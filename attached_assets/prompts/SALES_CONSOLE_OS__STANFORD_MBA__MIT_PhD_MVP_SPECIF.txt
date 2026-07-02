@@ -1,0 +1,383 @@
+SALES CONSOLE OS™
+
+STANFORD MBA + MIT PhD MVP SPECIFICATION
+
+Kincaid IQ Executive Intelligence Platform
+
+Vision
+
+Sales organizations traditionally operate on fragmented data, intuition, and reactive outreach. The Sales Console OS™ transforms sales execution into a data-driven intelligence discipline by unifying employer intelligence, Form 5500 data, consultant relationships, RFP activity, and AI-powered opportunity prioritization within a single executive command center.
+
+The objective is simple:
+
+Identify the highest-value opportunities, allocate resources intelligently, and create a compounding intelligence advantage that improves with every interaction.
+
+⸻
+
+MVP OBJECTIVE
+
+Create a unified intelligence platform that allows SiriusB leadership, sales teams, and consultants to:
+
+* Select a target market.
+* Analyze employers within that market.
+* Prioritize opportunities.
+* Monitor RFP activity.
+* Leverage Form 5500 intelligence.
+* Execute targeted outreach.
+* Track outcomes.
+* Continuously improve decision-making.
+
+The MVP must deliver meaningful business value immediately while establishing the foundation for future predictive capabilities.
+
+⸻
+
+MVP MODULE 1
+
+Market Selection Command Center
+
+Upon launch, users are presented with a Market Intelligence Selector.
+
+State Selector
+
+A searchable dropdown containing all 50 U.S. states.
+
+Default:
+All States
+
+Selection instantly refreshes all dashboard intelligence.
+
+Geographic Drill-Down
+
+State
+→ County
+→ Metropolitan Area
+→ Employer
+
+Example:
+
+Indiana
+→ Hamilton County
+→ Carmel
+→ Employer Universe
+
+This becomes the primary navigation structure for market exploration.
+
+⸻
+
+MVP MODULE 2
+
+Opportunity Source Engine
+
+Users may choose one or more intelligence sources.
+
+My Book of Business
+
+Includes:
+
+* Current Clients
+* Former Clients
+* Active Prospects
+* Open Opportunities
+* Renewal Opportunities
+
+Form 5500 Intelligence
+
+Includes:
+
+* Self-Funded Plans
+* Fully Insured Plans
+* Large Employers
+* High-Cost Plans
+* PBM Opportunities
+* Fiduciary Risk Opportunities
+
+Combined Intelligence View
+
+A unified dataset merging internal CRM intelligence with external market intelligence.
+
+⸻
+
+MVP MODULE 3
+
+Executive Intelligence Dashboard
+
+The Executive Dashboard provides an immediate understanding of the selected market.
+
+Market Metrics
+
+Display:
+
+* Total Employers
+* Total Covered Lives
+* Total Healthcare Spend
+* Total PBM Spend
+* Estimated Opportunity Value
+* Active RFPs
+* Renewal Volume
+
+Market Concentration
+
+Display:
+
+* Largest Employers
+* Largest Consultants
+* Largest Brokers
+* Largest PBMs
+* Largest Carriers
+
+The objective is rapid market orientation.
+
+⸻
+
+MVP MODULE 4
+
+Employer Intelligence Grid
+
+This becomes the primary working screen.
+
+Each employer profile contains:
+
+Core Information
+
+* Employer Name
+* EIN
+* Industry
+* Headquarters State
+* County
+* Employee Count
+* Covered Lives
+
+Benefits Intelligence
+
+* Consultant
+* Broker
+* Carrier
+* PBM
+* Funding Structure
+* Renewal Date
+
+Opportunity Intelligence
+
+* Estimated Revenue
+* Strategic Score
+* Renewal Probability
+* Competitive Position
+
+Users can sort, filter, and export all results.
+
+⸻
+
+MVP MODULE 5
+
+AI Opportunity Prioritization Engine
+
+Every employer receives an Opportunity Score.
+
+Scoring Factors
+
+1. Revenue Potential
+2. Strategic Fit
+3. PBM Opportunity
+4. Fiduciary Opportunity
+5. Consultant Accessibility
+6. Competitive Position
+7. Renewal Timing
+
+Output Categories:
+
+Tier 1
+
+Pursue Aggressively
+
+Tier 2
+
+Pursue
+
+Tier 3
+
+Monitor
+
+Tier 4
+
+Archive
+
+Every score must be explainable.
+
+No black-box scoring models.
+
+Leadership must understand exactly why an account was ranked.
+
+⸻
+
+MVP MODULE 6
+
+Account Command Center
+
+Selecting an employer opens a dedicated intelligence workspace.
+
+Overview Tab
+
+* Executive Summary
+* Opportunity Assessment
+* Competitive Landscape
+* Strategic Recommendations
+
+Benefits Tab
+
+* Carrier Analysis
+* PBM Analysis
+* Spend Analysis
+* Benchmark Analysis
+
+Consultant Tab
+
+* Influencer Mapping
+* Relationship Tracking
+* Historical Engagement
+
+Activity Tab
+
+* Meetings
+* Calls
+* Emails
+* Notes
+* Tasks
+
+The objective is a complete institutional memory system.
+
+⸻
+
+MVP MODULE 7
+
+RFP Intelligence Integration
+
+If an employer has an active RFP:
+
+Display:
+
+* Submission Date
+* Opportunity Value
+* Competitive Environment
+* Consultant Involved
+* Strategic Recommendation
+
+AI automatically summarizes the RFP.
+
+⸻
+
+MVP MODULE 8
+
+AI Copilot
+
+Persistent executive intelligence assistant.
+
+Capabilities include:
+
+Account Analysis
+
+“Analyze this employer.”
+
+Meeting Preparation
+
+“Prepare me for tomorrow’s meeting.”
+
+Opportunity Assessment
+
+“Why should we pursue this account?”
+
+Proposal Support
+
+“Draft a proposal strategy.”
+
+Executive Briefing
+
+“Summarize this market.”
+
+The Copilot must prioritize internal Kincaid IQ intelligence before generating recommendations.
+
+⸻
+
+MVP MODULE 9
+
+Executive Search
+
+Universal search bar.
+
+Search by:
+
+* Employer
+* EIN
+* Consultant
+* Broker
+* Carrier
+* PBM
+* State
+* County
+* Industry
+
+Target response time:
+
+Less than two seconds.
+
+⸻
+
+MVP MODULE 10
+
+Executive Dashboard Metrics
+
+Leadership metrics include:
+
+Pipeline Metrics
+
+* Open Opportunities
+* Qualified Opportunities
+* Proposal Stage Accounts
+* Expected Revenue
+* Forecast Revenue
+
+Performance Metrics
+
+* Win Rate
+* Loss Rate
+* Average Opportunity Value
+* Proposal Conversion Rate
+
+Intelligence Metrics
+
+* New Form 5500 Filings
+* New Market Opportunities
+* Re-Engagement Candidates
+* Consultant Activity
+
+⸻
+
+PHASE 2 (POST-MVP)
+
+After adoption is achieved:
+
+* Predictive Win Probability
+* Monte Carlo Revenue Forecasting
+* Competitive Battlecards
+* Automated Outreach
+* Resource Optimization
+* Proposal Generation
+* Benchmark-Injected Sales Materials
+* Territory Optimization
+* Consultant Influence Network Mapping
+
+⸻
+
+SUCCESS METRIC
+
+The Sales Console OS succeeds when it enables SiriusB to:
+
+1. Identify opportunities faster.
+2. Pursue opportunities more intelligently.
+3. Improve win rates.
+4. Reduce time spent researching accounts.
+5. Increase revenue per sales professional.
+6. Build a proprietary intelligence asset that compounds over time.
+
+The MVP is not a CRM.
+
+It is an Executive Intelligence Operating System designed to help SiriusB determine where to deploy capital, time, relationships, and expertise to maximize both commercial outcomes and humanitarian impact.

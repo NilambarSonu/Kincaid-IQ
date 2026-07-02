@@ -1,0 +1,364 @@
+MASTER PROMPT — SBI LANDING PAGE COPY + UX + CONVERSION ARCHITECTURE
+“The Bloomberg Terminal for Broker Transparency”
+
+You are now acting as a world-class coalition of:
+
+Stanford behavioral economists
+MIT systems architects
+Former Palantir Technologies intelligence platform designers
+Executive storytellers from Apple and Stripe
+Former healthcare economics leaders from Aon, Mercer, and WTW
+ERISA litigators and fiduciary-risk investigators
+Investigative journalists specializing in healthcare waste, PBMs, and employer benefit economics
+Growth strategists from elite SaaS companies and fintech unicorns
+
+Your objective is to create the complete homepage experience for:
+
+SHADY BROKER INDEX (SBI)
+
+The platform must feel like:
+
+Bloomberg Terminal meets Palantir
+Moody’s meets Glassdoor
+Investigative journalism meets enterprise intelligence
+Executive trust infrastructure for employer healthcare
+
+The user experience should create:
+
+Curiosity
+Shock through data
+Executive urgency
+Institutional trust
+Fiduciary awareness
+Desire for transparency
+Viral shareability
+
+The site should emotionally communicate:
+
+“Your healthcare broker may be the most expensive invisible line item in your business.”
+
+PRIMARY LANDING PAGE GOALS
+
+The homepage must:
+
+Instantly explain the value proposition
+Establish credibility within 5 seconds
+Create emotional urgency around hidden healthcare costs
+Position SBI as the market authority
+Demonstrate investigative intelligence sophistication
+Drive demo requests and enterprise conversions
+Encourage employers to benchmark their broker
+Create a viral “check your score” mechanic
+Build trust through data and methodology transparency
+Establish SBI as a movement — not just software
+HERO SECTION REQUIREMENTS
+
+Design a cinematic hero section with:
+
+HEADLINE OPTIONS
+
+Generate 25 elite headline variations such as:
+
+“What Is Your Broker Not Telling You?”
+“The First Fiduciary Transparency Index for Healthcare Brokers”
+“Healthcare’s Hidden Economics. Finally Exposed.”
+“Most Employers Don’t Know How Their Broker Gets Paid.”
+“Your Broker May Be Incentivized Against Your Best Interests.”
+“Trust Requires Transparency.”
+“The Bloomberg Terminal for Broker Accountability.”
+
+Headlines must:
+
+Feel institutional
+Sound intelligent
+Trigger curiosity
+Avoid sounding defamatory
+Emphasize transparency and fiduciary alignment
+SUBHEAD REQUIREMENTS
+
+Generate subheads explaining:
+
+SBI analyzes fiduciary transparency
+Broker incentives influence healthcare costs
+Employers deserve visibility into compensation structures
+Healthcare procurement lacks accountability
+SBI introduces measurable transparency scoring
+
+Tone:
+
+Data-driven
+Executive-level
+Investigative
+Sophisticated
+Calm but urgent
+HERO VISUAL CONCEPT
+
+Describe an advanced UI visualization including:
+
+Dynamic SBI score gauges
+Broker risk heatmaps
+Compensation opacity meters
+PBM relationship network graphs
+Employer savings simulations
+Litigation signal indicators
+Transparency percentile rankings
+
+Visual style:
+
+Bloomberg Terminal
+Palantir Gotham
+Apple-grade polish
+Cinematic dark mode
+Real-time intelligence feeds
+TRUST & AUTHORITY SECTION
+
+Generate content blocks showing:
+
+Data sources analyzed
+Number of filings processed
+Estimated healthcare spend analyzed
+Number of broker relationships mapped
+Fiduciary risk indicators tracked
+Public datasets monitored
+
+Create copy such as:
+
+“Built on millions of healthcare economics data points.”
+“Analyzing the hidden architecture of employer healthcare.”
+“Turning opaque procurement into measurable intelligence.”
+“WHY SBI EXISTS” SECTION
+
+Write a compelling institutional narrative explaining:
+
+Employer healthcare spending is often opaque
+Brokers influence billions in economic decisions
+Most employers lack visibility into compensation incentives
+Fiduciary responsibility requires measurable transparency
+Procurement systems lack modern intelligence tooling
+
+Tone should resemble:
+
+Harvard Business Review
+Bloomberg investigative reporting
+McKinsey thought leadership
+
+Avoid conspiracy language.
+
+Frame everything around:
+
+transparency
+alignment
+governance
+fiduciary stewardship
+data intelligence
+“HOW THE SBI SCORE WORKS” SECTION
+
+Create a visually structured methodology explanation.
+
+Scoring categories include:
+
+Compensation transparency
+PBM alignment
+Contract disclosure quality
+Vendor steering risk
+Litigation exposure
+Fee structure opacity
+Benchmark competitiveness
+Fiduciary safeguards
+Procurement integrity
+Employer outcome indicators
+
+Generate:
+
+Risk tiers
+Letter grades
+Color logic
+Confidence scoring
+Methodology disclaimers
+INTERACTIVE FEATURES
+
+Design interactions for:
+
+“LOOK UP YOUR BROKER”
+
+User enters:
+
+Broker name
+Employer size
+State
+Renewal date
+
+System outputs:
+
+Estimated SBI score
+Transparency percentile
+Potential risk indicators
+Suggested fiduciary questions
+Benchmark comparisons
+“ESTIMATE YOUR HEALTHCARE LEAKAGE”
+
+Interactive calculator estimating:
+
+Hidden broker compensation
+Rx spread pricing exposure
+Administrative waste
+Potential savings opportunities
+
+Must feel:
+
+Executive-grade
+Sophisticated
+Financially credible
+VIRALITY & SOCIAL PROOF
+
+Generate:
+
+“Top Transparent Brokers” leaderboard
+“Most Improved Transparency Scores”
+“Highest Fiduciary Alignment Ratings”
+“Healthcare Waste Exposure Rankings”
+
+Include:
+
+Shareable LinkedIn cards
+Executive scorecards
+Benchmark badges
+Transparency certification concepts
+EXECUTIVE CTA SECTIONS
+
+Create elite conversion copy for:
+
+CFOs
+CHROs
+Private equity firms
+Labor groups
+Public-sector employers
+
+CTA examples:
+
+“Benchmark Your Broker”
+“Run a Fiduciary Exposure Scan”
+“Request an Executive Transparency Audit”
+“See What Your Healthcare Strategy May Be Missing”
+“Quantify Your Hidden Healthcare Risk”
+
+Tone:
+
+Institutional
+Sophisticated
+Non-salesy
+Highly credible
+DESIGN SYSTEM REQUIREMENTS
+
+Specify:
+
+COLORS
+Matte black
+Graphite
+Deep navy
+Electric blue accents
+Risk amber
+Fiduciary green
+TYPOGRAPHY
+
+Blend:
+
+Bloomberg Terminal density
+Apple whitespace
+Institutional report styling
+UI COMPONENTS
+Intelligence cards
+Heatmaps
+Dynamic dashboards
+Entity relationship graphs
+AI insight panels
+Real-time risk indicators
+Executive summary modules
+MOBILE UX REQUIREMENTS
+
+Homepage must be:
+
+Mobile-native
+Lightning-fast
+Executive-friendly
+Shareable
+Highly visual
+
+Design for:
+
+CFO scrolling on mobile
+LinkedIn virality
+Boardroom presentations
+Enterprise demos
+AI CONTENT REQUIREMENTS
+
+Generate examples of:
+
+AI-generated fiduciary insights
+Broker transparency summaries
+Healthcare leakage explanations
+Executive risk briefings
+Employer benchmark narratives
+
+The AI tone should sound like:
+
+Bloomberg Intelligence
+McKinsey research
+SEC-style analytical writing
+Investigative financial journalism
+LEGAL & REPUTATIONAL SAFEGUARDS
+
+All content must:
+
+Avoid accusations
+Avoid definitive wrongdoing claims
+Use probabilistic and analytical language
+Emphasize transparency methodology
+Include scoring disclosures
+Allow response/correction workflows
+
+Key positioning:
+
+“SBI measures transparency signals and fiduciary alignment indicators — not intent.”
+
+FINAL OUTPUTS REQUIRED
+
+Generate:
+
+Full homepage copy
+Hero section copy
+25 headlines
+25 subheads
+CTA library
+Wireframe structure
+UX interaction descriptions
+Design-system documentation
+Conversion psychology framework
+Mobile UX strategy
+Trust-building framework
+LinkedIn virality strategy
+Investor-grade positioning narrative
+Enterprise SaaS messaging
+Executive demo flow
+AI-generated report examples
+Transparency methodology visuals
+Public leaderboard concepts
+Interactive calculator concepts
+Brand manifesto
+CORE BRAND MESSAGE
+
+SBI is not anti-broker.
+
+SBI is pro-transparency.
+
+It exists to:
+
+strengthen fiduciary governance
+improve healthcare procurement integrity
+empower employers with intelligence
+modernize healthcare accountability
+create measurable trust infrastructure
+
+Final emotional takeaway:
+
+“Transparency is no longer optional in employer healthcare.”

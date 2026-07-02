@@ -1,0 +1,452 @@
+/ VOLUME I — CONSTITUTIONAL CHARTER
+// Identity, the Four Hard Rules, the 4 primitives, the 7-gate chain, confidence tiering.
+ 
+const fs = require('fs');
+const D = require('./_design.js');
+ 
+const body = [
+  // ============================================================
+  // §1 — Mandate
+  // ============================================================
+  D.KICKER('§ 1  ·  Mandate'),
+  D.H1('The build that compounds', 'past the first $10M ARR.'),
+  D.LEDE('This document and its four companion volumes constitute the complete specification for building the SiriusB engine and its first vertical deployment, Kincaid iQ. Read together they define every primitive, gate, OS, engine, KPI, endpoint, schema, and acceptance test required to ship a fiduciary-grade computational infrastructure product to investment committees, family offices, and the boards of self-insured employers.'),
+ 
+  D.P('This volume — the Charter — is the irreducible substrate. It contains the constitutional rules that govern every other artifact in the build. The other volumes describe what to build; this volume describes the rules under which building is permitted to occur.'),
+ 
+  D.P('No engineer, no agent, no contributor may begin work in another volume without reading this one first. The Charter takes precedence over every other instruction in the system. A conflict between the Charter and any other volume is resolved in favor of the Charter.'),
+ 
+  // ============================================================
+  // §2 — Identity Doctrine
+  // ============================================================
+  D.pageBreak(),
+  D.KICKER('§ 2  ·  Identity Doctrine'),
+  D.H1('Three entities.', 'Preserved across the codebase.'),
+  D.LEDE('Identity drift is the most common failure mode in multi-entity ventures. The build must preserve the three-entity separation at the level of namespaces, schemas, repository boundaries, and product narrative.'),
+ 
+  D.dataTable(
+    ['Entity', 'Function', 'Scope of This Build'],
+    [
+      [{ text: 'SiriusB iQ', bold: true },
+       'AI Financial Intelligence Infrastructure. The deterministic computation substrate, the 4 primitives, the 7-gate chain, the Evidence Spine. Industry-agnostic.',
+       'The engine. Every line of code lives under the SiriusB namespace in some form. Future verticals (Vendor iQ, Capital iQ, Contract iQ) inherit from this engine without modification.'],
+      [{ text: 'Kincaid iQ', bold: true },
+       'Healthcare Capital Efficiency Intelligence application. The first deployment of the SiriusB engine. Domain schema, benchmarks, contract clause library, regulatory framing.',
+       'The application. Operates on the SiriusB engine but with healthcare-specific schema (claims, NDC, CPT, plan documents) and benchmarks (NADAC, CMS, DOL 5500).'],
+      [{ text: 'Kincaid RMC', bold: true },
+       'Advisory practice. The distribution channel. Carries the human relationship with the buyer; provides advisory services that wrap the platform output.',
+       'Out of scope for this build. RMC consumes the platform but does not build it.'],
+    ],
+    [1700, 4200, 3460],
+  ),
+ 
+  D.callout(
+    'Constitutional Rule of Identity',
+    'When asked what SiriusB is: SiriusB iQ is an AI-native financial intelligence company building verticalized financial leakage detection systems. When asked what Kincaid iQ is: Kincaid iQ is SiriusB iQ\u2019s healthcare financial intelligence application — designed to identify structural cost leakage and quantify EBITDA impact inside employer-sponsored health plans. Kincaid = application. SiriusB = engine. That separation enables vertical expansion, platform narrative, enterprise SaaS valuation, and category creation.'
+  ),
+ 
+  // ============================================================
+  // §3 — Category Discipline
+  // ============================================================
+  D.pageBreak(),
+  D.KICKER('§ 3  ·  Category Discipline'),
+  D.H1('What this build', 'is not.'),
+  D.LEDE('A correct category claim is worth more than a long list of features. State these prohibitions in the executing agent\u2019s working memory; they prevent category drift, the most common failure mode in LLM-driven builds.'),
+ 
+  D.dataTable(
+    ['Prohibition', 'Why It Matters'],
+    [
+      [{ text: 'NOT A DASHBOARD', mono: true, bold: true, color: D.COLORS.crimson },
+       'Dashboards show numbers. This shows receipts. Any feature that surfaces a number without a routed drill path to its underlying evidence is, by construction, not a Kincaid iQ feature.'],
+      [{ text: 'NOT A CONSULTING ACCELERATOR', mono: true, bold: true, color: D.COLORS.crimson },
+       'If a feature is implementable in Power Query, Alteryx, or Power BI within one engagement cycle by a competent practitioner, it is a consulting accelerator, not infrastructure. Reject the build.'],
+      [{ text: 'NOT A BROKER TOOL', mono: true, bold: true, color: D.COLORS.crimson },
+       'The buyer is the CFO, the PE operating partner, the M&A deal team, the board, the family office, the institutional fiduciary. UX, language, and documentation are calibrated to that audience exclusively.'],
+      [{ text: 'NOT HEALTHCARE ANALYTICS', mono: true, bold: true, color: D.COLORS.crimson },
+       'Fiduciary-grade financial infrastructure that happens to deploy in healthcare first. Comp set: Palantir, Snowflake, Databricks (12–20× revenue multiples). Not Castlight, Springbuk, Artemis (analytics multiples).'],
+      [{ text: 'NOT A GENERATIVE-AI PRODUCT', mono: true, bold: true, color: D.COLORS.crimson },
+       'Generative outputs are gated, cited, admin-approved. Deterministic math is the substrate. Narrative is the surface. The two layers never merge. Narrative never outruns evidence.'],
+      [{ text: 'NOT FOR HR', mono: true, bold: true, color: D.COLORS.crimson },
+       'HR is not the buyer. HR is the data steward at most. The product is fiduciary-grade infrastructure for the people who carry fiduciary obligation under ERISA §404(a)(1)(B).'],
+      [{ text: 'NOT A WELLNESS TOOL', mono: true, bold: true, color: D.COLORS.crimson },
+       'This quantifies financial leakage and EBITDA impact, not employee engagement.'],
+      [{ text: 'NOT A BENEFITS NAV APP', mono: true, bold: true, color: D.COLORS.crimson },
+       'This serves CFOs and Boards, not members choosing doctors.'],
+    ],
+    [3400, 5960],
+  ),
+ 
+  // ============================================================
+  // §4 — The Four Hard Rules
+  // ============================================================
+  D.pageBreak(),
+  D.KICKER('§ 4  ·  The Four Hard Rules'),
+  D.H1('Constitutional.', 'Non-negotiable.'),
+  D.LEDE('These are not preferences. They are structural properties of the system, enforced at the type level, the gate level, and the export-manifest level. Code that violates one of these rules cannot be merged. Cannot be deployed. Cannot exist in the Kincaid iQ codebase.'),
+ 
+  D.dataTable(
+    ['Rule', 'Statement', 'Enforcement Mechanism'],
+    [
+      [{ text: '01', mono: true, bold: true, color: D.COLORS.gold },
+       { text: 'One screen, four tiles always.', bold: true },
+       'TypeScript 4-tuple at the type level. Adding a fifth tile requires a type-signature change that is reviewable. The Surface API returns exactly tiles: [Tile, Tile, Tile, Tile].'],
+      [{ text: '02', mono: true, bold: true, color: D.COLORS.gold },
+       { text: 'Every number clickable into receipts.', bold: true },
+       'Routed deep-link, not a tooltip. Every rendered KPI carries a kpi_id that resolves at /api/v1/receipt/{kpi_id} to the full lineage chain: claim → transform → policy → render.'],
+      [{ text: '03', mono: true, bold: true, color: D.COLORS.gold },
+       { text: 'No export without receipts.', bold: true },
+       'Cryptographic manifest (SHA-256 of every cited EvidenceRef, TransformRef, PolicyResult) attached to every PDF, CSV, JSON export. RENDER gate refuses to materialize artifacts without a complete manifest.'],
+      [{ text: '04', mono: true, bold: true, color: D.COLORS.gold },
+       { text: 'Narratives never outrun evidence.', bold: true },
+       'Generative layer cites EvidenceRefs explicitly; never infers beyond the deterministic computation. INSUFFICIENT_EVIDENCE returns "no finding," not a paper-over. The Narrative Engine has a hard rule: cannot introduce uncited numbers.'],
+    ],
+    [800, 3000, 5560],
+  ),
+ 
+  D.callout(
+    'The Constitutional Test',
+    'If a proposed feature, KPI, narrative, or export would still be possible if any one of the Four Hard Rules were suspended, the feature is not a Kincaid iQ feature. The features must require the rules; the rules are not optional constraints on otherwise-acceptable features.'
+  ),
+ 
+  // ============================================================
+  // §5 — The Four Core Primitives
+  // ============================================================
+  D.pageBreak(),
+  D.KICKER('§ 5  ·  The Four Core Primitives'),
+  D.H1('Frozen. Typed.', 'Constitutional first-class objects.'),
+  D.LEDE('The primitives are the substrate. Every gate, every engine, every endpoint, every KPI, every export operates on these and only these. They are implemented as Pydantic v2 frozen dataclasses. A field is not "typed after import"; it is typed as a precondition of being a field. Mutation attempts raise. There are no exceptions.'),
+ 
+  D.H2('5.1  EvidenceRef — content-addressed evidence pointer'),
+  D.codeBlock([
+    'from pydantic import BaseModel, Field, ConfigDict',
+    'from datetime import datetime',
+    'from typing import Literal',
+    '',
+    'class EvidenceRef(BaseModel):',
+    '    model_config = ConfigDict(frozen=True)',
+    '    evidence_id: str                          # ULID',
+    '    source_hash: str = Field(min_length=64, max_length=64)  # SHA-256 hex',
+    '    source_type: Literal[',
+    '        "pbm_contract", "claims_file", "5500_schedule",',
+    '        "remittance_report", "plan_document", "vendor_invoice",',
+    '        "stop_loss_policy", "broker_disclosure", "rfp_response",',
+    '        "audit_letter", "regulatory_filing"',
+    '    ]',
+    '    source_uri: str                           # s3://, postgres://, file://',
+    '    captured_at: datetime',
+    '    captured_by: str                          # user_id or system_id',
+    '    vintage_year: int                         # plan year evidence pertains to',
+    '    bytes_length: int',
+    '    parent_evidence_id: str | None = None     # for derived evidence',
+  ]),
+ 
+  D.H2('5.2  TransformRef — versioned computation pointer'),
+  D.codeBlock([
+    'class TransformRef(BaseModel):',
+    '    model_config = ConfigDict(frozen=True)',
+    '    transform_id: str                         # ULID',
+    '    code_hash: str = Field(min_length=64, max_length=64)',
+    '    function_name: str                        # e.g. "compute_drap"',
+    '    input_evidence_ids: tuple[str, ...]       # immutable',
+    '    output_hash: str = Field(min_length=64, max_length=64)',
+    '    executed_at: datetime',
+    '    runtime_ms: int',
+    '    superseded_by: str | None = None          # transform_id of replacement',
+  ]),
+  D.P('A TransformRef is never mutated. Refinements create a new TransformRef with superseded_by set on the prior version. This is the constitutional alternative to Power Query\u2019s "Insert Step After": full lineage, no in-place mutation, every refinement auditable.', { italics: true, color: D.COLORS.inkDim }),
+ 
+  D.H2('5.3  PolicyResult — gate verdict'),
+  D.codeBlock([
+    'class PolicyResult(BaseModel):',
+    '    model_config = ConfigDict(frozen=True)',
+    '    policy_result_id: str',
+    '    policy_id: str',
+    '    policy_version: str                       # semver',
+    '    verdict: Literal["PASS", "FAIL", "WAIVED"]',
+    '    gate: Literal[',
+    '        "DEFINE", "WIRE", "VALIDATE", "PROMOTE",',
+    '        "COMPUTE", "GATE", "RENDER"',
+    '    ]',
+    '    evaluated_at: datetime',
+    '    rationale: str                            # required; no empty verdicts',
+    '    waiver_authority: str | None = None       # if WAIVED, who authorized',
+    '    citation: str | None = None               # statutory reference',
+  ]),
+ 
+  D.H2('5.4  Claim — atomic financial record'),
+  D.codeBlock([
+    'class Claim(BaseModel):',
+    '    model_config = ConfigDict(frozen=True)',
+    '    claim_id: str',
+    '    org_id: str',
+    '    member_id_hash: str                       # SHA-256, no PII',
+    '    claim_type: Literal["medical", "rx", "stop_loss"]',
+    '    ndc: str | None = None                    # for rx',
+    '    cpt: str | None = None                    # for medical',
+    '    pos: str | None = None                    # place-of-service',
+    '    service_date: datetime',
+    '    paid_amount: float                        # what the plan paid',
+    '    allowed_amount: float                     # plan-allowed (benchmark)',
+    '    member_responsibility: float',
+    '    vendor_id: str                            # PBM or carrier',
+    '    evidence_id: str                          # source EvidenceRef',
+  ]),
+ 
+  // ============================================================
+  // §6 — The 7-Gate Enforcement Chain
+  // ============================================================
+  D.pageBreak(),
+  D.KICKER('§ 6  ·  The 7-Gate Enforcement Chain'),
+  D.H1('Sequential.', 'Halt-on-fail.'),
+  D.LEDE('No artifact reaches a board-facing surface without passing all seven gates in order. Each gate exposes a single typed function with the signature run(input: GateInput) -> GateOutput. A failing gate raises GateFailure(gate, error_code, rationale). The chain is the architecture; the architecture is the proof.'),
+ 
+  new D.Paragraph({
+    spacing: { before: 200, after: 200 },
+    alignment: D.AlignmentType.CENTER,
+    children: [new D.TextRun({
+      text: 'DEFINE  →  WIRE  →  VALIDATE  →  PROMOTE  →  COMPUTE  →  GATE  →  RENDER',
+      font: D.FONTS.mono, size: 18, bold: true, color: D.COLORS.gold, characterSpacing: 30,
+    })],
+  }),
+ 
+  D.dataTable(
+    ['Gate', 'Purpose', 'Output On Pass', 'Canonical Failure'],
+    [
+      [{ text: 'DEFINE', mono: true, bold: true },
+       'Schema and policy registration. Every primitive schema, every policy DSL rule, every KPI definition is declared before ingestion.',
+       'PolicyResult{verdict=PASS, gate=DEFINE}',
+       { text: 'SCHEMA_NOT_REGISTERED', mono: true, color: D.COLORS.crimson }],
+      [{ text: 'WIRE', mono: true, bold: true },
+       'Source-to-primitive binding. The EvidenceRef is created, source_hash computed, source_uri verified reachable.',
+       'EvidenceRef{evidence_id, source_hash}',
+       { text: 'HASH_MISMATCH · SOURCE_UNREACHABLE', mono: true, color: D.COLORS.crimson }],
+      [{ text: 'VALIDATE', mono: true, bold: true },
+       'Type, range, completeness, vintage. Row counts, content hashes, lineage invariants. Drift detection against prior vintage.',
+       'PolicyResult{verdict=PASS, gate=VALIDATE}',
+       { text: 'TYPE_VIOLATION · COMPLETENESS_BREACH', mono: true, color: D.COLORS.crimson }],
+      [{ text: 'PROMOTE', mono: true, bold: true },
+       'The EvidenceRef is admitted to the Evidence Spine. Chain hash computed. From this point sealed and append-only.',
+       'Spine entry, chain_hash',
+       { text: 'SPINE_SEAL_FAILURE', mono: true, color: D.COLORS.crimson }],
+      [{ text: 'COMPUTE', mono: true, bold: true },
+       'TransformRef executes against promoted evidence. Deterministic — same inputs, same outputs, always.',
+       'TransformRef{output_hash}',
+       { text: 'NONDETERMINISTIC · EVIDENCE_STALE', mono: true, color: D.COLORS.crimson }],
+      [{ text: 'GATE', mono: true, bold: true },
+       'PolicyResult adjudicates the computed output. Confidence tier assigned. Thresholds applied.',
+       'PolicyResult + confidence',
+       { text: 'POLICY_FAIL · INSUFFICIENT_EVIDENCE', mono: true, color: D.COLORS.crimson }],
+      [{ text: 'RENDER', mono: true, bold: true },
+       'Output materialized to UI surface or export artifact. Manifest attached.',
+       'Tile, ReceiptResolution, or signed PDF',
+       { text: 'MANIFEST_INCOMPLETE · UNATTRIBUTED', mono: true, color: D.COLORS.crimson }],
+    ],
+    [1200, 3400, 2400, 2360],
+  ),
+ 
+  D.H2('6.1  The Gate Contract'),
+  D.codeBlock([
+    'from typing import Protocol',
+    '',
+    'class Gate(Protocol):',
+    '    name: Literal["DEFINE","WIRE","VALIDATE","PROMOTE","COMPUTE","GATE","RENDER"]',
+    '',
+    '    def run(self, input: GateInput) -> GateOutput:',
+    '        """Pure function. No I/O outside declared spine/db access.',
+    '        Raises GateFailure(gate, error_code, rationale) on fail.',
+    '        Returns GateOutput(passed=True, policy_result, artifact) on pass."""',
+    '',
+    'class GateFailure(Exception):',
+    '    def __init__(self, gate: str, error_code: str, rationale: str):',
+    '        self.gate = gate',
+    '        self.error_code = error_code',
+    '        self.rationale = rationale',
+  ]),
+ 
+  // ============================================================
+  // §7 — Confidence Tiering
+  // ============================================================
+  D.pageBreak(),
+  D.KICKER('§ 7  ·  Confidence Tiering'),
+  D.H1('Three labels.', 'No fourth.'),
+  D.LEDE('Every finding is labeled with exactly one tier. The tier governs whether the finding can render to a board-facing surface. The absence of a number is itself an evidence-integrity signal — not a gap to be hidden, not a value to be estimated into existence.'),
+ 
+  D.dataTable(
+    ['Tier', 'Requirement', 'Renderable?', 'Chip Color', 'Hex'],
+    [
+      [{ text: 'CERTIFIED', mono: true, bold: true, color: D.COLORS.emerald },
+       'Direct evidence: contract clause + claim record + remittance, all present and reconciled. The number is a computation of a specific contractual breach, expressed as a dollar amount, linked to a clause, and certified by the evidence it cites.',
+       { text: 'YES', bold: true, color: D.COLORS.emerald },
+       'Emerald',
+       { text: '#4ade80', mono: true }],
+      [{ text: 'MODELED', mono: true, bold: true, color: D.COLORS.amber },
+       'Inference from incomplete evidence. Uncertainty bounds (P5/P50/P95) disclosed. Actuarial projection with explicit assumption set.',
+       { text: 'YES, with amber chip', bold: true, color: D.COLORS.amber },
+       'Amber',
+       { text: '#ffb547', mono: true }],
+      [{ text: 'INSUFFICIENT', mono: true, bold: true, color: D.COLORS.crimson },
+       'Missing data. No finding issued. Logged as a Tile-4 (Fiduciary Posture) gap finding. The gap itself is forensic signal — what is missing tells us as much as what is present.',
+       { text: 'NO — gap only', bold: true, color: D.COLORS.crimson },
+       'Crimson',
+       { text: '#ff6b7a', mono: true }],
+    ],
+    [1500, 4500, 1500, 900, 960],
+  ),
+ 
+  D.callout(
+    'The Anti-Pattern',
+    'Three behaviors signal that the confidence tier is being abused. First, the tier is computed downstream of the narrative, not upstream — the system is writing the conclusion and then back-rating the evidence. Second, INSUFFICIENT_EVIDENCE is treated as a failure to be suppressed rather than a finding to be surfaced. Third, MODELED is reached for whenever CERTIFIED is hard, instead of being reserved for cases where the actuarial inference is genuinely defensible. All three are constitutional violations.'
+  ),
+ 
+  // ============================================================
+  // §8 — The Evidence Spine
+  // ============================================================
+  D.pageBreak(),
+  D.KICKER('§ 8  ·  The Evidence Spine'),
+  D.H1('Append-only.', 'SHA-256 sealed. Inviolable.'),
+  D.LEDE('The Evidence Spine is the constitutional commitment device. It is a Postgres-backed, append-only ledger where every promoted EvidenceRef carries a chain_hash = SHA-256(prior_chain_hash || source_hash). Retroactive tampering invalidates every downstream entry. A nightly verify_spine_integrity() job emits a PolicyResult at gate PROMOTE. If that PolicyResult fails, the entire system enters READ_ONLY mode until integrity is restored.'),
+ 
+  D.H2('8.1  Schema (Alembic migration 001_evidence_spine.py)'),
+  D.codeBlock([
+    'CREATE TABLE evidence_spine (',
+    '    evidence_id        TEXT PRIMARY KEY,',
+    '    source_hash        CHAR(64) NOT NULL UNIQUE,',
+    '    source_type        TEXT NOT NULL,',
+    '    source_uri         TEXT NOT NULL,',
+    '    captured_at        TIMESTAMPTZ NOT NULL,',
+    '    captured_by        TEXT NOT NULL,',
+    '    vintage_year       INT NOT NULL,',
+    '    bytes_length       BIGINT NOT NULL,',
+    '    parent_evidence_id TEXT REFERENCES evidence_spine(evidence_id),',
+    '    chain_hash         CHAR(64) NOT NULL,    -- SHA-256(prior || source)',
+    '    sealed_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()',
+    ');',
+    '',
+    'CREATE TABLE transform_spine (',
+    '    transform_id       TEXT PRIMARY KEY,',
+    '    code_hash          CHAR(64) NOT NULL,',
+    '    function_name      TEXT NOT NULL,',
+    '    input_evidence_ids TEXT[] NOT NULL,',
+    '    output_hash        CHAR(64) NOT NULL,',
+    '    executed_at        TIMESTAMPTZ NOT NULL,',
+    '    runtime_ms         INT NOT NULL,',
+    '    superseded_by      TEXT REFERENCES transform_spine(transform_id)',
+    ');',
+    '',
+    'CREATE TABLE policy_spine (',
+    '    policy_result_id   TEXT PRIMARY KEY,',
+    '    policy_id          TEXT NOT NULL,',
+    '    policy_version     TEXT NOT NULL,',
+    '    verdict            TEXT NOT NULL CHECK (verdict IN (\'PASS\',\'FAIL\',\'WAIVED\')),',
+    '    gate               TEXT NOT NULL,',
+    '    evaluated_at       TIMESTAMPTZ NOT NULL,',
+    '    rationale          TEXT NOT NULL,',
+    '    waiver_authority   TEXT,',
+    '    citation           TEXT',
+    ');',
+    '',
+    '-- Enforce immutability at the role level',
+    'REVOKE UPDATE, DELETE ON evidence_spine FROM PUBLIC;',
+    'REVOKE UPDATE, DELETE ON transform_spine FROM PUBLIC;',
+    'REVOKE UPDATE, DELETE ON policy_spine FROM PUBLIC;',
+  ]),
+ 
+  D.H2('8.2  Integrity Verification Job'),
+  D.codeBlock([
+    '# Runs nightly via Celery beat',
+    '@celery.task',
+    'def verify_spine_integrity():',
+    '    rows = db.execute("SELECT * FROM evidence_spine ORDER BY sealed_at ASC")',
+    '    prior_chain_hash = ""  # genesis',
+    '    for row in rows:',
+    '        expected = sha256(prior_chain_hash + row.source_hash).hexdigest()',
+    '        if expected != row.chain_hash:',
+    '            emit_policy_result(',
+    '                policy_id="spine.integrity",',
+    '                verdict="FAIL",',
+    '                gate="PROMOTE",',
+    '                rationale=f"chain_hash mismatch at evidence_id={row.evidence_id}",',
+    '            )',
+    '            system_enter_read_only_mode()',
+    '            return',
+    '        prior_chain_hash = row.chain_hash',
+    '    emit_policy_result(policy_id="spine.integrity", verdict="PASS", gate="PROMOTE",',
+    '                       rationale="spine verified intact")',
+  ]),
+ 
+  // ============================================================
+  // §9 — Zero-Trust AI Governance
+  // ============================================================
+  D.pageBreak(),
+  D.KICKER('§ 9  ·  Zero-Trust AI Governance'),
+  D.H1('Two layers.', 'They never merge.'),
+  D.LEDE('The Kincaid iQ platform contains two computational layers with categorically different governance regimes. Conflating them is a constitutional violation. The platform is architecturally designed so that they cannot be conflated by accident.'),
+ 
+  D.dataTable(
+    ['Layer', 'Examples', 'Governance Regime'],
+    [
+      [{ text: 'Deterministic', bold: true, color: D.COLORS.emerald },
+       'PEPM computation, DRAP, PBM Waste Index, SBI™ scoring, GLP-1 risk model, Monte Carlo EBITDA scenarios, gate-chain execution, evidence spine sealing.',
+       'Runs autonomously if reproducible and governed. Same inputs → same outputs, always. Output_hash equality asserted in tests. CERTIFIED tier achievable.'],
+      [{ text: 'Generative (Kendra)', bold: true, color: D.COLORS.amber },
+       'Executive narrative generation, board pack prose, opportunity descriptions, contract clause interpretation summaries, RFP language suggestions.',
+       'Must be gated, cited, admin-approved. Cannot introduce uncited numbers. Cannot promote MODELED findings to CERTIFIED-equivalent language. Reversible via admin kill switch.'],
+    ],
+    [2200, 4000, 3160],
+  ),
+ 
+  D.callout(
+    'The Anti-Pattern (Kendra)',
+    'A generative model produces text that sounds confident: "Pharmacy spend rose 12% year-over-year, driven by specialty drug utilization." If the deterministic layer has not certified this number — if the 12% is a model inference, not a sealed computation — then the narrative has outrun the evidence. The Narrative Engine must refuse to ship that sentence. It must instead emit: "Pharmacy spend trend remains under verification; see Tile 4 gap inventory." That is the difference between board-defensible output and a defamation lawsuit.'
+  ),
+ 
+  // ============================================================
+  // §10 — How To Use The Volumes
+  // ============================================================
+  D.pageBreak(),
+  D.KICKER('§ 10  ·  How To Use This Volume Set'),
+  D.H1('Five volumes.', 'One build.'),
+  D.LEDE('The Charter establishes the rules. The remaining four volumes are the build instructions, organized by architectural layer so the executing agent can load the relevant context for the current sprint without overwhelming its working memory.'),
+ 
+  D.dataTable(
+    ['Vol', 'Title', 'Load When'],
+    [
+      [{ text: 'I', mono: true, bold: true, color: D.COLORS.gold },
+       { text: 'Constitutional Charter', bold: true },
+       'Always. Before every other volume. Before every sprint. Before every commit. Read this first.'],
+      [{ text: 'II', mono: true, bold: true, color: D.COLORS.gold },
+       { text: 'Platform OS Inventory', bold: true },
+       'Building any of the 22 V4 Constitution operating systems (OS-01 through OS-22). The platform substrate that every domain inherits.'],
+      [{ text: 'III', mono: true, bold: true, color: D.COLORS.gold },
+       { text: 'Domain OS & Engines', bold: true },
+       'Building any of the 8 EDI-OS domain layers or the 6 computational engines (PEPM, DRAP, PBM Waste, SBI, GLP-1, EBITDA Scenario).'],
+      [{ text: 'IV', mono: true, bold: true, color: D.COLORS.gold },
+       { text: 'API · Data Model · Frontend', bold: true },
+       'Building the endpoint surface, the canonical schema, the Evidence Spine DDL, the four-tile UI, the receipt drill, the design system.'],
+      [{ text: 'V', mono: true, bold: true, color: D.COLORS.gold },
+       { text: 'Build Order & Acceptance', bold: true },
+       'Always have open. The 24-sprint plan with acceptance criteria per sprint. Do not begin a sprint without reading its entry. Do not close a sprint until its acceptance test passes.'],
+    ],
+    [600, 3200, 5560],
+  ),
+ 
+  D.callout(
+    'Working Discipline for the Agent',
+    'For each sprint: (1) Re-read Volume I §4 (the Four Hard Rules). (2) Open Volume V at the current sprint entry. (3) Open the volume the sprint draws from. (4) Build. (5) Run the sprint\u2019s acceptance test. (6) If green, commit and advance. If red, stop and report. Do not skip steps. Do not batch sprints. Do not advance past an unacceptable test.'
+  ),
+];
+ 
+const doc = D.buildDoc({
+  volumeRoman: 'I',
+  volumeTitle: 'Constitutional | Charter',
+  volumeSubtitle: 'Identity, the Four Hard Rules, the four primitives, the 7-gate enforcement chain, confidence tiering, the Evidence Spine, and the discipline of category. The substrate beneath every other volume.',
+  bodyChildren: body,
+  nextVolumeHint: 'VOLUME II — PLATFORM OS INVENTORY',
+});
+ 
+D.Packer.toBuffer(doc).then(buffer => {
+  const outPath = '/home/claude/replit_volumes/Kincaid_IQ_Vol_I_Constitutional_Charter.docx';
+  fs.writeFileSync(outPath, buffer);
+  console.log(`Volume I written: ${outPath}  (${(buffer.length/1024).toFixed(1)} KB)`);
+});
+ 

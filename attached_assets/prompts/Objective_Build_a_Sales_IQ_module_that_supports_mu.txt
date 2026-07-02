@@ -1,0 +1,72 @@
+Objective:
+Build a "Sales IQ" module that supports multi-state regulatory, pricing, and compliance intelligence across all 50 U.S. states, with enhanced logic for California.
+
+Core Requirements:
+
+1. Multi-State Framework
+- Create a state abstraction layer:
+  - Each state = object with:
+    - regulatory_rules
+    - pbm_constraints
+    - broker_comp_rules
+    - transparency_requirements
+    - rebate_handling_rules
+- Allow user to:
+    - Select single state OR
+    - Compare multiple states side-by-side
+
+2. California (Priority State - Advanced Logic)
+- Implement California-specific overrides:
+    - Enforce full transparency rules tied to SB-17 and related legislation
+    - Require rebate pass-through visibility
+    - Flag spread pricing models as high-risk
+    - Add employer disclosure alerts
+- Build warning engine:
+    IF plan violates CA transparency norms:
+        → trigger "Compliance Risk Alert"
+
+3. Sales Intelligence Layer
+- For each state:
+    - Show:
+        - Market norm (spread vs pass-through prevalence)
+        - Broker compensation visibility norms
+        - Regulatory strictness score (1–10)
+- Add "Sales Angle Generator":
+    - Input: state + client type (self-funded, fully insured)
+    - Output:
+        - Key talking points
+        - Objection handling
+        - Regulatory-driven urgency hooks
+
+4. Data Integration (Phase 2 Ready)
+- Structure system to ingest:
+    - 5500 filings
+    - SEC Edgar (10-K, 8-K)
+    - PBM contract benchmarks
+- Normalize data by:
+    - state
+    - employer size
+    - industry
+
+5. UI/UX
+- Dashboard:
+    - Map view (clickable states)
+    - Comparison table (multi-state)
+    - Alerts panel (compliance risks)
+- California should visually stand out (badge or highlight)
+
+6. Scoring Engine
+- Create:
+    - "Transparency Score"
+    - "PBM Risk Score"
+- California scoring should be stricter than all other states
+
+7. Tech Stack
+- Frontend: React
+- Backend: Node.js or Python (FastAPI)
+- Database: PostgreSQL (state rules table required)
+
+Deliverables:
+- Working prototype with mock data
+- California fully implemented as test case
+- At least 3 additional states (TX, NY, FL) for comparison

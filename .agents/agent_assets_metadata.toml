@@ -1,0 +1,80 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "L8a7VAj4fzHGw9eN30YZi"
+uri = "file://attached_assets/KincaidIQ_HCC_ActuarialReport.pdf"
+type = "pdf"
+title = "Kincaid IQ VERIFY™ — Human Capital Concepts LLC Actuarial Report"
+
+[[outputs]]
+id = "99A_fhVTt_pBGWLCPWUvc"
+uri = "file://attached_assets/KincaidIQ_HorizonBancorp_ActuarialReport_2024.pdf"
+type = "pdf"
+title = "Kincaid IQ VERIFY™ — Horizon Bancorp Actuarial Report (2020–2024)"
+
+[[outputs]]
+id = "12dVJRhmKs7G2BAArsQ3n"
+uri = "file://client/public/moser_consulting_actuarial_2024.md"
+type = "text"
+title = "Kincaid IQ Verify™ — Moser Consulting Actuarial Report 2024"
+
+[[outputs]]
+id = "H-zphSJDpohuwQ5gYZCoy"
+uri = "file://.local/exports/shady_broker_sample.pdf"
+type = "pdf"
+title = "Sample — Shady Broker Intelligence Report (Tower Health, EIN 231352204)"
+
+[[outputs]]
+id = "rl8g4q7DE6ZCImOBjbhsc"
+uri = "file://docs/RFP_Intelligence_OS_Paper.md"
+type = "text"
+title = "The RFP Intelligence OS — Technical & Product Paper"
+
+[[outputs]]
+id = "F0i9n-BIcQx-leAK2sNHD"
+uri = "file://docs/rfp-intelligence-changes.md"
+type = "text"
+title = "RFP Intelligence: What Changed and Why"
+
+[[outputs]]
+id = "08oi3U4gzxNrKVS5s5UA4"
+uri = "file://docs/Claims_Recovery_IQ_Paper.md"
+type = "text"
+title = "Claims Recovery IQ — Research Paper"
+
+[[outputs]]
+id = "KuwZW2_x8I5ZGaR0Kh8IR"
+uri = "file://docs/Sales_IQ_Console_MBA_Paper.md"
+type = "text"
+title = "Sales IQ Console — Stanford MBA Competitive Analysis"
+
+[[outputs]]
+id = "IHLjti6B54wrks5XG3j5M"
+uri = "file://docs/Rx_Defense_PBM_Intelligence_MBA_Paper.md"
+type = "text"
+title = "Rx Defense & RxPBM Intelligence — Stanford MBA Analysis"
+
+[[outputs]]
+id = "RlNGooiYmTjrvtq_Z_0-a"
+uri = "file://docs/kincaid-iq-whitepaper.md"
+type = "text"
+title = "Capital Efficiency Intelligence — A Kincaid IQ Working Paper (PhD Economics / Stanford MBA)"
+
+[[outputs]]
+id = "6Tjx4Wa9vDkIXsZcWjxwj"
+uri = "file://docs/kincaid-iq-interoperability-paper.md"
+type = "text"
+title = "One Evidence Fabric, Many Front Doors — How the Kincaid IQ Modules Interoperate (Stanford MBA Research Paper)"
+
+[[outputs]]
+id = "z5hltcUkVqHRhEN4GgTlh"
+uri = "file://docs/kincaid-iq-thirteen-module-mba-paper.md"
+type = "text"
+title = "Thirteen Front Doors, One Fiduciary Engine — Stanford MBA Research Paper"
+
+[[outputs]]
+id = "uXl_Z_8VVF2bkWn_cX3iV"
+uri = "file://docs/kincaid-iq-thirteen-layer-architecture-competitive-paper.md"
+type = "text"
+title = "The Thirteen-Layer Fiduciary Stack — Architecture, Competitive & Field-Operations Analysis"

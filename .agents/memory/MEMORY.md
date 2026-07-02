@@ -1,0 +1,20 @@
+- [Company 360 aggregator](company-360-aggregator.md) — EIN-keyed cross-module dossier reuses each module's plain (non-HTTP) helper fn; fixed-cardinality fallback cards; UI navigates from backend-provided route.
+- [Share-link view-state](share-link-view-state.md) — short links `/s/{id}` restore page state via query params; restore effects must not hard-require two keys when only one is always serialized, and must survive localStorage restores.
+- [DOL Form 5500 DuckDB quirks](dol5500-duckdb-quirks.md) — unusable health booleans (use WELFARE_BENEFIT_CODES 4A), Decimal coercion, INT32 overflow on PARTICIPANTS
+- [Rx Defense spend cap](rx-defense-spend-cap.md) — modeled leakage/savings capped at 30% of actual Rx spend; cap must match across frontend tabs and backend /exposure + /savings-report
+- [AI doctrine injection paths](ai-doctrine-injection-paths.md) — "all AI follows X" has two coverage paths: central persona + direct-SDK tools that bypass it
+- [Kincaid IQ Verify RBAC](kiq-verify-rbac.md) — Verify ledger role comes from X-KIQ-Role header on purpose (demo); default MUST be viewer not owner; appends use pg advisory lock
+- [AI provider routing](ai-provider-lever.md) — a router's LLM provider = which shim its `as AsyncOpenAI` alias points at (Gemini- or Claude-backed) + its model= strings; swap the alias to switch one router
+- [ORM schema drift](orm-schema-drift.md) — create_all never ALTERs existing tables; add idempotent ensure_<table>_columns() at startup or new model columns break all queries on legacy DBs
+- [Gemini via Replit AI Integrations](gemini-integration.md) — gateway rejects OpenAI /chat/completions (400 INVALID_ENDPOINT); use native google-genai SDK with api_version=""; drop-in shim at backend/gemini_compat.py
+- [Rx Defense economics](rx-defense-economics.md) — all $ figures = member×PMPY×risk_fraction, 3yr NPV ×2.85; demo financial_impact overridden at request time (don't "fix" source strings); INSUFFICIENT_EVIDENCE never a fallback constant
+- [Benchmarking divergence contract](benchmarking-divergence-contract.md) — "fees rising at rank" detection lives ONLY in frontend detectDivergence; divergence-watch returns raw series, prune per-metric (same metric ≥2 pct AND ≥2 $), never server-flag
+- [Client-package snapshot retention](snapshot-retention.md) — daily prune deletes snapshot blobs only; ClientPackageDelivery audit rows must never be purged; env-tunable age + per-recipient caps
+- [Pipeline forecast shared math](pipeline-forecast-shared-math.md) — RFP Monte Carlo forecast (win-prob/revenue/P10-P50-P90) lives in one lib reused by War Room; never re-implement per page
+- [Bid optimizer parity](bid-model-parity.md) — RFP curve math has one copy per language (backend/bid_model.py + client/src/lib/bidModel.ts); cross-lang parity test spawns python; needs pyRound banker's rounding + trunc labels
+- [Backend Python tests](backend-python-tests.md) — stdlib unittest + SQLite (register gen_random_uuid before DML); `from google import genai` import is ~77s cold (slow, not hung)
+- [RFP scoring live override](rfp-scoring-live-override.md) — retune scorer at runtime via DB override; MUST mutate RFP_SCORING in place + call refresh_scoring_constants(), never rebind
+- [Testable client logic](testable-client-logic.md) — `test` workflow globs `client/src/**/*.test.ts` under `tsx --test` (no DOM); extract pure logic into `.ts` modules to unit-test it without importing React/`.tsx`.
+- [Live-feed ingestion security](live-feed-provenance-security.md) — redact api_key from external-API error strings before persisting/returning; frontend ProtectedRoute ≠ backend authz (new telemetry/trigger endpoints need Depends(get_current_user))
+- [DuckDB remote provisioning (AWS)](duckdb-remote-provisioning.md) — boot-time fetch (s3:// IAM-role or http(s)); write atomically since existence-gate = integrity-gate
+- [Anthropic compat JSON mode](anthropic-compat-json-mode.md) — OpenAI-shaped shim has NO real json_object enforcement; Claude wraps in fences/prose, so parse LLM responses leniently (strip fences, slice outer {...}, assert dict).

@@ -1,0 +1,108 @@
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const CATEGORIES = [
+  "surface",
+  "structure",
+  "incentive",
+  "failure",
+];
+
+const CATEGORY_COLORS = {
+  surface: "bg-blue-500",
+  structure: "bg-green-500",
+  incentive: "bg-purple-500",
+  failure: "bg-red-500",
+};
+
+function generateChildren(parent, level) {
+  if (level > 9) return [];
+
+  return CATEGORIES.map((cat, i) => ({
+    id: `${parent.id}-${i}`,
+    level,
+    category: cat,
+    title: `${cat.toUpperCase()} L${level}`,
+    description: `Deeper ${cat} analysis derived from ${parent.title}`,
+  }));
+}
+
+export default function App() {
+  const root = {
+    id: "root",
+    level: 1,
+    title: "Root Problem",
+  };
+
+  const [path, setPath] = useState([root]);
+
+  const current = path[path.length - 1];
+
+  const children = generateChildren(current, current.level + 1);
+
+  const handleClick = (child) => {
+    if (child.level > 9) return;
+    setPath([...path, child]);
+  };
+
+  const goBack = (index) => {
+    setPath(path.slice(0, index + 1));
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white p-6">
+      <div className="mb-4">
+        <h1 className="text-2xl font-bold">4-Tile Drill Down</h1>
+        <p className="text-sm opacity-70">Level {current.level} of 9</p>
+      </div>
+
+      {/* Breadcrumb */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        {path.map((node, i) => (
+          <button
+            key={node.id}
+            onClick={() => goBack(i)}
+            className="text-xs bg-gray-800 px-2 py-1 rounded"
+          >
+            {node.title}
+          </button>
+        ))}
+      </div>
+
+      {/* Grid */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="grid grid-cols-2 gap-4"
+        >
+          {children.map((child) => (
+            <div
+              key={child.id}
+              onClick={() => handleClick(child)}
+              className={`cursor-pointer p-6 rounded-2xl shadow-lg ${CATEGORY_COLORS[child.category]}`}
+            >
+              <h2 className="text-lg font-semibold">{child.title}</h2>
+              <p className="text-sm mt-2 opacity-80">
+                {child.description}
+              </p>
+            </div>
+          ))}
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Final Output */}
+      {current.level === 9 && (
+        <div className="mt-8 p-6 bg-gray-900 rounded-2xl">
+          <h2 className="text-xl font-bold">Final Insight</h2>
+          <p className="mt-2">
+            You have reached maximum depth. This is where strategic insight,
+            risk exposure, or monetizable intelligence is generated.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}

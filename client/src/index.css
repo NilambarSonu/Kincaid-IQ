@@ -1,0 +1,582 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', sans-serif;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-mono: 'Orbitron', monospace;
+
+    /* Midnight Navy Theme */
+    --background: 222 42% 14%;
+    --foreground: 210 20% 94%;
+
+    --card: 220 38% 18%;
+    --card-foreground: 210 20% 94%;
+
+    --popover: 220 38% 19%;
+    --popover-foreground: 210 20% 94%;
+
+    /* Kincaid IQ Crimson Primary */
+    --primary: 349 62% 48%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 216 40% 18%;
+    --secondary-foreground: 210 15% 80%;
+
+    --muted: 216 40% 16%;
+    --muted-foreground: 210 20% 55%;
+
+    --accent: 349 62% 48%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 90% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 216 40% 22%;
+    --input: 216 40% 16%;
+    --ring: 349 62% 48%;
+
+    --radius: 0.875rem;
+
+    /* Gold */
+    --gold: 44 100% 55%;
+    --gold-light: 44 100% 75%;
+    --gold-foreground: 0 0% 0%;
+
+    /* Neon palette — B&B edition */
+    --neon-blue: 216 93% 55%;
+    --neon-cyan: 349 62% 58%;
+    --neon-green: 150 100% 50%;
+    --neon-purple: 270 100% 65%;
+    --neon-pink: 320 100% 65%;
+
+    /* Sidebar */
+    --sidebar: 222 45% 8%;
+    --sidebar-foreground: 210 20% 85%;
+    --sidebar-muted: 220 40% 13%;
+    --sidebar-border: 216 40% 18%;
+    --sidebar-active: 207 100% 55%;
+    --sidebar-active-foreground: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(ellipse 80% 55% at 20% 0%, rgba(155, 28, 46, 0.13) 0%, transparent 60%),
+      radial-gradient(ellipse 65% 45% at 80% 100%, rgba(0, 43, 92, 0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 30% at 60% 30%, rgba(0, 43, 92, 0.08) 0%, transparent 55%);
+    min-height: 100vh;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply tracking-tight;
+  }
+}
+
+@layer utilities {
+  /* Glass card — main surface */
+  .glass-card {
+    background: rgba(5, 8, 40, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(0, 160, 255, 0.12);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+  .glass-card:hover {
+    border-color: rgba(0, 160, 255, 0.22);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.7),
+      0 0 20px rgba(0, 140, 255, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  /* Metric card — alias */
+  .metric-card {
+    @apply glass-card rounded-2xl p-5 transition-all duration-300 cursor-pointer;
+  }
+  .metric-card:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Gold glass */
+  .gold-glass {
+    background: rgba(255, 190, 0, 0.06);
+    border: 1px solid rgba(255, 190, 0, 0.2);
+    box-shadow: 0 0 20px rgba(255, 190, 0, 0.08);
+  }
+
+  /* Sidebar nav item */
+  .sidebar-nav-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150;
+    color: rgba(160, 185, 225, 0.45);
+    border-left: 2px solid transparent;
+    position: relative;
+  }
+  .sidebar-nav-item:hover {
+    background: linear-gradient(
+      90deg,
+      rgba(140, 170, 255, 0.07) 0%,
+      rgba(80, 110, 220, 0.03) 100%
+    );
+    color: rgba(210, 228, 255, 0.88);
+    border-left-color: rgba(120, 160, 255, 0.28);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.15),
+      0 0 10px rgba(80, 130, 255, 0.04);
+  }
+  .sidebar-nav-item.active {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 195, 0, 0.09) 0%,
+      rgba(255, 140, 0, 0.04) 60%,
+      transparent 100%
+    );
+    color: hsl(44 100% 68%);
+    border-left: 2px solid hsl(44 100% 55%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 220, 80, 0.08),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+      0 0 16px rgba(255, 185, 0, 0.06);
+    text-shadow: 0 0 18px rgba(255, 190, 0, 0.5);
+  }
+
+  /* Sidebar metal glass shell */
+  .sidebar-metal-glass {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(32, 38, 72, 0.97) 0%,
+        rgba(14, 17, 44, 0.98) 20%,
+        rgba(6, 8, 26, 0.99) 60%,
+        rgba(4, 6, 20, 1.0) 100%
+      );
+    backdrop-filter: blur(48px) saturate(160%) brightness(0.95);
+    -webkit-backdrop-filter: blur(48px) saturate(160%) brightness(0.95);
+    border-right: 1px solid rgba(160, 190, 255, 0.07);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.09),
+      inset 1px 0 0 rgba(255, 255, 255, 0.04),
+      inset -1px 0 0 rgba(0, 0, 0, 0.5),
+      6px 0 32px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(0, 0, 0, 0.3);
+    position: relative;
+  }
+  /* Chrome top-edge highlight line */
+  .sidebar-metal-glass::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.18) 30%,
+      rgba(255, 255, 255, 0.28) 50%,
+      rgba(255, 255, 255, 0.18) 70%,
+      transparent 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+  /* Right edge metallic glint */
+  .sidebar-metal-glass::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(140, 170, 255, 0.06) 40%,
+      transparent 80%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Gold text */
+  .gold-text {
+    color: hsl(var(--gold));
+  }
+  .gold-text-glow {
+    color: hsl(var(--gold));
+    text-shadow: 0 0 20px rgba(255, 190, 0, 0.5), 0 0 40px rgba(255, 190, 0, 0.25);
+  }
+  .neon-text {
+    color: hsl(var(--neon-blue));
+    text-shadow: 0 0 20px rgba(0, 160, 255, 0.6);
+  }
+
+  /* Badges */
+  .gold-badge {
+    @apply text-xs font-semibold px-2.5 py-1 rounded-full;
+    background: rgba(255, 190, 0, 0.1);
+    color: hsl(44 100% 65%);
+    border: 1px solid rgba(255, 190, 0, 0.25);
+    text-shadow: 0 0 8px rgba(255, 190, 0, 0.3);
+  }
+  .neon-badge {
+    @apply text-xs font-semibold px-2.5 py-1 rounded-full;
+    background: rgba(0, 160, 255, 0.1);
+    color: hsl(var(--neon-blue));
+    border: 1px solid rgba(0, 160, 255, 0.3);
+  }
+
+  /* Section label */
+  .section-label {
+    @apply text-xs font-semibold uppercase tracking-widest;
+    color: rgba(130, 160, 200, 0.55);
+    letter-spacing: 0.12em;
+  }
+
+  /* Value colors */
+  .value-positive {
+    color: hsl(var(--neon-green));
+    font-weight: 600;
+    text-shadow: 0 0 12px rgba(0, 255, 128, 0.3);
+  }
+  .value-negative {
+    color: hsl(0 90% 60%);
+    font-weight: 600;
+    text-shadow: 0 0 12px rgba(255, 60, 60, 0.3);
+  }
+
+  /* Progress bar */
+  .neon-bar {
+    height: 6px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+  }
+  .neon-bar-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 8px currentColor;
+  }
+
+  /* Neon glow borders */
+  .glow-blue { box-shadow: 0 0 15px rgba(0, 160, 255, 0.35), inset 0 0 15px rgba(0, 160, 255, 0.05); }
+  .glow-gold { box-shadow: 0 0 15px rgba(255, 190, 0, 0.35), inset 0 0 15px rgba(255, 190, 0, 0.05); }
+  .glow-green { box-shadow: 0 0 15px rgba(0, 255, 128, 0.3); }
+  .glow-purple { box-shadow: 0 0 15px rgba(140, 80, 255, 0.35); }
+
+  /* Button glow */
+  .btn-neon {
+    @apply font-semibold rounded-xl transition-all duration-200 cursor-pointer;
+    background: rgba(0, 140, 255, 0.12);
+    color: hsl(var(--neon-blue));
+    border: 1px solid rgba(0, 140, 255, 0.3);
+  }
+  .btn-neon:hover {
+    background: rgba(0, 140, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 140, 255, 0.3);
+    transform: translateY(-1px);
+  }
+  .btn-gold {
+    @apply font-semibold rounded-xl transition-all duration-200 cursor-pointer;
+    background: rgba(255, 190, 0, 0.1);
+    color: hsl(var(--gold));
+    border: 1px solid rgba(255, 190, 0, 0.3);
+  }
+  .btn-gold:hover {
+    background: rgba(255, 190, 0, 0.18);
+    box-shadow: 0 0 20px rgba(255, 190, 0, 0.25);
+    transform: translateY(-1px);
+  }
+
+  /* Live indicator */
+  .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: hsl(var(--neon-green));
+    box-shadow: 0 0 8px hsl(var(--neon-green));
+    animation: live-pulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  /* Risk badges */
+  .risk-low {
+    background: rgba(0, 255, 128, 0.08);
+    color: hsl(150 80% 55%);
+    border: 1px solid rgba(0, 255, 128, 0.2);
+  }
+  .risk-moderate {
+    background: rgba(255, 190, 0, 0.08);
+    color: hsl(44 100% 60%);
+    border: 1px solid rgba(255, 190, 0, 0.25);
+  }
+  .risk-high {
+    background: rgba(255, 60, 60, 0.08);
+    color: hsl(0 90% 62%);
+    border: 1px solid rgba(255, 60, 60, 0.2);
+  }
+  .risk-none {
+    background: rgba(130, 150, 200, 0.08);
+    color: rgba(130, 160, 200, 0.7);
+    border: 1px solid rgba(130, 150, 200, 0.15);
+  }
+
+  /* Provider gradients */
+  .provider-gradient-openai {
+    background: rgba(16, 185, 129, 0.06);
+    border: 1px solid rgba(16, 185, 129, 0.15);
+  }
+  .provider-gradient-anthropic {
+    background: rgba(245, 158, 11, 0.06);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+  }
+  .provider-gradient-kincaid {
+    background: rgba(0, 140, 255, 0.06);
+    border: 1px solid rgba(0, 140, 255, 0.15);
+  }
+
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 140, 255, 0.2);
+    border-radius: 9999px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 140, 255, 0.4);
+  }
+
+  /* Horizontal divider */
+  .neon-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 140, 255, 0.2), transparent);
+  }
+
+  /* Top border accent */
+  .border-top-blue { border-top: 2px solid hsl(var(--neon-blue)); }
+  .border-top-gold { border-top: 2px solid hsl(var(--gold)); }
+  .border-top-green { border-top: 2px solid hsl(var(--neon-green)); }
+  .border-top-purple { border-top: 2px solid hsl(var(--neon-purple)); }
+  .border-top-cyan { border-top: 2px solid hsl(var(--neon-cyan)); }
+}
+
+/* Keyframe animations */
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px hsl(150, 100%, 50%); }
+  50% { opacity: 0.6; transform: scale(0.85); box-shadow: 0 0 4px hsl(150, 100%, 50%); }
+}
+
+@keyframes gold-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes float-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(400%); }
+}
+
+.animate-float-up {
+  animation: float-up 0.5s ease-out forwards;
+}
+
+/* ─── PRINT PROTECTION ─────────────────────────────────────────────────── */
+@media print {
+  /* 1 — Hide all app UI chrome */
+  .no-print,
+  .print-hide,
+  [data-no-print] { display: none !important; }
+
+  /* 2 — Force exact color reproduction (preserve dark backgrounds, neon colors) */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* 3 — Reset Layout for route-based report pages */
+  .flex.h-screen.overflow-hidden {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .flex-1.flex.flex-col.min-w-0.overflow-hidden {
+    width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+  main.flex-1.overflow-y-auto {
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* 4 — Page geometry */
+  @page { margin: 0.4in; size: letter portrait; }
+
+  /* 5 — Page-break utilities */
+  .print-page-break { page-break-before: always; break-before: page; }
+  .print-avoid-break { page-break-inside: avoid; break-inside: avoid; }
+
+  /* 6 — Confidential watermark on every page */
+  body::after {
+    content: "KINCAID IQ — STRICTLY CONFIDENTIAL · ACCOUNT SHRACK-7742";
+    position: fixed;
+    bottom: 0.18in;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 6.5pt;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 184, 0, 0.38);
+    pointer-events: none;
+    z-index: 99999;
+  }
+}
+
+/* ─── OVERLAY REPORT PRINT (portaled outside #root) ──────────────────── */
+@media print {
+  /* When an overlay report is open, suppress the app shell */
+  body:has(#kiq-print-overlay) #root { display: none !important; }
+
+  /* Expand overlay from fixed to normal flow */
+  #kiq-print-overlay {
+    position: static !important;
+    inset: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: #03050D !important;
+    width: 100% !important;
+  }
+
+  /* Expand the scroll container so all pages print */
+  #kiq-print-scroll {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    flex: none !important;
+  }
+
+  /* Page break between every top-level section */
+  #kiq-print-scroll > div > *:not(:first-child) {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  /* Keep cards together */
+  #kiq-print-scroll [style*="border-radius: 14px"],
+  #kiq-print-scroll [style*="borderRadius: 14"] {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+
+.gold-shimmer-text {
+  background: linear-gradient(90deg, #C9A020 0%, #FFE066 40%, #FFD700 60%, #C9A020 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gold-shimmer 4s linear infinite;
+}
+
+/* ── Kincaid IQ Design System — Glass / Glow / Base ───────────────────────── */
+
+body {
+  background: radial-gradient(circle at top, #0b1220, #05070a);
+  font-family: Inter, sans-serif;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 16px;
+}
+
+.glass-sm {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+}
+
+.glass-dark {
+  background: rgba(8, 12, 38, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 16px;
+}
+
+.glow {
+  box-shadow: 0 0 40px rgba(100, 150, 255, 0.15);
+}
+
+.glow-crimson {
+  box-shadow: 0 0 40px rgba(155, 28, 46, 0.25);
+}
+
+.glow-pulse {
+  animation: glow-pulse-anim 2.5s ease-in-out infinite;
+}
+
+@keyframes glow-pulse-anim {
+  0%, 100% { box-shadow: 0 0 20px rgba(100, 150, 255, 0.1); }
+  50%       { box-shadow: 0 0 40px rgba(100, 150, 255, 0.25); }
+}
+
+.kiq-command-bg {
+  background: radial-gradient(circle at 20% 0%, #0b1220 0%, #05070a 60%);
+  min-height: 100vh;
+}
+
+/* docx-preview faithful Word rendering inside the component preview drawer.
+   docx-preview emits a .docx-wrapper containing one .docx page element per
+   page. We neutralize its default gray canvas (the host already provides a
+   Word-grade backdrop) and give each page a real paper drop-shadow. */
+.docx-preview-host .docx-wrapper {
+  background: transparent;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.docx-preview-host .docx-wrapper > section.docx {
+  background: #ffffff;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  margin: 0;
+}

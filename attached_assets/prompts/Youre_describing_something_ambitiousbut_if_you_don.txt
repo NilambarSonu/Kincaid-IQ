@@ -1,0 +1,188 @@
+You’re describing something ambitious—but if you don’t structure the logic behind the clicks, it turns into a gimmicky dashboard fast. The power here isn’t “4 tiles × 9 clicks”… it’s progressive narrative compression → expansion for the C-suite.
+
+Let’s design this like a system Claude can actually build—not just a concept.
+
+⸻
+
+🧠 Kincaid IQ War Room UI
+
+“4-Tile Recursive Drill-Down System” (C-Suite Narrative Engine)
+
+Core Principle
+
+Each click must do ONE thing:
+
+Convert ambiguity → decision-grade clarity
+
+Not “more data.”
+Different data, at a higher resolution and different abstraction layer.
+
+⸻
+
+🧩 LEVEL 0 — WAR ROOM (ENTRY STATE)
+
+4 Tiles (Always Fixed Categories)
+	1.	Financial Exposure
+	2.	Contract Integrity
+	3.	Operational Behavior
+	4.	Strategic Leverage
+
+Each tile shows:
+	•	1 dominant KPI (large)
+	•	1 anomaly signal
+	•	1 directional indicator (↑ ↓ →)
+	•	1 sentence narrative
+
+👉 Example:
+
+“$12.4M leakage identified — driven by spread + rebate opacity”
+
+⸻
+
+🔁 CLICK ARCHITECTURE (9 LEVELS DEEP)
+
+Each click = change in narrative layer
+
+⸻
+
+🔵 LEVEL 1 — SIGNAL DECOMPOSITION
+
+“What is driving this?”
+
+Break tile into 3–5 drivers:
+	•	Spread Pricing
+	•	Rebate Misalignment
+	•	Specialty Inflation
+	•	Formulary Drift
+
+Each becomes a mini-tile.
+
+⸻
+
+🔵 LEVEL 2 — MECHANISM VIEW
+
+“How does it actually happen?”
+
+Now we shift from categories → mechanics
+
+Example:
+	•	Ingredient Cost vs Plan Paid
+	•	MAC List Manipulation
+	•	Rebate Retention Timing
+
+👉 This is where most dashboards fail—they never cross into mechanism layer
+
+⸻
+
+🔵 LEVEL 3 — CONTRACT MAPPING
+
+“Where is this allowed?”
+
+Map each mechanism to:
+	•	Clause
+	•	Absence of clause
+	•	Ambiguous language
+
+Output:
+	•	“This behavior exists because §7.3 does not define pass-through timing”
+
+⸻
+
+🔵 LEVEL 4 — CLAIMS TRACE (REALITY LAYER)
+
+“Show me proof”
+
+Now we anchor in:
+	•	Actual claim examples
+	•	NDC-level detail
+	•	Pharmacy-level variance
+
+👉 This is your “Walgreens moment” layer
+
+⸻
+
+🔵 LEVEL 5 — PATTERN DETECTION
+
+“Is this isolated or systemic?”
+	•	Frequency analysis
+	•	Cohort clustering
+	•	Time-based patterns
+
+Output:
+	•	“Occurs in 78% of specialty claims”
+	•	“Spikes at quarter-end”
+
+⸻
+
+🔵 LEVEL 6 — COUNTERFACTUAL MODEL
+
+“What should have happened?”
+
+Simulate:
+	•	Transparent pricing model
+	•	Alternative contract terms
+	•	NADAC / pass-through baseline
+
+Output:
+	•	“Expected cost: $4.2M vs actual $6.1M”
+
+⸻
+
+🔵 LEVEL 7 — RISK & FIDUCIARY EXPOSURE
+
+“What is the consequence?”
+
+Translate into:
+	•	ERISA breach risk
+	•	Fiduciary exposure
+	•	Audit vulnerability
+
+Tone shift:
+👉 Now speaking to GC + Board
+
+⸻
+
+🔵 LEVEL 8 — LEVERAGE POINTS
+
+“What can we do about it?”
+
+This is where your product becomes lethal.
+	•	Contract rewrite targets
+	•	RFP leverage triggers
+	•	Vendor pressure points
+
+Example:
+
+“Force rebate pass-through at adjudication, not reconciliation”
+
+⸻
+
+🔴 LEVEL 9 — C-SUITE NARRATIVE VIEW (END STATE)
+
+This is the payoff.
+
+A single screen:
+	•	3–5 bullet executive story
+	•	Financial impact
+	•	Risk statement
+	•	Recommended action
+
+👉 Example Output:
+
+Narrative:
+The PBM is extracting margin through spread pricing and delayed rebate pass-through, enabled by ambiguous contract language and lack of real-time audit rights.
+
+Impact:
+$18.6M annual leakage
+
+Risk:
+Potential ERISA fiduciary breach exposure
+
+Action:
+Immediate RFP with enforced pass-through + audit controls
+
+⸻
+
+🧱 UI STRUCTURE FOR CLAUDE (BUILD INSTRUCTIONS)
+
+1. Layout System

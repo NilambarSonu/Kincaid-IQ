@@ -1,0 +1,179 @@
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const CATEGORIES = ["surface", "structure", "incentive", "failure"];
+
+const CATEGORY_COLORS = {
+  surface: "bg-blue-500",
+  structure: "bg-green-500",
+  incentive: "bg-purple-500",
+  failure: "bg-red-500",
+};
+
+// 🔥 AI GENERATION FUNCTION
+async function generateChildrenAI(path, level) {
+  const response = await fetch("/api/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ path, level }),
+  });
+
+  const data = await response.json();
+  return data.children;
+}
+
+export default function App() {
+  const root = {
+    id: "root",
+    level: 1,
+    title: "PBM Contract Risk",
+    category: "root",
+  };
+
+  const [path, setPath] = useState([root]);
+  const [children, setChildren] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const current = path[path.length - 1];
+
+  const handleClick = async (child) => {
+    if (child.level > 9) return;
+
+    const newPath = [...path, child];
+    setPath(newPath);
+
+    setLoading(true);
+    const next = await generateChildrenAI(newPath, child.level + 1);
+    setChildren(next);
+    setLoading(false);
+  };
+
+  const goBack = async (index) => {
+    const newPath = path.slice(0, index + 1);
+    setPath(newPath);
+
+    setLoading(true);
+    const next = await generateChildrenAI(newPath, newPath[newPath.length - 1].level + 1);
+    setChildren(next);
+    setLoading(false);
+  };
+
+  // INITIAL LOAD
+  React.useEffect(() => {
+    (async () => {
+      setLoading(true);
+      const initial = await generateChildrenAI([root], 2);
+      setChildren(initial);
+      setLoading(false);
+    })();
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-black text-white p-6">
+      <div className="mb-4">
+        <h1 className="text-2xl font-bold">AI Drill Engine</h1>
+        <p className="text-sm opacity-70">Level {current.level} of 9</p>
+      </div>
+
+      {/* Breadcrumb */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        {path.map((node, i) => (
+          <button
+            key={node.id}
+            onClick={() => goBack(i)}
+            className="text-xs bg-gray-800 px-2 py-1 rounded"
+          >
+            {node.title}
+          </button>
+        ))}
+      </div>
+
+      {/* Loading */}
+      {loading && <p className="opacity-50">Thinking...</p>}
+
+      {/* Grid */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          className="grid grid-cols-2 gap-4"
+        >
+          {children.map((child) => (
+            <div
+              key={child.id}
+              onClick={() => handleClick(child)}
+              className={`cursor-pointer p-6 rounded-2xl shadow-lg ${CATEGORY_COLORS[child.category]}`}
+            >
+              <h2 className="text-lg font-semibold">{child.title}</h2>
+              <p className="text-sm mt-2 opacity-80">
+                {child.description}
+              </p>
+            </div>
+          ))}
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Final Output */}
+      {current.level === 9 && (
+        <div className="mt-8 p-6 bg-gray-900 rounded-2xl">
+          <h2 className="text-xl font-bold">Strategic Output</h2>
+          <p className="mt-2">
+            AI-generated insight: monetizable risk, contract flaw, or leverage point.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ================= BACKEND (REPLIT EXPRESS API) =================
+
+// Create a file: /api/generate.js
+
+/*
+import OpenAI from "openai";
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+export default async function handler(req, res) {
+  const { path, level } = req.body;
+
+  const context = path.map(p => p.title).join(" → ");
+
+  const prompt = `
+You are an elite systems analyst.
+
+Context path:
+${context}
+
+Generate exactly 4 drill-down tiles for level ${level}.
+
+Categories MUST be:
+1. surface
+2. structure
+3. incentive
+4. failure
+
+Return JSON:
+{
+  "children": [
+    { "id": "", "level": ${level}, "category": "surface", "title": "", "description": "" }
+  ]
+}
+
+Make insights sharp, specific, and economically meaningful.
+`;
+
+  const completion = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [{ role: "user", content: prompt }],
+  });
+
+  const text = completion.choices[0].message.content;
+  const json = JSON.parse(text);
+
+  res.status(200).json(json);
+}
+*/

@@ -1,0 +1,66 @@
+Here is the Kincaid iQ architecture as we have built and documented it, grouped by function. The current operating platform is Kincaid iQ Verify V9.0.
+Core engine and data foundation
+
+Kincaid iQ Verify, the operating platform (FastAPI / Python / PostgreSQL)
+DOL EFAST2 National Benchmark Index (757,294 rows, SHA-256 integrity verification)
+Verify Multi-Agent Engine (six constitutional agents)
+7-Gate Enforcement Chain
+Evidence Spine Protocol ("No Anchor, No Claim. No Lineage, No Publish.")
+Lineage Tiering (CERTIFIED / MODELED / INSUFFICIENT EVIDENCE)
+
+Forensic and fiduciary metrics (the Kincaid Alfa)
+
+Shadow EBITDA (recoverable leakage as destroyed margin)
+Evidence Integrity Ratio (EIR)
+Missing Data Alpha and the Missingness Score (MS)
+Economic Crime Screen (the four-criteria fiduciary-breach test)
+Decision Velocity Index (DVI)
+Capital Allocation Test (ROI, Payback, NPV)
+Kincaid Audit Readiness Score (ARS, weighted self-grade)
+
+Adversarial validation and self-audit
+
+The Prosecutor Test (finding, counter, invalidation, Reversal Probability)
+The Kincaid Question (the conscious-loss framing)
+Quality Gates self-grading
+
+Predictive and quantitative engine
+
+Bayesian Trend Posterior (Normal-Normal conjugate update)
+Bühlmann-Straub Credibility (Z-factor)
+36-Scenario Engine (3 x 3 x 4 matrix, S17 / S33 / S16 anchors)
+Monte Carlo Predictive Architecture (GBM with Poisson jump-diffusion)
+Posterior-Predictive PEPY Fan (P10 / P50 / P90 / P99 credible bands)
+VaR / CVaR Tail Engine (expected shortfall)
+Beta-Binomial Concentration (top-decile posterior)
+
+Signal Engine (the six insight signals)
+
+PBM Shadow Tax
+Float Drag and Stop-Loss Inefficiency
+Quantum Leap (specialty Rx and GLP-1 pipeline)
+Shady Broker Index (SBI)
+Population Concentration Risk
+Fiduciary Score Index (FSI)
+
+Strategic framework layer
+
+Capital Efficiency Intelligence (CEI) framework
+Shadow Tax methodology
+EBITDA Defense Playbook
+48-Lever Control Architecture (Tier 0 Sovereign, Tier 1 Defensive Hedges, Tier 2 Strategic Bets, Tier 3 Plan-Design Redesign, Tier 4 Governance and Capital, mapped to RAPID rights)
+Industry Benchmark Comparator (EFAST2 anchor plus Mercer, KFF, Milliman, Aon, WTW validators)
+Multi-Firm Framework Compression (McKinsey, Bain, EY-Parthenon, Crowe, MIT/Stanford)
+
+Output and delivery
+
+24-page MECE Output Architecture (Layer 1 Executive Brief, Layer 2 Strategic Framework, Layer 3 Analytical Appendix)
+Glassmorphic research-paper PDF pipeline (HTML to Playwright Chromium)
+Triple-Check Certified mark (Anchor, Benchmark, Recompute)
+Bar leaderboard module (bar_front.py) and the custom SVG chart library
+
+Productized applications
+
+Shady Broker Report ($4,500)
+Shady Broker Index (web application)
+The forensic report library and 30-day report registry

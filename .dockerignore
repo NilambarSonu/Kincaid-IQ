@@ -1,0 +1,36 @@
+# Dependencies / build outputs (reinstalled or rebuilt inside the image)
+node_modules
+# dist
+.pythonlibs
+.venv
+venv
+__pycache__
+**/__pycache__
+*.pyc
+*.pyo
+
+# Large local-only data — the DuckDB analytics file is pulled from
+# DUCKDB_REMOTE_URL at runtime, not baked into the image.
+data/*.duckdb
+data/*.duckdb.wal
+data/*.duckdb.tmp
+
+# Local runtime artifacts
+uploads/*
+screenshots
+*.log
+sec_ingest.log
+
+# VCS, secrets, and Replit/agent-local state
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+.local
+.agents
+.replit
+replit.nix
+.cache
+.config
+.upm

@@ -1,0 +1,218 @@
+// ================================
+// KINCAID IQ — DRILL DOWN ENGINE
+// CORE FOUNDATION (LEVEL 0 + UTILS)
+// ================================
+
+// -------------------------------
+// Utility Functions
+// -------------------------------
+
+function sum(arr) {
+  return arr.reduce((acc, val) => acc + (val || 0), 0);
+}
+
+function mean(arr) {
+  return sum(arr) / (arr.length || 1);
+}
+
+function stdDev(arr) {
+  const avg = mean(arr);
+  const variance = mean(arr.map(v => Math.pow(v - avg, 2)));
+  return Math.sqrt(variance);
+}
+
+function zScores(arr) {
+  const avg = mean(arr);
+  const sd = stdDev(arr);
+  return arr.map(v => (sd === 0 ? 0 : (v - avg) / sd));
+}
+
+function groupBy(arr, key) {
+  return arr.reduce((acc, item) => {
+    const group = item[key] || "UNKNOWN";
+    if (!acc[group]) acc[group] = [];
+    acc[group].push(item);
+    return acc;
+  }, {});
+}
+
+function sortDesc(arr, key) {
+  return [...arr].sort((a, b) => b[key] - a[key]);
+}
+
+// -------------------------------
+// Data Normalization Layer
+// -------------------------------
+
+function normalizeClaims(rawClaims) {
+  return rawClaims.map(c => ({
+    claim_id: c.claim_id,
+    ndc: c.ndc,
+    pharmacy: c.pharmacy,
+    plan_paid: Number(c.plan_paid || 0),
+    pharmacy_paid: Number(c.pharmacy_paid || 0),
+    rebate: Number(c.rebate || 0),
+    fill_date: new Date(c.fill_date),
+
+    // Derived fields (CRITICAL)
+    spread: (c.plan_paid || 0) - (c.pharmacy_paid || 0),
+    net_cost: (c.plan_paid || 0) - (c.rebate || 0),
+    rebate_delay_days: calculateRebateDelay(c),
+  }));
+}
+
+function calculateRebateDelay(claim) {
+  if (!claim.rebate_date || !claim.fill_date) return 0;
+  const fill = new Date(claim.fill_date);
+  const rebate = new Date(claim.rebate_date);
+  return Math.floor((rebate - fill) / (1000 * 60 * 60 * 24));
+}
+
+// -------------------------------
+// Anomaly Detection Engine
+// -------------------------------
+
+function detectOutliers(claims) {
+  const spreads = claims.map(c => c.spread);
+  const scores = zScores(spreads);
+
+  const anomalies = claims.map((c, i) => ({
+    ...c,
+    z: scores[i],
+    isOutlier: Math.abs(scores[i]) > 2.5
+  }));
+
+  const anomalyCount = anomalies.filter(a => a.isOutlier).length;
+
+  return {
+    anomalyRate: anomalyCount / claims.length,
+    anomalyCount,
+    highRiskClaims: anomalies.filter(a => a.isOutlier),
+  };
+}
+
+// -------------------------------
+// Driver Ranking Engine
+// -------------------------------
+
+function rankDrivers(claims) {
+  const drivers = {
+    spread: sum(claims.map(c => c.spread)),
+    rebates: sum(claims.map(c => c.rebate)),
+    pharmacy_variance: sum(
+      claims.map(c => Math.abs(c.plan_paid - c.pharmacy_paid))
+    ),
+    specialty_proxy: claims.filter(c => c.plan_paid > 1000).length
+  };
+
+  return Object.entries(drivers)
+    .map(([key, value]) => ({ driver: key, value }))
+    .sort((a, b) => b.value - a.value);
+}
+
+// -------------------------------
+// LEVEL 0 — SUMMARY ENGINE
+// -------------------------------
+
+function level0_summary(claims) {
+  const normalized = normalizeClaims(claims);
+
+  const totalLeakage = sum(normalized.map(c => c.spread));
+
+  const anomalyData = detectOutliers(normalized);
+
+  const rankedDrivers = rankDrivers(normalized);
+
+  const topDriver = rankedDrivers.length > 0
+    ? rankedDrivers[0]
+    : { driver: "unknown", value: 0 };
+
+  // Directional trend (simple baseline vs mean)
+  const avgSpread = mean(normalized.map(c => c.spread));
+
+  const trend =
+    avgSpread > 50 ? "UP" :
+    avgSpread < 10 ? "DOWN" :
+    "FLAT";
+
+  // Signal strength scoring
+  const signalStrength =
+    (Math.abs(totalLeakage) * 0.5) +
+    (anomalyData.anomalyRate * 1000) +
+    (topDriver.value * 0.2);
+
+  return {
+    level: 0,
+
+    metrics: {
+      totalLeakage,
+      anomalyScore: anomalyData.anomalyRate,
+      anomalyCount: anomalyData.anomalyCount,
+      topDriver: topDriver.driver,
+      topDriverValue: topDriver.value,
+      trend,
+      signalStrength
+    },
+
+    narrative: generateLevel0Narrative({
+      totalLeakage,
+      anomalyRate: anomalyData.anomalyRate,
+      topDriver: topDriver.driver
+    }),
+
+    raw: {
+      claimsAnalyzed: normalized.length,
+      highRiskClaims: anomalyData.highRiskClaims.slice(0, 10),
+      driverBreakdown: rankedDrivers
+    }
+  };
+}
+
+// -------------------------------
+// LEVEL 0 NARRATIVE ENGINE
+// -------------------------------
+
+function generateLevel0Narrative({ totalLeakage, anomalyRate, topDriver }) {
+  const leakageFormatted = `$${totalLeakage.toLocaleString()}`;
+
+  let severity;
+
+  if (totalLeakage > 10000000) severity = "material";
+  else if (totalLeakage > 1000000) severity = "significant";
+  else severity = "moderate";
+
+  let anomalyText;
+
+  if (anomalyRate > 0.2) anomalyText = "high anomaly concentration";
+  else if (anomalyRate > 0.1) anomalyText = "elevated anomalies";
+  else anomalyText = "contained anomaly levels";
+
+  return {
+    insight: `Detected ${severity} financial leakage of ${leakageFormatted} driven primarily by ${topDriver}.`,
+
+    anomaly: `System exhibits ${anomalyText} (${(anomalyRate * 100).toFixed(1)}% of claims flagged).`,
+
+    implication: `Immediate drill-down required to isolate structural drivers and contract exposure.`
+  };
+}
+
+// -------------------------------
+// EXPORT ENGINE
+// -------------------------------
+
+class DrillDownEngine {
+  constructor(claims) {
+    this.claims = normalizeClaims(claims);
+  }
+
+  process(level, context = {}) {
+    switch(level) {
+      case 0:
+        return level0_summary(this.claims);
+
+      // next levels plugged in future dumps
+      default:
+        throw new Error(`Level ${level} not implemented yet.`);
+    }
+  }
+}

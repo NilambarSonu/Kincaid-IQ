@@ -1,0 +1,118 @@
+SYSTEM BEHAVIOR
+	•	Start at Level 1
+	•	Show 4 tiles
+	•	On click:
+	•	Push state to navigation stack
+	•	Render next level
+	•	Allow:
+	•	Back navigation (breadcrumb or stack)
+	•	Path visualization (show the chain of decisions)
+	•	Hard stop at Level 9
+	•	Final level returns:
+	•	Deep insight
+	•	Recommendation
+	•	Extractable intelligence artifact
+
+⸻
+
+UI REQUIREMENTS
+	•	Grid: 2x2 tile layout
+	•	Each tile:
+	•	Title
+	•	1–2 sentence description
+	•	Visual distinction by category
+	•	Smooth transitions between levels
+	•	Breadcrumb path at top
+	•	Progress indicator (Level X of 9)
+
+Optional:
+	•	Mini-map of decision tree
+	•	Export path as report
+
+⸻
+
+INTELLIGENCE ENGINE (IMPORTANT)
+
+You must generate tile content dynamically.
+
+Given a parent node, generate 4 children:
+	•	Surface → more granular observation
+	•	Structure → deeper mechanics
+	•	Incentive → sharper economic/legal motivation
+	•	Failure → more precise exploit or risk vector
+
+This should feel like:
+	•	A Stanford MBA
+	•	A systems engineer
+	•	A litigation attorney
+	•	A hedge fund analyst
+
+All thinking at once.
+
+⸻
+
+EXAMPLE (LEVEL 1 → LEVEL 2)
+
+Level 1 tiles:
+	•	Surface: “Drug pricing appears high”
+	•	Structure: “PBM contract governs pricing”
+	•	Incentive: “PBM profits from spread”
+	•	Failure: “Lack of transparency”
+
+Click “Structure” →
+
+Level 2 tiles:
+	•	Surface: “Contract defines reimbursement terms”
+	•	Structure: “MAC lists, rebates, spread pricing mechanics”
+	•	Incentive: “Opaque pricing benefits intermediaries”
+	•	Failure: “Audit rights restricted”
+
+⸻
+
+TECH STACK (DEFAULT)
+	•	Frontend: React + Tailwind
+	•	State: Zustand or Redux
+	•	Animations: Framer Motion
+	•	Backend (optional): Node/Express or serverless
+	•	AI generation: modular function (mock or real API)
+
+⸻
+
+FUNCTIONAL COMPONENTS TO BUILD
+	1.	TileGrid component
+	2.	DrillState manager
+	3.	Recursive generator function
+	4.	Breadcrumb navigation
+	5.	Level indicator
+	6.	Insight output at level 9
+
+⸻
+
+SUCCESS CRITERIA
+	•	Clean, fast UI
+	•	Zero cognitive clutter
+	•	Every click feels like going deeper into truth
+	•	By level 9, the user reaches:
+	•	A non-obvious insight
+	•	A monetizable or strategic conclusion
+
+⸻
+
+FINAL INSTRUCTION
+
+Do not overcomplicate visually.
+
+This system is powerful because:
+	•	It constrains choice
+	•	It structures thinking
+	•	It forces depth over breadth
+
+Build it like a weaponized thinking tool, not a dashboard.
+
+⸻
+
+If you want, I can take this one step further and:
+	•	Turn it into a live Replit-ready codebase
+	•	Or map it specifically to your Rx Defense IQ / PBM contract analysis engine
+
+Just say “build the full system” or “map to PBM,” and I’ll push it into production-grade form.

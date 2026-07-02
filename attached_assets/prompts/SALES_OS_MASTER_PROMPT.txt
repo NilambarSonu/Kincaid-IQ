@@ -1,0 +1,447 @@
+# SALES OS MASTER PROMPT
+## MIT Human-Centered Design + Stanford d.school Architecture
+### Version 1.0
+
+You are a world-class software architect, full-stack engineer, UX researcher, data scientist, and enterprise SaaS product designer.
+
+Your mission is to build a production-grade platform called:
+
+# SALES OS™
+
+An AI-powered sales intelligence operating system for benefits consulting, healthcare analytics, employer prospecting, and strategic account management.
+
+The platform must be engineered using Human-Centered Design principles:
+
+- Simplicity over complexity
+- Decision support over data overload
+- Executive-grade visualization
+- Enterprise scalability
+- Mobile responsiveness
+- Accessibility compliance
+- Fast load times
+- Intuitive navigation
+- Minimal clicks to insight
+
+----------------------------------------------------
+PRIMARY USER EXPERIENCE
+----------------------------------------------------
+
+When the application launches, display a clean executive dashboard.
+
+TOP NAVIGATION:
+
+Dashboard
+Prospects
+Book of Business
+Target Accounts
+States
+Analytics
+Pipeline
+Settings
+
+----------------------------------------------------
+LEFT CONTROL PANEL
+----------------------------------------------------
+
+SECTION 1:
+STATE SELECTOR
+
+Display a searchable dropdown containing:
+
+Alabama
+Alaska
+Arizona
+Arkansas
+California
+Colorado
+Connecticut
+Delaware
+Florida
+Georgia
+Hawaii
+Idaho
+Illinois
+Indiana
+Iowa
+Kansas
+Kentucky
+Louisiana
+Maine
+Maryland
+Massachusetts
+Michigan
+Minnesota
+Mississippi
+Missouri
+Montana
+Nebraska
+Nevada
+New Hampshire
+New Jersey
+New Mexico
+New York
+North Carolina
+North Dakota
+Ohio
+Oklahoma
+Oregon
+Pennsylvania
+Rhode Island
+South Carolina
+South Dakota
+Tennessee
+Texas
+Utah
+Vermont
+Virginia
+Washington
+West Virginia
+Wisconsin
+Wyoming
+
+Default:
+United States
+
+----------------------------------------------------
+SECTION 2:
+DATA SOURCE SELECTION
+----------------------------------------------------
+
+Radio Buttons:
+
+○ My Book of Business
+
+○ Fortune 5500 Prospect Database
+
+○ Combined View
+
+----------------------------------------------------
+SECTION 3:
+ACCOUNT FILTERS
+----------------------------------------------------
+
+Allow user to filter by:
+
+Employer Name
+
+Industry
+
+Revenue
+
+Employee Count
+
+State
+
+City
+
+Current Carrier
+
+PBM
+
+Broker
+
+Renewal Date
+
+Funding Type
+
+Self-Funded
+
+Fully Insured
+
+Captive
+
+PEO
+
+Union
+
+Non-Union
+
+----------------------------------------------------
+SECTION 4:
+ACCOUNT SELECTION
+----------------------------------------------------
+
+Multi-select account picker
+
+User can:
+
+Select Individual Accounts
+
+Select Entire State
+
+Select Industry Segment
+
+Select Top 100
+
+Select Top 500
+
+Select All
+
+Search by Employer Name
+
+----------------------------------------------------
+MAIN DASHBOARD
+----------------------------------------------------
+
+Display:
+
+Total Prospects
+
+Selected Accounts
+
+Total Covered Lives
+
+Estimated Premium
+
+Estimated Pharmacy Spend
+
+Estimated Savings Opportunity
+
+Pipeline Value
+
+Potential Revenue
+
+----------------------------------------------------
+ACCOUNT DETAIL PAGE
+----------------------------------------------------
+
+When an account is selected show:
+
+Company Overview
+
+Industry
+
+Headquarters
+
+Employee Count
+
+Revenue Estimate
+
+Current Benefits Structure
+
+Current Carrier
+
+PBM Relationship
+
+Broker Relationship
+
+Renewal Timeline
+
+Known Pain Points
+
+Risk Indicators
+
+AI Opportunity Score
+
+Strategic Notes
+
+----------------------------------------------------
+AI ACCOUNT SCORING ENGINE
+----------------------------------------------------
+
+Generate scores from:
+
+1. Revenue Potential
+
+2. Probability of Conversion
+
+3. PBM Risk Exposure
+
+4. Fiduciary Risk
+
+5. Savings Opportunity
+
+6. Market Timing
+
+7. Strategic Fit
+
+Create:
+
+Overall Opportunity Score
+0-100
+
+Color Scale:
+
+Green
+Yellow
+Red
+
+----------------------------------------------------
+SEARCH EXPERIENCE
+----------------------------------------------------
+
+Universal Search Bar
+
+Search:
+
+Company Name
+
+Executive Name
+
+Broker
+
+PBM
+
+Industry
+
+State
+
+Keywords
+
+Results appear instantly.
+
+----------------------------------------------------
+PIPELINE VIEW
+----------------------------------------------------
+
+Kanban Board
+
+Stages:
+
+Target
+
+Research
+
+Outreach
+
+Discovery
+
+Proposal
+
+Negotiation
+
+Closed Won
+
+Closed Lost
+
+Drag and Drop enabled.
+
+----------------------------------------------------
+ANALYTICS PAGE
+----------------------------------------------------
+
+Interactive Charts:
+
+Prospects by State
+
+Prospects by Industry
+
+Revenue by Segment
+
+Pipeline by Stage
+
+Projected Revenue
+
+Savings Opportunity Analysis
+
+----------------------------------------------------
+AI COPILOT
+----------------------------------------------------
+
+Embedded assistant panel.
+
+Capabilities:
+
+Generate outreach emails
+
+Generate executive summaries
+
+Create account plans
+
+Identify cross-sell opportunities
+
+Identify PBM opportunities
+
+Create meeting briefs
+
+Generate renewal strategies
+
+----------------------------------------------------
+TECHNICAL REQUIREMENTS
+----------------------------------------------------
+
+Frontend:
+
+Next.js
+TypeScript
+Tailwind
+ShadCN UI
+
+Backend:
+
+Node.js
+PostgreSQL
+
+Authentication:
+
+Enterprise SSO
+Role-Based Access Control
+
+Cloud:
+
+AWS
+
+Security:
+
+SOC 2 Ready
+
+Encryption At Rest
+
+Encryption In Transit
+
+Audit Logging
+
+----------------------------------------------------
+DESIGN LANGUAGE
+----------------------------------------------------
+
+Inspired by:
+
+Bloomberg Terminal
+Palantir Foundry
+Salesforce
+HubSpot Enterprise
+McKinsey Digital
+
+Visual Style:
+
+Executive
+Clean
+Modern
+Minimal
+
+Use:
+
+Large KPIs
+
+Interactive charts
+
+Advanced filtering
+
+Fast workflows
+
+Minimal clutter
+
+----------------------------------------------------
+SUCCESS CRITERIA
+----------------------------------------------------
+
+The platform should allow a benefits consultant or sales executive to:
+
+1. Select a state
+
+2. Select data source
+
+3. Select accounts
+
+4. Analyze opportunity
+
+5. Prioritize outreach
+
+6. Generate executive intelligence
+
+7. Build pipeline
+
+8. Drive revenue growth
+
+Every design decision should maximize clarity, speed, and executive decision-making.

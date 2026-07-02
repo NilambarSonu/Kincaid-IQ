@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Kincaid IQ — Replit Master Build Prompt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --canvas: #08070d;
+    --gold: #f5c361;
+    --gold-2: #ffd98a;
+    --magenta: #ff5a8a;
+    --cyan: #5be3d8;
+    --violet: #a78bfa;
+    --emerald: #4ade80;
+    --amber: #ffb547;
+    --crimson: #ff6b7a;
+    --ink: #ece6dc;
+    --ink-dim: #b8b0a3;
+    --ink-faint: #847e72;
+    --hairline: rgba(245, 195, 97, 0.32);
+    --panel-fill: rgba(18, 16, 30, 0.42);
+    --panel-blur: blur(28px) saturate(170%);
+    --panel-radius: 22px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: 'Geist', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.55;
+    font-size: 14.5px;
+    overflow-x: hidden;
+  }
+
+  /* Layered radial gradient canvas */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(255, 90, 138, 0.18), transparent 60%),
+      radial-gradient(ellipse 50% 35% at 85% 15%, rgba(91, 227, 216, 0.14), transparent 65%),
+      radial-gradient(ellipse 55% 40% at 50% 50%, rgba(167, 139, 250, 0.12), transparent 70%),
+      radial-gradient(ellipse 45% 30% at 15% 85%, rgba(245, 195, 97, 0.16), transparent 65%),
+      radial-gradient(ellipse 50% 35% at 90% 90%, rgba(74, 222, 128, 0.10), transparent 65%);
+    z-index: -2;
+    pointer-events: none;
+  }
+
+  /* Faint noise overlay */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.04 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: 0.5;
+    mix-blend-mode: overlay;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .page {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 56px 44px 72px;
+  }
+
+  /* Cover */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 64px 44px;
+  }
+
+  .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .cover-mark {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+
+  .cover-mark .em { color: var(--gold); font-style: italic; }
+
+  .cover-meta {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-dim);
+    letter-spacing: 0.08em;
+  }
+
+  .cover-title {
+    margin-top: 80px;
+  }
+
+  .cover-title h1 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 88px;
+    line-height: 0.96;
+    letter-spacing: -0.02em;
+    background: linear-gradient(120deg, #f3e5c7 0%, #f5c361 35%, #ff5a8a 70%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .cover-title h1 .ital { font-style: italic; }
+
+  .cover-title .sub {
+    margin-top: 24px;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--ink-dim);
+    line-height: 1.3;
+    max-width: 660px;
+  }
+
+  .cover-bottom {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+
+  /* Author medallion */
+  .medallion {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(245, 195, 97, 0.35), rgba(18, 16, 30, 0.9)),
+      linear-gradient(135deg, rgba(255, 90, 138, 0.25), rgba(167, 139, 250, 0.25));
+    border: 3px solid var(--gold);
+    box-shadow:
+      0 0 0 1px rgba(245, 195, 97, 0.4),
+      0 0 30px rgba(245, 195, 97, 0.35),
+      inset 0 2px 8px rgba(255, 217, 138, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 38px;
+    color: var(--gold-2);
+  }
+
+  .author-block .name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+  }
+
+  .author-block .role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .author-block .entities {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  /* Voice contract panel */
+  .voice-contract {
+    margin-top: 56px;
+    padding: 24px 28px;
+    background: var(--panel-fill);
+    backdrop-filter: var(--panel-blur);
+    -webkit-backdrop-filter: var(--panel-blur);
+    border: 1px solid var(--hairline);
+    border-radius: var(--panel-radius);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+
+  .voice-contract .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .voice-contract p {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* Section header */
+  .section {
+    margin: 56px 0;
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 38px;
+    line-height: 1.1;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+
+  h2 .accent {
+    background: linear-gradient(120deg, #f3e5c7 0%, #f5c361 50%, #ff5a8a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-style: italic;
+  }
+
+  .section-lede {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-dim);
+    line-height: 1.45;
+    max-width: 720px;
+    margin-bottom: 24px;
+  }
+
+  h3 {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--ink);
+    margin-top: 28px;
+    margin-bottom: 10px;
+    letter-spacing: 0.01em;
+  }
+
+  h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: var(--ink);
+    margin: 12px 0;
+    max-width: 740px;
+  }
+
+  p.dim { color: var(--ink-dim); }
+
+  /* Glass panel */
+  .panel {
+    padding: 22px 26px;
+    background: var(--panel-fill);
+    backdrop-filter: var(--panel-blur);
+    -webkit-backdrop-filter: var(--panel-blur);
+    border: 1px solid var(--hairline);
+    border-radius: var(--panel-radius);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    margin: 16px 0;
+  }
+
+  /* Hard rule cards */
+  .rules {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 18px 0;
+  }
+
+  .rule {
+    padding: 18px 20px;
+    background: var(--panel-fill);
+    backdrop-filter: var(--panel-blur);
+    -webkit-backdrop-filter: var(--panel-blur);
+    border: 1px solid var(--hairline);
+    border-radius: 16px;
+  }
+
+  .rule .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--gold);
+  }
+
+  .rule .title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 18px;
+    color: var(--ink);
+    margin: 6px 0 8px;
+    line-height: 1.25;
+  }
+
+  .rule .body {
+    font-size: 13px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+
+  table th, table td {
+    text-align: left;
+    padding: 11px 14px;
+    border-bottom: 1px solid rgba(245, 195, 97, 0.15);
+    vertical-align: top;
+  }
+
+  table th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  table td.mono, table td code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--cyan);
+  }
+
+  /* Confidence chips */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px 3px 9px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border: 1px solid;
+  }
+
+  .chip .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .chip.certified { color: var(--emerald); border-color: rgba(74, 222, 128, 0.4); background: rgba(74, 222, 128, 0.08); }
+  .chip.certified .dot { background: var(--emerald); box-shadow: 0 0 8px var(--emerald); }
+  .chip.modeled { color: var(--amber); border-color: rgba(255, 181, 71, 0.4); background: rgba(255, 181, 71, 0.08); }
+  .chip.modeled .dot { background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+  .chip.insufficient { color: var(--crimson); border-color: rgba(255, 107, 122, 0.4); background: rgba(255, 107, 122, 0.08); }
+  .chip.insufficient .dot { background: var(--crimson); box-shadow: 0 0 10px var(--crimson); }
+
+  /* Code blocks */
+  pre {
+    background: rgba(8, 7, 13, 0.72);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 18px 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.65;
+    color: #d8f0ff;
+    overflow-x: auto;
+    margin: 14px 0;
+  }
+
+  pre .kw { color: var(--magenta); }
+  pre .str { color: var(--gold-2); }
+  pre .com { color: var(--ink-faint); font-style: italic; }
+  pre .num { color: var(--emerald); }
+  pre .type { color: var(--cyan); }
+
+  code.inline {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--cyan);
+    background: rgba(91, 227, 216, 0.08);
+    padding: 1px 6px;
+    border-radius: 4px;
+    border: 1px solid rgba(91, 227, 216, 0.18);
+  }
+
+  /* Gate chain */
+  .gate-chain {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 18px 0;
+    padding: 22px 18px;
+    background: var(--panel-fill);
+    backdrop-filter: var(--panel-blur);
+    -webkit-backdrop-filter: var(--panel-blur);
+    border: 1px solid var(--hairline);
+    border-radius: var(--panel-radius);
+  }
+
+  .gate {
+    flex: 1;
+    min-width: 90px;
+    text-align: center;
+  }
+
+  .gate .name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .gate .ordinal {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-faint);
+    letter-spacing: 0.18em;
+    margin-top: 3px;
+  }
+
+  .gate-arrow {
+    color: var(--gold);
+    font-size: 14px;
+    opacity: 0.6;
+  }
+
+  /* Callout */
+  .callout {
+    margin: 22px 0;
+    padding: 22px 26px;
+    background: linear-gradient(135deg, rgba(245, 195, 97, 0.08), rgba(255, 90, 138, 0.06));
+    border-left: 2px solid var(--gold);
+    border-radius: 12px;
+    backdrop-filter: blur(14px);
+  }
+
+  .callout .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .callout p {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* Prohibitions */
+  .prohibitions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 18px 0;
+  }
+
+  .prohibit {
+    padding: 14px 18px;
+    background: rgba(255, 107, 122, 0.05);
+    border: 1px solid rgba(255, 107, 122, 0.22);
+    border-radius: 14px;
+  }
+
+  .prohibit .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    color: var(--crimson);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .prohibit .body {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+
+  /* Step list */
+  .steps {
+    counter-reset: step;
+    list-style: none;
+    margin: 18px 0;
+  }
+
+  .steps li {
+    counter-increment: step;
+    position: relative;
+    padding: 14px 18px 14px 56px;
+    margin: 8px 0;
+    background: var(--panel-fill);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    backdrop-filter: var(--panel-blur);
+  }
+
+  .steps li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 18px;
+    top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+
+  .steps li .title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .steps li .test {
+    font-size: 12px;
+    color: var(--ink-dim);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.5;
+  }
+
+  .steps li .test::before {
+    content: "✓ ACCEPT  ";
+    color: var(--emerald);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 80px;
+    padding-top: 30px;
+    border-top: 1px solid var(--hairline);
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  .footer .belief {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--gold);
+    text-transform: none;
+    letter-spacing: 0.01em;
+    margin-bottom: 12px;
+  }
+
+  /* Print */
+  @page { size: Letter; margin: 0; }
+
+  @media print {
+    body::before, body::after { display: none; }
+    body { background: #08070d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .panel, .rule, .voice-contract, .gate-chain, .callout, .steps li, .prohibit {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      background: #14121e !important;
+    }
+    pre { background: #050409 !important; }
+    .cover { page-break-after: always; }
+    .section { page-break-inside: avoid; }
+    h2 { page-break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─────────────── COVER ─────────────── -->
+<div class="cover">
+  <div class="cover-top">
+    <div class="cover-mark">Kincaid<span class="em"> iQ</span> &nbsp;·&nbsp; SiriusB iQ</div>
+    <div class="cover-meta">
+      DOCTRINE · MASTER BUILD<br />
+      MAY 24, 2026 · v1.0<br />
+      CLASSIFICATION: ENGINEERING
+    </div>
+  </div>
+
+  <div class="cover-title">
+    <div class="kicker">Replit Master Build Prompt</div>
+    <h1>The <span class="ital">Constitutional</span><br />Build Order.</h1>
+    <p class="sub">A specification for engineers, not a brief for marketers. The SiriusB engine, deployed as the Kincaid IQ healthcare application, executed under the constraints that make fiduciary-grade computational infrastructure structurally different from a dashboard.</p>
+  </div>
+
+  <div>
+    <div class="voice-contract">
+      <div class="label">Voice Contract for the Executing Agent</div>
+      <p>Senior McKinsey Partner — strategic economy, MECE structure, board-room directness — overlaid on Stanford PhD in Systems Engineering: formal contracts, invariants, control loops, failure-mode reasoning. No marketing language. No hedging. Every decision is justified by a structural property, not a preference.</p>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="medallion">JS</div>
+      <div class="author-block">
+        <div class="name">Jeremiah Franklin Shrack</div>
+        <div class="role">CEO &amp; CHAIRMAN  ·  PRINCIPAL ARCHITECT</div>
+        <div class="entities">SIRIUSB iQ  ·  KINCAID iQ  ·  KINCAID RMC</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─────────────── BODY ─────────────── -->
+<div class="page">
+
+<!-- §0 Hard Rules -->
+<section class="section">
+  <div class="section-num">§ 0  ·  Non-Negotiable Constraints</div>
+  <h2>The <span class="accent">Four Hard Rules</span></h2>
+  <p class="section-lede">Constitutional. Not subject to engineering trade-off. Code that violates one of these is, by definition, not a Kincaid IQ feature and must be rejected at review.</p>
+
+  <div class="rules">
+    <div class="rule">
+      <div class="num">RULE 01</div>
+      <div class="title">One screen, four tiles always.</div>
+      <div class="body">The executive surface is architecturally constrained to four tiles. The constraint prevents the false precision of information overload. Adding a fifth tile must be structurally impossible without changing the layout primitive — enforced at the TypeScript type level as a 4-tuple.</div>
+    </div>
+    <div class="rule">
+      <div class="num">RULE 02</div>
+      <div class="title">Every number clickable into receipts.</div>
+      <div class="body">No KPI is rendered without a drill path to the underlying <code class="inline">EvidenceRef</code>. The drill is a first-class UI affordance, not a tooltip. Implemented as a routed deep-link, not a modal.</div>
+    </div>
+    <div class="rule">
+      <div class="num">RULE 03</div>
+      <div class="title">No export without receipts.</div>
+      <div class="body">Any PDF, CSV, or JSON export carries a cryptographic manifest — SHA-256 of every cited <code class="inline">EvidenceRef</code>, <code class="inline">TransformRef</code>, <code class="inline">PolicyResult</code>. Exports without the manifest are rejected at the RENDER gate.</div>
+    </div>
+    <div class="rule">
+      <div class="num">RULE 04</div>
+      <div class="title">Narratives never outrun evidence.</div>
+      <div class="body">Generative language is gated behind deterministic computation. The narrative cites; it does not infer. If the math returns <code class="inline">INSUFFICIENT_EVIDENCE</code>, the narrative says so — it does not paper over the gap.</div>
+    </div>
+  </div>
+</section>
+
+<!-- §1 Architecture -->
+<section class="section">
+  <div class="section-num">§ 1  ·  Architecture</div>
+  <h2>One Repl, <span class="accent">two processes</span>, one origin.</h2>
+  <p class="section-lede">The decision that collapses CORS, secret management, deployment, and the auth question into a single answer. The backend serves the built frontend as static assets in production; the frontend calls relative <code class="inline">/api/v1</code> paths. Zero cross-origin surface.</p>
+
+  <div class="panel">
+    <h4>Identity Separation — Preserved Across the Codebase</h4>
+    <table>
+      <tr><th>Entity</th><th>Role</th><th>Scope</th></tr>
+      <tr><td><strong>SiriusB iQ</strong></td><td>Engine company</td><td>Deterministic computation substrate. The 4 primitives, the 7-gate chain, the Evidence Spine. Industry-agnostic.</td></tr>
+      <tr><td><strong>Kincaid iQ</strong></td><td>Healthcare application</td><td>First deployment of the SiriusB engine. Domain schema, benchmarks, contract clause library.</td></tr>
+      <tr><td><strong>Kincaid RMC</strong></td><td>Advisory practice</td><td>Distribution channel. Out of scope for this build.</td></tr>
+    </table>
+  </div>
+
+  <h3>Repository Layout</h3>
+<pre>/
+├── <span class="kw">backend/</span>                  <span class="com"># FastAPI, Python 3.11+</span>
+│   ├── app/
+│   │   ├── main.py            <span class="com"># Entrypoint, mounts /api/v1</span>
+│   │   ├── auth.py            <span class="com"># Bearer token dependency</span>
+│   │   ├── primitives/        <span class="com"># EvidenceRef, TransformRef, PolicyResult, Claim</span>
+│   │   ├── gates/             <span class="com"># 7-Gate Chain</span>
+│   │   ├── spine/             <span class="com"># Evidence Spine — SHA-256, append-only</span>
+│   │   ├── engines/           <span class="com"># PEPM, DRAP, PBM Waste, SBI, GLP-1, EBITDA Scenario</span>
+│   │   ├── routes/            <span class="com"># /api/v1/*</span>
+│   │   └── confidence.py      <span class="com"># CERTIFIED | MODELED | INSUFFICIENT_EVIDENCE</span>
+│   ├── tests/                 <span class="com"># pytest — contract tests per gate</span>
+│   └── alembic/               <span class="com"># Postgres migrations</span>
+├── <span class="kw">frontend/</span>                 <span class="com"># Vite + React + TypeScript</span>
+│   └── src/
+│       ├── components/        <span class="com"># FourTileSurface, Receipt, ConfidenceChip, FPSGauge</span>
+│       ├── lib/api.ts         <span class="com"># Single fetch wrapper</span>
+│       └── styles/            <span class="com"># Glassmorphic design system</span>
+├── .replit
+├── replit.nix
+└── run.sh</pre>
+
+  <h3>Replit Secrets</h3>
+  <table>
+    <tr><th>Key</th><th>Purpose</th><th>How to generate</th></tr>
+    <tr><td class="mono">KINCAID_API_TOKEN</td><td>Bearer for /api/v1/*</td><td class="mono">python -c "import secrets; print(secrets.token_urlsafe(32))"</td></tr>
+    <tr><td class="mono">DATABASE_URL</td><td>Postgres connection</td><td class="mono">Replit DB or external</td></tr>
+    <tr><td class="mono">EVIDENCE_SPINE_SALT</td><td>SHA-256 content-address salt</td><td class="mono">secrets.token_hex(32)</td></tr>
+  </table>
+</section>
+
+<!-- §2 Primitives -->
+<section class="section">
+  <div class="section-num">§ 2  ·  The Four Core Primitives</div>
+  <h2>Constitutional <span class="accent">first-class objects.</span></h2>
+  <p class="section-lede">Pydantic v2, frozen. A field is not "typed after import"; it is typed as a precondition of being a field. Mutation attempts must raise. The primitives are the substrate — every gate, every engine, every endpoint operates on these and only these.</p>
+
+  <table>
+    <tr><th>Primitive</th><th>Purpose</th><th>Critical fields</th></tr>
+    <tr>
+      <td><strong>EvidenceRef</strong></td>
+      <td>Content-addressed evidence pointer</td>
+      <td class="mono">evidence_id · source_hash (SHA-256) · vintage_year · parent_evidence_id</td>
+    </tr>
+    <tr>
+      <td><strong>TransformRef</strong></td>
+      <td>Versioned computation pointer</td>
+      <td class="mono">code_hash · input_evidence_ids · output_hash · superseded_by</td>
+    </tr>
+    <tr>
+      <td><strong>PolicyResult</strong></td>
+      <td>Gate verdict</td>
+      <td class="mono">verdict (PASS/FAIL/WAIVED) · gate · rationale · citation</td>
+    </tr>
+    <tr>
+      <td><strong>Claim</strong></td>
+      <td>Atomic financial record</td>
+      <td class="mono">paid_amount · allowed_amount · ndc/cpt · evidence_id · member_id_hash</td>
+    </tr>
+  </table>
+
+  <div class="callout">
+    <div class="label">Design Property</div>
+    <p>A <code class="inline" style="font-style: normal;">TransformRef</code> is never mutated. Refinements create a new <code class="inline" style="font-style: normal;">TransformRef</code> with <code class="inline" style="font-style: normal;">superseded_by</code> set on the prior version. This is the constitutional alternative to Power Query's "Insert Step After" — full lineage, no in-place mutation, every refinement auditable.</p>
+  </div>
+</section>
+
+<!-- §3 Gate Chain -->
+<section class="section">
+  <div class="section-num">§ 3  ·  The 7-Gate Enforcement Chain</div>
+  <h2>Sequential. <span class="accent">Halt-on-fail.</span></h2>
+  <p class="section-lede">No artifact reaches a board-facing surface without passing all seven gates in order. Each gate exposes a single function with a typed contract. A failing gate raises <code class="inline">GateFailure(gate, error_code, rationale)</code>.</p>
+
+  <div class="gate-chain">
+    <div class="gate"><div class="name">DEFINE</div><div class="ordinal">GATE 1</div></div>
+    <div class="gate-arrow">→</div>
+    <div class="gate"><div class="name">WIRE</div><div class="ordinal">GATE 2</div></div>
+    <div class="gate-arrow">→</div>
+    <div class="gate"><div class="name">VALIDATE</div><div class="ordinal">GATE 3</div></div>
+    <div class="gate-arrow">→</div>
+    <div class="gate"><div class="name">PROMOTE</div><div class="ordinal">GATE 4</div></div>
+    <div class="gate-arrow">→</div>
+    <div class="gate"><div class="name">COMPUTE</div><div class="ordinal">GATE 5</div></div>
+    <div class="gate-arrow">→</div>
+    <div class="gate"><div class="name">GATE</div><div class="ordinal">GATE 6</div></div>
+    <div class="gate-arrow">→</div>
+    <div class="gate"><div class="name">RENDER</div><div class="ordinal">GATE 7</div></div>
+  </div>
+
+  <table>
+    <tr><th>Gate</th><th>Purpose</th><th>Canonical failure mode</th></tr>
+    <tr><td><strong>DEFINE</strong></td><td>Schema and policy registration</td><td class="mono">SCHEMA_NOT_REGISTERED</td></tr>
+    <tr><td><strong>WIRE</strong></td><td>Source-to-primitive binding, content hash</td><td class="mono">HASH_MISMATCH · SOURCE_UNREACHABLE</td></tr>
+    <tr><td><strong>VALIDATE</strong></td><td>Type, range, completeness, vintage</td><td class="mono">TYPE_VIOLATION · COMPLETENESS_BREACH</td></tr>
+    <tr><td><strong>PROMOTE</strong></td><td>Admit to Evidence Spine — sealed, append-only</td><td class="mono">SPINE_SEAL_FAILURE</td></tr>
+    <tr><td><strong>COMPUTE</strong></td><td>Deterministic <code class="inline">TransformRef</code> execution</td><td class="mono">NONDETERMINISTIC_OUTPUT · EVIDENCE_STALE</td></tr>
+    <tr><td><strong>GATE</strong></td><td><code class="inline">PolicyResult</code> adjudication, confidence tier assigned</td><td class="mono">POLICY_FAIL · INSUFFICIENT_EVIDENCE</td></tr>
+    <tr><td><strong>RENDER</strong></td><td>Materialize to UI surface or export artifact + manifest</td><td class="mono">MANIFEST_INCOMPLETE · UNATTRIBUTED_NUMBER</td></tr>
+  </table>
+</section>
+
+<!-- §4 Confidence Tiers -->
+<section class="section">
+  <div class="section-num">§ 4  ·  Confidence Tiering</div>
+  <h2>Three labels. <span class="accent">No fourth.</span></h2>
+  <p class="section-lede">Every finding is labeled with exactly one tier. The tier governs whether the finding can render to a board-facing surface. The absence of a number is itself an evidence-integrity signal — not a gap to be hidden.</p>
+
+  <table>
+    <tr><th>Tier</th><th>Requirement</th><th>Board-facing?</th><th>Chip</th></tr>
+    <tr>
+      <td><strong>CERTIFIED</strong></td>
+      <td>Direct evidence: contract clause + claim record + remittance, all present and reconciled.</td>
+      <td>Yes</td>
+      <td><span class="chip certified"><span class="dot"></span>CERTIFIED</span></td>
+    </tr>
+    <tr>
+      <td><strong>MODELED</strong></td>
+      <td>Inference from incomplete evidence. Uncertainty bounds disclosed.</td>
+      <td>Yes</td>
+      <td><span class="chip modeled"><span class="dot"></span>MODELED</span></td>
+    </tr>
+    <tr>
+      <td><strong>INSUFFICIENT EVIDENCE</strong></td>
+      <td>Missing data. No finding issued. Logged as Tile-4 gap finding.</td>
+      <td>No</td>
+      <td><span class="chip insufficient"><span class="dot"></span>INSUFFICIENT</span></td>
+    </tr>
+  </table>
+</section>
+
+<!-- §5 Engines -->
+<section class="section">
+  <div class="section-num">§ 5  ·  The Computational Engines</div>
+  <h2>Pure functions. <span class="accent">Deterministic outputs.</span></h2>
+  <p class="section-lede">Each engine consumes promoted evidence and returns a typed result with a confidence tier. Same inputs, same outputs, always. Determinism is asserted in unit tests via output-hash equality across runs.</p>
+
+  <h3>5.1 · PEPM Engine — the anchor variable</h3>
+<pre><span class="kw">def</span> <span class="type">compute_pepm</span>(claims: list[Claim], member_months: <span class="type">int</span>) -&gt; PEPMResult:
+    <span class="com"># PEPM = total_paid / member_months</span>
+    <span class="com"># Trend-adjusted, exposure-adjusted, credibility-weighted (Bühlmann-Straub)</span>
+    <span class="com"># Member-month denominator hardened via eligibility audit-diff engine</span></pre>
+
+  <h3>5.2 · PBM Waste Index</h3>
+<pre>Spread_pricing       = Σ(plan_charge − pharmacy_reimbursement)
+Rebate_leakage       = benchmark_rebate − actual_rebate
+Formulary_distortion = Σ(tier_assigned_cost − lowest_net_cost_alternative)
+
+Waste_Index_pct = (Spread + Rebate_leakage + Formulary_distortion) / Total_Rx_Spend</pre>
+  <p class="dim">Tier CERTIFIED requires all three inputs (claims at NDC, contract clauses, current-year remittance). Missing one → MODELED. Missing two → INSUFFICIENT_EVIDENCE.</p>
+
+  <h3>5.3 · DRAP — Delta Realized vs. Allowable Pricing</h3>
+<pre><span class="com"># For each claim c:</span>
+allowable_c   = benchmark.lookup(c.ndc <span class="kw">or</span> c.cpt, c.service_date, c.pos)
+delta_c       = c.paid_amount − allowable_c
+
+DRAP_total    = Σ delta_c
+DRAP_per_PEPM = DRAP_total / member_months
+EBITDA_impact = DRAP_total   <span class="com"># the dollar is the EBITDA dollar</span></pre>
+  <p class="dim">Benchmark sources: NADAC (rx), CMS Fee Schedule (medical), DOL 5500 Schedule C peer set (admin). The benchmark itself is an <code class="inline">EvidenceRef</code> with its own <code class="inline">vintage_year</code>.</p>
+
+  <h3>5.4 · Shady Broker Index — SBI™</h3>
+<pre>SBI = (Opacity              × 0.30)
+    + (Renewal_Incentive    × 0.25)
+    + (Rebate_Distortion    × 0.25)
+    + (Spread_Linkage       × 0.20)</pre>
+  <p class="dim">Structural analysis, not character judgment. Inputs: DOL 5500 Schedule A and C, ERISA §408(b)(2) filings, broker disclosures. Output normalized 0–100. Narrative layer must use that language.</p>
+
+  <h3>5.5 · GLP-1 Risk Engine &nbsp;&middot;&nbsp; 5.6 · EBITDA Scenario Engine</h3>
+  <p>GLP-1 drives utilization, PEPM, trend velocity, and stop-loss pressure — the inputs to Tile 3 (Forward Risk). EBITDA Scenario runs Monte Carlo (10,000 iterations, Cholesky-correlated, 5 distribution types) across GLP-1 growth, stop-loss multipliers, rebate variance, spread variance. Output: probability-weighted EBITDA distribution with P5/P50/P95 bands and renewal-shock waterfall.</p>
+
+  <div class="callout">
+    <div class="label">Structural Replacement Logic</div>
+    <p>Let I = information asymmetry, M_b = broker margin, M_i = infrastructure margin. Historically: high I → sustained M_b. With canonical normalization: I↓. Therefore M_b↓ and M_i↑. Kincaid IQ captures M_i. This is not disruption by marketing. It is disruption by math.</p>
+  </div>
+</section>
+
+<!-- §6 Evidence Spine -->
+<section class="section">
+  <div class="section-num">§ 6  ·  The Evidence Spine</div>
+  <h2>Append-only. <span class="accent">SHA-256 sealed.</span> Inviolable.</h2>
+  <p class="section-lede">Postgres-backed. Every entry carries a <code class="inline">chain_hash</code> = SHA-256(prior_chain_hash || source_hash). Retroactive tampering invalidates every downstream entry. Nightly <code class="inline">verify_spine_integrity()</code> job emits a <code class="inline">PolicyResult</code> at gate PROMOTE.</p>
+
+<pre><span class="kw">CREATE TABLE</span> evidence_spine (
+    evidence_id        TEXT <span class="kw">PRIMARY KEY</span>,
+    source_hash        CHAR(<span class="num">64</span>) <span class="kw">NOT NULL UNIQUE</span>,
+    source_type        TEXT <span class="kw">NOT NULL</span>,
+    source_uri         TEXT <span class="kw">NOT NULL</span>,
+    captured_at        TIMESTAMPTZ <span class="kw">NOT NULL</span>,
+    vintage_year       INT <span class="kw">NOT NULL</span>,
+    parent_evidence_id TEXT <span class="kw">REFERENCES</span> evidence_spine(evidence_id),
+    chain_hash         CHAR(<span class="num">64</span>) <span class="kw">NOT NULL</span>,    <span class="com">-- SHA-256(prior || source)</span>
+    sealed_at          TIMESTAMPTZ <span class="kw">NOT NULL DEFAULT</span> NOW()
+);
+
+<span class="kw">REVOKE</span> UPDATE, DELETE <span class="kw">ON</span> evidence_spine <span class="kw">FROM</span> PUBLIC;</pre>
+</section>
+
+<!-- §7 API -->
+<section class="section">
+  <div class="section-num">§ 7  ·  The API Surface</div>
+  <h2>Versioned. <span class="accent">Bearer-guarded.</span> Receipt-bearing.</h2>
+  <p class="section-lede">All endpoints under <code class="inline">/api/v1/*</code> require <code class="inline">Authorization: Bearer $KINCAID_API_TOKEN</code>. Every compute response carries <code class="inline">value · confidence · transform_id · evidence_ids · policy_result_id</code>.</p>
+
+  <h3>Surface — the four-tile contract</h3>
+<pre>GET /api/v1/surface/{org_id}/{plan_year}
+
+<span class="com"># Returns exactly four tiles, hard-capped by the type system:</span>
+{
+  tiles: [<span class="type">Tile</span>, <span class="type">Tile</span>, <span class="type">Tile</span>, <span class="type">Tile</span>]   <span class="com"># Python tuple, TS tuple</span>
+}
+
+<span class="com"># Tile 1: Plan Posture           — PEPM trend, member-months, enrollment integrity</span>
+<span class="com"># Tile 2: Current EBITDA Drag    — DRAP, PBM Waste, admin overbenchmark</span>
+<span class="com"># Tile 3: Forward Risk           — GLP-1 trajectory, stop-loss exposure, renewal shock</span>
+<span class="com"># Tile 4: Fiduciary Posture      — FPS score, gap inventory, governance compliance</span></pre>
+
+  <h3>Compute · Receipts · Export</h3>
+  <table>
+    <tr><th>Method</th><th>Path</th><th>Returns</th></tr>
+    <tr><td class="mono">GET</td><td class="mono">/api/v1/health</td><td>Health, spine integrity, version</td></tr>
+    <tr><td class="mono">GET</td><td class="mono">/api/v1/me</td><td>Principal, org_id, roles</td></tr>
+    <tr><td class="mono">POST</td><td class="mono">/api/v1/evidence</td><td>Ingest EvidenceRef (multipart)</td></tr>
+    <tr><td class="mono">POST</td><td class="mono">/api/v1/compute/pepm</td><td>PEPMResult + confidence</td></tr>
+    <tr><td class="mono">POST</td><td class="mono">/api/v1/compute/drap</td><td>DRAPResult + confidence</td></tr>
+    <tr><td class="mono">POST</td><td class="mono">/api/v1/compute/pbm_waste</td><td>PBMWasteResult + confidence</td></tr>
+    <tr><td class="mono">POST</td><td class="mono">/api/v1/compute/sbi</td><td>SBIResult + confidence</td></tr>
+    <tr><td class="mono">POST</td><td class="mono">/api/v1/compute/glp1</td><td>GLP1Result + confidence</td></tr>
+    <tr><td class="mono">POST</td><td class="mono">/api/v1/compute/ebitda</td><td>EBITDAScenarioResult + bands</td></tr>
+    <tr><td class="mono">GET</td><td class="mono">/api/v1/receipt/{kpi_id}</td><td>Full lineage: claim → transform → policy → render</td></tr>
+    <tr><td class="mono">POST</td><td class="mono">/api/v1/export/board_packet</td><td>PDF binary + manifest.json attached</td></tr>
+  </table>
+</section>
+
+<!-- §8 Frontend -->
+<section class="section">
+  <div class="section-num">§ 8  ·  Frontend Surface</div>
+  <h2>Glassmorphic. <span class="accent">Type-enforced.</span> Receipt-aware.</h2>
+  <p class="section-lede">Vite + React + TypeScript. Tailwind utility classes; custom CSS for the glass layer. Fonts: Instrument Serif (display), Geist (body), JetBrains Mono (kickers, labels, numbers). Never Inter, Arial, Space Grotesk, Roboto.</p>
+
+<pre><span class="com">// frontend/src/components/FourTileSurface.tsx</span>
+<span class="kw">type</span> Tile = {
+  id: <span class="str">'plan_posture'</span> | <span class="str">'ebitda_drag'</span> | <span class="str">'forward_risk'</span> | <span class="str">'fiduciary_posture'</span>;
+  title: <span class="type">string</span>;
+  headline_kpi: { value: <span class="type">string</span>; confidence: <span class="type">Confidence</span> };
+  drill_path: <span class="type">string</span>;   <span class="com">// /receipt/:kpi_id</span>
+};
+
+<span class="com">// Hard-cap as a 4-tuple. Adding a fifth tile requires a type change.</span>
+<span class="kw">type</span> Surface = { tiles: <span class="kw">readonly</span> [Tile, Tile, Tile, Tile] };</pre>
+
+  <h3>Design Tokens</h3>
+  <table>
+    <tr><th>Token</th><th>Value</th><th>Use</th></tr>
+    <tr><td class="mono">--canvas</td><td class="mono">#08070d</td><td>Near-black canvas</td></tr>
+    <tr><td class="mono">--gold</td><td class="mono">#f5c361</td><td>Primary accent, hairlines, kickers</td></tr>
+    <tr><td class="mono">--emerald</td><td class="mono">#4ade80</td><td>CERTIFIED confidence chip</td></tr>
+    <tr><td class="mono">--amber</td><td class="mono">#ffb547</td><td>MODELED confidence chip</td></tr>
+    <tr><td class="mono">--crimson</td><td class="mono">#ff6b7a</td><td>INSUFFICIENT_EVIDENCE chip</td></tr>
+    <tr><td class="mono">--panel-blur</td><td class="mono">blur(28px) saturate(170%)</td><td>Glass panel backdrop</td></tr>
+    <tr><td class="mono">--panel-radius</td><td class="mono">22px</td><td>Glass panel corner radius</td></tr>
+  </table>
+</section>
+
+<!-- §9 Build Order -->
+<section class="section">
+  <div class="section-num">§ 9  ·  Build Order</div>
+  <h2>Sequential. <span class="accent">Acceptance-gated.</span></h2>
+  <p class="section-lede">Execute in order. Do not advance until the prior step's acceptance test passes. Steps 1–3 are non-negotiable foundations. Steps 4–6 deliver the deterministic substrate. Steps 7–10 surface it.</p>
+
+  <ol class="steps">
+    <li>
+      <div class="title">Repo scaffold &middot; .replit &middot; replit.nix &middot; both processes start</div>
+      <div class="test"><code>curl -H "Authorization: Bearer $TOKEN" localhost:8000/api/v1/health</code> → 200; unauthenticated → 401</div>
+    </li>
+    <li>
+      <div class="title">Four primitives as Pydantic frozen dataclasses + unit tests</div>
+      <div class="test"><code>pytest backend/tests/test_primitives.py</code> green; mutation attempts raise <code>ValidationError</code></div>
+    </li>
+    <li>
+      <div class="title">Evidence Spine schema + Alembic migrations + verify_spine_integrity()</div>
+      <div class="test">Empty-spine integrity check returns PASS; tampered <code>chain_hash</code> returns FAIL with diagnostic</div>
+    </li>
+    <li>
+      <div class="title">Gates 1–3 — DEFINE, WIRE, VALIDATE</div>
+      <div class="test">Ingest sample PBM claims CSV; all three gates emit PolicyResults; malformed data fails VALIDATE with typed error</div>
+    </li>
+    <li>
+      <div class="title">Gates 4–7 — PROMOTE, COMPUTE, GATE, RENDER for DRAP</div>
+      <div class="test">Compute DRAP on synthetic data; result includes confidence tier, transform_id, evidence_ids[]</div>
+    </li>
+    <li>
+      <div class="title">PEPM &middot; PBM Waste &middot; SBI &middot; GLP-1 &middot; EBITDA Scenario engines</div>
+      <div class="test">Each engine asserts determinism: identical input → identical output_hash across N=100 runs</div>
+    </li>
+    <li>
+      <div class="title">API routes for compute and receipts</div>
+      <div class="test">httpie hits every endpoint with bearer; receipts resolve full lineage chain to spine entries</div>
+    </li>
+    <li>
+      <div class="title">Frontend scaffold &middot; design tokens &middot; FourTileSurface component</div>
+      <div class="test">Four tiles render at <code>/</code>; TypeScript prevents adding a fifth tile at compile time</div>
+    </li>
+    <li>
+      <div class="title">Receipt drill UX &middot; ConfidenceChip &middot; FiduciaryPostureGauge</div>
+      <div class="test">Every number on surface deep-links to <code>/receipt/:kpi_id</code>; chip colors match tier verdict</div>
+    </li>
+    <li>
+      <div class="title">Board packet export with cryptographic manifest</div>
+      <div class="test">Exported PDF opens; <code>manifest.json</code> attached; every cited hash resolves to a spine entry</div>
+    </li>
+  </ol>
+</section>
+
+<!-- §10 Prohibitions -->
+<section class="section">
+  <div class="section-num">§ 10  ·  Category Discipline</div>
+  <h2>What this build <span class="accent">is not.</span></h2>
+  <p class="section-lede">State these in the agent's working memory. They prevent category drift — the most common failure mode when an LLM-driven build is left unsupervised.</p>
+
+  <div class="prohibitions">
+    <div class="prohibit">
+      <div class="label">NOT A DASHBOARD</div>
+      <div class="body">Dashboards show numbers. This shows receipts. A surfaced number without a drill path is a constitutional failure.</div>
+    </div>
+    <div class="prohibit">
+      <div class="label">NOT A CONSULTING ACCELERATOR</div>
+      <div class="body">If a feature is implementable in Power Query / Alteryx / Power BI within one engagement cycle, it is not a Kincaid IQ feature. Reject the build.</div>
+    </div>
+    <div class="prohibit">
+      <div class="label">NOT A BROKER TOOL</div>
+      <div class="body">Buyer is the CFO, the PE operating partner, the M&amp;A deal team, the board, the family office. UX calibrated to that audience.</div>
+    </div>
+    <div class="prohibit">
+      <div class="label">NOT A HEALTHCARE ANALYTICS PLATFORM</div>
+      <div class="body">Fiduciary-grade financial infrastructure that happens to deploy in healthcare first. Comp set: Palantir, Snowflake, Databricks.</div>
+    </div>
+    <div class="prohibit">
+      <div class="label">NOT A GENERATIVE-AI PRODUCT</div>
+      <div class="body">Generative outputs are gated, cited, admin-approved. Deterministic math is the substrate; narrative is the surface; the layers never merge.</div>
+    </div>
+    <div class="prohibit">
+      <div class="label">NOT FOR HR</div>
+      <div class="body">HR is not the buyer. The product is fiduciary-grade infrastructure for the people who carry fiduciary obligation.</div>
+    </div>
+  </div>
+</section>
+
+<!-- §11 First Task -->
+<section class="section">
+  <div class="section-num">§ 11  ·  The Agent's First Concrete Task</div>
+  <h2>Execute <span class="accent">Step 1.</span> Stop. Wait.</h2>
+  <p class="section-lede">The agent that executes this build does so under supervision, advancing only on confirmed acceptance. The first task is small enough to be observed, large enough to prove the architecture compiles.</p>
+
+  <div class="panel">
+    <ol style="padding-left: 18px; line-height: 1.8;">
+      <li>Initialize the directory structure in §1.</li>
+      <li>Write <code class="inline">backend/app/main.py</code> exposing <code class="inline">/api/v1/health</code> guarded by <code class="inline">require_token</code>.</li>
+      <li>Write <code class="inline">frontend/src/App.tsx</code> with a placeholder that calls <code class="inline">/api/v1/health</code> on mount and renders the response.</li>
+      <li>Write <code class="inline">run.sh</code>: uvicorn on 8000, Vite on 5173 with proxy for <code class="inline">/api</code>.</li>
+      <li>Write <code class="inline">replit.nix</code>: Python 3.11, Node 20, Postgres 16.</li>
+      <li>Generate <code class="inline">KINCAID_API_TOKEN</code> via <code class="inline">secrets.token_urlsafe(32)</code>; instruct user to paste into Replit Secrets.</li>
+    </ol>
+  </div>
+
+  <div class="callout">
+    <div class="label">Stop Condition</div>
+    <p><code class="inline" style="font-style: normal;">curl -H "Authorization: Bearer $TOKEN" http://localhost:8000/api/v1/health</code> returns 200. Without the header, 401. The frontend at <code class="inline" style="font-style: normal;">localhost:5173</code> displays the health response. Stop. Wait for explicit advancement to Step 2.</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<div class="footer">
+  <div class="belief">— I believe in myself.</div>
+  Kincaid iQ &nbsp;·&nbsp; SiriusB iQ &nbsp;·&nbsp; Kincaid RMC &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 24 MAY 2026<br />
+  Disruption by math, not by marketing.
+</div>
+
+</div>
+</body>
+</html>

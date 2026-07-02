@@ -1,0 +1,26 @@
+{
+  "name": "kincaid-iq-bff",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Kincaid IQ Node BFF (Express + node-sqlite3-wasm). Capital Efficiency Intelligence engine. Evidence lineage is the MO.",
+  "scripts": {
+    "dev": "tsx watch kincaid-iq-bff-server.ts",
+    "start": "tsx kincaid-iq-bff-server.ts",
+    "seed": "tsx seed.ts",
+    "harness": "tsx harness.ts",
+    "health": "tsx scripts/health.ts",
+    "verify": "tsx scripts/verify.ts"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^4.21.2",
+    "node-sqlite3-wasm": "^0.8.59"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}

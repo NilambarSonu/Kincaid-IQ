@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+data/
+data.db
+*.db-journal
+.venv/
+.env
+.env.production
+
+# Node.js
+node_modules/
+.env
+.env.production
+
+# Build artifacts
+dist/
+build/
+
+# Development
+*.log
+*.swp
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.pyc
+__pycache__/
+*.zip
+*.tar.gz
