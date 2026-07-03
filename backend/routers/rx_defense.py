@@ -11,6 +11,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, Query
 from sqlalchemy.orm import Session
 from backend.anthropic_compat import AsyncAnthropicClient as AsyncOpenAI
+from openai import AsyncOpenAI as _RealAsyncOpenAI
 from backend.agents.base import KIQ_VERIFY_HEADER
 from pydantic import BaseModel
 
@@ -29,6 +30,14 @@ openai_client = AsyncOpenAI(
     base_url=settings.openai_base_url,
 )
 
+# Real OpenAI client (NOT the Anthropic-compat shim above) — used by the
+# dual-engine comparison so the same contract can be scored with GPT-5 AND
+# Claude, letting the user pick whichever savings estimate they trust.
+openai_native_client = _RealAsyncOpenAI(
+    api_key=settings.openai_api_key,
+    base_url=settings.openai_base_url,
+)
+
 
 def _loads_llm_json(raw: Optional[str]):
     """Parse a JSON object from an LLM response that may be wrapped in markdown
@@ -38,8 +47,9 @@ def _loads_llm_json(raw: Optional[str]):
     toward JSON via the system prompt — so the model occasionally emits a
     ```json ... ``` fence or a leading sentence before the object. Plain
     json.loads then fails at char 0 and callers silently fall back to demo data.
-    This helper strips fences and, as a last resort, slices the outermost
-    {...} before parsing. Raises json.JSONDecodeError when no object is found.
+    This helper strips fences, slices the outermost {...}, and — when the
+    output was truncated mid-object — salvages the completed leading portion.
+    Raises json.JSONDecodeError when no object can be recovered.
     """
     if not raw:
         raise ValueError("empty LLM content")
@@ -53,14 +63,107 @@ def _loads_llm_json(raw: Optional[str]):
             raise ValueError(f"LLM returned non-object JSON ({type(parsed).__name__})")
         return parsed
 
+    # 1) Strict parse.
     try:
         return _as_object(json.loads(s))
     except (json.JSONDecodeError, ValueError):
-        start = s.find("{")
-        end = s.rfind("}")
-        if start != -1 and end != -1 and end > start:
+        pass
+
+    # 2) Slice the outermost {...} (drops leading/trailing prose) and parse.
+    start = s.find("{")
+    end = s.rfind("}")
+    if start != -1 and end != -1 and end > start:
+        try:
             return _as_object(json.loads(s[start:end + 1]))
-        raise
+        except (json.JSONDecodeError, ValueError):
+            pass
+
+    # 3) Salvage a truncated/malformed object. The 13-provision forensic JSON is
+    #    large enough to be cut off mid-structure when the model hits its token
+    #    budget; recovering the completed portion is far better than silently
+    #    substituting demo data for the user's real contract.
+    salvaged = _salvage_json_object(s)
+    if salvaged is not None:
+        return _as_object(salvaged)
+
+    raise json.JSONDecodeError("no parseable JSON object in LLM output", s, 0)
+
+
+def _salvage_json_object(s: str) -> Optional[dict]:
+    """Best-effort recovery of a JSON object from a truncated or lightly
+    malformed LLM response. Cuts the string back to the last *clean* structural
+    boundary — the end of a completed nested element or a top-level member
+    separator — then closes any still-open containers so a half-received
+    trailing element is dropped rather than kept partially populated. Tries the
+    furthest boundary first (most data recovered) and falls back to closing the
+    whole balanced string. Returns None when nothing parses, so callers fall
+    back exactly as they did before."""
+    start = s.find("{")
+    if start == -1:
+        return None
+    body = s[start:]
+
+    def _balance(text: str) -> str:
+        in_str = False
+        escape = False
+        stack: list[str] = []
+        for ch in text:
+            if in_str:
+                if escape:
+                    escape = False
+                elif ch == "\\":
+                    escape = True
+                elif ch == '"':
+                    in_str = False
+                continue
+            if ch == '"':
+                in_str = True
+            elif ch in "{[":
+                stack.append(ch)
+            elif ch in "}]":
+                if stack:
+                    stack.pop()
+        if in_str:
+            text += '"'
+        text += "".join("}" if c == "{" else "]" for c in reversed(stack))
+        return text
+
+    # Collect safe truncation points: the position right after a nested element
+    # closes (a } or ] that leaves us still inside a container) and top-level
+    # member separators (a comma at depth 1, cutting before the comma).
+    cut_points: list[int] = []
+    in_str = False
+    escape = False
+    depth = 0
+    for i, ch in enumerate(body):
+        if in_str:
+            if escape:
+                escape = False
+            elif ch == "\\":
+                escape = True
+            elif ch == '"':
+                in_str = False
+            continue
+        if ch == '"':
+            in_str = True
+        elif ch in "{[":
+            depth += 1
+        elif ch in "}]":
+            depth -= 1
+            if depth >= 1:
+                cut_points.append(i + 1)
+        elif ch == "," and depth == 1:
+            cut_points.append(i)
+
+    for cut in sorted(set(cut_points), reverse=True) + [len(body)]:
+        try:
+            parsed = json.loads(_balance(body[:cut]))
+            if isinstance(parsed, dict):
+                return parsed
+        except (json.JSONDecodeError, ValueError):
+            continue
+    return None
+
 
 PROVISIONS = [
     {
@@ -385,6 +488,144 @@ Respond with ONLY valid JSON:
 }}"""
 
 
+def _persist_analysis(contract, result: dict) -> None:
+    """Write a parsed analysis result onto a contract's fields. Shared by the
+    upload/analysis pipeline and the dual-engine engine-selection action so both
+    persist identically. Always applies MODELED financial impacts first so no
+    fabricated dollar figures are ever stored."""
+    result = _apply_modeled_impacts(result)
+    overall = float(result.get("overall_score", 45))
+    # A salvaged (truncated) response can leave a structurally-incomplete trailing
+    # provision; keep only fully-formed ones so downstream key access never raises
+    # and no half-populated provision is persisted.
+    provisions = [
+        p for p in result.get("provisions", [])
+        if isinstance(p, dict) and "id" in p and "name" in p and "score" in p
+    ]
+    contract.overall_score = overall
+    contract.rating = score_to_rating(overall)
+    if result.get("pbm_name") and not contract.pbm_name:
+        contract.pbm_name = result["pbm_name"]
+    contract.provision_scores = json.dumps(provisions)
+    contract.quick_look = json.dumps([
+        {"id": p["id"], "name": p["name"], "quick_look": p.get("quick_look", "concern")}
+        for p in provisions
+    ])
+    contract.key_findings = json.dumps(result.get("key_findings", []))
+    contract.negotiation_guide = json.dumps([
+        {"id": p["id"], "name": p["name"], "score": p["score"],
+         "negotiation": p.get("negotiation", {}), "issues": p.get("issues", [])}
+        for p in provisions
+    ])
+
+
+# The full 13-provision / 65-issue forensic JSON runs ~17K output tokens; the
+# previous 16K cap truncated it mid-object on real contracts, causing a JSON
+# parse failure and a silent fall-back to demo data. 32K leaves ~2x headroom,
+# well within Claude Sonnet / GPT-5 output limits.
+_ANALYSIS_MAX_TOKENS = 32000
+
+
+async def _analyze_with(provider: str, contract_text: str) -> dict:
+    """Run the 13-provision forensic analysis with a specific engine.
+    provider='claude' → Anthropic (claude-sonnet-4-6); provider='openai' → GPT-5.
+    Returns a parsed result dict; falls back to the demo analysis on empty or
+    unparseable model output so a comparison always renders."""
+    prompt = build_analysis_prompt(contract_text)
+    if provider == "openai":
+        resp = await openai_native_client.chat.completions.create(
+            model="gpt-5",
+            messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"},
+            max_completion_tokens=_ANALYSIS_MAX_TOKENS,
+            reasoning_effort="low",
+        )
+        raw = resp.choices[0].message.content or ""
+    else:
+        stream = await openai_client.chat.completions.create(
+            model="claude-sonnet-4-6",
+            messages=[{"role": "user", "content": prompt}],
+            response_format={"type": "json_object"},
+            max_tokens=_ANALYSIS_MAX_TOKENS,
+            stream=True,
+        )
+        parts: list[str] = []
+        async for chunk in stream:
+            if not chunk.choices:
+                continue
+            delta = chunk.choices[0].delta
+            if delta and delta.content:
+                parts.append(delta.content)
+        raw = "".join(parts)
+    if not raw:
+        return _demo_analysis()
+    try:
+        return _loads_llm_json(raw)
+    except (json.JSONDecodeError, ValueError):
+        return _demo_analysis()
+
+
+def _savings_core(prov_by_id: dict, members: int, annual_rx_spend: Optional[float]) -> dict:
+    """Deterministic savings math shared by the Savings Report and the Dual-Engine
+    comparison. Given per-provision scores it returns cap-anchored, 30%-hard-
+    clamped savings totals plus a per-provision breakdown. Only damaging clauses
+    (score < 7) contribute. This is the SINGLE source of truth for savings dollars
+    — never re-implement it per surface."""
+    raw_leakage = 0.0
+    for pid, meta in _PROVISION_EXPOSURE_PMPY.items():
+        score = float(prov_by_id.get(pid, {}).get("score", 5.0))
+        if score >= 7:
+            continue
+        rf = max(0.0, (10.0 - score) / 10.0)
+        raw_leakage += rf * meta["pmpy"] * members
+    spend_scale = _spend_cap_scale(raw_leakage, annual_rx_spend, members)
+
+    per: dict = {}
+    total_low = total_base = total_high = 0
+    for pid, meta in _PROVISION_EXPOSURE_PMPY.items():
+        score = float(prov_by_id.get(pid, {}).get("score", 5.0))
+        if score >= 7:
+            continue
+        rf = max(0.0, (10.0 - score) / 10.0)
+        rate_lo, rate_base, rate_hi = _PROVISION_RECOVERY_RATE.get(pid, (0.4, 0.6, 0.8))
+        annual_exposure = round(rf * meta["pmpy"] * members * spend_scale)
+        save_low  = round(annual_exposure * rate_lo)
+        save_base = round(annual_exposure * rate_base)
+        save_high = round(annual_exposure * rate_hi)
+        total_low  += save_low
+        total_base += save_base
+        total_high += save_high
+        per[pid] = {
+            "score": round(score, 1),
+            "risk_fraction": round(rf, 2),
+            "full_pmpy": meta["pmpy"],
+            "annual_exposure": annual_exposure,
+            "save_low": save_low, "save_base": save_base, "save_high": save_high,
+            "rate_lo": rate_lo, "rate_base": rate_base, "rate_hi": rate_hi,
+        }
+
+    # Hard 30% ceiling on the HIGH band — only ever reduces, keeping every
+    # surface provably ≤ 30% of effective Rx spend.
+    cap_ceiling = _effective_rx_spend(annual_rx_spend, members) * _MAX_LEAKAGE_SHARE
+    if total_high > cap_ceiling and total_high > 0:
+        clamp = cap_ceiling / total_high
+        total_low  = round(total_low  * clamp)
+        total_base = round(total_base * clamp)
+        total_high = round(total_high * clamp)
+        spend_scale *= clamp
+        for p in per.values():
+            for k in ("annual_exposure", "save_low", "save_base", "save_high"):
+                p[k] = round(p[k] * clamp)
+
+    return {
+        "spend_scale": spend_scale,
+        "per": per,
+        "total_low": total_low,
+        "total_base": total_base,
+        "total_high": total_high,
+    }
+
+
 async def run_analysis(contract_id: str, contract_text: str, db: Session, *, use_demo: bool = False):
     contract = db.query(models.RxDefenseContract).filter(models.RxDefenseContract.id == contract_id).first()
     if not contract:
@@ -398,10 +639,10 @@ async def run_analysis(contract_id: str, contract_text: str, db: Session, *, use
         else:
             prompt = build_analysis_prompt(contract_text)
             stream = await openai_client.chat.completions.create(
-                model="claude-opus-4-5",
+                model="claude-sonnet-4-6",
                 messages=[{"role": "user", "content": prompt}],
                 response_format={"type": "json_object"},
-                max_tokens=16000,
+                max_tokens=_ANALYSIS_MAX_TOKENS,
                 stream=True,
             )
             content_parts: list[str] = []
@@ -438,31 +679,10 @@ async def run_analysis(contract_id: str, contract_text: str, db: Session, *, use
                     )
                     result = _demo_analysis()
 
-        # Replace any LLM- or demo-provided financial_impact strings with MODELED
-        # values derived from member_count × PMPY × risk_fraction. This applies to
-        # ALL analysis results (demo + real) so no fabricated dollar figures are
-        # ever persisted.
-        result = _apply_modeled_impacts(result)
-
-        overall = float(result.get("overall_score", 45))
-        provisions = result.get("provisions", [])
-
-        contract.overall_score = overall
-        contract.rating = score_to_rating(overall)
-        if result.get("pbm_name") and not contract.pbm_name:
-            contract.pbm_name = result["pbm_name"]
-
-        contract.provision_scores = json.dumps(provisions)
-        contract.quick_look = json.dumps([
-            {"id": p["id"], "name": p["name"], "quick_look": p.get("quick_look", "concern")}
-            for p in provisions
-        ])
-        contract.key_findings = json.dumps(result.get("key_findings", []))
-        contract.negotiation_guide = json.dumps([
-            {"id": p["id"], "name": p["name"], "score": p["score"],
-             "negotiation": p.get("negotiation", {}), "issues": p.get("issues", [])}
-            for p in provisions
-        ])
+        # Persist via the shared helper (which also applies MODELED financial
+        # impacts) so the analysis pipeline and the dual-engine "use this engine"
+        # action write the contract identically.
+        _persist_analysis(contract, result)
         contract.status = "complete"
         db.commit()
 
@@ -1235,38 +1455,55 @@ _PROVISION_EXPOSURE_PMPY: dict[int, dict] = {
 }
 
 # Realistic ceiling: even an egregious PBM contract cannot leak more than ~30% of
-# total Rx spend. When the plan's actual annual Rx spend is known, scale every
-# MODELED figure so it never exceeds this share of real dollars. Mirrors the
-# client-side ≤30% cap so the $ Exposure tab and Savings Report stay consistent.
+# total Rx spend. Every MODELED figure is scaled so it never exceeds this share.
+# Mirrors the client-side ≤30% cap so the $ Exposure tab and Savings Report stay
+# consistent.
 _MAX_LEAKAGE_SHARE = 0.30
+# Typical commercial Rx spend baseline (PMPY), used ONLY as the cap denominator
+# when the plan's actual annual Rx spend is unknown, so the ≤30% ceiling ALWAYS
+# binds instead of silently disabling the cap. Mirrors RX_ASSUMED_RX_PMPY in
+# client/src/lib/pdfReports.ts.
+_ASSUMED_RX_PMPY = 1400
 
 
-def _spend_cap_scale(modeled_total: float, annual_rx_spend: Optional[float]) -> float:
-    """Return a ≤1.0 scale factor anchoring MODELED figures to actual Rx spend.
+def _effective_rx_spend(annual_rx_spend: Optional[float], members: int = 0) -> float:
+    """Effective annual Rx spend used as the 30% cap denominator: the plan's
+    actual spend when known, else a MODELED baseline (members × typical Rx PMPY)
+    so the cap has a floor and can never be silently disabled."""
+    if annual_rx_spend and annual_rx_spend > 0:
+        return float(annual_rx_spend)
+    m = members if (members and members > 0) else 500
+    return float(m) * _ASSUMED_RX_PMPY
 
-    Caps modeled leakage at _MAX_LEAKAGE_SHARE of annual_rx_spend. Returns 1.0
-    when spend is unknown/zero or the modeled total is already within the cap, so
-    behavior is unchanged unless a real spend makes the PMPY model implausible."""
-    if not annual_rx_spend or annual_rx_spend <= 0 or modeled_total <= 0:
+
+def _spend_cap_scale(modeled_total: float, annual_rx_spend: Optional[float], members: int = 0) -> float:
+    """Return a ≤1.0 scale factor capping MODELED leakage at _MAX_LEAKAGE_SHARE of
+    the effective Rx spend (actual when known, else a members-based baseline).
+    Returns 1.0 only when the modeled total is already within the cap, so figures
+    can never exceed 30% of pharmacy spend on any surface."""
+    spend = _effective_rx_spend(annual_rx_spend, members)
+    if spend <= 0 or modeled_total <= 0:
         return 1.0
-    cap = annual_rx_spend * _MAX_LEAKAGE_SHARE
+    cap = spend * _MAX_LEAKAGE_SHARE
     if modeled_total <= cap:
         return 1.0
     return cap / modeled_total
 
 
-def _compute_financial_impact(provision_id: int, score: float, members: int = 500) -> Optional[str]:
+def _compute_financial_impact(provision_id: int, score: float, members: int = 500, scale: float = 1.0) -> Optional[str]:
     """MODELED annual $ exposure range for a provision.
 
     Derived from _PROVISION_EXPOSURE_PMPY × members × risk_fraction,
-    risk_fraction = (10 − score) / 10. Returns a disclosed ±25% band string,
-    or None when there is no residual exposure. Never a hardcoded constant.
+    risk_fraction = (10 − score) / 10. `scale` is the aggregate ≤30% leakage-cap
+    factor so per-provision figures never sum to more than the capped total.
+    Returns a disclosed ±25% band string, or None when there is no residual
+    exposure. Never a hardcoded constant.
     """
     meta = _PROVISION_EXPOSURE_PMPY.get(provision_id)
     if not meta:
         return None
     risk_fraction = max(0.0, (10.0 - float(score)) / 10.0)
-    midpoint = risk_fraction * meta["pmpy"] * members
+    midpoint = risk_fraction * meta["pmpy"] * members * scale
     if midpoint <= 0:
         return None
     low = midpoint * 0.75
@@ -1277,7 +1514,7 @@ def _compute_financial_impact(provision_id: int, score: float, members: int = 50
     return f"${low:,.0f} - ${high:,.0f} annually"
 
 
-def _modeled_reference_exposure(provisions: list, members: int = 500) -> float:
+def _modeled_reference_exposure(provisions: list, members: int = 500, annual_rx_spend: Optional[float] = None) -> float:
     """MODELED total annual exposure across all provisions for a reference plan.
     Sum of member_count × PMPY × risk_fraction over _PROVISION_EXPOSURE_PMPY.
     Returns 0.0 when no provision scores are available (caller should treat as
@@ -1298,6 +1535,10 @@ def _modeled_reference_exposure(provisions: list, members: int = 500) -> float:
             continue
         risk_fraction = max(0.0, (10.0 - score_map[pid]) / 10.0)
         total += risk_fraction * meta["pmpy"] * members
+    # Cap intrinsically at ≤30% of Rx spend — the plan's actual spend when known,
+    # else a members-based baseline — so this fallback path can never exceed the
+    # ceiling on any surface, whether or not the caller supplied a spend figure.
+    total *= _spend_cap_scale(total, annual_rx_spend, members)
     return round(total)
 
 
@@ -1305,13 +1546,28 @@ def _apply_modeled_impacts(result: dict, members: int = 500) -> dict:
     """Replace any baked-in financial_impact strings on demo/analysis provisions
     with MODELED values computed at request time from the PMPY table.
     Issues with a non-null financial_impact are recomputed from their provision's
-    id + score so figures always scale with the reference member count."""
+    id + score so figures always scale with the reference member count. A single
+    aggregate ≤30% leakage-cap factor is applied to every provision so the
+    issue-card dollars can never sum to more than the capped total."""
+    # Raw (uncapped) aggregate exposure across scored provisions, then the same
+    # ≤30% cap the totals use (spend unknown at analysis time → members baseline).
+    raw_total = 0.0
+    for prov in result.get("provisions", []):
+        pid = prov.get("id")
+        if pid is None:
+            continue
+        meta = _PROVISION_EXPOSURE_PMPY.get(int(pid))
+        if not meta:
+            continue
+        rf = max(0.0, (10.0 - float(prov.get("score", 5))) / 10.0)
+        raw_total += rf * meta["pmpy"] * members
+    scale = _spend_cap_scale(raw_total, None, members)
     for prov in result.get("provisions", []):
         pid = prov.get("id")
         score = prov.get("score", 5)
         if pid is None:
             continue
-        computed = _compute_financial_impact(int(pid), float(score), members)
+        computed = _compute_financial_impact(int(pid), float(score), members, scale)
         for issue in prov.get("issues", []):
             if issue.get("financial_impact"):
                 issue["financial_impact"] = computed
@@ -1346,17 +1602,23 @@ def get_contract_exposure(
     # First pass: raw (uncapped) PMPY-derived exposure.
     raw_items = []
     raw_total_exposure = 0.0
+    raw_total_at_stake = 0.0
     for pid, meta in _PROVISION_EXPOSURE_PMPY.items():
         score = score_map.get(pid, 5.0)
         risk_fraction = max(0.0, (10.0 - score) / 10.0)
         exposure = risk_fraction * meta["pmpy"] * members
         full_exposure = float(meta["pmpy"] * members)
         raw_total_exposure += exposure
+        raw_total_at_stake += full_exposure
         raw_items.append((pid, meta, score, risk_fraction, exposure, full_exposure))
 
-    # Anchor to actual Rx spend: cap modeled leakage at ≤30% of real dollars so
-    # the figures can never exceed what the plan actually spends on pharmacy.
-    scale = _spend_cap_scale(raw_total_exposure, annual_rx_spend)
+    # Anchor to actual Rx spend. Even the theoretical worst case (every score 0 —
+    # the "total at stake") cannot leak more than ≤30% of pharmacy spend, so cap
+    # the WORST-CASE total at 30% and scale the score-adjusted exposure by the
+    # same factor. This guarantees NO exposure figure — current OR at-stake —
+    # exceeds 30% of what the plan actually spends, while preserving their
+    # ordering (at-stake ≥ current exposure).
+    scale = _spend_cap_scale(raw_total_at_stake, annual_rx_spend, members)
     capped = scale < 1.0
 
     items = []
@@ -1404,6 +1666,7 @@ def get_contract_exposure(
 async def get_executive_summary(
     contract_id: str,
     members: int = 500,
+    annual_rx_spend: Optional[float] = None,
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):
@@ -1430,6 +1693,12 @@ async def get_executive_summary(
     red_flags = [p for p in provisions if p.get("rating") in ("red_flag", "concern")]
     critical_findings = [f["text"] for f in key_findings if f.get("severity") == "critical"]
 
+    # Hard dollar ceiling for anything this summary might quantify: modeled
+    # savings/exposure can never exceed 30% of the plan's Rx spend (actual when
+    # provided, else a members-based baseline). Fed to the LLM so the AI-authored
+    # narrative cannot invent a figure above the cap.
+    _cap_ceiling = round(_effective_rx_spend(annual_rx_spend, members) * _MAX_LEAKAGE_SHARE)
+
     try:
         prompt = f"""You are a senior benefits attorney writing a plain-English executive summary of a PBM contract analysis for a CFO or HR Director who is NOT a benefits expert.
 
@@ -1442,6 +1711,8 @@ Write a 3-paragraph executive summary:
 1. What this contract score means in plain business terms (one paragraph, no jargon)
 2. The 2-3 biggest specific risks this plan sponsor faces RIGHT NOW
 3. The one most important action to take in the next 30 days
+
+HARD CONSTRAINT: If you cite any dollar figure for potential savings, recovery, or exposure, it MUST NOT exceed ${_cap_ceiling:,} (30% of this plan's annual Rx spend). Never state a savings or exposure number larger than ${_cap_ceiling:,}. Prefer describing risk qualitatively over inventing a dollar figure.
 
 Keep it under 300 words. Be direct, not alarmist. Sound like a trusted advisor, not a lawyer.
 Respond with JSON: {{"headline": "one strong headline sentence", "paragraphs": ["p1", "p2", "p3"], "action": "one specific next step"}}"""
@@ -1460,7 +1731,7 @@ Respond with JSON: {{"headline": "one strong headline sentence", "paragraphs": [
     except Exception:
         # Rule-based fallback
         headline = f"Your PBM contract scored {score:.0f}/100 — {'significant gaps exist' if score < 60 else 'moderate improvements needed' if score < 80 else 'strong protections in place'}."
-        _exec_exposure = _modeled_reference_exposure(provisions, members)
+        _exec_exposure = _modeled_reference_exposure(provisions, members, annual_rx_spend)
         fallback = {
             "headline": headline,
             "paragraphs": [
@@ -1921,42 +2192,34 @@ async def get_savings_report(
     guide_by_id = {int(g.get("id", 0)): g for g in guide}
     prov_by_id  = {int(p.get("id", 0)): p for p in provisions}
 
-    # ── Anchor to actual Rx spend ───────────────────────────────────────────
-    # Cap total modeled leakage (damaging provisions) at ≤30% of real Rx spend
-    # so reported savings can never outrun what the plan actually spends.
-    raw_leakage = 0.0
-    for pid, meta in _PROVISION_EXPOSURE_PMPY.items():
-        score = float(prov_by_id.get(pid, {}).get("score", 5.0))
-        if score >= 7:
-            continue
-        risk_fraction = max(0.0, (10.0 - score) / 10.0)
-        raw_leakage += risk_fraction * meta["pmpy"] * members
-    spend_scale = _spend_cap_scale(raw_leakage, annual_rx_spend)
+    # ── Deterministic savings math (cap-anchored + 30% hard clamp) lives in the
+    # shared _savings_core helper so the Savings Report and the Dual-Engine
+    # comparison can never disagree on dollars.
+    core        = _savings_core(prov_by_id, members, annual_rx_spend)
+    spend_scale = core["spend_scale"]
+    total_low   = core["total_low"]
+    total_base  = core["total_base"]
+    total_high  = core["total_high"]
 
     # ── Build clause-by-clause findings (damaging only: score < 7) ──────────
     findings = []
     waterfall = []
-    total_low = total_base = total_high = 0
 
     for pid, meta in _PROVISION_EXPOSURE_PMPY.items():
+        cp = core["per"].get(pid)
+        if cp is None:
+            continue  # only damaging clauses (score >= 7 excluded by _savings_core)
         prov  = prov_by_id.get(pid, {})
         g     = guide_by_id.get(pid, {})
-        score = float(prov.get("score", 5.0))
-        if score >= 7:
-            continue  # only damaging clauses
+        score = cp["score"]
 
-        risk_fraction = max(0.0, (10.0 - score) / 10.0)
-        full_pmpy = meta["pmpy"]
-        rate_lo, rate_base, rate_hi = _PROVISION_RECOVERY_RATE.get(pid, (0.4, 0.6, 0.8))
-
-        annual_exposure  = round(risk_fraction * full_pmpy * members * spend_scale)
-        save_low         = round(annual_exposure * rate_lo)
-        save_base        = round(annual_exposure * rate_base)
-        save_high        = round(annual_exposure * rate_hi)
-
-        total_low  += save_low
-        total_base += save_base
-        total_high += save_high
+        risk_fraction   = cp["risk_fraction"]
+        full_pmpy       = cp["full_pmpy"]
+        rate_lo, rate_base, rate_hi = cp["rate_lo"], cp["rate_base"], cp["rate_hi"]
+        annual_exposure = cp["annual_exposure"]
+        save_low        = cp["save_low"]
+        save_base       = cp["save_base"]
+        save_high       = cp["save_high"]
 
         issues = prov.get("issues", []) or g.get("issues", [])
         red_issues = [i for i in issues
@@ -1966,6 +2229,10 @@ async def get_savings_report(
 
         neg = g.get("negotiation", {}) or {}
 
+        # Recompute issue-level dollars at the SAME request-time cap scale as the
+        # totals (actual spend when provided, else baseline) so issue-card figures
+        # never drift above — or disagree with — the capped clause totals.
+        issue_impact = _compute_financial_impact(pid, score, members, spend_scale)
         clause_issues = []
         for i in (red_issues or issues)[:8]:
             clause_issues.append({
@@ -1975,7 +2242,7 @@ async def get_savings_report(
                 "quote":            i.get("quote"),
                 "gap":              i.get("gap"),
                 "mechanism_type":   i.get("mechanism_type"),
-                "financial_impact": i.get("financial_impact"),
+                "financial_impact": issue_impact if i.get("financial_impact") else None,
                 "confidence":       i.get("confidence"),
                 "explanation":      i.get("explanation"),
             })
@@ -2025,6 +2292,27 @@ async def get_savings_report(
 
     overall_score = float(contract.overall_score or 0)
     pbm = contract.pbm_name or "Incumbent PBM"
+
+    # ── Client label for the deliverable cover. Use the organization/plan-sponsor
+    # name, never an individual's personal name or email, so reports stay
+    # institution-addressed and no person is identified on the document.
+    client_label = "Plan Sponsor"
+    try:
+        membership = (
+            db.query(models.OrganizationMember)
+            .filter(models.OrganizationMember.user_id == current_user.id)
+            .first()
+        )
+        if membership:
+            org = (
+                db.query(models.Organization)
+                .filter(models.Organization.id == membership.org_id)
+                .first()
+            )
+            if org and org.name:
+                client_label = org.name
+    except Exception:
+        client_label = "Plan Sponsor"
 
     # ── AI engagement narrative (situation / complication / resolution) ─────
     narrative = {
@@ -2136,7 +2424,7 @@ Total length under 380 words. No bullet points. No emojis.
             "practice":       "Pharmacy Benefit Integrity",
             "deliverable":    "Strategic Savings Report",
             "voice":          "Senior Partner — Big 4 / MBB standard",
-            "client":         current_user.email,
+            "client":         client_label,
             "pbm":            pbm,
             "members":        members,
             "annual_rx_spend": annual_rx_spend,
@@ -2160,7 +2448,7 @@ Total length under 380 words. No bullet points. No emojis.
         "methodology": {
             "framework":   "65-Issue Fiduciary–Economic Distortion Grid across 13 structural provision systems",
             "scoring":     "0–10 per provision based on plan-sponsor economic protection; overall = weighted avg scaled to 0–100",
-            "exposure":    "PMPY at full-risk × (1 − score/10) × member count, calibrated to mid-market commercial plans; capped at 30% of annual Rx spend when provided",
+            "exposure":    "PMPY at full-risk × (1 − score/10) × member count, calibrated to mid-market commercial plans; always capped at 30% of Rx spend (actual annual Rx spend when provided, else a members-based modeled baseline)",
             "recovery":    "Per-provision low/base/high recovery rates derived from observed amendment outcomes",
             "confidence":  "CERTIFIED (quoted clause + low score) · MODELED (inference) · INSUFFICIENT_EVIDENCE (no finding)",
             "sources": [
@@ -2438,6 +2726,8 @@ PROVISION DATA MOST RELEVANT TO YOUR DOMAIN:
 
 Write your chapter as the named attorney. Be specific, cite the relevant ERISA/CAA/DOL/FTC hooks, quantify exposure where the data supports it, and tie every assertion to a structural property of the contract — no marketing language, no hedging. Where evidence is insufficient, say INSUFFICIENT_EVIDENCE rather than inventing a finding.
 
+HARD CONSTRAINT: any dollar figure you cite for savings, recovery, or exposure — per finding or in total — MUST NOT exceed ${ctx['cap_ceiling']:,} (30% of the plan's annual Rx spend). Never state a number above ${ctx['cap_ceiling']:,}; use qualitative language instead when the modeled figure would exceed it.
+
 Respond with ONLY valid JSON (no markdown):
 {{
   "title": "a specific, board-ready chapter title for your domain analysis (max 9 words)",
@@ -2473,6 +2763,8 @@ THE 12 CHAPTER DIGESTS:
 {digest_text}
 
 Produce the engagement's executive synthesis. MECE structure, board-room directness, every claim justified by a structural property. No hedging, no marketing language.
+
+HARD CONSTRAINT: any dollar figure you cite for savings, recovery, or exposure MUST NOT exceed ${ctx['cap_ceiling']:,} (30% of the plan's annual Rx spend). Never state a number above ${ctx['cap_ceiling']:,}.
 
 Respond with ONLY valid JSON (no markdown):
 {{
@@ -2629,7 +2921,7 @@ async def _generate_synthesis(chapters: list, ctx: dict) -> dict:
         return _fallback_synthesis(chapters, ctx)
 
 
-def _load_strategic_ctx(contract, members: int) -> dict:
+def _load_strategic_ctx(contract, members: int, annual_rx_spend: Optional[float] = None) -> dict:
     def parse(field):
         try:
             return json.loads(field) if field else []
@@ -2646,6 +2938,10 @@ def _load_strategic_ctx(contract, members: int) -> dict:
         "overall_score": float(contract.overall_score or 0),
         "rating": (contract.rating or "concern").replace("_", " "),
         "members": members,
+        # Hard dollar ceiling (30% of Rx spend, actual when known else baseline)
+        # injected into every attorney/synthesis prompt so AI-authored strategic
+        # figures can never exceed the platform-wide leakage cap.
+        "cap_ceiling": round(_effective_rx_spend(annual_rx_spend, members) * _MAX_LEAKAGE_SHARE),
         "provisions": provisions,
         "key_findings": key_findings,
     }
@@ -2677,6 +2973,7 @@ def _build_strategic_payload(contract, ctx: dict, chapters: list, synthesis: dic
 async def strategic_report(
     contract_id: str,
     members: int = Query(500, ge=1),
+    annual_rx_spend: Optional[float] = None,
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):
@@ -2695,7 +2992,7 @@ async def strategic_report(
     if contract.status != "complete":
         raise HTTPException(400, "Contract analysis not complete")
 
-    ctx = _load_strategic_ctx(contract, members)
+    ctx = _load_strategic_ctx(contract, members, annual_rx_spend)
     chapters = await asyncio.gather(*[_generate_chapter(a, ctx) for a in RX_ATTORNEYS])
     chapters = sorted(chapters, key=lambda c: c["attorney"]["id"])
     synthesis = await _generate_synthesis(chapters, ctx)
@@ -2766,6 +3063,7 @@ async def _run_strategic_job(job_id: str, contract_meta: dict, ctx: dict):
 async def strategic_report_start(
     contract_id: str,
     members: int = Query(500, ge=1),
+    annual_rx_spend: Optional[float] = None,
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):
@@ -2787,7 +3085,7 @@ async def strategic_report_start(
     if contract.status != "complete":
         raise HTTPException(400, "Contract analysis not complete")
 
-    ctx = _load_strategic_ctx(contract, members)
+    ctx = _load_strategic_ctx(contract, members, annual_rx_spend)
     job_id = uuid.uuid4().hex
     _STRATEGIC_JOBS[job_id] = {
         "created_at": __import__("time").time(),
@@ -2851,4 +3149,183 @@ async def strategic_report_status(
         "synthesis_status": job["synthesis_status"],
         "error": job.get("error"),
         "report": job["payload"] if done else None,
+    }
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Dual-engine comparison — score the SAME contract with Claude AND OpenAI, then
+# let the user pick whichever savings estimate they trust as the active analysis.
+# ─────────────────────────────────────────────────────────────────────────────
+# Server-side cache of the last dual-engine run per contract. /select-engine only
+# ever persists a result that THIS server produced (looked up here by engine name)
+# so a client can never inject a fabricated analysis by posting an arbitrary body.
+_DUAL_RUN_CACHE: "dict[str, dict]" = {}
+_DUAL_RUN_CACHE_MAX = 256
+
+
+def _cache_dual_run(contract_id: str, results: dict) -> None:
+    kept = {k: v for k, v in results.items() if isinstance(v, dict) and v.get("provisions")}
+    if not kept:
+        return
+    _DUAL_RUN_CACHE.pop(contract_id, None)
+    _DUAL_RUN_CACHE[contract_id] = kept
+    while len(_DUAL_RUN_CACHE) > _DUAL_RUN_CACHE_MAX:
+        _DUAL_RUN_CACHE.pop(next(iter(_DUAL_RUN_CACHE)))
+
+
+def _engine_savings_summary(res, engine: str, model: str, members: int,
+                            annual_rx_spend: Optional[float]) -> dict:
+    """Turn one engine's raw analysis result into a compact savings summary using
+    the shared _savings_core math so both engines are compared on identical rules."""
+    if isinstance(res, Exception) or not isinstance(res, dict):
+        return {
+            "engine": engine, "model": model, "ok": False,
+            "error": str(res) if isinstance(res, Exception) else "No result returned.",
+        }
+    res = _apply_modeled_impacts(res)
+    provisions = res.get("provisions", [])
+    prov_by_id = {int(p.get("id", 0)): p for p in provisions}
+    core = _savings_core(prov_by_id, members, annual_rx_spend)
+    top = sorted(
+        [
+            {
+                "id": pid,
+                "name": _PROVISION_EXPOSURE_PMPY[pid]["label"],
+                "score": core["per"][pid]["score"],
+                "save_low": core["per"][pid]["save_low"],
+                "save_base": core["per"][pid]["save_base"],
+                "save_high": core["per"][pid]["save_high"],
+            }
+            for pid in core["per"]
+        ],
+        key=lambda x: -x["save_base"],
+    )
+    overall = float(res.get("overall_score", 45))
+    spend_pct = (
+        round(core["total_base"] / annual_rx_spend * 100, 1)
+        if annual_rx_spend else None
+    )
+    return {
+        "engine": engine, "model": model, "ok": True,
+        "overall_score": overall,
+        "rating": score_to_rating(overall),
+        "damaging_count": len(core["per"]),
+        "savings": {
+            "low": core["total_low"],
+            "base": core["total_base"],
+            "high": core["total_high"],
+            "spend_pct": spend_pct,
+        },
+        "top_provisions": top[:6],
+        "result": res,  # full result echoed back so /select-engine can persist it
+    }
+
+
+@router.post("/contracts/{contract_id}/dual-savings")
+async def dual_savings(
+    contract_id: str,
+    members: int = 1500,
+    annual_rx_spend: Optional[float] = None,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    """Analyze the same contract with BOTH Claude and OpenAI in parallel and
+    return each engine's savings estimate side by side so the user can pick the
+    one they trust. Requires readable source text (demo contracts can't be
+    re-scored)."""
+    import asyncio
+    contract = db.query(models.RxDefenseContract).filter(
+        models.RxDefenseContract.id == contract_id,
+        models.RxDefenseContract.user_id == current_user.id,
+    ).first()
+    if not contract:
+        raise HTTPException(404, "Contract not found")
+    if not contract.contract_text or len(contract.contract_text.strip()) < 100:
+        raise HTTPException(
+            400,
+            "This contract has no readable source text to re-analyze. "
+            "Dual-engine scoring needs the original uploaded contract.",
+        )
+
+    claude_res, openai_res = await asyncio.gather(
+        _analyze_with("claude", contract.contract_text),
+        _analyze_with("openai", contract.contract_text),
+        return_exceptions=True,
+    )
+
+    claude_sum = _engine_savings_summary(
+        claude_res, "claude", "claude-sonnet-4-6", members, annual_rx_spend)
+    openai_sum = _engine_savings_summary(
+        openai_res, "openai", "gpt-5", members, annual_rx_spend)
+
+    # Cache the server-produced results so /select-engine can persist exactly what
+    # was shown without trusting a client-supplied payload.
+    _cache_dual_run(contract_id, {
+        "claude": claude_sum.get("result") if claude_sum.get("ok") else None,
+        "openai": openai_sum.get("result") if openai_sum.get("ok") else None,
+    })
+
+    # Strip the bulky raw result from the wire response — it is no longer needed by
+    # the client now that selection is server-authoritative.
+    claude_sum.pop("result", None)
+    openai_sum.pop("result", None)
+
+    return {
+        "contract_id": contract_id,
+        "members": members,
+        "annual_rx_spend": annual_rx_spend,
+        "cap_note": (
+            f"All savings figures are hard-capped at {int(_MAX_LEAKAGE_SHARE * 100)}% "
+            f"of effective Rx spend, identically for both engines."
+        ),
+        "claude": claude_sum,
+        "openai": openai_sum,
+    }
+
+
+class SelectEngineBody(BaseModel):
+    engine: str
+
+
+@router.post("/contracts/{contract_id}/select-engine")
+def select_engine(
+    contract_id: str,
+    body: SelectEngineBody,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user),
+):
+    """Persist a chosen engine's analysis as the contract's active analysis, so
+    every other tab (scorecard, savings report, negotiation, etc.) reflects the
+    engine the user selected in the dual-engine comparison. The result applied is
+    the one THIS server produced in the most recent dual-savings run (looked up by
+    engine name) — never a client-supplied payload."""
+    engine = (body.engine or "").strip().lower()
+    if engine not in ("claude", "openai"):
+        raise HTTPException(400, "engine must be 'claude' or 'openai'.")
+
+    contract = db.query(models.RxDefenseContract).filter(
+        models.RxDefenseContract.id == contract_id,
+        models.RxDefenseContract.user_id == current_user.id,
+    ).first()
+    if not contract:
+        raise HTTPException(404, "Contract not found")
+
+    cached = _DUAL_RUN_CACHE.get(contract_id, {})
+    result = cached.get(engine)
+    if not isinstance(result, dict) or not result.get("provisions"):
+        raise HTTPException(
+            409,
+            "No cached analysis for that engine. Re-run the dual-engine comparison "
+            "and then apply an engine.",
+        )
+
+    _persist_analysis(contract, result)
+    contract.status = "complete"
+    contract.error_message = None
+    db.commit()
+    return {
+        "ok": True,
+        "engine": engine,
+        "overall_score": contract.overall_score,
+        "rating": contract.rating,
     }

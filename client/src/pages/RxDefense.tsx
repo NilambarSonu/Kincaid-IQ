@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useManifestDownload } from "@/hooks/use-manifest-download";
 import html2canvas from "html2canvas";
 import EmailReportModal from "@/components/EmailReportModal";
-import { downloadPDF, generateStrategicReportPDF, computeRxProvisionExposure, computeRxSavings, RX_REFERENCE_MEMBERS } from "@/lib/pdfReports";
+import { downloadPDF, generateStrategicReportPDF, computeRxProvisionExposure, computeRxSavings, RX_REFERENCE_MEMBERS, rxSpendCapScale, rxEffectiveSpend } from "@/lib/pdfReports";
 import RxDefenseFullReport from "./RxDefenseFullReport";
 import { motion } from "framer-motion";
 import {
@@ -1411,9 +1411,10 @@ function QuickLookTab({ contract, planRxSpend, planMembers, hideFindings }: { co
 
         // If the plan's actual Rx spend is known, cap leakage at 30% of spend (realistic max).
         const rxSpendDollars = planRxSpend ? (parseFloat(planRxSpend.replace(/[^0-9.]/g, "")) || 0) : 0;
-        const maxLeakage = rxSpendDollars > 0 ? rxSpendDollars * 0.30 : Infinity;
-        const scaleFactor = rawGrandMax > 0 && rawGrandMax > maxLeakage ? maxLeakage / rawGrandMax : 1;
+        const scaleFactor = rxSpendCapScale(rawGrandMax, rxSpendDollars, members);
         const isScaled = scaleFactor < 1;
+        const capUsesActualSpend = rxSpendDollars > 0;
+        const capBaseline = rxEffectiveSpend(rxSpendDollars, members);
 
         const grandMax = Math.round(rawGrandMax * scaleFactor);
         const grandMin = Math.round(rawGrandMin * scaleFactor);
@@ -1431,13 +1432,15 @@ function QuickLookTab({ contract, planRxSpend, planMembers, hideFindings }: { co
                   <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded"
                     style={{ color: NEON.gold, background: `${NEON.gold}15`, border: `1px solid ${NEON.gold}30` }}>MODELED</span>
                 </div>
-                <p className="text-[9px] text-slate-500">Estimated annual surplus capture by category · see $ Exposure tab for member × PMPY detail</p>
+                <p className="text-[9px] text-slate-500">Estimated annual leakage by category · see $ Exposure tab for member × PMPY detail</p>
               </div>
               <div className="ml-auto text-right">
                 <p className="text-lg font-black text-slate-900">{fmtAmt(grandMin)}–{fmtAmt(grandMax)}</p>
                 <p className="text-[9px] text-slate-500">
                   {isScaled
-                    ? `scaled to your ${fmtAmt(rxSpendDollars)} Rx spend · ≤30% cap`
+                    ? (capUsesActualSpend
+                        ? `scaled to your ${fmtAmt(rxSpendDollars)} Rx spend · ≤30% cap`
+                        : `capped at 30% of modeled Rx spend (${fmtAmt(capBaseline)}) · enter spend to refine`)
                     : "total estimated annual leakage"}
                 </p>
               </div>
@@ -1475,8 +1478,10 @@ function QuickLookTab({ contract, planRxSpend, planMembers, hideFindings }: { co
                 style={{ background: "rgba(255,184,0,0.06)", border: "1px solid rgba(255,184,0,0.2)" }}>
                 <AlertTriangle className="w-3 h-3 flex-shrink-0 mt-0.5" style={{ color: NEON.gold }} />
                 <p className="text-[9px] text-slate-500 leading-relaxed">
-                  Figures scaled to your <strong className="text-slate-700">{fmtAmt(rxSpendDollars)}</strong> annual Rx spend.
-                  Maximum realistic leakage is capped at 30% of total spend. Use the $ Exposure tab for provision-level PMPY detail.
+                  Figures capped at 30% of {capUsesActualSpend
+                    ? <>your <strong className="text-slate-700">{fmtAmt(rxSpendDollars)}</strong> annual Rx spend</>
+                    : <>a modeled Rx spend baseline (<strong className="text-slate-700">{fmtAmt(capBaseline)}</strong>) — enter actual spend to refine</>}.
+                  Even an egregious PBM contract cannot leak more than ~30% of total pharmacy spend. Use the $ Exposure tab for provision-level PMPY detail.
                 </p>
               </div>
             ) : (
@@ -1570,8 +1575,7 @@ function FinancialImpactCalculator({ contract, externalRxSpend, externalMembers,
   const rawTotal = rawGaps.reduce((s, g) => s + g.exposure, 0);
 
   // Annual Rx spend acts only as a guardrail cap — modeled leakage can't exceed 30% of spend.
-  const maxLeak = spend > 0 ? spend * 0.30 : Infinity;
-  const scale = rawTotal > maxLeak && rawTotal > 0 ? maxLeak / rawTotal : 1;
+  const scale = rxSpendCapScale(rawTotal, spend, members);
   const isCapped = scale < 1;
   const gaps = rawGaps.map(g => ({ ...g, exposure: Math.round(g.exposure * scale) }));
 
@@ -2440,11 +2444,13 @@ function RedFlagTab({ contract, planRxSpend, planMembers }: { contract: Contract
   const rawLow  = Math.round(rawMid * 0.75);
   const rawHigh = Math.round(rawMid * 1.25);
 
-  // Cap at 30% of actual Rx spend when entered — leakage cannot exceed what the plan spends
+  // Cap leakage at 30% of Rx spend — actual when entered, else a modeled baseline
+  // so the ceiling always binds and savings can never exceed what a plan spends.
   const rxSpendDollars = planRxSpend ? (parseFloat(planRxSpend.replace(/[^0-9.]/g, "")) || 0) : 0;
-  const maxLeakage = rxSpendDollars > 0 ? rxSpendDollars * 0.30 : Infinity;
-  const scaleFactor = rawHigh > 0 && rawHigh > maxLeakage ? maxLeakage / rawHigh : 1;
+  const scaleFactor = rxSpendCapScale(rawHigh, rxSpendDollars, members);
   const isScaled = scaleFactor < 1;
+  const capUsesActualSpend = rxSpendDollars > 0;
+  const capBaseline = rxEffectiveSpend(rxSpendDollars, members);
 
   const dollarLow  = Math.round(rawLow  * scaleFactor);
   const dollarHigh = Math.round(rawHigh * scaleFactor);
@@ -2478,7 +2484,9 @@ function RedFlagTab({ contract, planRxSpend, planMembers }: { contract: Contract
                 </div>
                 <div className="text-xs text-zinc-500 mt-1">
                   {isScaled
-                    ? `Scaled to your ${fmtDollar(rxSpendDollars)} Rx spend · ≤30% cap · top 5 risk provisions`
+                    ? (capUsesActualSpend
+                        ? `Scaled to your ${fmtDollar(rxSpendDollars)} Rx spend · ≤30% cap · top 5 risk provisions`
+                        : `Capped at 30% of modeled Rx spend (${fmtDollar(capBaseline)}) · enter spend to refine · top 5 risk provisions`)
                     : `${members.toLocaleString()} members × PMPY × risk_fraction · top 5 provisions${isRefPlan ? " · based on 500-member reference plan" : ""}`}
                 </div>
               </>
@@ -2537,7 +2545,7 @@ function RedFlagTab({ contract, planRxSpend, planMembers }: { contract: Contract
                     </div>
                     <p className="text-sm font-bold text-slate-800 truncate">{p.name}</p>
                   </div>
-                  {(() => { const ex = provExposure(p); return ex > 0 ? (
+                  {(() => { const ex = Math.round(provExposure(p) * scaleFactor); return ex > 0 ? (
                     <div className="flex-shrink-0 text-right mr-2">
                       <div className="text-xs font-black" style={{ color: pColor }}>
                         {fmtDollar(Math.round(ex * 0.75))}–{fmtDollar(Math.round(ex * 1.25))}
@@ -3324,14 +3332,17 @@ interface ExecSummaryData {
   headline: string; paragraphs: string[]; action: string; ai_generated: boolean;
 }
 
-function ExecSummaryTab({ contract, planMembers }: { contract: Contract; planMembers?: number }) {
+function ExecSummaryTab({ contract, planMembers, planRxSpend }: { contract: Contract; planMembers?: number; planRxSpend?: string }) {
   const queryClient = useQueryClient();
   const members = planMembers && planMembers > 0 ? planMembers : 500;
-  const summaryQueryKey = ["/api/rx-defense/contracts", contract.id, "executive-summary", members];
+  const spendNum = planRxSpend ? (parseFloat(planRxSpend.replace(/[^0-9.]/g, "")) || 0) : 0;
+  const summaryQueryKey = ["/api/rx-defense/contracts", contract.id, "executive-summary", members, spendNum || "na"];
   const { data, isLoading, isFetching, refetch } = useQuery<ExecSummaryData>({
     queryKey: summaryQueryKey,
     queryFn: async () => {
-      const r = await fetch(`/api/rx-defense/contracts/${contract.id}/executive-summary?members=${members}`, { credentials: "include" });
+      let url = `/api/rx-defense/contracts/${contract.id}/executive-summary?members=${members}`;
+      if (spendNum) url += `&annual_rx_spend=${spendNum}`;
+      const r = await fetch(url, { credentials: "include" });
       return r.json();
     },
     staleTime: 300_000,
@@ -3493,7 +3504,7 @@ function ExecSummaryTab({ contract, planMembers }: { contract: Contract; planMem
 
           <p className="text-[9px] text-slate-400 text-center">
             {data.ai_generated
-              ? "Generated by GPT-4o based on contract analysis data. Not legal advice."
+              ? "Generated by GPT-5 based on contract analysis data. Not legal advice."
               : "Summary generated from contract analysis data. Consult ERISA counsel before action."}
           </p>
         </div>
@@ -3847,7 +3858,7 @@ function PresentationMode({ contract, onClose }: { contract: Contract; onClose: 
 }
 
 
-/* ─── McKinsey-Grade Savings Report Tab ──────────────────────────────────── */
+/* ─── McKinsey-Grade Forensic Findings Report Tab ─────────────────────────── */
 
 interface SavingsClause {
   text: string; status: string; severity: string;
@@ -3891,6 +3902,222 @@ function fmt$(n: number): string {
   return `$${n.toLocaleString()}`;
 }
 
+type DualEngineResult = {
+  engine: string; model: string; ok: boolean; error?: string;
+  overall_score?: number; rating?: string; damaging_count?: number;
+  savings?: { low: number; base: number; high: number; spend_pct: number | null };
+  top_provisions?: { id: number; name: string; score: number; save_low: number; save_base: number; save_high: number }[];
+  result?: any;
+};
+type DualSavingsData = {
+  contract_id: string; members: number; annual_rx_spend: number | null;
+  cap_note: string; claude: DualEngineResult; openai: DualEngineResult;
+};
+
+function DualEngineTab({ contract, members, rxSpend }: { contract: Contract; members: number; rxSpend: string }) {
+  const spendNum = parseFloat((rxSpend || "").replace(/[^0-9.]/g, "")) || undefined;
+  const qc = useQueryClient();
+  const { toast } = useToast();
+  const [data, setData] = useState<DualSavingsData | null>(null);
+  const [chosen, setChosen] = useState<"claude" | "openai" | null>(null);
+
+  const run = useMutation({
+    mutationFn: async () => {
+      const url = new URL(`/api/rx-defense/contracts/${contract.id}/dual-savings`, window.location.origin);
+      url.searchParams.set("members", String(members || 1500));
+      if (spendNum) url.searchParams.set("annual_rx_spend", String(spendNum));
+      const res = await apiRequest("POST", url.toString().replace(window.location.origin, ""), {});
+      return res.json() as Promise<DualSavingsData>;
+    },
+    onSuccess: (d) => { setData(d); setChosen(null); },
+    onError: (e: any) => toast({
+      title: "Comparison failed",
+      description: e?.message?.includes("400")
+        ? "Dual-engine scoring needs the original uploaded contract text."
+        : "Could not run both engines. Try again.",
+      variant: "destructive",
+    }),
+  });
+
+  const select = useMutation({
+    mutationFn: async (engine: "claude" | "openai") => {
+      const eng = data?.[engine];
+      if (!eng?.ok) throw new Error("Engine result unavailable");
+      const res = await apiRequest("POST", `/api/rx-defense/contracts/${contract.id}/select-engine`, { engine });
+      return res.json();
+    },
+    onSuccess: (_r, engine) => {
+      setChosen(engine);
+      qc.invalidateQueries({ queryKey: ["/api/rx-defense/contracts", contract.id] });
+      qc.invalidateQueries({ queryKey: ["/api/rx-defense/contracts"] });
+      toast({
+        title: `${engine === "claude" ? "Claude" : "OpenAI"} analysis applied`,
+        description: "Every tab now reflects this engine's scoring & savings.",
+      });
+    },
+    onError: () => toast({ title: "Could not apply engine", variant: "destructive" }),
+  });
+
+  const fmt = (n?: number) => n == null ? "—" : n >= 1_000_000 ? `$${(n / 1_000_000).toFixed(2)}M` : `$${Math.round(n / 1000)}K`;
+
+  const ENGINE_META: Record<string, { label: string; color: string; sub: string }> = {
+    claude: { label: "Claude", color: NEON.purple, sub: "Anthropic" },
+    openai: { label: "OpenAI", color: NEON.green, sub: "GPT-5" },
+  };
+
+  const baseVals = data && data.claude.ok && data.openai.ok
+    ? [data.claude.savings!.base, data.openai.savings!.base] : null;
+  const higher = baseVals ? (baseVals[0] >= baseVals[1] ? "claude" : "openai") : null;
+
+  const EngineColumn = ({ eng }: { eng: DualEngineResult }) => {
+    const meta = ENGINE_META[eng.engine];
+    const isChosen = chosen === eng.engine;
+    const isHigher = higher === eng.engine;
+    if (!eng.ok) {
+      return (
+        <div className="rounded-2xl p-6 flex flex-col" style={{ border: `1px solid rgba(0,0,0,0.10)`, background: "rgba(0,0,0,0.02)" }}>
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-sm font-black" style={{ color: meta.color }}>{meta.label}</span>
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded" style={{ background: `${meta.color}18`, color: meta.color }}>{eng.model}</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-slate-500 py-8 justify-center">
+            <AlertOctagon className="w-4 h-4" style={{ color: NEON.red }} />
+            {eng.error || "This engine did not return a result."}
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div
+        data-testid={`rx-dual-col-${eng.engine}`}
+        className="rounded-2xl p-6 flex flex-col relative"
+        style={{
+          border: `1.5px solid ${isChosen ? meta.color : `${meta.color}30`}`,
+          background: isChosen ? `${meta.color}08` : "#fff",
+          boxShadow: isChosen ? `0 0 0 3px ${meta.color}22` : "0 1px 3px rgba(0,0,0,0.05)",
+        }}
+      >
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <span className="text-base font-black" style={{ color: meta.color }}>{meta.label}</span>
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded" style={{ background: `${meta.color}18`, color: meta.color }}>{eng.model}</span>
+          </div>
+          {isHigher && (
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: `${NEON.gold}18`, color: NEON.gold }}>Higher estimate</span>
+          )}
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="rounded-xl p-3" style={{ background: "rgba(0,0,0,0.03)" }}>
+            <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Fiduciary score</div>
+            <div className="text-2xl font-black" style={{ color: meta.color }}>{Math.round(eng.overall_score || 0)}<span className="text-sm text-slate-400">/100</span></div>
+            <div className="text-[10px] text-slate-500 capitalize">{eng.rating}</div>
+          </div>
+          <div className="rounded-xl p-3" style={{ background: "rgba(0,0,0,0.03)" }}>
+            <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Damaging clauses</div>
+            <div className="text-2xl font-black" style={{ color: NEON.red }}>{eng.damaging_count}<span className="text-sm text-slate-400">/13</span></div>
+            {eng.savings?.spend_pct != null && <div className="text-[10px] text-slate-500">{eng.savings.spend_pct}% of Rx spend</div>}
+          </div>
+        </div>
+
+        <div className="rounded-xl p-4 mb-4 text-center" style={{ background: `${meta.color}0d`, border: `1px solid ${meta.color}22` }}>
+          <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Recoverable savings / yr (base case)</div>
+          <div className="text-3xl font-black" style={{ color: meta.color }} data-testid={`rx-dual-savings-${eng.engine}`}>{fmt(eng.savings?.base)}</div>
+          <div className="text-[11px] text-slate-500 mt-1">Range {fmt(eng.savings?.low)} – {fmt(eng.savings?.high)}</div>
+        </div>
+
+        <div className="flex-1">
+          <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-2">Top savings drivers</div>
+          <div className="space-y-1.5">
+            {(eng.top_provisions || []).map((p) => (
+              <div key={p.id} className="flex items-center justify-between text-xs">
+                <span className="truncate pr-2 text-slate-700">{p.name}</span>
+                <span className="font-bold flex-shrink-0" style={{ color: meta.color }}>{fmt(p.save_base)}</span>
+              </div>
+            ))}
+            {(eng.top_provisions || []).length === 0 && <div className="text-xs text-slate-400">No damaging provisions found.</div>}
+          </div>
+        </div>
+
+        <button
+          data-testid={`rx-dual-select-${eng.engine}`}
+          onClick={() => select.mutate(eng.engine as "claude" | "openai")}
+          disabled={select.isPending}
+          className="mt-5 w-full py-2.5 rounded-xl text-sm font-bold transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+          style={{
+            background: isChosen ? meta.color : `${meta.color}15`,
+            color: isChosen ? "#fff" : meta.color,
+            border: `1px solid ${meta.color}${isChosen ? "" : "40"}`,
+          }}
+        >
+          {select.isPending && select.variables === eng.engine
+            ? <><Loader2 className="w-4 h-4 animate-spin" /> Applying…</>
+            : isChosen
+              ? <><CheckCircle2 className="w-4 h-4" /> Active analysis</>
+              : <>Use this engine's analysis</>}
+        </button>
+      </div>
+    );
+  };
+
+  return (
+    <div className="px-6 pb-6">
+      <div className="rounded-2xl p-5 mb-5 flex flex-col sm:flex-row sm:items-center gap-4 justify-between"
+        style={{ background: "linear-gradient(135deg, rgba(124,58,237,0.06), rgba(5,150,105,0.06))", border: "1px solid rgba(0,0,0,0.08)" }}>
+        <div className="flex items-start gap-3">
+          <GitCompare className="w-6 h-6 flex-shrink-0" style={{ color: NEON.purple }} />
+          <div>
+            <div className="text-sm font-black text-slate-800">Dual-Engine Savings Comparison</div>
+            <div className="text-xs text-slate-500 max-w-xl mt-0.5">
+              Score this contract with <b>Claude</b> and <b>OpenAI</b> at the same time, then apply whichever
+              savings estimate you trust. Both run identical cap rules ({members.toLocaleString()} members{spendNum ? ` · ${fmt(spendNum)} Rx spend` : ""}).
+            </div>
+          </div>
+        </div>
+        <button
+          data-testid="rx-dual-run"
+          onClick={() => run.mutate()}
+          disabled={run.isPending}
+          className="flex-shrink-0 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all disabled:opacity-60 flex items-center gap-2"
+          style={{ background: NEON.purple }}
+        >
+          {run.isPending
+            ? <><Loader2 className="w-4 h-4 animate-spin" /> Running both engines…</>
+            : <><Sparkles className="w-4 h-4" /> {data ? "Re-run comparison" : "Run comparison"}</>}
+        </button>
+      </div>
+
+      {run.isPending && (
+        <div className="flex flex-col items-center justify-center py-16 gap-3">
+          <Loader2 className="w-7 h-7 animate-spin" style={{ color: NEON.purple }} />
+          <p className="text-xs text-slate-500 tracking-widest uppercase">Claude &amp; OpenAI analyzing in parallel…</p>
+        </div>
+      )}
+
+      {!run.isPending && !data && (
+        <div className="text-center py-16 text-sm text-slate-400">
+          Run the comparison to see Claude and OpenAI side by side.
+        </div>
+      )}
+
+      {data && !run.isPending && (
+        <>
+          {baseVals && (
+            <div className="text-center text-xs text-slate-500 mb-4">
+              Engines differ by <b style={{ color: NEON.gold }}>{fmt(Math.abs(baseVals[0] - baseVals[1]))}</b> on base-case annual savings.
+            </div>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <EngineColumn eng={data.claude} />
+            <EngineColumn eng={data.openai} />
+          </div>
+          <div className="text-[11px] text-slate-400 mt-4 text-center">{data.cap_note}</div>
+        </>
+      )}
+    </div>
+  );
+}
+
 function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; members: number; rxSpend: string }) {
   const reportRef = useRef<HTMLDivElement>(null);
   const spendNum = parseFloat((rxSpend || "").replace(/[^0-9.]/g, "")) || undefined;
@@ -3913,7 +4140,7 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
     return (
       <div className="flex flex-col items-center justify-center py-20 gap-3">
         <Loader2 className="w-7 h-7 animate-spin" style={{ color: NEON.gold }} />
-        <p className="text-xs text-slate-500 tracking-widest uppercase">Compiling Strategic Savings Report…</p>
+        <p className="text-xs text-slate-500 tracking-widest uppercase">Compiling Strategic Forensic Report…</p>
       </div>
     );
   }
@@ -3949,7 +4176,7 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
       <div className="no-print flex items-center justify-between mb-4 px-2">
         <div>
           <div className="text-[10px] uppercase tracking-[0.3em] text-slate-400">Kincaid Strategic Advisory</div>
-          <div className="text-sm font-black text-slate-900">Strategic Savings Report</div>
+          <div className="text-sm font-black text-slate-900">Strategic Forensic Report</div>
         </div>
         <div className="flex gap-2">
           <button
@@ -3992,12 +4219,12 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
           <h2 className="text-xl text-slate-500 print-dark italic mb-12"
             style={{ fontFamily: "ui-serif, Georgia, serif" }}>
             Forensic Review of Pharmacy Benefit Contract<br/>
-            with Quantified Recovery Pathway
+            with Model Remediation Pathway
           </h2>
 
           <div className="grid grid-cols-4 gap-6 mb-10">
             {[
-              { label: "Plan Sponsor", value: data.engagement.client?.split("@")[0] || "Client" },
+              { label: "Plan Sponsor", value: data.engagement.client || "Plan Sponsor" },
               { label: "PBM", value: data.engagement.pbm },
               { label: "Members", value: data.engagement.members.toLocaleString() },
               { label: "Report Date", value: dateStr },
@@ -4009,21 +4236,17 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
             ))}
           </div>
 
-          {/* Headline savings number */}
+          {/* Headline findings summary */}
           <div className="rounded-xl p-8 rxd-print-card"
             style={{ background: "rgba(217,119,6,0.05)", border: `1px solid ${NEON.gold}30` }}>
-            <div className="text-[10px] uppercase tracking-[0.4em] text-slate-400 mb-2">Identified Recovery Opportunity</div>
+            <div className="text-[10px] uppercase tracking-[0.4em] text-slate-400 mb-2">Fiduciary Findings Summary</div>
             <div className="flex items-baseline gap-3">
               <span className="text-6xl font-black" style={{ color: NEON.gold,
-                fontFamily: "ui-serif, Georgia, serif" }}>{fmt$(data.savings.total_base)}</span>
-              <span className="text-slate-500 text-sm">annual · base case</span>
+                fontFamily: "ui-serif, Georgia, serif" }}>{data.savings.damaging_count}</span>
+              <span className="text-slate-500 text-sm">of {data.savings.provisions_total} provisions below fiduciary baseline</span>
             </div>
             <div className="mt-3 text-xs text-slate-500 print-dark">
-              Range {fmt$(data.savings.total_low)} – {fmt$(data.savings.total_high)} ·{" "}
-              {data.savings.damaging_count} of {data.savings.provisions_total} provisions below fiduciary baseline ·{" "}
-              ${data.savings.per_member_savings.toLocaleString()} per member per year
-              {data.savings.savings_as_pct_of_spend != null &&
-                <> · <span style={{ color: NEON.gold }}>{data.savings.savings_as_pct_of_spend}% of annual Rx spend</span></>}
+              Each damaging provision is detailed below with quoted contract language, its economic mechanism, and model remediation language.
             </div>
           </div>
 
@@ -4031,6 +4254,7 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
             <span>Confidential — Prepared for Plan Committee</span>
             <span>{data.engagement.voice}</span>
           </div>
+          <ReportPageFooter n={1} total={5} />
         </div>
 
         {/* === EXECUTIVE NARRATIVE (S-C-R) === */}
@@ -4054,52 +4278,13 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
               </p>
             </div>
           ))}
-        </div>
-
-        {/* === SAVINGS WATERFALL === */}
-        <div className="p-12 page-break" style={{ background: "rgba(0,0,0,0.015)" }}>
-          <SectionHeader number="02" label="Savings Waterfall" subtitle="Per-provision base-case recovery, ranked" />
-          <div className="space-y-2">
-            {data.waterfall.map((w, i) => {
-              const maxVal = Math.max(...data.waterfall.map(x => x.savings_base), 1);
-              const pct = (w.savings_base / maxVal) * 100;
-              return (
-                <div key={w.provision_id}
-                  data-testid={`rxd-savings-waterfall-${w.provision_id}`}
-                  className="grid grid-cols-12 items-center gap-3 py-2 border-b"
-                  style={{ borderColor: "rgba(0,0,0,0.06)" }}>
-                  <div className="col-span-1 text-[10px] font-mono text-slate-400">#{String(i+1).padStart(2,'0')}</div>
-                  <div className="col-span-4 text-xs font-bold text-slate-700 print-dark truncate">{w.name}</div>
-                  <div className="col-span-5 h-5 rounded relative overflow-hidden"
-                    style={{ background: "rgba(0,0,0,0.05)" }}>
-                    <div className="h-full rounded"
-                      style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${NEON.gold}40, ${NEON.gold})` }}/>
-                  </div>
-                  <div className="col-span-2 text-right">
-                    <div className="text-sm font-black" style={{ color: NEON.gold }}>{fmt$(w.savings_base)}</div>
-                    <div className="text-[9px] text-slate-400 font-mono">{fmt$(w.savings_low)}–{fmt$(w.savings_high)}</div>
-                  </div>
-                </div>
-              );
-            })}
-            <div className="grid grid-cols-12 items-center gap-3 pt-4 mt-2"
-              style={{ borderTop: `2px solid ${NEON.gold}` }}>
-              <div className="col-span-5 text-sm font-black uppercase tracking-widest text-slate-900 print-dark">Total Recovery</div>
-              <div className="col-span-5 text-right text-[10px] uppercase tracking-widest text-slate-400">
-                Low · Base · High
-              </div>
-              <div className="col-span-2 text-right">
-                <div className="text-xl font-black" style={{ color: NEON.gold }}>{fmt$(data.savings.total_base)}</div>
-                <div className="text-[9px] text-slate-400">{fmt$(data.savings.total_low)} – {fmt$(data.savings.total_high)}</div>
-              </div>
-            </div>
-          </div>
+          <ReportPageFooter n={2} total={5} />
         </div>
 
         {/* === CLAUSE-BY-CLAUSE FINDINGS === */}
         <div className="p-12">
-          <SectionHeader number="03" label="Damaging Clauses — Findings"
-            subtitle={`${data.findings.length} provisions detailed below; each contains quoted contract language (where present), the economic mechanism of value-extraction, savings band, and model remediation language.`} />
+          <SectionHeader number="02" label="Damaging Clauses — Findings"
+            subtitle={`${data.findings.length} provisions detailed below; each contains quoted contract language (where present), the economic mechanism of value-extraction, and model remediation language.`} />
           <div className="space-y-8">
             {data.findings.map((f, idx) => (
               <FindingBlock key={f.id} f={f} idx={idx} sevColor={SEV_COLOR[f.severity]} tierColor={TIER_COLOR[f.confidence_tier]} />
@@ -4113,11 +4298,12 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
               </div>
             )}
           </div>
+          <ReportPageFooter n={3} total={5} />
         </div>
 
         {/* === 30/60/90 ROADMAP === */}
         <div className="p-12 page-break" style={{ background: "rgba(0,0,0,0.015)" }}>
-          <SectionHeader number="04" label="Implementation Roadmap" subtitle="30 · 60 · 90-day governance cadence" />
+          <SectionHeader number="03" label="Implementation Roadmap" subtitle="30 · 60 · 90-day governance cadence" />
           <div className="grid grid-cols-3 gap-4">
             {data.roadmap.map((r, i) => (
               <div key={r.horizon} className="rounded-xl p-5 rxd-print-card"
@@ -4139,17 +4325,17 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
               </div>
             ))}
           </div>
+          <ReportPageFooter n={4} total={5} />
         </div>
 
         {/* === METHODOLOGY & APPENDIX === */}
         <div className="p-12">
-          <SectionHeader number="05" label="Methodology & Sources" subtitle="Appendix" />
+          <SectionHeader number="04" label="Methodology & Sources" subtitle="Appendix" />
           <div className="grid grid-cols-2 gap-x-10 gap-y-4 mb-8">
             {[
               ["Framework",   data.methodology.framework],
               ["Scoring",     data.methodology.scoring],
               ["Exposure",    data.methodology.exposure],
-              ["Recovery",    data.methodology.recovery],
               ["Confidence",  data.methodology.confidence],
             ].map(([k, v]) => (
               <div key={k}>
@@ -4177,6 +4363,7 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
             style={{ borderTop: "1px solid rgba(0,0,0,0.08)" }}>
             <span>{data.engagement.firm} · {data.engagement.practice}</span>
             <span>Generated {dateStr}</span>
+            <span className="font-mono tabular-nums" style={{ color: NEON.gold }}>Page 5 of 5</span>
             <span>© Kincaid Risk Management Consulting</span>
           </div>
         </div>
@@ -4197,6 +4384,18 @@ function SectionHeader({ number, label, subtitle }: { number: string; label: str
       </div>
       {subtitle && <p className="text-xs text-slate-500 leading-relaxed pl-9 max-w-3xl">{subtitle}</p>}
       <div className="mt-4 h-px" style={{ background: "linear-gradient(90deg, rgba(217,119,6,0.4), transparent)" }} />
+    </div>
+  );
+}
+
+/* Page-number footer for the printable Strategic Savings Report — visible on
+   screen and in print so each page is easy to reference and navigate. */
+function ReportPageFooter({ n, total }: { n: number; total: number }) {
+  return (
+    <div className="mt-10 pt-4 flex items-center justify-between text-[9px] uppercase tracking-widest text-slate-400"
+      style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
+      <span>Kincaid Strategic Advisory — Strategic Forensic Report</span>
+      <span className="font-mono tabular-nums" style={{ color: NEON.gold }}>Page {n} of {total}</span>
     </div>
   );
 }
@@ -4295,34 +4494,19 @@ function FindingBlock({ f, idx, sevColor, tierColor }: {
           )}
         </div>
 
-        {/* Right column — savings band */}
+        {/* Right column — exposure profile */}
         <div className="col-span-4">
           <div className="rounded-xl p-4 rxd-print-card"
             style={{ background: "rgba(217,119,6,0.04)", border: `1px solid ${NEON.gold}25` }}>
-            <div className="text-[9px] uppercase tracking-widest text-slate-400 mb-1">Annual Recovery</div>
+            <div className="text-[9px] uppercase tracking-widest text-slate-400 mb-1">Annual Exposure</div>
             <div className="text-3xl font-black mb-1" style={{ color: NEON.gold,
-              fontFamily: "ui-serif, Georgia, serif" }}>{fmt$(f.exposure.savings_base)}</div>
-            <div className="text-[10px] text-slate-400 mb-4">base case</div>
-
-            <div className="space-y-1.5">
-              {[
-                { label: "Low",  v: f.exposure.savings_low,  r: f.exposure.recovery_rate_low },
-                { label: "Base", v: f.exposure.savings_base, r: f.exposure.recovery_rate_base },
-                { label: "High", v: f.exposure.savings_high, r: f.exposure.recovery_rate_high },
-              ].map(b => (
-                <div key={b.label} className="flex items-baseline justify-between text-[11px]">
-                  <span className="text-slate-400 uppercase tracking-widest text-[9px]">{b.label}</span>
-                  <span className="text-slate-700 print-dark font-mono">{fmt$(b.v)}</span>
-                  <span className="text-slate-400 font-mono text-[9px]">{Math.round(b.r * 100)}%</span>
-                </div>
-              ))}
-            </div>
+              fontFamily: "ui-serif, Georgia, serif" }}>{fmt$(f.exposure.annual_exposure)}</div>
+            <div className="text-[10px] text-slate-400 mb-4">modeled · at full risk</div>
 
             <div className="mt-4 pt-3 text-[10px] text-slate-500"
               style={{ borderTop: "1px solid rgba(0,0,0,0.08)" }}>
               <div className="flex justify-between mb-1"><span>PMPY at full risk</span><span className="font-mono">${f.exposure.pmpy_at_full_risk}</span></div>
-              <div className="flex justify-between mb-1"><span>Risk fraction</span><span className="font-mono">{Math.round(f.exposure.risk_fraction * 100)}%</span></div>
-              <div className="flex justify-between"><span>Annual exposure</span><span className="font-mono">{fmt$(f.exposure.annual_exposure)}</span></div>
+              <div className="flex justify-between"><span>Risk fraction</span><span className="font-mono">{Math.round(f.exposure.risk_fraction * 100)}%</span></div>
             </div>
           </div>
 
@@ -4339,13 +4523,14 @@ function FindingBlock({ f, idx, sevColor, tierColor }: {
 /* ─── REPORT PAGES ────────────────────────────────────────────────────────── */
 
 type PageId =
-  | "overview" | "exec_summary" | "financial" | "risk"
+  | "overview" | "exec_summary" | "financial" | "dual" | "risk"
   | "redflags" | "compliance" | "negotiation" | "tracker" | "comparison";
 
 const REPORT_PAGES: { id: PageId; title: string; icon: typeof ShieldCheck; desc: string; color: string }[] = [
   { id: "overview",     title: "Overview",                   icon: CircleDot,      desc: "Score, key stats & quick look",       color: NEON.blue },
   { id: "exec_summary", title: "Executive Summary",          icon: Brain,          desc: "AI CFO brief & key findings",         color: NEON.purple },
-  { id: "financial",    title: "Financial Analysis",         icon: DollarSign,     desc: "Dollar exposure & savings report",    color: NEON.red },
+  { id: "financial",    title: "Financial Analysis",         icon: DollarSign,     desc: "Dollar exposure & forensic findings", color: NEON.red },
+  { id: "dual",         title: "Dual-Engine Savings",        icon: GitCompare,     desc: "Claude vs OpenAI — pick the estimate", color: NEON.purple },
   { id: "risk",         title: "Risk Architecture",          icon: BarChart3,      desc: "13-provision scorecard & benchmarks", color: NEON.purple },
   { id: "redflags",     title: "Red Flags & DOL Gaps",       icon: AlertOctagon,   desc: "Flags, DOL gap & PBM index",          color: NEON.red },
   { id: "compliance",   title: "Regulatory Compliance",      icon: ListChecks,     desc: "CAA 2026 & ERISA matrix",             color: NEON.blue },
@@ -4606,7 +4791,6 @@ function DolGapTab({ contract }: { contract: Contract }) {
               { label: "Broker Ratio", value: `${co.broker_ratio_pct}%`, color: co.broker_ratio_pct > b.p90_broker_ratio_pct ? RED2 : co.broker_ratio_pct > b.median_broker_ratio_pct ? AMB : GRN },
               { label: "vs National Median", value: `${co.broker_vs_median > 0 ? "+" : ""}${co.broker_vs_median}%`, color: co.broker_vs_median > 0 ? RED2 : GRN },
               { label: "Broker Excess $", value: `$${Math.round((co.broker_excess||0)/1000)}K`, color: co.broker_excess > 0 ? RED2 : GRN },
-              { label: "Total Recoverable (40%)", value: `$${Math.round((co.total_recoverable||0)/1000)}K`, color: GRN },
             ].map(({ label, value, color }) => (
               <div key={label} style={{ background: "#FFFFFF", border: `1px solid ${BORDER2}`, borderRadius: 6, padding: "10px 12px" }}>
                 <div style={{ color: T2, fontSize: 10, textTransform: "uppercase", letterSpacing: 0.7, marginBottom: 3 }}>{label}</div>
@@ -4685,7 +4869,7 @@ const RX_ATTORNEYS_META = [
 
 type CardState = "pending" | "active" | "done";
 
-function StrategicReportPanel({ contractId, members, pbmName, onClose }: { contractId: string; members: number; pbmName: string; onClose: () => void }) {
+function StrategicReportPanel({ contractId, members, rxSpend, pbmName, onClose }: { contractId: string; members: number; rxSpend?: string; pbmName: string; onClose: () => void }) {
   const [cards, setCards] = useState<CardState[]>(() => Array(12).fill("pending"));
   const [synthState, setSynthState] = useState<CardState>("pending");
   const [phase, setPhase] = useState<"running" | "done" | "error">("running");
@@ -4731,7 +4915,8 @@ function StrategicReportPanel({ contractId, members, pbmName, onClose }: { contr
 
     (async () => {
       try {
-        const startRes = await apiRequest("POST", `/api/rx-defense/contracts/${contractId}/strategic-report/start?members=${members}`);
+        const _stratSpend = rxSpend ? (parseFloat(String(rxSpend).replace(/[^0-9.]/g, "")) || 0) : 0;
+        const startRes = await apiRequest("POST", `/api/rx-defense/contracts/${contractId}/strategic-report/start?members=${members}${_stratSpend ? `&annual_rx_spend=${_stratSpend}` : ""}`);
         const startData = await startRes.json();
         const jobId: string = startData.job_id;
 
@@ -4761,7 +4946,7 @@ function StrategicReportPanel({ contractId, members, pbmName, onClose }: { contr
     })();
 
     return () => { cancelledRef.current = true; if (pollRef.current) clearTimeout(pollRef.current); };
-  }, [contractId, members, pbmName]);
+  }, [contractId, members, rxSpend, pbmName]);
 
   const doneCount = cards.filter(s => s === "done").length + (synthState === "done" ? 1 : 0);
   const total = 13;
@@ -5103,10 +5288,13 @@ export default function RxDefense() {
       },
       staleTime: 60_000,
     }).finally(() => setBgWarmingExposure(false));
+    const execSpendNum = rxSpend ? (parseFloat(String(rxSpend).replace(/[^0-9.]/g, "")) || 0) : 0;
     const execPromise = qcMain.prefetchQuery({
-      queryKey: ["/api/rx-defense/contracts", contractId, "executive-summary"],
+      queryKey: ["/api/rx-defense/contracts", contractId, "executive-summary", members || 500, execSpendNum || "na"],
       queryFn: async () => {
-        const r = await fetch(`/api/rx-defense/contracts/${contractId}/executive-summary`, { credentials: "include" });
+        let url = `/api/rx-defense/contracts/${contractId}/executive-summary?members=${members || 500}`;
+        if (execSpendNum) url += `&annual_rx_spend=${execSpendNum}`;
+        const r = await fetch(url, { credentials: "include" });
         return r.json();
       },
       staleTime: 300_000,
@@ -5674,7 +5862,7 @@ export default function RxDefense() {
                     <OverviewPage contract={contract} planMembers={planMembers} planRxSpend={planRxSpend} />
                   </div>
                   <div style={{ display: activePage === "exec_summary" ? "block" : "none" }} data-testid="rx-page-exec_summary">
-                    <ExecSummaryTab contract={contract} planMembers={planMembers} />
+                    <ExecSummaryTab contract={contract} planMembers={planMembers} planRxSpend={planRxSpend} />
                     <div className="px-6 pb-2 space-y-6">
                       <KeyFindingsBlock findings={contract.key_findings} />
                       <ConfidenceTiers />
@@ -5684,8 +5872,12 @@ export default function RxDefense() {
                     <PageSectionHeading icon={DollarSign} title="Dollar Exposure" subtitle="Per-provision annual exposure & waterfall" color={NEON.red} />
                     <ExposureTab contract={contract} members={planMembers} rxSpend={planRxSpend} onLoadingChange={setExposureLoading} onSaveMembers={setPlanMembers} onSaveRxSpend={setPlanRxSpend} />
                     <div className="mx-6 my-2" style={{ borderTop: "1px solid rgba(0,0,0,0.07)" }} />
-                    <PageSectionHeading icon={FileText} title="Savings Report" subtitle="Recoverable savings & negotiation upside" color={NEON.gold} />
+                    <PageSectionHeading icon={FileText} title="Forensic Findings" subtitle="Damaging clauses, model remediation & roadmap" color={NEON.gold} />
                     <SavingsReportTab contract={contract} members={planMembers} rxSpend={planRxSpend} />
+                  </div>
+                  <div style={{ display: activePage === "dual" ? "block" : "none" }} data-testid="rx-page-dual">
+                    <PageSectionHeading icon={GitCompare} title="Dual-Engine Savings" subtitle="Score with Claude & OpenAI, then apply the estimate you trust" color={NEON.purple} />
+                    <DualEngineTab contract={contract} members={planMembers} rxSpend={planRxSpend} />
                   </div>
                   <div style={{ display: activePage === "risk" ? "block" : "none" }} data-testid="rx-page-risk">
                     <PageSectionHeading icon={BarChart3} title="Scorecard" subtitle="All 13 provision scores & ratings" color={NEON.purple} />
@@ -5788,6 +5980,7 @@ export default function RxDefense() {
         <StrategicReportPanel
           contractId={selectedId}
           members={planMembers || 500}
+          rxSpend={planRxSpend}
           pbmName={contract.pbm_name ?? "PBM"}
           onClose={() => setShowStrategicReport(false)}
         />,

@@ -12,7 +12,7 @@ from typing import Any, Dict, List
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from anthropic import AsyncAnthropic
+from backend.anthropic_compat import AsyncAnthropic
 from backend.config import settings
 
 from backend.services.commit_engine import (
@@ -520,8 +520,8 @@ class AiRecommendationRequest(BaseModel):
 
 
 _anthropic = AsyncAnthropic(
-    api_key=settings.anthropic_api_key,
-    base_url=settings.anthropic_base_url,
+    api_key=settings.openai_api_key,
+    base_url=settings.openai_base_url,
 )
 
 _KPI_CONTEXT_MAP = {

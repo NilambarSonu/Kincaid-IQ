@@ -192,7 +192,7 @@ Sample Claim Rows (up to 50):
 Identify all recoverable findings. Be specific and forensic-grade."""
 
         resp = await client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-5",
             messages=[{"role": "system", "content": KIQ_VERIFY_HEADER + system_prompt}, {"role": "user", "content": user_msg}],
             max_tokens=3000,
             temperature=0.1,
@@ -205,7 +205,7 @@ Identify all recoverable findings. Be specific and forensic-grade."""
             if raw.startswith("json"):
                 raw = raw[4:]
         findings = json.loads(raw)
-        return {"ok": True, "findings": findings, "model": "gpt-4o", "analyzed_at": datetime.utcnow().isoformat() + "Z"}
+        return {"ok": True, "findings": findings, "model": "gpt-5", "analyzed_at": datetime.utcnow().isoformat() + "Z"}
     except Exception as e:
         return {"ok": False, "error": str(e), "findings": _fallback_ai_findings()}
 
@@ -829,7 +829,7 @@ Finding Description: {finding.get('description', '')}
 Write the full demand letter."""
 
         resp = await client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-5",
             messages=[{"role": "system", "content": KIQ_VERIFY_HEADER + system_prompt}, {"role": "user", "content": user_msg}],
             max_tokens=1500,
             temperature=0.05,

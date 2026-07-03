@@ -6,7 +6,7 @@ All 5 fiduciary agents inherit from BaseAgent and carry the BASE_PERSONA.
 import json
 import logging
 import contextvars
-from anthropic import AsyncAnthropic
+from backend.anthropic_compat import AsyncAnthropic
 from backend.config import settings
 
 # ── Dominance Mode Context ─────────────────────────────────────────────────────
@@ -16,7 +16,7 @@ dominance_ctx: contextvars.ContextVar[bool] = contextvars.ContextVar("dominance_
 
 logger = logging.getLogger("kincaid.agents")
 
-MODEL      = "claude-sonnet-4-6"
+MODEL      = "gpt-5"
 MAX_TOKENS = 4096
 TEMP       = 0.05  # near-deterministic for audit-defensibility
 
@@ -486,8 +486,8 @@ KIQ_VERIFY_HEADER = (
 
 def _get_client() -> AsyncAnthropic:
     return AsyncAnthropic(
-        api_key=settings.anthropic_api_key,
-        base_url=settings.anthropic_base_url,
+        api_key=settings.openai_api_key,
+        base_url=settings.openai_base_url,
     )
 
 

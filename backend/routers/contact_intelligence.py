@@ -13,7 +13,7 @@ router = APIRouter(prefix="/api/contact-intel", tags=["contact-intel"])
 logger = logging.getLogger("kincaid.contact_intel")
 
 HUNTER_KEY = os.getenv("HUNTER_API_KEY", "")
-ANTHROPIC_KEY = os.getenv("ANTHROPIC_API_KEY", "")
+ANTHROPIC_KEY = os.getenv("AI_INTEGRATIONS_OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY", "")
 
 PRIORITY_TITLES = [
     "benefits", "human resources", "hr director", "vp hr", "chief human",
@@ -234,7 +234,7 @@ Return ONLY valid JSON in this exact format:
 Subject lines should be specific, non-promotional, and reference a concrete legal or financial concept — not a value proposition."""
 
         try:
-            import anthropic
+            from backend import anthropic_compat as anthropic
             ant = anthropic.Anthropic(api_key=ANTHROPIC_KEY)
             msg = ant.messages.create(
                 model="claude-opus-4-5",

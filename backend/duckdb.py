@@ -53,15 +53,30 @@ def _download_s3(remote: str, dest: Path) -> None:
     boto3.client("s3").download_file(bucket, key, str(dest))
 
 
+def _download_gcs(remote: str, dest: Path) -> None:
+    """Download a ``gs://bucket/object`` blob to ``dest`` using the Google Cloud
+    Storage client. Credentials come from Application Default Credentials — on
+    Cloud Run / GKE / GCE this is the attached service account, so no presigned
+    URL is required and nothing expires. The GCP parallel to ``_download_s3``."""
+    from google.cloud import storage  # google-cloud-storage
+    without_scheme = remote[len("gs://"):]
+    bucket, _, blob = without_scheme.partition("/")
+    if not bucket or not blob:
+        raise ValueError(f"malformed GCS URL (expected gs://bucket/object): {remote}")
+    storage.Client().bucket(bucket).blob(blob).download_to_filename(str(dest))
+
+
 def _maybe_download():
     """
     If DUCKDB_REMOTE_URL is set and the local file doesn't exist, download it
     from S3/R2/HTTPS. One-time on startup.
 
     Supports ``s3://bucket/key`` (private buckets via the AWS credential chain /
-    IAM role) as well as any ``http(s)://`` URL (including a presigned S3 URL).
-    The file is written to a temp path and atomically renamed so an interrupted
-    download never leaves a corrupt-but-present file that later boots trust.
+    IAM role), ``gs://bucket/object`` (private buckets via GCP Application Default
+    Credentials / the Cloud Run service account), as well as any ``http(s)://``
+    URL (including a presigned S3 or Cloud Storage URL). The file is written to a
+    temp path and atomically renamed so an interrupted download never leaves a
+    corrupt-but-present file that later boots trust.
     """
     remote = os.environ.get("DUCKDB_REMOTE_URL", "")
     if not remote or _DUCK_PATH.exists():
@@ -73,6 +88,8 @@ def _maybe_download():
     try:
         if remote.startswith("s3://"):
             _download_s3(remote, tmp)
+        elif remote.startswith("gs://"):
+            _download_gcs(remote, tmp)
         else:
             import urllib.request
             urllib.request.urlretrieve(remote, str(tmp))

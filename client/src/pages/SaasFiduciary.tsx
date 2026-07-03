@@ -79,7 +79,7 @@ export default function SaasFiduciary() {
   return (
     <div className="p-6 space-y-6 max-w-7xl">
       <DoctrineBar
-        gate="GATE"
+        gate="THRESHOLD_EVALUATION"
         tier={compliance?.score >= 80 ? "CERTIFIED" : compliance?.score >= 60 ? "MODELED" : "INSUFFICIENT_EVIDENCE"}
         einName={data?.org?.name}
       />

@@ -9,10 +9,13 @@ import { Layout } from "@/components/Layout";
 import { ClientPackageDrawer } from "@/components/ClientPackageDrawer";
 import { FPSGauge } from "@/components/FPSGauge";
 import { LiveRiskMeter } from "@/components/LiveRiskMeter";
+import RecursiveNarrativeDrill from "@/components/warroom/RecursiveNarrativeDrill";
+import ContractLeakagePanel from "@/components/warroom/ContractLeakagePanel";
 import { apiRequest } from "@/lib/queryClient";
 import { useCompanyHandoff } from "@/hooks/use-company-handoff";
 import { useReducedMotion, enterMotion } from "@/hooks/use-reduced-motion";
 import { ShareMenu } from "@/components/ShareMenu";
+import { ENFORCEMENT_GATES, gateMeta, type Gate } from "@/components/Doctrine";
 import {
   DollarSign, Shield, AlertTriangle, TrendingDown, TrendingUp,
   Zap, FileText, CheckCircle2, XCircle, Clock, ArrowRight,
@@ -24,7 +27,7 @@ import {
   Share2, Mail, Copy, Check,
 } from "lucide-react";
 import { downloadBoardBriefPDF, downloadPlaybookPDF, downloadSlideTablePDF, type PlaybookStep } from "@/lib/pdfReports";
-import { runMonteCarlo, filterOpenOpps, type ForecastOpportunity } from "@/lib/pipelineForecast";
+import { runMonteCarlo, filterOpenOpps, getRevenue, type ForecastOpportunity } from "@/lib/pipelineForecast";
 import { useToast } from "@/hooks/use-toast";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -588,14 +591,16 @@ type NarrativeEntry =
   | { type: "executive"; brief: string; tier?: ConfidenceTier }
   | { type: "loading" };
 
-// ─── Master Build Prompt — Doctrine constants ────────────────────────────────
-// Source of record: attached_assets/kincaid_iq_replit_master_prompt_*.html
+// ─── Kincaid IQ Verify™ V10.0 — Doctrine constants ───────────────────────────
+// Source of record: Kincaid IQ Verify™ V10.0 (see replit.md Constitutional Doctrine).
+// Canonical copy lives in components/Doctrine.tsx; kept in sync here.
 // These constants are surfaced in the DoctrineStrip at the top of the War Room.
 
 const VOICE_CONTRACT =
-  "Senior McKinsey Partner — strategic economy, MECE structure, board-room directness — " +
-  "overlaid on Stanford PhD in Systems Engineering: formal contracts, invariants, control loops, " +
-  "failure-mode reasoning. Every decision justified by a structural property, not a preference.";
+  "University of Chicago PhD Economist + PhD Computer Scientist — industrial organization, agency theory, " +
+  "information economics, causal inference — overlaid on a McKinsey senior partner's board-room directness. " +
+  "Do not summarize — investigate. Do not speculate — prove. Do not report observations — quantify consequences. " +
+  "Every assertion justified by a structural property and a dollar figure, never a preference.";
 
 const HARD_RULES: { num: string; title: string; body: string }[] = [
   { num: "RULE 01", title: "One screen, four tiles always.",
@@ -608,22 +613,115 @@ const HARD_RULES: { num: string; title: string; body: string }[] = [
     body: "Generative language is gated behind deterministic computation. If math returns INSUFFICIENT_EVIDENCE, the narrative says so — it does not paper over the gap." },
 ];
 
-// 7-Gate Enforcement Chain (§3 of Master Build Prompt). Mapped onto the existing
-// 10-level drill so each level shows which gate it materially exercises.
-const GATE_CHAIN = ["DEFINE", "WIRE", "VALIDATE", "PROMOTE", "COMPUTE", "GATE", "RENDER"] as const;
-
-const LEVEL_TO_GATE: Record<number, (typeof GATE_CHAIN)[number]> = {
-  0: "DEFINE",   // entry state — schema/policy registration
-  1: "WIRE",     // signal decomposition — source-to-primitive binding
-  2: "VALIDATE", // mechanism view — type/range/completeness
-  3: "PROMOTE",  // contract mapping — admit to evidence spine
-  4: "COMPUTE",  // claims trace — deterministic transform
-  5: "COMPUTE",  // pattern detection — still compute layer
-  6: "GATE",     // counterfactual — policy adjudication
-  7: "GATE",     // risk/fiduciary — policy adjudication
-  8: "RENDER",   // leverage points — materialize to surface
-  9: "RENDER",   // c-suite narrative — final render w/ manifest
+// Each drill level materially exercises one of the canonical enforcement gates,
+// imported from Doctrine (the single source of truth). The DEFINE..RENDER pipeline
+// shorthand is retired.
+const LEVEL_TO_GATE: Record<number, Gate> = {
+  0: "EVIDENCE_EXISTENCE",     // entry state: evidence must exist
+  1: "EVIDENCE_FRESHNESS",     // signal decomposition: freshness of bound sources
+  2: "EVIDENCE_VERIFICATION",  // mechanism view: hash and verify the evidence
+  3: "KPI_LIFECYCLE",          // contract mapping: admit the KPI to production
+  4: "DEPENDENCY_RESOLUTION",  // claims trace: parent KPIs and claim lines resolved
+  5: "DEPENDENCY_RESOLUTION",  // pattern detection: still the dependency layer
+  6: "THRESHOLD_EVALUATION",   // counterfactual: threshold adjudication
+  7: "THRESHOLD_EVALUATION",   // risk / fiduciary: threshold adjudication
+  8: "DEBT_SCORE_CHECK",       // leverage points: debt gate before render
+  9: "DEBT_SCORE_CHECK",       // c-suite narrative: debt score over 15 blocks render
 };
+
+// ─── Canonical constitution surfaces (docs/CONSTITUTION.md) ────────────────────
+// The four core primitives, the canonical enforcement gates (with fail codes), and
+// the zero-trust governance event taxonomy. Surfaced verbatim in the DoctrineStrip
+// so the War Room shows the governance substance it enforces, not just the voice,
+// the four hard rules, and the tiers.
+
+const CORE_PRIMITIVES: { name: string; fields: string; purpose: string }[] = [
+  { name: "EvidenceRef",
+    fields: "evidence_id · source_hash (SHA-256) · received_at_epoch · sensitivity_tags · uri",
+    purpose: "Content-addressed evidence pointer. Tamper detection and freshness computation." },
+  { name: "TransformRef",
+    fields: "transform_hash · code_version · params_hash · executed_at_epoch",
+    purpose: "Computation fingerprint. Same code plus same params guarantees the same output." },
+  { name: "PolicyResult",
+    fields: "allowed · verified_status · freshness_status · confidence_score · reason_code · violations[]",
+    purpose: "Governance verdict. Status is VERIFIED, UNVERIFIED, or DISPUTED." },
+  { name: "Claim",
+    fields: "claim_id · kpi_key · kpi_version · value · unit · period · evidence[] · transform · policy",
+    purpose: "The atomic unit. A versioned, evidence-backed, policy-evaluated, cryptographically fingerprinted assertion." },
+];
+
+const DETERMINISTIC_CACHE_KEY =
+  "(kpi_key, kpi_version, evidence_set_hash, transform_hash). A cache match guarantees byte-identical output.";
+
+// ENFORCEMENT_GATES is imported from Doctrine (the single source of truth) and
+// rendered below with its fail codes and effects.
+
+const GOVERNANCE_EVENTS: { type: string; severity: "INFO" | "WARNING" | "CRITICAL"; meaning: string }[] = [
+  { type: "GATE_PASS",           severity: "INFO",     meaning: "Computation cleared all seven gates." },
+  { type: "GATE_BLOCK",          severity: "WARNING",  meaning: "Export or render blocked on an unverified artifact." },
+  { type: "AGENT_BLOCKED",       severity: "CRITICAL", meaning: "Generative agent attempted action beyond its authority." },
+  { type: "HASH_VERIFIED",       severity: "INFO",     meaning: "Evidence artifact SHA-256 hash confirmed." },
+  { type: "POLICY_BREACH",       severity: "WARNING",  meaning: "Contract clause breach detected in evidence." },
+  { type: "AGENT_GOVERNED",      severity: "INFO",     meaning: "Agent draft reviewed and approved by a human." },
+  { type: "DETERMINISTIC_CHECK", severity: "INFO",     meaning: "Transform reproducibility verified." },
+  { type: "FRESHNESS_ALERT",     severity: "WARNING",  meaning: "Evidence artifact freshness degraded." },
+];
+
+// ─── Stanford register: empirical validation (STANFORD_PHD_SETUP.md) ───────────
+// The fourth register in the Kincaid IQ intellectual stack. Harvard argues it, MIT
+// proves it, Stanford tests it and ships it, Notre Dame asks who it serves. This
+// register governs methodology, benchmarks, and validation: the answer to "how do
+// you know?" It is surfaced in the DoctrineStrip so the War Room states its
+// empirical posture, not just its voice and its gates.
+
+const INTELLECTUAL_STACK: { register: string; contribution: string; question: string }[] = [
+  { register: "Harvard MBA",  contribution: "The boardroom argument: capital, margin, fiduciary duty, category economics.",           question: "Why does this matter to the people who allocate capital?" },
+  { register: "MIT PhD (CS)", contribution: "The formal proof: primitives, gates, hash chains, determinism as a property of the system.", question: "Why is this guaranteed true by construction?" },
+  { register: "Stanford PhD", contribution: "The empirical validation: benchmarks, replication, ablation, research shipped as product.", question: "How do we know it is true in practice?" },
+  { register: "Notre Dame",   contribution: "The conscience: who is served, and who is harmed when the system fails.",              question: "Why is this worth doing beyond the return?" },
+];
+
+const STANFORD_DISCIPLINE: { rule: string; body: string }[] = [
+  { rule: "Falsifiable claims",
+    body: "A claim is a hypothesis until it survives contact with data. Define the metric before running the test, and report the result whether or not it flatters the thesis." },
+  { rule: "Benchmarks over adjectives",
+    body: "\"Fast\" is a Harvard word. \"Sub-second OLAP over 3.9M rows, p95 under 400ms\" is a Stanford sentence. If a number cannot be benchmarked yet, state the benchmark and when it will exist." },
+  { rule: "Ablation thinking",
+    body: "When a result improves, know which component did it. When quantifying leakage, know which clause, channel, or formulary tier carried the effect, not just the total." },
+  { rule: "Replication is the standard of proof",
+    body: "A finding another party can reproduce from the packet is a finding. Anything else is an anecdote with confidence. Replication packets are first-class deliverables." },
+  { rule: "Report the null result",
+    body: "INSUFFICIENT_EVIDENCE is the null result reported rather than hidden. Reporting the null result is a deeply empirical act." },
+  { rule: "Research-to-product distance",
+    body: "The gap between what the engine proved and what the customer receives is itself a metric. State it, and treat it as backlog rather than embarrassment." },
+];
+
+// The published replication benchmark from the determinism harness on the fixed
+// demo seed (per STANFORD_PHD_SETUP.md). These are the reference values every build
+// must reproduce byte-for-byte on identical inputs; they are scoped to the fixed
+// demo seed, NOT to any live per-employer computation surfaced elsewhere.
+const REPLICATION_BENCHMARK: {
+  seed: string; method: string; source: string; falsification: string;
+  metrics: { key: string; label: string; value: string }[];
+} = {
+  seed: "Fixed demo seed",
+  method: "Determinism harness: identical inputs produce byte-identical result_json, verified across repeated runs.",
+  source: "STANFORD_PHD_SETUP.md",
+  falsification: "Any build that deviates on identical inputs has failed replication.",
+  metrics: [
+    { key: "DRAP", label: "Delta Realized vs Allowable Pricing", value: "$6,230,840" },
+    { key: "PEPM", label: "Blended PEPM",                         value: "$1,055" },
+  ],
+};
+
+// The three confidence tiers, read as epistemic states (STANFORD_PHD_SETUP.md):
+// CERTIFIED is a replicated result, MODELED is a disclosed-assumption hypothesis,
+// INSUFFICIENT_EVIDENCE is the null result reported not hidden.
+const TIER_EPISTEMICS: { tier: ConfidenceTier; gloss: string }[] = [
+  { tier: "CERTIFIED",             gloss: "A replicated result." },
+  { tier: "MODELED",               gloss: "A stated hypothesis with disclosed assumptions." },
+  { tier: "INSUFFICIENT_EVIDENCE", gloss: "The null result, reported not hidden." },
+];
 
 // Dimensional transformation at each level — what new lens is introduced
 const LEVEL_DIMENSION: Record<number, string> = {
@@ -2827,6 +2925,7 @@ function NarrativePanel({ level, insight, implication, tileId, tileColor, isLoad
 }) {
   const meta = LEVEL_META[level];
   const gate = LEVEL_TO_GATE[level];
+  const gateInfo = gate ? gateMeta(gate) : null;
 
   return (
     <div className="h-full flex flex-col" style={{ background: "rgba(0,0,0,0.5)", borderLeft: "1px solid rgba(255,255,255,0.07)" }}>
@@ -2842,10 +2941,10 @@ function NarrativePanel({ level, insight, implication, tileId, tileColor, isLoad
         </div>
         <div className="text-[9px] font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color: tileId ? `${tileColor}88` : "#555" }}>
           <span className="truncate">{meta?.label ?? "War Room"} · {meta?.question ?? "Select a tile"}</span>
-          {tileId && gate && (
+          {tileId && gateInfo && (
             <span className="ml-auto px-1.5 py-0.5 rounded font-bold tracking-[0.18em]"
               style={{ background: `${GOLD}10`, color: GOLD, border: `1px solid ${GOLD}30`, fontSize: 8 }}>
-              GATE · {gate}
+              GATE {gateInfo.n} · {gateInfo.name}
             </span>
           )}
         </div>
@@ -3017,6 +3116,286 @@ function RfpForecastBar() {
   );
 }
 
+// ── Metrics Canon Strip ───────────────────────────────────────────────────────
+// Surfaces the five load-bearing canon metrics (DRAP, PEPM, PWI, SBI, GLP-1) from
+// /api/plan-metrics/canon. Supplemental to the four-tile board (Hard Rule 01 intact).
+// Each cell shows its confidence tier; DRAP and PWI stay INSUFFICIENT_EVIDENCE with
+// the unlocking ingestion named (Hard Rule 04: narratives never outrun evidence).
+
+type CanonMetric = {
+  key: string;
+  label: string;
+  formula: string;
+  tier: ConfidenceTier;
+  value: number | string | null;
+  unit?: string;
+  note?: string;
+  components?: Record<string, unknown>;
+  inputs?: Record<string, unknown>;
+  dollar_exposure?: string;
+};
+
+type CanonResponse = {
+  ein: string;
+  metrics: CanonMetric[];
+  coverage: { certified: number; modeled: number; insufficient: number };
+};
+
+function fmtCanonValue(m: CanonMetric): string {
+  if (m.tier === "INSUFFICIENT_EVIDENCE" || m.value == null) return "INSUFFICIENT_EVIDENCE";
+  if (m.key === "PEPM") return `$${Number(m.value).toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+  if (m.key === "GLP1") return `${m.value}%`;
+  if (m.key === "SBI") return `${m.value} / 100`;
+  return String(m.value);
+}
+
+function MetricsCanonStrip({ ein }: { ein: string }) {
+  const target = ein || "ENTITY_001";
+  const { data, isLoading } = useQuery<CanonResponse>({
+    queryKey: ["/api/plan-metrics/canon", target],
+    queryFn: async () => {
+      const r = await fetch(`/api/plan-metrics/canon/${encodeURIComponent(target)}`, { credentials: "include" });
+      if (!r.ok) throw new Error("canon fetch failed");
+      return r.json();
+    },
+    retry: false,
+    staleTime: 60_000,
+  });
+
+  if (isLoading) {
+    return (
+      <div className="mt-3 rounded-xl px-4 py-2.5 flex items-center gap-2"
+        style={{ background: "rgba(251,183,36,0.04)", border: "1px solid rgba(251,183,36,0.15)" }}
+        data-testid="metrics-canon-loading">
+        <Activity className="w-3 h-3 animate-pulse" style={{ color: GOLD }} />
+        <span className="text-[9px] font-mono uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.4)" }}>
+          Loading metrics canon…
+        </span>
+      </div>
+    );
+  }
+  if (!data || !data.metrics?.length) return null;
+
+  return (
+    <div className="mt-3 rounded-xl px-4 py-3"
+      style={{ background: "rgba(251,183,36,0.04)", border: "1px solid rgba(251,183,36,0.15)" }}
+      data-testid="metrics-canon-strip">
+      <div className="flex items-center gap-2 mb-2">
+        <Activity className="w-3 h-3" style={{ color: GOLD }} />
+        <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: GOLD }}>
+          Metrics Canon
+        </span>
+        <span className="text-[8px] font-mono uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.25)" }}>
+          Supplemental · not a board tile
+        </span>
+        <span className="ml-auto text-[8px] font-mono uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.3)" }}>
+          {data.coverage.modeled} modeled · {data.coverage.insufficient} insufficient
+        </span>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
+        {data.metrics.map(m => {
+          const insufficient = m.tier === "INSUFFICIENT_EVIDENCE" || m.value == null;
+          return (
+            <div key={m.key} data-testid={`canon-metric-${m.key.toLowerCase()}`}
+              className="rounded-lg px-3 py-2.5 flex flex-col gap-1.5"
+              style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="flex items-center justify-between gap-1">
+                <span className="text-[10px] font-black tracking-[0.08em]" style={{ color: GOLD }}>{m.key}</span>
+                <ConfidenceChip tier={m.tier} compact />
+              </div>
+              <div className="text-[8px] font-mono uppercase tracking-wider leading-tight" style={{ color: "rgba(255,255,255,0.35)" }}>
+                {m.label}
+              </div>
+              <div className="font-black tabular-nums leading-tight break-words"
+                style={{ color: insufficient ? "#ef4444" : "#e5e7eb", fontSize: insufficient ? 9 : 13 }}
+                data-testid={`canon-value-${m.key.toLowerCase()}`}>
+                {fmtCanonValue(m)}
+              </div>
+              <div className="text-[8px] font-mono leading-tight break-words" style={{ color: "rgba(255,255,255,0.3)" }}>
+                {m.formula}
+              </div>
+              {m.note && (
+                <div className="text-[8px] leading-tight break-words" style={{ color: "rgba(255,255,255,0.28)" }}>
+                  {m.note}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ── Commit Engine · RFP Intelligence OS ───────────────────────────────────────
+// Unifies the KincaidCommit Engine (7-gate qualification) with the RFP Intelligence
+// OS (opportunity lifecycle) as a single operational surface inside the War Room.
+// Left rail = the loaded company's live commit-gate readiness (from commitData,
+// already fetched via /api/commit/analyze). Right rail = the live open-opportunity
+// roster from /api/rfp/opportunities. Supplemental to the four-tile board so the
+// Hard Rule 01 invariant stays intact.
+
+// Structurally the served /api/rfp/opportunities payload (rfp_intake._serialize):
+// extends ForecastOpportunity (stage/status/estimated_contract_value/covered_lives)
+// with the display fields the roster renders.
+interface RfpOpportunity extends ForecastOpportunity {
+  id: string;
+  employer_name?: string | null;
+  title?: string | null;
+  industry?: string | null;
+  score_tier?: string | null;
+}
+
+const STAGE_META: Record<string, { label: string; color: string }> = {
+  new:        { label: "New",        color: "#94a3b8" },
+  scoring:    { label: "Scoring",    color: BLUE },
+  qualifying: { label: "Qualifying", color: BLUE },
+  reviewing:  { label: "Reviewing",  color: BLUE },
+  proposal:   { label: "Proposal",   color: GOLD },
+  submitted:  { label: "Submitted",  color: GOLD },
+  decision:   { label: "Decision",   color: PURPLE },
+  won:        { label: "Won",        color: GREEN },
+  lost:       { label: "Lost",       color: RED },
+  no_bid:     { label: "No Bid",     color: "#64748b" },
+};
+
+// Dot color from the opportunity's live score tier (rfp_intake TIER_THRESHOLDS).
+const TIER_COLOR: Record<string, string> = {
+  pursue_aggressively: GREEN,
+  pursue_selectively:  GOLD,
+  monitor:             BLUE,
+  decline:             RED,
+};
+
+function CommitRfpOsPanel({ ein, name, commitData }: { ein: string; name: string; commitData: any }) {
+  const { data: opps } = useQuery<RfpOpportunity[]>({
+    queryKey: ["/api/rfp/opportunities"],
+    retry: false,
+    staleTime: 60_000,
+  });
+
+  const gates       = (commitData?.gates ?? {}) as Record<string, { status?: string; note?: string }>;
+  const gateVals    = Object.values(gates);
+  const totalGates  = gateVals.length || 7;
+  const goCount     = gateVals.filter(g => g?.status === "GO").length;
+  const commitReady = gates.gate7_commit?.status === "GO";
+  const opportunity = (commitData?.opportunity ?? {}) as { total_first_year?: number; three_year_value?: number };
+
+  const openOpps = filterOpenOpps(opps ?? []);
+  const topOpps  = [...openOpps]
+    .sort((a, b) => getRevenue(b) - getRevenue(a))
+    .slice(0, 4);
+  const pipelineValue = openOpps.reduce((s, o) => s + getRevenue(o), 0);
+
+  return (
+    <div className="mt-3 rounded-xl px-4 py-3"
+      style={{ background: "rgba(251,183,36,0.04)", border: "1px solid rgba(251,183,36,0.15)" }}
+      data-testid="commit-rfp-os-panel">
+      <div className="flex items-center gap-2 mb-2.5">
+        <Workflow className="w-3 h-3" style={{ color: GOLD }} />
+        <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: GOLD }}>
+          Commit Engine · RFP Intelligence OS
+        </span>
+        <span className="text-[8px] font-mono uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.25)" }}>
+          Supplemental · not a board tile
+        </span>
+        <span className="ml-auto text-[8px] font-mono uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.3)" }}>
+          {openOpps.length} open · {fmtCompact(pipelineValue)} pipeline
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-3">
+        {/* Commit readiness rail */}
+        <div className="rounded-lg px-3 py-2.5 flex flex-col gap-2"
+          style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.06)" }}
+          data-testid="commit-readiness-rail">
+          <div className="flex items-center gap-1.5">
+            <Target className="w-3 h-3" style={{ color: GOLD }} />
+            <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: GOLD }}>Commit Readiness</span>
+          </div>
+          {ein && commitData ? (
+            <>
+              <div className="text-[11px] font-bold text-white/85 leading-tight truncate" data-testid="commit-company">
+                {commitData?.edgar?.name ?? name ?? "Loaded company"}
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-black tabular-nums" style={{ color: goCount >= 4 ? GOLD : BLUE }} data-testid="commit-gate-count">
+                  {goCount}/{totalGates}
+                </span>
+                <span className="text-[9px] uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.4)" }}>gates cleared</span>
+              </div>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <span className="text-[9px] font-bold px-2 py-0.5 rounded-full"
+                  style={{ background: commitReady ? "rgba(16,185,129,0.14)" : "rgba(0,212,255,0.12)",
+                    color: commitReady ? GREEN : BLUE }} data-testid="commit-rfp-status">
+                  {commitReady ? "RFP Ready" : "Qualifying"}
+                </span>
+                {opportunity.total_first_year ? (
+                  <span className="text-[9px] font-mono" style={{ color: "rgba(255,255,255,0.45)" }}>
+                    {fmtShort(opportunity.total_first_year)} first-year
+                  </span>
+                ) : null}
+              </div>
+            </>
+          ) : (
+            <div className="text-[10px] leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>
+              Load a company above to score its 7-gate commit readiness.
+            </div>
+          )}
+          <a href="/commit-engine"
+            className="mt-auto text-[9px] font-bold px-2.5 py-1.5 rounded-md flex items-center justify-center gap-1"
+            style={{ background: "rgba(251,183,36,0.10)", border: "1px solid rgba(251,183,36,0.22)", color: GOLD, textDecoration: "none" }}
+            data-testid="link-commit-engine">
+            Qualify in Commit Engine <ArrowRight className="w-3 h-3" />
+          </a>
+        </div>
+
+        {/* Opportunity roster rail */}
+        <div className="rounded-lg px-3 py-2.5 flex flex-col gap-2"
+          style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.06)" }}
+          data-testid="rfp-opportunity-roster">
+          <div className="flex items-center gap-1.5">
+            <Layers className="w-3 h-3" style={{ color: GOLD }} />
+            <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: GOLD }}>Top Opportunities</span>
+            <a href="/rfp-os/command"
+              className="ml-auto text-[9px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1"
+              style={{ background: "rgba(251,183,36,0.10)", border: "1px solid rgba(251,183,36,0.22)", color: GOLD, textDecoration: "none" }}
+              data-testid="link-rfp-os">
+              Open RFP Intelligence OS <ArrowRight className="w-3 h-3" />
+            </a>
+          </div>
+          {topOpps.length === 0 ? (
+            <div className="text-[10px] leading-relaxed py-2" style={{ color: "rgba(255,255,255,0.4)" }}>
+              No open opportunities yet. Intake an RFP in the RFP Intelligence OS to start scoring the pipeline.
+            </div>
+          ) : (
+            <div className="flex flex-col gap-1">
+              {topOpps.map(o => {
+                const sm  = STAGE_META[o.stage] ?? { label: o.stage || "Stage", color: "#94a3b8" };
+                const dot = TIER_COLOR[o.score_tier ?? ""] ?? "#94a3b8";
+                return (
+                  <a key={o.id} href="/rfp-os/scoring"
+                    className="flex items-center gap-2 rounded-md px-2 py-1.5"
+                    style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", textDecoration: "none" }}
+                    data-testid={`rfp-opp-${o.id}`}>
+                    <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: dot }} />
+                    <span className="text-[10px] font-bold text-white/85 truncate flex-1">{o.employer_name || o.title || "Untitled RFP"}</span>
+                    <span className="text-[8px] font-bold px-1.5 py-0.5 rounded shrink-0"
+                      style={{ background: `${sm.color}1f`, color: sm.color }}>{sm.label}</span>
+                    <span className="text-[10px] font-black tabular-nums shrink-0" style={{ color: GOLD }}>
+                      {fmtCompact(getRevenue(o))}
+                    </span>
+                  </a>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // War Room: voice contract, four hard rules, 7-gate chain, three tiers.
 // Open/closed state persists via localStorage.
 
@@ -3033,7 +3412,7 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
           Constitutional Doctrine
         </span>
         <span className="text-[10px] font-mono italic" style={{ color: "rgba(255,255,255,0.45)" }}>
-          {open ? "—" : "voice contract · four hard rules · seven-gate chain · three tiers"}
+          {open ? "" : "voice contract · four hard rules · four primitives · seven-gate chain · governance events · three tiers · four registers · empirical validation"}
         </span>
         <ChevronRight className="w-3 h-3 ml-auto transition-transform" style={{ color: GOLD, transform: open ? "rotate(90deg)" : "rotate(0deg)" }} />
       </button>
@@ -3085,13 +3464,13 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
                     § 3 · 7-Gate Enforcement Chain
                   </div>
                   <div className="flex items-center justify-between gap-1">
-                    {GATE_CHAIN.map((g, i) => (
-                      <div key={g} className="flex items-center gap-1 flex-1">
+                    {ENFORCEMENT_GATES.map((g, i) => (
+                      <div key={g.key} className="flex items-center gap-1 flex-1">
                         <div className="flex-1 text-center">
-                          <div className="text-[9px] font-mono font-bold tracking-[0.12em]" style={{ color: GOLD }}>{g}</div>
-                          <div className="text-[8px] font-mono mt-0.5" style={{ color: "rgba(255,255,255,0.3)" }}>GATE {i + 1}</div>
+                          <div className="text-[9px] font-mono font-bold tracking-[0.12em]" style={{ color: GOLD }}>GATE {g.n}</div>
+                          <div className="text-[8px] font-mono mt-0.5" style={{ color: "rgba(255,255,255,0.3)" }}>{g.name}</div>
                         </div>
-                        {i < GATE_CHAIN.length - 1 && <span className="text-[10px]" style={{ color: `${GOLD}88` }}>→</span>}
+                        {i < ENFORCEMENT_GATES.length - 1 && <span className="text-[10px]" style={{ color: `${GOLD}88` }}>→</span>}
                       </div>
                     ))}
                   </div>
@@ -3105,6 +3484,154 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
                     <ConfidenceChip tier="CERTIFIED" />
                     <ConfidenceChip tier="MODELED" />
                     <ConfidenceChip tier="INSUFFICIENT_EVIDENCE" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Four Core Primitives */}
+              <div>
+                <div className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] mb-2" style={{ color: GOLD }}>
+                  Four Core Primitives
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {CORE_PRIMITIVES.map(p => (
+                    <div key={p.name} data-testid={`primitive-${p.name.toLowerCase()}`}
+                      className="rounded-lg px-3 py-2.5"
+                      style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(245,166,35,0.14)" }}>
+                      <div className="text-[11px] font-mono font-bold tracking-[0.06em]" style={{ color: GOLD }}>{p.name}</div>
+                      <div className="text-[9px] font-mono mt-1 leading-relaxed break-words" style={{ color: "rgba(255,255,255,0.5)" }}>{p.fields}</div>
+                      <div className="text-[10px] leading-relaxed text-zinc-500 mt-1">{p.purpose}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="text-[9px] font-mono mt-2 leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  Deterministic cache key: <span style={{ color: `${GOLD}cc` }}>{DETERMINISTIC_CACHE_KEY}</span>
+                </div>
+              </div>
+
+              {/* Canonical Enforcement Gates */}
+              <div className="rounded-xl px-4 py-3"
+                style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(245,166,35,0.18)" }}>
+                <div className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] mb-2" style={{ color: GOLD }}>
+                  Canonical Enforcement Gates
+                </div>
+                <div className="flex flex-col gap-1">
+                  {ENFORCEMENT_GATES.map(g => (
+                    <div key={g.n} data-testid={`enforcement-gate-${g.n}`}
+                      className="grid grid-cols-[auto_1fr_auto] items-center gap-3 rounded-md px-2.5 py-1.5"
+                      style={{ background: "rgba(255,255,255,0.02)" }}>
+                      <span className="text-[9px] font-mono font-bold whitespace-nowrap" style={{ color: `${GOLD}aa` }}>GATE {g.n}</span>
+                      <span className="text-[11px] font-semibold text-white/80" style={{ fontFamily: "ui-serif, Georgia, serif" }}>
+                        {g.name}
+                        <span className="text-[10px] font-normal text-zinc-500"> · {g.effect}</span>
+                      </span>
+                      <span className="text-[8px] font-mono px-2 py-0.5 rounded whitespace-nowrap"
+                        style={{ color: "#ff6b7a", background: "rgba(255,107,122,0.10)", border: "1px solid rgba(255,107,122,0.25)" }}>
+                        {g.fail}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Zero-Trust Governance Events */}
+              <div>
+                <div className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] mb-2" style={{ color: GOLD }}>
+                  Zero-Trust Governance Events
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {GOVERNANCE_EVENTS.map(e => {
+                    const sc = e.severity === "CRITICAL" ? "#ff6b7a" : e.severity === "WARNING" ? "#ffb547" : "#4ade80";
+                    return (
+                      <div key={e.type} data-testid={`gov-event-${e.type.toLowerCase()}`}
+                        className="flex items-start gap-2 rounded-lg px-3 py-2"
+                        style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${sc}22` }}>
+                        <span className="mt-1 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: sc, boxShadow: `0 0 6px ${sc}` }} />
+                        <div>
+                          <div className="text-[10px] font-mono font-bold" style={{ color: sc }}>{e.type}</div>
+                          <div className="text-[10px] leading-relaxed text-zinc-500">{e.meaning}</div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* § 5 · Stanford Register: Empirical Validation */}
+              <div data-testid="stanford-register" className="rounded-xl px-4 py-3"
+                style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(245,166,35,0.18)" }}>
+                <div className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] mb-1" style={{ color: GOLD }}>
+                  § 5 · Stanford Register: Empirical Validation
+                </div>
+                <p className="text-[10px] font-mono italic leading-relaxed mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
+                  Four registers · Harvard argues it · MIT proves it · Stanford tests it and ships it · Notre Dame asks who it serves. The Stanford register answers the question "how do you know?"
+                </p>
+
+                {/* The four-register stack */}
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  {INTELLECTUAL_STACK.map(r => {
+                    const isStanford = r.register === "Stanford PhD";
+                    return (
+                      <div key={r.register} data-testid={`register-${r.register.toLowerCase().replace(/[^a-z]+/g, "-")}`}
+                        className="rounded-lg px-3 py-2.5"
+                        style={{
+                          background: isStanford ? "rgba(245,166,35,0.07)" : "rgba(255,255,255,0.02)",
+                          border: `1px solid ${isStanford ? "rgba(245,166,35,0.34)" : "rgba(245,166,35,0.12)"}`,
+                        }}>
+                        <div className="text-[10px] font-mono font-bold tracking-[0.08em]" style={{ color: isStanford ? GOLD : `${GOLD}bb` }}>{r.register}</div>
+                        <div className="text-[10px] leading-relaxed text-zinc-400 mt-1">{r.contribution}</div>
+                        <div className="text-[9px] italic leading-relaxed mt-1" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "ui-serif, Georgia, serif" }}>{r.question}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Stanford discipline */}
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  {STANFORD_DISCIPLINE.map(d => (
+                    <div key={d.rule} data-testid={`stanford-rule-${d.rule.toLowerCase().replace(/[^a-z]+/g, "-")}`}
+                      className="rounded-lg px-3 py-2"
+                      style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(245,166,35,0.12)" }}>
+                      <div className="text-[10px] font-semibold text-white/85" style={{ fontFamily: "ui-serif, Georgia, serif" }}>{d.rule}</div>
+                      <div className="text-[9px] leading-relaxed text-zinc-500 mt-0.5">{d.body}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Replication benchmark + tier epistemics */}
+                <div className="grid grid-cols-[1fr_auto] gap-3 items-stretch">
+                  <div data-testid="replication-benchmark" className="rounded-lg px-3 py-2.5"
+                    style={{ background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.30)" }}>
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <div className="text-[9px] font-mono font-bold uppercase tracking-[0.16em]" style={{ color: "#F59E0B" }}>Published Reference Benchmark</div>
+                      <ConfidenceChip tier="MODELED" compact />
+                      <span className="text-[8px] font-mono ml-auto" style={{ color: "rgba(255,255,255,0.35)" }}>external harness · {REPLICATION_BENCHMARK.seed}</span>
+                    </div>
+                    <div className="flex flex-wrap gap-4 mb-1.5">
+                      {REPLICATION_BENCHMARK.metrics.map(m => (
+                        <div key={m.key} data-testid={`benchmark-${m.key.toLowerCase()}`}>
+                          <div className="text-lg font-black leading-none" style={{ color: "#F59E0B" }}>{m.value}</div>
+                          <div className="text-[8px] font-mono mt-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>{m.key} · {m.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="text-[9px] leading-relaxed text-zinc-500">
+                      Cited reference, not reproduced in this environment. {REPLICATION_BENCHMARK.method}
+                    </div>
+                    <div className="text-[9px] leading-relaxed mt-1" style={{ color: "#ff8a97" }}>
+                      Falsification: {REPLICATION_BENCHMARK.falsification}
+                    </div>
+                    <div className="text-[8px] font-mono mt-1" style={{ color: "rgba(255,255,255,0.3)" }}>source · {REPLICATION_BENCHMARK.source}</div>
+                  </div>
+                  <div className="rounded-lg px-3 py-2.5 flex flex-col gap-1.5 justify-center"
+                    style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(245,166,35,0.14)" }}>
+                    <div className="text-[9px] font-mono font-bold uppercase tracking-[0.16em] mb-0.5" style={{ color: GOLD }}>Tiers as epistemics</div>
+                    {TIER_EPISTEMICS.map(t => (
+                      <div key={t.tier} className="flex items-center gap-2">
+                        <ConfidenceChip tier={t.tier} compact />
+                        <span className="text-[9px] leading-tight text-zinc-500">{t.gloss}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -4029,6 +4556,18 @@ export default function CfoWarRoom() {
 
           {/* RFP Pipeline Forecast — feeds from /api/rfp/forecast */}
           <RfpForecastBar />
+
+          {/* Metrics Canon: supplemental strip (Hard Rule 01, not a board tile) */}
+          <MetricsCanonStrip ein={selectedEin} />
+
+          {/* Commit Engine · RFP Intelligence OS: qualification + opportunity roster */}
+          <CommitRfpOsPanel ein={selectedEin} name={selectedName} commitData={commitData} />
+
+          {/* Recursive Narrative Drill: 4-tile x 9-level C-Suite narrative engine */}
+          <RecursiveNarrativeDrill />
+
+          {/* Contract Leakage: DRAP = Sum(Paid - Allowable) reconciliation + proof packet */}
+          <ContractLeakagePanel />
         </div>
 
         {/* Drill Area */}

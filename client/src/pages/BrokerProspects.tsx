@@ -1780,7 +1780,7 @@ export function ProspectsView() {
 
   const doctrineBar = (
     <DoctrineBar
-      gate={mode === "results" ? "RENDER" : mode === "book" || mode === "quiz" ? "COMPUTE" : "DEFINE"}
+      gate={mode === "results" ? "DEBT_SCORE_CHECK" : mode === "book" || mode === "quiz" ? "DEPENDENCY_RESOLUTION" : "EVIDENCE_EXISTENCE"}
       tier={handoffEin ? "CERTIFIED" : mode === "results" ? "MODELED" : "INSUFFICIENT_EVIDENCE"}
       ein={handoffEin}
       einName={handoffCompany}

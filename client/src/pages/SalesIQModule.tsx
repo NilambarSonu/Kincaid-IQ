@@ -750,7 +750,7 @@ Write a concise pre-call intelligence brief (3 short paragraphs): 1) What the da
       const res = await fetch("/api/ai/chat", {
         method: "POST", credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: "gpt-4o", messages: [{ role: "user", content: prompt }], max_tokens: 500, temperature: 0.5 }),
+        body: JSON.stringify({ model: "gpt-5", messages: [{ role: "user", content: prompt }], max_tokens: 500, temperature: 0.5 }),
       });
       const json = await res.json();
       setAiInsight(json.choices?.[0]?.message?.content || json.content || "");
@@ -998,7 +998,7 @@ Return only valid JSON, no markdown.`;
       const res = await fetch("/api/ai/chat", {
         method: "POST", credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: "gpt-4o", messages: [{ role: "user", content: prompt }], max_tokens: 2000, temperature: 0.65 }),
+        body: JSON.stringify({ model: "gpt-5", messages: [{ role: "user", content: prompt }], max_tokens: 2000, temperature: 0.65 }),
       });
       const json = await res.json();
       const raw = json.choices?.[0]?.message?.content || json.content || "[]";
@@ -1253,7 +1253,7 @@ Write in first person as the advisor. Be specific, not generic. No bullet lists.
       const res = await fetch("/api/ai/chat", {
         method: "POST", credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: "gpt-4o", messages: [{ role: "user", content: prompt }], max_tokens: 600, temperature: 0.6 }),
+        body: JSON.stringify({ model: "gpt-5", messages: [{ role: "user", content: prompt }], max_tokens: 600, temperature: 0.6 }),
       });
       const json = await res.json();
       setAiNarrative(json.choices?.[0]?.message?.content || json.content || "");
@@ -1475,7 +1475,7 @@ Give a sharp, direct coaching suggestion for what to do next to advance this dea
       const res = await fetch("/api/ai/chat", {
         method: "POST", credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: "gpt-4o", messages: [{ role: "user", content: prompt }], max_tokens: 200, temperature: 0.6 }),
+        body: JSON.stringify({ model: "gpt-5", messages: [{ role: "user", content: prompt }], max_tokens: 200, temperature: 0.6 }),
       });
       const json = await res.json();
       const text = json.choices?.[0]?.message?.content || json.content || "";
@@ -2460,7 +2460,7 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
               const res = await fetch("/api/ai/chat", {
                 method: "POST", credentials: "include",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ model: "gpt-4o", messages: [{ role: "user", content: prompt }], max_tokens: 300, temperature: 0.6 }),
+                body: JSON.stringify({ model: "gpt-5", messages: [{ role: "user", content: prompt }], max_tokens: 300, temperature: 0.6 }),
               });
               const json = await res.json();
               setQqAiAngle(json.choices?.[0]?.message?.content || json.content || "");

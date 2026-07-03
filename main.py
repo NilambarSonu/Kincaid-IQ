@@ -333,6 +333,8 @@ from backend.routers.rfp_enhancements import router as rfp_enhancements_router
 app.include_router(rfp_enhancements_router)
 from backend.routers.plan_metrics import router as plan_metrics_router
 app.include_router(plan_metrics_router)
+from backend.routers.contract_leakage import router as contract_leakage_router
+app.include_router(contract_leakage_router)
 
 from backend.routers.form_5500_monitor import router as f5500_monitor_router, ensure_account_intel_columns, ensure_rfp_opportunity_columns
 app.include_router(f5500_monitor_router)
@@ -399,7 +401,14 @@ if os.path.exists(STATIC_DIR):
             raise HTTPException(status_code=404)
         index_file = os.path.join(STATIC_DIR, "index.html")
         if os.path.exists(index_file):
-            return FileResponse(index_file)
+            return FileResponse(
+                index_file,
+                headers={
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "Pragma": "no-cache",
+                    "Expires": "0",
+                },
+            )
         return {"error": "Frontend not built"}
 else:
     @app.get("/")

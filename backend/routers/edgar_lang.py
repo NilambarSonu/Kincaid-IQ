@@ -672,11 +672,11 @@ async def _claude_tone(
     diff: dict, escalations: list,
 ) -> Optional[str]:
     import os
-    key = os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_KEY")
+    key = os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY") or os.environ.get("OPENAI_API_KEY")
     if not key:
         return None
     try:
-        import anthropic  # type: ignore
+        from backend import anthropic_compat as anthropic  # type: ignore
         client = anthropic.Anthropic(api_key=key)
 
         added_sample = "\n".join(f"+ {s}" for s in diff["added"][:10])
@@ -721,11 +721,11 @@ Be direct, use professional financial language. Do NOT include headers or bullet
 async def _claude_classify_8k(text: str, company: str, filing_date: str) -> Optional[dict]:
     """Use Claude to classify and summarize a single 8-K filing."""
     import os
-    key = os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_KEY")
+    key = os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY") or os.environ.get("OPENAI_API_KEY")
     if not key:
         return None
     try:
-        import anthropic  # type: ignore
+        from backend import anthropic_compat as anthropic  # type: ignore
         client = anthropic.Anthropic(api_key=key)
         snippet = text[:4000]
 

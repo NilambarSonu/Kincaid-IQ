@@ -786,11 +786,11 @@ def _build_sales_angle_template(state: dict, client_type: str, employer_size: st
 async def _claude_sales_angle(state: dict, client_type: str, employer_size: str, industry: Optional[str]) -> Optional[dict]:
     """Claude-powered Sales Angle Generator."""
     import os
-    key = os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_KEY")
+    key = os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY") or os.environ.get("OPENAI_API_KEY")
     if not key:
         return None
     try:
-        import anthropic
+        from backend import anthropic_compat as anthropic
         client = anthropic.Anthropic(api_key=key)
 
         legislation = ", ".join(state["regulatory_rules"].get("key_legislation", [])[:3])

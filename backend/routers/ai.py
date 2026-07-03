@@ -4,7 +4,7 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from backend.gemini_compat import AsyncGeminiClient as AsyncOpenAI
-from anthropic import AsyncAnthropic
+from backend.anthropic_compat import AsyncAnthropic
 from pydantic import BaseModel
 from backend.database import get_db
 from backend import models, schemas

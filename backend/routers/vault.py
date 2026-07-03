@@ -10,10 +10,10 @@ from backend import models
 from backend.auth import get_current_user
 from backend.config import settings
 from backend.gemini_compat import AsyncGeminiClient as AsyncOpenAI
-from anthropic import AsyncAnthropic
+from backend.anthropic_compat import AsyncAnthropic
 
 openai_client = AsyncOpenAI(api_key=settings.openai_api_key, base_url=settings.openai_base_url)
-anthropic_client = AsyncAnthropic(api_key=settings.anthropic_api_key, base_url=settings.anthropic_base_url)
+anthropic_client = AsyncAnthropic(api_key=settings.openai_api_key, base_url=settings.openai_base_url)
 
 TAX_SYSTEM_PROMPT = """You are a senior fiduciary tax advisor at Kincaid RMC, specializing in UHNW individual, trust, and family office tax matters. You are analyzing a client's tax return document.
 

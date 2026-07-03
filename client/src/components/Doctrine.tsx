@@ -6,8 +6,24 @@ import { LiveRiskMeter } from "./LiveRiskMeter";
 
 export type ConfidenceTier = "CERTIFIED" | "MODELED" | "INSUFFICIENT_EVIDENCE";
 
-export const GATE_CHAIN = ["DEFINE", "WIRE", "VALIDATE", "PROMOTE", "COMPUTE", "GATE", "RENDER"] as const;
-export type Gate = (typeof GATE_CHAIN)[number];
+// Canonical 7-gate enforcement chain (docs/CONSTITUTION.md). The former DEFINE..RENDER
+// pipeline shorthand is retired; these enforcement gates are the single source of truth,
+// shared by the War Room drill and every page's DoctrineBar.
+export const ENFORCEMENT_GATES = [
+  { n: 1, key: "EVIDENCE_EXISTENCE",    name: "Evidence Existence",    fail: "EVIDENCE_MISSING",                  effect: "Cannot compute." },
+  { n: 2, key: "EVIDENCE_FRESHNESS",    name: "Evidence Freshness",    fail: "EVIDENCE_STALE",                    effect: "Tile blocked." },
+  { n: 3, key: "EVIDENCE_VERIFICATION", name: "Evidence Verification", fail: "EVIDENCE_UNVERIFIED",               effect: "Amber or blocked." },
+  { n: 4, key: "KPI_LIFECYCLE",         name: "KPI Lifecycle",         fail: "KPI_NOT_PRODUCTION",                effect: "No War Room render." },
+  { n: 5, key: "DEPENDENCY_RESOLUTION", name: "Dependency Resolution", fail: "KPI_DEPENDENCY_FAILED",             effect: "Blocked until parent KPIs resolve." },
+  { n: 6, key: "THRESHOLD_EVALUATION",  name: "Threshold Evaluation",  fail: "INFO / WARNING / CRITICAL / BLOCK", effect: "Badges, alerts, or suppression." },
+  { n: 7, key: "DEBT_SCORE_CHECK",      name: "Debt Score Check",      fail: "DEBT_SCORE",                        effect: "Over 25 blocks production. Over 15 blocks render." },
+] as const;
+
+export type Gate = (typeof ENFORCEMENT_GATES)[number]["key"];
+
+export function gateMeta(gate: Gate) {
+  return ENFORCEMENT_GATES.find(g => g.key === gate)!;
+}
 
 export const VOICE_CONTRACT =
   "University of Chicago PhD Economist + PhD Computer Scientist — industrial organization, agency theory, " +
@@ -76,7 +92,7 @@ export function ConfidenceChip({ tier, compact = false }: { tier: ConfidenceTier
 }
 
 export function GateBadge({ gate }: { gate: Gate }) {
-  const idx = GATE_CHAIN.indexOf(gate);
+  const g = gateMeta(gate);
   return (
     <span
       data-testid={`gate-badge-${gate.toLowerCase()}`}
@@ -96,8 +112,8 @@ export function GateBadge({ gate }: { gate: Gate }) {
         fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
       }}
     >
-      <span style={{ color: "rgba(255,255,255,0.4)", fontWeight: 700 }}>GATE {idx + 1}/7 ·</span>
-      {gate}
+      <span style={{ color: "rgba(255,255,255,0.4)", fontWeight: 700 }}>GATE {g.n}/7 ·</span>
+      {g.name}
     </span>
   );
 }
@@ -297,9 +313,9 @@ export function DoctrineBar(props: DoctrineBarProps) {
                 textTransform: "uppercase",
               }}
             >
-              7-Gate Chain · {GATE_CHAIN.map((g, i) => (
-                <span key={g} style={{ color: g === gate ? "#FFB800" : "rgba(255,255,255,0.30)" }}>
-                  {g}{i < GATE_CHAIN.length - 1 ? " → " : ""}
+              7-Gate Enforcement Chain · {ENFORCEMENT_GATES.map((g, i) => (
+                <span key={g.key} style={{ color: g.key === gate ? "#FFB800" : "rgba(255,255,255,0.30)" }}>
+                  {g.name}{i < ENFORCEMENT_GATES.length - 1 ? " → " : ""}
                 </span>
               ))}
             </div>

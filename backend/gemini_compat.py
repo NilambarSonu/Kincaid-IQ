@@ -1,20 +1,18 @@
 """
-Gemini compatibility shim.
+Gemini compatibility shim — now OpenAI-backed.
 
-Provides a tiny subset of the OpenAI Python SDK surface
-(`client.chat.completions.create(...)` -> `resp.choices[0].message.content`)
-backed by Google Gemini via Replit AI Integrations.
-
-This lets the existing routers keep their OpenAI-style call sites unchanged
-while routing all LLM traffic to Gemini. The Replit Gemini gateway only
-speaks the native `generateContent` protocol (not OpenAI chat/completions),
-so we translate here.
+Historically this routed OpenAI-style chat-completions calls to Google Gemini.
+Per the platform directive to use OpenAI exclusively, these drop-in clients now
+forward to the real OpenAI SDK. The class names are intentionally unchanged so
+the many call sites that do
+    from backend.gemini_compat import AsyncGeminiClient as AsyncOpenAI
+keep working without edits — only the underlying provider changed.
 
 Usage (drop-in):
     from backend.gemini_compat import AsyncGeminiClient as AsyncOpenAI
     client = AsyncOpenAI(api_key=..., base_url=...)   # args ignored
     resp = await client.chat.completions.create(
-        model="gemini-2.5-flash",
+        model="gemini-2.5-flash",   # any non-OpenAI id is remapped to DEFAULT_MODEL
         messages=[{"role": "system", "content": ...}, {"role": "user", "content": ...}],
         temperature=0.3,
         max_tokens=2000,
@@ -22,181 +20,88 @@ Usage (drop-in):
     )
     text = resp.choices[0].message.content
 """
-import base64
 import os
 from typing import Any, List, Optional
 
-from google import genai
-from google.genai import types
+from openai import AsyncOpenAI as _AsyncOpenAI, OpenAI as _SyncOpenAI
 
-# Prefer Replit's AI Integrations Gemini gateway when present; otherwise fall back
-# to a direct Google Gemini key (GEMINI_API_KEY / GOOGLE_API_KEY) so the app runs
-# on AWS or any host. When no custom base URL is set we let the SDK hit Google's
-# public Gemini endpoint directly.
-_API_KEY = (
-    os.environ.get("AI_INTEGRATIONS_GEMINI_API_KEY")
-    or os.environ.get("GEMINI_API_KEY")
-    or os.environ.get("GOOGLE_API_KEY", "")
-)
-_BASE_URL = os.environ.get("AI_INTEGRATIONS_GEMINI_BASE_URL", "")
+from backend.config import settings
 
-# Default model for any non-Gemini identifier (e.g. legacy "gpt-4o").
-DEFAULT_MODEL = "gemini-2.5-flash"
+# Platform directive: only ever use the highest-tier GPT-5 model. Every call —
+# regardless of the model= string the caller passes — resolves to this.
+DEFAULT_MODEL = "gpt-5"
 
-# Gemini 2.5 spends part of its output budget on internal "thinking" tokens,
-# so very low caps can yield empty text. Never cap below this floor.
-_MIN_OUTPUT_TOKENS = 8192
+# Reasoning-class models (GPT-5, o-series) require `max_completion_tokens` instead
+# of `max_tokens`, only accept the default temperature (a custom value 400s), and
+# spend part of the token budget on hidden reasoning — so we floor the completion
+# budget to keep the visible answer from being starved.
+_REASONING_PREFIXES = ("gpt-5", "o1", "o3", "o4")
+_MIN_REASONING_COMPLETION = 2048
 
-_client_singleton: Optional["genai.Client"] = None
+# GPT-5 defaults to "medium" reasoning effort, which for large JSON responses (e.g.
+# the Rx Defense forensic analysis) spends so long thinking that requests exceed
+# multi-minute timeouts and/or exhaust the token budget before emitting an answer —
+# making features silently fall back to demo output. Pin a fast-but-capable default
+# ("low"); override globally with GPT5_REASONING_EFFORT, or per-call via the
+# reasoning_effort kwarg. "none"/"" disables it (uses model default).
+_REASONING_EFFORT = os.getenv("GPT5_REASONING_EFFORT", "low").strip()
+
+_async_singleton: Optional[_AsyncOpenAI] = None
+_sync_singleton: Optional[_SyncOpenAI] = None
 
 
-def _client() -> "genai.Client":
-    global _client_singleton
-    if _client_singleton is None:
-        if _BASE_URL:
-            # Replit AI Integrations gateway (custom endpoint, empty api_version).
-            _client_singleton = genai.Client(
-                api_key=_API_KEY,
-                http_options=types.HttpOptions(base_url=_BASE_URL, api_version=""),
-            )
-        else:
-            # Direct Google Gemini endpoint (AWS / any host) — SDK defaults apply.
-            _client_singleton = genai.Client(api_key=_API_KEY)
-    return _client_singleton
+def _aclient() -> _AsyncOpenAI:
+    global _async_singleton
+    if _async_singleton is None:
+        _async_singleton = _AsyncOpenAI(
+            api_key=settings.openai_api_key, base_url=settings.openai_base_url
+        )
+    return _async_singleton
+
+
+def _sclient() -> _SyncOpenAI:
+    global _sync_singleton
+    if _sync_singleton is None:
+        _sync_singleton = _SyncOpenAI(
+            api_key=settings.openai_api_key, base_url=settings.openai_base_url
+        )
+    return _sync_singleton
 
 
 def _map_model(model: Optional[str]) -> str:
-    if model and str(model).startswith("gemini"):
-        return model
+    # The caller's model= string is intentionally ignored: only GPT-5 is used.
     return DEFAULT_MODEL
 
 
-def _content_to_parts(content: Any) -> List["types.Part"]:
-    if isinstance(content, str):
-        return [types.Part(text=content)]
-    if isinstance(content, list):
-        parts: List[types.Part] = []
-        for item in content:
-            if isinstance(item, dict):
-                itype = item.get("type")
-                if itype == "text":
-                    parts.append(types.Part(text=item.get("text", "")))
-                elif itype == "image_url":
-                    url = (item.get("image_url") or {}).get("url", "")
-                    if url.startswith("data:") and "," in url:
-                        header, b64 = url.split(",", 1)
-                        mime = header.split(";")[0].replace("data:", "") or "image/png"
-                        parts.append(
-                            types.Part(
-                                inline_data=types.Blob(
-                                    mime_type=mime, data=base64.b64decode(b64)
-                                )
-                            )
-                        )
-                else:
-                    parts.append(types.Part(text=str(item)))
-            else:
-                parts.append(types.Part(text=str(item)))
-        return parts or [types.Part(text="")]
-    return [types.Part(text=str(content))]
+def _is_reasoning(model: str) -> bool:
+    return str(model).startswith(_REASONING_PREFIXES)
 
 
-def _split_messages(messages: Optional[List[dict]]):
-    """Translate OpenAI-style messages into (system_instruction, contents)."""
-    system_parts: List[str] = []
-    contents: List[types.Content] = []
-    for m in messages or []:
-        role = m.get("role")
-        content = m.get("content")
-        if role == "system":
-            if isinstance(content, str):
-                system_parts.append(content)
-            elif isinstance(content, list):
-                for item in content:
-                    if isinstance(item, dict) and item.get("type") == "text":
-                        system_parts.append(item.get("text", ""))
-            continue
-        g_role = "model" if role == "assistant" else "user"
-        contents.append(types.Content(role=g_role, parts=_content_to_parts(content)))
-    system_instruction = "\n\n".join(p for p in system_parts if p) or None
-    return system_instruction, contents
-
-
-def _build_config(
-    system_instruction: Optional[str],
+def _build_kwargs(
+    model: Optional[str],
+    messages: Optional[List[dict]],
     max_tokens: Optional[int],
     temperature: Optional[float],
     response_format: Optional[dict],
-) -> "types.GenerateContentConfig":
-    kwargs: dict = {}
-    if system_instruction:
-        kwargs["system_instruction"] = system_instruction
-    if max_tokens is not None:
-        kwargs["max_output_tokens"] = max(int(max_tokens), _MIN_OUTPUT_TOKENS)
-    if temperature is not None:
-        kwargs["temperature"] = temperature
-    if (
-        isinstance(response_format, dict)
-        and response_format.get("type") == "json_object"
-    ):
-        kwargs["response_mime_type"] = "application/json"
-    return types.GenerateContentConfig(**kwargs)
-
-
-# ── OpenAI-shaped response shims ──────────────────────────────────────────────
-class _Message:
-    def __init__(self, content: str):
-        self.content = content
-        self.role = "assistant"
-
-
-class _Choice:
-    def __init__(self, content: str):
-        self.message = _Message(content)
-        self.finish_reason = "stop"
-        self.index = 0
-
-
-class _Usage:
-    def __init__(self, prompt_tokens: int, completion_tokens: int):
-        self.prompt_tokens = prompt_tokens
-        self.completion_tokens = completion_tokens
-        self.total_tokens = (prompt_tokens or 0) + (completion_tokens or 0)
-
-
-class _Response:
-    def __init__(self, content: str, usage: _Usage):
-        self.choices = [_Choice(content)]
-        self.usage = usage
-
-
-def _to_response(g: Any) -> _Response:
-    text = getattr(g, "text", None) or ""
-    prompt_tokens = completion_tokens = 0
-    um = getattr(g, "usage_metadata", None)
-    if um is not None:
-        prompt_tokens = getattr(um, "prompt_token_count", 0) or 0
-        completion_tokens = getattr(um, "candidates_token_count", 0) or 0
-    return _Response(text, _Usage(prompt_tokens, completion_tokens))
-
-
-# ── OpenAI-shaped streaming chunk shims ───────────────────────────────────────
-class _Delta:
-    def __init__(self, content: Optional[str]):
-        self.content = content
-        self.role = "assistant"
-
-
-class _ChunkChoice:
-    def __init__(self, content: Optional[str]):
-        self.delta = _Delta(content)
-        self.finish_reason = None
-        self.index = 0
-
-
-class _Chunk:
-    def __init__(self, content: Optional[str]):
-        self.choices = [_ChunkChoice(content)]
+    reasoning_effort: Optional[str] = None,
+) -> dict:
+    resolved = _map_model(model)
+    kwargs: dict = {"model": resolved, "messages": messages or []}
+    if _is_reasoning(resolved):
+        # GPT-5: use max_completion_tokens (floored), and drop custom temperature.
+        if max_tokens is not None:
+            kwargs["max_completion_tokens"] = max(int(max_tokens), _MIN_REASONING_COMPLETION)
+        effort = reasoning_effort if reasoning_effort is not None else _REASONING_EFFORT
+        if effort and effort.lower() != "none":
+            kwargs["reasoning_effort"] = effort
+    else:
+        if max_tokens is not None:
+            kwargs["max_tokens"] = int(max_tokens)
+        if temperature is not None:
+            kwargs["temperature"] = temperature
+    if response_format is not None:
+        kwargs["response_format"] = response_format
+    return kwargs
 
 
 # ── Async client ──────────────────────────────────────────────────────────────
@@ -209,27 +114,15 @@ class _AsyncCompletions:
         temperature: Optional[float] = None,
         response_format: Optional[dict] = None,
         stream: bool = False,
+        reasoning_effort: Optional[str] = None,
         **_: Any,
     ) -> Any:
-        system_instruction, contents = _split_messages(messages)
-        config = _build_config(system_instruction, max_tokens, temperature, response_format)
-        mapped_model = _map_model(model)
+        kwargs = _build_kwargs(model, messages, max_tokens, temperature, response_format, reasoning_effort)
         if stream:
-            return self._stream(mapped_model, contents, config)
-        g = await _client().aio.models.generate_content(
-            model=mapped_model, contents=contents, config=config
-        )
-        return _to_response(g)
-
-    async def _stream(self, model: str, contents: Any, config: Any):
-        """Yield OpenAI-style streaming chunks (chunk.choices[0].delta.content)."""
-        iterator = await _client().aio.models.generate_content_stream(
-            model=model, contents=contents, config=config
-        )
-        async for g in iterator:
-            text = getattr(g, "text", None)
-            if text:
-                yield _Chunk(text)
+            kwargs["stream"] = True
+        # Returns the real OpenAI response (resp.choices[0].message.content) or,
+        # when stream=True, the real OpenAI async stream (chunk.choices[0].delta.content).
+        return await _aclient().chat.completions.create(**kwargs)
 
 
 class _AsyncChat:
@@ -253,14 +146,11 @@ class _SyncCompletions:
         max_tokens: Optional[int] = None,
         temperature: Optional[float] = None,
         response_format: Optional[dict] = None,
+        reasoning_effort: Optional[str] = None,
         **_: Any,
-    ) -> _Response:
-        system_instruction, contents = _split_messages(messages)
-        config = _build_config(system_instruction, max_tokens, temperature, response_format)
-        g = _client().models.generate_content(
-            model=_map_model(model), contents=contents, config=config
-        )
-        return _to_response(g)
+    ) -> Any:
+        kwargs = _build_kwargs(model, messages, max_tokens, temperature, response_format, reasoning_effort)
+        return _sclient().chat.completions.create(**kwargs)
 
 
 class _SyncChat:

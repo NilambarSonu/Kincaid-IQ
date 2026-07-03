@@ -28,18 +28,27 @@ function hexRGB(h: string): [number, number, number] {
   return [parseInt(v.slice(0,2),16), parseInt(v.slice(2,4),16), parseInt(v.slice(4,6),16)];
 }
 
-// ── Dark-mode palette ──────────────────────────────────────────────────────
-const BG    = [3,  5,  13] as [number,number,number];   // near-black page bg
-const BG2   = [8,  11, 24] as [number,number,number];   // slightly lighter dark (header rows)
-const BG3   = [14, 18, 38] as [number,number,number];   // card / alt-row bg
-const BG4   = [20, 26, 52] as [number,number,number];   // kv highlight row
-const WHITE = [255,255,255] as [number,number,number];
-const FG    = [210,220,242] as [number,number,number];  // primary text
-const FG2   = [135,153,195] as [number,number,number];  // secondary / label text
-const FG3   = [65, 80, 120] as [number,number,number];  // very muted / footer
-const SEP   = [24, 32, 68] as [number,number,number];   // separator lines
-const GOLD  = [255,184,0]  as [number,number,number];
-const GREEN = [0,  255,148] as [number,number,number];
+// ── Light print palette ────────────────────────────────────────────────────
+// Pages are white for print-friendly, ink-light deliverables. Thin slate strips
+// (BG2) carry white text for a premium accent without "blacking out" the page.
+const BG    = [255,255,255] as [number,number,number];  // white page bg
+const BG2   = [17, 24, 39]  as [number,number,number];  // dark slate strips / banners / table headers (white text on it)
+const BG3   = [243,246,251] as [number,number,number];  // card / alt-row bg (light)
+const BG4   = [236,241,248] as [number,number,number];  // kv highlight row (light)
+const WHITE = [255,255,255] as [number,number,number];  // text on slate strips
+const FG    = [17, 24, 39]  as [number,number,number];  // primary text (near-black)
+const FG2   = [71, 85, 105] as [number,number,number];  // secondary / label text (slate)
+const FG3   = [120,132,150] as [number,number,number];  // muted
+const SEP   = [222,228,236] as [number,number,number];  // separator lines
+const GOLD  = [176,122,10]  as [number,number,number];  // deep gold, readable on light + slate
+const GREEN = [4,  150,105] as [number,number,number];  // deep green, readable on light
+// Light text for use ON the dark slate strips (banners / footers)
+const ONDARK  = [235,240,248] as [number,number,number];
+const ONDARK2 = [156,170,196] as [number,number,number];
+
+// Report authorship / white-label branding (surfaced throughout the report)
+const AUTHOR_NAME = "Jeremiah Franklin Shrack";
+const LAB_NAME    = "SiriusB iQ AI Data Science Labs";
 
 // Legacy aliases so report generators that reference NAVY/LIGHT/DARK/GRAY compile unchanged
 const NAVY  = BG2;
@@ -82,9 +91,14 @@ export interface RxSavings {
   isReference: boolean;
 }
 
-/** Disclosed 3-year NPV of a recurring annual figure (Y1 + Y2×0.95 + Y3×0.90). */
-export function disclosed3YearNPV(annual: number): number {
-  return Math.round(annual + annual * NPV_Y2 + annual * NPV_Y3);
+/** Disclosed 3-year NPV of a recurring annual figure (Y1 + Y2×0.95 + Y3×0.90).
+ *  `capCeiling` (when provided, > 0) hard-clamps the result so NO savings figure —
+ *  including the multi-year projection — can ever exceed the ≤30%-of-Rx-spend
+ *  ceiling. Keeps every displayed dollar within the doctrine cap. */
+export function disclosed3YearNPV(annual: number, capCeiling?: number): number {
+  const npv = Math.round(annual + annual * NPV_Y2 + annual * NPV_Y3);
+  if (capCeiling != null && capCeiling > 0) return Math.min(npv, Math.round(capCeiling));
+  return npv;
 }
 
 /**
@@ -97,6 +111,7 @@ export function computeRxSavings(
   overallScore: number,
   members: number,
   scoreMap?: Record<number, number>,
+  annualRxSpend: number = 0,
 ): RxSavings {
   const m = Number.isFinite(members) && members > 0 ? Math.round(members) : RX_REFERENCE_MEMBERS;
   let annual = 0;
@@ -115,7 +130,13 @@ export function computeRxSavings(
     annual = rf * RX_TOTAL_PMPY * m;
   }
   annual = Math.round(annual);
-  const year3NPV = disclosed3YearNPV(annual);
+  // Cap intrinsically at ≤30% of Rx spend (actual when known, else a
+  // members-based modeled baseline) so no report path can exceed the ceiling.
+  annual = Math.round(annual * rxSpendCapScale(annual, annualRxSpend, m));
+  // The 3-year NPV is a savings figure too, so it is bound by the SAME ≤30%-of-
+  // Rx-spend ceiling — never inflate past the cap via the multi-year multiplier.
+  const capCeiling = rxEffectiveSpend(annualRxSpend, m) * RX_MAX_LEAKAGE_SHARE;
+  const year3NPV = disclosed3YearNPV(annual, capCeiling);
   const isReference = m === RX_REFERENCE_MEMBERS;
   const methodology =
     `MODELED — member_count (${m.toLocaleString()}) × PMPY actuarial benchmark × ` +
@@ -137,6 +158,65 @@ export function computeRxProvisionExposure(provisionId: number, score: number, m
   const m = Number.isFinite(members) && members > 0 ? Math.round(members) : RX_REFERENCE_MEMBERS;
   const rf = Math.max(0, (10 - (typeof score === "number" ? score : 5)) / 10);
   return Math.round(rf * pmpy * m);
+}
+
+/** Aggregate ≤30% leakage-cap factor for per-provision figures, computed from the
+ *  raw (uncapped) exposure across ALL scored provisions so any displayed
+ *  provision dollar is scaled by the same ceiling as the modeled totals. Mirrors
+ *  _apply_modeled_impacts in backend/routers/rx_defense.py — keep in lockstep.
+ *  When no provision scores exist but an overall 0–100 score does, the raw basis
+ *  falls back to that overall score across the full PMPY set — the SAME basis
+ *  computeRxSavings uses for its else-branch total, so the per-row and total cap
+ *  scales stay identical (RX_TOTAL_PMPY is the sum of RX_PROVISION_PMPY). */
+export function rxProvisionCapScale(
+  scoreMap: Record<number, number>,
+  members: number,
+  annualRxSpend: number,
+  overallScore?: number,
+): number {
+  const m = Number.isFinite(members) && members > 0 ? Math.round(members) : RX_REFERENCE_MEMBERS;
+  let raw = 0;
+  const entries = Object.entries(scoreMap).filter(([, s]) => typeof s === "number");
+  if (entries.length > 0) {
+    for (const [pid, s] of entries) {
+      const pmpy = RX_PROVISION_PMPY[Number(pid)];
+      if (pmpy == null) continue;
+      raw += Math.max(0, (10 - (s as number)) / 10) * pmpy * m;
+    }
+  } else if (typeof overallScore === "number") {
+    const rf = Math.max(0, (100 - overallScore) / 100);
+    raw = rf * RX_TOTAL_PMPY * m;
+  }
+  return rxSpendCapScale(raw, annualRxSpend, m);
+}
+
+/* ── ≤30% leakage cap ─────────────────────────────────────────────────────────
+   Realistic ceiling: even an egregious PBM contract cannot leak more than ~30%
+   of total pharmacy spend. Modeled leakage/savings must NEVER exceed this share.
+   Mirrors _MAX_LEAKAGE_SHARE / _ASSUMED_RX_PMPY in backend/routers/rx_defense.py
+   — keep both surfaces in lockstep. */
+export const RX_MAX_LEAKAGE_SHARE = 0.30;
+// Typical commercial Rx spend baseline (PMPY), used ONLY as the cap denominator
+// when the plan's actual annual Rx spend is unknown, so the ≤30% ceiling always
+// binds instead of silently disabling the cap.
+export const RX_ASSUMED_RX_PMPY = 1400;
+
+/** Effective annual Rx spend for the 30% cap: actual spend when known, else a
+ *  MODELED baseline (members × typical Rx PMPY) so the cap always has a floor. */
+export function rxEffectiveSpend(annualRxSpend: number, members: number): number {
+  if (annualRxSpend && annualRxSpend > 0) return annualRxSpend;
+  const m = Number.isFinite(members) && members > 0 ? Math.round(members) : RX_REFERENCE_MEMBERS;
+  return m * RX_ASSUMED_RX_PMPY;
+}
+
+/** ≤1.0 scale factor capping modeled leakage at 30% of the (effective) Rx spend.
+ *  Returns 1 only when the modeled total is already within the cap. */
+export function rxSpendCapScale(modeledTotal: number, annualRxSpend: number, members: number): number {
+  const spend = rxEffectiveSpend(annualRxSpend, members);
+  if (!spend || spend <= 0 || !modeledTotal || modeledTotal <= 0) return 1;
+  const cap = spend * RX_MAX_LEAKAGE_SHARE;
+  if (modeledTotal <= cap) return 1;
+  return cap / modeledTotal;
 }
 
 /* ── Illustrative dollar de-fabrication ────────────────────────────────────────
@@ -210,26 +290,26 @@ export function modeledEhsSavings(overallScore: number): number {
 ══════════════════════════════════════════════════════════════════════════════ */
 function drawPageChrome(ctx: Ctx) {
   const { doc, W, H, M, accent, reportName, date, client, page } = ctx;
-  // Full-page black background
+  // White page background
   fillPage(doc, W, H);
-  // Header bar
+  // Header bar (slate strip)
   fill(doc, BG2); doc.rect(0, 0, W, 12, "F");
   fill(doc, accent); doc.rect(0, 12, W, 0.8, "F");
   // Header text
   doc.setFont("helvetica","bold"); doc.setFontSize(8);
   rgb(doc, GOLD); doc.text("KINCAID IQ", M, 7.5);
   doc.setFont("helvetica","normal"); doc.setFontSize(7.5);
-  rgb(doc, FG2); doc.text(reportName, M + 22, 7.5);
-  rgb(doc, FG3); doc.text(date, W - M, 7.5, { align: "right" });
-  // Footer bar
+  rgb(doc, ONDARK); doc.text(reportName, M + 22, 7.5);
+  rgb(doc, ONDARK2); doc.text(date, W - M, 7.5, { align: "right" });
+  // Footer bar (slate strip)
   fill(doc, BG2); doc.rect(0, H - 10, W, 10, "F");
   fill(doc, accent); doc.rect(0, H - 10, W, 0.5, "F");
   doc.setFont("helvetica","normal"); doc.setFontSize(7);
-  rgb(doc, FG2);
+  rgb(doc, ONDARK2);
   doc.text("CONFIDENTIAL — Prepared exclusively for " + client, M, H - 5.5);
   doc.text(`Page ${page}`, W - M, H - 5.5, { align: "right" });
-  rgb(doc, FG3);
-  doc.text("Kincaid IQ™ — Fiduciary-Grade Healthcare Benefits Intelligence", W / 2, H - 3, { align: "center" });
+  rgb(doc, ONDARK);
+  doc.text(`Prepared by ${AUTHOR_NAME} · ${LAB_NAME}`, W / 2, H - 3, { align: "center" });
 }
 
 function addPage(ctx: Ctx) {
@@ -244,18 +324,6 @@ function checkY(ctx: Ctx, needed = 20) {
 }
 
 function gap(ctx: Ctx, mm = 4) { ctx.y += mm; }
-
-// Emit filler blocks (in order, cycling) until the document reaches targetPage.
-// Guarantees a deterministic minimum page budget per section so the strategic
-// report reliably exceeds 100 pages regardless of AI content length.
-function padToPage(ctx: Ctx, targetPage: number, blocks: Array<(ctx: Ctx) => void>) {
-  let i = 0;
-  let guard = 0;
-  while (ctx.page < targetPage && guard < 60 && blocks.length) {
-    blocks[i % blocks.length](ctx);
-    i++; guard++;
-  }
-}
 
 function h1(ctx: Ctx, text: string) {
   checkY(ctx, 14);
@@ -333,7 +401,7 @@ function formulaBox(ctx: Ctx, name: string, expr: string, desc: string) {
   const { doc, M, CW, accent } = ctx;
   const bh = 22;
   checkY(ctx, bh + 4);
-  fill(doc, [2, 4, 10] as [number,number,number]); doc.rect(M, ctx.y, CW, bh, "F");
+  fill(doc, BG3); doc.rect(M, ctx.y, CW, bh, "F");
   fill(doc, accent); doc.rect(M, ctx.y, 2.5, bh, "F");
   stroke(doc, accent); doc.setLineWidth(0.3); doc.rect(M, ctx.y, CW, bh);
   doc.setFont("helvetica","bold"); doc.setFontSize(7.5);
@@ -341,7 +409,7 @@ function formulaBox(ctx: Ctx, name: string, expr: string, desc: string) {
   doc.setFont("courier","bold"); doc.setFontSize(9.5);
   rgb(doc, GREEN); doc.text(expr, M + 5, ctx.y + 12);
   doc.setFont("helvetica","normal"); doc.setFontSize(7.5);
-  rgb(doc, FG3);
+  rgb(doc, FG2);
   const dlines = doc.splitTextToSize(desc, CW - 8);
   dlines.slice(0,2).forEach((l: string, i: number) => doc.text(l, M + 5, ctx.y + 17 + i * 3.5));
   ctx.y += bh + 5;
@@ -389,15 +457,16 @@ function divider(ctx: Ctx) {
 function callout(ctx: Ctx, text: string, type: "info"|"warn"|"critical" = "info") {
   const { doc, M, CW } = ctx;
   const colors: Record<string,[number,number,number]> = {
-    info: [0,180,255], warn: [255,184,0], critical: [255,60,80]
+    info: [37,99,235], warn: [176,122,10], critical: [200,30,50]
   };
   const c = colors[type];
   checkY(ctx, 14);
-  // Dark tinted bg — just slightly tinted toward the accent color
-  fill(doc, [Math.round(c[0]*0.12), Math.round(c[1]*0.08), Math.round(c[2]*0.08)] as [number,number,number]);
+  // Light tinted bg toward the accent color
+  const lt = (v: number) => Math.round(255 - (255 - v) * 0.10);
+  fill(doc, [lt(c[0]), lt(c[1]), lt(c[2])] as [number,number,number]);
   doc.rect(M, ctx.y, CW, 12, "F");
   fill(doc, c); doc.rect(M, ctx.y, 2.5, 12, "F");
-  stroke(doc, [Math.round(c[0]*0.35), Math.round(c[1]*0.25), Math.round(c[2]*0.25)] as [number,number,number]);
+  stroke(doc, [Math.round(c[0]*0.5+128), Math.round(c[1]*0.5+128), Math.round(c[2]*0.5+128)] as [number,number,number]);
   doc.setLineWidth(0.25); doc.rect(M, ctx.y, CW, 12);
   doc.setFont("helvetica","bold"); doc.setFontSize(8.5);
   rgb(doc, c); doc.text(type.toUpperCase(), M + 5, ctx.y + 5);
@@ -414,10 +483,9 @@ function callout(ctx: Ctx, text: string, type: "info"|"warn"|"critical" = "info"
 function coverPage(ctx: Ctx) {
   const { doc, W, H, M, accent, reportName, subtitle, date } = ctx;
 
-  // Pure black background
+  // White page with a soft slate footer panel
   fill(doc, BG); doc.rect(0, 0, W, H, "F");
-  // Subtle dark gradient panel bottom half
-  fill(doc, [6, 8, 20] as [number,number,number]); doc.rect(0, H * 0.52, W, H * 0.48, "F");
+  fill(doc, BG3); doc.rect(0, H * 0.72, W, H * 0.28, "F");
 
   // Top accent bar
   fill(doc, accent); doc.rect(0, 0, W, 2.5, "F");
@@ -430,14 +498,14 @@ function coverPage(ctx: Ctx) {
   doc.setFont("helvetica","bold"); doc.setFontSize(12);
   rgb(doc, GOLD); doc.text("KINCAID IQ™", M + 3, 22);
   doc.setFont("helvetica","normal"); doc.setFontSize(8);
-  rgb(doc, FG3); doc.text("Kincaid RMC  •  Account SHRACK-7742", M + 3, 29);
+  rgb(doc, FG2); doc.text("Kincaid RMC  •  Account SHRACK-7742", M + 3, 29);
 
   // Thin accent rule under logo
   fill(doc, accent); doc.rect(M + 3, 33, 35, 0.6, "F");
 
-  // Report title — large white
+  // Report title — large dark
   doc.setFont("helvetica","bold"); doc.setFontSize(27);
-  rgb(doc, WHITE);
+  rgb(doc, FG);
   const titleLines = doc.splitTextToSize(reportName, W - M * 2 - 10);
   titleLines.forEach((l: string, i: number) => doc.text(l, M + 3, 56 + i * 16));
 
@@ -453,14 +521,14 @@ function coverPage(ctx: Ctx) {
   // Meta block — two columns
   const metaY = 108;
   doc.setFont("helvetica","bold"); doc.setFontSize(7.5);
-  rgb(doc, FG3); doc.text("PREPARED FOR", M + 3, metaY);
+  rgb(doc, FG2); doc.text("PREPARED FOR", M + 3, metaY);
   doc.setFont("helvetica","bold"); doc.setFontSize(12); rgb(doc, FG);
   doc.text("Jeremiah Shrack", M + 3, metaY + 7);
   doc.setFont("helvetica","normal"); doc.setFontSize(9); rgb(doc, FG2);
   doc.text("CEO, Kincaid RMC  •  SHRACK-7742", M + 3, metaY + 14);
 
   doc.setFont("helvetica","bold"); doc.setFontSize(7.5);
-  rgb(doc, FG3); doc.text("REPORT DATE", M + 3, metaY + 25);
+  rgb(doc, FG2); doc.text("REPORT DATE", M + 3, metaY + 25);
   doc.setFont("helvetica","bold"); doc.setFontSize(12); rgb(doc, FG);
   doc.text(date, M + 3, metaY + 32);
 
@@ -468,19 +536,19 @@ function coverPage(ctx: Ctx) {
   const bw = 60, bh = 9;
   fill(doc, accent); doc.rect(M + 3, metaY + 44, bw, bh, "F");
   doc.setFont("helvetica","bold"); doc.setFontSize(7.5);
-  rgb(doc, BG); doc.text("CONFIDENTIAL & PROPRIETARY", M + 6, metaY + 50.5);
+  rgb(doc, WHITE); doc.text("CONFIDENTIAL & PROPRIETARY", M + 6, metaY + 50.5);
 
-  // Bottom panel
-  fill(doc, [5, 7, 18] as [number,number,number]); doc.rect(3, H - 52, W - 6, 40, "F");
+  // Bottom panel (light slate)
+  fill(doc, BG3); doc.rect(3, H - 52, W - 6, 40, "F");
   fill(doc, accent); doc.rect(3, H - 52, W - 6, 0.5, "F");
   doc.setFont("helvetica","bold"); doc.setFontSize(8.5);
   rgb(doc, accent); doc.text("FIDUCIARY-GRADE ANALYSIS", M + 3, H - 43);
   doc.setFont("helvetica","normal"); doc.setFontSize(7.5);
-  rgb(doc, FG3);
-  const disclaimer = "This report was prepared by Kincaid RMC using the Kincaid IQ platform. All analyses reflect plan-specific data and current regulatory standards. This document is intended solely for the use of the plan sponsor identified above and may not be reproduced or redistributed without prior written consent from Kincaid RMC.";
+  rgb(doc, FG2);
+  const disclaimer = "This report was prepared by " + AUTHOR_NAME + " at " + LAB_NAME + " using the Kincaid IQ platform. All analyses reflect plan-specific data and current regulatory standards. This document is intended solely for the use of the plan sponsor identified above and may not be reproduced or redistributed without prior written consent.";
   const dlines = doc.splitTextToSize(disclaimer, W - M * 2 - 10);
   dlines.forEach((l: string, i: number) => doc.text(l, M + 3, H - 36 + i * 4));
-  rgb(doc, FG3);
+  rgb(doc, FG2);
   doc.text(`Report ID: KIQ-${Date.now().toString(36).toUpperCase()}  •  ${reportName}`, M + 3, H - 6);
 }
 
@@ -2377,6 +2445,12 @@ function generateRxDefensePDF(data: any): jsPDF {
   const provisions: any[] = d.provision_scores ?? [];
   const findings: any[] = d.key_findings ?? [];
   const members = Number(d.members ?? d.plan_members ?? d.planMembers ?? RX_REFERENCE_MEMBERS) || RX_REFERENCE_MEMBERS;
+  // Actual annual Rx spend (may arrive as a formatted string) so the ≤30% cap
+  // binds to real spend when known, else falls back to a members-based baseline.
+  const rxSpendRaw = d.rx_spend ?? d.annual_rx_spend ?? d.rxSpend ?? 0;
+  const rxSpendDollars = typeof rxSpendRaw === "number"
+    ? (rxSpendRaw > 0 ? rxSpendRaw : 0)
+    : (parseFloat(String(rxSpendRaw).replace(/[^0-9.]/g, "")) || 0);
   const provScoreMap: Record<number, number> = {};
   for (const p of provisions) {
     if (p && p.id != null && typeof p.score === "number") provScoreMap[Number(p.id)] = p.score;
@@ -2392,8 +2466,14 @@ function generateRxDefensePDF(data: any): jsPDF {
     : hasProvScores
       ? Math.round((Object.values(provScoreMap).reduce((a, b) => a + b, 0) / Object.keys(provScoreMap).length) * 10)
       : 0;
-  const rxModel = computeRxSavings(score, members, provScoreMap);
+  const rxModel = computeRxSavings(score, members, provScoreMap, rxSpendDollars);
   const exposure = hasEvidence ? rxModel.annual : 0;
+  // Single ≤30% cap factor applied to every per-provision dollar figure in this
+  // report so no per-row estimate can drift above the capped modeled totals.
+  const provCapScale = rxProvisionCapScale(provScoreMap, members, rxSpendDollars, hasScore ? score : undefined);
+  // Hard ≤30%-of-Rx-spend ceiling applied to every 3-year NPV so no multi-year
+  // savings figure can exceed the cap the annual/exposure figures already obey.
+  const npvCeiling = rxEffectiveSpend(rxSpendDollars, members) * RX_MAX_LEAKAGE_SHARE;
   // Dollar formatters that emit INSUFFICIENT_EVIDENCE rather than a fabricated $0/figure.
   const expLabel = hasEvidence ? `$${exposure.toLocaleString()}` : "INSUFFICIENT_EVIDENCE";
 
@@ -2451,7 +2531,7 @@ function generateRxDefensePDF(data: any): jsPDF {
     h2(c, "Top Risk Findings");
     callout(c, "MAC pricing methodology is not disclosed — PBM retains right to set MAC without independent verification. This is the single largest spread pricing risk in the contract.", "critical");
     callout(c, hasEvidence
-      ? `Manufacturer rebates are not fully passed through to the plan. MODELED retention of $${computeRxProvisionExposure(3, provScoreMap[3] ?? score / 10, members).toLocaleString()} annually (member_count × PMPY × risk_fraction).`
+      ? `Manufacturer rebates are not fully passed through to the plan. MODELED retention of $${Math.round(computeRxProvisionExposure(3, provScoreMap[3] ?? score / 10, members) * provCapScale).toLocaleString()} annually (member_count × PMPY × risk_fraction, ≤30% cap).`
       : "Manufacturer rebates are not fully passed through to the plan. Dollar retention is INSUFFICIENT_EVIDENCE until provision scores are available.", "critical");
     callout(c, "Audit rights require 90-day advance notice and are limited to once per year, severely restricting the plan's ability to verify pricing accuracy.", "warn");
   }
@@ -2749,12 +2829,12 @@ function generateRxDefensePDF(data: any): jsPDF {
   gap(c, 2);
   formulaBox(c, "3-Year Disclosed NPV of PBM Reform",
     "NPV = Year 1 + Year 2 × 0.95 + Year 3 × 0.90",
-    "Disclosed discount weighting (≈2.85×) applied to the MODELED annual recoverable savings for each scenario. No undisclosed cost-of-capital assumption.");
+    "Disclosed discount weighting (≈2.85×) applied to the MODELED annual recoverable savings for each scenario, then hard-capped at 30% of annual Rx spend. No undisclosed cost-of-capital assumption.");
   gap(c, 2);
   const scenRow = (label: string, frac: number): string[] => {
     if (!hasEvidence) return [label, "INSUFFICIENT_EVIDENCE", "", "", "", "Success-fee"];
     const annual = Math.round(exposure * frac);
-    return [label, `$${annual.toLocaleString()}`, `$${annual.toLocaleString()}`, `$${annual.toLocaleString()}`, `$${disclosed3YearNPV(annual).toLocaleString()}`, "Success-fee"];
+    return [label, `$${annual.toLocaleString()}`, `$${annual.toLocaleString()}`, `$${annual.toLocaleString()}`, `$${disclosed3YearNPV(annual, npvCeiling).toLocaleString()}`, "Success-fee"];
   };
   table(c, ["Scenario","Year 1 [MODELED]","Year 2","Year 3","3-Year NPV","Implementation"],
     [["Status Quo (no action)","$0","$0","$0","$0","—"],
@@ -2781,10 +2861,11 @@ function generateRxDefensePDF(data: any): jsPDF {
   const provExp = (id: number): number | null => {
     const s = provScoreMap[id] ?? (hasScore ? score / 10 : undefined);
     if (s === undefined) return null;
-    return computeRxProvisionExposure(id, s, members);
+    // Scale by the same ≤30% cap as the totals so per-row dollars never sum above it.
+    return Math.round(computeRxProvisionExposure(id, s, members) * provCapScale);
   };
   const dol = (n: number | null) => n == null ? "INSUFFICIENT_EVIDENCE" : `$${n.toLocaleString()}`;
-  const npvCell = (n: number | null) => n == null ? "" : `$${disclosed3YearNPV(n).toLocaleString()}`;
+  const npvCell = (n: number | null) => n == null ? "" : `$${disclosed3YearNPV(n, npvCeiling).toLocaleString()}`;
   const conf = (n: number | null) => n == null ? "Insufficient" : "Modeled";
   table(c, ["Exposure Category","Annual Estimate [MODELED]","3-Year NPV","Confidence","Priority"],
     [["Spread Pricing — Generics", dol(provExp(2)), npvCell(provExp(2)),conf(provExp(2)),"Critical"],
@@ -2933,7 +3014,7 @@ function generateBoardBriefPDF(opts: BoardBriefData): jsPDF {
   doc.setFont("helvetica", "bold"); doc.setFontSize(18);
   rgb(doc, WHITE); doc.text("BOARD BRIEF", M + 9, 40.5);
   doc.setFont("helvetica", "normal"); doc.setFontSize(9);
-  rgb(doc, FG2); doc.text("CFO War Room — C-Suite Executive Summary", M + 9, 47);
+  rgb(doc, ONDARK2); doc.text("CFO War Room — C-Suite Executive Summary", M + 9, 47);
 
   // Tile title block
   c.y = 58;
@@ -2999,8 +3080,8 @@ function generateBoardBriefPDF(opts: BoardBriefData): jsPDF {
   fill(doc, BG2); doc.rect(0, H - 14, W, 14, "F");
   fill(doc, accentRGB); doc.rect(0, H - 14, W, 0.5, "F");
   doc.setFont("helvetica", "normal"); doc.setFontSize(7);
-  rgb(doc, FG2); doc.text("CONFIDENTIAL — Prepared exclusively for " + (companyName ?? "Client"), M, H - 7);
-  rgb(doc, FG3); doc.text("Kincaid IQ™ — Fiduciary-Grade Healthcare Benefits Intelligence", W / 2, H - 3.5, { align: "center" });
+  rgb(doc, ONDARK2); doc.text("CONFIDENTIAL — Prepared exclusively for " + (companyName ?? "Client"), M, H - 7);
+  rgb(doc, ONDARK); doc.text(`Prepared by ${AUTHOR_NAME} · ${LAB_NAME}`, W / 2, H - 3.5, { align: "center" });
   doc.setFont("helvetica", "bold"); doc.setFontSize(7.5);
   rgb(doc, GOLD); doc.text("KINCAID IQ", W - M, H - 7, { align: "right" });
 
@@ -3017,7 +3098,7 @@ function generateBoardBriefPDF(opts: BoardBriefData): jsPDF {
   c.y += 2;
   fill(doc, accentRGB); doc.rect(M, c.y, 2.5, 60, "F");
   doc.setFont("helvetica", "normal"); doc.setFontSize(10);
-  rgb(doc, WHITE);
+  rgb(doc, FG);
   const narrativeLines = doc.splitTextToSize(narrativeText, CW - 10);
   let narrativeH = 0;
   narrativeLines.forEach((l: string, i: number) => {
@@ -3028,7 +3109,7 @@ function generateBoardBriefPDF(opts: BoardBriefData): jsPDF {
   fill(doc, BG3); doc.rect(M, c.y, CW, narrativeH - c.y + 8, "F");
   fill(doc, accentRGB); doc.rect(M, c.y, 2.5, narrativeH - c.y + 8, "F");
   doc.setFont("helvetica", "normal"); doc.setFontSize(10);
-  rgb(doc, WHITE);
+  rgb(doc, FG);
   narrativeLines.forEach((l: string, i: number) => {
     doc.text(l, M + 7, c.y + 6 + i * 5.5);
   });
@@ -3041,9 +3122,9 @@ function generateBoardBriefPDF(opts: BoardBriefData): jsPDF {
   const colW3 = CW / 3;
   const cardH  = 36;
   const cols = [
-    { label: "IMPACT",  value: impactValue,  detail: impactDetail,  bg: [10, 6,  2]  as [number,number,number], accent: GOLD  },
-    { label: "RISK",    value: riskLabel,    detail: riskDetail,    bg: [12, 4,  8]  as [number,number,number], accent: [255,80,100] as [number,number,number] },
-    { label: "ACTION",  value: actionLabel,  detail: actionDetail,  bg: [4,  12, 8]  as [number,number,number], accent: GREEN },
+    { label: "IMPACT",  value: impactValue,  detail: impactDetail,  bg: [253,248,235] as [number,number,number], accent: GOLD  },
+    { label: "RISK",    value: riskLabel,    detail: riskDetail,    bg: [253,240,242] as [number,number,number], accent: [200,40,60] as [number,number,number] },
+    { label: "ACTION",  value: actionLabel,  detail: actionDetail,  bg: [236,248,242] as [number,number,number], accent: GREEN },
   ];
 
   cols.forEach((col, i) => {
@@ -3051,7 +3132,7 @@ function generateBoardBriefPDF(opts: BoardBriefData): jsPDF {
     fill(doc, col.bg); doc.rect(x, c.y, colW3, cardH, "F");
     const accentC = typeof col.accent === "string" ? hexRGB(col.accent) : col.accent;
     fill(doc, accentC); doc.rect(x, c.y, colW3, 0.8, "F");
-    doc.setFont("helvetica", "bold"); doc.setFontSize(7); rgb(doc, FG3);
+    doc.setFont("helvetica", "bold"); doc.setFontSize(7); rgb(doc, FG2);
     doc.text(col.label, x + 5, c.y + 7);
     doc.setFont("helvetica", "bold"); doc.setFontSize(10); rgb(doc, FG);
     const vLines = doc.splitTextToSize(col.value, colW3 - 10);
@@ -3111,9 +3192,9 @@ function generateBoardBriefPDF(opts: BoardBriefData): jsPDF {
 
   // Bottom attestation
   fill(doc, BG2); doc.rect(M, c.y, CW, 10, "F");
-  doc.setFont("helvetica", "italic"); doc.setFontSize(7.5); rgb(doc, FG2);
+  doc.setFont("helvetica", "italic"); doc.setFontSize(7.5); rgb(doc, ONDARK2);
   doc.text(
-    "Kincaid IQ™ Board Brief — Generated from Level 9 C-Suite Narrative. All findings are evidence-backed and ERISA-traceable.",
+    `Prepared by ${AUTHOR_NAME} · ${LAB_NAME} — Generated from Level 9 C-Suite Narrative. All findings are evidence-backed and ERISA-traceable.`,
     M + 4, c.y + 4.5
   );
   doc.setFont("helvetica", "bold"); doc.setFontSize(7); rgb(doc, GOLD);
@@ -3175,12 +3256,12 @@ function generatePlaybookPDF(opts: PlaybookPDFData): jsPDF {
   doc.setFont("helvetica", "bold"); doc.setFontSize(18);
   rgb(doc, WHITE); doc.text("90-DAY LEVERAGE PLAYBOOK", M + 9, y + 8);
   doc.setFont("helvetica", "normal"); doc.setFontSize(9);
-  rgb(doc, FG2); doc.text("CFO War Room — Leverage Points · Sequenced Action Playbook", M + 9, y + 13);
+  rgb(doc, ONDARK2); doc.text("CFO War Room — Leverage Points · Sequenced Action Playbook", M + 9, y + 13);
   // Brand mark top-right
   doc.setFont("helvetica", "bold"); doc.setFontSize(8.5);
   rgb(doc, GOLD); doc.text("KINCAID IQ™", W - M, y + 6, { align: "right" });
   doc.setFont("helvetica", "normal"); doc.setFontSize(7.5);
-  rgb(doc, FG3); doc.text(date, W - M, y + 11, { align: "right" });
+  rgb(doc, ONDARK2); doc.text(date, W - M, y + 11, { align: "right" });
   y += 22;
 
   // Metadata strip
@@ -3228,7 +3309,7 @@ function generatePlaybookPDF(opts: PlaybookPDFData): jsPDF {
     doc.text(s.severity.toUpperCase(), M + 22, y + 11);
 
     // Label
-    doc.setFont("helvetica", "bold"); doc.setFontSize(10); rgb(doc, WHITE);
+    doc.setFont("helvetica", "bold"); doc.setFontSize(10); rgb(doc, FG);
     const labelLines = doc.splitTextToSize(s.label, CW - 90);
     doc.text(labelLines[0] || s.label, M + 48, y + 7);
 
@@ -3294,8 +3375,8 @@ function generatePlaybookPDF(opts: PlaybookPDFData): jsPDF {
   fill(doc, BG2); doc.rect(0, H - 14, W, 14, "F");
   fill(doc, GOLD); doc.rect(0, H - 14, W, 0.5, "F");
   doc.setFont("helvetica", "normal"); doc.setFontSize(7);
-  rgb(doc, FG2); doc.text("CONFIDENTIAL — Prepared exclusively for " + (companyName ?? "Client"), M, H - 7);
-  rgb(doc, FG3); doc.text("Kincaid IQ™ — Fiduciary-Grade Healthcare Benefits Intelligence", W / 2, H - 3.5, { align: "center" });
+  rgb(doc, ONDARK2); doc.text("CONFIDENTIAL — Prepared exclusively for " + (companyName ?? "Client"), M, H - 7);
+  rgb(doc, ONDARK); doc.text(`Prepared by ${AUTHOR_NAME} · ${LAB_NAME}`, W / 2, H - 3.5, { align: "center" });
   doc.setFont("helvetica", "bold"); doc.setFontSize(7.5);
   rgb(doc, GOLD); doc.text("KINCAID IQ", W - M, H - 7, { align: "right" });
 
@@ -3356,7 +3437,7 @@ function generateSlideTablePDF(opts: SlideTablePDFData): jsPDF {
   doc.text(titleLines[0] || title.toUpperCase(), M + 9, y + (subtitle ? 7.5 : 9.5));
   if (subtitle) {
     doc.setFont("helvetica", "normal"); doc.setFontSize(8.5);
-    rgb(doc, FG2);
+    rgb(doc, ONDARK2);
     const subLines = doc.splitTextToSize(subtitle, CW - 50);
     doc.text(subLines[0] || subtitle, M + 9, y + 12.5);
   }
@@ -3364,7 +3445,7 @@ function generateSlideTablePDF(opts: SlideTablePDFData): jsPDF {
   doc.setFont("helvetica", "bold"); doc.setFontSize(8.5);
   rgb(doc, GOLD); doc.text("KINCAID IQ™", W - M, y + 6, { align: "right" });
   doc.setFont("helvetica", "normal"); doc.setFontSize(7.5);
-  rgb(doc, FG3); doc.text(date, W - M, y + 11, { align: "right" });
+  rgb(doc, ONDARK2); doc.text(date, W - M, y + 11, { align: "right" });
   y += 22;
 
   // Metadata strip
@@ -3464,8 +3545,8 @@ function generateSlideTablePDF(opts: SlideTablePDFData): jsPDF {
   fill(doc, BG2); doc.rect(0, H - 14, W, 14, "F");
   fill(doc, accent); doc.rect(0, H - 14, W, 0.5, "F");
   doc.setFont("helvetica", "normal"); doc.setFontSize(7);
-  rgb(doc, FG2); doc.text(footer ?? ("CONFIDENTIAL — Prepared exclusively for " + (companyName ?? "Client")), M, H - 7);
-  rgb(doc, FG3); doc.text("Kincaid IQ™ — Fiduciary-Grade Healthcare Benefits Intelligence", W / 2, H - 3.5, { align: "center" });
+  rgb(doc, ONDARK2); doc.text(footer ?? ("CONFIDENTIAL — Prepared exclusively for " + (companyName ?? "Client")), M, H - 7);
+  rgb(doc, ONDARK); doc.text(`Prepared by ${AUTHOR_NAME} · ${LAB_NAME}`, W / 2, H - 3.5, { align: "center" });
   doc.setFont("helvetica", "bold"); doc.setFontSize(7.5);
   rgb(doc, GOLD); doc.text("KINCAID IQ", W - M, H - 7, { align: "right" });
 
@@ -3908,7 +3989,6 @@ export function generateStrategicReportPDF(data: any, sha256?: string): jsPDF {
 
     // Content
     addPage(c);
-    const chapterStartPage = c.page;
     h1(c, `${partLabel}`);
     if (ch.title) h2(c, String(ch.title));
     h3(c, `${atty.name} — ${atty.title}`);
@@ -3978,45 +4058,14 @@ export function generateStrategicReportPDF(data: any, sha256?: string): jsPDF {
       });
     }
 
-    // ── Deterministic page budget — guarantee a substantive chapter ──────────
-    // Each attorney deep-dive must occupy at least ~6 content pages so the full
-    // engagement reliably exceeds 100 pages. The supplemental blocks below are
-    // genuine domain decision-support, cycled until the budget is met.
+    // Domain Risk Register — a single, genuinely per-domain decision-support
+    // table. No artificial page-padding: each chapter runs to the natural length
+    // of its real analysis, which keeps the full report tight and readable.
     const domainGov = ROLE_GOVERNANCE[atty.id] || ROLE_GOVERNANCE_DEFAULT;
-    const padBlocks: Array<(cc: Ctx) => void> = [
-      (cc) => {
-        h2(cc, "Domain Risk Register");
-        body(cc, `The register below tracks the residual risks in ${String(atty.specialty).toLowerCase()} after the findings above are accounted for. Each row pairs an exposure with the control that retires it and the evidence that proves the control is operating.`);
-        table(cc, ["Residual Risk", "Likelihood", "Control", "Evidence of Control"], domainGov.register, [46, 22, 50, 44]);
-        gap(cc, 2);
-      },
-      (cc) => {
-        h2(cc, "Monitoring & Governance Cadence");
-        body(cc, `Findings in this domain do not stay closed without a cadence. The plan's benefits committee should review the following on the schedule shown, documenting each review to evidence procedural prudence under ERISA §404(a).`);
-        table(cc, ["Review Item", "Frequency", "Owner", "Trigger to Escalate"], domainGov.cadence, [50, 26, 36, 50]);
-        gap(cc, 2);
-      },
-      (cc) => {
-        h2(cc, "Evidence Standard for this Domain");
-        body(cc, `Confidence in this chapter is bounded by the evidence the contract supplies. CERTIFIED conclusions require a quoted clause and a corroborating record; MODELED conclusions disclose their assumptions and bounds; where neither is available the panel records INSUFFICIENT_EVIDENCE rather than manufacturing a finding.`);
-        bullet(cc, `What would raise a MODELED finding in this domain to CERTIFIED: ${domainGov.toCertified}`);
-        bullet(cc, `What currently caps confidence: ${domainGov.cap}`);
-        bullet(cc, `The single document the plan should demand first: ${domainGov.firstDoc}`);
-        gap(cc, 2);
-      },
-      (cc) => {
-        h2(cc, "Escalation Ladder");
-        body(cc, `If the PBM resists remediation, the plan escalates along the ladder below. Each rung increases cost and leverage; the plan should be prepared to reach the final rung to make the early rungs credible.`);
-        [`Rung 1 — Written remediation demand citing the specific provision and regulatory hook, with a response deadline.`,
-         `Rung 2 — Independent ${String(atty.specialty).toLowerCase()} audit invoking the contract's audit rights to quantify exposure.`,
-         `Rung 3 — Formal amendment proposal with model language and a benchmarked alternative from the open market.`,
-         `Rung 4 — Competitive RFP signaling credible exit; renewal timing converts this into real leverage.`,
-         `Rung 5 — Counsel-led claim preserving the plan's recovery and limitations posture under ERISA §413.`]
-          .forEach((s) => bullet(cc, s));
-        gap(cc, 2);
-      },
-    ];
-    padToPage(c, chapterStartPage + 5, padBlocks);
+    h2(c, "Domain Risk Register");
+    body(c, `Residual risks in ${String(atty.specialty).toLowerCase()} after the findings above — each paired with the control that retires it and the evidence that proves the control is operating.`);
+    table(c, ["Residual Risk", "Likelihood", "Control", "Evidence of Control"], domainGov.register, [46, 22, 50, 44]);
+    gap(c, 2);
   });
 
   // ── Part XIV — Cross-Cutting Strategic Themes ─────────────────────────────

@@ -688,7 +688,7 @@ async def ai_brief(req: AiBriefRequest, user: models.User = Depends(get_current_
 
 
 async def _ai_recommendation(facts: str, enriched: dict) -> Optional[dict]:
-    """Try OpenAI (gpt-4o) then Anthropic; return None on failure → rule-based fallback."""
+    """Try the primary GPT-5 engine (via the compat shim) then Anthropic; return None on failure → rule-based fallback."""
     prompt = (
         "You are a senior healthcare benefits sales strategist. Given the employer filing facts, "
         "produce a tight, board-room-quality opportunity brief. No hedging, no marketing fluff.\n\n"

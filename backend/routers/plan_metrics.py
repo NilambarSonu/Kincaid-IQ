@@ -602,6 +602,185 @@ def search_employers(
              "business_code": r[4], "participants": int(_safe(r[5]))} for r in rows]
 
 
+# ── Metrics canon (docs/METRICS.md) ───────────────────────────────────────────
+# The five load-bearing metrics surfaced in the War Room. Each carries a confidence
+# tier. Dollar magnitudes for a specific entity stay INSUFFICIENT_EVIDENCE until that
+# entity's 835/837 claim files are ingested. Missing data is a forensic signal, never
+# a fabricated number.
+def _metric_drap() -> dict:
+    """DRAP = Sum(Paid - Allowable). Requires 835/837; INSUFFICIENT until ingested."""
+    return {
+        "tier": INSUFFICIENT,
+        "value": None,
+        "unit": "USD",
+        "note": ("Sum(Paid - Allowable) across every claim line. Requires this entity's "
+                 "835 remittance and 837 claim files. Unlock: ingest 835/837."),
+    }
+
+
+def _metric_pepm(header: dict, benefit_lines: dict) -> dict:
+    """PEPM = H / (M x P). MODELED: 5500 counts are not authoritative member-months."""
+    participants = int(_safe(header.get("participants")))
+    total_spend = 0.0
+    if benefit_lines.get("tier") != INSUFFICIENT:
+        total_spend = _safe(benefit_lines.get("total_premium"))
+    if participants <= 0 or total_spend <= 0:
+        return {
+            "tier": INSUFFICIENT,
+            "value": None,
+            "unit": "USD PEPM",
+            "note": ("Total welfare spend and authoritative member-months are not both on "
+                     "file (self-insured spend is off the 5500). Unlock: eligibility file "
+                     "+ Schedule H financials."),
+        }
+    pepm = total_spend / (participants * 12)
+    return {
+        "tier": MODELED,
+        "value": round(pepm, 2),
+        "unit": "USD PEPM",
+        "inputs": {"H_total_spend": round(total_spend), "M_members": participants, "P_months": 12},
+        "note": ("H / (M x 12). MODELED: 5500 participant counts substitute for authoritative "
+                 "member-months and premium omits self-insured claims. True PEPM requires an "
+                 "eligibility file."),
+    }
+
+
+def _metric_pwi(pbm: dict) -> dict:
+    """PWI = (Spread + Rebate Leakage + Formulary Distortion) / Total Rx Spend."""
+    modeled_rx = _safe(pbm.get("est_annual_rx_spend")) if pbm.get("tier") != INSUFFICIENT else None
+    return {
+        "tier": INSUFFICIENT,
+        "value": None,
+        "unit": "%",
+        "modeled_rx_spend": round(modeled_rx) if modeled_rx else None,
+        "note": ("(Spread + Rebate Leakage + Formulary Distortion) / Total Rx Spend. Rx spend "
+                 "is MODELED from headcount, but the three waste components require PBM claim "
+                 "and rebate files, so the index is INSUFFICIENT_EVIDENCE. Unlock: PBM claims "
+                 "+ rebate remittances (see the Rx Defense module)."),
+    }
+
+
+def _metric_glp1(header: dict) -> dict:
+    """GLP-1 utilization U = G / T. MODELED prior; dollar exposure INSUFFICIENT."""
+    participants = int(_safe(header.get("participants")))
+    if participants <= 0:
+        return {"tier": INSUFFICIENT, "value": None, "unit": "%",
+                "note": "No participant count available. Unlock: current-year 5500 filing."}
+    model = CONDITION_MODELS["metabolic_glp1"]
+    sic3 = str(header.get("business_code") or "")[:3]
+    risk = model["by_sic3"].get(sic3, model["base"])
+    util = model["eligibility"] * risk
+    return {
+        "tier": MODELED,
+        "value": round(util * 100, 1),
+        "unit": "% of members (modeled utilization)",
+        "inputs": {
+            "eligibility": model["eligibility"],
+            "sic3_risk": round(risk, 2),
+            "modeled_glp1_members": round(participants * util),
+        },
+        "dollar_exposure": INSUFFICIENT,
+        "note": ("U = G / T. Utilization is a MODELED workforce prior (eligibility x industry "
+                 "risk). GLP-1 dollar exposure (PEPM_G) stays INSUFFICIENT_EVIDENCE until claims "
+                 "confirm actual utilizers and cost. Unlock: pharmacy claims."),
+    }
+
+
+def _metric_sbi(provider_leakage: dict) -> dict:
+    """Shady Broker Index. MODELED over the 2 of 4 components 5500 data supports."""
+    if provider_leakage.get("tier") == INSUFFICIENT:
+        return {"tier": INSUFFICIENT, "value": None, "unit": "0-100",
+                "note": ("No carrier-attributed compensation on file. Unlock: Schedule A "
+                         "carrier compensation.")}
+    providers = provider_leakage.get("providers", [])
+    total_broker = sum(_safe(p.get("broker_comm")) for p in providers)
+    total_premium = sum(_safe(p.get("premium")) for p in providers)
+    coupling_flags = sum(1 for p in providers if p.get("flag"))
+    if total_premium <= 0 or not providers:
+        return {"tier": INSUFFICIENT, "value": None, "unit": "0-100",
+                "note": ("Carrier compensation present but premium base is missing; cannot model "
+                         "the transparency ratio. Unlock: Schedule A premium lines.")}
+    # Component 1 (weight .30) Opacity, via a transparency ratio: disclosed commission
+    # vs a 4% modeled benchmark. Low disclosed comp relative to premium reads as opaque.
+    disclosed_ratio = total_broker / total_premium
+    transparency = min(disclosed_ratio / 0.04, 1.0)
+    opacity = round((1 - transparency) * 100, 1)
+    # Component 2 (weight .25) Renewal incentive bias, via commission/admin coupling.
+    renewal_bias = round(min(coupling_flags / len(providers), 1.0) * 100, 1)
+    # Composite over the two AVAILABLE weights only (0.30 + 0.25), renormalized.
+    partial = (opacity * 0.30 + renewal_bias * 0.25) / 0.55
+    return {
+        "tier": MODELED,
+        "value": round(partial, 1),
+        "unit": "0-100 (2 of 4 components)",
+        "components": {
+            "opacity": opacity,
+            "renewal_incentive_bias": renewal_bias,
+            "rebate_distortion": INSUFFICIENT,
+            "spread_pricing_linkage": INSUFFICIENT,
+        },
+        "note": ("SBI = Opacity(.30) + Renewal Bias(.25) + Rebate Distortion(.25) + Spread "
+                 "Linkage(.20). Only the first two are computable from Schedule A, so the "
+                 "composite is MODELED over the available weights. Unlock: Schedule C + PBM "
+                 "data for the remaining two components."),
+    }
+
+
+@router.get("/canon/{ein}")
+def metrics_canon(
+    ein: str,
+    db: Session = Depends(get_db),
+    user: models.User = Depends(get_current_user),
+):
+    """The five canon metrics (docs/METRICS.md) with confidence tiers. DRAP and PWI
+    stay INSUFFICIENT_EVIDENCE until 835/837 and PBM files are ingested for the entity."""
+    _require_duck()
+    resolved = _resolve_ein(ein)
+    filings = _fetch_filings(resolved)
+    if not filings:
+        raise HTTPException(404, f"No Form 5500 filings found for EIN {resolved}")
+    header = _employer_header(filings)
+
+    def _guard(fn, *args):
+        try:
+            return fn(*args)
+        except Exception as exc:  # never let one metric break the response
+            return {"tier": INSUFFICIENT, "value": None, "note": f"Metric error: {exc}"}
+
+    benefit_lines = _guard(_sec_benefit_lines, filings)
+    pbm = _guard(_sec_pbm_exposure, filings)
+    provider_leakage = _guard(_sec_provider_leakage, filings)
+
+    metrics = [
+        {"key": "DRAP", "label": "Delta Realized vs Allowable Pricing",
+         "formula": "Sum(Paid - Allowable) across all claims",
+         **_guard(_metric_drap)},
+        {"key": "PEPM", "label": "Per Employee Per Month",
+         "formula": "PEPM = H / (M x P)",
+         **_guard(_metric_pepm, header, benefit_lines)},
+        {"key": "PWI", "label": "Pharmacy Waste Index",
+         "formula": "W% = (Spread + Rebate Leakage + Formulary Distortion) / Total Rx Spend",
+         **_guard(_metric_pwi, pbm)},
+        {"key": "SBI", "label": "Shady Broker Index",
+         "formula": "(Opacity x .30) + (Renewal Bias x .25) + (Rebate Distortion x .25) + (Spread Linkage x .20)",
+         **_guard(_metric_sbi, provider_leakage)},
+        {"key": "GLP1", "label": "GLP-1 Utilization",
+         "formula": "U = G / T",
+         **_guard(_metric_glp1, header)},
+    ]
+    tiers = [m.get("tier") for m in metrics]
+    return {
+        "ein": resolved,
+        "employer": header,
+        "metrics": metrics,
+        "coverage": {
+            "certified": tiers.count(CERTIFIED),
+            "modeled": tiers.count(MODELED),
+            "insufficient": tiers.count(INSUFFICIENT),
+        },
+    }
+
+
 @router.get("/{ein}")
 def plan_metrics(
     ein: str,

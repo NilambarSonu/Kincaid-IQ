@@ -452,11 +452,12 @@ def actuarial_profile(ein: str):
 @router.post("/ai-narrative")
 async def actuarial_ai_narrative(payload: dict):
     """Generate Claude actuarial commentary for a 5500 profile."""
-    import os, anthropic
-    api_key = os.environ.get("AI_INTEGRATIONS_ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_API_KEY", "")
-    base_url = os.environ.get("AI_INTEGRATIONS_ANTHROPIC_BASE_URL", "https://api.anthropic.com")
+    import os
+    from backend import anthropic_compat as anthropic
+    api_key = os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY") or os.environ.get("OPENAI_API_KEY", "")
+    base_url = os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL", "")
     if not api_key:
-        raise HTTPException(status_code=503, detail="Anthropic API key not configured")
+        raise HTTPException(status_code=503, detail="OpenAI API key not configured")
     client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
 
     emp = payload.get("employer", {})
@@ -606,17 +607,18 @@ async def upload_indiana_5500s(files: List[UploadFile] = File(...)):
     use Claude to parse key financials, then benchmark against
     Indiana DOL EFAST2 data and produce a comparative report.
     """
-    import os, anthropic
+    import os
+    from backend import anthropic_compat as anthropic
 
     if not files:
         raise HTTPException(status_code=400, detail="No files uploaded")
     if len(files) > 5:
         raise HTTPException(status_code=400, detail="Maximum 5 files allowed")
 
-    api_key = os.environ.get("AI_INTEGRATIONS_ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_API_KEY", "")
-    base_url = os.environ.get("AI_INTEGRATIONS_ANTHROPIC_BASE_URL", "https://api.anthropic.com")
+    api_key = os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY") or os.environ.get("OPENAI_API_KEY", "")
+    base_url = os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL", "")
     if not api_key:
-        raise HTTPException(status_code=503, detail="Anthropic API key not configured")
+        raise HTTPException(status_code=503, detail="OpenAI API key not configured")
 
     client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
     duck = get_duck()

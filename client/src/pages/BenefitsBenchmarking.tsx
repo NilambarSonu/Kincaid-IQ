@@ -865,7 +865,7 @@ export default function BenefitsBenchmarking() {
       )}
       <div className="max-w-screen-2xl mx-auto px-6 pt-4">
         <DoctrineBar
-          gate="COMPUTE"
+          gate="DEPENDENCY_RESOLUTION"
           tier={profile ? "CERTIFIED" : selectedEin ? "MODELED" : "INSUFFICIENT_EVIDENCE"}
           ein={selectedEin}
           einName={profile?.employer?.name ?? searchInput ?? null}

@@ -1,188 +1,110 @@
 """
-Anthropic (Claude) compatibility shim.
+Anthropic (Claude) compatibility shim — now OpenAI-backed.
 
-Provides the same tiny subset of the OpenAI Python SDK surface that
-`gemini_compat` exposes — `client.chat.completions.create(...)` returning
-`resp.choices[0].message.content`, plus OpenAI-style streaming chunks
-(`chunk.choices[0].delta.content`) — but backed by Anthropic Claude.
+Historically this routed calls to Anthropic Claude. Per the platform directive to
+use OpenAI exclusively, everything here forwards to the real OpenAI SDK. Nothing
+in this module calls Claude anymore.
 
-This lets routers that were written against the OpenAI chat-completions
-interface route to the highest Claude tier without rewriting their call
-sites or response parsing.
+Two drop-in surfaces, both OpenAI-backed:
 
-Usage (drop-in):
-    from backend.anthropic_compat import AsyncAnthropicClient as AsyncOpenAI
-    client = AsyncOpenAI(api_key=..., base_url=...)   # args ignored
-    resp = await client.chat.completions.create(
-        model="claude-opus-4-5",
-        messages=[{"role": "system", "content": ...}, {"role": "user", "content": ...}],
-        temperature=0.4,
-        max_tokens=2000,
-        response_format={"type": "json_object"},
-    )
-    text = resp.choices[0].message.content
+  • AsyncAnthropicClient / SyncAnthropicClient — the OpenAI chat-completions subset
+    (`client.chat.completions.create(...)` -> resp.choices[0].message.content),
+    for routers that imported this module `as AsyncOpenAI`.
+
+  • AsyncAnthropic / Anthropic — the Anthropic *Messages* surface
+    (`client.messages.create(...)` -> resp.content[0].text), so call sites that
+    did `from anthropic import AsyncAnthropic` / `import anthropic` only need to
+    swap the import to this module and keep their response parsing unchanged.
 """
-from typing import Any, List, Optional, Tuple
+import os
+from typing import Any, List, Optional
 
-from anthropic import AsyncAnthropic, Anthropic
+from openai import AsyncOpenAI as _AsyncOpenAI, OpenAI as _SyncOpenAI
 
 from backend.config import settings
 
-# Highest Claude tier — used for any non-Claude identifier (e.g. legacy
-# "gemini-2.5-flash" / "gpt-4o") so swapping the import alone is sufficient.
-DEFAULT_MODEL = "claude-opus-4-5"
+# Platform directive: only ever use the highest-tier GPT-5 model. Every call —
+# regardless of the model= string the caller passes — resolves to this.
+DEFAULT_MODEL = "gpt-5"
 
-# Anthropic requires max_tokens on every call; use this when a caller omits it.
+# Reasoning-class models (GPT-5, o-series) require `max_completion_tokens` instead
+# of `max_tokens`, only accept the default temperature (a custom value 400s), and
+# spend part of the token budget on hidden reasoning — so we floor the completion
+# budget to keep the visible answer from being starved.
+_REASONING_PREFIXES = ("gpt-5", "o1", "o3", "o4")
+_MIN_REASONING_COMPLETION = 2048
+
+# GPT-5 defaults to "medium" reasoning effort, which for large JSON responses (e.g.
+# the Rx Defense forensic analysis) spends so long thinking that requests exceed
+# multi-minute timeouts and/or exhaust the token budget before emitting an answer —
+# making features silently fall back to demo output. Pin a fast-but-capable default
+# ("low"); override globally with GPT5_REASONING_EFFORT, or per-call via the
+# reasoning_effort kwarg. "none"/"" disables it (uses model default).
+_REASONING_EFFORT = os.getenv("GPT5_REASONING_EFFORT", "low").strip()
+
+# Anthropic required max_tokens on every call; keep a default for messages-surface
+# callers that omit it.
 _DEFAULT_MAX_TOKENS = 4096
 
-_async_singleton: Optional[AsyncAnthropic] = None
-_sync_singleton: Optional[Anthropic] = None
+_async_singleton: Optional[_AsyncOpenAI] = None
+_sync_singleton: Optional[_SyncOpenAI] = None
 
 
-def _aclient() -> AsyncAnthropic:
+def _aclient() -> _AsyncOpenAI:
     global _async_singleton
     if _async_singleton is None:
-        kwargs: dict = {"api_key": settings.anthropic_api_key}
-        if settings.anthropic_base_url:
-            kwargs["base_url"] = settings.anthropic_base_url
-        _async_singleton = AsyncAnthropic(**kwargs)
+        _async_singleton = _AsyncOpenAI(
+            api_key=settings.openai_api_key, base_url=settings.openai_base_url
+        )
     return _async_singleton
 
 
-def _sclient() -> Anthropic:
+def _sclient() -> _SyncOpenAI:
     global _sync_singleton
     if _sync_singleton is None:
-        kwargs: dict = {"api_key": settings.anthropic_api_key}
-        if settings.anthropic_base_url:
-            kwargs["base_url"] = settings.anthropic_base_url
-        _sync_singleton = Anthropic(**kwargs)
+        _sync_singleton = _SyncOpenAI(
+            api_key=settings.openai_api_key, base_url=settings.openai_base_url
+        )
     return _sync_singleton
 
 
 def _map_model(model: Optional[str]) -> str:
-    if model and str(model).startswith("claude"):
-        return model
+    # The caller's model= string is intentionally ignored: only GPT-5 is used.
     return DEFAULT_MODEL
 
 
-def _split_messages(
-    messages: Optional[List[dict]], response_format: Optional[dict]
-) -> Tuple[Optional[str], List[dict]]:
-    """Translate OpenAI-style messages into (system, anthropic_messages).
-
-    Anthropic takes `system` as a separate top-level argument and only
-    user/assistant turns in `messages`.
-    """
-    system_parts: List[str] = []
-    convo: List[dict] = []
-    for m in messages or []:
-        role = m.get("role")
-        content = m.get("content")
-        if role == "system":
-            if isinstance(content, str):
-                system_parts.append(content)
-            elif isinstance(content, list):
-                for item in content:
-                    if isinstance(item, dict) and item.get("type") == "text":
-                        system_parts.append(item.get("text", ""))
-            continue
-        a_role = "assistant" if role == "assistant" else "user"
-        convo.append({"role": a_role, "content": content})
-
-    # Anthropic has no native JSON mode; steer it via the system prompt so the
-    # OpenAI-style response_format={"type":"json_object"} callers keep working.
-    if isinstance(response_format, dict) and response_format.get("type") == "json_object":
-        system_parts.append(
-            "Respond with a single valid JSON object only. "
-            "No prose, no markdown code fences, no commentary before or after the JSON."
-        )
-
-    system = "\n\n".join(p for p in system_parts if p) or None
-    return system, convo
+def _is_reasoning(model: str) -> bool:
+    return str(model).startswith(_REASONING_PREFIXES)
 
 
-def _extract_text(message: Any) -> str:
-    parts: List[str] = []
-    for block in getattr(message, "content", None) or []:
-        if getattr(block, "type", None) == "text":
-            parts.append(getattr(block, "text", "") or "")
-    return "".join(parts)
-
-
-# ── OpenAI-shaped response shims ──────────────────────────────────────────────
-class _Message:
-    def __init__(self, content: str):
-        self.content = content
-        self.role = "assistant"
-
-
-class _Choice:
-    def __init__(self, content: str):
-        self.message = _Message(content)
-        self.finish_reason = "stop"
-        self.index = 0
-
-
-class _Usage:
-    def __init__(self, prompt_tokens: int, completion_tokens: int):
-        self.prompt_tokens = prompt_tokens
-        self.completion_tokens = completion_tokens
-        self.total_tokens = (prompt_tokens or 0) + (completion_tokens or 0)
-
-
-class _Response:
-    def __init__(self, content: str, usage: _Usage):
-        self.choices = [_Choice(content)]
-        self.usage = usage
-
-
-def _to_response(message: Any) -> _Response:
-    text = _extract_text(message)
-    um = getattr(message, "usage", None)
-    prompt_tokens = getattr(um, "input_tokens", 0) or 0 if um else 0
-    completion_tokens = getattr(um, "output_tokens", 0) or 0 if um else 0
-    return _Response(text, _Usage(prompt_tokens, completion_tokens))
-
-
-# ── OpenAI-shaped streaming chunk shims ───────────────────────────────────────
-class _Delta:
-    def __init__(self, content: Optional[str]):
-        self.content = content
-        self.role = "assistant"
-
-
-class _ChunkChoice:
-    def __init__(self, content: Optional[str]):
-        self.delta = _Delta(content)
-        self.finish_reason = None
-        self.index = 0
-
-
-class _Chunk:
-    def __init__(self, content: Optional[str]):
-        self.choices = [_ChunkChoice(content)]
-
-
-def _build_kwargs(
+# ── OpenAI chat-completions surface (imported `as AsyncOpenAI`) ────────────────
+def _chat_kwargs(
     model: Optional[str],
-    system: Optional[str],
-    convo: List[dict],
+    messages: Optional[List[dict]],
     max_tokens: Optional[int],
     temperature: Optional[float],
+    response_format: Optional[dict],
+    reasoning_effort: Optional[str] = None,
 ) -> dict:
-    kwargs: dict = {
-        "model": _map_model(model),
-        "messages": convo,
-        "max_tokens": int(max_tokens) if max_tokens is not None else _DEFAULT_MAX_TOKENS,
-    }
-    if system:
-        kwargs["system"] = system
-    if temperature is not None:
-        kwargs["temperature"] = temperature
+    resolved = _map_model(model)
+    kwargs: dict = {"model": resolved, "messages": messages or []}
+    if _is_reasoning(resolved):
+        # GPT-5: use max_completion_tokens (floored), and drop custom temperature.
+        if max_tokens is not None:
+            kwargs["max_completion_tokens"] = max(int(max_tokens), _MIN_REASONING_COMPLETION)
+        effort = reasoning_effort if reasoning_effort is not None else _REASONING_EFFORT
+        if effort and effort.lower() != "none":
+            kwargs["reasoning_effort"] = effort
+    else:
+        if max_tokens is not None:
+            kwargs["max_tokens"] = int(max_tokens)
+        if temperature is not None:
+            kwargs["temperature"] = temperature
+    if response_format is not None:
+        kwargs["response_format"] = response_format
     return kwargs
 
 
-# ── Async client ──────────────────────────────────────────────────────────────
 class _AsyncCompletions:
     async def create(
         self,
@@ -192,21 +114,13 @@ class _AsyncCompletions:
         temperature: Optional[float] = None,
         response_format: Optional[dict] = None,
         stream: bool = False,
+        reasoning_effort: Optional[str] = None,
         **_: Any,
     ) -> Any:
-        system, convo = _split_messages(messages, response_format)
-        kwargs = _build_kwargs(model, system, convo, max_tokens, temperature)
+        kwargs = _chat_kwargs(model, messages, max_tokens, temperature, response_format, reasoning_effort)
         if stream:
-            return self._stream(kwargs)
-        message = await _aclient().messages.create(**kwargs)
-        return _to_response(message)
-
-    async def _stream(self, kwargs: dict):
-        """Yield OpenAI-style streaming chunks (chunk.choices[0].delta.content)."""
-        async with _aclient().messages.stream(**kwargs) as stream:
-            async for text in stream.text_stream:
-                if text:
-                    yield _Chunk(text)
+            kwargs["stream"] = True
+        return await _aclient().chat.completions.create(**kwargs)
 
 
 class _AsyncChat:
@@ -221,7 +135,6 @@ class AsyncAnthropicClient:
         self.chat = _AsyncChat()
 
 
-# ── Sync client ─────────────────────────────────────────────────────────────--
 class _SyncCompletions:
     def create(
         self,
@@ -230,12 +143,12 @@ class _SyncCompletions:
         max_tokens: Optional[int] = None,
         temperature: Optional[float] = None,
         response_format: Optional[dict] = None,
+        reasoning_effort: Optional[str] = None,
         **_: Any,
-    ) -> _Response:
-        system, convo = _split_messages(messages, response_format)
-        kwargs = _build_kwargs(model, system, convo, max_tokens, temperature)
-        message = _sclient().messages.create(**kwargs)
-        return _to_response(message)
+    ) -> Any:
+        return _sclient().chat.completions.create(
+            **_chat_kwargs(model, messages, max_tokens, temperature, response_format, reasoning_effort)
+        )
 
 
 class _SyncChat:
@@ -248,3 +161,142 @@ class SyncAnthropicClient:
 
     def __init__(self, *_, **__):
         self.chat = _SyncChat()
+
+
+# ── Anthropic Messages surface (imported as `anthropic` / AsyncAnthropic) ──────
+class _TextBlock:
+    def __init__(self, text: str):
+        self.type = "text"
+        self.text = text or ""
+
+
+class _AnthropicUsage:
+    def __init__(self, input_tokens: int, output_tokens: int):
+        self.input_tokens = input_tokens or 0
+        self.output_tokens = output_tokens or 0
+
+
+class _AnthropicMessage:
+    """Mimics anthropic.types.Message: .content[0].text, .usage.*_tokens."""
+
+    def __init__(self, text: str, model: Optional[str], usage: _AnthropicUsage):
+        self.content = [_TextBlock(text)]
+        self.role = "assistant"
+        self.model = model
+        self.stop_reason = "end_turn"
+        self.usage = usage
+
+
+def _flatten_content(content: Any) -> Any:
+    """Anthropic content may be a string or a list of blocks; OpenAI wants a string
+    per message. Join text blocks; pass strings through unchanged."""
+    if isinstance(content, list):
+        return "\n".join(
+            b.get("text", "")
+            for b in content
+            if isinstance(b, dict) and b.get("type") == "text"
+        )
+    return content
+
+
+def _to_oai_messages(system: Any, messages: Optional[List[dict]]) -> List[dict]:
+    out: List[dict] = []
+    if system:
+        if isinstance(system, list):
+            system = "\n\n".join(
+                (b.get("text", "") if isinstance(b, dict) else str(b)) for b in system
+            )
+        out.append({"role": "system", "content": system})
+    for m in messages or []:
+        out.append(
+            {"role": m.get("role", "user"), "content": _flatten_content(m.get("content"))}
+        )
+    return out
+
+
+def _messages_kwargs(
+    model: Optional[str],
+    system: Any,
+    messages: Optional[List[dict]],
+    max_tokens: Optional[int],
+    temperature: Optional[float],
+    reasoning_effort: Optional[str] = None,
+) -> dict:
+    resolved = _map_model(model)
+    kwargs: dict = {
+        "model": resolved,
+        "messages": _to_oai_messages(system, messages),
+    }
+    mt = int(max_tokens) if max_tokens is not None else _DEFAULT_MAX_TOKENS
+    if _is_reasoning(resolved):
+        kwargs["max_completion_tokens"] = max(mt, _MIN_REASONING_COMPLETION)
+        effort = reasoning_effort if reasoning_effort is not None else _REASONING_EFFORT
+        if effort and effort.lower() != "none":
+            kwargs["reasoning_effort"] = effort
+    else:
+        kwargs["max_tokens"] = mt
+        if temperature is not None:
+            kwargs["temperature"] = temperature
+    return kwargs
+
+
+def _to_message(oai: Any) -> _AnthropicMessage:
+    text = ""
+    try:
+        text = oai.choices[0].message.content or ""
+    except (AttributeError, IndexError, TypeError):
+        text = ""
+    u = getattr(oai, "usage", None)
+    usage = _AnthropicUsage(
+        getattr(u, "prompt_tokens", 0) if u else 0,
+        getattr(u, "completion_tokens", 0) if u else 0,
+    )
+    return _AnthropicMessage(text, getattr(oai, "model", None), usage)
+
+
+class _AsyncMessages:
+    async def create(
+        self,
+        model: Optional[str] = None,
+        max_tokens: Optional[int] = None,
+        messages: Optional[List[dict]] = None,
+        system: Any = None,
+        temperature: Optional[float] = None,
+        reasoning_effort: Optional[str] = None,
+        **_: Any,
+    ) -> _AnthropicMessage:
+        oai = await _aclient().chat.completions.create(
+            **_messages_kwargs(model, system, messages, max_tokens, temperature, reasoning_effort)
+        )
+        return _to_message(oai)
+
+
+class AsyncAnthropic:
+    """OpenAI-backed drop-in for anthropic.AsyncAnthropic (messages subset)."""
+
+    def __init__(self, *_, **__):
+        self.messages = _AsyncMessages()
+
+
+class _SyncMessages:
+    def create(
+        self,
+        model: Optional[str] = None,
+        max_tokens: Optional[int] = None,
+        messages: Optional[List[dict]] = None,
+        system: Any = None,
+        temperature: Optional[float] = None,
+        reasoning_effort: Optional[str] = None,
+        **_: Any,
+    ) -> _AnthropicMessage:
+        oai = _sclient().chat.completions.create(
+            **_messages_kwargs(model, system, messages, max_tokens, temperature, reasoning_effort)
+        )
+        return _to_message(oai)
+
+
+class Anthropic:
+    """OpenAI-backed drop-in for anthropic.Anthropic (messages subset)."""
+
+    def __init__(self, *_, **__):
+        self.messages = _SyncMessages()

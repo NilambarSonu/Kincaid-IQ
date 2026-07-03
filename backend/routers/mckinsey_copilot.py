@@ -17,8 +17,8 @@ logger = logging.getLogger("kincaid.mckinsey")
 
 router = APIRouter(prefix="/api/mckinsey", tags=["mckinsey"])
 
-ANTHROPIC_API_KEY = os.environ.get("AI_INTEGRATIONS_ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_API_KEY", "")
-ANTHROPIC_BASE_URL = os.environ.get("AI_INTEGRATIONS_ANTHROPIC_BASE_URL", "https://api.anthropic.com")
+ANTHROPIC_API_KEY = os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY") or os.environ.get("OPENAI_API_KEY", "")
+ANTHROPIC_BASE_URL = os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL", "")
 
 MCKINSEY_SYSTEM_PROMPT = """You are the McKinsey Co-Pilot, an elite management consulting AI advisor embedded in the Kincaid IQ Fiduciary Intelligence Platform. You operate with the rigor, precision, and frameworks of a McKinsey & Company senior partner.
 
@@ -375,7 +375,7 @@ def _fetch_benchmark_context(company_name: str) -> Optional[str]:
 
 def _get_anthropic_client():
     try:
-        import anthropic
+        from backend import anthropic_compat as anthropic
         return anthropic.Anthropic(
             api_key=ANTHROPIC_API_KEY,
             base_url=ANTHROPIC_BASE_URL,

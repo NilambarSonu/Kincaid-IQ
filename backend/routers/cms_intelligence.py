@@ -18,15 +18,15 @@ from typing import Optional
 import httpx
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from anthropic import AsyncAnthropic
+from backend.anthropic_compat import AsyncAnthropic
 from backend.config import settings
 
 router = APIRouter(prefix="/api/cms", tags=["cms-intelligence"])
 logger = logging.getLogger("kincaid.cms_intel")
 
 _anthropic = AsyncAnthropic(
-    api_key=settings.anthropic_api_key,
-    base_url=settings.anthropic_base_url,
+    api_key=settings.openai_api_key,
+    base_url=settings.openai_base_url,
 )
 
 _PA_SYSTEM_PROMPT = """You are Kincaid IQ — a fiduciary-grade prior authorization intelligence engine.

@@ -158,175 +158,10 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
       <nav className="flex-1 px-3 overflow-y-auto custom-scrollbar pb-2">
         {/* Pinned quick-access tools */}
         <div className="pt-3 pb-1 space-y-1.5">
-          {/* ── FILING INTELLIGENCE — top pinned ── */}
-          <Link
-            href="/sales-iq-intel?tab=filings"
-            onClick={onClose}
-            data-testid="nav-filing-intelligence-pinned"
-            className={`sidebar-nav-item ${location.startsWith("/sales-iq-intel") ? "active" : ""}`}
-            style={{
-              color: "#9B1C2E",
-              background: "linear-gradient(90deg, rgba(155,28,46,0.16) 0%, rgba(155,28,46,0.05) 100%)",
-              border: "1px solid rgba(155,28,46,0.35)",
-              boxShadow: "0 0 10px rgba(155,28,46,0.10)",
-            }}
-          >
-            <Gauge size={15} strokeWidth={1.8} />
-            <span className="flex-1 text-sm font-semibold">Filing Intelligence</span>
-            {location.startsWith("/sales-iq-intel") && <ChevronRight size={12} className="opacity-40" />}
-          </Link>
-
-          {/* ── CFO WAR ROOM — top pinned ── */}
-          <Link
-            href="/"
-            onClick={onClose}
-            data-testid="nav-cfo-war-room-pinned"
-            className={`sidebar-nav-item ${location === "/" ? "active" : ""}`}
-            style={{
-              color: "#F5A623",
-              background: "linear-gradient(90deg, rgba(245,166,35,0.12) 0%, rgba(245,166,35,0.05) 100%)",
-              border: "1px solid rgba(245,166,35,0.28)",
-              boxShadow: "0 0 10px rgba(245,166,35,0.07)",
-            }}
-          >
-            <Target size={15} strokeWidth={1.8} />
-            <span className="flex-1 text-sm font-semibold">CFO War Room</span>
-            <span style={{
-              fontSize: 7, fontWeight: 900, letterSpacing: "0.14em",
-              textTransform: "uppercase", color: "#F5A623",
-              background: "rgba(245,166,35,0.12)", border: "1px solid rgba(245,166,35,0.25)",
-              borderRadius: 3, padding: "1px 5px",
-            }}>CFO</span>
-          </Link>
-
-          {/* ── HIOS — Healthcare Intelligence OS — top pinned ── */}
-          <Link
-            href="/hios"
-            onClick={onClose}
-            data-testid="nav-hios-pinned"
-            className={`sidebar-nav-item ${location === "/hios" ? "active" : ""}`}
-            style={{
-              color: "#00D4FF",
-              background: "rgba(0,212,255,0.08)",
-              border: "1px solid rgba(0,212,255,0.22)",
-            }}
-          >
-            <Activity size={15} strokeWidth={1.8} />
-            <span className="flex-1 text-sm font-semibold">HIOS — Intelligence OS</span>
-            {location === "/hios" && <ChevronRight size={12} className="opacity-40" />}
-          </Link>
-
-          {/* ── OPERATING SYSTEMS — overview hub ── */}
-          <Link
-            href="/operating-systems"
-            onClick={onClose}
-            data-testid="nav-operating-systems"
-            className={`sidebar-nav-item ${location.startsWith("/operating-systems") ? "active" : ""}`}
-            style={location.startsWith("/operating-systems") ? {} : { color: "rgba(255,255,255,0.6)" }}
-          >
-            <Layers size={15} strokeWidth={1.8} />
-            <span className="flex-1 text-sm font-semibold">Operating Systems</span>
-            <span style={{
-              fontSize: 7, fontWeight: 900, letterSpacing: "0.12em",
-              textTransform: "uppercase", color: "rgba(180,210,255,0.75)",
-              background: "rgba(100,150,255,0.1)", border: "1px solid rgba(100,150,255,0.22)",
-              borderRadius: 3, padding: "1px 5px",
-            }}>4</span>
-          </Link>
-
-          {/* ── CLAIMS RECOVERY IQ — top pinned ── */}
-          <Link
-            href="/claims-recovery"
-            onClick={onClose}
-            data-testid="nav-claims-recovery-pinned"
-            className={`sidebar-nav-item ${location === "/claims-recovery" ? "active" : ""}`}
-            style={{
-              color: "#FF6B1A",
-              background: "rgba(255,107,26,0.08)",
-              border: "1px solid rgba(255,107,26,0.22)",
-            }}
-          >
-            <DollarSign size={15} strokeWidth={1.8} />
-            <span className="flex-1 text-sm font-semibold">Claims Recovery IQ™</span>
-            {location === "/claims-recovery" && <ChevronRight size={12} className="opacity-40" />}
-          </Link>
-
-          {/* ── COMMAND CENTER ── */}
-          <Link
-            href="/dashboard"
-            onClick={onClose}
-            data-testid="nav-command-center-pinned"
-            className={`sidebar-nav-item ${location === "/dashboard" ? "active" : ""}`}
-            style={{
-              color: "rgba(180,210,255,0.75)",
-              background: "rgba(100,150,255,0.06)",
-              border: "1px solid rgba(100,150,255,0.16)",
-            }}
-          >
-            <LayoutDashboard size={15} strokeWidth={1.8} />
-            <span className="flex-1 text-sm font-semibold">Command Center</span>
-            {location === "/dashboard" && <ChevronRight size={12} className="opacity-40" />}
-          </Link>
-
-          {/* ── BROKER IQ CONSOLE — pinned + highlighted ── */}
-          <Link
-            href="/saas/broker"
-            onClick={onClose}
-            data-testid="nav-broker-iq-console-pinned"
-            className={`sidebar-nav-item ${location === "/saas/broker" ? "active" : ""}`}
-            style={{
-              color: "#FFB800",
-              background: "linear-gradient(90deg, rgba(255,184,0,0.12) 0%, rgba(255,184,0,0.05) 100%)",
-              border: "1px solid rgba(255,184,0,0.30)",
-              boxShadow: "0 0 10px rgba(255,184,0,0.08)",
-            }}
-          >
-            <Building2 size={15} strokeWidth={1.8} />
-            <span className="flex-1 text-sm font-semibold">Sales IQ Console</span>
-            <span style={{
-              fontSize: 7, fontWeight: 900, letterSpacing: "0.14em",
-              textTransform: "uppercase", color: "#FFB800",
-              background: "rgba(255,184,0,0.12)", border: "1px solid rgba(255,184,0,0.25)",
-              borderRadius: 3, padding: "1px 5px",
-            }}>PIN</span>
-          </Link>
-          {/* ── ACCOUNT INTELLIGENCE HUB ── */}
-          <Link
-            href="/account-intel"
-            onClick={onClose}
-            data-testid="nav-account-intel"
-            className={`sidebar-nav-item ${location === "/account-intel" ? "active" : ""}`}
-            style={location === "/account-intel" ? {} : { color: "rgba(255,255,255,0.6)" }}
-          >
-            <Database size={15} strokeWidth={1.8} />
-            <span className="flex-1 text-sm font-semibold">Account Intel Hub</span>
-            <span style={{
-              fontSize: 7, fontWeight: 900, letterSpacing: "0.12em",
-              textTransform: "uppercase", color: "#10b981",
-              background: "rgba(16,185,129,0.12)", border: "1px solid rgba(16,185,129,0.3)",
-              borderRadius: 3, padding: "1px 5px",
-            }}>9 API</span>
-          </Link>
-
-          {/* ── SALES IQ INTELLIGENCE — 50-state module ── */}
-          <Link
-            href="/sales-iq-intel"
-            onClick={onClose}
-            data-testid="nav-sales-iq-intel"
-            className={`sidebar-nav-item ${location === "/sales-iq-intel" ? "active" : ""}`}
-            style={location === "/sales-iq-intel" ? {} : {
-              color: "rgba(255,255,255,0.6)",
-            }}
-          >
-            <Target size={15} strokeWidth={1.8} />
-            <span className="flex-1 text-sm font-semibold">Sales IQ Intelligence</span>
-            <span style={{
-              fontSize: 7, fontWeight: 900, letterSpacing: "0.12em",
-              textTransform: "uppercase", color: "#9B1C2E",
-              background: "rgba(155,28,46,0.12)", border: "1px solid rgba(155,28,46,0.3)",
-              borderRadius: 3, padding: "1px 5px",
-            }}>50ST</span>
-          </Link>
+          {/* ═══════════ SALES OS — grouped at top ═══════════ */}
+          <div style={{ margin: "0 0 4px", paddingLeft: 4 }}>
+            <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(212,175,55,0.7)" }}>Sales OS</span>
+          </div>
 
           {/* ── SALES OS — Full AI Sales Intelligence Module ── */}
           <Link
@@ -336,8 +171,9 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
             className={`sidebar-nav-item ${location === "/sales-os" ? "active" : ""}`}
             style={{
               color: "#D4AF37",
-              background: "rgba(212,175,55,0.06)",
-              border: "1px solid rgba(212,175,55,0.18)",
+              background: "linear-gradient(90deg, rgba(212,175,55,0.14) 0%, rgba(212,175,55,0.05) 100%)",
+              border: "1px solid rgba(212,175,55,0.30)",
+              boxShadow: "0 0 10px rgba(212,175,55,0.08)",
             }}
           >
             <Zap size={15} strokeWidth={1.8} />
@@ -350,27 +186,120 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
             }}>NEW</span>
           </Link>
 
+          {/* ── SALES IQ CONSOLE — pinned + highlighted ── */}
+          <Link
+            href="/saas/broker"
+            onClick={onClose}
+            data-testid="nav-broker-iq-console-pinned"
+            className={`sidebar-nav-item ${location === "/saas/broker" ? "active" : ""}`}
+            style={{
+              color: "#D4AF37",
+              background: "linear-gradient(90deg, rgba(212,175,55,0.14) 0%, rgba(212,175,55,0.05) 100%)",
+              border: "1px solid rgba(212,175,55,0.30)",
+              boxShadow: "0 0 10px rgba(212,175,55,0.08)",
+            }}
+          >
+            <Building2 size={15} strokeWidth={1.8} />
+            <span className="flex-1 text-sm font-semibold">Sales IQ Console</span>
+            <span style={{
+              fontSize: 7, fontWeight: 900, letterSpacing: "0.14em",
+              textTransform: "uppercase", color: "#D4AF37",
+              background: "rgba(212,175,55,0.12)", border: "1px solid rgba(212,175,55,0.28)",
+              borderRadius: 3, padding: "1px 5px",
+            }}>PIN</span>
+          </Link>
+
+          {/* ── SALES IQ INTELLIGENCE — 50-state module ── */}
+          <Link
+            href="/sales-iq-intel"
+            onClick={onClose}
+            data-testid="nav-sales-iq-intel"
+            className={`sidebar-nav-item ${location === "/sales-iq-intel" ? "active" : ""}`}
+            style={{
+              color: "#D4AF37",
+              background: "linear-gradient(90deg, rgba(212,175,55,0.14) 0%, rgba(212,175,55,0.05) 100%)",
+              border: "1px solid rgba(212,175,55,0.30)",
+              boxShadow: "0 0 10px rgba(212,175,55,0.08)",
+            }}
+          >
+            <Target size={15} strokeWidth={1.8} />
+            <span className="flex-1 text-sm font-semibold">Sales IQ Intelligence</span>
+            <span style={{
+              fontSize: 7, fontWeight: 900, letterSpacing: "0.12em",
+              textTransform: "uppercase", color: "#D4AF37",
+              background: "rgba(212,175,55,0.12)", border: "1px solid rgba(212,175,55,0.28)",
+              borderRadius: 3, padding: "1px 5px",
+            }}>50ST</span>
+          </Link>
+
+          {/* ── FILING INTELLIGENCE ── */}
+          <Link
+            href="/sales-iq-intel?tab=filings"
+            onClick={onClose}
+            data-testid="nav-filing-intelligence-pinned"
+            className={`sidebar-nav-item ${location.startsWith("/sales-iq-intel") ? "active" : ""}`}
+            style={{
+              color: "#D4AF37",
+              background: "linear-gradient(90deg, rgba(212,175,55,0.14) 0%, rgba(212,175,55,0.05) 100%)",
+              border: "1px solid rgba(212,175,55,0.30)",
+              boxShadow: "0 0 10px rgba(212,175,55,0.08)",
+            }}
+          >
+            <Gauge size={15} strokeWidth={1.8} />
+            <span className="flex-1 text-sm font-semibold">Filing Intelligence</span>
+            {location.startsWith("/sales-iq-intel") && <ChevronRight size={12} className="opacity-40" />}
+          </Link>
+
+          {/* ── ACCOUNT INTELLIGENCE HUB ── */}
+          <Link
+            href="/account-intel"
+            onClick={onClose}
+            data-testid="nav-account-intel"
+            className={`sidebar-nav-item ${location === "/account-intel" ? "active" : ""}`}
+            style={{
+              color: "#D4AF37",
+              background: "linear-gradient(90deg, rgba(212,175,55,0.14) 0%, rgba(212,175,55,0.05) 100%)",
+              border: "1px solid rgba(212,175,55,0.30)",
+              boxShadow: "0 0 10px rgba(212,175,55,0.08)",
+            }}
+          >
+            <Database size={15} strokeWidth={1.8} />
+            <span className="flex-1 text-sm font-semibold">Account Intel Hub</span>
+            <span style={{
+              fontSize: 7, fontWeight: 900, letterSpacing: "0.12em",
+              textTransform: "uppercase", color: "#D4AF37",
+              background: "rgba(212,175,55,0.12)", border: "1px solid rgba(212,175,55,0.28)",
+              borderRadius: 3, padding: "1px 5px",
+            }}>9 API</span>
+          </Link>
+
+          {/* ── SHADY BROKER REPORT ── */}
           <Link
             href="/shady-broker-index"
             onClick={onClose}
             data-testid="nav-shady-broker-index"
             className={`sidebar-nav-item ${location === "/shady-broker-index" ? "active" : ""}`}
             style={{
-              color: "#FF4D6D",
-              background: "rgba(255,77,109,0.07)",
-              border: "1px solid rgba(255,77,109,0.22)",
+              color: "#D4AF37",
+              background: "linear-gradient(90deg, rgba(212,175,55,0.14) 0%, rgba(212,175,55,0.05) 100%)",
+              border: "1px solid rgba(212,175,55,0.30)",
+              boxShadow: "0 0 10px rgba(212,175,55,0.08)",
             }}
           >
             <ShieldAlert size={15} strokeWidth={1.8} />
             <span className="flex-1 text-sm font-semibold">Shady Broker Report</span>
             <span style={{
               fontSize: 7, fontWeight: 900, letterSpacing: "0.12em",
-              textTransform: "uppercase", color: "#FF4D6D",
-              background: "rgba(255,77,109,0.14)", border: "1px solid rgba(255,77,109,0.32)",
+              textTransform: "uppercase", color: "#D4AF37",
+              background: "rgba(212,175,55,0.12)", border: "1px solid rgba(212,175,55,0.28)",
               borderRadius: 3, padding: "1px 5px",
             }}>0-100</span>
           </Link>
 
+          {/* ═══════════ RX / PBM ═══════════ */}
+          <div style={{ margin: "10px 0 3px", paddingLeft: 4 }}>
+            <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(16,185,129,0.6)" }}>Rx / PBM</span>
+          </div>
           <Link
             href="/rx-defense"
             onClick={onClose}
@@ -392,9 +321,9 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
             data-testid="nav-rx-defense-pro-pinned"
             className={`sidebar-nav-item ${location === "/rx-defense-pro" ? "active" : ""}`}
             style={{
-              color: "#9B1C2E",
-              background: "rgba(155,28,46,0.08)",
-              border: "1px solid rgba(155,28,46,0.22)",
+              color: "#10B981",
+              background: "rgba(16,185,129,0.08)",
+              border: "1px solid rgba(16,185,129,0.22)",
             }}
           >
             <Pill size={15} strokeWidth={1.8} />
@@ -407,24 +336,126 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
             data-testid="nav-rx-pbm-pinned"
             className={`sidebar-nav-item ${location === "/rx-pbm" ? "active" : ""}`}
             style={{
-              color: "#34D399",
-              background: "rgba(52,211,153,0.08)",
-              border: "1px solid rgba(52,211,153,0.22)",
+              color: "#10B981",
+              background: "rgba(16,185,129,0.08)",
+              border: "1px solid rgba(16,185,129,0.22)",
             }}
           >
             <Pill size={15} strokeWidth={1.8} />
             <span className="flex-1 text-sm font-semibold">RxPBM Intelligence</span>
             {location === "/rx-pbm" && <ChevronRight size={12} className="opacity-40" />}
           </Link>
+
+          {/* ═══════════ CORE ═══════════ */}
+          <div style={{ margin: "10px 0 3px", paddingLeft: 4 }}>
+            <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(59,130,246,0.6)" }}>Core</span>
+          </div>
+
+          {/* ── CFO WAR ROOM — top pinned ── */}
+          <Link
+            href="/"
+            onClick={onClose}
+            data-testid="nav-cfo-war-room-pinned"
+            className={`sidebar-nav-item ${location === "/" ? "active" : ""}`}
+            style={{
+              color: "#3B82F6",
+              background: "linear-gradient(90deg, rgba(59,130,246,0.12) 0%, rgba(59,130,246,0.05) 100%)",
+              border: "1px solid rgba(59,130,246,0.28)",
+              boxShadow: "0 0 10px rgba(59,130,246,0.07)",
+            }}
+          >
+            <Target size={15} strokeWidth={1.8} />
+            <span className="flex-1 text-sm font-semibold">CFO War Room</span>
+            <span style={{
+              fontSize: 7, fontWeight: 900, letterSpacing: "0.14em",
+              textTransform: "uppercase", color: "#3B82F6",
+              background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.25)",
+              borderRadius: 3, padding: "1px 5px",
+            }}>CFO</span>
+          </Link>
+
+          {/* ── HIOS — Healthcare Intelligence OS — top pinned ── */}
+          <Link
+            href="/hios"
+            onClick={onClose}
+            data-testid="nav-hios-pinned"
+            className={`sidebar-nav-item ${location === "/hios" ? "active" : ""}`}
+            style={{
+              color: "#3B82F6",
+              background: "rgba(59,130,246,0.08)",
+              border: "1px solid rgba(59,130,246,0.22)",
+            }}
+          >
+            <Activity size={15} strokeWidth={1.8} />
+            <span className="flex-1 text-sm font-semibold">HIOS — Intelligence OS</span>
+            {location === "/hios" && <ChevronRight size={12} className="opacity-40" />}
+          </Link>
+
+          {/* ── OPERATING SYSTEMS — overview hub ── */}
+          <Link
+            href="/operating-systems"
+            onClick={onClose}
+            data-testid="nav-operating-systems"
+            className={`sidebar-nav-item ${location.startsWith("/operating-systems") ? "active" : ""}`}
+            style={{
+              color: "#3B82F6",
+              background: "rgba(59,130,246,0.08)",
+              border: "1px solid rgba(59,130,246,0.22)",
+            }}
+          >
+            <Layers size={15} strokeWidth={1.8} />
+            <span className="flex-1 text-sm font-semibold">Operating Systems</span>
+            <span style={{
+              fontSize: 7, fontWeight: 900, letterSpacing: "0.12em",
+              textTransform: "uppercase", color: "#3B82F6",
+              background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.25)",
+              borderRadius: 3, padding: "1px 5px",
+            }}>4</span>
+          </Link>
+
+          {/* ── CLAIMS RECOVERY IQ — top pinned ── */}
+          <Link
+            href="/claims-recovery"
+            onClick={onClose}
+            data-testid="nav-claims-recovery-pinned"
+            className={`sidebar-nav-item ${location === "/claims-recovery" ? "active" : ""}`}
+            style={{
+              color: "#3B82F6",
+              background: "rgba(59,130,246,0.08)",
+              border: "1px solid rgba(59,130,246,0.22)",
+            }}
+          >
+            <DollarSign size={15} strokeWidth={1.8} />
+            <span className="flex-1 text-sm font-semibold">Claims Recovery IQ™</span>
+            {location === "/claims-recovery" && <ChevronRight size={12} className="opacity-40" />}
+          </Link>
+
+          {/* ── COMMAND CENTER ── */}
+          <Link
+            href="/dashboard"
+            onClick={onClose}
+            data-testid="nav-command-center-pinned"
+            className={`sidebar-nav-item ${location === "/dashboard" ? "active" : ""}`}
+            style={{
+              color: "#3B82F6",
+              background: "rgba(59,130,246,0.08)",
+              border: "1px solid rgba(59,130,246,0.22)",
+            }}
+          >
+            <LayoutDashboard size={15} strokeWidth={1.8} />
+            <span className="flex-1 text-sm font-semibold">Command Center</span>
+            {location === "/dashboard" && <ChevronRight size={12} className="opacity-40" />}
+          </Link>
+
           <Link
             href="/stop-loss"
             onClick={onClose}
             data-testid="nav-stop-loss-pinned"
             className={`sidebar-nav-item ${location === "/stop-loss" ? "active" : ""}`}
             style={{
-              color: "#A855F7",
-              background: "rgba(168,85,247,0.08)",
-              border: "1px solid rgba(168,85,247,0.22)",
+              color: "#3B82F6",
+              background: "rgba(59,130,246,0.08)",
+              border: "1px solid rgba(59,130,246,0.22)",
             }}
           >
             <Activity size={15} strokeWidth={1.8} />
@@ -437,9 +468,9 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
             data-testid="nav-network-iq-pinned"
             className={`sidebar-nav-item ${location === "/network-iq" ? "active" : ""}`}
             style={{
-              color: "#22D3EE",
-              background: "rgba(34,211,238,0.08)",
-              border: "1px solid rgba(34,211,238,0.22)",
+              color: "#3B82F6",
+              background: "rgba(59,130,246,0.08)",
+              border: "1px solid rgba(59,130,246,0.22)",
             }}
           >
             <Network size={15} strokeWidth={1.8} />
@@ -452,9 +483,9 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
             data-testid="nav-fiduciary-iq-pinned"
             className={`sidebar-nav-item ${location === "/fiduciary-iq" ? "active" : ""}`}
             style={{
-              color: "#6366F1",
-              background: "rgba(99,102,241,0.08)",
-              border: "1px solid rgba(99,102,241,0.22)",
+              color: "#3B82F6",
+              background: "rgba(59,130,246,0.08)",
+              border: "1px solid rgba(59,130,246,0.22)",
             }}
           >
             <ShieldAlert size={15} strokeWidth={1.8} />
@@ -463,7 +494,7 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
           </Link>
           {/* ── RFP INTELLIGENCE OS ── */}
           <div style={{ margin: "8px 0 3px", paddingLeft: 4 }}>
-            <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(251,191,36,0.6)" }}>RFP Intelligence OS</span>
+            <span style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(167,139,250,0.6)" }}>RFP Intelligence OS</span>
           </div>
           <Link
             href="/rfp-command-center"
@@ -471,11 +502,9 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
             data-testid="nav-rfp-command-center"
             className={`sidebar-nav-item ${location === "/rfp-command-center" ? "active" : ""}`}
             style={{
-              color: "#FFB800",
-              background: location === "/rfp-command-center"
-                ? "linear-gradient(90deg, rgba(255,184,0,0.16) 0%, rgba(255,184,0,0.06) 100%)"
-                : "transparent",
-              border: location === "/rfp-command-center" ? "1px solid rgba(255,184,0,0.35)" : "1px solid transparent",
+              color: "#a78bfa",
+              background: "rgba(167,139,250,0.08)",
+              border: "1px solid rgba(167,139,250,0.22)",
             }}
           >
             <Target size={15} strokeWidth={1.8} />
@@ -488,18 +517,18 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
             data-testid="nav-rfp-os"
             className={`sidebar-nav-item ${location.startsWith("/rfp-os") ? "active" : ""}`}
             style={{
-              color: "#FBB724",
-              background: "linear-gradient(90deg, rgba(251,183,36,0.12) 0%, rgba(251,183,36,0.05) 100%)",
-              border: "1px solid rgba(251,183,36,0.30)",
-              boxShadow: "0 0 10px rgba(251,183,36,0.07)",
+              color: "#a78bfa",
+              background: "linear-gradient(90deg, rgba(167,139,250,0.12) 0%, rgba(167,139,250,0.05) 100%)",
+              border: "1px solid rgba(167,139,250,0.30)",
+              boxShadow: "0 0 10px rgba(167,139,250,0.07)",
             }}
           >
             <FileSearch size={15} strokeWidth={1.8} />
             <span className="flex-1 text-sm font-semibold">RFP Intelligence OS™</span>
             <span style={{
               fontSize: 7, fontWeight: 900, letterSpacing: "0.12em",
-              textTransform: "uppercase", color: "#FBB724",
-              background: "rgba(251,183,36,0.15)", border: "1px solid rgba(251,183,36,0.30)",
+              textTransform: "uppercase", color: "#a78bfa",
+              background: "rgba(167,139,250,0.15)", border: "1px solid rgba(167,139,250,0.30)",
               borderRadius: 3, padding: "1px 5px",
             }}>NEW</span>
           </Link>
@@ -510,10 +539,8 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
             className={`sidebar-nav-item ${location === "/rfp-resource-allocator" ? "active" : ""}`}
             style={{
               color: "#a78bfa",
-              background: location === "/rfp-resource-allocator"
-                ? "linear-gradient(90deg, rgba(167,139,250,0.14) 0%, rgba(167,139,250,0.06) 100%)"
-                : "transparent",
-              border: location === "/rfp-resource-allocator" ? "1px solid rgba(167,139,250,0.30)" : "1px solid transparent",
+              background: "rgba(167,139,250,0.08)",
+              border: "1px solid rgba(167,139,250,0.22)",
             }}
           >
             <BarChart3 size={15} strokeWidth={1.8} />
@@ -526,11 +553,9 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
             data-testid="nav-rfp-model-health"
             className={`sidebar-nav-item ${location === "/rfp-model-health" ? "active" : ""}`}
             style={{
-              color: "#34d399",
-              background: location === "/rfp-model-health"
-                ? "linear-gradient(90deg, rgba(52,211,153,0.14) 0%, rgba(52,211,153,0.06) 100%)"
-                : "transparent",
-              border: location === "/rfp-model-health" ? "1px solid rgba(52,211,153,0.30)" : "1px solid transparent",
+              color: "#a78bfa",
+              background: "rgba(167,139,250,0.08)",
+              border: "1px solid rgba(167,139,250,0.22)",
             }}
           >
             <Activity size={15} strokeWidth={1.8} />
@@ -543,11 +568,9 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
             data-testid="nav-battlecards"
             className={`sidebar-nav-item ${location === "/battlecards" ? "active" : ""}`}
             style={{
-              color: "#FF4D6D",
-              background: location === "/battlecards"
-                ? "linear-gradient(90deg, rgba(255,77,109,0.14) 0%, rgba(255,77,109,0.06) 100%)"
-                : "transparent",
-              border: location === "/battlecards" ? "1px solid rgba(255,77,109,0.30)" : "1px solid transparent",
+              color: "#a78bfa",
+              background: "rgba(167,139,250,0.08)",
+              border: "1px solid rgba(167,139,250,0.22)",
             }}
           >
             <Crosshair size={15} strokeWidth={1.8} />
@@ -560,14 +583,18 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
             onClick={onClose}
             data-testid="nav-5500-monitor"
             className={`sidebar-nav-item ${location === "/5500-monitor" ? "active" : ""}`}
-            style={location === "/5500-monitor" ? {} : { color: "rgba(255,255,255,0.6)" }}
+            style={{
+              color: "#a78bfa",
+              background: "rgba(167,139,250,0.08)",
+              border: "1px solid rgba(167,139,250,0.22)",
+            }}
           >
             <Activity size={15} strokeWidth={1.8} />
             <span className="flex-1 text-sm font-semibold">5500 Monitor</span>
             <span style={{
               fontSize: 7, fontWeight: 900, letterSpacing: "0.12em",
-              textTransform: "uppercase", color: "#FBB724",
-              background: "rgba(251,183,36,0.12)", border: "1px solid rgba(251,183,36,0.25)",
+              textTransform: "uppercase", color: "#a78bfa",
+              background: "rgba(167,139,250,0.12)", border: "1px solid rgba(167,139,250,0.25)",
               borderRadius: 3, padding: "1px 5px",
             }}>LIVE</span>
           </Link>
@@ -577,7 +604,11 @@ function Sidebar({ onClose, onOpenPalette }: { onClose?: () => void; onOpenPalet
             onClick={onClose}
             data-testid="nav-digest-preferences"
             className={`sidebar-nav-item ${location === "/digest-preferences" ? "active" : ""}`}
-            style={location === "/digest-preferences" ? {} : { color: "rgba(255,255,255,0.6)" }}
+            style={{
+              color: "#a78bfa",
+              background: "rgba(167,139,250,0.08)",
+              border: "1px solid rgba(167,139,250,0.22)",
+            }}
           >
             <Mail size={15} strokeWidth={1.8} />
             <span className="flex-1 text-sm font-semibold">Intelligence Digest</span>
