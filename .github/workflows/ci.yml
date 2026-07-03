@@ -1,0 +1,130 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  lint-and-test:
+    name: Lint & Test (Python)
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: kincaid_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://postgres:testpassword@localhost:5432/kincaid_test
+      SESSION_SECRET: ci-test-secret-key-not-for-production
+      APP_ENV: development
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libpango-1.0-0 libpangocairo-1.0-0 libgdk-pixbuf-2.0-0 \
+            libcairo2 libffi8 libharfbuzz0b libfribidi0 \
+            shared-mime-info fonts-dejavu-core
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install uv
+          uv export --frozen --no-dev --no-emit-project -o requirements.txt
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Run tests
+        run: pytest backend/tests/ -v --tb=short
+
+  build-docker:
+    name: Docker Build Check
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build frontend (Vite)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Node dependencies & build
+        run: |
+          npm ci
+          npx vite build
+
+      - name: Build Docker image
+        run: docker build -t kincaid-iq:ci-${{ github.sha }} .
+
+  # ─── DEPLOYMENT ──────────────────────────────────────────────────────────────
+  # Uncomment and configure ONE of the following after choosing a cloud provider.
+  #
+  # deploy-aws:
+  #   name: Deploy to AWS App Runner
+  #   runs-on: ubuntu-latest
+  #   needs: build-docker
+  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v4
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: us-east-1
+  #     - name: Login to ECR
+  #       uses: aws-actions/amazon-ecr-login@v2
+  #     - name: Build, tag, and push to ECR
+  #       run: |
+  #         docker build -t ${{ secrets.ECR_REPO_URI }}:latest .
+  #         docker push ${{ secrets.ECR_REPO_URI }}:latest
+  #
+  # deploy-gcp:
+  #   name: Deploy to Google Cloud Run
+  #   runs-on: ubuntu-latest
+  #   needs: build-docker
+  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: google-github-actions/auth@v2
+  #       with:
+  #         credentials_json: ${{ secrets.GCP_SA_KEY }}
+  #     - uses: google-github-actions/setup-gcloud@v2
+  #     - run: |
+  #         gcloud builds submit --tag gcr.io/${{ secrets.GCP_PROJECT_ID }}/kincaid-iq
+  #         gcloud run deploy kincaid-iq --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/kincaid-iq --region us-central1
+  #
+  # deploy-digitalocean:
+  #   name: Deploy to DigitalOcean App Platform
+  #   runs-on: ubuntu-latest
+  #   needs: build-docker
+  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: digitalocean/action-doctl@v2
+  #       with:
+  #         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+  #     - run: doctl apps create-deployment ${{ secrets.DO_APP_ID }}
