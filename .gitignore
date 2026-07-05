@@ -53,3 +53,9 @@ screenshots/
 docs/client_oauth_stripe_setup.md
 docs/github_secrets_setup.md
 docs/project_history_checklist.md
+
+# Diagnostic & operational scripts (never commit)
+scripts/verify_rds_backups.py
+scripts/configure_cloudwatch_alarms.py
+scripts/analyze_startup_logs.py
+scripts/rds_rightsizing_baseline.py
