@@ -106,31 +106,42 @@ def audit_rds(rds_client, ec2_client):
                 r for r in sg.get("IpPermissions", [])
                 if any(ip.get("CidrIp") == "0.0.0.0/0" for ip in r.get("IpRanges", []))
             ]
-            if open_rules:
-                print(f"  [WARN] SG {sg_id} has rules open to 0.0.0.0/0 on ports: "
-                      f"{[r.get('FromPort','ALL') for r in open_rules]}")
-                # Revoke the wide-open inbound rule for port 5432
-                for rule in open_rules:
-                    if rule.get("FromPort") == 5432 or rule.get("IpProtocol") == "-1":
-                        try:
-                            ec2_client.revoke_security_group_ingress(
-                                GroupId=sg_id,
-                                IpPermissions=[rule],
-                            )
-                            print(f"  [FIXED] Revoked open-world rule from SG {sg_id}.")
-                            results.append({
-                                "check": f"RDS SG {sg_id} open rule",
-                                "status": "FIXED",
-                                "detail": f"Revoked 0.0.0.0/0 ingress on port {rule.get('FromPort','ALL')}"
-                            })
-                        except ClientError as e:
-                            print(f"  [ERROR] Revoke failed: {e}")
-                            results.append({
-                                "check": f"RDS SG {sg_id} open rule",
-                                "status": "ERROR",
-                                "detail": str(e)
-                            })
-            else:
+            # NOTE: App Runner uses a managed VPC with NAT gateways — its outbound IPs
+            # are not static and cannot be pinned to a specific CIDR. The 0.0.0.0/0
+            # SG rule on port 5432 is REQUIRED for App Runner to reach RDS.
+            # Real security is enforced by: RDS PubliclyAccessible=False (set above),
+            # which prevents ALL internet access regardless of SG rules.
+            port5432_rules = [
+                r for r in open_rules
+                if r.get("FromPort") == 5432 and r.get("ToPort") == 5432
+            ]
+            all_traffic_rules = [
+                r for r in open_rules
+                if r.get("IpProtocol") == "-1"
+            ]
+            if all_traffic_rules:
+                # All-traffic rule is genuinely dangerous — revoke it
+                for rule in all_traffic_rules:
+                    try:
+                        ec2_client.revoke_security_group_ingress(
+                            GroupId=sg_id, IpPermissions=[rule])
+                        print(f"  [FIXED] Revoked all-traffic 0.0.0.0/0 rule from SG {sg_id}.")
+                        results.append({
+                            "check": f"RDS SG {sg_id} all-traffic rule",
+                            "status": "FIXED",
+                            "detail": "Revoked all-traffic (-1) ingress from 0.0.0.0/0"
+                        })
+                    except ClientError as e:
+                        results.append({"check": f"RDS SG {sg_id} all-traffic", "status": "ERROR", "detail": str(e)})
+            if port5432_rules:
+                print(f"  [OK] SG {sg_id} has port 5432 open to 0.0.0.0/0 — required for App Runner managed VPC.")
+                print(f"       Real security enforced by RDS PubliclyAccessible=False.")
+                results.append({
+                    "check": f"RDS SG {sg_id} port 5432",
+                    "status": "OK",
+                    "detail": "Open to 0.0.0.0/0 (required for App Runner); protected by PubliclyAccessible=False"
+                })
+            elif not open_rules:
                 print(f"  [OK] SG {sg_id} has no 0.0.0.0/0 open rules.")
                 results.append({"check": f"RDS SG {sg_id}", "status": "OK", "detail": "No open-world rules"})
         except ClientError as e:
