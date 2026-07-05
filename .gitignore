@@ -41,9 +41,15 @@ replit.nix
 
 # Database backups (contain production data — never commit)
 backups/
+*.dump
 
 # Uploaded files (runtime data)
 uploads/
 
 # Screenshots (development only)
 screenshots/
+
+# Internal project documentation and checklists (never commit)
+docs/client_oauth_stripe_setup.md
+docs/github_secrets_setup.md
+docs/project_history_checklist.md
