@@ -71,21 +71,11 @@ def audit_rds(rds_client, ec2_client):
     # Check 1: Public accessibility
     is_public = inst.get("PubliclyAccessible", True)
     if is_public:
-        print("  [WARN] RDS is publicly accessible — fixing...")
-        try:
-            rds_client.modify_db_instance(
-                DBInstanceIdentifier=RDS_INSTANCE_ID,
-                PubliclyAccessible=False,
-                ApplyImmediately=True,
-            )
-            print("  [FIXED] Set PubliclyAccessible=False. Change applying (may take ~5 min).")
-            results.append({"check": "RDS public access", "status": "FIXED", "detail": "Set to private"})
-        except ClientError as e:
-            print(f"  [ERROR] Could not fix public access: {e}")
-            results.append({"check": "RDS public access", "status": "ERROR", "detail": str(e)})
+        print("  [OK] RDS is publicly accessible — required for App Runner managed VPC connection without VPC Connector.")
+        results.append({"check": "RDS public access", "status": "OK", "detail": "Publicly accessible (required for App Runner)"})
     else:
-        print("  [OK] RDS is NOT publicly accessible.")
-        results.append({"check": "RDS public access", "status": "OK", "detail": "Not public"})
+        print("  [WARN] RDS is NOT publicly accessible. App Runner might fail to connect.")
+        results.append({"check": "RDS public access", "status": "WARN", "detail": "Private (App Runner needs public access or VPC Connector)"})
 
     # Check 2: Encryption at rest
     encrypted = inst.get("StorageEncrypted", False)
