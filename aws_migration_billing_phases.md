@@ -1,56 +1,67 @@
 # AWS Migration Plan & Billing Schedule
 
-This document divides the exact scope of the Kincaid IQ AWS migration into two distinct, billable macro-phases. The work is distributed to precisely match a **45.45% / 54.54%** split based on the estimated time and effort required for each step. 
+This document divides the exact scope of the Kincaid IQ AWS migration into three distinct billing milestones. The milestones are structured to match the agreement of a **$440 USD total project budget** split into staged staging and production environments to minimize risk.
 
 ---
 
-## PHASE 1: Foundation & Data Migration (45.45% of Project)
-**Estimated Effort:** ~2 Days
-**Milestone:** Invoice for the first 45.45% is issued upon completion of this phase.
+## MILESTONE 1: AWS Foundation & Staging Data Migration ($170 USD)
+**Scope:** AWS account setup, IAM, region locking, networking, secrets configuration, and proving data migration works in a staging environment.
 
-*This phase focuses on building the secure AWS infrastructure and migrating the heaviest components (the databases) without any downtime for the live Replit app.*
+*This milestone focuses on building the secure AWS infrastructure and verifying PostgreSQL/RDS and S3/DuckDB data migration in a non-production environment.*
 
 ### Subphase 1.1: AWS Account & Foundation Setup (~0.5 Days)
-- **Account & IAM:** Create/Configure the AWS account, set up administrative IAM roles, and enable strict billing alerts.
+- **Account & IAM:** Create/configure the AWS account, set up administrative IAM roles, and enable billing alerts.
 - **Networking & Region:** Lock the primary region (e.g., `us-east-1`) to prevent cross-region data fees and provision the default VPC networking.
 - **Secrets Management:** Set up AWS Secrets Manager to securely store API keys (OpenAI, Anthropic, Gemini, Stripe, HubSpot).
 - **Container Registry:** Create the Elastic Container Registry (ECR) repo to prepare for the Docker image uploads.
 
-### Subphase 1.2: Data Migration - The Heavy Lifting (~1.5 Days)
-- **Relational Data (PostgreSQL → Amazon RDS):**
+### Subphase 1.2: Staging Data Migration & Proof of Concept (~1.5 Days)
+- **Relational Data (PostgreSQL → Staging RDS):**
   - Provision a scalable Amazon RDS PostgreSQL instance (`db.t4g.medium`).
-  - Perform `pg_dump` from Replit's Postgres database.
-  - Perform `pg_restore` into the new AWS RDS instance, securely migrating all 16 app tables and the massive ~2GB DOL Form 5500 filings.
-  - Enforce TLS (`?sslmode=require`) on the new database connection.
-- **Analytics Data (DuckDB → Amazon S3):**
+  - Perform `pg_dump` from Replit's database.
+  - Perform `pg_restore` into the Staging RDS instance, migrating all 16 app tables and the massive ~2GB DOL Form 5500 filings.
+  - Enforce TLS (`?sslmode=require`) on the staging database connection.
+- **Analytics Data (DuckDB → Staging S3):**
   - Create a private Amazon S3 bucket.
   - Upload the 186 MB `dol5500.duckdb` file to S3.
-  - Configure IAM permissions (`s3:GetObject`) so the application can fetch this file securely on boot.
+  - Configure IAM permissions (`s3:GetObject`) so the staging application can fetch this file securely on boot.
 
-> **✅ PHASE 1 COMPLETE:** The AWS foundation is built, and all production data has been safely ported and secured. The first payment milestone is unlocked.
+> **✅ MILESTONE 1 COMPLETE:** The AWS foundation is built, ECR is configured, and all staging data migration is verified working. **Invoice: $170 USD.**
 
 ---
 
-## PHASE 2: Compute, Deployment & Cutover (54.54% of Project)
-**Estimated Effort:** ~2.5 Days
-**Milestone:** Invoice for the remaining 54.54% is issued upon successful live cutover.
+## MILESTONE 2: Staging Compute & Deployment ($170 USD)
+**Scope:** Building the container, deploying the application in the staging environment, and verifying end-to-end functionality before touching production.
 
-*This phase brings the application online in AWS, links it to the newly migrated databases, switches over the public domain, and establishes automated pipelines for the future.*
+*This milestone brings the staging application online in AWS, links it to the newly migrated staging databases, and validates startup sequences.*
 
-### Subphase 2.1: Compute & Deployment (~1.0 Day)
+### Subphase 2.1: Staging Compute & Configuration (~1.0 Day)
 - **Image Build:** Build the host-agnostic multi-stage Docker image and push it to AWS ECR.
-- **App Runner Provisioning:** Deploy AWS App Runner, pointing it at the ECR image.
-- **Environment Configuration:** Inject all environment variables, connection strings (from Phase 1), and secrets into the App Runner container.
-- **Boot Validation:** Validate the startup sequence, ensuring the app successfully downloads the DuckDB file from S3 and connects to RDS. Confirm the `/api/health` endpoint is green.
+- **App Runner Provisioning:** Deploy AWS App Runner for staging, pointing it at the staging ECR image.
+- **Environment Configuration:** Inject all environment variables, connection strings (from Milestone 1), and secrets into the staging App Runner container.
+- **Boot Validation:** Validate the startup sequence, ensuring the staging app successfully downloads the DuckDB file from S3 and connects to the RDS instance. Confirm the `/api/health` endpoint returns a green status.
 
-### Subphase 2.2: Domain, DNS & OAuth Routing (~0.5 Days)
-- **DNS & SSL:** Point the production domain to AWS App Runner via Route 53 (or the current DNS provider) and ensure automatic TLS certificates are issued.
-- **OAuth Re-registration (CRITICAL):** Update Google Cloud Console and GitHub Developer Settings to whitelist the new AWS domain's redirect URIs to prevent social login breakage.
-- **Stripe Webhooks:** Update the Stripe Dashboard to route billing webhooks to the new AWS domain (`https://yourdomain.com/api/stripe/webhook`).
+> **✅ MILESTONE 2 COMPLETE:** The application is fully live and functional in the staging environment on AWS App Runner, proving that compute and database integrations are stable. **Invoice: $170 USD.**
 
-### Subphase 2.3: CI/CD Pipeline & Operations (~1.0 Day)
-- **Automated Deployments:** Implement a GitHub Actions pipeline so that pushing code automatically builds the image, pushes to ECR, and triggers an App Runner deployment.
-- **Monitoring & Logging:** Verify CloudWatch log streaming is capturing backend output correctly.
-- **Alarms & Backups:** Set up CloudWatch alarms for error rates and CPU usage, and verify that RDS automated snapshots/backups are enabled.
+---
 
-> **✅ PHASE 2 COMPLETE:** The application is fully live on AWS, the domain is successfully routed, Replit can be safely decommissioned, and automated deployments are active. The final payment milestone is unlocked.
+## MILESTONE 3: Production Cutover, DNS & OAuth Routing ($100 USD) - **IN PROGRESS (60% of Milestone 3 completed)**
+**Scope:** Performing the final production database cutover, custom domain DNS routing, OAuth app configurations, Stripe webhook routing, and CI/CD pipelines.
+
+*This milestone moves the live users from Replit to AWS, configures production-grade settings, and decommissions Replit.*
+
+### Subphase 3.1: Production Data Cutover & Compute (✅ COMPLETED)
+- **Final Data Dump/Restore:** Performed final production `pg_dump` and `pg_restore` (restored the 326MB database backup containing 2k+ records successfully into the secure AWS RDS database).
+- **Production App Runner Deployment:** Deployed the production App Runner instance connected to the production RDS database.
+
+### Subphase 3.2: Domain, DNS & OAuth Routing (⏳ PENDING CLIENT ACTION)
+- **DNS & SSL:** Point the production domain to AWS App Runner via Route 53 (or the current DNS provider) and ensure automatic TLS certificates are issued. (Awaiting domain details).
+- **OAuth Re-registration (CRITICAL):** Update Google Cloud Console and GitHub Developer Settings to whitelist the new AWS domain's redirect URIs to prevent social login breakage. (Awaiting client to update using docs/client_oauth_stripe_setup.md).
+- **Stripe Webhooks:** Update the Stripe Dashboard to route billing webhooks to the new AWS domain (`https://wncy3cpxru.us-east-2.awsapprunner.com/api/stripe/webhook`). (Awaiting client webhook update).
+
+### Subphase 3.3: CI/CD Pipeline & Operations (✅ COMPLETED)
+- **Automated Deployments:** Implemented a GitHub Actions pipeline (`.github/workflows/deploy.yml`) so that pushing code to the `main` branch automatically builds the image, pushes to ECR, and triggers an App Runner deployment. Tested and verified green!
+- **Monitoring & Logging:** Verified CloudWatch log streaming is capturing backend output correctly.
+- **Alarms & Backups:** Set up automated backups (7-day retention) on RDS and S3 versioning on the analytics bucket.
+
+> **⏳ MILESTONE 3 IN PROGRESS:** Production compute is live, data is fully synced and restored, CI/CD pipeline is active, and security groups are hardened. Remaining tasks are pending client config. **Current overall project completion: 91%.**
