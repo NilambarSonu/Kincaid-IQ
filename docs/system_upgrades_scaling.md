@@ -1,6 +1,6 @@
 # Kincaid IQ: Enterprise Scaling & System Upgrades
 
-This document outlines the top 10 recommended architecture and infrastructure upgrades required to scale Kincaid IQ to support enterprise groups of 5,000+ employees and high concurrent traffic across North America.
+This document outlines the top 13 recommended architecture and infrastructure upgrades required to scale Kincaid IQ to support enterprise groups of 5,000+ employees and high concurrent traffic across North America.
 
 ---
 
@@ -53,3 +53,18 @@ This document outlines the top 10 recommended architecture and infrastructure up
 *   **Current State:** System testing is limited to basic unit tests.
 *   **The Upgrade:** Before onboarding 5,000 concurrent users, we must perform simulated peak-load testing using tools like **k6** or **Locust** (simulating 500+ concurrent requests per second). We should also integrate automated security scanning (Snyk/OWASP) in our CI/CD pipeline to catch vulnerable npm/pip dependencies.
 *   **Value:** Guarantees structural stability under load and ensures the system is hardened against common web vulnerabilities.
+
+## 11. Multi-Region Active-Passive Database Replication & Geo-Routing
+*   **Current State:** The database runs in a single availability zone.
+*   **The Upgrade:** Users accessing the app from Canada, the East Coast, or the West Coast will experience network latency querying a single database region. We should deploy PostgreSQL using Amazon Aurora Global Database (or equivalent multi-region replica hosting) with Route 53 Geo-proximity or Latency-based Routing.
+*   **Value:** Guarantees sub-50ms database latency across all of North America and provides high disaster recovery (DR) resilience.
+
+## 12. Immutable Regulatory Audit Trails (WORM / S3 Object Lock)
+*   **Current State:** Compliance audit trails are written directly to normal PostgreSQL tables.
+*   **The Upgrade:** Enterprise-grade corporate compliance requires audit records to be legally tamper-proof. We should stream critical compliance logs and fiduciary validations to a Write-Once-Read-Many (WORM) storage system (like AWS S3 Object Lock in Compliance Mode) or a cryptographically verifiable ledger.
+*   **Value:** Provides absolute compliance with federal records requirements and enables instant passing of SOC 2 Type II audits.
+
+## 13. Data Archival Tiering (Cold Storage Pipeline)
+*   **Current State:** All historical compliance runs, ingested claims, and file metadata remain in the primary active database indefinitely.
+*   **The Upgrade:** With 5,000+ employees purchasing access and uploading logs, the active database volume will grow exponentially, degrading query speed. We must implement an automated cold-storage archiving pipeline to move records older than 180 days to compressed, low-cost object storage (like S3 Glacier Deep Archive) while retaining quick lookup indexes.
+*   **Value:** Reduces primary database hosting costs by up to 80% and keeps active transaction queries fast.

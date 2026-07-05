@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-#
 # Kincaid IQ — portable container image.
 # Stage 1 builds the React/Vite frontend (Node). Stage 2 is the Python/FastAPI
 # runtime that serves both the API and the built static frontend on one port.

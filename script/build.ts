@@ -57,7 +57,7 @@ async function buildAll() {
         "process.env.NODE_ENV": '"production"',
       },
       minify: true,
-      external: externals,
+      external: [...externals, "@replit/connectors-sdk", "stripe-replit-sync"],
       logLevel: "info",
     });
   } catch (err) {
