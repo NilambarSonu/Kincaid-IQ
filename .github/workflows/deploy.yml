@@ -71,28 +71,47 @@ jobs:
           docker push ${{ env.LATEST_TAG }}
           echo "Pushed ${{ env.IMAGE_TAG }} to ECR"
 
-      # ── 6. Trigger App Runner redeployment ────────────────────────────────────
+      # ── 6. Wait for idle, trigger deploy, wait for healthy ───────────────────
       - name: Trigger App Runner deployment
         run: |
-          echo "Triggering App Runner deployment..."
-          aws apprunner start-deployment \
-            --service-arn "${{ env.APP_RUNNER_SERVICE_ARN }}" \
-            --region "${{ env.AWS_REGION }}"
-          echo "Deployment started. Monitor at:"
-          echo "https://us-east-2.console.aws.amazon.com/apprunner/home?region=us-east-2#/services"
-
-      # ── 7. Wait for App Runner to become healthy ──────────────────────────────
-      - name: Wait for healthy deployment
-        run: |
-          echo "Polling App Runner service status (max 5 minutes)..."
+          echo "Waiting for App Runner to be in RUNNING state before triggering..."
           for i in $(seq 1 30); do
             STATUS=$(aws apprunner describe-service \
               --service-arn "${{ env.APP_RUNNER_SERVICE_ARN }}" \
+              --region "${{ env.AWS_REGION }}" \
               --query 'Service.Status' --output text)
-            echo "  Attempt $i/30 — Status: $STATUS"
+            echo "  Pre-check $i/30 — Status: $STATUS"
             if [ "$STATUS" = "RUNNING" ]; then
-              echo "Service is RUNNING!"
+              echo "Service is idle and RUNNING. Triggering new deployment..."
               break
+            fi
+            if [ "$i" = "30" ]; then
+              echo "[ERROR] Timed out waiting for RUNNING state before deploy."
+              exit 1
+            fi
+            sleep 10
+          done
+
+          aws apprunner start-deployment \
+            --service-arn "${{ env.APP_RUNNER_SERVICE_ARN }}" \
+            --region "${{ env.AWS_REGION }}"
+          echo "Deployment triggered! Monitor at:"
+          echo "https://us-east-2.console.aws.amazon.com/apprunner/home?region=us-east-2#/services"
+
+          echo "Waiting for App Runner to finish redeploying (max 8 minutes)..."
+          for i in $(seq 1 48); do
+            STATUS=$(aws apprunner describe-service \
+              --service-arn "${{ env.APP_RUNNER_SERVICE_ARN }}" \
+              --region "${{ env.AWS_REGION }}" \
+              --query 'Service.Status' --output text)
+            echo "  Post-check $i/48 — Status: $STATUS"
+            if [ "$STATUS" = "RUNNING" ]; then
+              echo "Deployment complete — service is RUNNING!"
+              break
+            fi
+            if [ "$STATUS" = "CREATE_FAILED" ] || [ "$STATUS" = "DELETE_FAILED" ]; then
+              echo "[ERROR] App Runner entered failed state: $STATUS"
+              exit 1
             fi
             sleep 10
           done
