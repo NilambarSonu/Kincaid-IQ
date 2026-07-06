@@ -142,7 +142,7 @@ def verify_health():
     """Quick HTTP check against the health endpoint."""
     import urllib.request
     import ssl
-    url = "https://wncy3cpxru.us-east-2.awsapprunner.com/api/health"
+    url = "https://www.kincaidhealth.com/api/health"
     print(f"\nVerifying health: GET {url}")
     try:
         ctx = ssl.create_default_context()

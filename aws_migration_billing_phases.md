@@ -54,14 +54,14 @@ This document divides the exact scope of the Kincaid IQ AWS migration into three
 - **Final Data Dump/Restore:** Performed final production `pg_dump` and `pg_restore` (restored the 326MB database backup containing 2k+ records successfully into the secure AWS RDS database).
 - **Production App Runner Deployment:** Deployed the production App Runner instance connected to the production RDS database.
 
-### Subphase 3.2: Domain, DNS & OAuth Routing (⏳ PENDING CLIENT ACTION)
-- **DNS & SSL:** Point the production domain to AWS App Runner via Route 53 (or the current DNS provider) and ensure automatic TLS certificates are issued. (Awaiting domain details).
-- **OAuth Re-registration (CRITICAL):** Update Google Cloud Console and GitHub Developer Settings to whitelist the new AWS domain's redirect URIs to prevent social login breakage. (Awaiting client to update using docs/client_oauth_stripe_setup.md).
-- **Stripe Webhooks:** Update the Stripe Dashboard to route billing webhooks to the new AWS domain (`https://wncy3cpxru.us-east-2.awsapprunner.com/api/stripe/webhook`). (Awaiting client webhook update).
+### Subphase 3.2: Domain, DNS & OAuth Routing (✅ COMPLETED)
+- **DNS & SSL:** Point the production domain to AWS App Runner via Route 53 (or the current DNS provider) and ensure automatic TLS certificates are issued. (Completed: Domain configured in GoDaddy and App Runner).
+- **OAuth Re-registration (CRITICAL):** Update Google Cloud Console and GitHub Developer Settings to whitelist the new AWS domain's redirect URIs to prevent social login breakage. (Completed).
+- **Stripe Webhooks:** Update the Stripe Dashboard to route billing webhooks to the new AWS domain (`https://www.kincaidhealth.com/api/stripe/webhook`). (Completed).
 
 ### Subphase 3.3: CI/CD Pipeline & Operations (✅ COMPLETED)
 - **Automated Deployments:** Implemented a GitHub Actions pipeline (`.github/workflows/deploy.yml`) so that pushing code to the `main` branch automatically builds the image, pushes to ECR, and triggers an App Runner deployment. Tested and verified green!
 - **Monitoring & Logging:** Verified CloudWatch log streaming is capturing backend output correctly.
 - **Alarms & Backups:** Set up automated backups (7-day retention) on RDS and S3 versioning on the analytics bucket.
 
-> **⏳ MILESTONE 3 IN PROGRESS:** Production compute is live, data is fully synced and restored, CI/CD pipeline is active, and security groups are hardened. Remaining tasks are pending client config. **Current overall project completion: 91%.**
+> **✅ MILESTONE 3 COMPLETE:** Production compute is live, custom domain mapping is configured, OAuth & Stripe endpoints are updated, and environments are fully hardened. **Current overall project completion: 100%. Invoice: $100 USD.**
