@@ -342,7 +342,7 @@ export default function Login() {
           transition={{ delay: 0.36, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="kiq-webgl-auth-shine" />
-          <div className="kiq-webgl-logo">KH</div>
+          <img src="/icon.png" alt="Kincaid Health" style={{ width: '64px', height: '64px', objectFit: 'contain', margin: '0 auto 1rem', display: 'block' }} />
           <h2>{mode === "login" ? "Welcome back" : "Create your workspace"}</h2>
           <p className="kiq-webgl-auth-subtitle">
             {mode === "login" ? "Access your enterprise health intelligence console" : "Register your secure enterprise health intelligence console"}
