@@ -1083,6 +1083,939 @@
     -webkit-backdrop-filter: blur(20px) saturate(140%);
   }
 
+  /* ── Luxury animated auth landing — Stitch-inspired, Apple glass, Stripe motion ── */
+  .kiq-auth-luxury-shell {
+    --lux-x: 50%;
+    --lux-y: 50%;
+    background:
+      radial-gradient(circle at var(--lux-x) var(--lux-y), rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.24) 18%, transparent 42%),
+      linear-gradient(115deg, #fffdf5 0%, #f5e7ff 22%, #ffd9de 42%, #f8efd6 58%, #d9f8ff 78%, #eefbff 100%) !important;
+    color: #160623;
+    perspective: 1400px;
+  }
+
+  .kiq-auth-luxury-shell::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      conic-gradient(from 140deg at 15% 65%, rgba(27,8,44,0.72), rgba(109,66,137,0.34), rgba(255,202,183,0.18), rgba(27,8,44,0.78)),
+      radial-gradient(circle at 78% 28%, rgba(122,225,255,0.42), transparent 35%),
+      radial-gradient(circle at 46% 44%, rgba(255,247,210,0.76), transparent 34%);
+    filter: blur(1px) saturate(1.18);
+    opacity: 0.72;
+    animation: kiqLuxuryAtmosphere 18s ease-in-out infinite alternate;
+    transform: translate3d(calc((var(--lux-x) - 50%) * -0.02), calc((var(--lux-y) - 50%) * -0.02), 0) scale(1.04);
+  }
+
+  .kiq-luxury-aurora {
+    mix-blend-mode: multiply;
+  }
+
+  .kiq-luxury-orb {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(34px);
+    opacity: 0.72;
+    will-change: transform;
+  }
+
+  .kiq-luxury-orb.orb-a {
+    width: 54rem;
+    height: 34rem;
+    left: -14rem;
+    bottom: -12rem;
+    background: radial-gradient(ellipse, rgba(29,8,49,0.78), rgba(92,47,118,0.44) 42%, rgba(242,165,190,0.20) 70%, transparent 100%);
+    animation: kiqOrbFloatA 16s ease-in-out infinite alternate;
+  }
+
+  .kiq-luxury-orb.orb-b {
+    width: 46rem;
+    height: 30rem;
+    right: -12rem;
+    top: -8rem;
+    background: radial-gradient(ellipse, rgba(101,221,255,0.52), rgba(196,226,255,0.34) 42%, rgba(255,255,255,0.06) 78%, transparent);
+    animation: kiqOrbFloatB 14s ease-in-out infinite alternate;
+  }
+
+  .kiq-luxury-orb.orb-c {
+    width: 46rem;
+    height: 32rem;
+    left: 30%;
+    top: -10rem;
+    background: radial-gradient(ellipse, rgba(255,133,169,0.48), rgba(255,213,189,0.36) 50%, transparent 76%);
+    animation: kiqOrbFloatC 20s ease-in-out infinite alternate;
+  }
+
+  .kiq-luxury-orb.orb-d {
+    width: 34rem;
+    height: 25rem;
+    right: 18%;
+    bottom: 8%;
+    background: radial-gradient(ellipse, rgba(255,249,206,0.72), rgba(238,255,252,0.42), transparent 72%);
+    animation: kiqOrbFloatD 13s ease-in-out infinite alternate;
+  }
+
+  .kiq-luxury-ribbon {
+    position: absolute;
+    width: 38rem;
+    height: 38rem;
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 44% 56% 48% 52%;
+    background:
+      radial-gradient(circle at 50% 50%, transparent 52%, rgba(255,255,255,0.28) 53%, transparent 55%),
+      linear-gradient(135deg, rgba(255,255,255,0.16), rgba(255,255,255,0.02));
+    box-shadow: inset 0 0 55px rgba(255,255,255,0.18), 0 26px 90px rgba(37,16,74,0.10);
+    transform-style: preserve-3d;
+  }
+
+  .kiq-luxury-ribbon.ribbon-a {
+    left: 49%;
+    top: 6%;
+    animation: kiqRibbonSpin 26s linear infinite;
+  }
+
+  .kiq-luxury-ribbon.ribbon-b {
+    left: -10%;
+    top: 42%;
+    width: 42rem;
+    height: 42rem;
+    opacity: 0.6;
+    animation: kiqRibbonSpin 34s linear infinite reverse;
+  }
+
+  .kiq-luxury-mesh {
+    position: absolute;
+    inset: 0;
+    opacity: 0.22;
+    background-image:
+      linear-gradient(60deg, rgba(255,255,255,0.34) 1px, transparent 1px),
+      linear-gradient(120deg, rgba(255,255,255,0.28) 1px, transparent 1px);
+    background-size: 14px 24px;
+    mask-image: radial-gradient(circle at 52% 40%, black 0%, transparent 74%);
+    animation: kiqMeshDrift 24s linear infinite;
+  }
+
+  .kiq-luxury-noise {
+    position: absolute;
+    inset: 0;
+    opacity: 0.12;
+    background-image:
+      radial-gradient(circle at 25% 35%, rgba(255,255,255,0.8) 0 1px, transparent 1px),
+      radial-gradient(circle at 70% 65%, rgba(29,8,49,0.24) 0 1px, transparent 1px);
+    background-size: 22px 22px, 31px 31px;
+  }
+
+  .kiq-auth-luxury-shell .kiq-public-badge {
+    border-color: rgba(255,255,255,0.54);
+    background: rgba(255,255,255,0.34);
+    color: rgba(29,11,47,0.78);
+    box-shadow: 0 14px 40px rgba(37,16,74,0.10), inset 0 1px 0 rgba(255,255,255,0.82);
+    font-weight: 800;
+  }
+
+  .kiq-luxury-title {
+    font-family: var(--font-display), ui-serif, Georgia, serif;
+    font-size: clamp(48px, 5.6vw, 74px);
+    line-height: 0.98;
+    letter-spacing: -0.074em;
+    font-weight: 930;
+    color: #1a072b;
+    text-wrap: balance;
+    text-shadow: 0 18px 55px rgba(37,16,74,0.14);
+  }
+
+  .kiq-auth-luxury-shell .kiq-public-lead {
+    color: rgba(18,5,31,0.84);
+    font-size: clamp(17px, 1.35vw, 22px);
+    line-height: 1.18;
+    font-weight: 620;
+    letter-spacing: -0.035em;
+  }
+
+  .kiq-auth-luxury-card {
+    border: 1px solid rgba(255,255,255,0.56);
+    border-radius: 24px;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.62), rgba(237,255,255,0.38)),
+      radial-gradient(circle at 18% 10%, rgba(255,255,255,0.82), transparent 35%);
+    box-shadow:
+      0 38px 95px rgba(18,5,31,0.24),
+      0 12px 36px rgba(75,35,100,0.12),
+      inset 0 1px 0 rgba(255,255,255,0.9),
+      inset 0 -1px 0 rgba(255,255,255,0.32);
+    backdrop-filter: blur(34px) saturate(178%);
+    -webkit-backdrop-filter: blur(34px) saturate(178%);
+    transform: rotateX(calc((var(--lux-y) - 50%) * -0.035deg)) rotateY(calc((var(--lux-x) - 50%) * 0.035deg));
+    transform-style: preserve-3d;
+  }
+
+  .kiq-auth-luxury-card .kiq-luxury-mark {
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.82), rgba(255,255,255,0.18)),
+      linear-gradient(135deg, rgba(49,20,73,0.18), rgba(160,96,151,0.20));
+    box-shadow:
+      0 18px 45px rgba(37,16,74,0.18),
+      inset 0 1px 0 rgba(255,255,255,0.9);
+    text-shadow: 0 10px 26px rgba(37,16,74,0.18);
+  }
+
+  .kiq-auth-luxury-card h2 {
+    font-family: var(--font-display), ui-serif, Georgia, serif;
+    font-weight: 900 !important;
+    color: #12051f !important;
+  }
+
+  .kiq-auth-luxury-card p {
+    color: rgba(18,5,31,0.68) !important;
+  }
+
+  .kiq-auth-luxury-card label {
+    color: rgba(18,5,31,0.72) !important;
+    font-weight: 780 !important;
+    letter-spacing: -0.01em !important;
+    text-transform: none !important;
+    font-size: 12px !important;
+  }
+
+  .kiq-auth-luxury-card .kiq-input {
+    height: 38px;
+    border-radius: 9px;
+    border: 1px solid rgba(18,5,31,0.16);
+    background: rgba(255,255,255,0.72);
+    color: #12051f;
+    font-weight: 650;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 8px 18px rgba(37,16,74,0.04);
+  }
+
+  .kiq-auth-luxury-card .kiq-input:focus {
+    border-color: rgba(49,20,73,0.38);
+    box-shadow: 0 0 0 4px rgba(111,67,137,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
+  }
+
+  .kiq-auth-luxury-card button[type="submit"] {
+    background: linear-gradient(135deg, #1b082c 0%, #3b1b52 48%, #8d5b8e 100%) !important;
+    border-color: rgba(255,255,255,0.28) !important;
+    font-weight: 780 !important;
+    box-shadow: 0 18px 40px rgba(45,17,69,0.28), inset 0 1px 0 rgba(255,255,255,0.28) !important;
+  }
+
+  .kiq-auth-luxury-card button[type="submit"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 22px 50px rgba(45,17,69,0.34), inset 0 1px 0 rgba(255,255,255,0.32) !important;
+  }
+
+  .kiq-auth-luxury-card a[title*="Google"],
+  .kiq-auth-luxury-card a[title*="GitHub"] {
+    width: auto !important;
+    height: 42px !important;
+    gap: 8px;
+    border-radius: 10px !important;
+    border-color: rgba(18,5,31,0.12) !important;
+    background: rgba(255,255,255,0.56) !important;
+    color: #12051f !important;
+  }
+
+  @keyframes kiqLuxuryAtmosphere {
+    from { transform: translate3d(-2%, -1%, 0) scale(1.03) rotate(-1deg); filter: hue-rotate(0deg) saturate(1.08); }
+    to { transform: translate3d(2%, 1%, 0) scale(1.08) rotate(1.5deg); filter: hue-rotate(10deg) saturate(1.22); }
+  }
+
+  @keyframes kiqOrbFloatA {
+    from { transform: translate3d(-2%, 2%, 0) rotate(-8deg) scale(1); }
+    to { transform: translate3d(7%, -4%, 80px) rotate(8deg) scale(1.08); }
+  }
+
+  @keyframes kiqOrbFloatB {
+    from { transform: translate3d(4%, -2%, 0) rotate(10deg) scale(1); }
+    to { transform: translate3d(-6%, 8%, 80px) rotate(-6deg) scale(1.12); }
+  }
+
+  @keyframes kiqOrbFloatC {
+    from { transform: translate3d(-5%, -2%, 0) scale(1); }
+    to { transform: translate3d(5%, 5%, 60px) scale(1.08); }
+  }
+
+  @keyframes kiqOrbFloatD {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(-8%, -7%, 60px) scale(1.16); }
+  }
+
+  @keyframes kiqRibbonSpin {
+    from { transform: rotateX(68deg) rotateZ(0deg) translateZ(0); }
+    to { transform: rotateX(68deg) rotateZ(360deg) translateZ(90px); }
+  }
+
+  @keyframes kiqMeshDrift {
+    from { background-position: 0 0, 0 0; }
+    to { background-position: 140px 240px, -120px 180px; }
+  }
+
+  @media (max-width: 1023px) {
+    .kiq-auth-luxury-shell {
+      overflow-y: auto !important;
+      align-items: flex-start !important;
+    }
+
+    .kiq-auth-luxury-card {
+      max-width: 430px;
+      margin: 0 auto;
+      transform: none !important;
+    }
+  }
+
+  /* ── Enterprise Healthcare WebGL Landing v1 ───────────────────────────── */
+  .kiq-webgl-landing {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background: #03040c;
+    color: #fff;
+    font-family: "SF Pro Display", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    isolation: isolate;
+  }
+
+  .kiq-webgl-background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background: #03040c;
+  }
+
+  .kiq-webgl-background canvas {
+    display: block;
+  }
+
+  .kiq-webgl-grid {
+    position: absolute;
+    inset: 0;
+    opacity: 0.16;
+    background-image:
+      linear-gradient(rgba(123, 236, 255, 0.16) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(123, 236, 255, 0.12) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(circle at 52% 48%, black 0%, transparent 72%);
+    animation: kiqWebglGridDrift 30s linear infinite;
+  }
+
+  .kiq-webgl-orb {
+    position: absolute;
+    border-radius: 999px;
+    pointer-events: none;
+    filter: blur(30px);
+    opacity: 0.55;
+    mix-blend-mode: screen;
+  }
+
+  .kiq-webgl-orb.orb-left {
+    left: -16rem;
+    top: 14%;
+    width: 36rem;
+    height: 36rem;
+    background: radial-gradient(circle, rgba(138, 92, 246, 0.42), rgba(45, 27, 78, 0.22) 48%, transparent 72%);
+    animation: kiqWebglOrbLeft 18s ease-in-out infinite alternate;
+  }
+
+  .kiq-webgl-orb.orb-right {
+    right: -12rem;
+    bottom: 4%;
+    width: 34rem;
+    height: 34rem;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.34), rgba(26, 54, 93, 0.22) 50%, transparent 72%);
+    animation: kiqWebglOrbRight 16s ease-in-out infinite alternate;
+  }
+
+  .kiq-webgl-vignette {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 50% 45%, transparent 0%, rgba(3, 4, 12, 0.18) 48%, rgba(3, 4, 12, 0.72) 100%),
+      linear-gradient(90deg, rgba(3,4,12,0.36), transparent 28%, transparent 72%, rgba(3,4,12,0.44));
+  }
+
+  .premium-glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(28px) saturate(155%);
+    -webkit-backdrop-filter: blur(28px) saturate(155%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), inset 0 1px 0 rgba(255, 255, 255, 0.09);
+    transition: border-color 500ms ease-out, box-shadow 500ms ease-out, transform 500ms ease-out, background 500ms ease-out;
+  }
+
+  .premium-glass:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .glowing-border {
+    position: relative;
+  }
+
+  .glowing-border::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.42), rgba(124, 58, 237, 0.26), rgba(34, 211, 238, 0.12));
+    filter: blur(18px);
+    transition: opacity 500ms ease-out;
+  }
+
+  .glowing-border:hover::before {
+    opacity: 0.82;
+    animation: kiqGlowPulse 2.4s ease-in-out infinite;
+  }
+
+  .kiq-webgl-hero {
+    position: relative;
+    z-index: 10;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    width: min(1600px, 100%);
+    margin: 0 auto;
+    padding: clamp(22px, 3.2vw, 52px) clamp(34px, 6vw, 96px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(28px, 4vw, 72px);
+  }
+
+  .kiq-webgl-left {
+    width: min(60%, 860px);
+  }
+
+  .kiq-webgl-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(214, 246, 255, 0.88);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 16px 44px rgba(34,211,238,0.07);
+  }
+
+  .kiq-webgl-title {
+    margin: 24px 0 0;
+    max-width: 880px;
+    font-family: Inter, "SF Pro Display", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: clamp(44px, 4.7vw, 74px);
+    line-height: 1.01;
+    letter-spacing: -0.058em;
+    font-weight: 760;
+    color: transparent;
+    text-wrap: balance;
+    text-shadow: 0 22px 70px rgba(10, 20, 55, 0.38);
+  }
+
+  .kiq-webgl-title span {
+    display: inline-block;
+  }
+
+  .kiq-title-word {
+    color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .kiq-title-word.tone-white {
+    color: rgba(255,255,255,0.94);
+    font-weight: 760;
+  }
+
+  .kiq-title-word.tone-soft {
+    color: rgba(216, 230, 255, 0.66);
+    font-weight: 520;
+    letter-spacing: -0.045em;
+  }
+
+  .kiq-title-word.tone-ice {
+    font-weight: 830;
+    background: linear-gradient(115deg, #ffffff 0%, #dff8ff 45%, #9df6ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 22px rgba(34,211,238,0.12));
+  }
+
+  .kiq-title-word.tone-cyan {
+    font-weight: 820;
+    background: linear-gradient(110deg, #ffffff 0%, #8ef6ff 38%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 28px rgba(34,211,238,0.22));
+  }
+
+  .kiq-title-word.tone-violet {
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: -0.064em;
+    background: linear-gradient(120deg, #f5f3ff 0%, #c4b5fd 45%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 24px rgba(139,92,246,0.24));
+  }
+
+  .kiq-title-word.tone-blue {
+    font-weight: 790;
+    background: linear-gradient(115deg, #e0f2fe 0%, #93c5fd 42%, #60a5fa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 24px rgba(96,165,250,0.20));
+  }
+
+  .kiq-webgl-subtitle {
+    max-width: 690px;
+    margin: 22px 0 0;
+    color: rgba(255,255,255,0.80);
+    font-size: clamp(16px, 1.24vw, 20px);
+    line-height: 1.35;
+    letter-spacing: -0.025em;
+    font-weight: 500;
+  }
+
+  .kiq-webgl-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(210px, 1fr));
+    gap: 14px;
+    max-width: 660px;
+    margin-top: 26px;
+    perspective: 1100px;
+  }
+
+  .kiq-webgl-stat-card {
+    min-height: 92px;
+    border-radius: 22px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    overflow: hidden;
+  }
+
+  .kiq-webgl-icon-ring {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    color: #9df6ff;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(255,255,255,0.24), transparent 34%),
+      linear-gradient(135deg, rgba(34,211,238,0.20), rgba(124,58,237,0.14));
+    border: 1px solid rgba(157, 246, 255, 0.22);
+    box-shadow: 0 0 30px rgba(34, 211, 238, 0.16), inset 0 1px 0 rgba(255,255,255,0.16);
+  }
+
+  .kiq-webgl-stat-value {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: -0.045em;
+  }
+
+  .kiq-webgl-stat-label {
+    margin-top: 2px;
+    color: rgba(255,255,255,0.72);
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 560;
+  }
+
+  .kiq-webgl-testimonial {
+    max-width: 660px;
+    margin-top: 18px;
+    border-radius: 26px;
+    padding: 20px 22px;
+  }
+
+  .kiq-webgl-stars {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .kiq-webgl-stars svg {
+    width: 18px;
+    height: 18px;
+    fill: #fff;
+    filter: drop-shadow(0 0 12px rgba(34,211,238,0.32));
+  }
+
+  .kiq-webgl-testimonial p {
+    margin: 0;
+    max-width: 660px;
+    color: rgba(255,255,255,0.86);
+    font-size: 14.5px;
+    line-height: 1.48;
+    letter-spacing: -0.018em;
+  }
+
+  .kiq-webgl-avatar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+    color: rgba(255,255,255,0.92);
+    font-size: 14px;
+  }
+
+  .kiq-webgl-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    display: block;
+    overflow: hidden;
+    border: 2px solid rgba(255,255,255,0.78);
+    background: rgba(255,255,255,0.12);
+    box-shadow: 0 0 24px rgba(34,211,238,0.24), 0 10px 24px rgba(0,0,0,0.22);
+    flex: 0 0 42px;
+  }
+
+  .kiq-webgl-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .kiq-webgl-profile-link {
+    color: rgba(255,255,255,0.96);
+    font-size: 14px;
+    font-weight: 850;
+    text-decoration: none;
+    letter-spacing: -0.015em;
+  }
+
+  .kiq-webgl-profile-link:hover {
+    color: #9df6ff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .kiq-webgl-auth {
+    width: min(35%, 460px);
+    min-width: 390px;
+    border-radius: 2rem;
+    padding: 32px;
+    overflow: hidden;
+    transform-style: preserve-3d;
+  }
+
+  .kiq-webgl-auth-shine {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 20% 0%, rgba(255,255,255,0.14), transparent 32%),
+      linear-gradient(135deg, rgba(34,211,238,0.12), transparent 38%, rgba(124,58,237,0.10));
+  }
+
+  .kiq-webgl-logo {
+    position: relative;
+    width: 54px;
+    height: 54px;
+    margin: 0 auto 16px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 950;
+    letter-spacing: -0.09em;
+    background: linear-gradient(135deg, rgba(255,255,255,0.16), rgba(34,211,238,0.09));
+    border: 1px solid rgba(255,255,255,0.14);
+    box-shadow: 0 0 42px rgba(34,211,238,0.16), inset 0 1px 0 rgba(255,255,255,0.18);
+  }
+
+  .kiq-webgl-auth h2 {
+    position: relative;
+    margin: 0;
+    color: #fff;
+    text-align: center;
+    font-size: 27px;
+    font-weight: 900;
+    letter-spacing: -0.055em;
+  }
+
+  .kiq-webgl-auth-subtitle {
+    position: relative;
+    margin: 8px auto 22px;
+    color: rgba(255,255,255,0.70);
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .kiq-webgl-tabs {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    margin-bottom: 18px;
+  }
+
+  .kiq-webgl-tabs button {
+    height: 42px;
+    border: 0;
+    background: transparent;
+    color: rgba(255,255,255,0.55);
+    font-size: 14px;
+    font-weight: 760;
+    cursor: pointer;
+    transition: color 220ms ease, box-shadow 220ms ease;
+  }
+
+  .kiq-webgl-tabs button.is-active {
+    color: #fff;
+    box-shadow: inset 0 -2px 0 rgba(103, 232, 249, 0.95), 0 10px 28px rgba(34,211,238,0.08);
+  }
+
+  .kiq-webgl-error {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 13px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    color: #fecdd3;
+    background: rgba(244, 63, 94, 0.12);
+    border: 1px solid rgba(244, 63, 94, 0.22);
+    font-size: 13px;
+  }
+
+  .kiq-webgl-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .kiq-webgl-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .kiq-webgl-field span {
+    color: rgba(255,255,255,0.72);
+    font-size: 12px;
+    font-weight: 720;
+    letter-spacing: -0.01em;
+  }
+
+  .kiq-webgl-field input {
+    width: 100%;
+    height: 40px;
+    border-radius: 13px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    padding: 0 14px;
+    outline: none;
+    font-size: 14px;
+    font-weight: 650;
+    transition: border-color 220ms ease, box-shadow 220ms ease, background 220ms ease;
+  }
+
+  .kiq-webgl-field input:focus {
+    border-color: rgba(34, 211, 238, 0.50);
+    box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.50), 0 0 34px rgba(34,211,238,0.08);
+    background: rgba(255,255,255,0.075);
+  }
+
+  .kiq-webgl-password-wrap {
+    position: relative;
+  }
+
+  .kiq-webgl-password-wrap input {
+    padding-right: 46px;
+  }
+
+  .kiq-webgl-password-wrap button {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    color: rgba(255,255,255,0.56);
+    cursor: pointer;
+  }
+
+  .kiq-webgl-cta {
+    position: relative;
+    isolation: isolate;
+    height: 44px;
+    margin-top: 4px;
+    border: 0;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    overflow: hidden;
+    color: #fff;
+    background: linear-gradient(90deg, #7c3aed, #2563eb);
+    box-shadow: 0 18px 42px rgba(37,99,235,0.24), 0 0 38px rgba(124,58,237,0.18);
+    font-size: 14px;
+    font-weight: 850;
+    cursor: pointer;
+    transition: transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+  }
+
+  .kiq-webgl-cta::before {
+    content: "";
+    position: absolute;
+    inset: -40% auto -40% -55%;
+    z-index: -1;
+    width: 42%;
+    transform: skewX(-18deg);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+    transition: left 650ms ease;
+  }
+
+  .kiq-webgl-cta:hover {
+    transform: translateY(-1px);
+    filter: saturate(1.12);
+    box-shadow: 0 22px 56px rgba(37,99,235,0.32), 0 0 46px rgba(34,211,238,0.14);
+    background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+  }
+
+  .kiq-webgl-cta:hover::before {
+    left: 118%;
+  }
+
+  .kiq-webgl-cta:disabled {
+    cursor: wait;
+    opacity: 0.72;
+  }
+
+  .kiq-webgl-divider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 18px 0;
+    color: rgba(255,255,255,0.58);
+    font-size: 12px;
+    font-weight: 650;
+  }
+
+  .kiq-webgl-divider span {
+    height: 1px;
+    flex: 1;
+    background: rgba(255,255,255,0.12);
+  }
+
+  .kiq-webgl-sso {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .kiq-webgl-sso a {
+    height: 40px;
+    border-radius: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .kiq-webgl-sso svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  @keyframes kiqWebglGridDrift {
+    from { background-position: 0 0, 0 0; }
+    to { background-position: 144px 216px, -144px 72px; }
+  }
+
+  @keyframes kiqWebglOrbLeft {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(12%, -6%, 0) scale(1.08); }
+  }
+
+  @keyframes kiqWebglOrbRight {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(-10%, -8%, 0) scale(1.12); }
+  }
+
+  @keyframes kiqGlowPulse {
+    0%, 100% { filter: blur(18px); opacity: 0.56; }
+    50% { filter: blur(24px); opacity: 0.88; }
+  }
+
+  @media (max-width: 1180px) {
+    .kiq-webgl-hero {
+      align-items: flex-start;
+      flex-direction: column;
+      justify-content: center;
+      overflow-y: auto;
+    }
+
+    .kiq-webgl-left,
+    .kiq-webgl-auth {
+      width: 100%;
+      max-width: 760px;
+      min-width: 0;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .kiq-webgl-landing {
+      overflow-y: auto;
+    }
+
+    .kiq-webgl-hero {
+      min-height: auto;
+      padding: 28px 18px 48px;
+    }
+
+    .kiq-webgl-title {
+      font-size: clamp(42px, 13vw, 64px);
+    }
+
+    .kiq-webgl-stat-grid,
+    .kiq-webgl-sso {
+      grid-template-columns: 1fr;
+    }
+
+    .kiq-webgl-auth {
+      padding: 28px 22px;
+      border-radius: 24px;
+    }
+  }
+
   /* ── BUTTONS ─────────────────────────────────────────────────────────────── */
 
   /* Primary — Stripe electric indigo pill */
