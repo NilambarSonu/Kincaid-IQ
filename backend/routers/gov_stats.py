@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Government Statistics Intelligence Hub
+Kincaid Health — Government Statistics Intelligence Hub
 Connects to 6 free US government data APIs:
   1. BLS  — CPI, unemployment, healthcare employment, benefits cost index
   2. FDA  — drug recalls (Class I), adverse event counts

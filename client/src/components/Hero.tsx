@@ -14,59 +14,33 @@ interface HeroProps {
 
 export default function Hero({
   headline = "The Intelligence Layer Beneath Healthcare",
-  subheadline = "Kincaid IQ exposes hidden financial risk inside PBM contracts.",
+  subheadline = "Kincaid Health exposes hidden financial risk inside PBM contracts.",
   badgeText,
   primaryCta = "Start free trial",
   secondaryCta,
   onPrimary,
   onSecondary,
 }: HeroProps) {
-  const [first, ...rest] = headline.split(" ");
   const split = Math.ceil(headline.split(" ").length / 2);
   const line1 = headline.split(" ").slice(0, split).join(" ");
   const line2 = headline.split(" ").slice(split).join(" ");
 
   return (
-    <div className="text-center py-20 px-6 relative">
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(155,28,46,0.10) 0%, transparent 70%)",
-        }}
-      />
-
-      <div className="relative max-w-4xl mx-auto">
+    <div className="kiq-public-hero px-6">
+      <div className="relative mx-auto max-w-4xl">
         {badgeText && (
-          <div
-            className="inline-block mb-6 text-sm px-4 py-1.5 rounded-full"
-            style={{
-              background: "rgba(155,28,46,0.10)",
-              color: "#e0475a",
-              border: "1px solid rgba(155,28,46,0.20)",
-            }}
-          >
+          <div className="kiq-public-badge mb-6">
             {badgeText}
           </div>
         )}
 
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
+        <h1 className="kiq-public-title mb-6">
           {line1}
           <br />
-          <span
-            style={{
-              background:
-                "linear-gradient(90deg, #e0475a 0%, #ffffff 60%, #c8d8f0 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            {line2}
-          </span>
+          <span className="kiq-public-gradient-text">{line2}</span>
         </h1>
 
-        <p className="text-xl opacity-60 max-w-2xl mx-auto mb-10">
+        <p className="kiq-public-lead mx-auto mb-10 max-w-2xl">
           {subheadline}
         </p>
 
@@ -75,8 +49,7 @@ export default function Hero({
             {onPrimary && (
               <Button
                 size="lg"
-                className="text-white gap-2 text-base px-8"
-                style={{ background: "#9B1C2E" }}
+                className="gap-2 px-8 text-base"
                 onClick={onPrimary}
               >
                 {primaryCta} <ArrowRight className="w-4 h-4" />
@@ -86,7 +59,6 @@ export default function Hero({
               <Button
                 size="lg"
                 variant="outline"
-                className="border-white/20 text-white/70 hover:bg-white/5"
                 onClick={onSecondary}
               >
                 {secondaryCta}

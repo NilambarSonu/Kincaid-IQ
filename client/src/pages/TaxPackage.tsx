@@ -69,17 +69,17 @@ export default function TaxPackage() {
                         {item.yoy >= 0 ? <TrendingUp size={9} /> : <TrendingDown size={9} />}
                         {item.yoy >= 0 ? "+" : ""}{item.yoy.toFixed(1)}%
                       </span>
-                      <span className="font-bold text-white">{formatCurrency(item.amount)}</span>
+                      <span className="font-bold text-[var(--kiq-ink)]">{formatCurrency(item.amount)}</span>
                     </div>
                   </div>
-                  <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
-                    <div className="h-full rounded-full" style={{ width: `${pct}%`, background: "#00A8FF", opacity: 0.6 }} />
+                  <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: "#f8fafc" }}>
+                    <div className="h-full rounded-full" style={{ width: `${pct}%`, background: "#F8FAFC", opacity: 0.6 }} />
                   </div>
                 </div>
               );
             })}
-            <div className="flex justify-between text-sm font-bold pt-2" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-              <span className="text-white">Total Income</span>
+            <div className="flex justify-between text-sm font-bold pt-2" style={{ borderTop: "1px solid #f1f5f9" }}>
+              <span className="text-[var(--kiq-ink)]">Total Income</span>
               <span style={{ color: "#00A8FF" }}>{formatCurrency(totalIncome)}</span>
             </div>
           </div>
@@ -94,7 +94,7 @@ export default function TaxPackage() {
               { label: "Estimated Payments", value: formatCurrency(taxPackageData.estimatedPayments), color: "#00A8FF" },
               { label: "Balance Due Apr 15", value: formatCurrency(taxPackageData.balanceDue), color: "#FFB800" },
             ].map((r) => (
-              <div key={r.label} className="flex justify-between items-center py-2" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+              <div key={r.label} className="flex justify-between items-center py-2" style={{ borderBottom: "1px solid #ffffff" }}>
                 <span className="text-xs text-muted-foreground">{r.label}</span>
                 <div className="flex items-center gap-2">
                   {r.yoy !== undefined && (
@@ -111,16 +111,16 @@ export default function TaxPackage() {
           <div className="metric-card" data-testid="card-deductions">
             <p className="section-label mb-3">Itemized Deductions</p>
             {taxPackageData.deductions.map((d) => (
-              <div key={d.type} className="flex justify-between items-start py-1.5 text-xs" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+              <div key={d.type} className="flex justify-between items-start py-1.5 text-xs" style={{ borderBottom: "1px solid #ffffff" }}>
                 <div className="min-w-0">
-                  <p className="text-white">{d.type}</p>
+                  <p className="text-[var(--kiq-ink)]">{d.type}</p>
                   <p className="text-muted-foreground text-[10px]">{d.notes}</p>
                 </div>
                 <span className="font-bold flex-shrink-0 ml-4" style={{ color: "#00FF94" }}>{formatCurrency(d.amount)}</span>
               </div>
             ))}
             <div className="flex justify-between text-sm font-bold pt-2">
-              <span className="text-white">Total Deductions</span>
+              <span className="text-[var(--kiq-ink)]">Total Deductions</span>
               <span style={{ color: "#00FF94" }}>{formatCurrency(totalDeductions)}</span>
             </div>
           </div>
@@ -144,16 +144,16 @@ export default function TaxPackage() {
             const Icon = ss.icon;
             return (
               <div key={i} className="flex items-center gap-4 px-3 py-2.5 rounded-xl"
-                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
+                style={{ background: "#ffffff", border: "1px solid #f8fafc" }}
                 data-testid={`row-k1-${i}`}>
                 <Icon size={12} style={{ color: ss.color, flexShrink: 0 }} />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-white">{k.fund}</p>
+                  <p className="text-sm font-semibold text-[var(--kiq-ink)]">{k.fund}</p>
                   <p className="text-[10px] text-muted-foreground">{k.type}{k.date ? ` · Received ${new Date(k.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })}` : ""}</p>
                 </div>
                 {k.status === "Received" && (
                   <div className="flex gap-4 text-xs text-right">
-                    <div><p className="text-[9px] text-muted-foreground">Ordinary Inc.</p><p className="font-bold text-white">{formatCurrency(k.ordinaryIncome)}</p></div>
+                    <div><p className="text-[9px] text-muted-foreground">Ordinary Inc.</p><p className="font-bold text-[var(--kiq-ink)]">{formatCurrency(k.ordinaryIncome)}</p></div>
                     {k.capitalGains > 0 && <div><p className="text-[9px] text-muted-foreground">Cap. Gains</p><p className="font-bold" style={{ color: "#00FF94" }}>{formatCurrency(k.capitalGains)}</p></div>}
                   </div>
                 )}

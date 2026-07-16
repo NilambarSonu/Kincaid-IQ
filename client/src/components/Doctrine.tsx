@@ -112,7 +112,7 @@ export function GateBadge({ gate }: { gate: Gate }) {
         fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
       }}
     >
-      <span style={{ color: "rgba(255,255,255,0.4)", fontWeight: 700 }}>GATE {g.n}/7 ·</span>
+      <span style={{ color: "#475569", fontWeight: 700 }}>GATE {g.n}/7 ·</span>
       {g.name}
     </span>
   );
@@ -261,7 +261,7 @@ export function DoctrineBar(props: DoctrineBarProps) {
                       padding: 8,
                       borderRadius: 6,
                       background: "rgba(255,255,255,0.025)",
-                      border: "1px solid rgba(255,255,255,0.06)",
+                      border: "1px solid #f1f5f9",
                     }}
                   >
                     <div
@@ -308,13 +308,13 @@ export function DoctrineBar(props: DoctrineBarProps) {
             <div
               style={{
                 fontSize: 9,
-                color: "rgba(255,255,255,0.30)",
+                color: "rgba(15,23,42,0.10)",
                 letterSpacing: "0.10em",
                 textTransform: "uppercase",
               }}
             >
               7-Gate Enforcement Chain · {ENFORCEMENT_GATES.map((g, i) => (
-                <span key={g.key} style={{ color: g.key === gate ? "#FFB800" : "rgba(255,255,255,0.30)" }}>
+                <span key={g.key} style={{ color: g.key === gate ? "#FFB800" : "rgba(15,23,42,0.10)" }}>
                   {g.name}{i < ENFORCEMENT_GATES.length - 1 ? " → " : ""}
                 </span>
               ))}

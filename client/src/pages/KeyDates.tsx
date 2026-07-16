@@ -72,8 +72,8 @@ export default function KeyDates() {
             <button key={cat} onClick={() => setFilter(cat)}
               className="text-xs px-3 py-1.5 rounded-lg font-medium transition-all"
               style={{
-                background: filter === cat ? (cs?.bg || "rgba(0,168,255,0.1)") : "rgba(255,255,255,0.03)",
-                border: `1px solid ${filter === cat ? (cs?.border || "rgba(0,168,255,0.25)") : "rgba(255,255,255,0.06)"}`,
+                background: filter === cat ? (cs?.bg || "rgba(0,168,255,0.1)") : "#ffffff",
+                border: `1px solid ${filter === cat ? (cs?.border || "rgba(0,168,255,0.25)") : "#f1f5f9"}`,
                 color: filter === cat ? (cs?.color || "#00A8FF") : "rgba(150,170,210,0.5)",
               }}
               data-testid={`filter-dates-${cat.toLowerCase()}`}>{cat}</button>
@@ -103,7 +103,7 @@ export default function KeyDates() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-4 mb-1">
-                    <p className="font-bold text-sm text-white">{item.title}</p>
+                    <p className="font-bold text-sm text-[var(--kiq-ink)]">{item.title}</p>
                     <div className="flex items-center gap-2 flex-shrink-0">
                       <span className="text-[10px] font-bold px-1.5 py-0.5 rounded" style={{ color: priorityColor, background: `${priorityColor}12`, border: `1px solid ${priorityColor}25` }}>
                         {item.priority}

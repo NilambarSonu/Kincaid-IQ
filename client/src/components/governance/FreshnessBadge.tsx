@@ -19,7 +19,7 @@ export function FreshnessBadge({ state, size = "sm", className }: FreshnessBadge
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded border font-mono font-semibold tracking-wide",
+        "inline-flex items-center gap-1 rounded-full border font-mono font-semibold tracking-wide shadow-sm backdrop-blur-sm",
         size === "sm" ? "px-1.5 py-0.5 text-[9px]" : "px-2 py-1 text-[11px]",
         cfg.color,
         className,

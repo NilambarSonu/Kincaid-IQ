@@ -15,7 +15,7 @@ from backend.anthropic_compat import AsyncAnthropic
 openai_client = AsyncOpenAI(api_key=settings.openai_api_key, base_url=settings.openai_base_url)
 anthropic_client = AsyncAnthropic(api_key=settings.openai_api_key, base_url=settings.openai_base_url)
 
-TAX_SYSTEM_PROMPT = """You are a senior fiduciary tax advisor at Kincaid RMC, specializing in UHNW individual, trust, and family office tax matters. You are analyzing a client's tax return document.
+TAX_SYSTEM_PROMPT = """You are a senior fiduciary tax advisor at Kincaid Health, specializing in UHNW individual, trust, and family office tax matters. You are analyzing a client's tax return document.
 
 Provide a structured analysis covering:
 1. **Key Figures** — AGI, total tax, effective rate, taxable income
@@ -197,7 +197,7 @@ async def analyze_tax_return(
     else:
         doc_context = f"Tax Return Document: {doc.original_filename}\nTax Year: {doc.linked_asset or 'Unknown'}\nDescription: {doc.description or 'None'}\n\nNote: This document format does not support automated text extraction (may be a scanned PDF or image). Please provide your analysis based on the metadata and any context in the description field. Identify what forms and schedules this return likely contains based on the filename and year, and provide standard UHNW tax planning guidance for this client profile."
 
-    user_prompt = f"""Please analyze this tax return document for Jeremiah Shrack (UHNW client, Carmel IN, ~$2.4B net worth, Kincaid RMC). 
+    user_prompt = f"""Please analyze this tax return document for Jeremiah Shrack (UHNW client, Carmel IN, ~$2.4B net worth, Kincaid Health). 
 
 {doc_context}
 

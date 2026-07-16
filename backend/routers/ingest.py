@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Rx Ingestion Pipeline
+Kincaid Health — Rx Ingestion Pipeline
 ====================================
 Pipeline: CSV/JSON → /ingest/claims → parse → validate → normalize → RxClaim (PG) → DRAP
 

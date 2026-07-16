@@ -2,7 +2,7 @@ export const clientProfile = {
   name: "Jeremiah Shrack",
   initials: "KR",
   location: "Carmel, IN",
-  brokerage: "Kincaid RMC",
+  brokerage: "Kincaid Health",
   tier: "Private Wealth Platinum",
   advisor: "Victoria Chen, CFA",
   since: "2009",
@@ -865,10 +865,10 @@ export const lifestyleData = {
 };
 
 export const staffDirectory = [
-  { id: 1, name: "Sarah Chen", title: "Lead Wealth Advisor", firm: "Kincaid RMC", category: "Advisory", phone: "+1 312 555 0142", email: "s.chen@invst.com", since: "2019", avatar: "SC", color: "#00A8FF", linkedin: true },
-  { id: 2, name: "Jennifer Walsh", title: "Alternative Investments Director", firm: "Kincaid RMC", category: "Advisory", phone: "+1 312 555 0189", email: "j.walsh@invst.com", since: "2020", avatar: "JW", color: "#00A8FF", linkedin: true },
-  { id: 3, name: "Michael Torres", title: "Tax & Structuring", firm: "Kincaid RMC", category: "Advisory", phone: "+1 312 555 0156", email: "m.torres@invst.com", since: "2021", avatar: "MT", color: "#00A8FF", linkedin: true },
-  { id: 4, name: "Robert Kim", title: "FX & Derivatives", firm: "Kincaid RMC", category: "Advisory", phone: "+1 312 555 0203", email: "r.kim@invst.com", since: "2022", avatar: "RK", color: "#00A8FF", linkedin: true },
+  { id: 1, name: "Sarah Chen", title: "Lead Wealth Advisor", firm: "Kincaid Health", category: "Advisory", phone: "+1 312 555 0142", email: "s.chen@invst.com", since: "2019", avatar: "SC", color: "#00A8FF", linkedin: true },
+  { id: 2, name: "Jennifer Walsh", title: "Alternative Investments Director", firm: "Kincaid Health", category: "Advisory", phone: "+1 312 555 0189", email: "j.walsh@invst.com", since: "2020", avatar: "JW", color: "#00A8FF", linkedin: true },
+  { id: 3, name: "Michael Torres", title: "Tax & Structuring", firm: "Kincaid Health", category: "Advisory", phone: "+1 312 555 0156", email: "m.torres@invst.com", since: "2021", avatar: "MT", color: "#00A8FF", linkedin: true },
+  { id: 4, name: "Robert Kim", title: "FX & Derivatives", firm: "Kincaid Health", category: "Advisory", phone: "+1 312 555 0203", email: "r.kim@invst.com", since: "2022", avatar: "RK", color: "#00A8FF", linkedin: true },
   { id: 5, name: "James Chen", title: "Trust & Estate Partner", firm: "Sullivan & Cromwell LLP", category: "Legal", phone: "+1 212 558 4000", email: "j.chen@sullcrom.com", since: "2018", avatar: "JC", color: "#A855F7", linkedin: true },
   { id: 6, name: "Patricia Moore", title: "Tax Partner", firm: "Deloitte Private", category: "Tax", phone: "+1 312 486 5000", email: "p.moore@deloitte.com", since: "2017", avatar: "PM", color: "#FFB800", linkedin: true },
   { id: 7, name: "David Hughes", title: "Family Office COO", firm: "Shrack Family Office", category: "Family Office", phone: "+1 317 555 0188", email: "d.hughes@shrackfamilyoffice.com", since: "2020", avatar: "DH", color: "#00FF94", linkedin: false },

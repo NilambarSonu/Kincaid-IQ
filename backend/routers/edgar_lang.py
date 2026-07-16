@@ -1,5 +1,5 @@
 """
-EDGAR Intelligence Platform — Kincaid IQ
+EDGAR Intelligence Platform — Kincaid Health
 Phase 3: Autonomous Intelligence Layer
 
 Endpoints:

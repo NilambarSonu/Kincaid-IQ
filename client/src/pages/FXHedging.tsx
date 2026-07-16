@@ -56,8 +56,8 @@ export default function FXHedging() {
               <button key={s} onClick={() => setScenario(s)}
                 className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-all"
                 style={{
-                  background: scenario === s ? (s < 0 ? "rgba(0,255,148,0.12)" : s > 0 ? "rgba(255,77,109,0.12)" : "rgba(255,255,255,0.06)") : "rgba(255,255,255,0.03)",
-                  border: `1px solid ${scenario === s ? (s < 0 ? "rgba(0,255,148,0.3)" : s > 0 ? "rgba(255,77,109,0.3)" : "rgba(255,255,255,0.1)") : "rgba(255,255,255,0.06)"}`,
+                  background: scenario === s ? (s < 0 ? "rgba(0,255,148,0.12)" : s > 0 ? "rgba(255,77,109,0.12)" : "#f1f5f9") : "#ffffff",
+                  border: `1px solid ${scenario === s ? (s < 0 ? "rgba(0,255,148,0.3)" : s > 0 ? "rgba(255,77,109,0.3)" : "#e2e8f0") : "#f1f5f9"}`,
                   color: scenario === s ? (s < 0 ? "#00FF94" : s > 0 ? "#FF4D6D" : "white") : "rgba(150,170,210,0.5)",
                 }}
                 data-testid={`scenario-${s}`}
@@ -67,7 +67,7 @@ export default function FXHedging() {
             ))}
           </div>
         </div>
-        <div className="flex items-center gap-4 p-4 rounded-xl" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="flex items-center gap-4 p-4 rounded-xl" style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
           <Globe size={24} style={{ color: "rgba(0,168,255,0.4)" }} />
           <div>
             <p className="text-xs text-muted-foreground">Unhedged FX P&L Impact</p>
@@ -86,7 +86,7 @@ export default function FXHedging() {
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
                 {["Currency", "Total Exposure", "Hedged", "Unhedged", "Hedge Ratio", "Spot Rate", "Forward Rate", "Annual Cost", "P&L if USD-10%", "P&L if USD+10%"].map((h) => (
                   <th key={h} className="text-left px-3 py-2 text-muted-foreground font-medium whitespace-nowrap">{h}</th>
                 ))}
@@ -97,8 +97,8 @@ export default function FXHedging() {
                 const hedgeRatio = fx.hedged / fx.exposure;
                 const hedgeColor = hedgeRatio >= 0.8 ? "#00FF94" : hedgeRatio >= 0.5 ? "#FFB800" : "#FF4D6D";
                 return (
-                  <tr key={fx.currency} className="hover:bg-white/5 cursor-pointer transition-colors"
-                    style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
+                  <tr key={fx.currency} className="hover:bg-[var(--kiq-surface)]/5 cursor-pointer transition-colors"
+                    style={{ borderBottom: "1px solid #ffffff" }}
                     onClick={() => open("liquidity")}
                     data-testid={`row-fx-${fx.currency.toLowerCase()}`}
                   >
@@ -106,25 +106,25 @@ export default function FXHedging() {
                       <div className="flex items-center gap-2">
                         <span className="text-base">{fx.flag}</span>
                         <div>
-                          <p className="font-bold text-white">{fx.currency}</p>
+                          <p className="font-bold text-[var(--kiq-ink)]">{fx.currency}</p>
                           <p className="text-[10px] text-muted-foreground">{fx.name}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-3 py-2.5 text-white font-semibold">{formatCurrency(fx.exposure)}</td>
+                    <td className="px-3 py-2.5 text-[var(--kiq-ink)] font-semibold">{formatCurrency(fx.exposure)}</td>
                     <td className="px-3 py-2.5" style={{ color: "#00FF94" }}>{formatCurrency(fx.hedged)}</td>
                     <td className="px-3 py-2.5" style={{ color: fx.unhedged > 0 ? "#FF4D6D" : "rgba(130,150,200,0.4)" }}>
                       {fx.unhedged > 0 ? formatCurrency(fx.unhedged) : "—"}
                     </td>
                     <td className="px-3 py-2.5">
                       <div className="flex items-center gap-2">
-                        <div className="w-12 h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
+                        <div className="w-12 h-1.5 rounded-full overflow-hidden" style={{ background: "#f8fafc" }}>
                           <div className="h-full rounded-full" style={{ width: `${hedgeRatio * 100}%`, background: hedgeColor }} />
                         </div>
                         <span className="font-semibold" style={{ color: hedgeColor }}>{(hedgeRatio * 100).toFixed(0)}%</span>
                       </div>
                     </td>
-                    <td className="px-3 py-2.5 text-white">{fx.spotRate.toFixed(4)}</td>
+                    <td className="px-3 py-2.5 text-[var(--kiq-ink)]">{fx.spotRate.toFixed(4)}</td>
                     <td className="px-3 py-2.5 text-muted-foreground">{fx.forwardRate.toFixed(4)}</td>
                     <td className="px-3 py-2.5" style={{ color: fx.annualHedgeCost > 0 ? "#FFB800" : "rgba(130,150,200,0.4)" }}>
                       {fx.annualHedgeCost > 0 ? formatCurrency(fx.annualHedgeCost) : "—"}
@@ -140,9 +140,9 @@ export default function FXHedging() {
               })}
             </tbody>
             <tfoot>
-              <tr style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
-                <td className="px-3 py-2.5 font-bold text-white">Total</td>
-                <td className="px-3 py-2.5 font-bold text-white">{formatCurrency(totalExposure)}</td>
+              <tr style={{ borderTop: "1px solid #e2e8f0" }}>
+                <td className="px-3 py-2.5 font-bold text-[var(--kiq-ink)]">Total</td>
+                <td className="px-3 py-2.5 font-bold text-[var(--kiq-ink)]">{formatCurrency(totalExposure)}</td>
                 <td className="px-3 py-2.5 font-bold" style={{ color: "#00FF94" }}>{formatCurrency(totalHedged)}</td>
                 <td className="px-3 py-2.5 font-bold" style={{ color: "#FF4D6D" }}>{formatCurrency(totalUnhedged)}</td>
                 <td className="px-3 py-2.5 font-bold" style={{ color: hedgePct >= 70 ? "#00FF94" : "#FFB800" }}>{hedgePct.toFixed(0)}%</td>

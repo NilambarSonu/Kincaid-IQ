@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Administration & Introspection Panel
+Kincaid Health — Administration & Introspection Panel
 Behind-the-curtain system view: DB tables, route registry, seed controls, platform stats.
 """
 import os
@@ -202,9 +202,9 @@ def platform_stats(db: Session = Depends(get_db)):
             return 0
 
     return {
-        "platform": "Kincaid IQ",
+        "platform": "Kincaid Health",
         "version": "2.0.0",
-        "client": "SHRACK-7742 · Jeremiah Shrack · Kincaid RMC",
+        "client": "SHRACK-7742 · Jeremiah Shrack · Kincaid Health",
         "stack": "React 19 + Vite + FastAPI + PostgreSQL",
         "uptimeSeconds": uptime_seconds,
         "uptimeHuman": _fmt_uptime(uptime_seconds),

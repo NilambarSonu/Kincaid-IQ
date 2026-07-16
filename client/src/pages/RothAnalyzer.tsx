@@ -77,12 +77,12 @@ export default function RothAnalyzer() {
             <div key={p.label}>
               <div className="flex justify-between items-center mb-1">
                 <label className="text-[10px] text-muted-foreground">{p.label}</label>
-                <span className="text-xs font-bold text-white">{p.fmt(p.value)}</span>
+                <span className="text-xs font-bold text-[var(--kiq-ink)]">{p.fmt(p.value)}</span>
               </div>
               <input type="range" min={p.min} max={p.max} step={p.step} value={p.value}
                 onChange={(e) => p.setter(Number(e.target.value))}
                 className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
-                style={{ background: `linear-gradient(to right, rgba(0,168,255,0.6) ${((p.value - p.min)/(p.max - p.min))*100}%, rgba(255,255,255,0.1) ${((p.value - p.min)/(p.max - p.min))*100}%)` }}
+                style={{ background: `linear-gradient(to right, rgba(0,168,255,0.6) ${((p.value - p.min)/(p.max - p.min))*100}%, #e2e8f0 ${((p.value - p.min)/(p.max - p.min))*100}%)` }}
                 data-testid={`slider-${p.label.toLowerCase().replace(/\s+/g,"-").replace(/[()%]/g,"")}`}
               />
             </div>
@@ -118,7 +118,7 @@ export default function RothAnalyzer() {
                     </linearGradient>
                   ))}
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
                 <XAxis dataKey="age" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 9 }} axisLine={false} tickLine={false} label={{ value: "Age", position: "insideBottom", fill: "rgba(130,150,200,0.4)", fontSize: 9 }} />
                 <YAxis tick={{ fill: "rgba(130,150,200,0.4)", fontSize: 9 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${v}M`} width={40} />
                 <Tooltip formatter={(v: number) => [`$${v.toFixed(2)}M`, ""]} contentStyle={{ borderRadius: 12, border: "1px solid rgba(0,140,255,0.2)", background: "rgba(8,10,40,0.95)", fontSize: 12 }} />
@@ -141,7 +141,7 @@ export default function RothAnalyzer() {
             <div className="overflow-x-auto">
               <table className="w-full text-xs">
                 <thead>
-                  <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                  <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
                     {["Amount", "Tax Cost", "Roth at Retire.", "Tax Saved", "Net Benefit"].map((h) => (
                       <th key={h} className="text-left py-2 pr-4 text-muted-foreground font-semibold">{h}</th>
                     ))}
@@ -153,8 +153,8 @@ export default function RothAnalyzer() {
                     return (
                       <tr key={s.amount}
                         onClick={() => setConversionAmount(s.amount)}
-                        className="cursor-pointer hover:bg-white/5 transition-colors"
-                        style={{ borderBottom: "1px solid rgba(255,255,255,0.03)", background: isSelected ? "rgba(0,168,255,0.05)" : undefined }}
+                        className="cursor-pointer hover:bg-[var(--kiq-surface)]/5 transition-colors"
+                        style={{ borderBottom: "1px solid #ffffff", background: isSelected ? "rgba(0,168,255,0.05)" : undefined }}
                         data-testid={`row-scenario-${s.amount}`}>
                         <td className="py-2 pr-4 font-bold" style={{ color: isSelected ? "#00A8FF" : "white" }}>{s.amount === 0 ? "No conversion" : formatCurrency(s.amount)}</td>
                         <td className="py-2 pr-4" style={{ color: "#FF4D6D" }}>{formatCurrency(s.taxCost)}</td>

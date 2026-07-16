@@ -23,7 +23,7 @@ export default function ExportGeneration() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-zinc-950 text-zinc-100 p-6 max-w-5xl mx-auto">
+      <div className="min-h-screen bg-[var(--kiq-surface)] text-[var(--kiq-ink)] p-6 max-w-5xl mx-auto">
         {/* Header */}
         <div className="flex items-start gap-3 mb-6">
           <div>
@@ -38,7 +38,7 @@ export default function ExportGeneration() {
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-1 rounded-xl border border-zinc-800 bg-zinc-900/60 p-1 mb-6 overflow-x-auto"
+        <div className="flex items-center gap-1 rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60 p-1 mb-6 overflow-x-auto"
           data-testid="export-tabs">
           {TABS.map(({ id, label, icon: Icon }) => (
             <button
@@ -48,8 +48,8 @@ export default function ExportGeneration() {
               className={cn(
                 "flex items-center gap-1.5 px-3 py-2 rounded-lg text-[10px] font-mono font-semibold whitespace-nowrap transition-all",
                 tab === id
-                  ? "bg-zinc-800 text-zinc-100 border border-zinc-700"
-                  : "text-zinc-500 hover:text-zinc-300",
+                  ? "bg-[var(--kiq-surface)] text-[var(--kiq-ink)] border border-[var(--kiq-hairline)]"
+                  : "text-zinc-500 hover:text-[var(--kiq-muted)]",
               )}
             >
               <Icon className="w-3 h-3" />
@@ -69,8 +69,8 @@ export default function ExportGeneration() {
 
         {tab === "guard" && (
           <div className="space-y-5">
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3">
-              <p className="text-xs font-semibold text-zinc-200 mb-0.5">ExportGuard — Board Gate</p>
+            <div className="rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60 px-4 py-3">
+              <p className="text-xs font-semibold text-[var(--kiq-ink-soft)] mb-0.5">ExportGuard — Board Gate</p>
               <p className="text-[10px] text-zinc-500">
                 Runs the policy gate on all claims. If all pass, the export surface is unlocked.
                 If any fail, an ExportBlockedNotice is shown instead.
@@ -88,8 +88,8 @@ export default function ExportGeneration() {
 
         {tab === "board-pack" && (
           <div className="space-y-5">
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3">
-              <p className="text-xs font-semibold text-zinc-200 mb-0.5">BoardPackButton</p>
+            <div className="rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60 px-4 py-3">
+              <p className="text-xs font-semibold text-[var(--kiq-ink-soft)] mb-0.5">BoardPackButton</p>
               <p className="text-[10px] text-zinc-500">
                 Auto-discovers all board-grade claims, runs the 4-gate pipeline, generates a
                 signed board pack with a DecisionReceipt and SHA3-256 manifest hash.

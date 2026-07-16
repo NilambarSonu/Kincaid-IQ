@@ -1,5 +1,5 @@
 """
-Kincaid IQ — TPA IQ™
+Kincaid Health — TPA IQ™
 Fiduciary-grade forensic examination of Third-Party Administrator (TPA) agreements.
 
 Scores a TPA contract 0–100 across 13 structural provision systems, derived from the

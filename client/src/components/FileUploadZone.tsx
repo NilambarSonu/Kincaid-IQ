@@ -106,8 +106,8 @@ export default function FileUploadZone({
         <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm font-medium text-white truncate">{uploadedDoc.filename}</span>
-            <span className="text-xs px-1.5 py-0.5 rounded bg-white/10 text-zinc-300">
+            <span className="text-sm font-medium text-slate-900 truncate">{uploadedDoc.filename}</span>
+            <span className="text-xs px-1.5 py-0.5 rounded bg-white/10 text-slate-500">
               {TYPE_LABELS[uploadedDoc.doc_type] || uploadedDoc.doc_type.toUpperCase()}
             </span>
             <span className="text-xs text-zinc-500">{formatBytes(uploadedDoc.file_size_bytes)} · {uploadedDoc.char_count.toLocaleString()} chars</span>
@@ -118,7 +118,7 @@ export default function FileUploadZone({
         </div>
         <button
           onClick={handleClear}
-          className="text-zinc-500 hover:text-zinc-300 transition-colors shrink-0"
+          className="text-zinc-500 hover:text-slate-500 transition-colors shrink-0"
           data-testid="upload-clear-btn"
         >
           <X className="w-4 h-4" />
@@ -141,7 +141,7 @@ export default function FileUploadZone({
         <button
           onClick={() => inputRef.current?.click()}
           disabled={loading}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-dashed border-white/20 hover:border-white/40 bg-white/5 hover:bg-white/10 transition-all text-sm text-zinc-400 hover:text-zinc-200 disabled:opacity-50"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-dashed border-white/20 hover:border-white/40 bg-white/5 hover:bg-white/10 transition-all text-sm text-zinc-400 hover:text-slate-700 disabled:opacity-50"
           data-testid="upload-compact-btn"
         >
           {loading ? (
@@ -193,7 +193,7 @@ export default function FileUploadZone({
         ) : (
           <>
             <Upload className={`w-7 h-7 mx-auto mb-2 ${dragging ? "text-blue-400" : "text-zinc-500"}`} />
-            <p className="text-sm font-medium text-zinc-300">{label}</p>
+            <p className="text-sm font-medium text-slate-500">{label}</p>
             {hint && <p className="text-xs text-zinc-500 mt-1">{hint}</p>}
             <p className="text-xs text-zinc-600 mt-2">
               {ACCEPTED_EXTENSIONS.join(" · ")} · up to 20 MB

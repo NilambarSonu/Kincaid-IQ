@@ -76,19 +76,19 @@ def _card_benchmarking(ein: str) -> dict:
 
 
 def _card_shady_broker(ein: str) -> dict:
-    """Shady Broker Index — multi-year forensic integrity score."""
+    """Broker Compensation Index — multi-year forensic integrity score."""
     from backend.routers.shady_broker import _analyze
     try:
         r = _analyze(ein)
     except HTTPException:
         return _gap_card(
-            "shady-broker", "Shady Broker Index", "/shady-broker-index",
+            "shady-broker", "Broker Compensation Index", "/shady-broker-index",
             "No multi-year filing history to score broker integrity.",
         )
     exposure = r.get("exposure", {})
     return {
         "key": "shady-broker",
-        "module": "Shady Broker Index",
+        "module": "Broker Compensation Index",
         "route": "/shady-broker-index",
         "confidence": MODELED,
         "headline": f"Integrity Score {r.get('overall_score')}/100 — {r.get('rating')}",
@@ -202,7 +202,7 @@ def _card_network() -> dict:
 
 def _card_rx_defense() -> dict:
     return _gap_card(
-        "rx-defense", "Rx Defense IQ", "/rx-defense",
+        "rx-defense", "PBM Contract Clarity 360", "/rx-defense",
         "PBM contract analysis requires uploading the contract document for this employer.",
     )
 
@@ -260,6 +260,60 @@ def search_companies(
     }
 
 
+@router.get("/{ein}/history")
+def company_history(
+    ein: str,
+    user: models.User = Depends(get_current_user),
+):
+    """Five-plus years of filed DOL Form 5500 history for one employer.
+
+    Sourced from the DuckDB filing store via the engines multiyear helper. Every
+    figure here is filed data (CERTIFIED) · dollar lines summed across the plans
+    an EIN files each year, participants taken as the max plan headcount.
+    """
+    ein = ein.strip()
+    from backend.routers.engines import _get_multiyear, _agg_by_year
+
+    rows = _get_multiyear(ein)
+    if not rows:
+        raise HTTPException(404, f"No Form 5500 filing history on record for EIN {ein}")
+
+    years = _agg_by_year(rows)  # ascending by year (chart order)
+    latest = rows[0]            # _get_multiyear orders FORM_YEAR DESC
+    latest_year = latest.get("form_year")
+    latest_plans = [r for r in rows if r.get("form_year") == latest_year]
+
+    coverage = {
+        "health": any(r.get("is_health") for r in latest_plans),
+        "dental": any(r.get("is_dental") for r in latest_plans),
+        "vision": any(r.get("is_vision") for r in latest_plans),
+        "life": any(r.get("is_life") for r in latest_plans),
+        "stop_loss": any(r.get("is_stop_loss") for r in latest_plans),
+        "drug": any(r.get("is_drug") for r in latest_plans),
+    }
+
+    identity = {
+        "ein": ein,
+        "sponsor": latest.get("sponsor_name"),
+        "city": latest.get("city"),
+        "state": latest.get("state"),
+        "biz_code": latest.get("biz_code"),
+        "carrier": latest.get("carrier"),
+        "latest_year": latest_year,
+        "plan_count": len({r.get("plan_name") for r in latest_plans}),
+    }
+
+    return {
+        "ein": ein,
+        "identity": identity,
+        "coverage": coverage,
+        "years": years,                 # ascending, for charts
+        "series": list(reversed(years)),  # descending, for tables
+        "year_count": len(years),
+        "confidence": CERTIFIED,
+    }
+
+
 @router.get("/{ein}")
 def company_360(
     ein: str,
@@ -290,11 +344,11 @@ def company_360(
     # single module errors. Fixed cardinality keeps the roll-up math honest.
     resolvers = [
         ("benchmarking", "Filing Intelligence", "/benefits-benchmarking", lambda: _card_benchmarking(ein)),
-        ("shady-broker", "Shady Broker Index", "/shady-broker-index", lambda: _card_shady_broker(ein)),
+        ("shady-broker", "Broker Compensation Index", "/shady-broker-index", lambda: _card_shady_broker(ein)),
         ("sales-os", "Sales OS", f"/sales-os/account/{ein}", lambda: _card_sales_os(ein)),
         ("stop-loss", "Stop-Loss IQ", "/stop-loss", lambda: _card_stop_loss(bundle)),
         ("network-iq", "Network IQ", "/network-iq", _card_network),
-        ("rx-defense", "Rx Defense IQ", "/rx-defense", _card_rx_defense),
+        ("rx-defense", "PBM Contract Clarity 360", "/rx-defense", _card_rx_defense),
         ("fiduciary-iq", "Fiduciary IQ", "/fiduciary-iq", lambda: _card_fiduciary(bundle)),
         ("war-room", "CFO War Room", "/cfo-war-room", lambda: _card_war_room(ein, identity)),
     ]

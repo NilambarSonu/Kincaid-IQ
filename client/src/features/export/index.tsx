@@ -144,13 +144,13 @@ export function ExportPanel({
                 placeholder="Filter claims…"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full bg-zinc-950 border border-zinc-700 rounded-lg pl-7 pr-3 py-2 text-xs text-zinc-300 placeholder-zinc-600 focus:outline-none focus:border-[#A855F7]/40"
+                className="w-full bg-white border border-slate-200 rounded-lg pl-7 pr-3 py-2 text-xs text-slate-500 placeholder-zinc-600 focus:outline-none focus:border-[#A855F7]/40"
               />
             </div>
             <button
               data-testid="button-select-all"
               onClick={toggleAll}
-              className="flex items-center gap-1.5 text-[10px] font-mono px-3 py-2 rounded-lg border border-zinc-700 text-zinc-400 hover:border-[#A855F7]/40 hover:text-[#A855F7] transition-colors"
+              className="flex items-center gap-1.5 text-[10px] font-mono px-3 py-2 rounded-lg border border-slate-200 text-zinc-400 hover:border-[#A855F7]/40 hover:text-[#A855F7] transition-colors"
             >
               {allSelected ? <CheckSquare className="w-3 h-3" /> : <Square className="w-3 h-3" />}
               {allSelected ? "Deselect All" : "Select All"}
@@ -176,7 +176,7 @@ export function ExportPanel({
                       "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg border text-left transition-all",
                       checked
                         ? "border-[#A855F7]/40 bg-[#A855F7]/8"
-                        : "border-zinc-800 bg-zinc-900/40 hover:border-zinc-700",
+                        : "border-slate-200 bg-slate-50/40 hover:border-slate-200",
                     )}
                   >
                     {checked
@@ -184,8 +184,8 @@ export function ExportPanel({
                       : <Square      className="w-3.5 h-3.5 text-zinc-700 shrink-0" />}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-1.5 flex-wrap">
-                        <span className="text-[11px] font-semibold text-zinc-200 truncate">{c.title}</span>
-                        <span className="text-[9px] font-mono border border-zinc-700 rounded px-1 py-0.5 text-zinc-600">{c.kpiKey}</span>
+                        <span className="text-[11px] font-semibold text-slate-700 truncate">{c.title}</span>
+                        <span className="text-[9px] font-mono border border-slate-200 rounded px-1 py-0.5 text-zinc-600">{c.kpiKey}</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
@@ -201,7 +201,7 @@ export function ExportPanel({
 
         {/* Right: audience + trigger */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 space-y-4">
+          <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4 space-y-4">
             <div>
               <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-1.5">
                 Audience Gate
@@ -217,7 +217,7 @@ export function ExportPanel({
                     onChange={() => setAudience(opt.value as typeof defaultAudience)}
                     className="accent-[#A855F7]"
                   />
-                  <span className="text-[11px] font-mono text-zinc-300">{opt.label}</span>
+                  <span className="text-[11px] font-mono text-slate-500">{opt.label}</span>
                 </label>
               ))}
             </div>
@@ -239,7 +239,7 @@ export function ExportPanel({
 
           {/* Result */}
           {result && (
-            <div className="rounded-xl border bg-zinc-900/60 p-4 space-y-3"
+            <div className="rounded-xl border bg-slate-50/60 p-4 space-y-3"
               style={{ borderColor: result.allowed ? "rgba(0,255,148,.2)" : "rgba(255,77,109,.2)" }}
               data-testid="export-result">
               <div className="flex items-center gap-2">
@@ -259,7 +259,7 @@ export function ExportPanel({
                   { label: "Allowed",   value: result.claimsAllowed,   color: "#00FF94" },
                   { label: "Blocked",   value: result.claimsBlocked,   color: "#FF4D6D" },
                 ].map(({ label, value, color }) => (
-                  <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-950/50 py-2">
+                  <div key={label} className="rounded-lg border border-slate-200 bg-white/50 py-2">
                     <p className="text-lg font-bold font-mono" style={{ color }}>{value}</p>
                     <p className="text-[8px] font-mono text-zinc-600 uppercase tracking-wider">{label}</p>
                   </div>
@@ -273,7 +273,7 @@ export function ExportPanel({
                     <div key={bc.claimId} className="flex items-start gap-2 rounded border border-[#FF4D6D]/20 bg-[#FF4D6D]/5 px-2 py-1.5">
                       <XCircle className="w-2.5 h-2.5 text-[#FF4D6D] mt-0.5 shrink-0" />
                       <div className="min-w-0">
-                        <p className="text-[9px] font-mono text-zinc-300 truncate">{bc.title}</p>
+                        <p className="text-[9px] font-mono text-slate-500 truncate">{bc.title}</p>
                         <p className="text-[9px] font-mono text-[#FF4D6D]">{bc.reason}</p>
                       </div>
                     </div>
@@ -288,7 +288,7 @@ export function ExportPanel({
                     {result.claims.map(cp => (
                       <div key={cp.claim.claimId} className="flex items-center gap-2 rounded border border-[#00FF94]/15 bg-[#00FF94]/3 px-2 py-1">
                         <CheckCircle2 className="w-2.5 h-2.5 text-[#00FF94] shrink-0" />
-                        <span className="text-[9px] font-mono text-zinc-300 truncate">{cp.claim.title}</span>
+                        <span className="text-[9px] font-mono text-slate-500 truncate">{cp.claim.title}</span>
                         <span className="text-[9px] font-mono text-zinc-600 ml-auto tabular-nums shrink-0">
                           {cp.claim.value}{cp.claim.unit ? ` ${cp.claim.unit}` : ""}
                         </span>

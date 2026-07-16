@@ -1,5 +1,5 @@
 """
-Kincaid IQ Verify ledger and RBAC, ported natively into FastAPI.
+Kincaid Health Verify ledger and RBAC, ported natively into FastAPI.
 
 This module rebuilds the standalone BFF feature set inside the main app:
 an append only SHA-256 hash chained evidence ledger that verifies from

@@ -1,5 +1,5 @@
 """
-Market Intelligence Layer — Kincaid IQ
+Market Intelligence Layer — Kincaid Health
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 5 free public APIs for economic benchmarking and market intelligence.
 
@@ -500,7 +500,7 @@ async def economic_snapshot():
     fred_result, bls_result = await asyncio.gather(fred_task, bls_task)
 
     return {
-        "source": "Kincaid IQ Market Intelligence — FRED® + BLS",
+        "source": "Kincaid Health Market Intelligence — FRED® + BLS",
         "fred":   fred_result,
         "bls":    bls_result,
         "benchmarks": {

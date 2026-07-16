@@ -1,582 +1,1734 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700;800&display=swap');
+/* ═══════════════════════════════════════════════════════════════════════════
+   KINCAID HEALTH  ·  PREMIUM DESIGN SYSTEM
+   Synthesized from: Apple · Stripe · Intercom design philosophies
+   Version: 2.0 — Billion-Dollar Enterprise Edition
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ─── DESIGN TOKENS ─────────────────────────────────────────────────────────── */
 @layer base {
   :root {
-    --font-sans: 'Inter', sans-serif;
-    --font-display: 'Space Grotesk', sans-serif;
-    --font-mono: 'Orbitron', monospace;
+    /* Font Families */
+    --font-sans:    "Manrope", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: "Plus Jakarta Sans", "Manrope", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono:    "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
-    /* Midnight Navy Theme */
-    --background: 222 42% 14%;
-    --foreground: 210 20% 94%;
-
-    --card: 220 38% 18%;
-    --card-foreground: 210 20% 94%;
-
-    --popover: 220 38% 19%;
-    --popover-foreground: 210 20% 94%;
-
-    /* Kincaid IQ Crimson Primary */
-    --primary: 349 62% 48%;
+    /* ── Shadcn/Tailwind compatibility tokens ── */
+    --background:         36 31% 96%;
+    --foreground:         217 57% 11%;
+    --card:               0 0% 100%;
+    --card-foreground:    217 57% 11%;
+    --popover:            0 0% 100%;
+    --popover-foreground: 217 57% 11%;
+    --primary:            249 98% 61%;
     --primary-foreground: 0 0% 100%;
-
-    --secondary: 216 40% 18%;
-    --secondary-foreground: 210 15% 80%;
-
-    --muted: 216 40% 16%;
-    --muted-foreground: 210 20% 55%;
-
-    --accent: 349 62% 48%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 90% 60%;
+    --secondary:          210 45% 97%;
+    --secondary-foreground: 217 57% 11%;
+    --muted:              212 42% 94%;
+    --muted-foreground:   215 23% 30%;
+    --accent:             219 87% 58%;
+    --accent-foreground:  0 0% 100%;
+    --destructive:        0 72% 51%;
     --destructive-foreground: 0 0% 100%;
+    --border:             214 30% 88%;
+    --input:              214 30% 88%;
+    --ring:               249 98% 61%;
+    --radius:             0.5rem;
 
-    --border: 216 40% 22%;
-    --input: 216 40% 16%;
-    --ring: 349 62% 48%;
+    /* ── Kincaid Design Tokens ──────────────────────────────────────────────── */
 
-    --radius: 0.875rem;
+    /* CANVAS / SURFACES (Intercom-inspired warm hierarchy) */
+    --kiq-canvas:           #f5f1ec;  /* Intercom warm cream — the "wall" */
+    --kiq-canvas-soft:      #f6f9fc;  /* Stripe cool off-white */
+    --kiq-canvas-parchment: #f5f5f7;  /* Apple parchment */
+    --kiq-surface:          #ffffff;  /* Pure white — floating cards */
+    --kiq-surface-2:        #ebe7e1;  /* Warm alt surface */
+    --kiq-glass:            rgba(255, 255, 255, 0.76);
 
-    /* Gold */
-    --gold: 44 100% 55%;
-    --gold-light: 44 100% 75%;
-    --gold-foreground: 0 0% 0%;
+    /* INK / TEXT (Intercom charcoal hierarchy) */
+    --kiq-ink:         #08111f;  /* premium near-black navy — readable at distance */
+    --kiq-ink-soft:    #1e2f46;  /* secondary text with real contrast */
+    --kiq-muted:       #3f516a;  /* helper text / meta — intentionally darker */
+    --kiq-subtle:      #64748b;  /* tertiary / disabled, never body copy */
+    --kiq-hairline:    #e3e8ee;  /* 1px borders */
+    --kiq-hairline-warm: #d3cec6; /* Warm hairline (Intercom) */
 
-    /* Neon palette — B&B edition */
-    --neon-blue: 216 93% 55%;
-    --neon-cyan: 349 62% 58%;
-    --neon-green: 150 100% 50%;
-    --neon-purple: 270 100% 65%;
-    --neon-pink: 320 100% 65%;
+    /* PRIMARY ACCENT (Stripe electric indigo) */
+    --kiq-primary:       #533afd;
+    --kiq-primary-deep:  #4434d4;
+    --kiq-primary-press: #2e2b8c;
+    --kiq-primary-soft:  #665efd;
+    --kiq-primary-sub:   #b9b9f9;  /* Subdued indigo bg */
 
-    /* Sidebar */
-    --sidebar: 222 45% 8%;
-    --sidebar-foreground: 210 20% 85%;
-    --sidebar-muted: 220 40% 13%;
-    --sidebar-border: 216 40% 18%;
-    --sidebar-active: 207 100% 55%;
+    /* BRAND ACCENTS */
+    --kiq-navy:    #1c1e54;  /* Stripe brand-dark-900 */
+    --kiq-blue:    #0066cc;  /* Apple action blue */
+    --kiq-fin:     #ff5600;  /* Intercom Fin orange */
+    --kiq-health:  #0b9f6a;  /* Healthcare green */
+    --kiq-ruby:    #ea2261;  /* Stripe ruby */
+    --kiq-magenta: #f96bee;
+    --kiq-amber:   #f5a623;
+    --kiq-gold:    #9b6829;  /* Stripe lemon */
+
+    /* SHADOW */
+    --kiq-shadow-blue:   0, 55, 112;
+    --kiq-shadow-indigo: 83, 58, 253;
+
+    /* RADIUS (synthesized) */
+    --kiq-radius-xs:  4px;   /* Stripe tag chips */
+    --kiq-radius-sm:  8px;   /* Intercom buttons, Apple utility */
+    --kiq-radius-md:  12px;  /* Stripe cards */
+    --kiq-radius-lg:  16px;  /* Intercom product mockup */
+    --kiq-radius-xl:  24px;  /* Apple pill-zone cards */
+    --kiq-radius-pill: 9999px; /* Full pill */
+
+    /* LAYOUT */
+    --kiq-sidebar-width:         280px;
+    --kiq-sidebar-compact-width: 72px;
+    --kiq-topbar-height:         60px;
+
+    /* Semantic / legacy */
+    --kincaid-navy:    230 49% 22%;
+    --kincaid-crimson: 249 98% 61%;
+    --success:  158 87% 36%;
+    --warning:   32 95% 50%;
+    --danger:     0 72% 51%;
+    --info:     213 91% 54%;
+    --sidebar:           36 31% 96%;
+    --sidebar-foreground: 217 57% 11%;
+    --sidebar-muted:      212 42% 94%;
+    --sidebar-border:     214 30% 88%;
+    --sidebar-active:     249 98% 61%;
     --sidebar-active-foreground: 0 0% 100%;
   }
-}
 
-@layer base {
-  * {
-    @apply border-border;
-  }
+  /* ── Base resets ── */
+  * { @apply border-border; }
+
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
+
   body {
-    @apply bg-background text-foreground antialiased;
-    font-family: var(--font-sans);
-    background-color: hsl(var(--background));
-    background-image:
-      radial-gradient(ellipse 80% 55% at 20% 0%, rgba(155, 28, 46, 0.13) 0%, transparent 60%),
-      radial-gradient(ellipse 65% 45% at 80% 100%, rgba(0, 43, 92, 0.18) 0%, transparent 65%),
-      radial-gradient(ellipse 40% 30% at 60% 30%, rgba(0, 43, 92, 0.08) 0%, transparent 55%);
+    @apply antialiased;
     min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    color: var(--kiq-ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    /* Stripe's ss01 stylistic set + Intercom's tracking */
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Intercom warm cream canvas as the anchor */
+    background: var(--kiq-canvas);
   }
+
+  /* Typography baseline */
   h1, h2, h3, h4, h5, h6 {
+    color: var(--kiq-ink);
     font-family: var(--font-display);
-    @apply tracking-tight;
+    /* Apple's negative letter-spacing at display */
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+
+  h1 { font-size: clamp(34px, 5vw, 58px); letter-spacing: -0.055em; font-weight: 800; }
+  h2 { font-size: clamp(26px, 3.5vw, 42px); letter-spacing: -0.045em; font-weight: 800; }
+  h3 { font-size: clamp(20px, 2.5vw, 32px); letter-spacing: -0.035em; font-weight: 750; }
+  h4 { font-size: 22px; letter-spacing: -0.02em; }
+  h5 { font-size: 18px; letter-spacing: -0.01em; }
+  h6 { font-size: 15px; letter-spacing: 0; }
+
+  p { font-size: 15px; line-height: 1.65; color: var(--kiq-ink-soft); font-weight: 500; }
+
+  /* Premium readability guardrails:
+     muted text should be secondary, not invisible. These override common legacy
+     Tailwind utility colors that were too low contrast on warm/glass surfaces. */
+  .text-zinc-400,
+  .text-zinc-500,
+  .text-slate-400,
+  .text-slate-500 {
+    color: var(--kiq-muted) !important;
+  }
+
+  .text-zinc-600,
+  .text-slate-600 {
+    color: var(--kiq-ink-soft) !important;
+  }
+
+  .text-slate-900,
+  .text-zinc-900 {
+    color: var(--kiq-ink) !important;
+  }
+
+  .kiq-display-text {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    color: var(--kiq-ink);
+  }
+
+  .kiq-body-text {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    color: var(--kiq-ink-soft);
+  }
+
+  .kiq-meta-text {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    color: var(--kiq-muted);
+    letter-spacing: 0.02em;
+  }
+
+  button, a, input, textarea, select { font: inherit; }
+  button, a, [role="button"] { -webkit-tap-highlight-color: transparent; }
+
+  :focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--kiq-primary) 72%, white);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Tabular numerics — Stripe's quiet financial-data signal */
+  .tabular-nums,
+  [data-financial],
+  .kiq-metric-value {
+    font-feature-settings: "tnum", "ss01";
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
   }
 }
 
-@layer utilities {
-  /* Glass card — main surface */
-  .glass-card {
-    background: rgba(5, 8, 40, 0.75);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(0, 160, 255, 0.12);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.6),
-      inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  }
-  .glass-card:hover {
-    border-color: rgba(0, 160, 255, 0.22);
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.7),
-      0 0 20px rgba(0, 140, 255, 0.06),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  }
+/* ═══════════════════════════════════════════════════════════════════════════
+   COMPONENT LAYER
+   ═══════════════════════════════════════════════════════════════════════════ */
+@layer components {
 
-  /* Metric card — alias */
-  .metric-card {
-    @apply glass-card rounded-2xl p-5 transition-all duration-300 cursor-pointer;
-  }
-  .metric-card:hover {
-    transform: translateY(-2px);
-  }
-
-  /* Gold glass */
-  .gold-glass {
-    background: rgba(255, 190, 0, 0.06);
-    border: 1px solid rgba(255, 190, 0, 0.2);
-    box-shadow: 0 0 20px rgba(255, 190, 0, 0.08);
-  }
-
-  /* Sidebar nav item */
-  .sidebar-nav-item {
-    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150;
-    color: rgba(160, 185, 225, 0.45);
-    border-left: 2px solid transparent;
-    position: relative;
-  }
-  .sidebar-nav-item:hover {
-    background: linear-gradient(
-      90deg,
-      rgba(140, 170, 255, 0.07) 0%,
-      rgba(80, 110, 220, 0.03) 100%
-    );
-    color: rgba(210, 228, 255, 0.88);
-    border-left-color: rgba(120, 160, 255, 0.28);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.05),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.15),
-      0 0 10px rgba(80, 130, 255, 0.04);
-  }
-  .sidebar-nav-item.active {
-    background: linear-gradient(
-      90deg,
-      rgba(255, 195, 0, 0.09) 0%,
-      rgba(255, 140, 0, 0.04) 60%,
-      transparent 100%
-    );
-    color: hsl(44 100% 68%);
-    border-left: 2px solid hsl(44 100% 55%);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 220, 80, 0.08),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
-      0 0 16px rgba(255, 185, 0, 0.06);
-    text-shadow: 0 0 18px rgba(255, 190, 0, 0.5);
-  }
-
-  /* Sidebar metal glass shell */
-  .sidebar-metal-glass {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(32, 38, 72, 0.97) 0%,
-        rgba(14, 17, 44, 0.98) 20%,
-        rgba(6, 8, 26, 0.99) 60%,
-        rgba(4, 6, 20, 1.0) 100%
-      );
-    backdrop-filter: blur(48px) saturate(160%) brightness(0.95);
-    -webkit-backdrop-filter: blur(48px) saturate(160%) brightness(0.95);
-    border-right: 1px solid rgba(160, 190, 255, 0.07);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.09),
-      inset 1px 0 0 rgba(255, 255, 255, 0.04),
-      inset -1px 0 0 rgba(0, 0, 0, 0.5),
-      6px 0 32px rgba(0, 0, 0, 0.55),
-      0 0 0 1px rgba(0, 0, 0, 0.3);
-    position: relative;
-  }
-  /* Chrome top-edge highlight line */
-  .sidebar-metal-glass::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.18) 30%,
-      rgba(255, 255, 255, 0.28) 50%,
-      rgba(255, 255, 255, 0.18) 70%,
-      transparent 100%
-    );
-    pointer-events: none;
-    z-index: 1;
-  }
-  /* Right edge metallic glint */
-  .sidebar-metal-glass::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 1px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.12) 0%,
-      rgba(140, 170, 255, 0.06) 40%,
-      transparent 80%
-    );
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* Gold text */
-  .gold-text {
-    color: hsl(var(--gold));
-  }
-  .gold-text-glow {
-    color: hsl(var(--gold));
-    text-shadow: 0 0 20px rgba(255, 190, 0, 0.5), 0 0 40px rgba(255, 190, 0, 0.25);
-  }
-  .neon-text {
-    color: hsl(var(--neon-blue));
-    text-shadow: 0 0 20px rgba(0, 160, 255, 0.6);
-  }
-
-  /* Badges */
-  .gold-badge {
-    @apply text-xs font-semibold px-2.5 py-1 rounded-full;
-    background: rgba(255, 190, 0, 0.1);
-    color: hsl(44 100% 65%);
-    border: 1px solid rgba(255, 190, 0, 0.25);
-    text-shadow: 0 0 8px rgba(255, 190, 0, 0.3);
-  }
-  .neon-badge {
-    @apply text-xs font-semibold px-2.5 py-1 rounded-full;
-    background: rgba(0, 160, 255, 0.1);
-    color: hsl(var(--neon-blue));
-    border: 1px solid rgba(0, 160, 255, 0.3);
-  }
-
-  /* Section label */
-  .section-label {
-    @apply text-xs font-semibold uppercase tracking-widest;
-    color: rgba(130, 160, 200, 0.55);
-    letter-spacing: 0.12em;
-  }
-
-  /* Value colors */
-  .value-positive {
-    color: hsl(var(--neon-green));
-    font-weight: 600;
-    text-shadow: 0 0 12px rgba(0, 255, 128, 0.3);
-  }
-  .value-negative {
-    color: hsl(0 90% 60%);
-    font-weight: 600;
-    text-shadow: 0 0 12px rgba(255, 60, 60, 0.3);
-  }
-
-  /* Progress bar */
-  .neon-bar {
-    height: 6px;
-    border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.05);
-    overflow: hidden;
-  }
-  .neon-bar-fill {
-    height: 100%;
-    border-radius: 9999px;
-    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 8px currentColor;
-  }
-
-  /* Neon glow borders */
-  .glow-blue { box-shadow: 0 0 15px rgba(0, 160, 255, 0.35), inset 0 0 15px rgba(0, 160, 255, 0.05); }
-  .glow-gold { box-shadow: 0 0 15px rgba(255, 190, 0, 0.35), inset 0 0 15px rgba(255, 190, 0, 0.05); }
-  .glow-green { box-shadow: 0 0 15px rgba(0, 255, 128, 0.3); }
-  .glow-purple { box-shadow: 0 0 15px rgba(140, 80, 255, 0.35); }
-
-  /* Button glow */
-  .btn-neon {
-    @apply font-semibold rounded-xl transition-all duration-200 cursor-pointer;
-    background: rgba(0, 140, 255, 0.12);
-    color: hsl(var(--neon-blue));
-    border: 1px solid rgba(0, 140, 255, 0.3);
-  }
-  .btn-neon:hover {
-    background: rgba(0, 140, 255, 0.2);
-    box-shadow: 0 0 20px rgba(0, 140, 255, 0.3);
-    transform: translateY(-1px);
-  }
-  .btn-gold {
-    @apply font-semibold rounded-xl transition-all duration-200 cursor-pointer;
-    background: rgba(255, 190, 0, 0.1);
-    color: hsl(var(--gold));
-    border: 1px solid rgba(255, 190, 0, 0.3);
-  }
-  .btn-gold:hover {
-    background: rgba(255, 190, 0, 0.18);
-    box-shadow: 0 0 20px rgba(255, 190, 0, 0.25);
-    transform: translateY(-1px);
-  }
-
-  /* Live indicator */
-  .live-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: hsl(var(--neon-green));
-    box-shadow: 0 0 8px hsl(var(--neon-green));
-    animation: live-pulse 2s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-
-  /* Risk badges */
-  .risk-low {
-    background: rgba(0, 255, 128, 0.08);
-    color: hsl(150 80% 55%);
-    border: 1px solid rgba(0, 255, 128, 0.2);
-  }
-  .risk-moderate {
-    background: rgba(255, 190, 0, 0.08);
-    color: hsl(44 100% 60%);
-    border: 1px solid rgba(255, 190, 0, 0.25);
-  }
-  .risk-high {
-    background: rgba(255, 60, 60, 0.08);
-    color: hsl(0 90% 62%);
-    border: 1px solid rgba(255, 60, 60, 0.2);
-  }
-  .risk-none {
-    background: rgba(130, 150, 200, 0.08);
-    color: rgba(130, 160, 200, 0.7);
-    border: 1px solid rgba(130, 150, 200, 0.15);
-  }
-
-  /* Provider gradients */
-  .provider-gradient-openai {
-    background: rgba(16, 185, 129, 0.06);
-    border: 1px solid rgba(16, 185, 129, 0.15);
-  }
-  .provider-gradient-anthropic {
-    background: rgba(245, 158, 11, 0.06);
-    border: 1px solid rgba(245, 158, 11, 0.15);
-  }
-  .provider-gradient-kincaid {
-    background: rgba(0, 140, 255, 0.06);
-    border: 1px solid rgba(0, 140, 255, 0.15);
-  }
-
-  /* Custom scrollbar */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 4px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
+  /* ── SCROLLBARS ─────────────────────────────────────────────────────────── */
+  .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(0, 140, 255, 0.2);
-    border-radius: 9999px;
+    background: rgba(var(--kiq-shadow-blue), 0.14);
+    border-radius: var(--kiq-radius-pill);
   }
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 140, 255, 0.4);
+    background: rgba(var(--kiq-shadow-blue), 0.26);
   }
 
-  /* Horizontal divider */
-  .neon-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(0, 140, 255, 0.2), transparent);
+  /* ── APP SHELL ──────────────────────────────────────────────────────────── */
+  .kiq-shell {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    /* Intercom: warm cream canvas as base */
+    background: var(--kiq-canvas);
   }
 
-  /* Top border accent */
-  .border-top-blue { border-top: 2px solid hsl(var(--neon-blue)); }
-  .border-top-gold { border-top: 2px solid hsl(var(--gold)); }
-  .border-top-green { border-top: 2px solid hsl(var(--neon-green)); }
-  .border-top-purple { border-top: 2px solid hsl(var(--neon-purple)); }
-  .border-top-cyan { border-top: 2px solid hsl(var(--neon-cyan)); }
-}
-
-/* Keyframe animations */
-@keyframes live-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px hsl(150, 100%, 50%); }
-  50% { opacity: 0.6; transform: scale(0.85); box-shadow: 0 0 4px hsl(150, 100%, 50%); }
-}
-
-@keyframes gold-shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-
-@keyframes float-up {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes scan-line {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(400%); }
-}
-
-.animate-float-up {
-  animation: float-up 0.5s ease-out forwards;
-}
-
-/* ─── PRINT PROTECTION ─────────────────────────────────────────────────── */
-@media print {
-  /* 1 — Hide all app UI chrome */
-  .no-print,
-  .print-hide,
-  [data-no-print] { display: none !important; }
-
-  /* 2 — Force exact color reproduction (preserve dark backgrounds, neon colors) */
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
-  }
-
-  /* 3 — Reset Layout for route-based report pages */
-  .flex.h-screen.overflow-hidden {
-    display: block !important;
-    height: auto !important;
-    overflow: visible !important;
-  }
-  .flex-1.flex.flex-col.min-w-0.overflow-hidden {
-    width: 100% !important;
-    overflow: visible !important;
-    height: auto !important;
-  }
-  main.flex-1.overflow-y-auto {
-    overflow: visible !important;
-    height: auto !important;
-  }
-
-  /* 4 — Page geometry */
-  @page { margin: 0.4in; size: letter portrait; }
-
-  /* 5 — Page-break utilities */
-  .print-page-break { page-break-before: always; break-before: page; }
-  .print-avoid-break { page-break-inside: avoid; break-inside: avoid; }
-
-  /* 6 — Confidential watermark on every page */
-  body::after {
-    content: "KINCAID IQ — STRICTLY CONFIDENTIAL · ACCOUNT SHRACK-7742";
+  /* Stripe-style gradient mesh ambient — restrained, upper zone only */
+  .kiq-shell-ambient {
     position: fixed;
-    bottom: 0.18in;
-    left: 0;
-    right: 0;
-    text-align: center;
-    font-size: 6.5pt;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .kiq-shell-ambient::before {
+    content: "";
+    position: absolute;
+    top: -8rem;
+    left: 18%;
+    width: 42rem;
+    height: 14rem;
+    border-radius: 999px;
+    filter: blur(64px);
+    opacity: 0.28;
+    transform: translateZ(0);
+    background: linear-gradient(90deg,
+      rgba(255, 174, 92, 0.5),
+      rgba(83, 58, 253, 0.52),
+      rgba(234, 34, 97, 0.38)
+    );
+  }
+
+  .kiq-shell-ambient::after {
+    content: "";
+    position: absolute;
+    bottom: 6rem;
+    right: -8rem;
+    width: 26rem;
+    height: 26rem;
+    border-radius: 999px;
+    filter: blur(72px);
+    opacity: 0.18;
+    transform: translateZ(0);
+    background: radial-gradient(circle, rgba(185, 185, 249, 0.5), rgba(83, 58, 253, 0.22), transparent 68%);
+  }
+
+  /* ── CFO WAR ROOM ───────────────────────────────────────────────────────── */
+  .kiq-command-surface {
+    @apply rounded-xl border;
+    background-color: var(--kiq-glass);
+    border-color: var(--kiq-hairline);
+    box-shadow: 0 2px 8px rgba(0, 37, 80, 0.03), inset 0 1px 0 #fff;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .kiq-wr-tile {
+    @apply kiq-command-surface p-5 relative overflow-hidden text-left flex flex-col justify-between;
+    min-height: 146px;
+  }
+  .kiq-wr-tile:hover {
+    transform: translateY(-2px) scale(1.005);
+    box-shadow: 0 12px 30px rgba(var(--kiq-shadow-indigo), 0.08), 0 4px 12px rgba(0, 37, 80, 0.03), inset 0 1px 0 #fff;
+  }
+  .kiq-wr-tile:active {
+    transform: scale(0.98);
+  }
+
+  /* ── WORKSPACE ──────────────────────────────────────────────────────────── */
+  .kiq-workspace {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+    /* Very subtle lighter zone at top for topbar lift (Apple) */
+    background: linear-gradient(180deg, rgba(255,255,255,0.32) 0%, transparent 120px);
+  }
+
+  /* ── SIDEBAR ────────────────────────────────────────────────────────────── */
+  /* Apple's backdrop-blur frosted glass + Intercom's cream surface */
+  .kiq-sidebar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    width: var(--kiq-sidebar-width);
+    height: 100vh;
+    height: 100dvh;
+    flex-direction: column;
+    overflow: hidden;
+    border-right: 1px solid rgba(var(--kiq-shadow-blue), 0.08);
+    /* Floating glass on warm cream (Apple + Intercom) */
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.72) 100%),
+      var(--kiq-canvas);
+    box-shadow:
+      1px 0 0 rgba(255,255,255,0.9) inset,
+      20px 0 48px rgba(var(--kiq-shadow-blue), 0.05);
+    backdrop-filter: blur(32px) saturate(160%);
+    -webkit-backdrop-filter: blur(32px) saturate(160%);
+    transition: width 240ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .kiq-sidebar.is-compact {
+    width: var(--kiq-sidebar-compact-width);
+  }
+
+  /* Stripe-style gradient stripe at the very top of the sidebar */
+  .kiq-sidebar::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      var(--kiq-fin) 0%,
+      var(--kiq-primary) 50%,
+      var(--kiq-ruby) 100%
+    );
+    box-shadow: 0 0 18px rgba(var(--kiq-shadow-indigo), 0.38);
+  }
+
+  /* ── SIDEBAR HEADER ─────────────────────────────────────────────────────── */
+  .kiq-sidebar-header {
+    display: flex;
+    height: 68px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 16px 14px 12px;
+  }
+
+  /* Brand mark — Apple rounded rect logo treatment */
+  .kiq-brand-mark {
+    display: grid;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 10px;
+    color: #fff;
+    /* Stripe gradient + Apple glass sheen */
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.22), rgba(255,255,255,0) 40%),
+      linear-gradient(135deg, var(--kiq-navy) 0%, var(--kiq-primary) 60%, var(--kiq-ruby) 100%);
+    box-shadow:
+      0 12px 28px rgba(var(--kiq-shadow-indigo), 0.28),
+      inset 0 1px 0 rgba(255,255,255,0.34);
+    transition: box-shadow 200ms ease, transform 200ms ease;
+  }
+
+  .kiq-brand-mark:hover {
+    box-shadow:
+      0 16px 36px rgba(var(--kiq-shadow-indigo), 0.34),
+      inset 0 1px 0 rgba(255,255,255,0.38);
+    transform: translateY(-1px);
+  }
+
+  .kiq-brand-mark span {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+  }
+
+  .kiq-brand-button {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .kiq-brand-open-cue {
+    position: absolute;
+    right: -6px;
+    bottom: -5px;
+    width: 18px;
+    height: 18px;
+    padding: 3px;
+    border-radius: 999px;
+    color: var(--kiq-primary);
+    background: rgba(255,255,255,0.92);
+    border: 1px solid rgba(15,23,42,0.10);
+    box-shadow: 0 8px 18px rgba(15,23,42,0.14);
+    opacity: 0;
+    transform: translateY(3px) scale(0.9);
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+
+  .kiq-brand-button:hover .kiq-brand-open-cue,
+  .kiq-brand-button:focus-visible .kiq-brand-open-cue {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* ── COMMAND TRIGGER / SEARCH ───────────────────────────────────────────── */
+  /* Apple pill search + Stripe subtle shadow */
+  .kiq-command-trigger,
+  .kiq-topbar-search {
+    display: flex;
+    min-height: 40px;
+    width: 100%;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: var(--kiq-radius-pill);
+    color: var(--kiq-muted);
+    background:
+      radial-gradient(circle at 16% 0%, rgba(255,255,255,0.98), transparent 42%),
+      linear-gradient(135deg, rgba(255,255,255,0.82), rgba(241,245,249,0.54));
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.96),
+      0 12px 32px rgba(15,23,42,0.08),
+      0 1px 3px rgba(var(--kiq-shadow-blue), 0.06);
+    backdrop-filter: blur(22px) saturate(170%);
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+    padding: 0 12px;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0;
+    transition: all 160ms cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+
+  .kiq-topbar-search {
+    width: auto;
+    min-height: 36px;
+    padding: 0 10px 0 12px;
+  }
+
+  .kiq-command-trigger:hover,
+  .kiq-topbar-search:hover {
+    border-color: rgba(var(--kiq-shadow-indigo), 0.22);
+    background:
+      radial-gradient(circle at 18% 0%, rgba(255,255,255,1), transparent 42%),
+      linear-gradient(135deg, rgba(255,255,255,0.94), rgba(238,242,255,0.62));
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.92),
+      0 4px 12px rgba(var(--kiq-shadow-blue), 0.07),
+      0 1px 3px rgba(var(--kiq-shadow-blue), 0.06);
+    color: var(--kiq-ink);
+  }
+
+  .kiq-command-trigger:active,
+  .kiq-topbar-search:active,
+  .kiq-icon-button:active {
+    transform: scale(0.97);
+  }
+
+  .kiq-command-trigger kbd,
+  .kiq-topbar-search kbd {
+    border: 1px solid rgba(var(--kiq-shadow-blue), 0.1);
+    border-radius: 5px;
+    background: rgba(246, 249, 252, 0.92);
+    padding: 2px 6px;
+    color: var(--kiq-subtle);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.4;
+    margin-left: auto;
+  }
+
+  /* ── NAVIGATION ─────────────────────────────────────────────────────────── */
+  .kiq-nav-scroll {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 0 8px 12px;
+    /* Hide scrollbar but keep scroll */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--kiq-shadow-blue), 0.1) transparent;
+  }
+
+  .kiq-nav-section { padding: 6px 0 12px; }
+
+  .kiq-nav-heading {
+    padding: 6px 10px 6px;
+    color: var(--kiq-subtle);
+    font-size: 9.5px;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(255, 184, 0, 0.38);
+  }
+
+  .kiq-sidebar.is-compact .kiq-nav-scroll { padding-inline: 8px; }
+  .kiq-sidebar.is-compact .kiq-nav-heading { display: none; }
+
+  .kiq-sidebar.is-compact .kiq-sidebar-header {
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 8px 10px;
+  }
+
+  .kiq-sidebar.is-compact .kiq-brand-mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  /* Nav items — Intercom's clean approach + Apple's press micro-interaction */
+  .sidebar-nav-item {
+    display: flex;
+    min-height: 38px;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid transparent;
+    border-radius: var(--kiq-radius-sm);
+    color: var(--kiq-muted);
+    padding: 8px 10px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+  }
+
+  .kiq-sidebar.is-compact .sidebar-nav-item {
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  .sidebar-nav-item:hover {
+    color: var(--kiq-ink);
+    background: rgba(255, 255, 255, 0.76);
+    border-color: rgba(var(--kiq-shadow-blue), 0.07);
+    box-shadow: 0 1px 3px rgba(var(--kiq-shadow-blue), 0.05);
+    transform: translateX(2px);
+  }
+
+  /* Active state — Intercom's white-on-cream lift */
+  .sidebar-nav-item.active {
+    color: var(--kiq-primary-deep);
+    border-color: rgba(var(--kiq-shadow-indigo), 0.16);
+    background:
+      linear-gradient(135deg, rgba(83, 58, 253, 0.1), rgba(255,255,255,0.86)),
+      rgba(255, 255, 255, 0.88);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.82),
+      0 8px 20px rgba(var(--kiq-shadow-indigo), 0.06);
+  }
+
+  .sidebar-nav-item.active svg { color: var(--kiq-primary); }
+
+  .sidebar-nav-icon {
+    transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), color 180ms ease, filter 180ms ease;
+  }
+
+  .sidebar-nav-item:hover .sidebar-nav-icon {
+    transform: translateY(-1px) scale(1.12) rotate(-3deg);
+    filter: drop-shadow(0 6px 10px rgba(83,58,253,0.18));
+  }
+
+  .sidebar-nav-item.active .sidebar-nav-icon {
+    transform: scale(1.08);
+  }
+
+  .kiq-nav-badge {
+    flex-shrink: 0;
+    border: 1px solid rgba(83,58,253,0.16);
+    border-radius: 999px;
+    background: rgba(83,58,253,0.08);
+    color: var(--kiq-primary-deep);
+    padding: 1px 6px;
+    font-size: 8px;
+    font-weight: 850;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.55;
+  }
+
+  .kiq-liquid-command {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.72)) !important;
+    border: 1px solid rgba(15,23,42,0.10) !important;
+    box-shadow:
+      0 34px 90px rgba(15,23,42,0.22),
+      inset 0 1px 0 rgba(255,255,255,0.95),
+      0 0 0 1px rgba(255,255,255,0.54) !important;
+    color: var(--kiq-ink) !important;
+    backdrop-filter: blur(28px) saturate(170%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(170%) !important;
+  }
+
+  .kiq-liquid-command input {
+    color: var(--kiq-ink) !important;
+    font-weight: 650 !important;
+  }
+
+  .kiq-liquid-command [data-testid^="command-palette-item-"] {
+    color: var(--kiq-ink-soft) !important;
+  }
+
+  .kiq-liquid-command [data-testid^="command-palette-item-"]:hover,
+  .kiq-liquid-command [data-active="true"] {
+    background:
+      linear-gradient(90deg, rgba(83,58,253,0.11), rgba(255,255,255,0.52)) !important;
+    color: var(--kiq-ink) !important;
+  }
+
+  .kiq-liquid-command [style*="rgba(130,150,200"],
+  .kiq-liquid-command [style*="rgba(150,170,220"],
+  .kiq-liquid-command [style*="rgba(100,130,220"],
+  .kiq-liquid-command [style*="rgba(160,180,230"] {
+    color: var(--kiq-muted) !important;
+    font-weight: 650 !important;
+  }
+
+  .kiq-liquid-view-trigger,
+  .kiq-liquid-view-menu {
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.66)) !important;
+    border: 1px solid rgba(15,23,42,0.10) !important;
+    color: var(--kiq-ink) !important;
+    box-shadow:
+      0 18px 48px rgba(15,23,42,0.14),
+      inset 0 1px 0 rgba(255,255,255,0.92) !important;
+    backdrop-filter: blur(24px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+  }
+
+  .kiq-liquid-view-menu [role="option"] span {
+    color: var(--kiq-ink-soft) !important;
+  }
+
+  .kiq-liquid-view-menu [role="option"]:hover {
+    background: rgba(255,255,255,0.72) !important;
+  }
+
+  .kiq-floating-icon-button {
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      radial-gradient(circle at 28% 18%, rgba(255,255,255,0.85), transparent 34%),
+      linear-gradient(135deg, rgba(255,255,255,0.86), rgba(226,232,240,0.64)) !important;
+    border: 1px solid rgba(15,23,42,0.10) !important;
+    color: var(--kiq-primary-deep) !important;
+    box-shadow:
+      0 18px 48px rgba(15,23,42,0.16),
+      inset 0 1px 0 rgba(255,255,255,0.95) !important;
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+  }
+
+  .kiq-floating-icon-button:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow:
+      0 22px 60px rgba(83,58,253,0.20),
+      inset 0 1px 0 rgba(255,255,255,0.95) !important;
+  }
+
+  .kiq-floating-icon-button .kiq-floating-label {
+    position: absolute;
+    right: 0;
+    bottom: -30px;
     pointer-events: none;
-    z-index: 99999;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 160ms ease, transform 160ms ease;
+    white-space: nowrap;
+    border-radius: 999px;
+    padding: 5px 10px;
+    background: rgba(255,255,255,0.86);
+    border: 1px solid rgba(15,23,42,0.10);
+    color: var(--kiq-ink-soft);
+    font-size: 11px;
+    font-weight: 800;
+    box-shadow: 0 12px 30px rgba(15,23,42,0.12);
+  }
+
+  .kiq-floating-icon-button .kiq-floating-label.is-above {
+    bottom: auto;
+    top: -32px;
+    right: -8px;
+    transform: translateY(4px);
+  }
+
+  .kiq-floating-icon-button:hover .kiq-floating-label.is-above {
+    transform: translateY(0);
+  }
+
+  .kiq-floating-icon-button:hover .kiq-floating-label {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes kiq-border-run {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  .kiq-dropzone-glow {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kiq-dropzone-glow::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(90deg, #00ff94, #00a8ff, #8b5cf6, #00ff94);
+    background-size: 200% 100%;
+    opacity: 0;
+    transition: opacity 180ms ease;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .kiq-dropzone-glow.is-dragging::before,
+  .kiq-dropzone-glow:hover::before {
+    opacity: 1;
+    animation: kiq-border-run 1.8s linear infinite;
+  }
+
+  /* ── SIDEBAR FOOTER ─────────────────────────────────────────────────────── */
+  .kiq-sidebar-footer {
+    flex: 0 0 auto;
+    border-top: 1px solid rgba(var(--kiq-shadow-blue), 0.07);
+    padding: 10px;
+    background: rgba(255,255,255,0.32);
+  }
+
+  .kiq-sidebar-mission {
+    display: grid;
+    gap: 5px;
+    margin-bottom: 8px;
+    border: 1px solid rgba(var(--kiq-shadow-indigo), 0.12);
+    border-radius: var(--kiq-radius-md);
+    padding: 9px 10px;
+    color: var(--kiq-muted);
+    /* Stripe-style subtle feature card */
+    background:
+      radial-gradient(circle at 0% 0%, rgba(255, 86, 0, 0.08), transparent 50%),
+      radial-gradient(circle at 100% 0%, rgba(83, 58, 253, 0.1), transparent 50%),
+      rgba(255,255,255,0.62);
+    font-size: 11px;
+    font-weight: 500;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.78);
+  }
+
+  .kiq-sidebar-mission strong {
+    color: var(--kiq-ink);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  /* Live pulse orb */
+  .kiq-live-orb {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    background: var(--kiq-health);
+    box-shadow: 0 0 0 4px rgba(11, 159, 106, 0.12), 0 0 14px rgba(11, 159, 106, 0.42);
+    animation: live-pulse 2.4s ease-in-out infinite;
+  }
+
+  /* Trust strip */
+  .kiq-trust-strip {
+    display: flex;
+    min-height: 32px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid rgba(11, 159, 106, 0.14);
+    border-radius: var(--kiq-radius-sm);
+    color: #087a52;
+    background: rgba(11, 159, 106, 0.05);
+    font-size: 11.5px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  /* User dock — Intercom floating card on cream */
+  .kiq-user-dock {
+    display: flex;
+    min-height: 50px;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid rgba(var(--kiq-shadow-blue), 0.08);
+    border-radius: var(--kiq-radius-md);
+    padding: 8px;
+    background: rgba(255,255,255,0.68);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.74);
+    text-decoration: none;
+    color: var(--kiq-ink);
+    transition: all 160ms ease;
+  }
+
+  .kiq-user-dock:hover {
+    background: rgba(255,255,255,0.84);
+    border-color: rgba(var(--kiq-shadow-blue), 0.12);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.86),
+      0 4px 12px rgba(var(--kiq-shadow-blue), 0.06);
+  }
+
+  /* Avatar */
+  .kiq-avatar {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: var(--kiq-radius-sm);
+    overflow: hidden;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--kiq-navy), var(--kiq-primary));
+    box-shadow: 0 4px 12px rgba(var(--kiq-shadow-indigo), 0.22);
+  }
+
+  .kiq-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ── TOPBAR ─────────────────────────────────────────────────────────────── */
+  /* Apple sub-nav frosted glass effect */
+  .kiq-topbar {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    height: var(--kiq-topbar-height);
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(var(--kiq-shadow-blue), 0.07);
+    padding: 0 20px;
+    /* Apple's frosted sub-nav: parchment at 85% + blur */
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.72) inset,
+      0 2px 8px rgba(var(--kiq-shadow-blue), 0.04);
+  }
+
+  /* Context breadcrumb pill */
+  .kiq-context-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid rgba(var(--kiq-shadow-blue), 0.09);
+    border-radius: var(--kiq-radius-pill);
+    background: rgba(255,255,255,0.72);
+    padding: 3px 10px 3px 7px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--kiq-muted);
+    letter-spacing: 0;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    white-space: nowrap;
+  }
+
+  .kiq-context-pill.is-muted {
+    opacity: 0.72;
+  }
+
+  /* System status bar */
+  .kiq-system-status {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    border: 1px solid rgba(var(--kiq-shadow-blue), 0.08);
+    border-radius: var(--kiq-radius-pill);
+    overflow: hidden;
+    background: rgba(255,255,255,0.64);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.78);
+  }
+
+  .kiq-system-status > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 14px;
+    gap: 1px;
+    border-right: 1px solid rgba(var(--kiq-shadow-blue), 0.07);
+  }
+
+  .kiq-system-status > div:last-child { border-right: none; }
+
+  .kiq-system-status span {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--kiq-subtle);
+  }
+
+  .kiq-system-status strong {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--kiq-health);
+    font-feature-settings: "tnum";
+  }
+
+  /* Health chip */
+  .kiq-health-chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid rgba(11, 159, 106, 0.18);
+    border-radius: var(--kiq-radius-pill);
+    background: rgba(11, 159, 106, 0.07);
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #087a52;
+    letter-spacing: -0.01em;
+  }
+
+  /* Icon button — Apple utility button treatment */
+  .kiq-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    min-height: 36px;
+    border: 1px solid rgba(var(--kiq-shadow-blue), 0.09);
+    border-radius: var(--kiq-radius-sm);
+    color: var(--kiq-muted);
+    background: rgba(255,255,255,0.72);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.82);
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .kiq-icon-button:hover {
+    color: var(--kiq-ink);
+    background: rgba(255,255,255,0.9);
+    border-color: rgba(var(--kiq-shadow-blue), 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.88),
+      0 4px 10px rgba(var(--kiq-shadow-blue), 0.07);
+  }
+
+  /* ── PAGE FRAME ─────────────────────────────────────────────────────────── */
+  .kiq-main {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .kiq-page-frame {
+    padding: 24px;
+    min-height: 100%;
+  }
+
+  .kiq-page-content {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  /* ── PUBLIC SHELL (Login / Landing) ─────────────────────────────────────── */
+  /* Stripe's gradient mesh for marketing/auth surfaces */
+  .kiq-public-shell {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--kiq-canvas);
+    /* Stripe-style gradient mesh — the brand's atmospheric backdrop */
+    background-image:
+      radial-gradient(ellipse 60rem 30rem at 10% -8%, rgba(255, 174, 92, 0.32) 0%, transparent 60%),
+      radial-gradient(ellipse 70rem 36rem at 60% -10%, rgba(83, 58, 253, 0.36) 0%, transparent 64%),
+      radial-gradient(ellipse 50rem 28rem at 95% -6%, rgba(234, 34, 97, 0.22) 0%, transparent 62%),
+      radial-gradient(ellipse 40rem 22rem at 30% 110%, rgba(83, 58, 253, 0.14) 0%, transparent 60%);
+    isolation: isolate;
+  }
+
+  /* Public page badge — Intercom eyebrow style */
+  .kiq-public-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(var(--kiq-shadow-blue), 0.1);
+    border-radius: var(--kiq-radius-pill);
+    background: rgba(255,255,255,0.72);
+    padding: 5px 14px 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--kiq-muted);
+    letter-spacing: 0;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.82);
+    backdrop-filter: blur(10px);
+  }
+
+  /* Public hero title — Apple + Stripe display-xxl treatment */
+  .kiq-public-title {
+    font-size: clamp(36px, 5.5vw, 64px);
+    font-weight: 300;  /* Stripe's thin editorial weight */
+    line-height: 1.05;
+    letter-spacing: -0.04em;  /* Apple tight tracking */
+    color: var(--kiq-ink);
+    margin: 0;
+  }
+
+  /* Gradient text — hero accent word */
+  .kiq-public-gradient-text {
+    background: linear-gradient(135deg, var(--kiq-primary) 0%, var(--kiq-ruby) 60%, var(--kiq-fin) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Public lead paragraph — Intercom body-lg */
+  .kiq-public-lead {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    color: var(--kiq-muted);
+    margin: 0;
+  }
+
+  /* Public card — Intercom floating white on cream */
+  .kiq-public-card {
+    border: 1px solid rgba(var(--kiq-shadow-blue), 0.08);
+    border-radius: var(--kiq-radius-xl);
+    background: rgba(255,255,255,0.88);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.9) inset,
+      0 8px 32px rgba(var(--kiq-shadow-blue), 0.06),
+      0 2px 6px rgba(var(--kiq-shadow-blue), 0.04);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+  }
+
+  /* ── BUTTONS ─────────────────────────────────────────────────────────────── */
+
+  /* Primary — Stripe electric indigo pill */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 42px;
+    padding: 0 20px;
+    border-radius: var(--kiq-radius-pill);
+    border: 1px solid color-mix(in srgb, var(--kiq-primary) 72%, white);
+    background: linear-gradient(135deg, var(--kiq-primary), var(--kiq-primary-deep));
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+    box-shadow:
+      0 10px 24px rgba(var(--kiq-shadow-indigo), 0.22),
+      inset 0 1px 0 rgba(255,255,255,0.22);
+    transition: all 160ms cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--kiq-primary-soft), var(--kiq-primary));
+    box-shadow:
+      0 14px 32px rgba(var(--kiq-shadow-indigo), 0.30),
+      inset 0 1px 0 rgba(255,255,255,0.26);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active { transform: scale(0.96); }
+
+  /* Secondary — Intercom white on cream */
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 42px;
+    padding: 0 20px;
+    border-radius: var(--kiq-radius-sm);
+    border: 1px solid rgba(var(--kiq-shadow-blue), 0.12);
+    background: var(--kiq-surface);
+    color: var(--kiq-ink);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.9),
+      0 1px 3px rgba(var(--kiq-shadow-blue), 0.06);
+    transition: all 160ms ease;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(var(--kiq-shadow-blue), 0.18);
+    background: #fff;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.96),
+      0 4px 12px rgba(var(--kiq-shadow-blue), 0.08);
+    transform: translateY(-0.5px);
+  }
+
+  .btn-secondary:active { transform: scale(0.97); }
+
+  /* ── CARDS ───────────────────────────────────────────────────────────────── */
+  /* Feature card — Intercom floating white tile */
+  .kiq-card {
+    border: 1px solid rgba(var(--kiq-shadow-blue), 0.08);
+    border-radius: var(--kiq-radius-lg);
+    background: var(--kiq-surface);
+    box-shadow:
+      0 1px 3px rgba(var(--kiq-shadow-blue), 0.06),
+      inset 0 1px 0 rgba(255,255,255,0.9);
+    transition: box-shadow 200ms ease, transform 200ms ease;
+  }
+
+  .kiq-card:hover {
+    box-shadow:
+      0 8px 24px rgba(var(--kiq-shadow-blue), 0.09),
+      0 2px 6px rgba(var(--kiq-shadow-blue), 0.05),
+      inset 0 1px 0 rgba(255,255,255,0.96);
+    transform: translateY(-1px);
+  }
+
+  /* Stat/metric card */
+  .kiq-stat-card {
+    padding: 20px 22px;
+    border-radius: var(--kiq-radius-lg);
+    border: 1px solid rgba(var(--kiq-shadow-blue), 0.08);
+    background: var(--kiq-surface);
+    box-shadow:
+      0 1px 3px rgba(var(--kiq-shadow-blue), 0.06),
+      inset 0 1px 0 rgba(255,255,255,0.88);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kiq-stat-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    border-radius: var(--kiq-radius-lg) var(--kiq-radius-lg) 0 0;
+  }
+
+  /* Pill tag — Stripe subdued indigo */
+  .kiq-pill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    border-radius: var(--kiq-radius-pill);
+    background: var(--kiq-primary-sub);
+    color: var(--kiq-primary-deep);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.2;
+  }
+
+  /* ── INPUTS ──────────────────────────────────────────────────────────────── */
+  /* Intercom text-input + Apple pill variant for search */
+  .kiq-input {
+    display: block;
+    width: 100%;
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid rgba(var(--kiq-shadow-blue), 0.14);
+    border-radius: var(--kiq-radius-sm);
+    background: var(--kiq-surface);
+    color: var(--kiq-ink);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    outline: none;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .kiq-input::placeholder { color: var(--kiq-subtle); }
+
+  .kiq-input:focus {
+    border-color: var(--kiq-primary);
+    box-shadow: 0 0 0 3px rgba(var(--kiq-shadow-indigo), 0.1);
+  }
+
+  /* ── METRIC / DATA DISPLAY ───────────────────────────────────────────────── */
+  .kiq-metric-value {
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    color: var(--kiq-ink);
+    font-feature-settings: "tnum", "ss01";
+  }
+
+  .kiq-metric-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--kiq-subtle);
+  }
+
+  .kiq-metric-delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-feature-settings: "tnum";
+  }
+
+  /* ── ANIMATIONS ──────────────────────────────────────────────────────────── */
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 4px rgba(11,159,106,0.12), 0 0 14px rgba(11,159,106,0.42); }
+    50%       { opacity: 0.72; box-shadow: 0 0 0 7px rgba(11,159,106,0.07), 0 0 22px rgba(11,159,106,0.28); }
+  }
+
+  @keyframes kincaid-slide-up {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes kincaid-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .animate-kincaid-slide-up {
+    animation: kincaid-slide-up 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .animate-kincaid-fade-in {
+    animation: kincaid-fade-in 0.28s ease both;
+  }
+
+  .animate-spin { animation: spin 0.9s linear infinite; }
+
+  /* Stagger utilities */
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+
+  /* ── WAR ROOM / COMMAND SURFACE ─────────────────────────────────────────── */
+  /* Kincaid CFO War Room — dark command console aesthetic
+     Synthesized from: Stripe's dark terminal + Apple's frosted glass + Intercom's utility */
+
+  /* The master canvas for all War Room / command-level pages */
+  .kiq-command-surface {
+    background:
+      radial-gradient(ellipse 120rem 60rem at 50% -20%, rgba(83, 58, 253, 0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 80rem 40rem at 0% 80%, rgba(245, 166, 35, 0.05) 0%, transparent 60%),
+      #f5f1ec;
+    color: #1a2236;
+  }
+
+  /* Primary command card — used for drill canvases, main panels */
+  .kiq-command-card {
+    border: 1px solid rgba(0, 37, 80, 0.1);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.9) inset,
+      0 4px 24px rgba(0, 37, 80, 0.07),
+      0 1px 4px rgba(0, 37, 80, 0.04);
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    overflow: hidden;
+  }
+
+  /* Control input/select in command context */
+  .kiq-command-control {
+    border: 1px solid rgba(0, 37, 80, 0.12);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 3px rgba(0, 37, 80, 0.05);
+    color: #1a2236;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .kiq-command-control:focus {
+    border-color: #533afd;
+    box-shadow: 0 0 0 3px rgba(83, 58, 253, 0.1), inset 0 1px 0 rgba(255,255,255,0.9);
+    outline: none;
+  }
+
+  /* ── OPERATIONS / ENTERPRISE SURFACES ──────────────────────────────── */
+  /* Dense internal tools: Apple-clean canvas, Stripe lighting, Intercom clarity. */
+  .kiq-ops-shell {
+    position: relative;
+    isolation: isolate;
+    background:
+      radial-gradient(900px 520px at 10% -12%, rgba(83, 58, 253, 0.16), transparent 62%),
+      radial-gradient(760px 460px at 92% 0%, rgba(0, 212, 255, 0.13), transparent 58%),
+      radial-gradient(680px 520px at 62% 112%, rgba(251, 183, 36, 0.09), transparent 60%),
+      linear-gradient(145deg, #f8fafc 0%, #f3f0ea 48%, #eef4ff 100%);
+    color: #0f172a;
+  }
+
+  .kiq-ops-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(rgba(15, 23, 42, 0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.024) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.45), transparent 74%);
+  }
+
+  .kiq-ops-header,
+  .kiq-ops-card {
+    position: relative;
+    border: 1px solid rgba(15, 23, 42, 0.09);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.74)),
+      radial-gradient(560px 220px at 8% 0%, rgba(83,58,253,0.08), transparent 68%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.92),
+      0 22px 70px rgba(15,23,42,0.10),
+      0 5px 18px rgba(15,23,42,0.05);
+    backdrop-filter: blur(22px) saturate(145%);
+    -webkit-backdrop-filter: blur(22px) saturate(145%);
+  }
+
+  .kiq-ops-header::after,
+  .kiq-ops-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,255,255,0.62), transparent 34%);
+    opacity: 0.55;
+  }
+
+  .kiq-ops-card {
+    border-radius: 18px;
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+
+  .kiq-ops-card:hover {
+    transform: translateY(-1px);
+    border-color: rgba(83,58,253,0.18);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.94),
+      0 28px 78px rgba(15,23,42,0.13),
+      0 8px 22px rgba(83,58,253,0.08);
+  }
+
+  .kiq-readable-surface {
+    color: var(--kiq-ink);
+    font-family: var(--font-sans);
+    font-weight: 500;
+  }
+
+  .kiq-readable-surface [style*="color: rgba(255,255,255,0.3"],
+  .kiq-readable-surface [style*="color: rgba(255,255,255,0.4"],
+  .kiq-readable-surface [style*="color: rgba(255,255,255,0.5"],
+  .kiq-readable-surface [style*="color: rgba(255,255,255,0.6"],
+  .kiq-readable-surface [style*="color: rgba(255,255,255,0.7"],
+  .kiq-readable-surface [style*="color: rgba(255,255,255,0.8"],
+  .kiq-readable-surface [style*="color: rgba(255, 255, 255, 0.3"],
+  .kiq-readable-surface [style*="color: rgba(255, 255, 255, 0.4"],
+  .kiq-readable-surface [style*="color: rgba(255, 255, 255, 0.5"],
+  .kiq-readable-surface [style*="color: rgba(255, 255, 255, 0.6"],
+  .kiq-readable-surface [style*="color: rgba(255, 255, 255, 0.7"],
+  .kiq-readable-surface [style*="color: rgba(255, 255, 255, 0.8"],
+  .kiq-readable-surface [style*="color: rgba(15,23,42,0.03"],
+  .kiq-readable-surface [style*="color: rgba(15,23,42,0.04"],
+  .kiq-readable-surface [style*="color: rgba(15,23,42,0.05"],
+  .kiq-readable-surface [style*="color: rgba(15,23,42,0.06"],
+  .kiq-readable-surface [style*="color: rgba(15,23,42,0.08"],
+  .kiq-readable-surface [style*="color: rgba(15, 23, 42, 0.03"],
+  .kiq-readable-surface [style*="color: rgba(15, 23, 42, 0.04"],
+  .kiq-readable-surface [style*="color: rgba(15, 23, 42, 0.05"],
+  .kiq-readable-surface [style*="color: rgba(15, 23, 42, 0.06"],
+  .kiq-readable-surface [style*="color: rgba(15, 23, 42, 0.08"] {
+    color: var(--kiq-ink-soft) !important;
+    font-weight: 600 !important;
+  }
+
+  .kiq-readable-surface [style*="color: rgba(255,255,255,0.2"],
+  .kiq-readable-surface [style*="color: rgba(255,255,255,0.25"],
+  .kiq-readable-surface [style*="color: rgba(15,23,42,0.10"],
+  .kiq-readable-surface [style*="color: rgba(15, 23, 42, 0.10"] {
+    color: #475569 !important;
+    font-weight: 650 !important;
+  }
+
+  .kiq-readable-surface [style*="background: rgba(255,255,255,0.02"],
+  .kiq-readable-surface [style*="background: rgba(255,255,255,0.03"],
+  .kiq-readable-surface [style*="background: rgba(255,255,255,0.015"] {
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.88), rgba(248,250,252,0.68)) !important;
+    border-color: rgba(15,23,42,0.08) !important;
+    box-shadow:
+      0 14px 36px rgba(15,23,42,0.06),
+      inset 0 1px 0 rgba(255,255,255,0.88) !important;
+  }
+
+  .kiq-readable-surface p,
+  .kiq-readable-surface td,
+  .kiq-readable-surface li {
+    letter-spacing: -0.005em;
+  }
+
+  .kiq-ops-control {
+    border: 1px solid rgba(15,23,42,0.10);
+    background: rgba(255,255,255,0.72);
+    color: #0f172a;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.88), 0 1px 4px rgba(15,23,42,0.04);
+    backdrop-filter: blur(14px);
+  }
+
+  .kiq-ops-table-row {
+    background: rgba(255,255,255,0.55);
+    transition: background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+  }
+
+  .kiq-ops-table-row:hover {
+    background: rgba(255,255,255,0.86);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgba(15,23,42,0.07);
+  }
+
+  /* ── WAR ROOM TILE ───────────────────────────────────────────────────────── */
+  /* Premium tile for the 4-tile executive war room grid */
+  .kiq-wr-tile {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 200ms ease;
+    text-align: left;
+  }
+
+  .kiq-wr-tile:hover {
+    transform: translateY(-2px);
+  }
+
+  .kiq-wr-tile.is-active {
+    transform: translateY(-2px);
+  }
+
+  /* The top gradient accent bar — unique per tile via color var */
+  .kiq-wr-tile-bar {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    border-radius: 18px 18px 0 0;
+  }
+
+  /* Large numeric display in the war room tile */
+  .kiq-wr-tile-value {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    font-feature-settings: "tnum", "ss01";
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Tile category label */
+  .kiq-wr-tile-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+  }
+
+  /* ── DRILL NODE ──────────────────────────────────────────────────────────── */
+  /* Each clickable item in the drill canvas */
+  .kiq-drill-node {
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+    text-align: left;
+    width: 100%;
+  }
+
+  .kiq-drill-node:hover { transform: translateX(2px); }
+  .kiq-drill-node-grid:hover { transform: translateY(-2px) scale(1.01); }
+
+  /* ── SEVERITY CHIP ───────────────────────────────────────────────────────── */
+  .kiq-sev-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px;
+    border-radius: 5px;
+    border: 1px solid;
+    font-size: 8px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  /* ── BREADCRUMB PATH ─────────────────────────────────────────────────────── */
+  .kiq-drill-path {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: wrap;
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(0, 37, 80, 0.07);
+    background: rgba(0, 37, 80, 0.02);
+  }
+
+  /* ── NARRATIVE PANEL ─────────────────────────────────────────────────────── */
+  /* Right-hand intelligence commentary panel in the drill view */
+  .kiq-narrative-panel {
+    background: rgba(255, 255, 255, 0.62);
+    border-left: 1px solid rgba(0, 37, 80, 0.07);
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  /* ── LOADING SKELETON ────────────────────────────────────────────────────── */
+  .kiq-skeleton {
+    border-radius: 10px;
+    background: linear-gradient(
+      90deg,
+      rgba(0, 37, 80, 0.04) 0%,
+      rgba(0, 37, 80, 0.08) 50%,
+      rgba(0, 37, 80, 0.04) 100%
+    );
+    background-size: 200% 100%;
+    animation: kiq-shimmer 1.6s ease-in-out infinite;
+  }
+
+  @keyframes kiq-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* ── CONFIDENCE CHIP ─────────────────────────────────────────────────────── */
+  .kiq-confidence-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 8.5px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  /* ── DOCTRINE STRIP ──────────────────────────────────────────────────────── */
+  .kiq-doctrine-strip {
+    border-top: 1px solid rgba(0, 37, 80, 0.07);
+    background: rgba(255, 255, 255, 0.52);
+    padding: 12px 24px;
+  }
+
+  /* ── POSTURE / RISK PANELS ───────────────────────────────────────────────── */
+  .shadow-glass {
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.9) inset,
+      0 4px 16px rgba(0, 37, 80, 0.06),
+      0 1px 3px rgba(0, 37, 80, 0.04);
+  }
+
+  /* ── PRINT ───────────────────────────────────────────────────────────────── */
+  @media print {
+    .no-print { display: none !important; }
+    .kiq-sidebar,
+    .kiq-topbar,
+    .kiq-shell-ambient { display: none !important; }
+    .kiq-workspace { overflow: visible !important; }
+    .kiq-main { overflow: visible !important; height: auto !important; }
+  }
+
+  /* ── MOBILE RESPONSIVE ───────────────────────────────────────────────────── */
+  @media (max-width: 1023px) {
+    .kiq-page-frame { padding: 16px; }
+  }
+
+  @media (max-width: 767px) {
+    .kiq-page-frame { padding: 12px; }
+    .kiq-public-title { font-size: clamp(28px, 8vw, 40px); }
   }
 }
 
-/* ─── OVERLAY REPORT PRINT (portaled outside #root) ──────────────────── */
-@media print {
-  /* When an overlay report is open, suppress the app shell */
-  body:has(#kiq-print-overlay) #root { display: none !important; }
-
-  /* Expand overlay from fixed to normal flow */
-  #kiq-print-overlay {
-    position: static !important;
-    inset: auto !important;
-    height: auto !important;
-    overflow: visible !important;
-    display: flex !important;
-    flex-direction: column !important;
-    background: #03050D !important;
-    width: 100% !important;
-  }
-
-  /* Expand the scroll container so all pages print */
-  #kiq-print-scroll {
-    overflow: visible !important;
-    height: auto !important;
-    max-height: none !important;
-    flex: none !important;
-  }
-
-  /* Page break between every top-level section */
-  #kiq-print-scroll > div > *:not(:first-child) {
-    page-break-before: always;
-    break-before: page;
-  }
-
-  /* Keep cards together */
-  #kiq-print-scroll [style*="border-radius: 14px"],
-  #kiq-print-scroll [style*="borderRadius: 14"] {
-    page-break-inside: avoid;
-    break-inside: avoid;
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILITY OVERRIDES
+   ═══════════════════════════════════════════════════════════════════════════ */
+@layer utilities {
+  .text-display { font-weight: 300; letter-spacing: -0.04em; line-height: 1.05; }
+  .text-headline { font-weight: 500; letter-spacing: -0.025em; line-height: 1.15; }
+  .text-mono-tabular { font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+  .glass-card {
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid rgba(var(--kiq-shadow-blue), 0.08);
   }
 }
 
-.gold-shimmer-text {
-  background: linear-gradient(90deg, #C9A020 0%, #FFE066 40%, #FFD700 60%, #C9A020 100%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gold-shimmer 4s linear infinite;
+/* ═══════════════════════════════════════════════════════════════════════════
+   GLOBAL READABILITY OVERRIDES
+   Forcing hardcoded white/light text on light backgrounds to be slate
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Target inline styles that define color as white/near-white rgba/rgb/hex */
+*[style*="color:"][style*="rgba(255,"],
+*[style*="color:"][style*="rgba(255 ,"],
+*[style*="color:"][style*="rgb(255,"],
+*[style*="color:"][style*="rgb(255 ,"],
+*[style*="color:"][style*="#fff"],
+*[style*="color:"][style*="#FFF"] {
+  /* Avoid overriding inside dark elements like badges, active chips, and buttons */
+  &:not(button)
+  :not(a[className*="active"])
+  :not(.bg-primary)
+  :not(.bg-indigo-600)
+  :not(.bg-blue-600)
+  :not(.bg-red-600)
+  :not(.bg-emerald-600)
+  :not([class*="bg-indigo"])
+  :not([class*="bg-blue"])
+  :not([class*="bg-red"])
+  :not([class*="bg-green"])
+  :not([class*="bg-emerald"])
+  :not([style*="background: rgb(83, 58, 253)"])
+  :not([style*="background: #533afd"])
+  :not([style*="background:#533afd"])
+  :not([style*="background: var(--kiq-navy)"])
+  :not([style*="background: var(--kiq-primary)"]) {
+    color: var(--kiq-ink-soft) !important;
+  }
 }
 
-/* ── Kincaid IQ Design System — Glass / Glow / Base ───────────────────────── */
-
-body {
-  background: radial-gradient(circle at top, #0b1220, #05070a);
-  font-family: Inter, sans-serif;
+/* Also target chart text components or svg text that have fill="rgba(255,255,255,..." or similar */
+svg text[fill*="rgba(255,"],
+svg text[fill*="rgba(255 ,"],
+svg text[fill*="#fff"],
+svg text[fill*="#FFF"] {
+  fill: var(--kiq-muted) !important;
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 16px;
+/* ── Tailwind Opacity Class Overrides ── */
+.text-slate-900\/10, .text-slate-900\/15, .text-slate-900\/20, .text-slate-900\/25, .text-slate-900\/30, .text-slate-900\/35, .text-slate-900\/40, .text-slate-900\/45, .text-slate-900\/50,
+.text-slate-800\/10, .text-slate-800\/15, .text-slate-800\/20, .text-slate-800\/25, .text-slate-800\/30, .text-slate-800\/35, .text-slate-800\/40, .text-slate-800\/45, .text-slate-800\/50,
+.text-slate-700\/10, .text-slate-700\/15, .text-slate-700\/20, .text-slate-700\/25, .text-slate-700\/30, .text-slate-700\/35, .text-slate-700\/40, .text-slate-700\/45, .text-slate-700\/50,
+.text-zinc-900\/10, .text-zinc-900\/15, .text-zinc-900\/20, .text-zinc-900\/25, .text-zinc-900\/30, .text-zinc-900\/35, .text-zinc-900\/40, .text-zinc-900\/45, .text-zinc-900\/50,
+.text-zinc-800\/10, .text-zinc-800\/15, .text-zinc-800\/20, .text-zinc-800\/25, .text-zinc-800\/30, .text-zinc-800\/35, .text-zinc-800\/40, .text-zinc-800\/45, .text-zinc-800\/50 {
+  color: var(--kiq-ink-soft) !important;
+  opacity: 1 !important;
 }
 
-.glass-sm {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 12px;
+.text-slate-500\/10, .text-slate-500\/20, .text-slate-500\/30, .text-slate-500\/40, .text-slate-500\/50,
+.text-zinc-500\/10, .text-zinc-500\/20, .text-zinc-500\/30, .text-zinc-500\/40, .text-zinc-500\/50,
+.text-slate-400\/10, .text-slate-400\/20, .text-slate-400\/30, .text-slate-400\/40, .text-slate-400\/50,
+.text-zinc-400\/10, .text-zinc-400\/20, .text-zinc-400\/30, .text-zinc-400\/40, .text-zinc-400\/50 {
+  color: var(--kiq-muted) !important;
+  opacity: 1 !important;
 }
 
-.glass-dark {
-  background: rgba(8, 12, 38, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 16px;
-}
-
-.glow {
-  box-shadow: 0 0 40px rgba(100, 150, 255, 0.15);
-}
-
-.glow-crimson {
-  box-shadow: 0 0 40px rgba(155, 28, 46, 0.25);
-}
-
-.glow-pulse {
-  animation: glow-pulse-anim 2.5s ease-in-out infinite;
-}
-
-@keyframes glow-pulse-anim {
-  0%, 100% { box-shadow: 0 0 20px rgba(100, 150, 255, 0.1); }
-  50%       { box-shadow: 0 0 40px rgba(100, 150, 255, 0.25); }
-}
-
-.kiq-command-bg {
-  background: radial-gradient(circle at 20% 0%, #0b1220 0%, #05070a 60%);
-  min-height: 100vh;
-}
-
-/* docx-preview faithful Word rendering inside the component preview drawer.
-   docx-preview emits a .docx-wrapper containing one .docx page element per
-   page. We neutralize its default gray canvas (the host already provides a
-   Word-grade backdrop) and give each page a real paper drop-shadow. */
-.docx-preview-host .docx-wrapper {
-  background: transparent;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-}
-.docx-preview-host .docx-wrapper > section.docx {
-  background: #ffffff;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
-  margin: 0;
+.text-white\/20, .text-white\/25, .text-white\/30, .text-white\/35, .text-white\/40, .text-white\/45, .text-white\/50 {
+  &:not(button):not(.bg-primary):not([class*="bg-indigo"]):not([class*="bg-blue"]):not([class*="bg-red"]):not([class*="bg-green"]) {
+    color: var(--kiq-muted) !important;
+  }
 }

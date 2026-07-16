@@ -1074,18 +1074,18 @@ interface MarketQuote { symbol: string; price: number; change_pct: number; name:
 function TickerTape({ quotes }: { quotes: MarketQuote[] }) {
   const items = [...quotes, ...quotes, ...quotes];
   return (
-    <div className="relative overflow-hidden h-8 flex items-center"
-      style={{ background: "rgba(0,0,0,0.6)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+    <div className="relative overflow-hidden h-8 flex items-center shadow-sm"
+      style={{ background: "rgba(255, 255, 255, 0.8)", borderBottom: "1px solid rgba(0, 37, 80, 0.08)" }}>
       <div className="absolute left-0 z-10 h-full w-16 pointer-events-none"
-        style={{ background: "linear-gradient(to right, #000, transparent)" }} />
+        style={{ background: "linear-gradient(to right, #ffffff, transparent)" }} />
       <div className="absolute right-0 z-10 h-full w-16 pointer-events-none"
-        style={{ background: "linear-gradient(to left, #000, transparent)" }} />
+        style={{ background: "linear-gradient(to left, #ffffff, transparent)" }} />
       <div className="flex gap-8 animate-[ticker_40s_linear_infinite] whitespace-nowrap px-4">
         {items.map((q, i) => (
           <span key={i} className="flex items-center gap-1.5 text-[10px] font-mono">
-            <span className="text-zinc-500">{q.symbol}</span>
-            <span className="text-white/80">{q.price.toFixed(2)}</span>
-            <span style={{ color: q.change_pct >= 0 ? GREEN : RED }}>
+            <span className="text-[var(--kiq-muted)] font-semibold">{q.symbol}</span>
+            <span className="text-[var(--kiq-ink-soft)] font-medium">{q.price.toFixed(2)}</span>
+            <span style={{ color: q.change_pct >= 0 ? GREEN : RED }} className="font-bold">
               {q.change_pct >= 0 ? "▲" : "▼"} {Math.abs(q.change_pct).toFixed(2)}%
             </span>
           </span>
@@ -1099,11 +1099,11 @@ function TickerTape({ quotes }: { quotes: MarketQuote[] }) {
 // ─── Severity chip ────────────────────────────────────────────────────────────
 
 function SevChip({ s }: { s: DrillItem["severity"] }) {
-  const cls = s === "CRITICAL" ? "text-red-400 bg-red-500/10 border-red-500/30"
-    : s === "HIGH"     ? "text-orange-400 bg-orange-500/10 border-orange-500/30"
-    : s === "MEDIUM"   ? "text-amber-400 bg-amber-500/10 border-amber-500/30"
-    : "text-emerald-400 bg-emerald-500/10 border-emerald-500/30";
-  return <span className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border ${cls}`}>{s}</span>;
+  const cls = s === "CRITICAL" ? "text-red-700 bg-red-50/80 border-red-200/60"
+    : s === "HIGH"     ? "text-orange-700 bg-orange-50/80 border-orange-200/60"
+    : s === "MEDIUM"   ? "text-amber-700 bg-amber-50/80 border-amber-200/60"
+    : "text-emerald-700 bg-emerald-50/80 border-emerald-200/60";
+  return <span className={`text-[8.5px] font-mono font-bold px-2 py-0.5 rounded border ${cls}`}>{s}</span>;
 }
 
 // ─── Level badge ──────────────────────────────────────────────────────────────
@@ -1112,7 +1112,7 @@ function LevelBadge({ level, active }: { level: number; active?: boolean }) {
   const m = LEVEL_META[level];
   return (
     <span className="text-[8px] font-mono font-bold px-1.5 py-0.5 rounded"
-      style={{ background: active ? `${m.color}22` : "rgba(255,255,255,0.05)", color: active ? m.color : "#555", border: `1px solid ${active ? m.color + "40" : "rgba(255,255,255,0.08)"}` }}>
+      style={{ background: active ? `${m.color}15` : "rgba(0, 37, 80, 0.03)", color: active ? m.color : "var(--kiq-subtle)", border: `1px solid ${active ? m.color + "30" : "rgba(0, 37, 80, 0.08)"}` }}>
       L{level}
     </span>
   );
@@ -1136,10 +1136,10 @@ function Path({
 
   return (
     <div className="flex items-center gap-0 flex-wrap py-3 px-5 border-b"
-      style={{ borderColor: "rgba(255,255,255,0.07)", background: "rgba(0,0,0,0.4)" }}>
+      style={{ borderColor: "rgba(0, 37, 80, 0.08)", background: "rgba(0, 37, 80, 0.02)" }}>
 
       {/* Close */}
-      <button onClick={onClose} className="text-zinc-600 hover:text-zinc-300 transition-colors mr-3">
+      <button onClick={onClose} className="text-[var(--kiq-muted)] hover:text-[var(--kiq-ink-soft)] transition-colors mr-3">
         <ChevronLeft className="w-3.5 h-3.5" />
       </button>
 
@@ -1151,12 +1151,12 @@ function Path({
           <span key={i} className="flex items-center">
             <button
               onClick={() => onGoToLevel(i)}
-              className="text-[10px] font-mono font-bold uppercase tracking-wider transition-colors hover:text-white truncate max-w-[140px]"
-              style={{ color: isCurrent ? tile.color : "#444" }}>
+              className="text-[10px] font-mono font-bold uppercase tracking-wider transition-colors hover:text-[var(--kiq-ink-soft)] truncate max-w-[140px]"
+              style={{ color: isCurrent ? tile.color : "var(--kiq-muted)" }}>
               {seg}
             </button>
             {!isLast && (
-              <span className="mx-2 text-[10px] font-mono select-none" style={{ color: "#333" }}>→</span>
+              <span className="mx-2 text-[10px] font-mono select-none text-[var(--kiq-subtle)]">→</span>
             )}
           </span>
         );
@@ -1164,15 +1164,15 @@ function Path({
 
       {/* Right: level label + dots + badge */}
       <div className="ml-auto flex items-center gap-2">
-        <span className="text-[9px] font-mono text-zinc-700">{LEVEL_META[depth]?.label}</span>
+        <span className="text-[9px] font-mono text-[var(--kiq-muted)]">{LEVEL_META[depth]?.label}</span>
         <div className="flex gap-1">
           {LEVEL_META.slice(1).map((m, i) => (
             <div key={i} className="w-1.5 h-1.5 rounded-full transition-all"
-              style={{ background: i + 1 <= depth ? tile.color : "rgba(255,255,255,0.1)", opacity: i + 1 === depth ? 1 : 0.4 }} />
+              style={{ background: i + 1 <= depth ? tile.color : "rgba(0, 37, 80, 0.08)", opacity: i + 1 === depth ? 1 : 0.4 }} />
           ))}
         </div>
         <LevelBadge level={depth} active />
-        <span className="text-[8px] font-mono text-zinc-700">/ 9</span>
+        <span className="text-[8px] font-mono text-[var(--kiq-muted)]">/ 9</span>
       </div>
     </div>
   );
@@ -1285,19 +1285,20 @@ function DrillNode({ item, onClick, depth = 1, variant = "list" }: {
       <motion.button
         data-testid={`drill-l1-${item.id}`}
         onClick={onClick}
-        whileHover={{ scale: 1.01 }}
-        className="text-left rounded-xl p-4 transition-all"
-        style={{ background: `${color}0d`, border: `1px solid ${color}28`, boxShadow: `0 0 20px ${color}06` }}>
+        whileHover={{ y: -2, scale: 1.005 }}
+        whileTap={{ scale: 0.98 }}
+        className="text-left rounded-xl p-4 transition-all shadow-sm"
+        style={{ background: "#ffffff", border: `1px solid rgba(0, 37, 80, 0.08)` }}>
         <div className="flex items-center justify-between mb-2.5">
           <SevChip s={severity} />
-          <span className="text-[9px] font-mono" style={{ color: `${color}88` }}>{delta}</span>
+          <span className="text-[9px] font-mono" style={{ color: `${color}bb` }}>{delta}</span>
         </div>
-        <div className="text-2xl font-black mb-1" style={{ color }}>{value}</div>
-        <div className="text-[11px] font-bold text-white/80 mb-1.5">{label}</div>
-        <div className="text-[10px] text-zinc-500 leading-relaxed line-clamp-2 mb-3">{desc}</div>
+        <div className="text-2xl font-semibold mb-1 tabular-nums" style={{ color: "var(--kiq-ink)", fontFamily: "var(--font-sans)" }}>{value}</div>
+        <div className="text-[11px] font-semibold text-[var(--kiq-ink-soft)] mb-1.5">{label}</div>
+        <div className="text-[10px] text-[var(--kiq-muted)] leading-relaxed line-clamp-2 mb-3">{desc}</div>
         {item.chart && item.chart.length >= 2 && (
           <div className="mb-3 -mx-1">
-            <div className="text-[8px] font-mono text-zinc-600 uppercase tracking-[0.18em] mb-1 px-1">
+            <div className="text-[8px] font-mono text-[var(--kiq-subtle)] uppercase tracking-[0.18em] mb-1 px-1">
               Plan Filing History — {item.chart[0].year}–{item.chart[item.chart.length - 1].year}
             </div>
             <MiniHistoryChart data={item.chart} color={color} />
@@ -1314,20 +1315,21 @@ function DrillNode({ item, onClick, depth = 1, variant = "list" }: {
     <motion.button
       data-testid={`drill-l${depth}-${item.id}`}
       onClick={onClick}
-      whileHover={{ scale: 1.005, x: 2 }}
+      whileHover={{ x: 2, background: "rgba(255, 255, 255, 0.95)" }}
+      whileTap={{ scale: 0.99 }}
       className="w-full text-left rounded-xl p-4 transition-all"
-      style={{ background: `${color}0a`, border: `1px solid ${color}22` }}>
+      style={{ background: "rgba(255, 255, 255, 0.7)", border: "1px solid rgba(0, 37, 80, 0.06)" }}>
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1.5">
             <SevChip s={severity} />
-            <span className="text-[9px] font-mono" style={{ color: `${color}88` }}>{delta}</span>
+            <span className="text-[9px] font-mono" style={{ color: `${color}bb` }}>{delta}</span>
           </div>
           <div className="flex items-baseline gap-2 mb-1">
-            <span className="text-sm font-black" style={{ color }}>{value}</span>
-            <span className="text-[11px] font-bold text-white/80">{label}</span>
+            <span className="text-sm font-semibold tabular-nums" style={{ color: "var(--kiq-ink)" }}>{value}</span>
+            <span className="text-[11px] font-semibold text-[var(--kiq-ink-soft)]">{label}</span>
           </div>
-          <div className="text-[10px] text-zinc-500 leading-relaxed">{desc}</div>
+          <div className="text-[10px] text-[var(--kiq-muted)] leading-relaxed">{desc}</div>
           {action && depth >= 7 && (
             <div className="mt-2 text-[10px] font-medium rounded px-2.5 py-1.5 inline-block"
               style={{ background: `${color}12`, color, border: `1px solid ${color}25` }}>
@@ -1337,7 +1339,7 @@ function DrillNode({ item, onClick, depth = 1, variant = "list" }: {
         </div>
         {depth < 9 && (
           <div className="flex-shrink-0 mt-1">
-            <ChevronRight className="w-4 h-4" style={{ color: `${color}55` }} />
+            <ChevronRight className="w-4 h-4" style={{ color: `${color}77` }} />
           </div>
         )}
       </div>
@@ -2553,26 +2555,26 @@ function L9Canvas({ tileId, pathItems, tileColor, companyName, companyEin, commi
       {exportDialogOpen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          style={{ background: "rgba(0,0,0,0.75)" }}
+          style={{ background: "rgba(13, 37, 61, 0.45)", backdropFilter: "blur(4px)" }}
           onClick={() => setExportDialogOpen(false)}
           data-testid="overlay-board-brief-export"
         >
           <div
-            className="w-full max-w-md rounded-2xl p-6"
-            style={{ background: "#0b0b0d", border: `1px solid ${tileColor}40` }}
+            className="w-full max-w-md rounded-2xl p-6 shadow-xl"
+            style={{ background: "#ffffff", border: "1px solid rgba(0, 37, 80, 0.08)" }}
             onClick={e => e.stopPropagation()}
           >
             <div className="flex items-center justify-between mb-5">
               <div>
-                <div className="text-[9px] font-mono uppercase tracking-[0.2em]" style={{ color: `${tileColor}99` }}>
+                <div className="text-[9px] font-mono uppercase tracking-[0.2em]" style={{ color: `${tileColor}` }}>
                   Customize Export
                 </div>
-                <div className="text-sm font-bold text-white mt-1">Board Brief — {tileTitle}</div>
+                <div className="text-sm font-bold text-[var(--kiq-ink-soft)] mt-1">Board Brief — {tileTitle}</div>
               </div>
               <button
                 data-testid="button-close-export-dialog"
                 onClick={() => setExportDialogOpen(false)}
-                className="w-7 h-7 rounded-lg flex items-center justify-center text-zinc-500 hover:text-white hover:bg-white/5"
+                className="w-7 h-7 rounded-lg flex items-center justify-center text-[var(--kiq-subtle)] hover:text-[var(--kiq-ink-soft)] hover:bg-[var(--kiq-canvas-soft)] transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -2580,7 +2582,7 @@ function L9Canvas({ tileId, pathItems, tileColor, companyName, companyEin, commi
 
             <div className="space-y-4">
               <div>
-                <label className="block text-[9px] font-mono uppercase tracking-widest text-zinc-500 mb-1.5">
+                <label className="block text-[9px] font-mono uppercase tracking-widest text-[var(--kiq-muted)] mb-1.5">
                   Company / Entity Name
                 </label>
                 <input
@@ -2589,12 +2591,12 @@ function L9Canvas({ tileId, pathItems, tileColor, companyName, companyEin, commi
                   value={formCompany}
                   onChange={e => setFormCompany(e.target.value)}
                   placeholder="Client Confidential"
-                  className="w-full px-3 py-2 rounded-lg text-sm text-white bg-white/5 border border-white/10 focus:outline-none focus:border-white/30"
+                  className="w-full px-3 py-2 rounded-lg text-sm text-[var(--kiq-ink-soft)] bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] focus:outline-none focus:border-slate-400 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-[9px] font-mono uppercase tracking-widest text-zinc-500 mb-1.5">
+                <label className="block text-[9px] font-mono uppercase tracking-widest text-[var(--kiq-muted)] mb-1.5">
                   Analyst / Prepared By
                 </label>
                 <input
@@ -2603,12 +2605,12 @@ function L9Canvas({ tileId, pathItems, tileColor, companyName, companyEin, commi
                   value={formAnalyst}
                   onChange={e => setFormAnalyst(e.target.value)}
                   placeholder="Kincaid IQ™ — War Room Intelligence"
-                  className="w-full px-3 py-2 rounded-lg text-sm text-white bg-white/5 border border-white/10 focus:outline-none focus:border-white/30"
+                  className="w-full px-3 py-2 rounded-lg text-sm text-[var(--kiq-ink-soft)] bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] focus:outline-none focus:border-slate-400 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-[9px] font-mono uppercase tracking-widest text-zinc-500 mb-1.5">
+                <label className="block text-[9px] font-mono uppercase tracking-widest text-[var(--kiq-muted)] mb-1.5">
                   Report Date
                 </label>
                 <input
@@ -2617,17 +2619,17 @@ function L9Canvas({ tileId, pathItems, tileColor, companyName, companyEin, commi
                   value={formDate}
                   onChange={e => setFormDate(e.target.value)}
                   placeholder={defaultDate}
-                  className="w-full px-3 py-2 rounded-lg text-sm text-white bg-white/5 border border-white/10 focus:outline-none focus:border-white/30"
+                  className="w-full px-3 py-2 rounded-lg text-sm text-[var(--kiq-ink-soft)] bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] focus:outline-none focus:border-slate-400 transition-colors"
                 />
               </div>
 
               <div>
-                <label className="block text-[9px] font-mono uppercase tracking-widest text-zinc-500 mb-1.5">
+                <label className="block text-[9px] font-mono uppercase tracking-widest text-[var(--kiq-muted)] mb-1.5">
                   Client Logo (optional · PNG or JPG)
                 </label>
                 <div className="flex items-center gap-3">
                   <label
-                    className="px-3 py-2 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider cursor-pointer bg-white/5 border border-white/10 text-white hover:bg-white/10"
+                    className="px-3 py-2 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider cursor-pointer bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] text-[var(--kiq-ink-soft)] hover:bg-[var(--kiq-canvas-parchment)] transition-colors"
                   >
                     Choose file
                     <input
@@ -2641,14 +2643,14 @@ function L9Canvas({ tileId, pathItems, tileColor, companyName, companyEin, commi
                   {formLogo && (
                     <img src={formLogo} alt="logo preview" className="h-8 max-w-[100px] object-contain" />
                   )}
-                  <span className="text-[10px] text-zinc-500 truncate flex-1" data-testid="text-export-logo-name">
+                  <span className="text-[10px] text-[var(--kiq-muted)] truncate flex-1" data-testid="text-export-logo-name">
                     {formLogoName || "No file selected"}
                   </span>
                   {formLogo && (
                     <button
                       data-testid="button-clear-logo"
                       onClick={() => { setFormLogo(undefined); setFormLogoName(""); }}
-                      className="text-[10px] text-zinc-500 hover:text-white"
+                      className="text-[10px] text-[var(--kiq-muted)] hover:text-[var(--kiq-ink-soft)] underline transition-colors"
                     >
                       Clear
                     </button>
@@ -2658,14 +2660,14 @@ function L9Canvas({ tileId, pathItems, tileColor, companyName, companyEin, commi
             </div>
 
             {exportProfile.hasSavedDefaults && (
-              <div className="mt-3 flex items-center justify-between gap-2 text-[10px] font-mono text-zinc-500">
+              <div className="mt-3 flex items-center justify-between gap-2 text-[10px] font-mono text-[var(--kiq-muted)]">
                 <span className="truncate">
                   Pre-filled from your last export.
                 </span>
                 <button
                   data-testid="button-reset-export-defaults"
                   onClick={handleResetExportDefaults}
-                  className="uppercase tracking-wider text-zinc-400 hover:text-white underline-offset-2 hover:underline"
+                  className="uppercase tracking-wider text-[var(--kiq-subtle)] hover:text-[var(--kiq-muted)] underline-offset-2 hover:underline transition-colors"
                 >
                   Reset to default
                 </button>
@@ -2676,7 +2678,7 @@ function L9Canvas({ tileId, pathItems, tileColor, companyName, companyEin, commi
               <button
                 data-testid="button-cancel-export"
                 onClick={() => setExportDialogOpen(false)}
-                className="px-4 py-2 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-400 hover:text-white"
+                className="px-4 py-2 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider text-[var(--kiq-subtle)] hover:text-[var(--kiq-ink-soft)] transition-colors"
               >
                 Cancel
               </button>
@@ -2686,8 +2688,8 @@ function L9Canvas({ tileId, pathItems, tileColor, companyName, companyEin, commi
                 disabled={exporting}
                 className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-[10px] font-mono font-bold uppercase tracking-wider transition-all"
                 style={{
-                  background: `${tileColor}25`,
-                  border: `1px solid ${tileColor}60`,
+                  background: `${tileColor}15`,
+                  border: `1px solid ${tileColor}40`,
                   color: tileColor,
                   opacity: exporting ? 0.6 : 1,
                 }}
@@ -2702,8 +2704,8 @@ function L9Canvas({ tileId, pathItems, tileColor, companyName, companyEin, commi
 
       <div className="flex items-center justify-between gap-2 mb-6 px-1">
         <div className="flex items-center gap-2">
-          <Eye className="w-3.5 h-3.5 text-white" />
-          <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-[0.2em]">C-Suite Narrative — Executive Summary</span>
+          <Eye className="w-3.5 h-3.5" style={{ color: tileColor }} />
+          <span className="text-[10px] font-mono text-[var(--kiq-muted)] uppercase tracking-[0.2em]">C-Suite Narrative — Executive Summary</span>
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -2713,7 +2715,7 @@ function L9Canvas({ tileId, pathItems, tileColor, companyName, companyEin, commi
             style={{
               background: `${tileColor}0d`,
               border: `1px solid ${tileColor}25`,
-              color: `${tileColor}99`,
+              color: tileColor,
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = `${tileColor}18`; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = `${tileColor}0d`; }}
@@ -2728,7 +2730,7 @@ function L9Canvas({ tileId, pathItems, tileColor, companyName, companyEin, commi
             style={{
               background: `${tileColor}0d`,
               border: `1px solid ${tileColor}25`,
-              color: `${tileColor}99`,
+              color: tileColor,
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = `${tileColor}18`; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = `${tileColor}0d`; }}
@@ -2744,7 +2746,7 @@ function L9Canvas({ tileId, pathItems, tileColor, companyName, companyEin, commi
             style={{
               background: `${tileColor}0d`,
               border: `1px solid ${tileColor}25`,
-              color: `${tileColor}99`,
+              color: tileColor,
             }}
             onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = `${tileColor}18`; }}
             onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = `${tileColor}0d`; }}
@@ -2928,22 +2930,22 @@ function NarrativePanel({ level, insight, implication, tileId, tileColor, isLoad
   const gateInfo = gate ? gateMeta(gate) : null;
 
   return (
-    <div className="h-full flex flex-col" style={{ background: "rgba(0,0,0,0.5)", borderLeft: "1px solid rgba(255,255,255,0.07)" }}>
+    <div className="h-full flex flex-col" style={{ background: "rgba(255, 255, 255, 0.65)", borderLeft: "1px solid rgba(0, 37, 80, 0.08)" }}>
 
       {/* Header */}
-      <div className="px-5 pt-5 pb-4 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+      <div className="px-5 pt-5 pb-4 border-b" style={{ borderColor: "rgba(0, 37, 80, 0.08)" }}>
         <div className="flex items-center justify-between gap-2 mb-2">
           <div className="flex items-center gap-2 min-w-0">
-            <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: tileId ? tileColor : "#555" }} />
-            <span className="text-[8px] font-mono font-bold uppercase tracking-[0.25em] text-zinc-600 truncate">KIQ Narrative Engine™</span>
+            <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: tileId ? tileColor : "#888" }} />
+            <span className="text-[8px] font-mono font-bold uppercase tracking-[0.25em] text-[var(--kiq-subtle)] truncate">KIQ Narrative Engine™</span>
           </div>
           {tileId && tier && !isLoading && <ConfidenceChip tier={tier} compact />}
         </div>
-        <div className="text-[9px] font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color: tileId ? `${tileColor}88` : "#555" }}>
+        <div className="text-[9px] font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color: tileId ? `${tileColor}dd` : "#888" }}>
           <span className="truncate">{meta?.label ?? "War Room"} · {meta?.question ?? "Select a tile"}</span>
           {tileId && gateInfo && (
             <span className="ml-auto px-1.5 py-0.5 rounded font-bold tracking-[0.18em]"
-              style={{ background: `${GOLD}10`, color: GOLD, border: `1px solid ${GOLD}30`, fontSize: 8 }}>
+              style={{ background: "rgba(155, 104, 41, 0.08)", color: "var(--kiq-gold)", border: "1px solid rgba(155, 104, 41, 0.2)", fontSize: 8 }}>
               GATE {gateInfo.n} · {gateInfo.name}
             </span>
           )}
@@ -2961,7 +2963,7 @@ function NarrativePanel({ level, insight, implication, tileId, tileColor, isLoad
 
             {/* Empty state */}
             {!tileId && (
-              <p className="text-xs text-zinc-700 leading-relaxed italic">
+              <p className="text-xs text-[var(--kiq-muted)] leading-relaxed italic">
                 Click any War Room tile to begin. Each click descends one layer deeper — from signal to mechanism to proof to action.
               </p>
             )}
@@ -2970,10 +2972,10 @@ function NarrativePanel({ level, insight, implication, tileId, tileColor, isLoad
             {tileId && isLoading && (
               <div className="space-y-3">
                 {[80, 65].map((w, i) => (
-                  <div key={i} className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                    <div className="h-2 rounded mb-2 animate-pulse" style={{ background: "rgba(255,255,255,0.08)", width: "40%" }} />
-                    <div className="h-3 rounded animate-pulse" style={{ background: "rgba(255,255,255,0.05)", width: `${w}%` }} />
-                    <div className="h-3 rounded animate-pulse mt-1" style={{ background: "rgba(255,255,255,0.04)", width: "55%" }} />
+                  <div key={i} className="rounded-xl p-4" style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0, 37, 80, 0.04)" }}>
+                    <div className="h-2 rounded mb-2 animate-pulse" style={{ background: "rgba(0,0,0,0.06)", width: "40%" }} />
+                    <div className="h-3 rounded animate-pulse" style={{ background: "rgba(0,0,0,0.04)", width: `${w}%` }} />
+                    <div className="h-3 rounded animate-pulse mt-1" style={{ background: "rgba(0,0,0,0.03)", width: "55%" }} />
                   </div>
                 ))}
               </div>
@@ -2983,19 +2985,19 @@ function NarrativePanel({ level, insight, implication, tileId, tileColor, isLoad
             {tileId && !isLoading && (insight || implication) && (
               <div className="space-y-2.5">
                 {insight && (
-                  <div className="rounded-xl p-4" style={{ background: `${tileColor}09`, border: `1px solid ${tileColor}20` }}>
+                  <div className="rounded-xl p-4" style={{ background: `${tileColor}08`, border: `1px solid ${tileColor}20` }}>
                     <div className="text-[8px] font-mono font-bold uppercase tracking-[0.2em] mb-2" style={{ color: tileColor }}>
                       ● Insight
                     </div>
-                    <p className="text-[11px] text-white/80 leading-relaxed whitespace-pre-line">{insight}</p>
+                    <p className="text-[11px] text-[var(--kiq-ink-soft)] leading-relaxed whitespace-pre-line">{insight}</p>
                   </div>
                 )}
                 {implication && (
-                  <div className="rounded-xl p-4" style={{ background: `${GOLD}09`, border: `1px solid ${GOLD}20` }}>
+                  <div className="rounded-xl p-4" style={{ background: `${GOLD}08`, border: `1px solid ${GOLD}20` }}>
                     <div className="text-[8px] font-mono font-bold uppercase tracking-[0.2em] mb-2" style={{ color: GOLD }}>
                       → Implication
                     </div>
-                    <p className="text-[11px] text-zinc-300 leading-relaxed">{implication}</p>
+                    <p className="text-[11px] text-[var(--kiq-ink-soft)] leading-relaxed">{implication}</p>
                   </div>
                 )}
               </div>
@@ -3006,10 +3008,10 @@ function NarrativePanel({ level, insight, implication, tileId, tileColor, isLoad
       </div>
 
       {/* Descent Path — level continuity map */}
-      <div className="px-5 pb-5 pt-4 border-t" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
-        <div className="text-[8px] font-mono text-zinc-800 uppercase tracking-widest mb-2">Descent Path</div>
+      <div className="px-5 pb-5 pt-4 border-t" style={{ borderColor: "rgba(0, 37, 80, 0.08)" }}>
+        <div className="text-[8px] font-mono text-[var(--kiq-subtle)] uppercase tracking-widest mb-2">Descent Path</div>
         <div className="relative">
-          <div className="absolute left-[2.5px] top-2 bottom-2 w-px" style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.08), transparent)" }} />
+          <div className="absolute left-[2.5px] top-2 bottom-2 w-px" style={{ background: "linear-gradient(to bottom, rgba(0, 37, 80, 0.08), transparent)" }} />
           <div className="space-y-0.5 pl-4">
             {LEVEL_META.slice(1).map((m, i) => {
               const lvl     = i + 1;
@@ -3018,9 +3020,9 @@ function NarrativePanel({ level, insight, implication, tileId, tileColor, isLoad
               return (
                 <div key={i} className="flex items-center gap-2 py-0.5">
                   <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 absolute left-0"
-                    style={{ background: reached ? m.color : "rgba(255,255,255,0.08)", boxShadow: current ? `0 0 6px ${m.color}` : "none" }} />
+                    style={{ background: reached ? m.color : "rgba(0, 37, 80, 0.08)", boxShadow: current ? `0 0 6px ${m.color}` : "none" }} />
                   <span className="text-[8.5px] font-mono truncate transition-colors"
-                    style={{ color: current ? "rgba(255,255,255,0.85)" : reached ? "rgba(255,255,255,0.3)" : "#2a2a2a" }}>
+                    style={{ color: current ? "var(--kiq-ink)" : reached ? "var(--kiq-muted)" : "var(--kiq-subtle)" }}>
                     {current ? "▶ " : ""}{m.label}
                   </span>
                 </div>
@@ -3178,17 +3180,17 @@ function MetricsCanonStrip({ ein }: { ein: string }) {
 
   return (
     <div className="mt-3 rounded-xl px-4 py-3"
-      style={{ background: "rgba(251,183,36,0.04)", border: "1px solid rgba(251,183,36,0.15)" }}
+      style={{ background: "rgba(245, 166, 35, 0.05)", border: "1px solid rgba(245, 166, 35, 0.2)" }}
       data-testid="metrics-canon-strip">
       <div className="flex items-center gap-2 mb-2">
         <Activity className="w-3 h-3" style={{ color: GOLD }} />
         <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: GOLD }}>
           Metrics Canon
         </span>
-        <span className="text-[8px] font-mono uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.25)" }}>
+        <span className="text-[8px] font-mono uppercase tracking-wider text-[var(--kiq-muted)]">
           Supplemental · not a board tile
         </span>
-        <span className="ml-auto text-[8px] font-mono uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.3)" }}>
+        <span className="ml-auto text-[8px] font-mono uppercase tracking-wider text-[var(--kiq-subtle)]">
           {data.coverage.modeled} modeled · {data.coverage.insufficient} insufficient
         </span>
       </div>
@@ -3197,25 +3199,25 @@ function MetricsCanonStrip({ ein }: { ein: string }) {
           const insufficient = m.tier === "INSUFFICIENT_EVIDENCE" || m.value == null;
           return (
             <div key={m.key} data-testid={`canon-metric-${m.key.toLowerCase()}`}
-              className="rounded-lg px-3 py-2.5 flex flex-col gap-1.5"
-              style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              className="rounded-lg px-3 py-2.5 flex flex-col gap-1.5 shadow-sm"
+              style={{ background: "var(--kiq-surface)", border: "1px solid rgba(0, 37, 80, 0.08)" }}>
               <div className="flex items-center justify-between gap-1">
-                <span className="text-[10px] font-black tracking-[0.08em]" style={{ color: GOLD }}>{m.key}</span>
+                <span className="text-[10px] font-black tracking-[0.08em]" style={{ color: "var(--kiq-gold)" }}>{m.key}</span>
                 <ConfidenceChip tier={m.tier} compact />
               </div>
-              <div className="text-[8px] font-mono uppercase tracking-wider leading-tight" style={{ color: "rgba(255,255,255,0.35)" }}>
+              <div className="text-[8px] font-mono uppercase tracking-wider leading-tight text-[var(--kiq-subtle)]">
                 {m.label}
               </div>
-              <div className="font-black tabular-nums leading-tight break-words"
-                style={{ color: insufficient ? "#ef4444" : "#e5e7eb", fontSize: insufficient ? 9 : 13 }}
+              <div className="font-bold tabular-nums leading-tight break-words"
+                style={{ color: insufficient ? "#ef4444" : "var(--kiq-ink)", fontSize: insufficient ? 9 : 13 }}
                 data-testid={`canon-value-${m.key.toLowerCase()}`}>
                 {fmtCanonValue(m)}
               </div>
-              <div className="text-[8px] font-mono leading-tight break-words" style={{ color: "rgba(255,255,255,0.3)" }}>
+              <div className="text-[8px] font-mono leading-tight break-words text-[var(--kiq-subtle)]">
                 {m.formula}
               </div>
               {m.note && (
-                <div className="text-[8px] leading-tight break-words" style={{ color: "rgba(255,255,255,0.28)" }}>
+                <div className="text-[8px] leading-tight break-words text-[var(--kiq-subtle)]">
                   {m.note}
                 </div>
               )}
@@ -3289,25 +3291,25 @@ function CommitRfpOsPanel({ ein, name, commitData }: { ein: string; name: string
 
   return (
     <div className="mt-3 rounded-xl px-4 py-3"
-      style={{ background: "rgba(251,183,36,0.04)", border: "1px solid rgba(251,183,36,0.15)" }}
+      style={{ background: "rgba(245, 166, 35, 0.05)", border: "1px solid rgba(245, 166, 35, 0.2)" }}
       data-testid="commit-rfp-os-panel">
       <div className="flex items-center gap-2 mb-2.5">
         <Workflow className="w-3 h-3" style={{ color: GOLD }} />
         <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: GOLD }}>
           Commit Engine · RFP Intelligence OS
         </span>
-        <span className="text-[8px] font-mono uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.25)" }}>
+        <span className="text-[8px] font-mono uppercase tracking-wider text-[var(--kiq-muted)]">
           Supplemental · not a board tile
         </span>
-        <span className="ml-auto text-[8px] font-mono uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.3)" }}>
+        <span className="ml-auto text-[8px] font-mono uppercase tracking-wider text-[var(--kiq-subtle)]">
           {openOpps.length} open · {fmtCompact(pipelineValue)} pipeline
         </span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-3">
         {/* Commit readiness rail */}
-        <div className="rounded-lg px-3 py-2.5 flex flex-col gap-2"
-          style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.06)" }}
+        <div className="rounded-lg px-3 py-2.5 flex flex-col gap-2 shadow-sm"
+          style={{ background: "var(--kiq-surface)", border: "1px solid rgba(0, 37, 80, 0.08)" }}
           data-testid="commit-readiness-rail">
           <div className="flex items-center gap-1.5">
             <Target className="w-3 h-3" style={{ color: GOLD }} />
@@ -3315,57 +3317,57 @@ function CommitRfpOsPanel({ ein, name, commitData }: { ein: string; name: string
           </div>
           {ein && commitData ? (
             <>
-              <div className="text-[11px] font-bold text-white/85 leading-tight truncate" data-testid="commit-company">
+              <div className="text-[11px] font-bold text-[var(--kiq-ink-soft)] leading-tight truncate" data-testid="commit-company">
                 {commitData?.edgar?.name ?? name ?? "Loaded company"}
               </div>
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-black tabular-nums" style={{ color: goCount >= 4 ? GOLD : BLUE }} data-testid="commit-gate-count">
+                <span className="text-2xl font-bold tabular-nums" style={{ color: goCount >= 4 ? GOLD : BLUE }} data-testid="commit-gate-count">
                   {goCount}/{totalGates}
                 </span>
-                <span className="text-[9px] uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.4)" }}>gates cleared</span>
+                <span className="text-[9px] uppercase tracking-wider text-[var(--kiq-subtle)]">gates cleared</span>
               </div>
               <div className="flex items-center gap-1.5 flex-wrap">
                 <span className="text-[9px] font-bold px-2 py-0.5 rounded-full"
-                  style={{ background: commitReady ? "rgba(16,185,129,0.14)" : "rgba(0,212,255,0.12)",
-                    color: commitReady ? GREEN : BLUE }} data-testid="commit-rfp-status">
+                  style={{ background: commitReady ? "rgba(16,185,129,0.08)" : "rgba(0,212,255,0.08)",
+                    color: commitReady ? "var(--kiq-health)" : "var(--kiq-blue)" }} data-testid="commit-rfp-status">
                   {commitReady ? "RFP Ready" : "Qualifying"}
                 </span>
                 {opportunity.total_first_year ? (
-                  <span className="text-[9px] font-mono" style={{ color: "rgba(255,255,255,0.45)" }}>
+                  <span className="text-[9px] font-mono text-[var(--kiq-muted)]">
                     {fmtShort(opportunity.total_first_year)} first-year
                   </span>
                 ) : null}
               </div>
             </>
           ) : (
-            <div className="text-[10px] leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>
+            <div className="text-[10px] leading-relaxed text-[var(--kiq-muted)]">
               Load a company above to score its 7-gate commit readiness.
             </div>
           )}
           <a href="/commit-engine"
-            className="mt-auto text-[9px] font-bold px-2.5 py-1.5 rounded-md flex items-center justify-center gap-1"
-            style={{ background: "rgba(251,183,36,0.10)", border: "1px solid rgba(251,183,36,0.22)", color: GOLD, textDecoration: "none" }}
+            className="mt-auto text-[9px] font-bold px-2.5 py-1.5 rounded-md flex items-center justify-center gap-1 shadow-sm"
+            style={{ background: "#ffffff", border: "1px solid rgba(251,183,36,0.3)", color: GOLD, textDecoration: "none" }}
             data-testid="link-commit-engine">
             Qualify in Commit Engine <ArrowRight className="w-3 h-3" />
           </a>
         </div>
 
         {/* Opportunity roster rail */}
-        <div className="rounded-lg px-3 py-2.5 flex flex-col gap-2"
-          style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.06)" }}
+        <div className="rounded-lg px-3 py-2.5 flex flex-col gap-2 shadow-sm"
+          style={{ background: "var(--kiq-surface)", border: "1px solid rgba(0, 37, 80, 0.08)" }}
           data-testid="rfp-opportunity-roster">
           <div className="flex items-center gap-1.5">
             <Layers className="w-3 h-3" style={{ color: GOLD }} />
             <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: GOLD }}>Top Opportunities</span>
             <a href="/rfp-os/command"
-              className="ml-auto text-[9px] font-bold px-2 py-0.5 rounded-md flex items-center gap-1"
-              style={{ background: "rgba(251,183,36,0.10)", border: "1px solid rgba(251,183,36,0.22)", color: GOLD, textDecoration: "none" }}
+              className="ml-auto text-[9px] font-bold px-2.5 py-1 rounded-md flex items-center gap-1 shadow-sm"
+              style={{ background: "#ffffff", border: "1px solid rgba(251,183,36,0.3)", color: GOLD, textDecoration: "none" }}
               data-testid="link-rfp-os">
               Open RFP Intelligence OS <ArrowRight className="w-3 h-3" />
             </a>
           </div>
           {topOpps.length === 0 ? (
-            <div className="text-[10px] leading-relaxed py-2" style={{ color: "rgba(255,255,255,0.4)" }}>
+            <div className="text-[10px] leading-relaxed py-2 text-[var(--kiq-muted)]">
               No open opportunities yet. Intake an RFP in the RFP Intelligence OS to start scoring the pipeline.
             </div>
           ) : (
@@ -3375,14 +3377,14 @@ function CommitRfpOsPanel({ ein, name, commitData }: { ein: string; name: string
                 const dot = TIER_COLOR[o.score_tier ?? ""] ?? "#94a3b8";
                 return (
                   <a key={o.id} href="/rfp-os/scoring"
-                    className="flex items-center gap-2 rounded-md px-2 py-1.5"
-                    style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", textDecoration: "none" }}
+                    className="flex items-center gap-2 rounded-md px-2 py-1.5 hover:bg-[var(--kiq-canvas-soft)] transition-colors"
+                    style={{ background: "rgba(0, 37, 80, 0.02)", border: "1px solid rgba(0, 37, 80, 0.06)", textDecoration: "none" }}
                     data-testid={`rfp-opp-${o.id}`}>
                     <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: dot }} />
-                    <span className="text-[10px] font-bold text-white/85 truncate flex-1">{o.employer_name || o.title || "Untitled RFP"}</span>
+                    <span className="text-[10px] font-semibold text-[var(--kiq-ink-soft)] truncate flex-1">{o.employer_name || o.title || "Untitled RFP"}</span>
                     <span className="text-[8px] font-bold px-1.5 py-0.5 rounded shrink-0"
-                      style={{ background: `${sm.color}1f`, color: sm.color }}>{sm.label}</span>
-                    <span className="text-[10px] font-black tabular-nums shrink-0" style={{ color: GOLD }}>
+                      style={{ background: `${sm.color}14`, color: sm.color }}>{sm.label}</span>
+                    <span className="text-[10px] font-bold tabular-nums shrink-0" style={{ color: "var(--kiq-gold)" }}>
                       {fmtCompact(getRevenue(o))}
                     </span>
                   </a>
@@ -3402,19 +3404,19 @@ function CommitRfpOsPanel({ ein, name, commitData }: { ein: string; name: string
 function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void }) {
   return (
     <div data-testid="doctrine-strip" className="mx-6 mt-3 mb-4 rounded-2xl overflow-hidden"
-      style={{ background: "rgba(18,16,30,0.55)", border: "1px solid rgba(245,166,35,0.32)", backdropFilter: "blur(18px) saturate(160%)" }}>
+      style={{ background: "rgba(245, 166, 35, 0.04)", border: "1px solid rgba(245, 166, 35, 0.22)", backdropFilter: "blur(10px)" }}>
 
       {/* Toggle row */}
       <button data-testid="btn-toggle-doctrine" onClick={onToggle}
-        className="w-full flex items-center gap-3 px-5 py-3 text-left">
-        <Scale className="w-3.5 h-3.5" style={{ color: GOLD }} />
+        className="w-full flex items-center gap-3 px-5 py-3.5 text-left">
+        <Scale className="w-4 h-4" style={{ color: GOLD }} />
         <span className="text-[10px] font-mono font-bold uppercase tracking-[0.22em]" style={{ color: GOLD }}>
           Constitutional Doctrine
         </span>
-        <span className="text-[10px] font-mono italic" style={{ color: "rgba(255,255,255,0.45)" }}>
+        <span className="text-[10px] font-mono italic text-[var(--kiq-muted)]">
           {open ? "" : "voice contract · four hard rules · four primitives · seven-gate chain · governance events · three tiers · four registers · empirical validation"}
         </span>
-        <ChevronRight className="w-3 h-3 ml-auto transition-transform" style={{ color: GOLD, transform: open ? "rotate(90deg)" : "rotate(0deg)" }} />
+        <ChevronRight className="w-3.5 h-3.5 ml-auto transition-transform" style={{ color: GOLD, transform: open ? "rotate(90deg)" : "rotate(0deg)" }} />
       </button>
 
       <AnimatePresence>
@@ -3428,12 +3430,12 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
             <div className="px-5 pb-5 space-y-4">
 
               {/* Voice Contract */}
-              <div className="rounded-xl px-4 py-3"
-                style={{ background: "rgba(245,166,35,0.06)", border: "1px solid rgba(245,166,35,0.22)" }}>
+              <div className="rounded-xl px-4 py-3 shadow-sm"
+                style={{ background: "#ffffff", border: "1px solid rgba(245,166,35,0.18)" }}>
                 <div className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] mb-1.5" style={{ color: GOLD }}>
                   Voice Contract for the Narrative Engine
                 </div>
-                <p className="text-[12px] italic leading-relaxed" style={{ color: "rgba(255,255,255,0.78)", fontFamily: "ui-serif, Georgia, serif" }}>
+                <p className="text-[12px] leading-relaxed text-[var(--kiq-ink-soft)] font-medium">
                   {VOICE_CONTRACT}
                 </p>
               </div>
@@ -3446,11 +3448,11 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
                 <div className="grid grid-cols-2 gap-2">
                   {HARD_RULES.map(r => (
                     <div key={r.num} data-testid={`hard-rule-${r.num.toLowerCase().replace(" ", "-")}`}
-                      className="rounded-lg px-3 py-2.5"
-                      style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(245,166,35,0.14)" }}>
+                      className="rounded-lg px-3 py-2.5 shadow-sm"
+                      style={{ background: "#ffffff", border: "1px solid rgba(245,166,35,0.12)" }}>
                       <div className="text-[9px] font-mono font-bold tracking-[0.16em]" style={{ color: GOLD }}>{r.num}</div>
-                      <div className="text-[11px] font-semibold text-white/85 my-1" style={{ fontFamily: "ui-serif, Georgia, serif" }}>{r.title}</div>
-                      <div className="text-[10px] leading-relaxed text-zinc-500">{r.body}</div>
+                      <div className="text-[11px] font-semibold text-[var(--kiq-ink-soft)] my-1">{r.title}</div>
+                      <div className="text-[10px] leading-relaxed text-[var(--kiq-muted)]">{r.body}</div>
                     </div>
                   ))}
                 </div>
@@ -3458,8 +3460,8 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
 
               {/* 7-Gate Chain + Tier legend */}
               <div className="grid grid-cols-[1fr_auto] gap-4 items-stretch">
-                <div className="rounded-xl px-4 py-3"
-                  style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(245,166,35,0.18)" }}>
+                <div className="rounded-xl px-4 py-3 shadow-sm"
+                  style={{ background: "#ffffff", border: "1px solid rgba(245,166,35,0.15)" }}>
                   <div className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] mb-2" style={{ color: GOLD }}>
                     § 3 · 7-Gate Enforcement Chain
                   </div>
@@ -3468,15 +3470,15 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
                       <div key={g.key} className="flex items-center gap-1 flex-1">
                         <div className="flex-1 text-center">
                           <div className="text-[9px] font-mono font-bold tracking-[0.12em]" style={{ color: GOLD }}>GATE {g.n}</div>
-                          <div className="text-[8px] font-mono mt-0.5" style={{ color: "rgba(255,255,255,0.3)" }}>{g.name}</div>
+                          <div className="text-[8px] font-mono mt-0.5 text-[var(--kiq-subtle)]">{g.name}</div>
                         </div>
-                        {i < ENFORCEMENT_GATES.length - 1 && <span className="text-[10px]" style={{ color: `${GOLD}88` }}>→</span>}
+                        {i < ENFORCEMENT_GATES.length - 1 && <span className="text-[10px]" style={{ color: `${GOLD}66` }}>→</span>}
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="rounded-xl px-4 py-3 flex flex-col gap-2 justify-center"
-                  style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(245,166,35,0.18)" }}>
+                <div className="rounded-xl px-4 py-3 flex flex-col gap-2 justify-center shadow-sm"
+                  style={{ background: "#ffffff", border: "1px solid rgba(245,166,35,0.15)" }}>
                   <div className="text-[9px] font-mono font-bold uppercase tracking-[0.2em]" style={{ color: GOLD }}>
                     § 4 · Tiers
                   </div>
@@ -3496,22 +3498,22 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
                 <div className="grid grid-cols-2 gap-2">
                   {CORE_PRIMITIVES.map(p => (
                     <div key={p.name} data-testid={`primitive-${p.name.toLowerCase()}`}
-                      className="rounded-lg px-3 py-2.5"
-                      style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(245,166,35,0.14)" }}>
+                      className="rounded-lg px-3 py-2.5 shadow-sm"
+                      style={{ background: "#ffffff", border: "1px solid rgba(245,166,35,0.12)" }}>
                       <div className="text-[11px] font-mono font-bold tracking-[0.06em]" style={{ color: GOLD }}>{p.name}</div>
-                      <div className="text-[9px] font-mono mt-1 leading-relaxed break-words" style={{ color: "rgba(255,255,255,0.5)" }}>{p.fields}</div>
-                      <div className="text-[10px] leading-relaxed text-zinc-500 mt-1">{p.purpose}</div>
+                      <div className="text-[9px] font-mono mt-1 leading-relaxed break-words text-[var(--kiq-muted)]">{p.fields}</div>
+                      <div className="text-[10px] leading-relaxed text-[var(--kiq-muted)] mt-1">{p.purpose}</div>
                     </div>
                   ))}
                 </div>
-                <div className="text-[9px] font-mono mt-2 leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>
-                  Deterministic cache key: <span style={{ color: `${GOLD}cc` }}>{DETERMINISTIC_CACHE_KEY}</span>
+                <div className="text-[9px] font-mono mt-2 leading-relaxed text-[var(--kiq-subtle)]">
+                  Deterministic cache key: <span className="font-bold text-[var(--kiq-muted)]">{DETERMINISTIC_CACHE_KEY}</span>
                 </div>
               </div>
 
               {/* Canonical Enforcement Gates */}
-              <div className="rounded-xl px-4 py-3"
-                style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(245,166,35,0.18)" }}>
+              <div className="rounded-xl px-4 py-3 shadow-sm"
+                style={{ background: "#ffffff", border: "1px solid rgba(245,166,35,0.15)" }}>
                 <div className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] mb-2" style={{ color: GOLD }}>
                   Canonical Enforcement Gates
                 </div>
@@ -3519,14 +3521,14 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
                   {ENFORCEMENT_GATES.map(g => (
                     <div key={g.n} data-testid={`enforcement-gate-${g.n}`}
                       className="grid grid-cols-[auto_1fr_auto] items-center gap-3 rounded-md px-2.5 py-1.5"
-                      style={{ background: "rgba(255,255,255,0.02)" }}>
-                      <span className="text-[9px] font-mono font-bold whitespace-nowrap" style={{ color: `${GOLD}aa` }}>GATE {g.n}</span>
-                      <span className="text-[11px] font-semibold text-white/80" style={{ fontFamily: "ui-serif, Georgia, serif" }}>
+                      style={{ background: "rgba(0, 37, 80, 0.02)" }}>
+                      <span className="text-[9px] font-mono font-bold whitespace-nowrap" style={{ color: GOLD }}>GATE {g.n}</span>
+                      <span className="text-[11px] font-semibold text-[var(--kiq-ink-soft)]">
                         {g.name}
-                        <span className="text-[10px] font-normal text-zinc-500"> · {g.effect}</span>
+                        <span className="text-[10px] font-normal text-[var(--kiq-muted)]"> · {g.effect}</span>
                       </span>
                       <span className="text-[8px] font-mono px-2 py-0.5 rounded whitespace-nowrap"
-                        style={{ color: "#ff6b7a", background: "rgba(255,107,122,0.10)", border: "1px solid rgba(255,107,122,0.25)" }}>
+                        style={{ color: "#ef4444", background: "rgba(239, 68, 68, 0.08)", border: "1px solid rgba(239, 68, 68, 0.2)" }}>
                         {g.fail}
                       </span>
                     </div>
@@ -3541,15 +3543,15 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   {GOVERNANCE_EVENTS.map(e => {
-                    const sc = e.severity === "CRITICAL" ? "#ff6b7a" : e.severity === "WARNING" ? "#ffb547" : "#4ade80";
+                    const sc = e.severity === "CRITICAL" ? "#ef4444" : e.severity === "WARNING" ? "#f5a623" : "#10b981";
                     return (
                       <div key={e.type} data-testid={`gov-event-${e.type.toLowerCase()}`}
-                        className="flex items-start gap-2 rounded-lg px-3 py-2"
-                        style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${sc}22` }}>
+                        className="flex items-start gap-2 rounded-lg px-3 py-2 shadow-sm"
+                        style={{ background: "#ffffff", border: `1px solid ${sc}22` }}>
                         <span className="mt-1 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: sc, boxShadow: `0 0 6px ${sc}` }} />
                         <div>
                           <div className="text-[10px] font-mono font-bold" style={{ color: sc }}>{e.type}</div>
-                          <div className="text-[10px] leading-relaxed text-zinc-500">{e.meaning}</div>
+                          <div className="text-[10px] leading-relaxed text-[var(--kiq-muted)]">{e.meaning}</div>
                         </div>
                       </div>
                     );
@@ -3558,12 +3560,12 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
               </div>
 
               {/* § 5 · Stanford Register: Empirical Validation */}
-              <div data-testid="stanford-register" className="rounded-xl px-4 py-3"
-                style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(245,166,35,0.18)" }}>
+              <div data-testid="stanford-register" className="rounded-xl px-4 py-3 shadow-sm"
+                style={{ background: "#ffffff", border: "1px solid rgba(245,166,35,0.15)" }}>
                 <div className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] mb-1" style={{ color: GOLD }}>
                   § 5 · Stanford Register: Empirical Validation
                 </div>
-                <p className="text-[10px] font-mono italic leading-relaxed mb-3" style={{ color: "rgba(255,255,255,0.5)" }}>
+                <p className="text-[10px] font-mono italic leading-relaxed mb-3 text-[var(--kiq-muted)]">
                   Four registers · Harvard argues it · MIT proves it · Stanford tests it and ships it · Notre Dame asks who it serves. The Stanford register answers the question "how do you know?"
                 </p>
 
@@ -3575,12 +3577,12 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
                       <div key={r.register} data-testid={`register-${r.register.toLowerCase().replace(/[^a-z]+/g, "-")}`}
                         className="rounded-lg px-3 py-2.5"
                         style={{
-                          background: isStanford ? "rgba(245,166,35,0.07)" : "rgba(255,255,255,0.02)",
-                          border: `1px solid ${isStanford ? "rgba(245,166,35,0.34)" : "rgba(245,166,35,0.12)"}`,
+                          background: isStanford ? "rgba(245,166,35,0.07)" : "rgba(0, 37, 80, 0.01)",
+                          border: `1px solid ${isStanford ? "rgba(245,166,35,0.3)" : "rgba(0, 37, 80, 0.08)"}`,
                         }}>
-                        <div className="text-[10px] font-mono font-bold tracking-[0.08em]" style={{ color: isStanford ? GOLD : `${GOLD}bb` }}>{r.register}</div>
-                        <div className="text-[10px] leading-relaxed text-zinc-400 mt-1">{r.contribution}</div>
-                        <div className="text-[9px] italic leading-relaxed mt-1" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "ui-serif, Georgia, serif" }}>{r.question}</div>
+                        <div className="text-[10px] font-mono font-bold tracking-[0.08em]" style={{ color: isStanford ? GOLD : "#8a96a8" }}>{r.register}</div>
+                        <div className="text-[10px] leading-relaxed text-[var(--kiq-muted)] mt-1">{r.contribution}</div>
+                        <div className="text-[9px] italic leading-relaxed mt-1 text-[var(--kiq-subtle)]">{r.question}</div>
                       </div>
                     );
                   })}
@@ -3590,10 +3592,10 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
                 <div className="grid grid-cols-2 gap-2 mb-3">
                   {STANFORD_DISCIPLINE.map(d => (
                     <div key={d.rule} data-testid={`stanford-rule-${d.rule.toLowerCase().replace(/[^a-z]+/g, "-")}`}
-                      className="rounded-lg px-3 py-2"
-                      style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(245,166,35,0.12)" }}>
-                      <div className="text-[10px] font-semibold text-white/85" style={{ fontFamily: "ui-serif, Georgia, serif" }}>{d.rule}</div>
-                      <div className="text-[9px] leading-relaxed text-zinc-500 mt-0.5">{d.body}</div>
+                      className="rounded-lg px-3 py-2 shadow-sm"
+                      style={{ background: "#ffffff", border: "1px solid rgba(245,166,35,0.12)" }}>
+                      <div className="text-[10px] font-semibold text-[var(--kiq-ink-soft)]">{d.rule}</div>
+                      <div className="text-[9px] leading-relaxed text-[var(--kiq-muted)] mt-0.5">{d.body}</div>
                     </div>
                   ))}
                 </div>
@@ -3601,35 +3603,35 @@ function DoctrineStrip({ open, onToggle }: { open: boolean; onToggle: () => void
                 {/* Replication benchmark + tier epistemics */}
                 <div className="grid grid-cols-[1fr_auto] gap-3 items-stretch">
                   <div data-testid="replication-benchmark" className="rounded-lg px-3 py-2.5"
-                    style={{ background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.30)" }}>
+                    style={{ background: "rgba(245,158,11,0.03)", border: "1px solid rgba(245,158,11,0.2)" }}>
                     <div className="flex items-center gap-2 mb-1.5">
                       <div className="text-[9px] font-mono font-bold uppercase tracking-[0.16em]" style={{ color: "#F59E0B" }}>Published Reference Benchmark</div>
                       <ConfidenceChip tier="MODELED" compact />
-                      <span className="text-[8px] font-mono ml-auto" style={{ color: "rgba(255,255,255,0.35)" }}>external harness · {REPLICATION_BENCHMARK.seed}</span>
+                      <span className="text-[8px] font-mono ml-auto text-[var(--kiq-subtle)]">external harness · {REPLICATION_BENCHMARK.seed}</span>
                     </div>
                     <div className="flex flex-wrap gap-4 mb-1.5">
                       {REPLICATION_BENCHMARK.metrics.map(m => (
                         <div key={m.key} data-testid={`benchmark-${m.key.toLowerCase()}`}>
                           <div className="text-lg font-black leading-none" style={{ color: "#F59E0B" }}>{m.value}</div>
-                          <div className="text-[8px] font-mono mt-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>{m.key} · {m.label}</div>
+                          <div className="text-[8px] font-mono mt-0.5 text-[var(--kiq-subtle)]">{m.key} · {m.label}</div>
                         </div>
                       ))}
                     </div>
-                    <div className="text-[9px] leading-relaxed text-zinc-500">
+                    <div className="text-[9px] leading-relaxed text-[var(--kiq-muted)]">
                       Cited reference, not reproduced in this environment. {REPLICATION_BENCHMARK.method}
                     </div>
-                    <div className="text-[9px] leading-relaxed mt-1" style={{ color: "#ff8a97" }}>
+                    <div className="text-[9px] leading-relaxed mt-1 text-red-600">
                       Falsification: {REPLICATION_BENCHMARK.falsification}
                     </div>
-                    <div className="text-[8px] font-mono mt-1" style={{ color: "rgba(255,255,255,0.3)" }}>source · {REPLICATION_BENCHMARK.source}</div>
+                    <div className="text-[8px] font-mono mt-1 text-[var(--kiq-subtle)]">source · {REPLICATION_BENCHMARK.source}</div>
                   </div>
-                  <div className="rounded-lg px-3 py-2.5 flex flex-col gap-1.5 justify-center"
-                    style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(245,166,35,0.14)" }}>
+                  <div className="rounded-lg px-3 py-2.5 flex flex-col gap-1.5 justify-center shadow-sm"
+                    style={{ background: "#ffffff", border: "1px solid rgba(245,166,35,0.12)" }}>
                     <div className="text-[9px] font-mono font-bold uppercase tracking-[0.16em] mb-0.5" style={{ color: GOLD }}>Tiers as epistemics</div>
                     {TIER_EPISTEMICS.map(t => (
                       <div key={t.tier} className="flex items-center gap-2">
                         <ConfidenceChip tier={t.tier} compact />
-                        <span className="text-[9px] leading-tight text-zinc-500">{t.gloss}</span>
+                        <span className="text-[9px] leading-tight text-[var(--kiq-muted)]">{t.gloss}</span>
                       </div>
                     ))}
                   </div>
@@ -3654,34 +3656,39 @@ function WRTile({ tile, isActive, onClick, tier }: {
     <motion.button
       data-testid={`tile-${tile.id}`}
       onClick={onClick}
-      whileHover={{ scale: 1.015 }}
-      className="relative text-left rounded-2xl p-5 transition-all overflow-hidden"
+      className={`kiq-wr-tile ${isActive ? "ring-1 ring-inset shadow-md" : ""}`}
       style={{
-        background: isActive ? `${tile.color}22` : `${tile.color}10`,
-        border: `1px solid ${isActive ? tile.color + "99" : tile.color + "40"}`,
-        boxShadow: isActive ? `0 0 60px ${tile.color}30` : `0 0 28px ${tile.color}14`,
-        minHeight: 140,
+        background: isActive ? "rgba(255, 255, 255, 0.95)" : undefined,
+        borderColor: isActive ? tile.color + "cc" : undefined,
+        boxShadow: isActive
+          ? `0 12px 30px ${tile.color}12, 0 4px 12px rgba(0, 37, 80, 0.03), inset 0 1px 0 #fff`
+          : undefined,
       }}>
-      {/* Watermark icon */}
-      <div className="absolute right-3 bottom-3 opacity-5" style={{ color: tile.color }}>
-        <DirIcon className="w-16 h-16" />
+      {/* Watermark icon — extremely faint */}
+      <div className="absolute right-4 bottom-3 opacity-[0.03]" style={{ color: tile.color }}>
+        <DirIcon className="w-12 h-12" />
       </div>
-      {/* Top gradient bar — always visible, stronger when active */}
-      <div className="absolute top-0 left-0 right-0 h-0.5 rounded-t-2xl" style={{ background: `linear-gradient(to right, transparent, ${tile.color}${isActive ? "ff" : "88"}, transparent)` }} />
-      <div className="flex items-center justify-between gap-2 mb-3">
-        <div className="flex items-center gap-2 min-w-0">
-          <div className="w-1.5 h-1.5 rounded-full" style={{ background: tile.color, boxShadow: `0 0 ${isActive ? "8px" : "4px"} ${tile.color}` }} />
-          <span className="text-[9px] font-mono font-bold uppercase tracking-[0.22em] truncate" style={{ color: tile.color }}>{tile.title}</span>
+      {/* Top accent line */}
+      <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: tile.color, opacity: isActive ? 1 : 0.4 }} />
+
+      <div className="flex items-center justify-between gap-2 mb-3.5">
+        <div className="flex items-center gap-1.5 min-w-0">
+          <div className="w-1.5 h-1.5 rounded-full" style={{ background: tile.color }} />
+          <span className="text-[10px] font-mono font-bold uppercase tracking-[0.16em] truncate" style={{ color: "var(--kiq-muted)" }}>{tile.title}</span>
         </div>
         <ConfidenceChip tier={tier} compact />
       </div>
-      <div className="text-3xl font-black mb-1" style={{ color: tile.color }}>{tile.value}</div>
-      <div className="flex items-center gap-1.5 mb-3">
-        <DirIcon className="w-3 h-3" style={{ color: tile.color, opacity: 0.7 }} />
-        <span className="text-[10px] font-mono" style={{ color: `${tile.color}99` }}>{tile.anomaly}</span>
+
+      <div className="text-3xl font-semibold mb-1 tracking-tight text-[var(--kiq-ink)] leading-none" style={{ fontFamily: "var(--font-sans)" }}>
+        {tile.value}
       </div>
-      {/* Narrative — short, punchy, data-anchored */}
-      <p className="text-[10px] font-mono leading-snug pr-6" style={{ color: `${tile.color}70` }}>{tile.narrative}</p>
+
+      <div className="flex items-center gap-1.5 mb-2.5">
+        <DirIcon className="w-3 h-3" style={{ color: tile.color }} />
+        <span className="text-[10px] font-mono font-medium" style={{ color: tile.color }}>{tile.anomaly}</span>
+      </div>
+
+      <p className="text-[11px] font-sans leading-relaxed text-[var(--kiq-muted)] pr-4">{tile.narrative}</p>
     </motion.button>
   );
 }
@@ -4335,67 +4342,67 @@ export default function CfoWarRoom() {
 
   return (
     <Layout>
-      <div className="min-h-screen flex flex-col" style={{ background: "linear-gradient(160deg, #0a0a0f 0%, #0d0d14 100%)" }}>
+      <div className="min-h-screen flex flex-col kiq-ops-shell kiq-readable-surface" style={{ background: "var(--kiq-canvas)" }}>
 
         {/* Ticker */}
         {marketData?.quotes && <TickerTape quotes={marketData.quotes} />}
 
         {/* Header */}
-        <div className="px-6 pt-6 pb-4">
-          <div className="flex items-end justify-between gap-4">
+        <div className="px-4 sm:px-6 pt-6 pb-4">
+          <div className="kiq-ops-header flex flex-col xl:flex-row xl:items-end justify-between gap-4 rounded-[24px] p-5">
             <div className="flex-shrink-0">
-              <div className="flex items-center gap-2.5 mb-1">
-                <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: GOLD }} />
-                <span className="text-[9px] font-mono font-bold uppercase tracking-[0.3em] text-zinc-600">Kincaid IQ™</span>
+              <div className="flex items-center gap-2.5 mb-1.5">
+                <div className="w-1.5 h-1.5 rounded-full" style={{ background: GOLD }} />
+                <span className="text-[10px] font-mono font-bold uppercase tracking-[0.25em]" style={{ color: "var(--kiq-muted)" }}>Kincaid IQ™</span>
               </div>
-              <h1 className="text-2xl font-black text-white">CFO War Room</h1>
-              <p className="text-xs text-zinc-600 mt-0.5">4-Tile Recursive Drill-Down · 9 Levels of Intelligence</p>
+              <h1 className="text-2xl font-semibold text-[var(--kiq-ink)] tracking-tight" style={{ fontFamily: "var(--font-sans)", letterSpacing: "-0.025em" }}>CFO War Room</h1>
+              <p className="text-xs text-[var(--kiq-muted)] mt-1">4-Tile Recursive Drill-Down · 9 Levels of Intelligence</p>
             </div>
 
             {/* Company Selector */}
             <div className="flex-1 max-w-md relative" onClick={e => e.stopPropagation()}>
               {selectedEin && !einSearch ? (
-                <div className="flex items-center gap-2 px-3 py-2 rounded-xl"
-                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                <div className="flex items-center gap-2.5 px-3.5 py-2 rounded-xl"
+                  style={{ background: "var(--kiq-surface)", border: "1px solid rgba(0, 37, 80, 0.08)", boxShadow: "0 1px 3px rgba(0,0,0,0.02)" }}>
                   <Building2 className="w-4 h-4 flex-shrink-0" style={{ color: GOLD }} />
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs font-bold text-white truncate">{selectedName}</div>
-                    <div className="text-[10px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>EIN {selectedEin}</div>
+                    <div className="text-xs font-semibold text-[var(--kiq-ink-soft)] truncate">{selectedName}</div>
+                    <div className="text-[10px] font-mono text-[var(--kiq-subtle)]">EIN {selectedEin}</div>
                   </div>
                   {commitLoading && <RefreshCw className="w-3 h-3 animate-spin" style={{ color: GOLD }} />}
                   <button data-testid="btn-clear-company" onClick={clearCompany}
-                    className="p-1 rounded-full hover:bg-white/10 transition-colors flex-shrink-0">
-                    <X className="w-3 h-3 text-zinc-500" />
+                    className="p-1 rounded-full hover:bg-[var(--kiq-canvas-parchment)] transition-colors flex-shrink-0">
+                    <X className="w-3 h-3 text-[var(--kiq-subtle)]" />
                   </button>
                 </div>
               ) : (
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-600 pointer-events-none" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--kiq-subtle)] pointer-events-none" />
                   <input
                     data-testid="input-war-room-ein"
                     value={einSearch}
                     onChange={e => handleEinInput(e.target.value)}
                     onFocus={() => setSearchOpen(true)}
                     placeholder="Search company to load real plan data…"
-                    className="w-full text-xs text-white placeholder:text-zinc-700 rounded-xl pl-9 pr-4 py-2.5 outline-none"
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}
+                    className="w-full text-xs text-[var(--kiq-ink-soft)] placeholder:text-[var(--kiq-subtle)] rounded-xl pl-9 pr-4 py-2.5 outline-none"
+                    style={{ background: "var(--kiq-surface)", border: "1px solid rgba(0, 37, 80, 0.08)", boxShadow: "inset 0 1px 2px rgba(0,0,0,0.01)" }}
                   />
-                  {searchFetching && <RefreshCw className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 animate-spin text-zinc-600" />}
+                  {searchFetching && <RefreshCw className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 animate-spin text-[var(--kiq-subtle)]" />}
                 </div>
               )}
               {/* Dropdown */}
               {searchOpen && !selectedEin && (searchResults?.results?.length ?? 0) > 0 && (
-                <div className="absolute top-full left-0 right-0 mt-1 rounded-xl overflow-hidden z-50"
-                  style={{ background: "#0d1033", border: "1px solid rgba(255,255,255,0.1)", maxHeight: 280, overflowY: "auto" }}>
+                <div className="absolute top-full left-0 right-0 mt-1.5 rounded-xl overflow-hidden z-50 shadow-lg"
+                  style={{ background: "#ffffff", border: "1px solid rgba(0, 37, 80, 0.08)", maxHeight: 280, overflowY: "auto" }}>
                   {searchResults!.results.map((r: any) => (
                     <button key={r.ein} data-testid={`btn-wr-company-${r.ein}`}
                       onClick={() => selectCompany(r.ein, r.name)}
-                      className="w-full text-left px-4 py-3 text-xs hover:bg-white/5 transition-colors border-b border-white/5 flex items-center justify-between gap-3">
+                      className="w-full text-left px-4 py-3 text-xs hover:bg-[var(--kiq-canvas-soft)] transition-colors border-b border-slate-100 flex items-center justify-between gap-3">
                       <div className="min-w-0">
-                        <div className="font-semibold text-white truncate">{r.name}</div>
-                        <div style={{ color: "rgba(255,255,255,0.35)" }}>{r.sector} · {r.city}, {r.state} · EIN {r.ein}</div>
+                        <div className="font-semibold text-[var(--kiq-ink-soft)] truncate">{r.name}</div>
+                        <div className="text-[10px] text-[var(--kiq-subtle)] mt-0.5">{r.sector} · {r.city}, {r.state} · EIN {r.ein}</div>
                       </div>
-                      <ArrowRight className="w-3 h-3 flex-shrink-0 text-zinc-600" />
+                      <ArrowRight className="w-3.5 h-3.5 flex-shrink-0 text-[var(--kiq-subtle)]" />
                     </button>
                   ))}
                 </div>
@@ -4404,17 +4411,17 @@ export default function CfoWarRoom() {
 
             <div className="flex items-center gap-3 flex-shrink-0">
               <div className="px-3 py-1.5 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider"
-                style={{ background: `${GREEN}12`, color: GREEN, border: `1px solid ${GREEN}25` }}>
+                style={{ background: "rgba(11,159,106,0.08)", color: "var(--kiq-health)", border: "1px solid rgba(11,159,106,0.18)" }}>
                 ● {selectedEin && commitData ? "Live Data" : "Demo"}
               </div>
               {selectedEin && selectedName && (
                 <button
                   onClick={() => sendCompanyTo("benchmarking", selectedEin, selectedName)}
                   data-testid="btn-war-room-benchmarking"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-mono font-bold text-[9px] uppercase tracking-wider transition-all"
-                  style={{ background: "rgba(245,166,35,0.10)", border: "1px solid rgba(245,166,35,0.28)", color: GOLD }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(245,166,35,0.20)"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(245,166,35,0.10)"; }}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-mono font-bold text-[9px] uppercase tracking-wider transition-all shadow-sm"
+                  style={{ background: "#ffffff", border: "1px solid rgba(155, 104, 41, 0.25)", color: "var(--kiq-gold)" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(155, 104, 41, 0.05)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#ffffff"; }}
                 >
                   <BarChart2 className="w-3 h-3" />
                   Benefits Benchmarking
@@ -4423,17 +4430,17 @@ export default function CfoWarRoom() {
               <button
                 onClick={() => setClientPkgOpen(true)}
                 data-testid="btn-war-room-client-package"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-mono font-bold text-[9px] uppercase tracking-wider transition-all"
-                style={{ background: "rgba(255,184,0,0.10)", border: "1px solid rgba(255,184,0,0.28)", color: "#FFB800" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,184,0,0.20)"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,184,0,0.10)"; }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl font-mono font-bold text-[9px] uppercase tracking-wider transition-all shadow-sm"
+                style={{ background: "#ffffff", border: "1px solid rgba(255, 184, 0, 0.3)", color: "var(--kiq-gold)" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255, 184, 0, 0.05)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#ffffff"; }}
               >
                 <Archive className="w-3 h-3" />
                 Build Package
               </button>
               <ShareMenu page="war-room" getState={getShareState} getTitle={() => selectedName || "CFO War Room"} accent="#F5A623" testIdPrefix="share-warroom" />
               {auth && (
-                <span className="text-[10px] text-zinc-600 font-mono">{auth.email}</span>
+                <span className="text-[10px] text-[var(--kiq-subtle)] font-mono">{auth.email}</span>
               )}
             </div>
           </div>
@@ -4454,7 +4461,7 @@ export default function CfoWarRoom() {
               <div className="font-black text-sm" style={{ color: GOLD }}>
                 {handoffLoading ? `Loading ${handoffCompany}…` : handoffCompany}
               </div>
-              <div className="text-[10px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>
+              <div className="text-[10px] font-mono" style={{ color: "#475569" }}>
                 {handoffLoading
                   ? "Fetching DOL EFAST2 benchmark data…"
                   : <>EIN {handoffEin}
@@ -4480,7 +4487,7 @@ export default function CfoWarRoom() {
                     <div className="text-sm font-black" style={{ color: d.val >= 75 ? RED : d.val >= 50 ? AMBER : GREEN }}>
                       P{d.val}
                     </div>
-                    <div className="text-[9px]" style={{ color: "rgba(255,255,255,0.3)" }}>{d.label}</div>
+                    <div className="text-[9px]" style={{ color: "#64748b" }}>{d.label}</div>
                   </div>
                 ))}
               </div>
@@ -4491,21 +4498,21 @@ export default function CfoWarRoom() {
               Full Benchmark →
             </a>
             <button onClick={() => setHandoffDismissed(true)} data-testid="dismiss-handoff-banner"
-              style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.25)", padding: 4 }}>
+              style={{ background: "none", border: "none", cursor: "pointer", color: "#64748b", padding: 4 }}>
               <X className="w-4 h-4" />
             </button>
           </div>
         )}
 
         {/* 4 War Room Tiles */}
-        <div className="px-6 mb-4" onClick={() => { if (searchOpen) setSearchOpen(false); }}>
+        <div className="px-4 sm:px-6 mb-4" onClick={() => { if (searchOpen) setSearchOpen(false); }}>
           {commitLoading && selectedEin && (
             <div className="flex items-center gap-2 mb-3 text-[10px] font-mono" style={{ color: GOLD }}>
               <RefreshCw className="w-3 h-3 animate-spin" />
               Pulling real plan data for {selectedName}…
             </div>
           )}
-          <div className="grid grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
             {displayTiles.map(tile => {
               // CERTIFIED when real DOL plan data backs the tile; MODELED for demo seed.
               const tileTier: ConfidenceTier = (selectedEin && commitData) ? "CERTIFIED" : "MODELED";
@@ -4516,40 +4523,34 @@ export default function CfoWarRoom() {
             })}
           </div>
 
-          {/* OS-08 Posture + OS-13 Risk — Phase 3 Day 90 surveillance pair.
-              Master Build Prompt §3 + §4 surface posture (FPS, defensive) and
-              risk (LiveRiskIndex, offensive) adjacent to the four-tile grid.
-              Posture sits cols 1–2 under Tiles 1–2 (claims + waste).
-              Risk sits cols 3–4 under Tiles 3–4 (compliance + leverage).
-              Hard Rule 01 four-tile invariant is untouched — this is a
-              parallel scoreboard row, not a fifth tile. */}
+          {/* OS-08 Posture + OS-13 Risk — Phase 3 Day 90 surveillance pair. */}
           <div
-            className="mt-4 grid grid-cols-4 gap-4"
+            className="mt-4 grid grid-cols-1 lg:grid-cols-4 gap-4"
             data-testid="warroom-posture-row"
           >
             <div
-              className="col-span-2 p-3 rounded-lg"
+              className="lg:col-span-2 p-3 rounded-xl shadow-sm"
               data-testid="warroom-fps-panel"
               style={{
-                background: "rgba(255,255,255,0.02)",
-                border: "1px solid rgba(255,255,255,0.06)",
+                background: "var(--kiq-surface)",
+                border: "1px solid rgba(0, 37, 80, 0.08)",
               }}
             >
               <FPSGauge ein={selectedEin || null} size={108} />
             </div>
             <div
-              className="col-span-2 p-3 rounded-lg"
+              className="lg:col-span-2 p-3 rounded-xl shadow-sm"
               data-testid="warroom-risk-panel"
               style={{
-                background: "rgba(255,255,255,0.02)",
-                border: "1px solid rgba(255, 77, 109, 0.12)",
+                background: "var(--kiq-surface)",
+                border: "1px solid rgba(255, 77, 109, 0.18)",
               }}
             >
               <LiveRiskMeter ein={selectedEin || null} />
             </div>
           </div>
           {selectedEin && commitData && (
-            <div className="mt-2 text-[9px] font-mono text-zinc-700 text-right">
+            <div className="mt-2.5 text-[9px] font-mono text-[var(--kiq-subtle)] text-right">
               KPIs sourced from DOL Form 5500 + EDGAR · {commitData.dol?.latest_year} filing year
             </div>
           )}
@@ -4579,8 +4580,8 @@ export default function CfoWarRoom() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className="flex-1 mx-6 mb-6 rounded-2xl overflow-hidden flex flex-col"
-              style={{ border: `1px solid ${tileColor}20`, background: "rgba(0,0,0,0.5)", minHeight: 480 }}>
+              className="flex-1 mx-4 sm:mx-6 mb-6 rounded-2xl overflow-hidden flex flex-col shadow-sm"
+              style={{ border: "1px solid rgba(0, 37, 80, 0.08)", background: "rgba(255, 255, 255, 0.85)", minHeight: 480 }}>
 
               {/* Path — Financial → Spread → MAC → Clause 7.3 */}
               <Path
@@ -4600,7 +4601,7 @@ export default function CfoWarRoom() {
               />
 
               {/* Split: Canvas + Narrative */}
-              <div className="flex flex-1 overflow-hidden">
+              <div className="flex flex-col xl:flex-row flex-1 overflow-hidden">
 
                 {/* Left: Drill Canvas */}
                 <div className="flex-1 overflow-y-auto p-6">
@@ -4655,7 +4656,7 @@ export default function CfoWarRoom() {
                             type="button"
                             onClick={clearSharedView}
                             data-testid="button-clear-shared-view"
-                            className="flex-shrink-0 flex items-center gap-1 rounded border px-2 py-1 font-mono uppercase tracking-wider hover:bg-white/10 transition-colors"
+                            className="flex-shrink-0 flex items-center gap-1 rounded border px-2 py-1 font-mono uppercase tracking-wider hover:bg-[var(--kiq-surface)]/10 transition-colors"
                             style={{ borderColor: "rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.85)" }}
                           >
                             <X className="w-3 h-3" />
@@ -4678,7 +4679,7 @@ export default function CfoWarRoom() {
                 </div>
 
                 {/* Right: Narrative Panel — KIQ Narrative Engine™ */}
-                <div className="w-72 xl:w-80 flex-shrink-0">
+                <div className="w-full xl:w-80 flex-shrink-0">
                   {(() => {
                     const entry = narrative[depthLevel] ?? null;
                     const insight     = entry?.type === "level"     ? entry.insight
@@ -4708,12 +4709,12 @@ export default function CfoWarRoom() {
         {!activeTile && (
           <div className="flex-1 flex items-center justify-center pb-16 text-center">
             <div>
-              <div className="w-12 h-12 rounded-2xl border flex items-center justify-center mx-auto mb-4"
-                style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)" }}>
-                <Target className="w-5 h-5 text-zinc-700" />
+              <div className="w-12 h-12 rounded-2xl border flex items-center justify-center mx-auto mb-4 shadow-sm"
+                style={{ borderColor: "rgba(0, 37, 80, 0.08)", background: "rgba(255, 255, 255, 0.8)" }}>
+                <Target className="w-5 h-5 text-[var(--kiq-subtle)]" />
               </div>
-              <p className="text-zinc-700 text-sm font-mono">Select a War Room tile to begin the intelligence drill</p>
-              <p className="text-zinc-800 text-xs mt-1 font-mono">Each click converts ambiguity → decision-grade clarity</p>
+              <p className="text-[var(--kiq-muted)] text-sm font-mono">Select a War Room tile to begin the intelligence drill</p>
+              <p className="text-[var(--kiq-subtle)] text-xs mt-1.5 font-mono">Each click converts ambiguity → decision-grade clarity</p>
             </div>
           </div>
         )}

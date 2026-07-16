@@ -1,6 +1,6 @@
 """
 verify_war_room.py
-Kincaid IQ VERIFY™ — War Room commit boundary router.
+Kincaid Health VERIFY™ — War Room commit boundary router.
 Every KPI runs through KincaidCommitEngine; every gate decision is ledger-recorded.
 """
 from __future__ import annotations
@@ -31,7 +31,7 @@ router = APIRouter(prefix="/api/verify", tags=["verify"])
 
 CODE_VERSION = "kincaid_iq_v2"
 
-# ─── Shared evidence fixtures (demo employer — Kincaid RMC) ───────────────────
+# ─── Shared evidence fixtures (demo employer — Kincaid Health) ───────────────────
 
 def _epoch_days_ago(days: int) -> int:
     return int(time.time()) - days * 86_400
@@ -570,7 +570,7 @@ async def ai_recommendation(body: AiRecommendationRequest):
     violations = policy.get("violations", [])
 
     system_prompt = (
-        "You are a senior fiduciary benefits advisor at Kincaid RMC — a UHNW healthcare consulting firm. "
+        "You are a senior fiduciary benefits advisor at Kincaid Health — a UHNW healthcare consulting firm. "
         "You advise self-funded employers on reducing EBITDA drag, recovering hidden costs, and improving "
         "population health outcomes. Your answers are precise, actionable, and grounded in plan finance. "
         "Never use filler phrases. Always cite specific numbers. Keep your response under 200 words."

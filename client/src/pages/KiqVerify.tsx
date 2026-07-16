@@ -171,16 +171,16 @@ export default function KiqVerify() {
   const has = (p: string) => permissions.includes("*") || permissions.includes(p);
 
   return (
-    <div className="p-6 max-w-7xl mx-auto" data-testid="page-kiq-verify">
-      <div className="flex items-start justify-between flex-wrap gap-4 mb-6">
+    <div className="kiq-ops-shell kiq-readable-surface min-h-screen p-6" data-testid="page-kiq-verify">
+      <div className="kiq-ops-header max-w-7xl mx-auto flex items-start justify-between flex-wrap gap-4 mb-6 p-6 rounded-[22px]">
         <div>
           <div className="flex items-center gap-2.5">
             <ShieldCheck size={22} style={{ color: "#34d399" }} />
             <h1 className="text-2xl font-bold tracking-tight" data-testid="text-page-title">
-              Kincaid IQ Verify
+              Kincaid Health Verify
             </h1>
           </div>
-          <p className="text-sm text-muted-foreground mt-1 max-w-2xl">
+          <p className="text-sm mt-1 max-w-2xl font-medium" style={{ color: "#1e2f46" }}>
             Append only, SHA-256 hash chained evidence ledger. Every metric carries one of exactly
             three confidence tiers, every action is recorded, and no export leaves without a manifest.
           </p>
@@ -199,11 +199,11 @@ export default function KiqVerify() {
               setBanner(null);
               setExportResult(null);
             }}
-            className="rounded-md px-3 py-2 text-sm"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.12)", color: "#e5e7eb" }}
+            className="rounded-xl px-3 py-2 text-sm"
+            style={{ background: "rgba(255,255,255,0.82)", border: "1px solid rgba(15,23,42,0.12)", color: "#08111f", boxShadow: "0 10px 28px rgba(15,23,42,0.08), inset 0 1px 0 rgba(255,255,255,0.9)" }}
           >
             {ROLE_OPTIONS.map((r) => (
-              <option key={r.value} value={r.value} style={{ background: "#111827" }}>
+              <option key={r.value} value={r.value} style={{ background: "#FFFFFF", color: "#08111f" }}>
                 {r.label}
               </option>
             ))}
@@ -216,6 +216,7 @@ export default function KiqVerify() {
         </div>
       </div>
 
+      <div className="max-w-7xl mx-auto">
       {banner && (
         <div
           data-testid="banner-status"
@@ -246,8 +247,8 @@ export default function KiqVerify() {
                 <div
                   key={m.key}
                   data-testid={`card-metric-${m.key}`}
-                  className="rounded-xl p-4"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
+                  className="kiq-ops-card rounded-xl p-4"
+                  style={{ background: "rgba(255,255,255,0.82)", border: "1px solid rgba(15,23,42,0.10)" }}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <span className="text-xs text-muted-foreground">{m.label}</span>
@@ -259,7 +260,7 @@ export default function KiqVerify() {
                       {m.confidence.replace(/_/g, " ")}
                     </span>
                   </div>
-                  <div className="text-2xl font-bold mt-2" style={{ color: "#f9fafb" }} data-testid={`text-value-${m.key}`}>
+                  <div className="text-2xl font-bold mt-2" style={{ color: "#08111f" }} data-testid={`text-value-${m.key}`}>
                     {formatValue(m)}
                   </div>
                   <div className="text-[11px] text-muted-foreground mt-1">Period {m.period}</div>
@@ -297,7 +298,7 @@ export default function KiqVerify() {
             data-testid="button-download-manifest"
             onClick={downloadManifest}
             className="flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.14)", color: "#e5e7eb" }}
+            style={{ background: "rgba(255,255,255,0.82)", border: "1px solid rgba(15,23,42,0.10)", color: "#08111f" }}
           >
             <FileDown size={15} />
             Download JSON
@@ -308,8 +309,8 @@ export default function KiqVerify() {
       {exportResult && (
         <div
           data-testid="card-manifest"
-          className="rounded-xl p-4 mb-8"
-          style={{ background: "rgba(96,165,250,0.06)", border: "1px solid rgba(96,165,250,0.25)" }}
+          className="kiq-ops-card rounded-xl p-4 mb-8"
+          style={{ background: "rgba(96,165,250,0.08)", border: "1px solid rgba(96,165,250,0.25)" }}
         >
           <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Export Manifest</div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
@@ -321,17 +322,17 @@ export default function KiqVerify() {
             </div>
             <div>
               <span className="text-muted-foreground">Ledger head: </span>
-              <span className="font-mono text-xs" style={{ color: "#e5e7eb" }}>
+              <span className="font-mono text-xs" style={{ color: "#08111f" }}>
                 {exportResult.manifest.ledgerHead ? shortHash(exportResult.manifest.ledgerHead) : "none"}
               </span>
             </div>
             <div>
               <span className="text-muted-foreground">Generated by: </span>
-              <span style={{ color: "#e5e7eb" }}>{exportResult.manifest.generated_by}</span>
+              <span style={{ color: "#08111f" }}>{exportResult.manifest.generated_by}</span>
             </div>
             <div>
               <span className="text-muted-foreground">Generated at: </span>
-              <span style={{ color: "#e5e7eb" }}>{new Date(exportResult.manifest.generated_at).toLocaleString()}</span>
+              <span style={{ color: "#08111f" }}>{new Date(exportResult.manifest.generated_at).toLocaleString()}</span>
             </div>
           </div>
         </div>
@@ -354,10 +355,10 @@ export default function KiqVerify() {
             <Lock size={15} /> This role cannot read the evidence ledger.
           </div>
         ) : (
-          <div className="overflow-x-auto rounded-xl" style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
+          <div className="kiq-ops-card overflow-x-auto rounded-xl" style={{ border: "1px solid rgba(15,23,42,0.10)", background: "rgba(255,255,255,0.82)" }}>
             <table className="w-full text-sm">
               <thead>
-                <tr style={{ background: "rgba(255,255,255,0.03)" }} className="text-left text-[11px] uppercase tracking-wider text-muted-foreground">
+                <tr style={{ background: "rgba(248,250,252,0.92)" }} className="text-left text-[11px] uppercase tracking-wider text-muted-foreground">
                   <th className="px-3 py-2">Seq</th>
                   <th className="px-3 py-2">Timestamp</th>
                   <th className="px-3 py-2">Actor</th>
@@ -368,10 +369,10 @@ export default function KiqVerify() {
               </thead>
               <tbody>
                 {(evidenceQuery.data?.chain ?? []).map((e) => (
-                  <tr key={e.seq} data-testid={`row-ledger-${e.seq}`} style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+                  <tr key={e.seq} data-testid={`row-ledger-${e.seq}`} style={{ borderTop: "1px solid #f8fafc" }}>
                     <td className="px-3 py-2 text-muted-foreground">{e.seq}</td>
                     <td className="px-3 py-2 text-muted-foreground whitespace-nowrap">{new Date(e.ts).toLocaleString()}</td>
-                    <td className="px-3 py-2" style={{ color: "#e5e7eb" }}>{e.actor}</td>
+                    <td className="px-3 py-2" style={{ color: "#08111f" }}>{e.actor}</td>
                     <td className="px-3 py-2">
                       <span className="text-xs font-mono" style={{ color: "#a78bfa" }}>{e.action}</span>
                     </td>
@@ -384,6 +385,7 @@ export default function KiqVerify() {
           </div>
         )}
       </section>
+      </div>
     </div>
   );
 }

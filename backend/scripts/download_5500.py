@@ -1,5 +1,5 @@
 """
-Kincaid IQ — DOL Form 5500 Bulk Downloader & Importer
+Kincaid Health — DOL Form 5500 Bulk Downloader & Importer
 Downloads 10 years of Form 5500 (main) + Schedule A from DOL EBSA
 and imports into PostgreSQL for full-text search.
 

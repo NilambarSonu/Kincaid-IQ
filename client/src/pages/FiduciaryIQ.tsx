@@ -33,8 +33,8 @@ function Gauge({ score, size = 80 }: { score: number; size?: number }) {
           strokeDasharray={`${(score/100)*circ} ${circ}`} strokeLinecap="round" />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-bold text-white" style={{ fontSize: size*0.22 }}>{score}</span>
-        <span className="text-white/30" style={{ fontSize: size*0.1 }}>/ 100</span>
+        <span className="font-bold text-[var(--kiq-ink)]" style={{ fontSize: size*0.22 }}>{score}</span>
+        <span className="text-[var(--kiq-ink)]/30" style={{ fontSize: size*0.1 }}>/ 100</span>
       </div>
     </div>
   );
@@ -48,7 +48,7 @@ function ScorePill({ score, riskLevel }: { score: number; riskLevel: string }) {
       style={{ background: `${c}10`, border: `1px solid ${c}30` }}>
       <span className="text-2xl font-black" style={{ color: c }}>{score}</span>
       <div>
-        <div className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/30">Fiduciary Risk</div>
+        <div className="text-[9px] font-bold uppercase tracking-[0.18em] text-[var(--kiq-ink)]/30">Fiduciary Risk</div>
         <div className="text-xs font-black" style={{ color: c }}>{riskLevel}</div>
       </div>
     </div>
@@ -67,20 +67,20 @@ function SeverityBadge({ sev }: { sev: string }) {
     Critical: "bg-red-500/10 text-red-400 border-red-500/25",
     High:     "bg-amber-500/10 text-amber-400 border-amber-500/25",
     Medium:   "bg-blue-500/10 text-blue-400 border-blue-500/25",
-    Low:      "bg-white/5 text-white/40 border-white/10",
+    Low:      "bg-[var(--kiq-surface)]/5 text-[var(--kiq-ink)]/40 border-white/10",
   };
   return <Badge className={`text-xs border ${map[sev] ?? map.Low}`}>{sev}</Badge>;
 }
 
 /* ─── CARD / SECTION TITLE ───────────────────────────────────────────────── */
 function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5 ${className}`}>{children}</div>;
+  return <div className={`kiq-health-card rounded-2xl p-5 ${className}`}>{children}</div>;
 }
 
 function SectionTitle({ icon: Icon, label, color }: { icon: any; label: string; color: string }) {
   return (
-    <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/[0.06]">
-      <Icon size={14} style={{ color }} /><h3 className="text-white font-semibold text-sm">{label}</h3>
+    <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[var(--kiq-hairline)]/70">
+      <Icon size={14} style={{ color }} /><h3 className="text-[var(--kiq-ink)] font-semibold text-sm">{label}</h3>
     </div>
   );
 }
@@ -92,8 +92,8 @@ function OverviewTab({ d }: { d: any }) {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 flex flex-col items-center gap-2">
-          <p className="text-white/40 text-xs">Fiduciary Risk Score</p>
+        <div className="rounded-xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.07] p-4 flex flex-col items-center gap-2">
+          <p className="text-[var(--kiq-ink)]/40 text-xs">Fiduciary Risk Score</p>
           <Gauge score={d.fiduciary_risk_score} size={76} />
           <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ color: NEON.gold, background: "rgba(255,184,0,0.12)" }}>{d.risk_level}</span>
         </div>
@@ -102,9 +102,9 @@ function OverviewTab({ d }: { d: any }) {
           { label: "Undisclosed Fees",       val: `$${(s.total_undisclosed_fees/1000).toFixed(0)}K`, color: NEON.orange, icon: DollarSign },
           { label: "DOL Audit Readiness",    val: `${s.audit_readiness_score}/100`,  color: scoreColor(s.audit_readiness_score), icon: Shield },
         ].map((k) => (
-          <div key={k.label} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4">
+          <div key={k.label} className="rounded-xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.07] p-4">
             <k.icon size={13} style={{ color: k.color }} className="mb-2" />
-            <p className="text-white/40 text-xs mb-1">{k.label}</p>
+            <p className="text-[var(--kiq-ink)]/40 text-xs mb-1">{k.label}</p>
             <p className="text-xl font-bold" style={{ color: k.color }}>{k.val}</p>
           </div>
         ))}
@@ -119,12 +119,12 @@ function OverviewTab({ d }: { d: any }) {
               <PolarAngleAxis dataKey="duty" tick={{ fill: "#ffffff45", fontSize: 10 }} />
               <Radar name="Your Score" dataKey="score" stroke={NEON.indigo} fill={NEON.indigo} fillOpacity={0.18} strokeWidth={2} />
               <Radar name="Benchmark"  dataKey="benchmark" stroke={NEON.gold} fill={NEON.gold} fillOpacity={0.06} strokeWidth={1.5} strokeDasharray="4 2" />
-              <Tooltip contentStyle={{ background: "#080d1a", border: "1px solid #ffffff15", borderRadius: 8, fontSize: 11 }} />
+              <Tooltip contentStyle={{ background: "#F8FAFC", border: "1px solid #ffffff15", borderRadius: 8, fontSize: 11 }} />
             </RadarChart>
           </ResponsiveContainer>
           <div className="flex gap-4 text-xs justify-center mt-1">
-            <div className="flex items-center gap-1.5"><div className="w-3 h-0.5 rounded" style={{ background: NEON.indigo }} /><span className="text-white/40">Your Plan</span></div>
-            <div className="flex items-center gap-1.5"><div className="w-3 h-0.5 rounded" style={{ background: NEON.gold }} /><span className="text-white/40">Benchmark</span></div>
+            <div className="flex items-center gap-1.5"><div className="w-3 h-0.5 rounded" style={{ background: NEON.indigo }} /><span className="text-[var(--kiq-ink)]/40">Your Plan</span></div>
+            <div className="flex items-center gap-1.5"><div className="w-3 h-0.5 rounded" style={{ background: NEON.gold }} /><span className="text-[var(--kiq-ink)]/40">Benchmark</span></div>
           </div>
         </Card>
 
@@ -136,8 +136,8 @@ function OverviewTab({ d }: { d: any }) {
                 data-testid={`action-${i}`}>
                 <span className={`text-xs font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${a.priority === "Critical" ? "text-red-400 bg-red-500/15" : "text-amber-400 bg-amber-500/15"}`}>{a.priority}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-white/80 font-medium truncate">{a.title}</p>
-                  <p className="text-xs text-white/35 mt-0.5">{a.timeline} · {a.owner}</p>
+                  <p className="text-sm text-[var(--kiq-ink)]/80 font-medium truncate">{a.title}</p>
+                  <p className="text-xs text-[var(--kiq-ink)]/35 mt-0.5">{a.timeline} · {a.owner}</p>
                 </div>
               </div>
             ))}
@@ -151,10 +151,10 @@ function OverviewTab({ d }: { d: any }) {
           { label: "Disclosures Received",      val: `${7 - d.summary.disclosures_missing} / 7`,  color: d.summary.disclosures_missing > 0 ? NEON.gold : NEON.green, sub: `${d.summary.disclosures_missing} still missing` },
           { label: "High + Critical Gaps",      val: `${d.summary.critical_gaps + d.summary.high_gaps}`, color: NEON.red, sub: "Require remediation" },
         ].map((k) => (
-          <div key={k.label} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4">
-            <p className="text-white/40 text-xs mb-1">{k.label}</p>
+          <div key={k.label} className="rounded-xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.07] p-4">
+            <p className="text-[var(--kiq-ink)]/40 text-xs mb-1">{k.label}</p>
             <p className="text-2xl font-bold" style={{ color: k.color }}>{k.val}</p>
-            <p className="text-xs text-white/30 mt-1">{k.sub}</p>
+            <p className="text-xs text-[var(--kiq-ink)]/30 mt-1">{k.sub}</p>
           </div>
         ))}
       </div>
@@ -176,8 +176,8 @@ function Disclosure408Tab({ d }: { d: any }) {
           { label: "Missing Disclosures",       val: String(missing.length),  color: missing.length > 0 ? NEON.red : NEON.green },
           { label: "Incomplete Disclosures",    val: String(incomplete.length), color: incomplete.length > 0 ? NEON.gold : NEON.green },
         ].map((k) => (
-          <div key={k.label} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4">
-            <p className="text-white/40 text-xs mb-1">{k.label}</p>
+          <div key={k.label} className="rounded-xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.07] p-4">
+            <p className="text-[var(--kiq-ink)]/40 text-xs mb-1">{k.label}</p>
             <p className="text-2xl font-bold" style={{ color: k.color }}>{k.val}</p>
           </div>
         ))}
@@ -187,8 +187,8 @@ function Disclosure408Tab({ d }: { d: any }) {
         <div className="p-4 rounded-xl border border-red-500/25 bg-red-500/[0.05] flex items-start gap-3">
           <AlertTriangle size={15} className="text-red-400 flex-shrink-0 mt-0.5" />
           <div>
-            <p className="text-white/85 text-sm font-semibold">Prohibited Transaction Risk — Immediate Action Required</p>
-            <p className="text-white/45 text-xs mt-0.5">Under ERISA 408(b)(2), failure to obtain required fee disclosures from covered service providers is a prohibited transaction. Personal liability attaches to plan fiduciaries. Issue written demand letters to {missing.map((v: any) => v.vendor).join(", ")} immediately.</p>
+            <p className="text-[var(--kiq-ink)]/85 text-sm font-semibold">Prohibited Transaction Risk — Immediate Action Required</p>
+            <p className="text-[var(--kiq-ink)]/45 text-xs mt-0.5">Under ERISA 408(b)(2), failure to obtain required fee disclosures from covered service providers is a prohibited transaction. Personal liability attaches to plan fiduciaries. Issue written demand letters to {missing.map((v: any) => v.vendor).join(", ")} immediately.</p>
           </div>
         </div>
       )}
@@ -200,23 +200,23 @@ function Disclosure408Tab({ d }: { d: any }) {
             <thead>
               <tr className="border-b border-white/[0.06]">
                 {["Vendor", "Type", "Annual Compensation", "Fee Basis", "Disclosure", "Received", "Complete", "Notes"].map(h => (
-                  <th key={h} className="text-left py-2 px-3 text-xs text-white/30 font-medium">{h}</th>
+                  <th key={h} className="text-left py-2 px-3 text-xs text-[var(--kiq-ink)]/30 font-medium">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {d.disclosures_408b2.map((v: any, i: number) => (
                 <tr key={i}
-                  className={`border-b border-white/[0.03] hover:bg-white/[0.02] transition-colors ${!v.disclosure_received ? "bg-red-500/[0.03]" : !v.disclosure_complete ? "bg-amber-500/[0.02]" : ""}`}
+                  className={`border-b border-white/[0.03] hover:bg-[var(--kiq-surface)]/[0.02] transition-colors ${!v.disclosure_received ? "bg-red-500/[0.03]" : !v.disclosure_complete ? "bg-amber-500/[0.02]" : ""}`}
                   data-testid={`vendor-row-${i}`}>
-                  <td className="py-3 px-3 text-white font-medium">{v.vendor}</td>
-                  <td className="py-3 px-3 text-white/50 text-xs">{v.type}</td>
+                  <td className="py-3 px-3 text-[var(--kiq-ink)] font-medium">{v.vendor}</td>
+                  <td className="py-3 px-3 text-[var(--kiq-ink)]/50 text-xs">{v.type}</td>
                   <td className="py-3 px-3 font-bold" style={{ color: NEON.blue }}>${v.annual_compensation.toLocaleString()}</td>
-                  <td className="py-3 px-3 text-white/45 text-xs">{v.fee_basis}</td>
-                  <td className="py-3 px-3 text-xs text-white/50">{v.disclosure_date ?? <span className="text-red-400 font-bold">NOT RECEIVED</span>}</td>
+                  <td className="py-3 px-3 text-[var(--kiq-ink)]/45 text-xs">{v.fee_basis}</td>
+                  <td className="py-3 px-3 text-xs text-[var(--kiq-ink)]/50">{v.disclosure_date ?? <span className="text-red-400 font-bold">NOT RECEIVED</span>}</td>
                   <td className="py-3 px-3">{v.disclosure_received ? <CheckCircle size={14} className="text-green-400" /> : <XCircle size={14} className="text-red-400" />}</td>
                   <td className="py-3 px-3">{v.disclosure_complete ? <CheckCircle size={14} className="text-green-400" /> : v.disclosure_received ? <AlertTriangle size={14} className="text-amber-400" /> : <XCircle size={14} className="text-red-400" />}</td>
-                  <td className="py-3 px-3 text-xs text-white/35 max-w-xs">{v.notes ?? <span className="text-green-400/60">—</span>}</td>
+                  <td className="py-3 px-3 text-xs text-[var(--kiq-ink)]/35 max-w-xs">{v.notes ?? <span className="text-green-400/60">—</span>}</td>
                 </tr>
               ))}
             </tbody>
@@ -231,7 +231,7 @@ function Disclosure408Tab({ d }: { d: any }) {
 function RiskTab({ d }: { d: any }) {
   return (
     <div className="space-y-4">
-      <p className="text-white/40 text-xs">ERISA §404 establishes four core fiduciary duties. Each is scored based on documented evidence of compliance. Gaps create personal liability for named plan fiduciaries.</p>
+      <p className="text-[var(--kiq-ink)]/40 text-xs">ERISA §404 establishes four core fiduciary duties. Each is scored based on documented evidence of compliance. Gaps create personal liability for named plan fiduciaries.</p>
       {d.duty_scores.map((duty: any) => {
         const col = scoreColor(duty.score);
         return (
@@ -239,23 +239,23 @@ function RiskTab({ d }: { d: any }) {
             <div className="flex items-start justify-between mb-3">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-white font-semibold text-sm">{duty.duty}</span>
-                  <span className="text-xs text-white/30">Weight: {duty.weight}%</span>
+                  <span className="text-[var(--kiq-ink)] font-semibold text-sm">{duty.duty}</span>
+                  <span className="text-xs text-[var(--kiq-ink)]/30">Weight: {duty.weight}%</span>
                 </div>
-                <p className="text-white/40 text-xs">{duty.description}</p>
+                <p className="text-[var(--kiq-ink)]/40 text-xs">{duty.description}</p>
               </div>
               <div className="text-right ml-4 flex-shrink-0">
                 <span className="text-2xl font-bold" style={{ color: col }}>{duty.score}</span>
-                <span className="text-white/30 text-xs">/100</span>
+                <span className="text-[var(--kiq-ink)]/30 text-xs">/100</span>
               </div>
             </div>
-            <div className="w-full h-1.5 rounded-full bg-white/[0.06] mb-3">
+            <div className="w-full h-1.5 rounded-full bg-[var(--kiq-surface)]/[0.06] mb-3">
               <div className="h-full rounded-full" style={{ width: `${duty.score}%`, background: col }} />
             </div>
             {duty.gaps.length > 0 && (
               <div className="space-y-1.5">
                 {duty.gaps.map((g: string, i: number) => (
-                  <div key={i} className="flex items-start gap-2 text-xs text-white/55" data-testid={`gap-${i}`}>
+                  <div key={i} className="flex items-start gap-2 text-xs text-[var(--kiq-ink)]/55" data-testid={`gap-${i}`}>
                     <AlertTriangle size={11} className="text-amber-400 flex-shrink-0 mt-0.5" />
                     {g}
                   </div>
@@ -280,15 +280,15 @@ function ChecklistTab({ d }: { d: any }) {
       <div className="grid grid-cols-3 gap-4">
         <div className="rounded-xl bg-green-500/[0.06] border border-green-500/20 p-4 text-center">
           <p className="text-2xl font-bold text-green-400">{passes}</p>
-          <p className="text-xs text-white/40 mt-1">Compliant</p>
+          <p className="text-xs text-[var(--kiq-ink)]/40 mt-1">Compliant</p>
         </div>
         <div className="rounded-xl bg-red-500/[0.06] border border-red-500/20 p-4 text-center">
           <p className="text-2xl font-bold text-red-400">{fails}</p>
-          <p className="text-xs text-white/40 mt-1">Non-Compliant</p>
+          <p className="text-xs text-[var(--kiq-ink)]/40 mt-1">Non-Compliant</p>
         </div>
         <div className="rounded-xl bg-amber-500/[0.06] border border-amber-500/20 p-4 text-center">
           <p className="text-2xl font-bold text-amber-400">{warns}</p>
-          <p className="text-xs text-white/40 mt-1">Needs Attention</p>
+          <p className="text-xs text-[var(--kiq-ink)]/40 mt-1">Needs Attention</p>
         </div>
       </div>
       {d.erisa_checklist.map((cat: any) => (
@@ -297,13 +297,13 @@ function ChecklistTab({ d }: { d: any }) {
           <div className="space-y-2">
             {cat.items.map((item: any, i: number) => (
               <div key={i}
-                className={`flex items-start justify-between p-3 rounded-lg border transition-colors ${item.status === "FAIL" ? "border-red-500/20 bg-red-500/[0.04]" : item.status === "WARN" ? "border-amber-500/20 bg-amber-500/[0.03]" : "border-white/[0.05] bg-white/[0.01]"}`}
+                className={`flex items-start justify-between p-3 rounded-lg border transition-colors ${item.status === "FAIL" ? "border-red-500/20 bg-red-500/[0.04]" : item.status === "WARN" ? "border-amber-500/20 bg-amber-500/[0.03]" : "border-white/[0.05] bg-[var(--kiq-surface)]/[0.01]"}`}
                 data-testid={`checklist-${i}`}>
                 <div className="flex items-start gap-3 flex-1">
                   <StatusIcon s={item.status} />
                   <div>
-                    <p className="text-sm text-white/80">{item.task}</p>
-                    <p className="text-xs text-white/30 mt-0.5">{item.statute}{item.due ? ` · Due: ${item.due}` : ""}</p>
+                    <p className="text-sm text-[var(--kiq-ink)]/80">{item.task}</p>
+                    <p className="text-xs text-[var(--kiq-ink)]/30 mt-0.5">{item.statute}{item.due ? ` · Due: ${item.due}` : ""}</p>
                   </div>
                 </div>
                 {item.severity && <SeverityBadge sev={item.severity} />}
@@ -325,10 +325,10 @@ function AuditTab({ d }: { d: any }) {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 flex flex-col items-center gap-2">
-          <p className="text-white/40 text-xs">Audit Readiness</p>
+        <div className="rounded-xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.07] p-4 flex flex-col items-center gap-2">
+          <p className="text-[var(--kiq-ink)]/40 text-xs">Audit Readiness</p>
           <Gauge score={d.dol_audit_readiness.score} size={72} />
-          <span className="text-xs text-white/30">Grade: {d.dol_audit_readiness.grade}</span>
+          <span className="text-xs text-[var(--kiq-ink)]/30">Grade: {d.dol_audit_readiness.grade}</span>
         </div>
         <div className="rounded-xl bg-green-500/[0.06] border border-green-500/20 p-4 text-center"><p className="text-2xl font-bold text-green-400">{complete}</p><p className="text-xs text-white/40 mt-1">Documents Complete</p></div>
         <div className="rounded-xl bg-amber-500/[0.06] border border-amber-500/20 p-4 text-center"><p className="text-2xl font-bold text-amber-400">{partial}</p><p className="text-xs text-white/40 mt-1">Partial / Outdated</p></div>
@@ -337,7 +337,7 @@ function AuditTab({ d }: { d: any }) {
 
       <div className="p-4 rounded-xl border border-indigo-500/25 bg-indigo-500/[0.05] flex items-start gap-3">
         <Gavel size={15} className="text-indigo-400 flex-shrink-0 mt-0.5" />
-        <p className="text-white/65 text-xs leading-relaxed">DOL enforcement activity under ERISA is accelerating. Plans with inadequate documentation face civil penalties of $100–$110/day per violation under ERISA §502(c). Preparing these documents before an audit saves an estimated $40,000–$200,000 in response costs and penalties.</p>
+        <p className="text-[var(--kiq-ink)]/65 text-xs leading-relaxed">DOL enforcement activity under ERISA is accelerating. Plans with inadequate documentation face civil penalties of $100–$110/day per violation under ERISA §502(c). Preparing these documents before an audit saves an estimated $40,000–$200,000 in response costs and penalties.</p>
       </div>
 
       <Card>
@@ -350,8 +350,8 @@ function AuditTab({ d }: { d: any }) {
               <div className="flex items-center gap-3 flex-1">
                 <StatusIcon s={doc.status} />
                 <div>
-                  <p className="text-sm text-white/80">{doc.doc}</p>
-                  {doc.notes && <p className="text-xs text-white/35 mt-0.5">{doc.notes}</p>}
+                  <p className="text-sm text-[var(--kiq-ink)]/80">{doc.doc}</p>
+                  {doc.notes && <p className="text-xs text-[var(--kiq-ink)]/35 mt-0.5">{doc.notes}</p>}
                 </div>
               </div>
               <Badge className={`text-xs border ml-3 flex-shrink-0 ${doc.status === "COMPLETE" ? "bg-green-500/10 text-green-400 border-green-500/25" : doc.status === "MISSING" ? "bg-red-500/10 text-red-400 border-red-500/25" : "bg-amber-500/10 text-amber-400 border-amber-500/25"}`}>
@@ -441,7 +441,7 @@ function FiqUploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
         onDrop={(e) => { e.preventDefault(); setDragging(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }}
         onClick={() => !isPending && fileRef.current?.click()}
         className="border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition-all"
-        style={{ borderColor: dragging ? ACCENT : "rgba(255,255,255,0.08)", background: dragging ? ACCENT_BG : "rgba(255,255,255,0.02)" }}
+        style={{ borderColor: dragging ? ACCENT : "#e2e8f0", background: dragging ? ACCENT_BG : "#ffffff" }}
       >
         <input ref={fileRef} type="file" accept=".pdf,.docx,.txt" className="hidden"
           onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
@@ -453,7 +453,7 @@ function FiqUploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
         ) : (
           <div className="flex flex-col items-center gap-1.5">
             <Upload className="w-5 h-5" style={{ color: ACCENT }} />
-            <p className="text-xs text-white font-medium">Drop plan documents here</p>
+            <p className="text-xs text-[var(--kiq-ink)] font-medium">Drop plan documents here</p>
             <p className="text-[10px] text-zinc-600">SPD · Form 5500 · 408(b)(2) · PDF · DOCX</p>
           </div>
         )}
@@ -461,14 +461,14 @@ function FiqUploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
 
       <input
         data-testid="fiq-input-planname"
-        className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
+        className="w-full bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg px-3 py-1.5 text-xs text-[var(--kiq-ink)] placeholder-zinc-500 focus:outline-none focus:border-zinc-500"
         placeholder="Plan name (optional)"
         value={planName}
         onChange={(e) => setPlanName(e.target.value)}
       />
       <input
         data-testid="fiq-input-orgname"
-        className="w-full bg-black border border-zinc-800 rounded-lg px-3 py-1.5 text-xs text-white placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
+        className="w-full bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg px-3 py-1.5 text-xs text-[var(--kiq-ink)] placeholder-zinc-500 focus:outline-none focus:border-zinc-500"
         placeholder="Organization name (optional)"
         value={orgName}
         onChange={(e) => setOrgName(e.target.value)}
@@ -507,11 +507,11 @@ function FiqPlanList({ selected, onSelect }: { selected: string | null; onSelect
             className="group flex items-center gap-2.5 p-2.5 rounded-lg cursor-pointer transition-all"
             style={{
               background: isSelected ? ACCENT_BG : "transparent",
-              border: `1px solid ${isSelected ? ACCENT_BORDER : "rgba(255,255,255,0.05)"}`,
+              border: `1px solid ${isSelected ? ACCENT_BORDER : "#f8fafc"}`,
             }}>
             <Shield className="w-3.5 h-3.5 flex-shrink-0 text-zinc-600" />
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-white truncate font-medium">{p.plan_name}</p>
+              <p className="text-xs text-[var(--kiq-ink)] truncate font-medium">{p.plan_name}</p>
               {p.org_name && <p className="text-[10px] text-zinc-600 truncate">{p.org_name}</p>}
             </div>
             <button data-testid={`fiq-delete-${p.id}`}
@@ -536,9 +536,9 @@ function FiqLanding() {
           <Shield className="w-10 h-10" style={{ color: ACCENT }} />
         </div>
       </div>
-      <h2 className="text-3xl font-black text-white mb-3">Fiduciary IQ™</h2>
+      <h2 className="text-3xl font-black text-[var(--kiq-ink)] mb-3">Fiduciary IQ™</h2>
       <p className="text-zinc-400 max-w-md mb-1 text-sm leading-relaxed">
-        Upload your plan documents or run the demo. We evaluate <span className="font-black text-white">5 core ERISA duties</span>, score 408(b)(2) disclosures, and generate a DOL audit readiness report.
+        Upload your plan documents or run the demo. We evaluate <span className="font-black text-[var(--kiq-ink)]">5 core ERISA duties</span>, score 408(b)(2) disclosures, and generate a DOL audit readiness report.
       </p>
       <p className="text-zinc-700 text-xs mb-10 uppercase tracking-widest">ERISA § 404 · CAA 2026 · DOL EBSA</p>
 
@@ -555,7 +555,7 @@ function FiqLanding() {
         ))}
       </div>
 
-      <div className="mt-12 pt-8 w-full max-w-lg" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+      <div className="mt-12 pt-8 w-full max-w-lg" style={{ borderTop: "1px solid #f8fafc" }}>
         <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-zinc-700 mb-4">ERISA Fiduciary Duties Evaluated</p>
         <div className="space-y-2 text-left">
           {["Prudent Expert Standard · §404(a)(1)(B)", "Exclusive Benefit & Loyalty · §404(a)(1)(A)", "Plan Document Compliance · §404(a)(1)(D)", "Monitoring & Oversight · §404(a)", "Diversification / Prudence · §404(a)(1)(C)"].map(d => (
@@ -606,16 +606,16 @@ export default function FiduciaryIQ() {
 
   return (
     <Layout fullBleed>
-      <div className="flex h-full overflow-hidden" style={{ background: "#000" }}>
+      <div className="kiq-health-shell flex h-full overflow-hidden">
 
         {/* ── Left sidebar ── */}
-        <div className="w-64 flex-shrink-0 flex flex-col" style={{ background: "#040408", borderRight: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="w-64 flex-shrink-0 flex flex-col" style={{ background: "#F8FAFC", borderRight: "1px solid #f1f5f9" }}>
 
           {/* Brand header */}
-          <div className="px-4 py-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="px-4 py-4" style={{ borderBottom: "1px solid #f1f5f9" }}>
             <div className="flex items-center gap-2 mb-0.5">
               <Shield className="w-4 h-4" style={{ color: ACCENT }} />
-              <span className="text-white font-black text-sm">Fiduciary IQ™</span>
+              <span className="text-[var(--kiq-ink)] font-black text-sm">Fiduciary IQ™</span>
             </div>
             <p className="text-[10px] text-zinc-700 uppercase tracking-widest">ERISA Plan Intelligence</p>
             {isComplete && (
@@ -640,7 +640,7 @@ export default function FiduciaryIQ() {
           </div>
 
           {/* Upload zone */}
-          <div className="px-4 py-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="px-4 py-4" style={{ borderBottom: "1px solid #f1f5f9" }}>
             <FiqUploadZone onUploaded={handleUploaded} />
           </div>
 
@@ -651,7 +651,7 @@ export default function FiduciaryIQ() {
           </div>
 
           {/* Footer disclaimer */}
-          <div className="px-4 py-3" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+          <div className="px-4 py-3" style={{ borderTop: "1px solid #f8fafc" }}>
             <p className="text-[9px] text-zinc-700 leading-relaxed">
               ERISA §404 fiduciary standards · CAA 2026 aligned · DOL EBSA guidance. For plan sponsor and advisor use.
             </p>
@@ -659,7 +659,7 @@ export default function FiduciaryIQ() {
         </div>
 
         {/* ── Main report panel ── */}
-        <div ref={mainPanelRef} className="flex-1 overflow-y-auto" style={{ background: "#000" }}>
+        <div ref={mainPanelRef} className="flex-1 overflow-y-auto" style={{ background: "#F8FAFC" }}>
           {!selectedId ? (
             <FiqLanding />
           ) : planLoading ? (
@@ -669,12 +669,12 @@ export default function FiduciaryIQ() {
           ) : plan ? (
             <div>
               {/* Sticky report header + tab bar */}
-              <div style={{ position: "sticky", top: 0, zIndex: 20, background: "rgba(4,4,8,0.95)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(99,102,241,0.12)" }}>
+              <div style={{ position: "sticky", top: 0, zIndex: 20, background: "rgba(255,255,255,0.82)", backdropFilter: "blur(20px) saturate(155%)", borderBottom: "1px solid rgba(99,102,241,0.12)", boxShadow: "0 12px 34px rgba(15,23,42,0.06)" }}>
                 <div className="px-8 py-3 flex items-center gap-4">
                   <Shield size={18} style={{ color: ACCENT }} />
                   <div className="flex-1 min-w-0">
-                    <h1 className="text-sm font-black text-white truncate">{plan.plan_meta?.plan_name ?? "Employer Health Plan"}</h1>
-                    <p className="text-white/35 text-xs">
+                    <h1 className="text-sm font-black text-[var(--kiq-ink)] truncate">{plan.plan_meta?.plan_name ?? "Employer Health Plan"}</h1>
+                    <p className="text-[var(--kiq-ink)]/35 text-xs">
                       {plan.plan_meta?.org_name ? `${plan.plan_meta.org_name} · ` : ""}
                       408(b)(2) · Fiduciary Risk · DOL Audit
                       {plan.plan_meta?.plan_year ? ` · Plan Year ${plan.plan_meta.plan_year}` : ""}
@@ -689,7 +689,7 @@ export default function FiduciaryIQ() {
                       <button key={id} onClick={() => setTab(id)} data-testid={`fiq-tab-${id}`}
                         className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium whitespace-nowrap transition-all border-b-2 flex-shrink-0"
                         style={{
-                          color: active ? ACCENT : "rgba(255,255,255,0.4)",
+                          color: active ? ACCENT : "#475569",
                           borderBottomColor: active ? ACCENT : "transparent",
                           background: active ? ACCENT_BG : "transparent",
                         }}>
@@ -710,7 +710,7 @@ export default function FiduciaryIQ() {
               </div>
             </div>
           ) : (
-            <div className="text-white/30 text-center py-20">Plan not found.</div>
+            <div className="text-[var(--kiq-ink)]/30 text-center py-20">Plan not found.</div>
           )}
         </div>
       </div>

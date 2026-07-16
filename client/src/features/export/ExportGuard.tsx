@@ -117,10 +117,10 @@ export function ExportGuard({
     <div className={cn("space-y-4", className)} data-testid="export-guard">
       {/* Idle: show gate check trigger */}
       {guardState === "idle" && !autoCheck && (
-        <div className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3">
+        <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3">
           <ShieldCheck className="w-4 h-4 text-zinc-600" />
           <div className="flex-1">
-            <p className="text-xs font-semibold text-zinc-300">Export Eligibility Guard</p>
+            <p className="text-xs font-semibold text-slate-500">Export Eligibility Guard</p>
             <p className="text-[10px] text-zinc-600">
               {ids.length} claim{ids.length !== 1 ? "s" : ""} · {audience} gate
             </p>
@@ -129,7 +129,7 @@ export function ExportGuard({
             data-testid="button-run-guard-check"
             onClick={() => runCheck()}
             disabled={ids.length === 0}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-semibold bg-zinc-800 border border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-zinc-100 transition-colors disabled:opacity-40"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-semibold bg-white border border-slate-200 text-slate-500 hover:border-zinc-500 hover:text-slate-900 transition-colors disabled:opacity-40"
           >
             <ShieldCheck className="w-2.5 h-2.5" />
             Check Gate
@@ -139,11 +139,11 @@ export function ExportGuard({
 
       {/* Checking */}
       {(guardState === "checking" || isPending) && (
-        <div className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3"
+        <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3"
           data-testid="export-guard-checking">
           <Loader2 className="w-4 h-4 text-[#00A8FF] animate-spin" />
           <div>
-            <p className="text-xs font-semibold text-zinc-300">Running Gate Check…</p>
+            <p className="text-xs font-semibold text-slate-500">Running Gate Check…</p>
             <p className="text-[10px] text-zinc-600">Evaluating {ids.length} claims against {audience} policy</p>
           </div>
         </div>

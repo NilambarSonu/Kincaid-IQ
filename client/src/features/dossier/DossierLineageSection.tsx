@@ -23,12 +23,12 @@ export function DossierLineageSection({ transforms, className }: DossierLineageS
 
   return (
     <div
-      className={cn("rounded-xl border border-zinc-800 bg-zinc-900/60 overflow-hidden", className)}
+      className={cn("rounded-xl border border-slate-200 bg-slate-50/60 overflow-hidden", className)}
       data-testid="dossier-lineage-section"
     >
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-800">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-200">
         <GitBranch className="w-3.5 h-3.5 text-[#A855F7]" />
-        <span className="text-xs font-semibold text-zinc-200">Transform Lineage</span>
+        <span className="text-xs font-semibold text-slate-700">Transform Lineage</span>
         <span className="ml-auto text-[9px] font-mono text-zinc-600">{transforms.length}</span>
       </div>
 
@@ -41,7 +41,7 @@ export function DossierLineageSection({ transforms, className }: DossierLineageS
               {tx.name && <span className="text-[10px] text-zinc-400">{tx.name}</span>}
             </div>
             {tx.formula && (
-              <code className="block text-[10px] font-mono text-[#FFB800] bg-zinc-950/60 border border-zinc-800 rounded px-2 py-1">
+              <code className="block text-[10px] font-mono text-[#FFB800] bg-white/60 border border-slate-200 rounded px-2 py-1">
                 {tx.formula}
               </code>
             )}

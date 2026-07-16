@@ -127,7 +127,7 @@ def _load_persisted_rfp_scoring():
         app_config.enable_db_override()
         app_config._apply_in_place(app_config._load_rfp_scoring())
         if app_config.get_rfp_scoring_override() is not None:
-            print("[Kincaid IQ] RFP scoring override applied (DB/admin file) ✓")
+            print("[Kincaid IQ] RFP scoring override applied (DB/admin file) [OK]")
     except Exception as e:
         logger.warning(f"[Kincaid IQ] Could not load persisted RFP scoring override: {e}")
 
@@ -147,16 +147,16 @@ async def lifespan(app: FastAPI):
     )
     Base.metadata.create_all(bind=engine, checkfirst=True)
     start_scheduler()
-    print("[Kincaid IQ] Database ready ✓")
+    print("[Kincaid IQ] Database ready [OK]")
     from backend.database import SessionLocal
     from backend import models
     with SessionLocal() as _db:
         from backend import kiq_verify as _kiq_verify
         _kiq_verify.seed_demo(_db)
-        print("[Kincaid IQ] Kincaid IQ Verify ledger ready ✓")
+        print("[Kincaid IQ] Kincaid IQ Verify ledger ready [OK]")
         seeded = seed_broker_commissions(_db)
         if seeded:
-            print(f"[Kincaid IQ] Broker commissions seeded: {seeded} records ✓")
+            print(f"[Kincaid IQ] Broker commissions seeded: {seeded} records [OK]")
         # Seed Eric Dreyfus — Rx Defense IQ, can_view + can_edit
         eric = _db.query(models.User).filter(models.User.username == "eric.dreyfus").first()
         if eric:
@@ -177,7 +177,7 @@ async def lifespan(app: FastAPI):
                     granted_by = "system",
                 ))
                 _db.commit()
-                print("[Kincaid IQ] Eric Dreyfus → rx-defense (view + edit) granted ✓")
+                print("[Kincaid IQ] Eric Dreyfus → rx-defense (view + edit) granted [OK]")
     yield
     stop_scheduler()
 

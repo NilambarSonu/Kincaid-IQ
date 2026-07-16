@@ -179,8 +179,8 @@ function ImportPanel() {
     status?.items.find(i => i.year === y && i.fileType === ft);
 
   return (
-    <div className="bg-zinc-950/80 border border-zinc-800/60 rounded-2xl overflow-hidden">
-      <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-800/60">
+    <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/60 rounded-2xl overflow-hidden">
+      <div className="flex items-center justify-between px-5 py-3.5 border-b border-[var(--kiq-hairline)]/60">
         <div className="flex items-center gap-2">
           <Download className="w-4 h-4 text-[#00A8FF]" />
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#00A8FF]">
@@ -252,7 +252,7 @@ function ImportPanel() {
           <a
             href="https://www.dol.gov/agencies/ebsa/about-ebsa/our-activities/public-disclosure/foia/form-5500-datasets"
             target="_blank" rel="noopener"
-            className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-zinc-300 transition-colors"
+            className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-[var(--kiq-muted)] transition-colors"
           >
             <ExternalLink className="w-3 h-3" />
             DOL EBSA Form 5500 Datasets
@@ -264,7 +264,7 @@ function ImportPanel() {
           <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto">
             {status.items.map(item => (
               <div key={`${item.year}-${item.fileType}`}
-                className="flex items-center justify-between gap-2 bg-zinc-900/50 rounded-lg px-3 py-2 border border-zinc-800/40">
+                className="flex items-center justify-between gap-2 bg-[var(--kiq-canvas-soft)]/50 rounded-lg px-3 py-2 border border-[var(--kiq-hairline)]/40">
                 <span className="text-[10px] font-mono text-zinc-400">
                   {item.year} · {item.fileType}
                 </span>
@@ -298,7 +298,7 @@ function StatsStrip() {
         { label: "Total Broker Comm.",value: stats?.totalBrokerCommissions ?? 0, icon: DollarSign, color: "#FF4D6D", dollar: true },
         { label: "Total Welfare Prem.",value: stats?.totalWelfarePremiums ?? 0, icon: Shield, color: "#00FF94", dollar: true },
       ].map(({ label, value, icon: Icon, color, dollar }) => (
-        <div key={label} className="bg-zinc-950/80 border border-zinc-800/50 rounded-xl p-4">
+        <div key={label} className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-xl p-4">
           <div className="flex items-center gap-2 mb-1">
             <Icon className="w-3.5 h-3.5" style={{ color }} />
             <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-500">{label}</p>
@@ -354,27 +354,27 @@ function FilingsSearch() {
   return (
     <div className="space-y-4">
       {/* Filters */}
-      <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-2xl p-5">
+      <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-2xl p-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
           <div className="lg:col-span-2">
             <label className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-1 block">Plan / Sponsor Name</label>
             <input value={q} onChange={e => setQ(e.target.value)}
               onKeyDown={e => e.key === "Enter" && handleSearch()}
               placeholder="Search plan or sponsor name…"
-              className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-1.5 text-xs font-mono text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
+              className="w-full bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-lg px-3 py-1.5 text-xs font-mono text-[var(--kiq-ink-soft)] placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
               data-testid="input-search-filings" />
           </div>
           <div>
             <label className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-1 block">EIN</label>
             <input value={ein} onChange={e => setEin(e.target.value)}
               placeholder="XX-XXXXXXX"
-              className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-1.5 text-xs font-mono text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
+              className="w-full bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-lg px-3 py-1.5 text-xs font-mono text-[var(--kiq-ink-soft)] placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
               data-testid="input-ein-filings" />
           </div>
           <div>
             <label className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-1 block">State</label>
             <select value={state} onChange={e => setState(e.target.value)}
-              className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-1.5 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600"
+              className="w-full bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-lg px-3 py-1.5 text-xs font-mono text-[var(--kiq-ink-soft)] focus:outline-none focus:border-zinc-600"
               data-testid="select-state-filings">
               <option value="">All States</option>
               {US_STATES.map(s => <option key={s} value={s}>{s}</option>)}
@@ -383,7 +383,7 @@ function FilingsSearch() {
           <div>
             <label className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-1 block">Year From</label>
             <select value={yearFrom} onChange={e => setYearFrom(e.target.value)}
-              className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-1.5 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600"
+              className="w-full bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-lg px-3 py-1.5 text-xs font-mono text-[var(--kiq-ink-soft)] focus:outline-none focus:border-zinc-600"
               data-testid="select-year-from">
               <option value="">Any</option>
               {YEARS.map(y => <option key={y} value={y}>{y}</option>)}
@@ -392,7 +392,7 @@ function FilingsSearch() {
           <div>
             <label className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-1 block">Year To</label>
             <select value={yearTo} onChange={e => setYearTo(e.target.value)}
-              className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-1.5 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600"
+              className="w-full bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-lg px-3 py-1.5 text-xs font-mono text-[var(--kiq-ink-soft)] focus:outline-none focus:border-zinc-600"
               data-testid="select-year-to">
               <option value="">Any</option>
               {YEARS.map(y => <option key={y} value={y}>{y}</option>)}
@@ -403,7 +403,7 @@ function FilingsSearch() {
             <input value={minPart} onChange={e => setMinPart(e.target.value)}
               placeholder="e.g. 1000"
               type="number"
-              className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-1.5 text-xs font-mono text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
+              className="w-full bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-lg px-3 py-1.5 text-xs font-mono text-[var(--kiq-ink-soft)] placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
               data-testid="input-min-participants" />
           </div>
           <div className="flex items-end gap-2">
@@ -414,7 +414,7 @@ function FilingsSearch() {
               Search
             </button>
             <button onClick={handleClear} data-testid="btn-clear-filings"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 hover:text-zinc-300 transition-all border border-zinc-800/50">
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 hover:text-[var(--kiq-muted)] transition-all border border-[var(--kiq-hairline)]/50">
               <X className="w-3 h-3" />
               Clear
             </button>
@@ -423,22 +423,22 @@ function FilingsSearch() {
       </div>
 
       {/* Results */}
-      <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-2xl overflow-hidden">
-        <div className="flex items-center justify-between px-5 py-3 border-b border-zinc-800/40">
+      <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-2xl overflow-hidden">
+        <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--kiq-hairline)]/40">
           <span className="text-[10px] font-mono text-zinc-500">
             {isFetching ? "Searching…" : total > 0 ? `${fmtNum(total)} results` : "Enter a search above"}
           </span>
           {total > 0 && (
             <div className="flex items-center gap-2">
               <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
-                className="p-1 rounded text-zinc-500 hover:text-zinc-200 disabled:opacity-30">
+                className="p-1 rounded text-zinc-500 hover:text-[var(--kiq-ink-soft)] disabled:opacity-30">
                 <ChevronLeft className="w-3.5 h-3.5" />
               </button>
               <span className="text-[10px] font-mono text-zinc-500">
                 Page {page} of {Math.ceil(total / 50)}
               </span>
               <button onClick={() => setPage(p => p + 1)} disabled={page >= Math.ceil(total / 50)}
-                className="p-1 rounded text-zinc-500 hover:text-zinc-200 disabled:opacity-30">
+                className="p-1 rounded text-zinc-500 hover:text-[var(--kiq-ink-soft)] disabled:opacity-30">
                 <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -447,7 +447,7 @@ function FilingsSearch() {
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr className="border-b border-zinc-800/40">
+              <tr className="border-b border-[var(--kiq-hairline)]/40">
                 {["Year", "Plan Name", "Sponsor", "EIN", "State", "Participants", "Type"].map(h => (
                   <th key={h} className="px-4 py-2.5 text-left text-[9px] font-mono uppercase tracking-widest text-zinc-600">{h}</th>
                 ))}
@@ -465,13 +465,13 @@ function FilingsSearch() {
               ) : (
                 results.map((r, i) => (
                   <tr key={r.ackId + i}
-                    className="border-b border-zinc-900/40 hover:bg-zinc-900/30 transition-colors"
+                    className="border-b border-zinc-900/40 hover:bg-[var(--kiq-canvas-soft)]/30 transition-colors"
                     data-testid={`filing-row-${i}`}>
                     <td className="px-4 py-2.5">
                       <span className="text-[10px] font-mono text-[#00A8FF]">{r.year}</span>
                     </td>
                     <td className="px-4 py-2.5 max-w-[200px]">
-                      <p className="text-zinc-200 font-medium truncate" title={r.planName}>{r.planName || "—"}</p>
+                      <p className="text-[var(--kiq-ink-soft)] font-medium truncate" title={r.planName}>{r.planName || "—"}</p>
                     </td>
                     <td className="px-4 py-2.5 max-w-[160px]">
                       <p className="text-zinc-400 truncate text-[11px]" title={r.sponsorName}>{r.sponsorName || "—"}</p>
@@ -540,26 +540,26 @@ function ScheduleASearch() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-2xl p-5">
+      <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-2xl p-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
           <div className="lg:col-span-2">
             <label className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-1 block">Insurance Carrier Name</label>
             <input value={q} onChange={e => setQ(e.target.value)}
               onKeyDown={e => e.key === "Enter" && handleSearch()}
               placeholder="Search carrier name…"
-              className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-1.5 text-xs font-mono text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
+              className="w-full bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-lg px-3 py-1.5 text-xs font-mono text-[var(--kiq-ink-soft)] placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
               data-testid="input-search-scha" />
           </div>
           <div>
             <label className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-1 block">Plan EIN</label>
             <input value={ein} onChange={e => setEin(e.target.value)} placeholder="XX-XXXXXXX"
-              className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-1.5 text-xs font-mono text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
+              className="w-full bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-lg px-3 py-1.5 text-xs font-mono text-[var(--kiq-ink-soft)] placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
               data-testid="input-ein-scha" />
           </div>
           <div>
             <label className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-1 block">Benefit Type</label>
             <select value={benefitType} onChange={e => setBenefitType(e.target.value)}
-              className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-1.5 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600"
+              className="w-full bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-lg px-3 py-1.5 text-xs font-mono text-[var(--kiq-ink-soft)] focus:outline-none focus:border-zinc-600"
               data-testid="select-benefit-scha">
               <option value="">All Types</option>
               {BENEFIT_TYPES.map(b => <option key={b.value} value={b.value}>{b.label}</option>)}
@@ -568,7 +568,7 @@ function ScheduleASearch() {
           <div>
             <label className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-1 block">Year From</label>
             <select value={yearFrom} onChange={e => setYearFrom(e.target.value)}
-              className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-1.5 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600"
+              className="w-full bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-lg px-3 py-1.5 text-xs font-mono text-[var(--kiq-ink-soft)] focus:outline-none focus:border-zinc-600"
               data-testid="select-year-from-scha">
               <option value="">Any</option>
               {YEARS.map(y => <option key={y} value={y}>{y}</option>)}
@@ -577,7 +577,7 @@ function ScheduleASearch() {
           <div>
             <label className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest mb-1 block">Year To</label>
             <select value={yearTo} onChange={e => setYearTo(e.target.value)}
-              className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-1.5 text-xs font-mono text-zinc-200 focus:outline-none focus:border-zinc-600"
+              className="w-full bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-lg px-3 py-1.5 text-xs font-mono text-[var(--kiq-ink-soft)] focus:outline-none focus:border-zinc-600"
               data-testid="select-year-to-scha">
               <option value="">Any</option>
               {YEARS.map(y => <option key={y} value={y}>{y}</option>)}
@@ -588,7 +588,7 @@ function ScheduleASearch() {
             <input value={minComm} onChange={e => setMinComm(e.target.value)}
               placeholder="e.g. 50000"
               type="number"
-              className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-1.5 text-xs font-mono text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
+              className="w-full bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-lg px-3 py-1.5 text-xs font-mono text-[var(--kiq-ink-soft)] placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
               data-testid="input-min-commission" />
           </div>
           <div className="flex items-end gap-2">
@@ -600,7 +600,7 @@ function ScheduleASearch() {
             </button>
             <button onClick={() => { setQ(""); setEin(""); setBenefitType(""); setYearFrom(""); setYearTo(""); setMinComm(""); setActiveQ({}); }}
               data-testid="btn-clear-scha"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 hover:text-zinc-300 transition-all border border-zinc-800/50">
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-500 hover:text-[var(--kiq-muted)] transition-all border border-[var(--kiq-hairline)]/50">
               <X className="w-3 h-3" />
               Clear
             </button>
@@ -608,20 +608,20 @@ function ScheduleASearch() {
         </div>
       </div>
 
-      <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-2xl overflow-hidden">
-        <div className="flex items-center justify-between px-5 py-3 border-b border-zinc-800/40">
+      <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-2xl overflow-hidden">
+        <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--kiq-hairline)]/40">
           <span className="text-[10px] font-mono text-zinc-500">
             {isFetching ? "Searching…" : total > 0 ? `${fmtNum(total)} results` : "Search for carriers or filter by benefit type"}
           </span>
           {total > 0 && (
             <div className="flex items-center gap-2">
               <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
-                className="p-1 rounded text-zinc-500 hover:text-zinc-200 disabled:opacity-30">
+                className="p-1 rounded text-zinc-500 hover:text-[var(--kiq-ink-soft)] disabled:opacity-30">
                 <ChevronLeft className="w-3.5 h-3.5" />
               </button>
               <span className="text-[10px] font-mono text-zinc-500">Page {page} of {Math.ceil(total / 50)}</span>
               <button onClick={() => setPage(p => p + 1)} disabled={page >= Math.ceil(total / 50)}
-                className="p-1 rounded text-zinc-500 hover:text-zinc-200 disabled:opacity-30">
+                className="p-1 rounded text-zinc-500 hover:text-[var(--kiq-ink-soft)] disabled:opacity-30">
                 <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -630,7 +630,7 @@ function ScheduleASearch() {
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr className="border-b border-zinc-800/40">
+              <tr className="border-b border-[var(--kiq-hairline)]/40">
                 {["Year", "EIN", "Carrier", "NAIC", "Broker Commissions", "Welfare Premiums", "Benefits"].map(h => (
                   <th key={h} className="px-4 py-2.5 text-left text-[9px] font-mono uppercase tracking-widest text-zinc-600">{h}</th>
                 ))}
@@ -648,7 +648,7 @@ function ScheduleASearch() {
               ) : (
                 results.map((r, i) => (
                   <tr key={r.ackId + i}
-                    className="border-b border-zinc-900/40 hover:bg-zinc-900/30 transition-colors"
+                    className="border-b border-zinc-900/40 hover:bg-[var(--kiq-canvas-soft)]/30 transition-colors"
                     data-testid={`scha-row-${i}`}>
                     <td className="px-4 py-2.5">
                       <span className="text-[10px] font-mono text-[#A855F7]">{r.year}</span>
@@ -657,7 +657,7 @@ function ScheduleASearch() {
                       <span className="text-[10px] font-mono text-zinc-500">{r.ein || "—"}</span>
                     </td>
                     <td className="px-4 py-2.5 max-w-[180px]">
-                      <p className="text-zinc-200 truncate" title={r.carrierName}>{r.carrierName || "—"}</p>
+                      <p className="text-[var(--kiq-ink-soft)] truncate" title={r.carrierName}>{r.carrierName || "—"}</p>
                     </td>
                     <td className="px-4 py-2.5">
                       <span className="text-[10px] font-mono text-zinc-600">{r.naicCode || "—"}</span>
@@ -693,7 +693,7 @@ export default function Form5500Database() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-zinc-950 p-6 space-y-6">
+      <div className="min-h-screen bg-[var(--kiq-surface)] p-6 space-y-6">
 
         {/* Header */}
         <div className="flex items-start justify-between">
@@ -704,7 +704,7 @@ export default function Form5500Database() {
                 DOL EBSA · 10-Year Coverage
               </span>
             </div>
-            <h1 className="text-2xl font-black text-zinc-100 tracking-tight">Form 5500 Database</h1>
+            <h1 className="text-2xl font-black text-[var(--kiq-ink)] tracking-tight">Form 5500 Database</h1>
             <p className="text-xs text-zinc-500 mt-1">
               Annual benefit plan filings · Schedule A insurance data · ~800K plans/year · 2015–2024
             </p>
@@ -712,7 +712,7 @@ export default function Form5500Database() {
           <a
             href="https://www.dol.gov/agencies/ebsa/about-ebsa/our-activities/public-disclosure/foia/form-5500-datasets"
             target="_blank" rel="noopener"
-            className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-zinc-300 transition-colors border border-zinc-800/40 rounded-lg px-3 py-2"
+            className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-[var(--kiq-muted)] transition-colors border border-[var(--kiq-hairline)]/40 rounded-lg px-3 py-2"
           >
             <ExternalLink className="w-3 h-3" />
             DOL Source
@@ -723,7 +723,7 @@ export default function Form5500Database() {
         <StatsStrip />
 
         {/* Tabs */}
-        <div className="flex gap-2 border-b border-zinc-800/40 pb-0">
+        <div className="flex gap-2 border-b border-[var(--kiq-hairline)]/40 pb-0">
           {[
             { key: "filings",    label: "Main Filings",    icon: FileSearch, color: "#00A8FF" },
             { key: "schedule-a", label: "Schedule A (Insurance)", icon: Shield, color: "#A855F7" },

@@ -127,12 +127,12 @@ export default function Commodities() {
                       <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
-                  <XAxis dataKey="month" tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }} axisLine={false} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f8fafc" />
+                  <XAxis dataKey="month" tick={{ fill: "#475569", fontSize: 10 }} axisLine={false} />
                   <YAxis hide domain={['auto', 'auto']} />
                   <Tooltip 
-                    contentStyle={{ background: "#0c0e1a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }}
-                    labelStyle={{ color: "#fff" }}
+                    contentStyle={{ background: "#F8FAFC", border: "1px solid #e2e8f0", borderRadius: "8px" }}
+                    labelStyle={{ color: "#0F172A" }}
                   />
                   <Area type="monotone" dataKey="price" stroke="hsl(var(--primary))" strokeWidth={2} fillOpacity={1} fill="url(#colorPrice)"  isAnimationActive={false} />
                 </AreaChart>
@@ -142,11 +142,11 @@ export default function Commodities() {
                 <h4 className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest">Term Structure (Futures Curve)</h4>
                 <ResponsiveContainer width="100%" height={180}>
                   <LineChart data={termStructureData} data-testid="chart-term-structure">
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
-                    <XAxis dataKey="tenor" tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }} axisLine={false} />
-                    <YAxis tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }} axisLine={false} domain={['auto', 'auto']} />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f8fafc" />
+                    <XAxis dataKey="tenor" tick={{ fill: "#475569", fontSize: 10 }} axisLine={false} />
+                    <YAxis tick={{ fill: "#475569", fontSize: 10 }} axisLine={false} domain={['auto', 'auto']} />
                     <Tooltip 
-                      contentStyle={{ background: "#0c0e1a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }}
+                      contentStyle={{ background: "#F8FAFC", border: "1px solid #e2e8f0", borderRadius: "8px" }}
                     />
                     <Line 
                       type="monotone" 

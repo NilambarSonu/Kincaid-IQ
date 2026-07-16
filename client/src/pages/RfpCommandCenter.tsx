@@ -194,13 +194,15 @@ function KpiTile({
       whileHover={{ scale: 1.02, y: -1 }}
       onClick={onClick}
       style={{
-        background: "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%)",
+        background: "linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.62) 100%)",
         border: `1px solid ${color}30`,
-        borderRadius: 12,
+        borderRadius: 16,
         padding: "18px 20px",
         cursor: onClick ? "pointer" : "default",
         position: "relative",
         overflow: "hidden",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9), 0 18px 48px rgba(15,23,42,0.08)",
+        backdropFilter: "blur(18px)",
       }}
     >
       <div style={{
@@ -217,9 +219,9 @@ function KpiTile({
           <Icon size={16} color={color} strokeWidth={1.8} />
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", marginBottom: 2, textTransform: "uppercase", letterSpacing: "0.08em" }}>{label}</div>
+          <div style={{ fontSize: 11, color: "#64748b", marginBottom: 2, textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 800 }}>{label}</div>
           <div style={{ fontSize: 22, fontWeight: 700, color, lineHeight: 1.15, fontVariantNumeric: "tabular-nums" }}>{value}</div>
-          {sub && <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>{sub}</div>}
+          {sub && <div style={{ fontSize: 11, color: "#64748b", marginTop: 2 }}>{sub}</div>}
         </div>
         {trend && trend !== "flat" && (
           <div style={{ color: trend === "up" ? GREEN : RED }}>
@@ -253,8 +255,8 @@ function EmptyState({ message }: { message: string }) {
   return (
     <div style={{
       textAlign: "center", padding: "24px 16px",
-      color: "rgba(255,255,255,0.25)", fontSize: 12,
-      border: "1px dashed rgba(255,255,255,0.08)", borderRadius: 8,
+      color: "rgba(15,23,42,0.08)", fontSize: 12,
+      border: "1px dashed #e2e8f0", borderRadius: 8,
     }}>{message}</div>
   );
 }
@@ -270,10 +272,12 @@ export default function RfpCommandCenter() {
   });
 
   const card: React.CSSProperties = {
-    background: "rgba(255,255,255,0.03)",
-    border: "1px solid rgba(255,255,255,0.07)",
-    borderRadius: 12,
+    background: "rgba(255,255,255,0.78)",
+    border: "1px solid rgba(15,23,42,0.10)",
+    borderRadius: 18,
     padding: "18px 20px",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.9), 0 18px 52px rgba(15,23,42,0.08)",
+    backdropFilter: "blur(20px)",
   };
 
   const STAGE_COLORS: Record<string, string> = {
@@ -305,22 +309,21 @@ export default function RfpCommandCenter() {
           70%  { box-shadow: 0 0 0 6px transparent; }
           100% { box-shadow: 0 0 0 0 transparent; }
         }
-        .cmd-row-hover:hover { background: rgba(255,255,255,0.04) !important; }
+        .cmd-row-hover:hover { background: rgba(255,255,255,0.82) !important; box-shadow: 0 10px 26px rgba(15,23,42,0.07); }
       `}</style>
 
-      <div style={{
-        minHeight: "100vh",
-        background: "linear-gradient(160deg, #070d1f 0%, #0a1428 50%, #06101e 100%)",
+      <div className="kiq-ops-shell" style={{
+        minHeight: "calc(100vh - 56px)",
         padding: "28px 32px",
         fontFamily: "'Inter', sans-serif",
       }}>
 
         {/* ── Header ── */}
-        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 28 }}>
+        <div className="kiq-ops-header" style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 28, borderRadius: 24, padding: "20px 22px" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
               <Target size={20} color={GOLD} strokeWidth={1.8} />
-              <span style={{ fontSize: 22, fontWeight: 800, color: "#fff", letterSpacing: "-0.02em" }}>
+              <span style={{ fontSize: 26, fontWeight: 900, color: "#0F172A", letterSpacing: "-0.035em" }}>
                 RFP Executive Command Center
               </span>
               <span style={{
@@ -330,8 +333,8 @@ export default function RfpCommandCenter() {
                 borderRadius: 4, padding: "2px 6px", marginLeft: 4,
               }}>LIVE</span>
             </div>
-            <div style={{ fontSize: 13, color: "rgba(255,255,255,0.35)" }}>
-              Kincaid RMC · Leadership intelligence · {data ? new Date(data.generated_at).toLocaleString() : "—"}
+            <div style={{ fontSize: 13, color: "#64748b" }}>
+              Kincaid Health · Leadership intelligence · {data ? new Date(data.generated_at).toLocaleString() : "—"}
             </div>
           </div>
           <button
@@ -339,8 +342,8 @@ export default function RfpCommandCenter() {
             data-testid="button-refresh-command-center"
             style={{
               display: "flex", alignItems: "center", gap: 6,
-              background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: 8, padding: "7px 14px", color: "rgba(255,255,255,0.6)",
+              background: "rgba(255,255,255,0.72)", border: "1px solid rgba(15,23,42,0.10)",
+              borderRadius: 8, padding: "7px 14px", color: "#1e293b",
               fontSize: 12, cursor: "pointer",
             }}
           >
@@ -350,12 +353,12 @@ export default function RfpCommandCenter() {
         </div>
 
         {isLoading ? (
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 300, color: "rgba(255,255,255,0.3)", gap: 10 }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: 300, color: "#64748b", gap: 10 }}>
             <RefreshCw size={18} style={{ animation: "spin 1s linear infinite" }} />
             Loading command center…
           </div>
         ) : !data ? (
-          <div style={{ textAlign: "center", color: "rgba(255,255,255,0.3)", padding: 60 }}>
+          <div style={{ textAlign: "center", color: "#64748b", padding: 60 }}>
             No data available. Ingest your first RFP to activate the Command Center.
           </div>
         ) : (
@@ -407,7 +410,7 @@ export default function RfpCommandCenter() {
                         borderRadius: 3, padding: "1px 5px", color: GREEN, textTransform: "uppercase",
                       }}>MODELED</span>
                     </div>
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", marginBottom: 10, fontFamily: "monospace" }}>
+                    <div style={{ fontSize: 12, color: "#334155", marginBottom: 10, fontFamily: "monospace" }}>
                       {data.forecast_method.formula}
                     </div>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8, marginBottom: 10 }}>
@@ -415,13 +418,13 @@ export default function RfpCommandCenter() {
                         const e = entry as ForecastTierEntry;
                         return (
                           <div key={tier} style={{
-                            background: "rgba(255,255,255,0.03)",
+                            background: "#ffffff",
                             border: `1px solid ${tierColor(tier)}25`,
                             borderRadius: 8, padding: "10px 12px",
                           }}>
                             <div style={{ fontSize: 10, color: tierColor(tier), fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>{tierLabel(tier)}</div>
-                            <div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>{e.count} opps</div>
-                            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{e.win_prob_pct}% win prob</div>
+                            <div style={{ fontSize: 13, fontWeight: 700, color: "#0F172A" }}>{e.count} opps</div>
+                            <div style={{ fontSize: 11, color: "#475569" }}>{e.win_prob_pct}% win prob</div>
                             <div style={{ fontSize: 12, color: GREEN, fontWeight: 600, marginTop: 2 }}>
                               ${Math.round(e.forecasted / 1000)}K forecast
                             </div>
@@ -429,7 +432,7 @@ export default function RfpCommandCenter() {
                         );
                       })}
                     </div>
-                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>
+                    <div style={{ fontSize: 11, color: "#64748b" }}>
                       {data.forecast_method.basis}
                     </div>
                   </div>
@@ -470,18 +473,18 @@ export default function RfpCommandCenter() {
                         {/* Rank */}
                         <div style={{
                           width: 22, height: 22, borderRadius: 6,
-                          background: i < 3 ? `${GOLD}20` : "rgba(255,255,255,0.05)",
+                          background: i < 3 ? `${GOLD}20` : "#f8fafc",
                           display: "flex", alignItems: "center", justifyContent: "center",
                           fontSize: 10, fontWeight: 700,
-                          color: i < 3 ? GOLD : "rgba(255,255,255,0.3)",
+                          color: i < 3 ? GOLD : "#64748b",
                         }}>#{i + 1}</div>
 
                         {/* Name + meta */}
                         <div style={{ minWidth: 0 }}>
-                          <div style={{ fontSize: 13, fontWeight: 600, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                          <div style={{ fontSize: 13, fontWeight: 600, color: "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {opp.employer_name}
                           </div>
-                          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>
+                          <div style={{ fontSize: 11, color: "#64748b" }}>
                             {[opp.industry, opp.state].filter(Boolean).join(" · ")} · {stageLabel(opp.stage)}
                           </div>
                         </div>
@@ -494,7 +497,7 @@ export default function RfpCommandCenter() {
                             border: `1px solid ${tierColor(opp.score_tier)}30`,
                             borderRadius: 4, padding: "2px 6px",
                           }}>{opp.score}/100</div>
-                          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>{opp.win_probability}% win</div>
+                          <div style={{ fontSize: 10, color: "#64748b", marginTop: 2 }}>{opp.win_probability}% win</div>
                         </div>
 
                         {/* Value */}
@@ -504,7 +507,7 @@ export default function RfpCommandCenter() {
                         </div>
 
                         {/* Arrow */}
-                        <ChevronRight size={13} color="rgba(255,255,255,0.2)" />
+                        <ChevronRight size={13} color="#94a3b8" />
                       </motion.div>
                     ))}
                   </div>
@@ -520,11 +523,11 @@ export default function RfpCommandCenter() {
                   <>
                     <ResponsiveContainer width="100%" height={160}>
                       <BarChart data={stageChartData} margin={{ top: 4, right: 4, left: -20, bottom: 4 }} barSize={16}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                        <XAxis dataKey="stage" tick={{ fontSize: 9, fill: "rgba(255,255,255,0.4)" }} />
-                        <YAxis tick={{ fontSize: 9, fill: "rgba(255,255,255,0.4)" }} allowDecimals={false} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" />
+                        <XAxis dataKey="stage" tick={{ fontSize: 9, fill: "#475569" }} />
+                        <YAxis tick={{ fontSize: 9, fill: "#475569" }} allowDecimals={false} />
                         <Tooltip
-                          contentStyle={{ background: "#0d1b2a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, fontSize: 12 }}
+                          contentStyle={{ background: "#F8FAFC", border: "1px solid #e2e8f0", borderRadius: 8, fontSize: 12 }}
                           formatter={(v: any) => [`${v} opps`, "Count"]}
                         />
                         <Bar dataKey="count" radius={[4, 4, 0, 0]}>
@@ -541,9 +544,9 @@ export default function RfpCommandCenter() {
                         <div key={stage} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                             <div style={{ width: 8, height: 8, borderRadius: 2, background: color }} />
-                            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{stage}</span>
+                            <span style={{ fontSize: 11, color: "#334155" }}>{stage}</span>
                           </div>
-                          <span style={{ fontSize: 11, fontWeight: 600, color: "#fff" }}>{count}</span>
+                          <span style={{ fontSize: 11, fontWeight: 600, color: "#0F172A" }}>{count}</span>
                         </div>
                       ))}
                     </div>
@@ -583,11 +586,11 @@ export default function RfpCommandCenter() {
                           alignItems: "center", justifyContent: "center",
                         }}>
                           <span style={{ fontSize: 14, fontWeight: 800, color: daysColor(d.days_left), lineHeight: 1 }}>{d.days_left}</span>
-                          <span style={{ fontSize: 8, color: "rgba(255,255,255,0.4)", textTransform: "uppercase" }}>days</span>
+                          <span style={{ fontSize: 8, color: "#475569", textTransform: "uppercase" }}>days</span>
                         </div>
                         <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ fontSize: 12, fontWeight: 600, color: "#fff", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{d.employer_name}</div>
-                          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>{stageLabel(d.stage)} · {d.owner || "Unassigned"}</div>
+                          <div style={{ fontSize: 12, fontWeight: 600, color: "#0F172A", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{d.employer_name}</div>
+                          <div style={{ fontSize: 10, color: "#475569" }}>{stageLabel(d.stage)} · {d.owner || "Unassigned"}</div>
                         </div>
                         <div style={{
                           width: 6, height: 6, borderRadius: "50%",
@@ -628,8 +631,8 @@ export default function RfpCommandCenter() {
                           <Building2 size={14} color={PURPLE} strokeWidth={1.8} />
                         </div>
                         <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ fontSize: 12, fontWeight: 600, color: "#fff", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.employer_name}</div>
-                          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>
+                          <div style={{ fontSize: 12, fontWeight: 600, color: "#0F172A", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.employer_name}</div>
+                          <div style={{ fontSize: 10, color: "#475569" }}>
                             {r.monitor_type.replace("_", " ")}
                             {r.latest_alert && ` · ${r.latest_alert.slice(0, 32)}…`}
                           </div>
@@ -669,8 +672,8 @@ export default function RfpCommandCenter() {
                       >
                         <AlertCircle size={14} color={AMBER} style={{ marginTop: 2, flexShrink: 0 }} strokeWidth={1.8} />
                         <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ fontSize: 12, fontWeight: 600, color: "#fff", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.employer_name}</div>
-                          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>{a.summary} · FY{a.filing_year}</div>
+                          <div style={{ fontSize: 12, fontWeight: 600, color: "#0F172A", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.employer_name}</div>
+                          <div style={{ fontSize: 10, color: "#475569" }}>{a.summary} · FY{a.filing_year}</div>
                         </div>
                         <Pulse color={AMBER} />
                       </motion.div>
@@ -702,14 +705,14 @@ export default function RfpCommandCenter() {
                       >
                         <div style={{
                           width: 24, height: 24, borderRadius: 6,
-                          background: i < 3 ? `${GOLD}20` : "rgba(255,255,255,0.05)",
+                          background: i < 3 ? `${GOLD}20` : "#f8fafc",
                           display: "flex", alignItems: "center", justifyContent: "center",
                           fontSize: 11, fontWeight: 700,
-                          color: i < 3 ? GOLD : "rgba(255,255,255,0.35)",
+                          color: i < 3 ? GOLD : "#64748b",
                         }}>#{i + 1}</div>
                         <div>
-                          <div style={{ fontSize: 13, fontWeight: 600, color: "#fff" }}>{c.name}</div>
-                          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{c.firm} · {c.role}</div>
+                          <div style={{ fontSize: 13, fontWeight: 600, color: "#0F172A" }}>{c.name}</div>
+                          <div style={{ fontSize: 11, color: "#64748b" }}>{c.firm} · {c.role}</div>
                         </div>
                         <div style={{ textAlign: "right" }}>
                           <div style={{ fontSize: 12, fontWeight: 700, color: GOLD }}>{c.opp_count} opp{c.opp_count !== 1 ? "s" : ""}</div>
@@ -729,11 +732,11 @@ export default function RfpCommandCenter() {
                   <>
                     <ResponsiveContainer width="100%" height={160}>
                       <BarChart data={tierChartData} margin={{ top: 4, right: 4, left: -10, bottom: 4 }} barSize={28}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                        <XAxis dataKey="tier" tick={{ fontSize: 10, fill: "rgba(255,255,255,0.4)" }} />
-                        <YAxis tick={{ fontSize: 9, fill: "rgba(255,255,255,0.4)" }} unit="K" />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" />
+                        <XAxis dataKey="tier" tick={{ fontSize: 10, fill: "#475569" }} />
+                        <YAxis tick={{ fontSize: 9, fill: "#475569" }} unit="K" />
                         <Tooltip
-                          contentStyle={{ background: "#0d1b2a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, fontSize: 12 }}
+                          contentStyle={{ background: "#F8FAFC", border: "1px solid #e2e8f0", borderRadius: 8, fontSize: 12 }}
                           formatter={(v: any) => [`$${v}K`, "Forecasted"]}
                         />
                         <Bar dataKey="forecasted" radius={[5, 5, 0, 0]}>
@@ -750,12 +753,12 @@ export default function RfpCommandCenter() {
                         <span style={{ fontSize: 15, fontWeight: 800, color: GREEN }}>{data.kpis.forecasted_revenue_fmt}</span>
                       </div>
                       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>Pipeline Value</span>
+                        <span style={{ fontSize: 11, color: "#64748b" }}>Pipeline Value</span>
                         <span style={{ fontSize: 13, fontWeight: 700, color: GOLD }}>{data.kpis.pipeline_value_fmt}</span>
                       </div>
                       <div style={{
                         marginTop: 8,
-                        fontSize: 10, color: "rgba(255,255,255,0.3)",
+                        fontSize: 10, color: "#64748b",
                         fontStyle: "italic",
                       }}>
                         Click "Forecasted Rev." tile above to view calculation method.
@@ -790,15 +793,15 @@ export default function RfpCommandCenter() {
                         </span>
                       </div>
                       {r.contract_value && (
-                        <div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>
+                        <div style={{ fontSize: 13, fontWeight: 700, color: "#0F172A" }}>
                           ${(r.contract_value / 1000).toFixed(0)}K
                         </div>
                       )}
                       {r.winning_competitor && (
-                        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>vs {r.winning_competitor}</div>
+                        <div style={{ fontSize: 10, color: "#64748b", marginTop: 2 }}>vs {r.winning_competitor}</div>
                       )}
                       {r.decision_date && (
-                        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", marginTop: 2 }}>{r.decision_date}</div>
+                        <div style={{ fontSize: 10, color: "rgba(15,23,42,0.08)", marginTop: 2 }}>{r.decision_date}</div>
                       )}
                     </div>
                   ))}
@@ -809,10 +812,10 @@ export default function RfpCommandCenter() {
             {/* ── Footer ── */}
             <div style={{
               marginTop: 24, padding: "12px 0",
-              borderTop: "1px solid rgba(255,255,255,0.06)",
+              borderTop: "1px solid #f1f5f9",
               display: "flex", alignItems: "center", justifyContent: "space-between",
             }}>
-              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.2)" }}>
+              <span style={{ fontSize: 11, color: "#94a3b8" }}>
                 All forecast figures are MODELED — tier-based win-probability, not actuarial data.
               </span>
               <button

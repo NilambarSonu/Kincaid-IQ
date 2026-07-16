@@ -3,9 +3,9 @@ import { Shield, TrendingUp, AlertTriangle, CheckCircle, ChevronRight, FileText 
 import { Layout } from "@/components/Layout";
 import FileUploadZone, { UploadedDocument } from "@/components/FileUploadZone";
 
-const BG = "#07091c"; const T1 = "#f0f4ff"; const BORDER = "rgba(255,255,255,0.08)";
-const GOLD = "#FFB800"; const GREEN = "#22c55e"; const RED = "#ef4444"; const AMBER = "#f59e0b";
-const CYAN = "#00D4FF"; const PURPLE = "#A855F7"; const ACCENT = "#4f7dff";
+const BG = "#F8FAFC"; const T1 = "#0f172a"; const BORDER = "rgba(15,23,42,0.08)";
+const GOLD = "#f59e0b"; const GREEN = "#10b981"; const RED = "#e11d48"; const AMBER = "#d97706";
+const CYAN = "#0ea5e9"; const PURPLE = "#7c3aed"; const ACCENT = "#533afd";
 
 const STEPS = [
   {
@@ -67,12 +67,12 @@ function statusColor(s: string) {
   if (s === "warn") return AMBER;
   if (s === "fail") return RED;
   if (s === "action") return CYAN;
-  return "rgba(255,255,255,0.4)";
+  return "#475569";
 }
 
 function ScoreBar({ score, color }: { score: number; color: string }) {
   return (
-    <div style={{ flex: 1, height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden" }}>
+    <div style={{ flex: 1, height: 6, background: "#f1f5f9", borderRadius: 3, overflow: "hidden" }}>
       <div style={{ height: "100%", width: `${score}%`, background: color, borderRadius: 3, transition: "width 0.5s" }} />
     </div>
   );
@@ -92,22 +92,22 @@ export default function SbiForensic() {
 
   return (
     <Layout>
-    <div style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-body)", padding: "24px 28px" }}>
-      <div style={{ marginBottom: 24 }}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-sans)", padding: "24px 28px" }}>
+      <div className="kiq-ops-header" style={{ marginBottom: 24, padding: 24, borderRadius: 24 }}>
         <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.22em", color: GOLD, marginBottom: 6 }}>
-          ◈ KINCAID IQ · SBI 4-STEP COMPOSITE · SYSTEMATIC BENEFIT INTELLIGENCE · BROKER FORENSIC SCORING
+          ◈ KINCAID HEALTH · SBI 4-STEP COMPOSITE · SYSTEMATIC BENEFIT INTELLIGENCE · BROKER FORENSIC SCORING
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
           <div>
             <h1 style={{ fontSize: 26, fontWeight: 900, letterSpacing: "-0.02em", margin: 0 }}>SBI Forensic Composite</h1>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>
+            <div style={{ fontSize: 12, color: "#475569", marginTop: 4 }}>
               4-step broker intelligence scoring · ERISA §3(38) fiduciary accountability matrix
             </div>
           </div>
           <div style={{ padding: "14px 22px", background: `${overallColor}12`, border: `1px solid ${overallColor}40`,
             borderRadius: 16, textAlign: "center" }}>
             <div style={{ fontSize: 32, fontWeight: 900, color: overallColor }}>{overall}</div>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", letterSpacing: "0.12em" }}>SBI COMPOSITE SCORE</div>
+            <div style={{ fontSize: 9, color: "#475569", letterSpacing: "0.12em" }}>SBI COMPOSITE SCORE</div>
           </div>
         </div>
       </div>
@@ -125,11 +125,11 @@ export default function SbiForensic() {
       </div>
 
       {/* Step cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 14, marginBottom: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 14, marginBottom: 20 }}>
         {STEPS.map(step => (
           <div key={step.num} onClick={() => setActive(active === step.num ? null : step.num)}
             data-testid={`sbi-step-${step.num}`}
-            style={{ background: active === step.num ? `${step.color}0e` : "rgba(255,255,255,0.02)",
+            style={{ background: active === step.num ? `${step.color}0e` : "#ffffff",
               border: `1px solid ${active === step.num ? `${step.color}50` : BORDER}`,
               borderRadius: 16, padding: "18px 18px", cursor: "pointer", transition: "all 0.15s" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
@@ -141,7 +141,7 @@ export default function SbiForensic() {
                 <div style={{ fontSize: 12, fontWeight: 700, color: T1 }}>{step.label}</div>
               </div>
             </div>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", lineHeight: 1.6, marginBottom: 14 }}>{step.desc}</div>
+            <div style={{ fontSize: 10, color: "#475569", lineHeight: 1.6, marginBottom: 14 }}>{step.desc}</div>
             {step.composite !== null ? (
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <ScoreBar score={step.composite} color={step.color} />
@@ -160,15 +160,15 @@ export default function SbiForensic() {
       {active !== null && (() => {
         const step = STEPS[active - 1];
         return (
-          <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${step.color}30`,
+          <div style={{ background: "#ffffff", border: `1px solid ${step.color}30`,
             borderRadius: 16, padding: 20, marginBottom: 20 }}>
             <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.18em", color: step.color, marginBottom: 14 }}>
               ◈ STEP {step.num} · {step.label.toUpperCase()} · DRILL-DOWN
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 8 }}>
               {step.checks.map((c, i) => (
                 <div key={c.item} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px",
-                  background: "rgba(255,255,255,0.02)", border: `1px solid ${statusColor(c.status)}20`, borderRadius: 10 }}>
+                  background: "#ffffff", border: `1px solid ${statusColor(c.status)}20`, borderRadius: 10 }}>
                   <div style={{ width: 8, height: 8, borderRadius: "50%", flexShrink: 0, background: statusColor(c.status),
                     boxShadow: `0 0 6px ${statusColor(c.status)}` }} />
                   <div style={{ flex: 1 }}>
@@ -201,7 +201,7 @@ export default function SbiForensic() {
               </button>
             </div>
             {receipts.filter(r => r.startsWith(step.id)).map((r, i) => (
-              <div key={i} style={{ marginTop: 8, padding: "6px 12px", background: "rgba(0,0,0,0.3)",
+              <div key={i} style={{ marginTop: 8, padding: "6px 12px", background: "rgba(0,0,0,0.05)",
                 borderRadius: 8, fontFamily: "monospace", fontSize: 9, color: step.color }}>{r}</div>
             ))}
           </div>
@@ -209,11 +209,11 @@ export default function SbiForensic() {
       })()}
 
       {/* Summary table */}
-      <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`, borderRadius: 16, padding: 20 }}>
-        <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.18em", color: "rgba(255,255,255,0.4)", marginBottom: 14 }}>
+      <div style={{ background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 16, padding: 20 }}>
+        <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.18em", color: "#475569", marginBottom: 14 }}>
           ◈ SBI COMPOSITE SUMMARY · BROKER ACCOUNTABILITY MATRIX
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 10 }}>
           {[
             { label: "Structural", score: 77, color: CYAN },
             { label: "Benchmark", score: 73, color: GOLD },
@@ -223,7 +223,7 @@ export default function SbiForensic() {
             <div key={s.label} style={{ padding: "14px 16px", background: `${s.color}08`,
               border: `1px solid ${s.color}25`, borderRadius: 12, textAlign: "center" }}>
               <div style={{ fontSize: 28, fontWeight: 900, color: s.color }}>{s.score}</div>
-              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>{s.label}</div>
+              <div style={{ fontSize: 10, color: "#475569", marginTop: 4 }}>{s.label}</div>
               <div style={{ fontSize: 9, color: s.score >= 80 ? GREEN : s.score >= 65 ? AMBER : RED, marginTop: 4, fontWeight: 700 }}>
                 {s.score >= 80 ? "STRONG" : s.score >= 65 ? "MODERATE RISK" : "HIGH RISK"}
               </div>

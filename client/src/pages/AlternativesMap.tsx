@@ -49,8 +49,8 @@ export default function AlternativesMap() {
           <button key={t} onClick={() => setTab(t)}
             className="text-xs px-3 py-1.5 rounded-xl font-semibold capitalize transition-all"
             style={{
-              background: tab === t ? "rgba(0,168,255,0.1)" : "rgba(255,255,255,0.03)",
-              border: `1px solid ${tab === t ? "rgba(0,168,255,0.3)" : "rgba(255,255,255,0.06)"}`,
+              background: tab === t ? "rgba(0,168,255,0.1)" : "#ffffff",
+              border: `1px solid ${tab === t ? "rgba(0,168,255,0.3)" : "#f1f5f9"}`,
               color: tab === t ? "#00A8FF" : "rgba(150,170,210,0.5)",
             }}
             data-testid={`tab-${t}`}>{t.charAt(0).toUpperCase()+t.slice(1)}</button>
@@ -64,7 +64,7 @@ export default function AlternativesMap() {
             <ResponsiveContainer width="100%" height={260}>
               <PieChart>
                 <Pie data={pieData[tab]} dataKey="value" cx="50%" cy="50%" outerRadius={100} innerRadius={50}
-                  strokeWidth={2} stroke="rgba(0,0,0,0.4)">
+                  strokeWidth={2} stroke="rgba(0,0,0,0.06)">
                   {pieData[tab].map((entry: any, i: number) => <Cell key={i} fill={entry.color} />)}
                 </Pie>
                 <Tooltip formatter={(v: number) => [formatCurrency(v), "AUM"]}
@@ -84,14 +84,14 @@ export default function AlternativesMap() {
                     <div className="flex items-center justify-between mb-1">
                       <div className="flex items-center gap-2">
                         <div className="w-2.5 h-2.5 rounded-full" style={{ background: item.color }} />
-                        <span className="text-sm font-medium text-white">{label}</span>
+                        <span className="text-sm font-medium text-[var(--kiq-ink)]">{label}</span>
                       </div>
                       <div className="flex items-center gap-3 text-xs">
                         <span className="text-muted-foreground">{pct.toFixed(1)}%</span>
                         <span className="font-bold" style={{ color: item.color }}>{formatCurrency(item.value)}</span>
                       </div>
                     </div>
-                    <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
+                    <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: "#f8fafc" }}>
                       <div className="h-full rounded-full" style={{ width: `${pct}%`, background: item.color, opacity: 0.7 }} />
                     </div>
                     {item.count && <p className="text-[10px] text-muted-foreground mt-0.5">{item.count} funds</p>}

@@ -40,11 +40,11 @@ function CustomTooltip({ active, payload, label }: TooltipProps) {
   if (!active || !payload?.length) return null;
   return (
     <div className="rounded-xl p-3 text-xs" style={{ background: "rgba(8,10,40,0.95)", border: "1px solid rgba(0,140,255,0.2)", minWidth: 180 }}>
-      <p className="font-bold text-white mb-2">{label}</p>
+      <p className="font-bold text-[var(--kiq-ink)] mb-2">{label}</p>
       {payload.map((p: any) => (
         <div key={p.dataKey} className="flex justify-between gap-4 mb-0.5">
           <span style={{ color: p.fill || p.stroke }}>{LABELS[p.dataKey] || p.dataKey}</span>
-          <span className="font-semibold text-white">{formatCurrency(Math.abs(p.value))}</span>
+          <span className="font-semibold text-[var(--kiq-ink)]">{formatCurrency(Math.abs(p.value))}</span>
         </div>
       ))}
     </div>
@@ -135,7 +135,7 @@ export default function CashFlow() {
           </div>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={processed} margin={{ top: 4, right: 4, left: 4, bottom: 0 }} barGap={2}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
               <XAxis dataKey="month" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} axisLine={false} tickLine={false} />
               <YAxis tickFormatter={(v) => `$${(v / 1_000_000).toFixed(0)}M`} tick={{ fill: "rgba(130,150,200,0.4)", fontSize: 9 }} axisLine={false} tickLine={false} width={36} />
               <Tooltip content={<CustomTooltip />} />
@@ -155,11 +155,11 @@ export default function CashFlow() {
           </div>
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={cumulativeData} margin={{ top: 4, right: 4, left: 4, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
               <XAxis dataKey="month" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} axisLine={false} tickLine={false} />
               <YAxis tickFormatter={(v) => `$${(v / 1_000_000).toFixed(0)}M`} tick={{ fill: "rgba(130,150,200,0.4)", fontSize: 9 }} axisLine={false} tickLine={false} width={36} />
               <Tooltip content={<CustomTooltip />} />
-              <ReferenceLine y={0} stroke="rgba(255,255,255,0.1)" strokeDasharray="4 4" />
+              <ReferenceLine y={0} stroke="#e2e8f0" strokeDasharray="4 4" />
               <Line dataKey="net" stroke="#00A8FF" strokeWidth={2} dot={{ fill: "#00A8FF", r: 3 }} name="Monthly Net"  isAnimationActive={false} />
               <Line dataKey="cumulative" stroke="#00FF94" strokeWidth={2.5} dot={false} name="Cumulative"  isAnimationActive={false} />
             </LineChart>
@@ -172,7 +172,7 @@ export default function CashFlow() {
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
                 {["Month", "Dividends", "Rent", "Distributions", "Interest", "Expenses", "Taxes", "Cap Calls", "Charitable", "Net"].map((h) => (
                   <th key={h} className="text-left px-3 py-2 text-muted-foreground font-medium">{h}</th>
                 ))}
@@ -182,8 +182,8 @@ export default function CashFlow() {
               {processed.map((m) => (
                 <tr
                   key={m.month}
-                  className="hover:bg-white/5 transition-colors cursor-pointer"
-                  style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
+                  className="hover:bg-[var(--kiq-surface)]/5 transition-colors cursor-pointer"
+                  style={{ borderBottom: "1px solid #ffffff" }}
                   onClick={() => open("liquidity")}
                   data-testid={`row-cashflow-${m.month.toLowerCase()}`}
                 >

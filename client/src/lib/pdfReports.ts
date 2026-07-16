@@ -1,5 +1,5 @@
 /**
- * Kincaid IQ — Comprehensive 20-Page PDF Report Generators
+ * Kincaid Health — Comprehensive 20-Page PDF Report Generators
  * Produces fiduciary-grade client deliverables for all 7 IQ modules.
  */
 import { jsPDF } from "jspdf";
@@ -70,7 +70,7 @@ function fillPage(doc: jsPDF, W: number, H: number) {
 /* ══════════════════════════════════════════════════════════════════════════════
    RX SAVINGS — MODELED ECONOMIC ENGINE
    Mirrors backend _PROVISION_EXPOSURE_PMPY in backend/routers/rx_defense.py.
-   Every Rx Defense dollar figure derives from:
+   Every PBM Contract Clarity 360 dollar figure derives from:
      member_count × PMPY_constant × risk_fraction,  risk_fraction = (10 − score)/10
    No magic constants. All output is MODELED (Constitutional Doctrine tier).
 ══════════════════════════════════════════════════════════════════════════════ */
@@ -278,7 +278,7 @@ export function qualifyUsdCell(cell: string): string {
 
 /* ── Employer Health Score savings model (non-Rx) ──────────────────────────────
    Disclosed assumption: $2,200 annual savings per composite-score-point below 100,
-   calibrated to the Kincaid RMC National Employer Database median PMPM gap.
+   calibrated to the Kincaid Health National Employer Database median PMPM gap.
    MODELED — not a guaranteed outcome. Replaces the previous undisclosed constant. */
 export const EHS_SAVINGS_PER_POINT = 2200;
 export function modeledEhsSavings(overallScore: number): number {
@@ -297,7 +297,7 @@ function drawPageChrome(ctx: Ctx) {
   fill(doc, accent); doc.rect(0, 12, W, 0.8, "F");
   // Header text
   doc.setFont("helvetica","bold"); doc.setFontSize(8);
-  rgb(doc, GOLD); doc.text("KINCAID IQ", M, 7.5);
+  rgb(doc, GOLD); doc.text("KINCAID HEALTH", M, 7.5);
   doc.setFont("helvetica","normal"); doc.setFontSize(7.5);
   rgb(doc, ONDARK); doc.text(reportName, M + 22, 7.5);
   rgb(doc, ONDARK2); doc.text(date, W - M, 7.5, { align: "right" });
@@ -496,9 +496,9 @@ function coverPage(ctx: Ctx) {
 
   // Logo / brand
   doc.setFont("helvetica","bold"); doc.setFontSize(12);
-  rgb(doc, GOLD); doc.text("KINCAID IQ™", M + 3, 22);
+  rgb(doc, GOLD); doc.text("KINCAID HEALTH™", M + 3, 22);
   doc.setFont("helvetica","normal"); doc.setFontSize(8);
-  rgb(doc, FG2); doc.text("Kincaid RMC  •  Account SHRACK-7742", M + 3, 29);
+  rgb(doc, FG2); doc.text("Kincaid Health  •  Account SHRACK-7742", M + 3, 29);
 
   // Thin accent rule under logo
   fill(doc, accent); doc.rect(M + 3, 33, 35, 0.6, "F");
@@ -525,7 +525,7 @@ function coverPage(ctx: Ctx) {
   doc.setFont("helvetica","bold"); doc.setFontSize(12); rgb(doc, FG);
   doc.text("Jeremiah Shrack", M + 3, metaY + 7);
   doc.setFont("helvetica","normal"); doc.setFontSize(9); rgb(doc, FG2);
-  doc.text("CEO, Kincaid RMC  •  SHRACK-7742", M + 3, metaY + 14);
+  doc.text("CEO, Kincaid Health  •  SHRACK-7742", M + 3, metaY + 14);
 
   doc.setFont("helvetica","bold"); doc.setFontSize(7.5);
   rgb(doc, FG2); doc.text("REPORT DATE", M + 3, metaY + 25);
@@ -545,7 +545,7 @@ function coverPage(ctx: Ctx) {
   rgb(doc, accent); doc.text("FIDUCIARY-GRADE ANALYSIS", M + 3, H - 43);
   doc.setFont("helvetica","normal"); doc.setFontSize(7.5);
   rgb(doc, FG2);
-  const disclaimer = "This report was prepared by " + AUTHOR_NAME + " at " + LAB_NAME + " using the Kincaid IQ platform. All analyses reflect plan-specific data and current regulatory standards. This document is intended solely for the use of the plan sponsor identified above and may not be reproduced or redistributed without prior written consent.";
+  const disclaimer = "This report was prepared by " + AUTHOR_NAME + " at " + LAB_NAME + " using the Kincaid Health platform. All analyses reflect plan-specific data and current regulatory standards. This document is intended solely for the use of the plan sponsor identified above and may not be reproduced or redistributed without prior written consent.";
   const dlines = doc.splitTextToSize(disclaimer, W - M * 2 - 10);
   dlines.forEach((l: string, i: number) => doc.text(l, M + 3, H - 36 + i * 4));
   rgb(doc, FG2);
@@ -577,7 +577,7 @@ function tocPage(ctx: Ctx, sections: string[]) {
 
 function ctx(doc: jsPDF, accentHex: string, reportName: string, subtitle: string): Ctx {
   const W = 210, H = 297, M = 14;
-  return { doc, y: 18, page: 1, W, H, M, CW: W - M*2, accent: hexRGB(accentHex), reportName, subtitle, date: new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}), client: "Kincaid RMC / SHRACK-7742", accentHex };
+  return { doc, y: 18, page: 1, W, H, M, CW: W - M*2, accent: hexRGB(accentHex), reportName, subtitle, date: new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"}), client: "Kincaid Health / SHRACK-7742", accentHex };
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -602,7 +602,7 @@ function generateFiduciaryPDF(data: any): jsPDF {
   addPage(c);
   h1(c, "Fiduciary Analysis Certification");
   gap(c, 2);
-  body(c, "This report constitutes a formal fiduciary analysis prepared pursuant to ERISA §404(a)(1), §408(b)(2), and the Department of Labor's final regulations at 29 CFR §2550.408b-2. Kincaid RMC operates as an independent fiduciary consultant. All findings, scores, and recommendations are grounded in plan-specific data, documented service provider disclosures, and current regulatory standards.");
+  body(c, "This report constitutes a formal fiduciary analysis prepared pursuant to ERISA §404(a)(1), §408(b)(2), and the Department of Labor's final regulations at 29 CFR §2550.408b-2. Kincaid Health operates as an independent fiduciary consultant. All findings, scores, and recommendations are grounded in plan-specific data, documented service provider disclosures, and current regulatory standards.");
   gap(c, 2);
   callout(c, `Fiduciary Risk Score: ${score}/100 — Risk Level: ${riskLevel}. Plan sponsors with a score below 70 face elevated DOL audit risk. Immediate remediation is warranted for all Critical findings.`, riskLevel === "Critical" || riskLevel === "High" ? "critical" : "warn");
   gap(c, 3);
@@ -625,7 +625,7 @@ function generateFiduciaryPDF(data: any): jsPDF {
   addPage(c);
   h1(c, "Executive Summary");
   gap(c, 2);
-  body(c, `The Kincaid IQ Fiduciary Risk Assessment assigns this plan a composite score of ${score}/100 — classified as "${riskLevel}" risk. This score is derived from a weighted analysis of five primary fiduciary domains: (1) service provider disclosure compliance, (2) fee reasonableness, (3) prudent expert process, (4) prohibited transaction screening, and (5) DOL audit readiness. Plans scoring below 70 face statistically elevated DOL audit risk based on our analysis of 2,400+ self-funded plan audits from FY2019-2024.`);
+  body(c, `The Kincaid Health Fiduciary Risk Assessment assigns this plan a composite score of ${score}/100 — classified as "${riskLevel}" risk. This score is derived from a weighted analysis of five primary fiduciary domains: (1) service provider disclosure compliance, (2) fee reasonableness, (3) prudent expert process, (4) prohibited transaction screening, and (5) DOL audit readiness. Plans scoring below 70 face statistically elevated DOL audit risk based on our analysis of 2,400+ self-funded plan audits from FY2019-2024.`);
   gap(c, 2);
   h2(c, "Key Metrics at a Glance");
   kv(c, "Composite Fiduciary Risk Score", `${score} / 100`, true);
@@ -649,7 +649,7 @@ function generateFiduciaryPDF(data: any): jsPDF {
   addPage(c);
   h1(c, "Fiduciary Risk Score — Methodology");
   gap(c, 2);
-  body(c, "The Kincaid IQ Fiduciary Risk Score is a weighted composite of five domain scores. Each domain is scored 0–100 based on binary compliance assessments, fee benchmarking percentile analysis, and documentation completeness reviews. Domain weights reflect the relative regulatory emphasis placed by the DOL in recent audit guidance and enforcement actions.");
+  body(c, "The Kincaid Health Fiduciary Risk Score is a weighted composite of five domain scores. Each domain is scored 0–100 based on binary compliance assessments, fee benchmarking percentile analysis, and documentation completeness reviews. Domain weights reflect the relative regulatory emphasis placed by the DOL in recent audit guidance and enforcement actions.");
   gap(c, 2);
   formulaBox(c, "Composite Fiduciary Risk Score",
     "FRS = Σ(Dᵢ × Wᵢ)  for i = 1..5",
@@ -682,14 +682,14 @@ function generateFiduciaryPDF(data: any): jsPDF {
      ["EAP Partners","EAP Services","$3.20 PEPM","$0","✓ Received","Reasonable"]],
     [40,32,28,28,30,24]);
   gap(c, 2);
-  callout(c, `${discMissing} service providers have not provided complete 408(b)(2) disclosures. Each missing disclosure represents a potential prohibited transaction. Kincaid RMC recommends issuing written demand letters within 30 days.`, "critical");
+  callout(c, `${discMissing} service providers have not provided complete 408(b)(2) disclosures. Each missing disclosure represents a potential prohibited transaction. Kincaid Health recommends issuing written demand letters within 30 days.`, "critical");
   h2(c, "Disclosure Deficiency Analysis");
   body(c, "When a covered service provider fails to furnish required disclosures, ERISA §408(b)(2)(D) requires the responsible plan fiduciary to: (1) request the disclosure in writing, (2) notify the DOL if the disclosure is not furnished within 90 days, and (3) determine whether to terminate the service arrangement. Failure to follow this procedure renders the arrangement a non-exempt prohibited transaction subject to excise taxes of 15-100% of the prohibited amount.");
 
   // Page 6: Fee Benchmarking
   addPage(c);
   h1(c, "Fee Benchmarking & Reasonableness Analysis");
-  body(c, "ERISA §404(a)(1)(B) requires plan fiduciaries to act as a 'prudent expert' would, which courts have interpreted to require fee benchmarking against comparable plans and services. This analysis benchmarks all material plan fees against the Kincaid RMC National Fee Database (KNFD), incorporating data from 4,200+ self-funded plans with 50-10,000 employees.");
+  body(c, "ERISA §404(a)(1)(B) requires plan fiduciaries to act as a 'prudent expert' would, which courts have interpreted to require fee benchmarking against comparable plans and services. This analysis benchmarks all material plan fees against the Kincaid Health National Fee Database (KNFD), incorporating data from 4,200+ self-funded plans with 50-10,000 employees.");
   gap(c, 2);
   formulaBox(c, "Fee Excess / Savings Calculation",
     "FE = (Actual_Fee - Benchmark_Median) × Enrolled_Lives",
@@ -711,7 +711,7 @@ function generateFiduciaryPDF(data: any): jsPDF {
   // Page 7: ERISA Checklist Part 1
   addPage(c);
   h1(c, "ERISA Fiduciary Compliance Checklist — Part I (Items 1–25)");
-  body(c, "The following 50-point fiduciary checklist is based on DOL Field Assistance Bulletins, ERISA Advisory Council recommendations, and Kincaid RMC proprietary audit protocols. Items marked ✗ require immediate corrective action.");
+  body(c, "The following 50-point fiduciary checklist is based on DOL Field Assistance Bulletins, ERISA Advisory Council recommendations, and Kincaid Health proprietary audit protocols. Items marked ✗ require immediate corrective action.");
   gap(c, 2);
   table(c, ["#","Requirement","Status","Priority"],
     [["1","Written investment policy statement (IPS) current within 2 years",score<65?"✗":"✓","High"],
@@ -865,7 +865,7 @@ function generateFiduciaryPDF(data: any): jsPDF {
      ["Fail-First / Step Therapy Disclosed","⚠ Partial","Not fully documented in SPD"],
      ["Annual Comparative Analysis on File","✗ Missing","Required under CAA 2023"]],
     [70,24,88]);
-  body(c, "The DOL has identified MHPAEA noncompliance as a top enforcement priority. Plans that cannot produce a written NQTL comparative analysis upon request face penalties and potential plan-level class action exposure. Kincaid RMC recommends engaging ERISA counsel to complete the analysis within 60 days.");
+  body(c, "The DOL has identified MHPAEA noncompliance as a top enforcement priority. Plans that cannot produce a written NQTL comparative analysis upon request face penalties and potential plan-level class action exposure. Kincaid Health recommends engaging ERISA counsel to complete the analysis within 60 days.");
 
   // Page 14: Claim Fiduciary Process
   addPage(c);
@@ -884,7 +884,7 @@ function generateFiduciaryPDF(data: any): jsPDF {
   // Page 15: Self-Correction & VFCP
   addPage(c);
   h1(c, "Self-Correction & Voluntary Fiduciary Correction Program (VFCP)");
-  body(c, "The DOL's VFCP allows plan fiduciaries to voluntarily correct certain prohibited transactions and fiduciary violations in exchange for 'no-action' letters and relief from civil penalties. Participation in VFCP also generally eliminates the 15% excise tax under IRC §4975. Kincaid RMC recommends proactive use of VFCP for identified issues prior to any DOL inquiry.");
+  body(c, "The DOL's VFCP allows plan fiduciaries to voluntarily correct certain prohibited transactions and fiduciary violations in exchange for 'no-action' letters and relief from civil penalties. Participation in VFCP also generally eliminates the 15% excise tax under IRC §4975. Kincaid Health recommends proactive use of VFCP for identified issues prior to any DOL inquiry.");
   gap(c, 2);
   h2(c, "VFCP-Eligible Transactions Identified");
   [["Delinquent participant contributions","Plan sponsor failed to deposit participant deferrals within 7 business days in Q2. VFCP correction requires payment of lost earnings using the DOL online calculator."],
@@ -936,7 +936,7 @@ function generateFiduciaryPDF(data: any): jsPDF {
   // Page 18: Financial Exposure Quantification
   addPage(c);
   h1(c, "Financial Exposure Quantification");
-  body(c, "The following table quantifies the estimated financial exposure arising from identified fiduciary deficiencies. These figures represent management's best estimates based on available plan data, DOL penalty schedules, and Kincaid RMC analysis of comparable enforcement actions.");
+  body(c, "The following table quantifies the estimated financial exposure arising from identified fiduciary deficiencies. These figures represent management's best estimates based on available plan data, DOL penalty schedules, and Kincaid Health analysis of comparable enforcement actions.");
   gap(c, 2);
   table(c, ["Exposure Category","Annual Estimate","3-Year NPV","Priority"],
     [["Undisclosed Service Provider Fees",`$${(undisclosed*0.4).toLocaleString()}`,"","Critical"],
@@ -956,7 +956,7 @@ function generateFiduciaryPDF(data: any): jsPDF {
   // Page 19: Prioritized Action Plan
   addPage(c);
   h1(c, "Fiduciary Action Plan — Prioritized Recommendations");
-  body(c, "The following action plan is organized by priority level and time horizon. Kincaid RMC recommends scheduling a fiduciary committee meeting within 30 days to review and formally adopt this action plan. All actions should be documented in committee minutes.");
+  body(c, "The following action plan is organized by priority level and time horizon. Kincaid Health recommends scheduling a fiduciary committee meeting within 30 days to review and formally adopt this action plan. All actions should be documented in committee minutes.");
   gap(c, 2);
   table(c, ["Priority","Action Item","Owner","Timeline","Estimated Cost Savings"],
     [["P1 — Critical","Issue written 408(b)(2) disclosure demand letters to "+discMissing+" service providers","HR Director","0-30 days","Avoids prohibited transaction penalties"],
@@ -973,16 +973,16 @@ function generateFiduciaryPDF(data: any): jsPDF {
   // Page 20: Certification
   addPage(c);
   h1(c, "Certification & Analyst Attestation");
-  body(c, "Kincaid RMC certifies that this ERISA Fiduciary IQ™ analysis was prepared in accordance with the standards of practice of a prudent ERISA benefits consultant. All findings are based on plan-specific data provided by or on behalf of the plan sponsor, publicly available regulatory guidance, and the Kincaid IQ analytical platform.");
+  body(c, "Kincaid Health certifies that this ERISA Fiduciary IQ™ analysis was prepared in accordance with the standards of practice of a prudent ERISA benefits consultant. All findings are based on plan-specific data provided by or on behalf of the plan sponsor, publicly available regulatory guidance, and the Kincaid Health analytical platform.");
   gap(c, 4);
   h2(c, "Analyst Certification");
-  body(c, "The findings, scores, and recommendations contained in this report represent the professional judgment of the Kincaid RMC analytical team. This report is provided for informational purposes and does not constitute legal advice. Plan sponsors should engage qualified ERISA counsel before implementing any recommendations.");
+  body(c, "The findings, scores, and recommendations contained in this report represent the professional judgment of the Kincaid Health analytical team. This report is provided for informational purposes and does not constitute legal advice. Plan sponsors should engage qualified ERISA counsel before implementing any recommendations.");
   gap(c, 4);
   divider(c);
   h2(c, "Report Metadata");
   kv(c, "Report Type", "ERISA Fiduciary IQ™");
-  kv(c, "Client", "Kincaid RMC / Account SHRACK-7742");
-  kv(c, "Analyst", "Jeremiah Shrack, CEO, Kincaid RMC");
+  kv(c, "Client", "Kincaid Health / Account SHRACK-7742");
+  kv(c, "Analyst", "Jeremiah Shrack, CEO, Kincaid Health");
   kv(c, "Report Date", c.date);
   kv(c, "Composite Risk Score", `${score}/100 — ${riskLevel}`);
   kv(c, "Critical Gaps Identified", String(critGaps));
@@ -991,7 +991,7 @@ function generateFiduciaryPDF(data: any): jsPDF {
   kv(c, "Report Version", "1.0 Final");
   kv(c, "Confidentiality", "Attorney-Client Privilege / Confidential");
   gap(c, 6);
-  body(c, "© Kincaid RMC / Kincaid IQ™. All rights reserved. Reproduction or redistribution of this report in whole or in part without the written consent of Kincaid RMC is strictly prohibited. This report is prepared under the protection of the attorney-client privilege and work product doctrine to the extent applicable.");
+  body(c, "© Kincaid Health™. All rights reserved. Reproduction or redistribution of this report in whole or in part without the written consent of Kincaid Health is strictly prohibited. This report is prepared under the protection of the attorney-client privilege and work product doctrine to the extent applicable.");
 
   return doc;
 }
@@ -1013,7 +1013,7 @@ function generateClaimsPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Engagement Overview & Success Fee Disclosure");
-  body(c, "Kincaid RMC's Claims Recovery IQ™ program operates on a contingency (success-fee) basis. Kincaid RMC receives compensation only when overpayments are identified, documented, and recovered. There is no upfront cost to the plan sponsor. This aligns our interests with those of the plan and its participants — we are motivated to maximize legitimate recoveries.");
+  body(c, "Kincaid Health's Claims Recovery IQ™ program operates on a contingency (success-fee) basis. Kincaid Health receives compensation only when overpayments are identified, documented, and recovered. There is no upfront cost to the plan sponsor. This aligns our interests with those of the plan and its participants — we are motivated to maximize legitimate recoveries.");
   gap(c, 2);
   table(c, ["Engagement Parameter","Value"],
     [["Success Fee Rate","20-25% of recovered amount"],
@@ -1050,7 +1050,7 @@ function generateClaimsPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Audit Methodology — Claims Selection & Scoring");
-  body(c, "Kincaid RMC's claims audit applies a proprietary 7-layer screening protocol to identify high-probability overpayment candidates. Claims are scored using a predictive model trained on 4.2 million historical claims with known overpayment outcomes. Only claims scoring above the 75th percentile threshold are advanced to manual review — maximizing recovery while minimizing false positives.");
+  body(c, "Kincaid Health's claims audit applies a proprietary 7-layer screening protocol to identify high-probability overpayment candidates. Claims are scored using a predictive model trained on 4.2 million historical claims with known overpayment outcomes. Only claims scoring above the 75th percentile threshold are advanced to manual review — maximizing recovery while minimizing false positives.");
   gap(c, 2);
   formulaBox(c, "Claim Overpayment Score (COS)",
     "COS = Σ(Fᵢ × Wᵢ) / max_score × 100",
@@ -1082,7 +1082,7 @@ function generateClaimsPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Unbundling Violations — NCCI Edit Analysis");
-  body(c, "Unbundling occurs when a provider bills for multiple component procedures separately when they should be billed as a single comprehensive procedure code. The National Correct Coding Initiative (NCCI) maintains over 1.1 million code pairs that define bundling rules. Unbundling violations represent the largest single category of overpayments in the Kincaid IQ audit.");
+  body(c, "Unbundling occurs when a provider bills for multiple component procedures separately when they should be billed as a single comprehensive procedure code. The National Correct Coding Initiative (NCCI) maintains over 1.1 million code pairs that define bundling rules. Unbundling violations represent the largest single category of overpayments in the Kincaid Health audit.");
   table(c, ["Component Code","Comprehensive Code","Provider","Overpayment","NCCI Reference"],
     [["99213+99024","99215","Family Medicine PC","$148","Column 1/2 Edit"],
      ["29880+29881","29882","Orthopedic Surg","$892","Mutually Exclusive"],
@@ -1093,7 +1093,7 @@ function generateClaimsPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Upcoding Analysis — CPT Code Benchmarking");
-  body(c, "Upcoding is the practice of billing a higher-complexity CPT code than the service actually rendered. For E&M (Evaluation & Management) services, the level of service must be supported by documentation in the medical record. Kincaid RMC applies the 2021 AMA/CMS E&M documentation guidelines and statistical outlier analysis to identify systematic upcoding patterns.");
+  body(c, "Upcoding is the practice of billing a higher-complexity CPT code than the service actually rendered. For E&M (Evaluation & Management) services, the level of service must be supported by documentation in the medical record. Kincaid Health applies the 2021 AMA/CMS E&M documentation guidelines and statistical outlier analysis to identify systematic upcoding patterns.");
   formulaBox(c, "E&M Level Distribution Score (ELDS)",
     "ELDS = [Provider's 99215 % - Cohort_Median_99215%] / Cohort_StdDev",
     "Z-score. ELDS > 2.0 triggers upcoding review (provider's 99215 usage is >2 standard deviations above cohort). Cohort = same specialty, same geographic market.");
@@ -1117,7 +1117,7 @@ function generateClaimsPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Medical Necessity Review");
-  body(c, "Medical necessity denials require clinical review by a certified medical reviewer applying generally accepted standards of care. Kincaid RMC partners with board-certified physicians to review all medical necessity findings before any recovery demand is issued. This protects plan participants and reduces carrier/provider disputes.");
+  body(c, "Medical necessity denials require clinical review by a certified medical reviewer applying generally accepted standards of care. Kincaid Health partners with board-certified physicians to review all medical necessity findings before any recovery demand is issued. This protects plan participants and reduces carrier/provider disputes.");
   table(c, ["Category","Claims Reviewed","Denials Recommended","Recovery Opportunity","Confidence"],
     [["Inpatient Day Excess","23","12","$86,400","High"],
      ["Inappropriate Setting","18","9","$41,200","High"],
@@ -1153,7 +1153,7 @@ function generateClaimsPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Benchmarking vs. Industry Recovery Rates");
-  body(c, "The following benchmarks compare this plan's recovery opportunity and error rates against Kincaid RMC's portfolio of 180+ self-funded plan audits conducted over the past 4 years.");
+  body(c, "The following benchmarks compare this plan's recovery opportunity and error rates against Kincaid Health's portfolio of 180+ self-funded plan audits conducted over the past 4 years.");
   table(c, ["Metric","This Plan","Portfolio Median","Percentile Rank","Assessment"],
     [["Error Rate",((errors/audited)*100).toFixed(1)+"%","5.8%","72nd","Above Average"],
      ["Recovery per Audited Claim","$22.11","$18.40","68th","Good Opportunity"],
@@ -1165,12 +1165,12 @@ function generateClaimsPDF(data: any): jsPDF {
   addPage(c);
   h1(c, "Prioritized Action Plan & Recovery Timeline");
   table(c, ["Priority","Action","Expected Recovery","Timeline","Owner"],
-    [["P1","Issue demand letters — confirmed duplicates ($38,400)","$36,100","30-45 days","Kincaid RMC"],
-     ["P1","Issue demand letters — confirmed unbundling ($67,200)","$54,100","45-90 days","Kincaid RMC"],
-     ["P2","Initiate upcoding appeals — E&M outliers ($51,800)","$38,300","60-120 days","Kincaid RMC + Clinical"],
-     ["P2","COB recovery — cross-plan coordination ($44,600)","$32,100","120-180 days","Kincaid RMC"],
-     ["P3","Medical necessity reviews ($42,000)","$28,600","90-150 days","Kincaid RMC + Clinical"],
-     ["Ongoing","Concurrent audit — claims processed monthly","$50,000+/yr","Continuous","Kincaid RMC"]],
+    [["P1","Issue demand letters — confirmed duplicates ($38,400)","$36,100","30-45 days","Kincaid Health"],
+     ["P1","Issue demand letters — confirmed unbundling ($67,200)","$54,100","45-90 days","Kincaid Health"],
+     ["P2","Initiate upcoding appeals — E&M outliers ($51,800)","$38,300","60-120 days","Kincaid Health + Clinical"],
+     ["P2","COB recovery — cross-plan coordination ($44,600)","$32,100","120-180 days","Kincaid Health"],
+     ["P3","Medical necessity reviews ($42,000)","$28,600","90-150 days","Kincaid Health + Clinical"],
+     ["Ongoing","Concurrent audit — claims processed monthly","$50,000+/yr","Continuous","Kincaid Health"]],
     [15,60,30,28,29]);
 
   addPage(c);
@@ -1188,7 +1188,7 @@ function generateClaimsPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Provider Risk Profiling & Fraud Indicators");
-  body(c, "Kincaid RMC's provider risk profiling engine analyzes billing patterns, code frequency distributions, and historical error rates to identify providers with elevated fraud, waste, and abuse (FWA) indicators. Providers flagged by three or more indicators are escalated to clinical review before payment of future claims.");
+  body(c, "Kincaid Health's provider risk profiling engine analyzes billing patterns, code frequency distributions, and historical error rates to identify providers with elevated fraud, waste, and abuse (FWA) indicators. Providers flagged by three or more indicators are escalated to clinical review before payment of future claims.");
   formulaBox(c, "Provider Risk Score (PRS)",
     "PRS = (Upcoding_Z × 0.30) + (Unbundling_Rate × 0.25) + (Denial_Rate × 0.20) + (Historical_Error × 0.25)",
     "PRS > 70 = High Risk (refer to SIU). PRS 50-70 = Elevated (pre-payment review). PRS < 50 = Standard monitoring.");
@@ -1222,7 +1222,7 @@ function generateClaimsPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Fraud, Waste & Abuse (FWA) Detection Summary");
-  body(c, "Kincaid RMC's FWA detection program applies behavioral analytics, network analysis, and clinical screening to identify potential fraud indicators in plan claims. All FWA findings are escalated through the plan's designated compliance officer and, where appropriate, referred to law enforcement under HIPAA's fraud reporting provisions.");
+  body(c, "Kincaid Health's FWA detection program applies behavioral analytics, network analysis, and clinical screening to identify potential fraud indicators in plan claims. All FWA findings are escalated through the plan's designated compliance officer and, where appropriate, referred to law enforcement under HIPAA's fraud reporting provisions.");
   formulaBox(c, "FWA Detection Rate",
     "FWA_Rate = FWA_Confirmed_Cases / Total_Claims_Reviewed × 100",
     "Industry FWA rate: 3-10% of healthcare spending (NHCAA estimate). Self-funded plans with active FWA programs recover avg. $4.20 for every $1 invested in detection. This plan FWA detection rate: est. 2.8% of spend.");
@@ -1240,7 +1240,7 @@ function generateClaimsPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "3-Year Claims Audit ROI Model");
-  body(c, "The following model projects the cumulative financial value of Kincaid RMC's Claims Recovery IQ™ program over a 3-year engagement period. The model assumes current error rates persist and Kincaid RMC's audit program achieves historical performance benchmarks.");
+  body(c, "The following model projects the cumulative financial value of Kincaid Health's Claims Recovery IQ™ program over a 3-year engagement period. The model assumes current error rates persist and Kincaid Health's audit program achieves historical performance benchmarks.");
   formulaBox(c, "3-Year Net Recovery",
     "NR_3yr = Σ [RO_t × SR × (1 - FF)]  for t = 1..3",
     "RO = Recovery Opportunity (grows 5%/yr with plan spend). SR = Success Rate (78%). FF = Fee Factor (22%). Year 1: NR = $284K × 0.78 × 0.78 = $172.7K. Year 2: $298K × 0.78 × 0.78 = $181.3K. Year 3: $313K × 0.78 × 0.78 = $190.4K.");
@@ -1258,11 +1258,11 @@ function generateClaimsPDF(data: any): jsPDF {
   kv(c, "3-Year Net ROI", "9.1x");
   kv(c, "Payback Period", "< 45 days");
   gap(c, 2);
-  callout(c, "Kincaid RMC's Claims Recovery IQ™ program operates on a pure contingency basis. If no recoveries are made, no fees are owed. The 3-year ROI of 9.1x is conservative — plans that implement concurrent audit programs (reviewing claims as processed rather than retrospectively) achieve 12-15x ROI.", "info");
+  callout(c, "Kincaid Health's Claims Recovery IQ™ program operates on a pure contingency basis. If no recoveries are made, no fees are owed. The 3-year ROI of 9.1x is conservative — plans that implement concurrent audit programs (reviewing claims as processed rather than retrospectively) achieve 12-15x ROI.", "info");
 
   addPage(c);
   h1(c, "Certification & Engagement Attestation");
-  body(c, "Kincaid RMC certifies that this Claims Recovery IQ™ analysis was conducted by trained claims audit professionals using industry-standard methodologies, NCCI guidelines, and clinical review protocols. All findings are supported by documentation and will be provided to carriers/providers upon request.");
+  body(c, "Kincaid Health certifies that this Claims Recovery IQ™ analysis was conducted by trained claims audit professionals using industry-standard methodologies, NCCI guidelines, and clinical review protocols. All findings are supported by documentation and will be provided to carriers/providers upon request.");
   gap(c, 3);
   body(c, "This report constitutes a formal communication under the plan's claims audit authority as established in the plan document and TPA service agreement. All overpayment demand letters issued as a result of this analysis are legally supported by ERISA §502(a), plan document audit provisions, and applicable state prompt-pay laws.");
   gap(c, 4);
@@ -1279,9 +1279,9 @@ function generateClaimsPDF(data: any): jsPDF {
   kv(c, "FWA Cases Identified", "19");
   kv(c, "High-Dollar Episodes Reviewed", "27");
   kv(c, "3-Year Net ROI", "9.1x");
-  kv(c, "Client", "Kincaid RMC / Account SHRACK-7742");
+  kv(c, "Client", "Kincaid Health / Account SHRACK-7742");
   kv(c, "Report Date", c.date);
-  kv(c, "Prepared By", "Jeremiah Shrack, CEO, Kincaid RMC");
+  kv(c, "Prepared By", "Jeremiah Shrack, CEO, Kincaid Health");
   kv(c, "Confidentiality", "Confidential — ERISA Audit Privilege");
   return doc;
 }
@@ -1410,7 +1410,7 @@ function generateNetworkPDF(data: any): jsPDF {
   h1(c, "Network Leakage Reduction Strategy");
   formulaBox(c, "Leakage Reduction ROI",
     "LR_ROI = (Leakage_Reduced × Savings_PMPY) / Program_Cost",
-    "Based on Kincaid RMC portfolio data: care navigation programs reduce true leakage by 35-55% on average. At $420K annual leakage with 55% addressable as true leakage, a 45% reduction = $104K savings. Typical program cost: $12-18/PEPM.");
+    "Based on Kincaid Health portfolio data: care navigation programs reduce true leakage by 35-55% on average. At $420K annual leakage with 55% addressable as true leakage, a 45% reduction = $104K savings. Typical program cost: $12-18/PEPM.");
   gap(c, 2);
   table(c, ["Strategy","Est. Leakage Reduction","Cost","Net Annual Savings","Timeframe"],
     [["Care Navigation Program","$95,000","$48,000/yr","$47,000","6-12 months"],
@@ -1482,7 +1482,7 @@ function generateNetworkPDF(data: any): jsPDF {
      ["TOTAL COE OPPORTUNITY","63","—","—","$542,700","—"]],
     [38,18,22,24,24,22]);
   gap(c, 2);
-  body(c, "Recommendation: Implement a COE program for spinal surgery, joint replacement, and cardiac procedures immediately. These three categories alone represent $400K in annual savings opportunity. Kincaid RMC has negotiated COE arrangements with Aetna, OPTUM, and Johns Hopkins Medicine for eligible self-funded plans.");
+  body(c, "Recommendation: Implement a COE program for spinal surgery, joint replacement, and cardiac procedures immediately. These three categories alone represent $400K in annual savings opportunity. Kincaid Health has negotiated COE arrangements with Aetna, OPTUM, and Johns Hopkins Medicine for eligible self-funded plans.");
 
   addPage(c);
   h1(c, "Provider Directory Accuracy & Stale Data Audit");
@@ -1532,7 +1532,7 @@ function generateNetworkPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Certification & Data Attestation");
-  body(c, "Kincaid RMC certifies this Network IQ™ analysis was prepared using member enrollment data, NPPES provider data (Q4 2024), EBSA enforcement guidance, and proprietary network adequacy models. All adequacy assessments reflect CMS time-distance standards and MHPAEA requirements as of the report date. Provider data verified against CMS PECOS, state medical board databases, and direct provider outreach.");
+  body(c, "Kincaid Health certifies this Network IQ™ analysis was prepared using member enrollment data, NPPES provider data (Q4 2024), EBSA enforcement guidance, and proprietary network adequacy models. All adequacy assessments reflect CMS time-distance standards and MHPAEA requirements as of the report date. Provider data verified against CMS PECOS, state medical board databases, and direct provider outreach.");
   gap(c, 3);
   body(c, "This Network IQ™ report constitutes a formal network adequacy assessment prepared for fiduciary review purposes under ERISA §404(a). Plan fiduciaries are advised to review this report at a scheduled committee meeting and formally document the plan's response to identified network adequacy gaps in committee minutes.");
   gap(c, 4);
@@ -1548,8 +1548,8 @@ function generateNetworkPDF(data: any): jsPDF {
   kv(c, "COE Savings Opportunity", "$542,700/yr");
   kv(c, "Telehealth Opportunity", "$241,000/yr");
   kv(c, "MHPAEA Status", "Non-Compliant — Immediate Action Required");
-  kv(c, "Client", "Kincaid RMC / Account SHRACK-7742");
-  kv(c, "Prepared By", "Jeremiah Shrack, CEO, Kincaid RMC");
+  kv(c, "Client", "Kincaid Health / Account SHRACK-7742");
+  kv(c, "Prepared By", "Jeremiah Shrack, CEO, Kincaid Health");
   kv(c, "Report Date", c.date);
   kv(c, "Confidentiality", "Confidential — Fiduciary Work Product");
   return doc;
@@ -1574,7 +1574,7 @@ function generateEmployerHealthPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Employer Health Score™ — Methodology & Scoring Framework");
-  body(c, "The Kincaid IQ Employer Health Score™ (EHS) provides a comprehensive diagnostic of an employer's health benefits program across five weighted domains. Each domain is assessed using a combination of plan document review, claims data analysis, vendor benchmarking, and regulatory compliance screening. The composite score (0-100) is calibrated against Kincaid RMC's national employer database.");
+  body(c, "The Kincaid Health Employer Health Score™ (EHS) provides a comprehensive diagnostic of an employer's health benefits program across five weighted domains. Each domain is assessed using a combination of plan document review, claims data analysis, vendor benchmarking, and regulatory compliance screening. The composite score (0-100) is calibrated against Kincaid Health's national employer database.");
   gap(c, 2);
   formulaBox(c, "Employer Health Score (EHS) Composite Formula",
     "EHS = 0.25×PD + 0.25×CC + 0.20×EE + 0.20×Comp + 0.10×Rx",
@@ -1598,7 +1598,7 @@ function generateEmployerHealthPDF(data: any): jsPDF {
   kv(c, "Top Strength", engagement >= Math.max(planDesign,cost,compliance,rx) ? "Employee Engagement" : "Plan Design");
   kv(c, "Highest Priority Gap", cost < Math.min(planDesign,engagement,compliance,rx) ? "Cost Containment" : "Rx Management");
   gap(c, 3);
-  body(c, `This employer's health benefits program scores ${overall}/100 — placing it in the ${Math.round(overall*0.82)}th percentile nationally. The primary opportunity for improvement lies in cost containment and Rx management, where the plan performs significantly below the national median. Strengthening these areas could generate a MODELED estimated $${modeledEhsSavings(overall).toLocaleString()} in annual savings (≈$${EHS_SAVINGS_PER_POINT.toLocaleString()} per composite-score-point below 100, per the Kincaid RMC national database — not a guaranteed outcome) while maintaining or improving employee satisfaction.`);
+  body(c, `This employer's health benefits program scores ${overall}/100 — placing it in the ${Math.round(overall*0.82)}th percentile nationally. The primary opportunity for improvement lies in cost containment and Rx management, where the plan performs significantly below the national median. Strengthening these areas could generate a MODELED estimated $${modeledEhsSavings(overall).toLocaleString()} in annual savings (≈$${EHS_SAVINGS_PER_POINT.toLocaleString()} per composite-score-point below 100, per the Kincaid Health national database — not a guaranteed outcome) while maintaining or improving employee satisfaction.`);
 
   addPage(c);
   h1(c, "Domain 1: Plan Design Analysis (Score: "+planDesign+"/100)");
@@ -1688,7 +1688,7 @@ function generateEmployerHealthPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "5-Year Cost Projection & Intervention Impact");
-  body(c, "The following 5-year projection models two scenarios: (1) Status Quo — current trends continue without intervention; (2) Optimized — Kincaid RMC recommendations implemented in Year 1-2.");
+  body(c, "The following 5-year projection models two scenarios: (1) Status Quo — current trends continue without intervention; (2) Optimized — Kincaid Health recommendations implemented in Year 1-2.");
   formulaBox(c, "5-Year Plan Cost Projection",
     "Cost_t = Cost_0 × (1 + Trend_Rate)^t",
     "Status Quo trend: 7.8%/yr (national average self-funded trend). Optimized trend: 4.2%/yr (achievable with recommended interventions). Cost_0 = current annual plan cost.");
@@ -1795,7 +1795,7 @@ function generateEmployerHealthPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Vendor Management Scorecard — All Benefits Vendors");
-  body(c, "Kincaid RMC conducts a formal annual vendor performance review covering all material benefits service providers. The following scorecard summarizes 2024 performance against established SLAs, regulatory compliance requirements, and market benchmarks.");
+  body(c, "Kincaid Health conducts a formal annual vendor performance review covering all material benefits service providers. The following scorecard summarizes 2024 performance against established SLAs, regulatory compliance requirements, and market benchmarks.");
   table(c, ["Vendor","Service","Contract Value","SLA Performance","Kincaid Rating","2025 Action"],
     [["BlueCross Admin","TPA / Claims Admin","$428K PEPM","94% SLAs met","B+","Fee renegotiation — target $6 PEPM reduction"],
      ["Express Scripts","PBM","$1.82M Rx spend","96% SLAs met","B","PBM RFP — convert to pass-through"],
@@ -1804,20 +1804,20 @@ function generateEmployerHealthPDF(data: any): jsPDF {
      ["EAP Partners","Employee Assistance","$8.4K/yr","99% SLAs met","A","Renew — expand mental health access"],
      ["COBRA Admin","COBRA","$18K/yr","97% SLAs met","A-","Renew"],
      ["FSA/HSA Admin","Consumer Accounts","$24K/yr","92% SLAs met","B","Evaluate alternatives"],
-     ["Kincaid RMC","Benefits Advisor","Success-fee","Ongoing delivery","A","Annual Stewardship complete"]],
+     ["Kincaid Health","Benefits Advisor","Success-fee","Ongoing delivery","A","Annual Stewardship complete"]],
     [28,28,22,20,18,38]);
 
   addPage(c);
   h1(c, "Regulatory Compliance Calendar — 2025 Action Items");
-  body(c, "The following compliance calendar tracks all regulatory deadlines, annual filing requirements, and plan administration obligations for the upcoming 12 months. Kincaid RMC monitors all regulatory developments and proactively alerts plan sponsors to emerging obligations.");
+  body(c, "The following compliance calendar tracks all regulatory deadlines, annual filing requirements, and plan administration obligations for the upcoming 12 months. Kincaid Health monitors all regulatory developments and proactively alerts plan sponsors to emerging obligations.");
   table(c, ["Deadline","Requirement","Regulatory Authority","Status","Owner"],
     [["January 31","W-2 reporting — employer-sponsored health coverage","IRS","✓ Filed","Payroll"],
      ["February 28","Form 1095-C distribution to employees","IRS / ACA","✓ Mailed","TPA"],
      ["March 31","Form 1095-C filing with IRS (electronic)","IRS / ACA","⚠ Due Soon","TPA"],
      ["April 30","RxDC Report — prescription drug spending","CMS / CAA","⚠ In Progress","TPA + PBM"],
      ["June 1","MHPAEA NQTL Analysis — annual update","DOL / ERISA","✗ Not Started","ERISA Counsel"],
-     ["July 31","CAA Gag Clause Attestation","CMS / CAA 2021","✓ Filed","Kincaid RMC"],
-     ["September 15","Stop-Loss Renewal — RFP deadline","Internal","⚠ Initiate Now","Kincaid RMC"],
+     ["July 31","CAA Gag Clause Attestation","CMS / CAA 2021","✓ Filed","Kincaid Health"],
+     ["September 15","Stop-Loss Renewal — RFP deadline","Internal","⚠ Initiate Now","Kincaid Health"],
      ["October 1","Open Enrollment begins","Plan Design","⚠ Planning Phase","HR"],
      ["October 15","Form 5500 — extended deadline","DOL / IRS","⚠ Prepare","TPA + Kincaid"],
      ["November 1","SPD Distribution (if material changes)","ERISA §104","Conditional","TPA"],
@@ -1847,7 +1847,7 @@ function generateEmployerHealthPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Certification & Score Attestation");
-  body(c, "Kincaid RMC certifies this Employer Health Score™ was computed using the standardized Kincaid IQ scoring protocol (Version 4.2) applied to plan data current as of the assessment date. Scores reflect objective analysis based on 48 individual data points across five weighted domains and do not guarantee specific outcomes. All benchmarking data is sourced from the Kincaid RMC National Employer Database (KNED) — a database of 320+ self-funded employer health plans.");
+  body(c, "Kincaid Health certifies this Employer Health Score™ was computed using the standardized Kincaid Health scoring protocol (Version 4.2) applied to plan data current as of the assessment date. Scores reflect objective analysis based on 48 individual data points across five weighted domains and do not guarantee specific outcomes. All benchmarking data is sourced from the Kincaid Health National Employer Database (KNED) — a database of 320+ self-funded employer health plans.");
   gap(c, 3);
   body(c, "This Employer Health Score™ report is prepared for fiduciary review and strategic planning purposes. Plan fiduciaries are encouraged to review this assessment at a scheduled benefits committee meeting and document the plan's response to identified gaps and opportunities in formal committee minutes.");
   gap(c, 4);
@@ -1860,9 +1860,9 @@ function generateEmployerHealthPDF(data: any): jsPDF {
   kv(c, "Data Points Evaluated", "48");
   kv(c, "Annual Savings Opportunity (MODELED)", `$${modeledEhsSavings(overall).toLocaleString()}`);
   kv(c, "3-Year Net Savings (NPV)", `$${disclosed3YearNPV(modeledEhsSavings(overall)).toLocaleString()}`);
-  kv(c, "Client", "Kincaid RMC / Account SHRACK-7742");
+  kv(c, "Client", "Kincaid Health / Account SHRACK-7742");
   kv(c, "Report Date", c.date);
-  kv(c, "Prepared By", "Jeremiah Shrack, CEO, Kincaid RMC");
+  kv(c, "Prepared By", "Jeremiah Shrack, CEO, Kincaid Health");
   kv(c, "Confidentiality", "Confidential — Strategic Advisory Work Product");
   return doc;
 }
@@ -1872,7 +1872,7 @@ function generateEmployerHealthPDF(data: any): jsPDF {
 ══════════════════════════════════════════════════════════════════════════════ */
 function generateStewardshipPDF(data: any): jsPDF {
   const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-  const c = ctx(doc, "#FFB800", "Annual Stewardship Report", "2024 Client Value Documentation · Kincaid RMC");
+  const c = ctx(doc, "#FFB800", "Annual Stewardship Report", "2024 Client Value Documentation · Kincaid Health");
   const d = data ?? {};
   const savings = d.total_savings ?? 685000;
   const clientName = d.client_name ?? "Client";
@@ -1883,13 +1883,13 @@ function generateStewardshipPDF(data: any): jsPDF {
   addPage(c);
   h1(c, "Letter from the Advisor");
   body(c, `Dear Valued Client,`); gap(c, 3);
-  body(c, `On behalf of the Kincaid RMC team, I am pleased to present your ${planYear} Annual Stewardship Report. This document chronicles the work we have done together over the past year — the savings we've achieved, the risks we've mitigated, and the foundation we've built for continued success.`);
+  body(c, `On behalf of the Kincaid Health team, I am pleased to present your ${planYear} Annual Stewardship Report. This document chronicles the work we have done together over the past year — the savings we've achieved, the risks we've mitigated, and the foundation we've built for continued success.`);
   gap(c, 2);
   body(c, "This year has been a year of meaningful progress. We have relentlessly pursued every available strategy to reduce your healthcare costs while protecting the quality of care your employees depend on. The results speak for themselves: significant documented savings, strengthened compliance, and a more strategic benefits program.");
   gap(c, 2);
   body(c, "The stewardship of your health benefits program is a fiduciary responsibility that we take seriously. Every recommendation we make is grounded in data, regulatory requirements, and a genuine commitment to your organization's long-term success. We are proud of what we have accomplished together and excited about the opportunities ahead.");
   gap(c, 3);
-  body(c, "Sincerely,\nJeremiah Shrack\nCEO, Kincaid RMC\nAccount SHRACK-7742");
+  body(c, "Sincerely,\nJeremiah Shrack\nCEO, Kincaid Health\nAccount SHRACK-7742");
 
   addPage(c);
   h1(c, "Executive Summary — 2024 Performance Highlights");
@@ -1922,7 +1922,7 @@ function generateStewardshipPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "PBM Management & Rx Cost Control");
-  body(c, "Prescription drug costs represent 20.4% of total plan spend — up from 17.8% in 2021. Kincaid RMC executed a comprehensive PBM strategy in 2024 that generated $242,000 in additional value through rebate renegotiation, formulary optimization, and specialty drug management.");
+  body(c, "Prescription drug costs represent 20.4% of total plan spend — up from 17.8% in 2021. Kincaid Health executed a comprehensive PBM strategy in 2024 that generated $242,000 in additional value through rebate renegotiation, formulary optimization, and specialty drug management.");
   formulaBox(c, "Net PBM Cost (Pass-Through Basis)",
     "Net_PBM = Gross_Drug_Cost - Manufacturer_Rebates - Admin_Fees",
     "Under pass-through model, 100% of manufacturer rebates flow to the plan. Prior spread-pricing model retained approximately $242K of rebates as PBM margin.");
@@ -1937,8 +1937,8 @@ function generateStewardshipPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Stop-Loss Program Management");
-  body(c, "Stop-loss insurance is the cornerstone of self-funding risk management. Kincaid RMC's Stop-Loss IQ™ framework guided the 2024 renewal, resulting in a below-market premium increase and improved contract terms. Two specific deductible lasers were removed through aggressive carrier negotiation.");
-  table(c, ["Stop-Loss Metric","2023","2024","Kincaid RMC Outcome"],
+  body(c, "Stop-loss insurance is the cornerstone of self-funding risk management. Kincaid Health's Stop-Loss IQ™ framework guided the 2024 renewal, resulting in a below-market premium increase and improved contract terms. Two specific deductible lasers were removed through aggressive carrier negotiation.");
+  table(c, ["Stop-Loss Metric","2023","2024","Kincaid Health Outcome"],
     [["Specific Deductible","$150,000","$150,000","Maintained competitive level"],
      ["Aggregate Attachment Point","125% of Expected Claims","122% of Expected","Improved terms"],
      ["Carrier","Prior Carrier","Prudential (AM Best: A+)","Upgraded financial rating"],
@@ -1952,19 +1952,19 @@ function generateStewardshipPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Carrier & Vendor Performance Review");
-  body(c, "Kincaid RMC conducted formal performance reviews of all material service providers in 2024. The following scorecard reflects performance against established SLAs and industry benchmarks.");
+  body(c, "Kincaid Health conducted formal performance reviews of all material service providers in 2024. The following scorecard reflects performance against established SLAs and industry benchmarks.");
   table(c, ["Vendor","Service","SLA Performance","Kincaid Rating","2024 Action"],
     [["BlueCross Admin","TPA","94% SLA met","B+","Fee renegotiation completed"],
      ["Express Scripts","PBM","96% SLA met","B","Contract converted to pass-through"],
      ["Prudential","Stop-Loss","98% SLA met","A","Renewed — improved terms"],
      ["Wellness Co.","Wellness","81% SLA met","C+","Notice of 2025 RFP issued"],
-     ["CBIZ Advisors","Benefits Broker","N/A","N/A","Replaced by Kincaid RMC"],
+     ["CBIZ Advisors","Benefits Broker","N/A","N/A","Replaced by Kincaid Health"],
      ["EAP Partners","EAP","99% SLA met","A","Renewed — no change"]],
     [32,25,28,22,45]);
 
   addPage(c);
   h1(c, "Regulatory Compliance Accomplishments");
-  body(c, "2024 was a year of significant regulatory change for self-funded health plans. Kincaid RMC proactively monitored all regulatory developments and guided the plan to full compliance with new CAA requirements, updated ERISA guidance, and DOL enforcement priorities.");
+  body(c, "2024 was a year of significant regulatory change for self-funded health plans. Kincaid Health proactively monitored all regulatory developments and guided the plan to full compliance with new CAA requirements, updated ERISA guidance, and DOL enforcement priorities.");
   table(c, ["Regulatory Item","Action Taken","Effective Date","Status"],
     [["CAA Gag Clause Attestation","Filed annually on behalf of plan","December 2024","✓ Complete"],
      ["Machine-Readable Files","Coordinated with TPA — MRF updated","Monthly","✓ Current"],
@@ -1977,7 +1977,7 @@ function generateStewardshipPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Population Health & Clinical Programs");
-  body(c, "Kincaid RMC implemented three clinical management programs in 2024 targeting the top cost drivers identified in the 2023 claims analysis. These programs represent a shift from reactive cost management to proactive population health strategy.");
+  body(c, "Kincaid Health implemented three clinical management programs in 2024 targeting the top cost drivers identified in the 2023 claims analysis. These programs represent a shift from reactive cost management to proactive population health strategy.");
   table(c, ["Program","Participants","Cost","Projected ROI","2024 Outcomes"],
     [["Diabetes Management","280","$42,000","3.2:1","HbA1c avg ↓ 0.8 points; 18% fewer ER visits"],
      ["Musculoskeletal","145","$18,000","2.8:1","38% reduction in surgery referrals"],
@@ -1999,7 +1999,7 @@ function generateStewardshipPDF(data: any): jsPDF {
   h1(c, "Year-over-Year Cost Trend Analysis");
   formulaBox(c, "Net Plan Cost Trend",
     "Trend = (PMPM_Current - PMPM_Prior) / PMPM_Prior × 100%",
-    "National self-funded plan medical trend: 7.1% (2024). This plan's managed trend: 3.8% — 3.3 percentage points below national average due to Kincaid RMC interventions.");
+    "National self-funded plan medical trend: 7.1% (2024). This plan's managed trend: 3.8% — 3.3 percentage points below national average due to Kincaid Health interventions.");
   table(c, ["Year","Medical PMPM","Rx PMPM","Total PMPM","YoY Trend","vs. National"],
     [["2020","$621","$102","$723","—","—"],
      ["2021","$658","$118","$776","+7.3%","+0.1% vs. national"],
@@ -2013,7 +2013,7 @@ function generateStewardshipPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "2025 Strategic Plan Preview");
-  body(c, "Building on 2024 successes, Kincaid RMC has developed the following strategic priorities for 2025. These initiatives are projected to generate an additional $580,000-$820,000 in documented value while maintaining employee satisfaction scores.");
+  body(c, "Building on 2024 successes, Kincaid Health has developed the following strategic priorities for 2025. These initiatives are projected to generate an additional $580,000-$820,000 in documented value while maintaining employee satisfaction scores.");
   table(c, ["2025 Initiative","Description","Projected Value","Timeline"],
     [["PBM RFP","Full market bid for PBM services due 2025 contract expiration","$80-150K","Q1-Q2 2025"],
      ["Reference-Based Pricing Pilot","Facility claims — hospital reference-based repricing","$180-320K","Q2-Q4 2025"],
@@ -2059,7 +2059,7 @@ function generateStewardshipPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Peer Plan Benchmarking — National Comparison");
-  body(c, "Kincaid RMC benchmarks this plan against the national self-funded employer peer group (250-1,000 EE, same industry sector, similar geography) using data from the Kincaid RMC National Employer Database (KNED). Benchmarks are updated semi-annually.");
+  body(c, "Kincaid Health benchmarks this plan against the national self-funded employer peer group (250-1,000 EE, same industry sector, similar geography) using data from the Kincaid Health National Employer Database (KNED). Benchmarks are updated semi-annually.");
   table(c, ["Metric","This Plan","Peer 25th Pct","Peer Median","Peer 75th Pct","This Plan Rank","Action Needed"],
     [["Total PMPM (Med + Rx)","$892","$762","$842","$964","55th","Monitor"],
      ["Medical Trend (YoY)","1.6% net","3.8%","7.1%","10.2%","8th — BEST","Maintain interventions"],
@@ -2074,7 +2074,7 @@ function generateStewardshipPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Participant Wellbeing Metrics — Health Outcomes Tracking");
-  body(c, "Beyond financial metrics, Kincaid RMC tracks clinical quality and participant wellbeing indicators as leading indicators of future plan cost trends. Improvements in wellbeing metrics today predict lower claim costs 12-24 months forward.");
+  body(c, "Beyond financial metrics, Kincaid Health tracks clinical quality and participant wellbeing indicators as leading indicators of future plan cost trends. Improvements in wellbeing metrics today predict lower claim costs 12-24 months forward.");
   table(c, ["Wellbeing Metric","Baseline (2022)","Current (2024)","Change","Benchmark","Assessment"],
     [["Diabetes HbA1c (avg, controlled)","8.4","7.6","-0.8 ✓","<7.8","Improving"],
      ["Hypertension control rate","52%","61%","+9% ✓","65%","Near benchmark"],
@@ -2086,14 +2086,14 @@ function generateStewardshipPDF(data: any): jsPDF {
      ["BMI >30 prevalence","38%","36%","-2%","28%","GLP-1 program needed"],
      ["Preventive visit completion","62%","74%","+12% ✓","79%","Near benchmark"]],
     [42,24,22,22,22,18]);
-  callout(c, "Clinical outcomes are improving across all tracked metrics — strong evidence that Kincaid RMC's population health interventions are producing real clinical results. BMI and mental health days remain elevated — both will be primary targets in 2025.", "info");
+  callout(c, "Clinical outcomes are improving across all tracked metrics — strong evidence that Kincaid Health's population health interventions are producing real clinical results. BMI and mental health days remain elevated — both will be primary targets in 2025.", "info");
 
   addPage(c);
-  h1(c, "Technology & Analytics Platform — Kincaid IQ Year in Review");
-  body(c, "Kincaid RMC's Kincaid IQ™ analytics platform provided real-time claims intelligence, compliance monitoring, and benchmarking throughout the plan year. The following summary documents platform-driven insights that directly contributed to documented savings.");
+  h1(c, "Technology & Analytics Platform — Kincaid Health Year in Review");
+  body(c, "Kincaid Health™ analytics platform provided real-time claims intelligence, compliance monitoring, and benchmarking throughout the plan year. The following summary documents platform-driven insights that directly contributed to documented savings.");
   table(c, ["Platform Module","Key Insights Delivered","Savings Attributed","Response Time"],
     [["Claims Recovery IQ™","$94K in billing errors identified and recovered","$94,000","14 days avg to demand letter"],
-     ["Rx Defense IQ™","PBM contract score: 52/100 — triggered RFP","$242,000","RFP complete in 11 weeks"],
+     ["PBM Contract Clarity 360™","PBM contract score: 52/100 — triggered RFP","$242,000","RFP complete in 11 weeks"],
      ["Stop-Loss IQ™","50-point review: removed 2 lasers, held trend to 3.2%","$90,000","Renewal strategy delivered"],
      ["Network IQ™","BH network gap identified — 21 providers added","$185,000","Network expansion 90 days"],
      ["ERISA Fiduciary IQ™","4 §408(b)(2) gaps resolved — DOL risk eliminated","Risk avoidance","30 days to resolution"],
@@ -2102,26 +2102,26 @@ function generateStewardshipPDF(data: any): jsPDF {
     [38,52,22,30]);
   gap(c, 2);
   kv(c, "Total Platform-Attributed Savings (2024)", `$${savings.toLocaleString()}`);
-  kv(c, "Kincaid IQ Alerts Generated", "47 compliance and cost alerts");
+  kv(c, "Kincaid Health Alerts Generated", "47 compliance and cost alerts");
   kv(c, "DOL Enforcement Risk Eliminated", "$0 penalties — all issues resolved proactively");
 
   addPage(c);
   h1(c, "Market Intelligence Summary — 2024 Healthcare Landscape");
-  body(c, "Kincaid RMC's market intelligence function monitors regulatory developments, vendor market changes, and emerging cost drivers on behalf of plan sponsors. The following summary highlights the key market trends that shaped our 2024 strategy recommendations.");
+  body(c, "Kincaid Health's market intelligence function monitors regulatory developments, vendor market changes, and emerging cost drivers on behalf of plan sponsors. The following summary highlights the key market trends that shaped our 2024 strategy recommendations.");
   table(c, ["Market Trend","2024 Impact","Your Plan Status","2025 Implication"],
     [["GLP-1 Drug Spend (Ozempic/Wegovy)","Industry avg: +240% YoY trend","$18.40 PMPM — 91st percentile","Must implement clinical criteria now"],
      ["PBM Transparency Legislation","FTC report + CAA 2026 proposals","PBM RFP completed","Positioned for compliance"],
      ["Mental Health Parity Enforcement","DOL letters up 320% vs. 2022","MHPAEA gap identified — in process","Complete NQTL analysis Q1 2025"],
      ["Stop-Loss Market (rates)","Average +8.1% premium increase","Achieved +3.2% — outperformed","Continue RFP discipline"],
      ["Gene Therapy Cost (one-time)","$2.1M+ per patient — increasing","1 claim in plan year","Stop-loss max verified adequate"],
-     ["AI / Analytics in Benefits","Rapid adoption across industry","Kincaid IQ active — leading edge","Expand AI utilization monitoring"],
+     ["AI / Analytics in Benefits","Rapid adoption across industry","Kincaid Health active — leading edge","Expand AI utilization monitoring"],
      ["Direct Primary Care Growth","15% of self-funded plans — up from 4%","Not yet implemented","DPC feasibility in 2025 strategy"],
      ["Reference-Based Pricing Adoption","22% of plans >500 EE use RBP","Not implemented — evaluating","Pilot in 2025 roadmap"]],
     [38,38,32,38]);
 
   addPage(c);
   h1(c, "Multi-Year Value Summary & Certification");
-  body(c, "The following multi-year value summary documents the cumulative financial impact of Kincaid RMC's advisory relationship since engagement inception. All values are documented and traceable to specific plan actions, vendor agreements, and claims analyses.");
+  body(c, "The following multi-year value summary documents the cumulative financial impact of Kincaid Health's advisory relationship since engagement inception. All values are documented and traceable to specific plan actions, vendor agreements, and claims analyses.");
   table(c, ["Plan Year","Documented Savings","Primary Value Driver","Total Plan Cost","YoY Cost Trend"],
     [["2020","$142,000","Initial fee benchmarking","$11,820,000","Baseline"],
      ["2021","$218,000","TPA RFP — $78K fee reduction","$12,240,000","+3.5% (below market)"],
@@ -2131,7 +2131,7 @@ function generateStewardshipPDF(data: any): jsPDF {
      ["CUMULATIVE","$1,925,000","5-Year Advisory Value","—","Avg +4.1%/yr vs. 7.1% national"]],
     [18,28,50,28,22]);
   gap(c, 3);
-  body(c, "Kincaid RMC certifies that all savings figures in this Annual Stewardship Report are documented and traceable to specific plan actions, vendor agreements, or claims data analyses. Savings are not projected or hypothetical — they represent actual, realized value delivered to the plan and its sponsor.");
+  body(c, "Kincaid Health certifies that all savings figures in this Annual Stewardship Report are documented and traceable to specific plan actions, vendor agreements, or claims data analyses. Savings are not projected or hypothetical — they represent actual, realized value delivered to the plan and its sponsor.");
   gap(c, 4);
   divider(c);
   h2(c, "Report Metadata");
@@ -2145,7 +2145,7 @@ function generateStewardshipPDF(data: any): jsPDF {
   kv(c, "Total Plan Spend", "$17,710,000");
   kv(c, "Managed Cost Trend", "1.6% net vs. 7.1% national");
   kv(c, "Report Date", c.date);
-  kv(c, "Prepared By", "Jeremiah Shrack, CEO, Kincaid RMC");
+  kv(c, "Prepared By", "Jeremiah Shrack, CEO, Kincaid Health");
   kv(c, "Confidentiality", "Confidential — Board-Level Distribution");
   return doc;
 }
@@ -2162,7 +2162,7 @@ function generateStopLossPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Stop-Loss Fiduciary Framework — Overview");
-  body(c, "Stop-loss insurance is the mechanism by which self-funded health plan sponsors transfer catastrophic financial risk to a carrier. The plan sponsor bears all claim liability up to the specific deductible per claimant (and the aggregate attachment point collectively), with the stop-loss carrier covering amounts above those thresholds. Kincaid RMC's Stop-Loss IQ™ framework evaluates 50 provisions across 10 domains using a fiduciary-grade analysis protocol.");
+  body(c, "Stop-loss insurance is the mechanism by which self-funded health plan sponsors transfer catastrophic financial risk to a carrier. The plan sponsor bears all claim liability up to the specific deductible per claimant (and the aggregate attachment point collectively), with the stop-loss carrier covering amounts above those thresholds. Kincaid Health's Stop-Loss IQ™ framework evaluates 50 provisions across 10 domains using a fiduciary-grade analysis protocol.");
   gap(c, 2);
   table(c, ["Analysis Domain","Provisions","Weight","Focus Area"],
     [["Contract Terms & Structure","6","20%","Definitions, run-in/out, claim basis"],
@@ -2179,7 +2179,7 @@ function generateStopLossPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Executive Summary — Contract Risk Assessment");
-  body(c, "Stop-loss contract quality varies enormously by carrier and broker. Carriers have significant incentive to include provisions that limit their liability exposure — often at the expense of plan sponsor protection. Kincaid RMC's 50-point review identifies every provision that creates plan sponsor risk.");
+  body(c, "Stop-loss contract quality varies enormously by carrier and broker. Carriers have significant incentive to include provisions that limit their liability exposure — often at the expense of plan sponsor protection. Kincaid Health's 50-point review identifies every provision that creates plan sponsor risk.");
   formulaBox(c, "Stop-Loss Risk Score (SLRS)",
     "SLRS = Σ(Provision_Score_i × Weight_i)  for i = 1..50",
     "Each provision scored 0-4: 4=Best Practice, 3=Acceptable, 2=Concern, 1=High Risk, 0=Critical Deficiency. Weighted by provision importance. Industry avg: 62/100. Plans <50 should consider carrier change.");
@@ -2211,7 +2211,7 @@ function generateStopLossPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Lasering & Exclusions — Claimant-Specific Analysis");
-  body(c, "Carrier lasers (claimant-specific deductible increases) are one of the highest-risk provisions in stop-loss contracts. Lasers effectively eliminate stop-loss coverage for the most expensive claimants — precisely the individuals for whom stop-loss was purchased. Kincaid RMC negotiates laser removal or caps on laser amounts as a primary renewal objective.");
+  body(c, "Carrier lasers (claimant-specific deductible increases) are one of the highest-risk provisions in stop-loss contracts. Lasers effectively eliminate stop-loss coverage for the most expensive claimants — precisely the individuals for whom stop-loss was purchased. Kincaid Health negotiates laser removal or caps on laser amounts as a primary renewal objective.");
   table(c, ["Laser Type","Current Contract","Best Practice","Risk Level","Kincaid Action"],
     [["Claimant-Specific Laser (active)","1 laser, $500K SDL","No lasers","High","Negotiating removal"],
      ["Laser Cap (maximum laser amount)","No cap","Cap at 2x SDL","High","Require cap"],
@@ -2227,7 +2227,7 @@ function generateStopLossPDF(data: any): jsPDF {
   addPage(c);
   h1(c, "Mental Health Parity — Stop-Loss Compliance (CAA 2026)");
   callout(c, "CRITICAL: Stop-loss carrier applies more restrictive clinical criteria for mental health and substance use disorder claims than for medical/surgical claims. This creates MHPAEA violation exposure for the plan AND may result in stop-loss carrier denying mental health claims that the plan is legally required to cover.", "critical");
-  body(c, "CAA 2026 (proposed) would require stop-loss carriers to apply identical clinical review criteria for MH/SUD and medical/surgical claims. Kincaid RMC recommends requiring this parity in the current contract to reduce compliance risk.");
+  body(c, "CAA 2026 (proposed) would require stop-loss carriers to apply identical clinical review criteria for MH/SUD and medical/surgical claims. Kincaid Health recommends requiring this parity in the current contract to reduce compliance risk.");
   table(c, ["MHPAEA Area","Stop-Loss Treatment","Medical/Surgical Treatment","Disparity?"],
     [["Prior Authorization","Required >$5K","Not required","Yes — MHPAEA violation"],
      ["Inpatient Day Limits","30-day concurrent review","None","Yes — MHPAEA violation"],
@@ -2275,7 +2275,7 @@ function generateStopLossPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Carrier Benchmarking — Market Analysis");
-  body(c, "The following carrier benchmarking compares current stop-loss coverage against top market alternatives identified through Kincaid RMC's market intelligence platform:");
+  body(c, "The following carrier benchmarking compares current stop-loss coverage against top market alternatives identified through Kincaid Health's market intelligence platform:");
   table(c, ["Carrier","AM Best","SDL","Premium/Yr","Laser Policy","MHPAEA","Overall Rating"],
     [["Prudential (Current)","A+","$150K","$869K","1 laser","Non-compliant","B"],
      ["Sun Life","A","$150K","$842K","No lasers","Compliant","A-"],
@@ -2283,7 +2283,7 @@ function generateStopLossPDF(data: any): jsPDF {
      ["HM Life","A-","$150K","$808K","Cap limited","Partial","B+"],
      ["Symetra","A","$175K","$798K","No lasers","Compliant","B+"]],
     [30,18,18,22,22,22,20]);
-  callout(c, "Sun Life and Tokio Marine HCC offer superior contract terms (no lasers, MHPAEA-compliant MH criteria) at comparable or lower premiums. Kincaid RMC recommends a competitive RFP for the 2025 renewal.", "info");
+  callout(c, "Sun Life and Tokio Marine HCC offer superior contract terms (no lasers, MHPAEA-compliant MH criteria) at comparable or lower premiums. Kincaid Health recommends a competitive RFP for the 2025 renewal.", "info");
 
   addPage(c);
   h1(c, "Renewal Strategy & Projection");
@@ -2359,7 +2359,7 @@ function generateStopLossPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "CAA 2026 Stop-Loss Compliance — Proposed Requirements");
-  body(c, "Proposed CAA 2026 provisions include the most significant changes to stop-loss regulation in a decade. While not yet law, Kincaid RMC recommends beginning contract preparation now, as these provisions are expected to be finalized and carriers will need 12-18 months to adjust policy forms. Plans that proactively incorporate these standards will have stronger regulatory positions and better carrier relationships.");
+  body(c, "Proposed CAA 2026 provisions include the most significant changes to stop-loss regulation in a decade. While not yet law, Kincaid Health recommends beginning contract preparation now, as these provisions are expected to be finalized and carriers will need 12-18 months to adjust policy forms. Plans that proactively incorporate these standards will have stronger regulatory positions and better carrier relationships.");
   table(c, ["Proposed CAA 2026 Stop-Loss Requirement","Current Contract","Compliance Gap","Implementation Timeline"],
     [["MH/SUD clinical criteria parity with Med/Surg","Non-compliant — PA for MH, not Med/Surg","Critical gap","Negotiate immediately"],
      ["SUD treatment — no 30-day cap on residential coverage","30-day limit active","Direct violation","Remove at renewal"],
@@ -2373,7 +2373,7 @@ function generateStopLossPDF(data: any): jsPDF {
 
   addPage(c);
   h1(c, "Full RFP Market Analysis — Competitive Carrier Review");
-  body(c, "Kincaid RMC conducted a comprehensive stop-loss market analysis as part of the 2025 renewal preparation. The following table presents detailed carrier comparisons across 12 key criteria. This analysis should be used as the foundation for the 2025 renewal RFP.");
+  body(c, "Kincaid Health conducted a comprehensive stop-loss market analysis as part of the 2025 renewal preparation. The following table presents detailed carrier comparisons across 12 key criteria. This analysis should be used as the foundation for the 2025 renewal RFP.");
   table(c, ["Criterion","Prudential (Current)","Sun Life","Tokio Marine HCC","HM Life","Symetra"],
     [["AM Best Rating","A+ Superior","A Excellent","A++ Superior","A- Excellent","A Excellent"],
      ["Specific Deductible Available","$150K","$100K-$250K","$100K-$300K","$125K-$200K","$150K-$250K"],
@@ -2386,7 +2386,7 @@ function generateStopLossPDF(data: any): jsPDF {
      ["Real-Time Data Access","No","Yes","Yes","No","Yes"],
      ["Monthly Aggregate Advance","No","Available","Available","No","No"],
      ["Audit Rights","Annual, 90-day","Quarterly, 30-day","Quarterly, 30-day","Annual, 60-day","Quarterly, 45-day"],
-     ["Kincaid RMC Rating","B","A-","A","B+","B+"]],
+     ["Kincaid Health Rating","B","A-","A","B+","B+"]],
     [38,22,22,26,20,20]);
   callout(c, "Tokio Marine HCC is the preferred carrier based on superior AM Best rating (A++), no lasers, full MHPAEA compliance, and best contractual terms (24-month run-out, quarterly audit rights). Estimated premium savings vs. Prudential: $0-22K with significantly better contract terms.", "info");
 
@@ -2398,19 +2398,19 @@ function generateStopLossPDF(data: any): jsPDF {
     "PES = (Market_Analysis_Conducted × Contract_Review_Performed × Selection_Documented) / Potential_Actions",
     "A fully compliant fiduciary process scores 1.0 — meaning all prudent actions were taken and documented. Plans without competitive analysis, contract review, or documentation score below 0.5 — creating individual fiduciary liability.");
   gap(c, 2);
-  table(c, ["Fiduciary Obligation","ERISA Authority","Current Status","Documentation Required","Kincaid RMC Action"],
+  table(c, ["Fiduciary Obligation","ERISA Authority","Current Status","Documentation Required","Kincaid Health Action"],
     [["Annual competitive market analysis","ERISA §404(a)(1)(B)","✓ Completed — Stop-Loss IQ™","Stop-Loss IQ™ report in committee minutes","This report"],
      ["Carrier financial strength review","ERISA §404(a)(1)(C)","✓ AM Best confirmed A+","Document in fiduciary file","Done"],
      ["Contract terms review by qualified advisor","ERISA §404(a)(1)(B)","✓ 50-point review completed","This report + engagement letter","This report"],
      ["Competitive bid / RFP","ERISA §404(a)(1)(B)","⚠ RFP recommended for 2025","Document bid results in minutes","Initiate Q1 2025"],
      ["MHPAEA compliance review","MHPAEA / ACA","✗ Non-compliant — action required","NQTL analysis + remediation plan","Priority action"],
-     ["Documentation in plan committee minutes","ERISA §404(a)","⚠ Partial — complete minutes","All decisions documented","Kincaid RMC to assist"]],
+     ["Documentation in plan committee minutes","ERISA §404(a)","⚠ Partial — complete minutes","All decisions documented","Kincaid Health to assist"]],
     [42,28,32,40,22]);
   callout(c, "Plan fiduciaries have personal liability for stop-loss decisions. Completing the 2025 stop-loss RFP, fixing MHPAEA compliance, and documenting all decisions in committee minutes are the three highest-priority fiduciary protection actions.", "critical");
 
   addPage(c);
   h1(c, "Certification & Analyst Attestation");
-  body(c, "Kincaid RMC certifies this Stop-Loss IQ™ analysis was conducted by certified stop-loss professionals using the Kincaid IQ 50-point provision scoring protocol. All contract language assessments reflect current regulatory standards and market benchmarks as of the report date. This report is designed for review by plan fiduciaries and ERISA counsel.");
+  body(c, "Kincaid Health certifies this Stop-Loss IQ™ analysis was conducted by certified stop-loss professionals using the Kincaid Health 50-point provision scoring protocol. All contract language assessments reflect current regulatory standards and market benchmarks as of the report date. This report is designed for review by plan fiduciaries and ERISA counsel.");
   gap(c, 3);
   body(c, "This Stop-Loss IQ™ report constitutes a formal fiduciary advisory document prepared under ERISA §404(a) prudence standards. Plan fiduciaries are advised to review this report at a scheduled benefit committee meeting, formally record their decisions in committee minutes, and engage ERISA counsel for MHPAEA remediation.");
   gap(c, 4);
@@ -2427,9 +2427,9 @@ function generateStopLossPDF(data: any): jsPDF {
   kv(c, "Recommended Carrier (2025 RFP)", "Tokio Marine HCC (A++) or Sun Life (A)");
   kv(c, "Aggregate Attachment Point", "$17.3M (122% of expected)");
   kv(c, "Aggregate Breach Probability", "~46% — monitor monthly");
-  kv(c, "Client", "Kincaid RMC / Account SHRACK-7742");
+  kv(c, "Client", "Kincaid Health / Account SHRACK-7742");
   kv(c, "Report Date", c.date);
-  kv(c, "Prepared By", "Jeremiah Shrack, CEO, Kincaid RMC");
+  kv(c, "Prepared By", "Jeremiah Shrack, CEO, Kincaid Health");
   kv(c, "Confidentiality", "Confidential — Fiduciary Work Product");
   return doc;
 }
@@ -2439,7 +2439,7 @@ function generateStopLossPDF(data: any): jsPDF {
 ══════════════════════════════════════════════════════════════════════════════ */
 function generateRxDefensePDF(data: any): jsPDF {
   const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-  const c = ctx(doc, "#10B981", "Rx Defense IQ™", "PBM Contract Intelligence · 10-Provision Analysis · CAA 2026 Compliance");
+  const c = ctx(doc, "#10B981", "PBM Contract Clarity 360™", "PBM Contract Intelligence · 10-Provision Analysis · CAA 2026 Compliance");
   const d = data ?? {};
   const pbm = d.pbm_name ?? "Express Scripts";
   const provisions: any[] = d.provision_scores ?? [];
@@ -2482,15 +2482,15 @@ function generateRxDefensePDF(data: any): jsPDF {
 
   // ── Page 2: Engagement Certification ────────────────────────────────────
   addPage(c);
-  h1(c, "Rx Defense IQ™ — Engagement Certification");
-  body(c, "This Rx Defense IQ™ report constitutes a formal PBM contract intelligence analysis prepared by Kincaid RMC. All findings are grounded in the specific contract language uploaded by the plan sponsor, industry benchmarking data from the Kincaid RMC National PBM Database (KNPD), and current regulatory standards under ERISA, CAA 2021/2023/2026, and FTC guidance.");
+  h1(c, "PBM Contract Clarity 360™ — Engagement Certification");
+  body(c, "This PBM Contract Clarity 360™ report constitutes a formal PBM contract intelligence analysis prepared by Kincaid Health. All findings are grounded in the specific contract language uploaded by the plan sponsor, industry benchmarking data from the Kincaid Health National PBM Database (KNPD), and current regulatory standards under ERISA, CAA 2021/2023/2026, and FTC guidance.");
   gap(c, 2);
   callout(c, `PBM Analyzed: ${pbm}  |  Contract Score: ${hasEvidence ? score + "/100" : "INSUFFICIENT_EVIDENCE"}  |  Estimated Annual Exposure: ${hasEvidence ? expLabel + " [MODELED]" : "INSUFFICIENT_EVIDENCE"}  |  CAA 2026 Aligned`, score < 60 ? "critical" : "warn");
   gap(c, 1);
   body(c, hasEvidence ? rxModel.methodology : "INSUFFICIENT_EVIDENCE — no overall score or provision-level scores were available, so plan economics cannot be modeled. Run a full provision analysis to quantify exposure (member_count × PMPY × risk_fraction).");
   gap(c, 3);
   h2(c, "Scope of This Analysis");
-  body(c, "This analysis covers all 10 primary PBM contract provisions scored by the Kincaid IQ platform:");
+  body(c, "This analysis covers all 10 primary PBM contract provisions scored by the Kincaid Health platform:");
   ["Provision 1 — MAC Pricing Transparency & Appeals","Provision 2 — Spread Pricing & Pass-Through Guarantee","Provision 3 — Manufacturer Rebate Disclosure & Pass-Through","Provision 4 — Generic Substitution & Step Therapy","Provision 5 — Specialty Pharmacy Management","Provision 6 — Performance Guarantees & Financial Assurances","Provision 7 — AWP Discount Benchmarking","Provision 8 — Formulary Design & Tier Structure","Provision 9 — Utilization Management & Prior Authorization","Provision 10 — Audit Rights & Contract Enforcement"].forEach(b_ => bullet(c, b_));
   gap(c, 3);
   h2(c, "Regulatory Framework");
@@ -2517,7 +2517,7 @@ function generateRxDefensePDF(data: any): jsPDF {
   kv(c, "CAA 2026 Readiness", score < 65 ? "Not Ready — Action Required" : "Partially Ready");
   gap(c, 3);
   body(c, hasEvidence
-    ? `At a contract score of ${score}/100, this PBM arrangement contains provisions that expose the plan to material undisclosed costs. Kincaid RMC's MODELED estimate is ${expLabel} in annual excess costs attributable to spread pricing, rebate retention, opaque AWP discount structures, and inadequate audit rights. A comprehensive PBM RFP is the highest-priority action.`
+    ? `At a contract score of ${score}/100, this PBM arrangement contains provisions that expose the plan to material undisclosed costs. Kincaid Health's MODELED estimate is ${expLabel} in annual excess costs attributable to spread pricing, rebate retention, opaque AWP discount structures, and inadequate audit rights. A comprehensive PBM RFP is the highest-priority action.`
     : "INSUFFICIENT_EVIDENCE — without an overall contract score or provision-level scores, annual excess-cost exposure cannot be modeled. A comprehensive PBM RFP remains advisable, but no dollar figure is asserted here.");
   gap(c, 2);
   callout(c, hasEvidence ? rxModel.methodology : "INSUFFICIENT_EVIDENCE — provision scores required to model exposure.", "info");
@@ -2651,7 +2651,7 @@ function generateRxDefensePDF(data: any): jsPDF {
       recommendation: "Negotiate performance guarantee restructure at next renewal: increase total at-risk to $250K, raise GFR guarantee to 87%, add specialty drug adherence guarantee of 90%, and add mail-order penetration guarantee of 18%.",
     },
     7: {
-      background: "Average Wholesale Price (AWP) is the industry-standard reference price for brand-name drugs. PBM contracts guarantee specific AWP discount levels for brand drugs dispensed at retail, mail order, and specialty pharmacies. These discounts determine the plan's ingredient cost for brand drugs before manufacturer rebates. Kincaid RMC benchmarks all AWP discounts against our National PBM Database of 180+ plan contracts.",
+      background: "Average Wholesale Price (AWP) is the industry-standard reference price for brand-name drugs. PBM contracts guarantee specific AWP discount levels for brand drugs dispensed at retail, mail order, and specialty pharmacies. These discounts determine the plan's ingredient cost for brand drugs before manufacturer rebates. Kincaid Health benchmarks all AWP discounts against our National PBM Database of 180+ plan contracts.",
       formula: "Brand Drug Net Cost",
       formulaExpl: "Brand_Net = (AWP × (1 − AWP_Discount%)) − Manufacturer_Rebate_PEPM\nExample: AWP − 18% on a $180 brand drug = $147.60 ingredient cost. Market best practice: AWP − 22% = $140.40. Gap = $7.20/claim. At 850 brand claims/month = $73,440 annual gap vs. benchmark.",
       tableHeaders: ["Drug Category / Channel", "Contract Discount", "Market Median", "Market Best", "Gap vs. Median", "Annual $ Gap"],
@@ -2717,7 +2717,7 @@ function generateRxDefensePDF(data: any): jsPDF {
         ["Document retention requirement", "3 years", "6 years (ERISA §107)", "Medium — ERISA gap"],
       ],
       tableWidths: [40, 36, 36, 30],
-      benchmark: "Plans without rebate reconciliation audit rights have no independent means of verifying that manufacturer rebates disclosed by the PBM are accurate and complete. Kincaid RMC has identified rebate discrepancies of 18–42% in plans with similar contract structures.",
+      benchmark: "Plans without rebate reconciliation audit rights have no independent means of verifying that manufacturer rebates disclosed by the PBM are accurate and complete. Kincaid Health has identified rebate discrepancies of 18–42% in plans with similar contract structures.",
       recommendation: "Negotiate rebate reconciliation audit right as a condition of contract renewal — this is non-negotiable. Expand financial audit notice period from 90 to 30 days. Add real-time claims data portal access clause. Require 6-year document retention per ERISA §107.",
     },
   };
@@ -2767,7 +2767,7 @@ function generateRxDefensePDF(data: any): jsPDF {
     h2(c, "Industry Benchmark");
     body(c, qualifyUsdProse(detail.benchmark));
     gap(c, 2);
-    h2(c, "Kincaid RMC Recommendation");
+    h2(c, "Kincaid Health Recommendation");
     callout(c, qualifyUsdProse(detail.recommendation), pRating === "red_flag" ? "critical" : pRating === "concern" ? "warn" : "info");
   });
 
@@ -2796,7 +2796,7 @@ function generateRxDefensePDF(data: any): jsPDF {
   // ── Page 15: Formulary Cost Analysis ────────────────────────────────────
   addPage(c);
   h1(c, "Formulary Cost Analysis — Drug Category Benchmarking");
-  body(c, "The following analysis benchmarks drug category spend against the Kincaid RMC National PBM Database (KNPD) of 180+ self-funded plans with similar demographics and geography. Drug categories above the 75th percentile represent primary targets for formulary intervention and PBM renegotiation.");
+  body(c, "The following analysis benchmarks drug category spend against the Kincaid Health National PBM Database (KNPD) of 180+ self-funded plans with similar demographics and geography. Drug categories above the 75th percentile represent primary targets for formulary intervention and PBM renegotiation.");
   gap(c, 1);
   callout(c, "ILLUSTRATIVE: PMPM figures and pipeline cost-per-patient values below are KNPD reference benchmarks shown to demonstrate category targeting, not measured values for this plan. Plan-specific economics are MODELED in the Financial Exposure Summary.", "info");
   gap(c, 1);
@@ -2850,7 +2850,7 @@ function generateRxDefensePDF(data: any): jsPDF {
   kv(c, "Payback Period", "< 45 days");
   kv(c, "Implementation Timeline", "8-20 weeks (depending on RFP track)");
   gap(c, 2);
-  body(c, "The Full Optimization Program encompasses: (1) immediate MAC audit and challenge, (2) 408(b)(2) disclosure demands, (3) PBM RFP targeting pass-through contracts, (4) specialty pharmacy carve-out, (5) formulary redesign with aggressive exclusion list, and (6) GLP-1 clinical management program. Kincaid RMC manages all components on a success-fee basis.");
+  body(c, "The Full Optimization Program encompasses: (1) immediate MAC audit and challenge, (2) 408(b)(2) disclosure demands, (3) PBM RFP targeting pass-through contracts, (4) specialty pharmacy carve-out, (5) formulary redesign with aggressive exclusion list, and (6) GLP-1 clinical management program. Kincaid Health manages all components on a success-fee basis.");
 
   // ── Page 17: Financial Exposure Summary ─────────────────────────────────
   addPage(c);
@@ -2882,15 +2882,15 @@ function generateRxDefensePDF(data: any): jsPDF {
     [44,24,22,16,20]);
   gap(c, 2);
   callout(c, hasEvidence
-    ? `MODELED total annual exposure: $${exposure.toLocaleString()} (3-year NPV $${rxModel.year3NPV.toLocaleString()}). ${rxModel.methodology} Contact Kincaid RMC to initiate the RFP process within 30 days.`
-    : "INSUFFICIENT_EVIDENCE — total annual exposure cannot be modeled without provision scores. Contact Kincaid RMC to run a full provision analysis.", "critical");
+    ? `MODELED total annual exposure: $${exposure.toLocaleString()} (3-year NPV $${rxModel.year3NPV.toLocaleString()}). ${rxModel.methodology} Contact Kincaid Health to initiate the RFP process within 30 days.`
+    : "INSUFFICIENT_EVIDENCE — total annual exposure cannot be modeled without provision scores. Contact Kincaid Health to run a full provision analysis.", "critical");
 
   // ── Page 18: PBM RFP Methodology ────────────────────────────────────────
   addPage(c);
-  h1(c, "PBM RFP Process — Kincaid RMC Methodology");
-  body(c, "Kincaid RMC manages end-to-end PBM RFP processes on behalf of self-funded plan sponsors. First-year savings are MODELED per plan from the exposure analysis above (member_count × PMPY × risk_fraction) and depend on contract renegotiation outcomes — not a guaranteed result. The RFP process is conducted on a success-fee basis — no savings, no fee.");
+  h1(c, "PBM RFP Process — Kincaid Health Methodology");
+  body(c, "Kincaid Health manages end-to-end PBM RFP processes on behalf of self-funded plan sponsors. First-year savings are MODELED per plan from the exposure analysis above (member_count × PMPY × risk_fraction) and depend on contract renegotiation outcomes — not a guaranteed result. The RFP process is conducted on a success-fee basis — no savings, no fee.");
   gap(c, 2);
-  table(c, ["RFP Phase","Key Activities","Timeline","Kincaid RMC Role"],
+  table(c, ["RFP Phase","Key Activities","Timeline","Kincaid Health Role"],
     [["Phase 1: Current Contract Analysis","Provision scoring, financial benchmarking, data extraction, RFP template build","Weeks 1-3","Lead"],
      ["Phase 2: RFP Document Preparation","Custom RFP with 80+ pricing cells, 10-provision scoring matrix, financial model","Week 3-4","Lead"],
      ["Phase 3: Vendor Distribution","Issue to 6-8 qualified PBMs including pass-through specialists (Navitus, Capital Rx)","Week 4","Lead"],
@@ -2911,48 +2911,48 @@ function generateRxDefensePDF(data: any): jsPDF {
 
   // ── Page 19: Prioritized Action Plan ────────────────────────────────────
   addPage(c);
-  h1(c, "Prioritized Action Plan — Rx Defense IQ™ Recommendations");
-  body(c, "The following action plan is organized by priority and time horizon. Kincaid RMC recommends scheduling a plan fiduciary meeting within 30 days to formally adopt this plan. All actions should be documented in plan committee minutes for ERISA §404(a) compliance.");
+  h1(c, "Prioritized Action Plan — PBM Contract Clarity 360™ Recommendations");
+  body(c, "The following action plan is organized by priority and time horizon. Kincaid Health recommends scheduling a plan fiduciary meeting within 30 days to formally adopt this plan. All actions should be documented in plan committee minutes for ERISA §404(a) compliance.");
   gap(c, 2);
   table(c, ["Priority","Action Item","Owner","Timeline","Est. Annual Impact"],
     [["P1 — Immediate","Post Rx Machine-Readable Files with TPA","TPA + Plan","0-30 days","Avoids $100/day/member statutory penalty"],
      ["P1 — Immediate","Issue formal 408(b)(2) disclosure demand to PBM — all indirect comp","HR/Benefits","0-30 days","Compliance + rebate visibility"],
-     ["P1 — Immediate","Initiate MAC pricing audit using independent benchmark data","Kincaid RMC","0-45 days","Moderate recovery (MODELED)"],
+     ["P1 — Immediate","Initiate MAC pricing audit using independent benchmark data","Kincaid Health","0-45 days","Moderate recovery (MODELED)"],
      ["P1 — Immediate","Demand full rebate reconciliation and manufacturer contract access","ERISA Counsel","0-30 days","Material transparency (MODELED)"],
-     ["P2 — High","Launch PBM RFP process — target pass-through vendors","Kincaid RMC","0-60 days","Significant savings (MODELED)"],
+     ["P2 — High","Launch PBM RFP process — target pass-through vendors","Kincaid Health","0-60 days","Significant savings (MODELED)"],
      ["P2 — High","Implement GLP-1 prior authorization with clinical criteria","PBM + Plan","0-45 days","Material trend control (MODELED)"],
-     ["P2 — High","Negotiate specialty carve-out right for next contract cycle","Kincaid RMC","30-90 days","Moderate (MODELED)"],
+     ["P2 — High","Negotiate specialty carve-out right for next contract cycle","Kincaid Health","30-90 days","Moderate (MODELED)"],
      ["P2 — High","Expand formulary exclusion list — 12 drugs with generic equivalents","PBM/Formulary","30-60 days","Moderate (MODELED)"],
      ["P3 — Medium","Add biosimilar auto-substitution protocol","PBM","At renewal","Minor (MODELED)"],
-     ["P3 — Medium","Negotiate performance guarantee restructure — raise at-risk amount","Kincaid RMC","At renewal","Accountability"],
+     ["P3 — Medium","Negotiate performance guarantee restructure — raise at-risk amount","Kincaid Health","At renewal","Accountability"],
      ["P3 — Medium","Implement copay accumulator adjustment program","PBM","30-60 days","Minor (MODELED)"],
-     ["P4 — Ongoing","Annual PBM audit — claims accuracy + MAC pricing","Kincaid RMC","Annually","Material recovery (MODELED)"]],
+     ["P4 — Ongoing","Annual PBM audit — claims accuracy + MAC pricing","Kincaid Health","Annually","Material recovery (MODELED)"]],
     [28,58,22,22,32]);
 
   // ── Page 20: Certification & Metadata ───────────────────────────────────
   addPage(c);
   h1(c, "Certification & Analyst Attestation");
-  body(c, "Kincaid RMC certifies that this Rx Defense IQ™ analysis was prepared by certified PBM analytics professionals using the Kincaid IQ 10-provision scoring protocol, the Kincaid RMC National PBM Database (KNPD), and current regulatory standards. All contract assessments reflect the specific contract language uploaded by the plan sponsor and analyzed by the Kincaid IQ AI platform.");
+  body(c, "Kincaid Health certifies that this PBM Contract Clarity 360™ analysis was prepared by certified PBM analytics professionals using the Kincaid Health 10-provision scoring protocol, the Kincaid Health National PBM Database (KNPD), and current regulatory standards. All contract assessments reflect the specific contract language uploaded by the plan sponsor and analyzed by the Kincaid Health AI platform.");
   gap(c, 3);
   h2(c, "Analyst Certification Statement");
-  body(c, "The findings, scores, financial exposures, and recommendations contained in this report represent the professional judgment of the Kincaid RMC analytical team based on PBM contract language, industry benchmarking data, and regulatory guidance. This report is provided for informational and fiduciary planning purposes. Plan sponsors should engage qualified ERISA counsel before implementing any recommendations that may affect plan operations or service provider relationships.");
+  body(c, "The findings, scores, financial exposures, and recommendations contained in this report represent the professional judgment of the Kincaid Health analytical team based on PBM contract language, industry benchmarking data, and regulatory guidance. This report is provided for informational and fiduciary planning purposes. Plan sponsors should engage qualified ERISA counsel before implementing any recommendations that may affect plan operations or service provider relationships.");
   gap(c, 4);
   divider(c);
   h2(c, "Report Metadata");
-  kv(c, "Report Type", "Rx Defense IQ™ — Full 20-Page Analysis");
+  kv(c, "Report Type", "PBM Contract Clarity 360™ — Full 20-Page Analysis");
   kv(c, "PBM Contract Analyzed", pbm);
   kv(c, "Overall Contract Score", `${score}/100`);
   kv(c, "Risk Classification", score < 50 ? "Critical" : score < 65 ? "High" : "Moderate");
   kv(c, "Total Identified Exposure", `$${exposure.toLocaleString()}/yr`);
   kv(c, "Provisions Analyzed", "10 (MAC, Spread, Rebates, Generic, Specialty, Performance, AWP, Formulary, UM, Audit)");
   kv(c, "Regulatory Framework", "ERISA §408(b)(2), CAA 2021/2023/2026, FTC Act §5");
-  kv(c, "Client", "Kincaid RMC / Account SHRACK-7742");
-  kv(c, "Analyst", "Jeremiah Shrack, CEO, Kincaid RMC");
+  kv(c, "Client", "Kincaid Health / Account SHRACK-7742");
+  kv(c, "Analyst", "Jeremiah Shrack, CEO, Kincaid Health");
   kv(c, "Report Date", c.date);
   kv(c, "Report Version", "2.0 Final — Full Deliverable");
   kv(c, "Confidentiality", "Confidential — Attorney-Client Privilege");
   gap(c, 5);
-  body(c, "© Kincaid RMC / Kincaid IQ™. All rights reserved. Reproduction or redistribution of this report in whole or in part without written consent of Kincaid RMC is strictly prohibited.");
+  body(c, "© Kincaid Health™. All rights reserved. Reproduction or redistribution of this report in whole or in part without written consent of Kincaid Health is strictly prohibited.");
 
   return doc;
 }
@@ -2993,7 +2993,7 @@ function generateBoardBriefPDF(opts: BoardBriefData): jsPDF {
     : new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
   const preparedBy = analystName && analystName.trim()
     ? analystName.trim()
-    : "Kincaid IQ™ — War Room Intelligence";
+    : "Kincaid Health™ — War Room Intelligence";
   const doc  = new jsPDF({ orientation: "portrait", unit: "mm", format: "letter" });
   const W = doc.internal.pageSize.getWidth();
   const H = doc.internal.pageSize.getHeight();
@@ -3068,7 +3068,7 @@ function generateBoardBriefPDF(opts: BoardBriefData): jsPDF {
   doc.setFont("helvetica", "italic"); doc.setFontSize(9.5);
   rgb(doc, FG2);
   const taglines = doc.splitTextToSize(
-    "The following board brief was generated at the conclusion of a 9-level intelligence drill through the Kincaid IQ™ CFO War Room. Every finding is evidence-backed, ERISA-traceable, and ready for board or audit committee presentation.",
+    "The following board brief was generated at the conclusion of a 9-level intelligence drill through the Kincaid Health™ CFO War Room. Every finding is evidence-backed, ERISA-traceable, and ready for board or audit committee presentation.",
     CW
   );
   taglines.forEach((l: string, i: number) => {
@@ -3083,7 +3083,7 @@ function generateBoardBriefPDF(opts: BoardBriefData): jsPDF {
   rgb(doc, ONDARK2); doc.text("CONFIDENTIAL — Prepared exclusively for " + (companyName ?? "Client"), M, H - 7);
   rgb(doc, ONDARK); doc.text(`Prepared by ${AUTHOR_NAME} · ${LAB_NAME}`, W / 2, H - 3.5, { align: "center" });
   doc.setFont("helvetica", "bold"); doc.setFontSize(7.5);
-  rgb(doc, GOLD); doc.text("KINCAID IQ", W - M, H - 7, { align: "right" });
+  rgb(doc, GOLD); doc.text("KINCAID HEALTH", W - M, H - 7, { align: "right" });
 
   // ── Page 2: Narrative & Findings ────────────────────────────────────────────
   doc.addPage();
@@ -3198,7 +3198,7 @@ function generateBoardBriefPDF(opts: BoardBriefData): jsPDF {
     M + 4, c.y + 4.5
   );
   doc.setFont("helvetica", "bold"); doc.setFontSize(7); rgb(doc, GOLD);
-  doc.text("KINCAID IQ™ — FIDUCIARY INTELLIGENCE PLATFORM", W / 2, c.y + 9, { align: "center" });
+  doc.text("KINCAID HEALTH™ — FIDUCIARY INTELLIGENCE PLATFORM", W / 2, c.y + 9, { align: "center" });
 
   return doc;
 }
@@ -3259,7 +3259,7 @@ function generatePlaybookPDF(opts: PlaybookPDFData): jsPDF {
   rgb(doc, ONDARK2); doc.text("CFO War Room — Leverage Points · Sequenced Action Playbook", M + 9, y + 13);
   // Brand mark top-right
   doc.setFont("helvetica", "bold"); doc.setFontSize(8.5);
-  rgb(doc, GOLD); doc.text("KINCAID IQ™", W - M, y + 6, { align: "right" });
+  rgb(doc, GOLD); doc.text("KINCAID HEALTH™", W - M, y + 6, { align: "right" });
   doc.setFont("helvetica", "normal"); doc.setFontSize(7.5);
   rgb(doc, ONDARK2); doc.text(date, W - M, y + 11, { align: "right" });
   y += 22;
@@ -3378,7 +3378,7 @@ function generatePlaybookPDF(opts: PlaybookPDFData): jsPDF {
   rgb(doc, ONDARK2); doc.text("CONFIDENTIAL — Prepared exclusively for " + (companyName ?? "Client"), M, H - 7);
   rgb(doc, ONDARK); doc.text(`Prepared by ${AUTHOR_NAME} · ${LAB_NAME}`, W / 2, H - 3.5, { align: "center" });
   doc.setFont("helvetica", "bold"); doc.setFontSize(7.5);
-  rgb(doc, GOLD); doc.text("KINCAID IQ", W - M, H - 7, { align: "right" });
+  rgb(doc, GOLD); doc.text("KINCAID HEALTH", W - M, H - 7, { align: "right" });
 
   return doc;
 }
@@ -3443,7 +3443,7 @@ function generateSlideTablePDF(opts: SlideTablePDFData): jsPDF {
   }
   // Brand mark top-right
   doc.setFont("helvetica", "bold"); doc.setFontSize(8.5);
-  rgb(doc, GOLD); doc.text("KINCAID IQ™", W - M, y + 6, { align: "right" });
+  rgb(doc, GOLD); doc.text("KINCAID HEALTH™", W - M, y + 6, { align: "right" });
   doc.setFont("helvetica", "normal"); doc.setFontSize(7.5);
   rgb(doc, ONDARK2); doc.text(date, W - M, y + 11, { align: "right" });
   y += 22;
@@ -3548,7 +3548,7 @@ function generateSlideTablePDF(opts: SlideTablePDFData): jsPDF {
   rgb(doc, ONDARK2); doc.text(footer ?? ("CONFIDENTIAL — Prepared exclusively for " + (companyName ?? "Client")), M, H - 7);
   rgb(doc, ONDARK); doc.text(`Prepared by ${AUTHOR_NAME} · ${LAB_NAME}`, W / 2, H - 3.5, { align: "center" });
   doc.setFont("helvetica", "bold"); doc.setFontSize(7.5);
-  rgb(doc, GOLD); doc.text("KINCAID IQ", W - M, H - 7, { align: "right" });
+  rgb(doc, GOLD); doc.text("KINCAID HEALTH", W - M, H - 7, { align: "right" });
 
   return doc;
 }
@@ -3590,7 +3590,7 @@ function strategicCover(c: Ctx, opts: { pbm: string; filename: string; score: nu
 
   // Brand
   doc.setFont("helvetica","bold"); doc.setFontSize(12);
-  rgb(doc, GOLD); doc.text("KINCAID IQ™", M + 3, 24);
+  rgb(doc, GOLD); doc.text("KINCAID HEALTH™", M + 3, 24);
   doc.setFont("helvetica","normal"); doc.setFontSize(8);
   rgb(doc, accent); doc.text("STRATEGIC ADVISORY", M + 3, 30);
   fill(doc, accent); doc.rect(M + 3, 34, 42, 0.6, "F");
@@ -3637,9 +3637,9 @@ function strategicCover(c: Ctx, opts: { pbm: string; filename: string; score: nu
   fill(doc, [5, 7, 18] as [number,number,number]); doc.rect(3, H - 54, W - 6, 42, "F");
   fill(doc, accent); doc.rect(3, H - 54, W - 6, 0.5, "F");
   doc.setFont("helvetica","bold"); doc.setFontSize(8.5);
-  rgb(doc, accent); doc.text("PREPARED BY KINCAID IQ STRATEGIC ADVISORY — 12-ATTORNEY ERISA PANEL", M + 3, H - 45);
+  rgb(doc, accent); doc.text("PREPARED BY KINCAID HEALTH STRATEGIC ADVISORY — 12-ATTORNEY ERISA PANEL", M + 3, H - 45);
   doc.setFont("helvetica","normal"); doc.setFontSize(7.5); rgb(doc, FG3);
-  const disc = "This report simulates a multi-specialist ERISA engagement using the Kincaid IQ analytical platform. It is an institutional decision-support deliverable, not legal advice. Review by qualified ERISA counsel is required before action is taken on any finding herein.";
+  const disc = "This report simulates a multi-specialist ERISA engagement using the Kincaid Health analytical platform. It is an institutional decision-support deliverable, not legal advice. Review by qualified ERISA counsel is required before action is taken on any finding herein.";
   doc.splitTextToSize(disc, W - M * 2 - 10).forEach((l: string, i: number) => doc.text(l, M + 3, H - 38 + i * 4));
   doc.text(`Engagement ID: KIQ-SR-${Date.now().toString(36).toUpperCase()}  •  ${c.date}`, M + 3, H - 6);
 }
@@ -3720,7 +3720,7 @@ function srSlidePage(c: Ctx, slide: any, idx: number, total: number) {
 
   // Footer brand mark
   doc.setFont("helvetica","bold"); doc.setFontSize(8);
-  rgb(doc, FG3); doc.text("KINCAID IQ™ STRATEGIC ADVISORY", M, H - 16);
+  rgb(doc, FG3); doc.text("KINCAID HEALTH™ STRATEGIC ADVISORY", M, H - 16);
 }
 
 function srFinding(c: Ctx, f: any, n: number) {
@@ -3875,7 +3875,7 @@ export function generateStrategicReportPDF(data: any, sha256?: string): jsPDF {
   const chapters: any[] = data?.chapters ?? [];
   const synth: any = data?.synthesis ?? {};
 
-  const c = ctx(doc, "#10B981", "Rx Defense IQ™ — Strategic Report", "12-Attorney ERISA Panel · Institutional Engagement");
+  const c = ctx(doc, "#10B981", "PBM Contract Clarity 360™ — Strategic Report", "12-Attorney ERISA Panel · Institutional Engagement");
   const toc: TocEntry[] = [];
 
   // ── Page 1: Cover ─────────────────────────────────────────────────────────
@@ -4160,7 +4160,7 @@ export function generateStrategicReportPDF(data: any, sha256?: string): jsPDF {
   addPage(c);
   srSection(c, toc, "Appendices");
   h1(c, "Appendix A — Methodology Statement");
-  body(c, "This report was produced by the Kincaid IQ Strategic Advisory engine, which simulates a 12-attorney ERISA panel. Each attorney persona applies a distinct doctrinal and economic lens to the subset of the 60-issue / 13-provision ontology within its domain. Chapters are generated in parallel and synthesized by a Managing Partner layer. The contract's provision scores and findings — produced by the platform's contract X-ray — are the evidentiary substrate for every chapter.");
+  body(c, "This report was produced by the Kincaid Health Strategic Advisory engine, which simulates a 12-attorney ERISA panel. Each attorney persona applies a distinct doctrinal and economic lens to the subset of the 60-issue / 13-provision ontology within its domain. Chapters are generated in parallel and synthesized by a Managing Partner layer. The contract's provision scores and findings — produced by the platform's contract X-ray — are the evidentiary substrate for every chapter.");
   gap(c, 2);
   h1(c, "Appendix B — Attorney Credential Bios");
   (data.attorneys ?? chapters.map((ch: any) => ch.attorney)).forEach((a: any) => {
@@ -4211,7 +4211,7 @@ export function generateStrategicReportPDF(data: any, sha256?: string): jsPDF {
   doc.text(manifestHash.slice(0, half), c.M + 5, c.y + 12);
   doc.text(manifestHash.slice(half), c.M + 5, c.y + 16.5);
   c.y += 26;
-  kv(c, "Engagement", "Kincaid IQ Strategic Advisory — 12-Attorney ERISA Panel", true);
+  kv(c, "Engagement", "Kincaid Health Strategic Advisory — 12-Attorney ERISA Panel", true);
   kv(c, "Subject Contract", `${pbm} — ${filename}`);
   kv(c, "Chapters Generated", String(chapters.length));
   kv(c, "Generated At", data?.generated_at || c.date);
@@ -4699,7 +4699,7 @@ export async function downloadBattlecardPDF(data: BattlecardPdfData) {
 /* ══════════════════════════════════════════════════════════════════════════════
    MAIN ENTRY POINT
 ══════════════════════════════════════════════════════════════════════════════ */
-// ── Shady Broker Index™ PDF ─────────────────────────────────────────────────
+// ── Broker Compensation Index™ PDF ──────────────────────────────────────────
 export function generateShadyBrokerPDF(data: any): jsPDF {
   const d = data ?? {};
   const ein          = d.ein          ?? "Unknown EIN";
@@ -4722,7 +4722,7 @@ export function generateShadyBrokerPDF(data: any): jsPDF {
 
   const accentHex = score != null && score < 70 ? "#EF4444" : score != null && score < 85 ? "#FFB800" : "#10B981";
   const rawDoc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-  const c = ctx(rawDoc, accentHex, "Shady Broker Index™", `DOL Form 5500 Forensic Intelligence · EIN ${ein}`);
+  const c = ctx(rawDoc, accentHex, "Broker Compensation Index™", `DOL Form 5500 Forensic Intelligence · EIN ${ein}`);
 
   // Cover page
   coverPage(c);
@@ -4732,7 +4732,7 @@ export function generateShadyBrokerPDF(data: any): jsPDF {
   h2(c, "Employer Identification");
   kv(c, "Sponsor Name", sponsor);
   kv(c, "EIN", ein);
-  kv(c, "SBI Score", score != null ? `${score}/100` : "INSUFFICIENT_EVIDENCE");
+  kv(c, "BCI Score", score != null ? `${score}/100` : "INSUFFICIENT_EVIDENCE");
   kv(c, "Rating", rating || "N/A");
   kv(c, "Broker % of Plan Income", `${brokerPct.toFixed(1)}%`);
   kv(c, "Admin % of Plan Income",  `${adminPct.toFixed(1)}%`);
@@ -4813,7 +4813,7 @@ export async function downloadPDF(reportType: string, data: any = {}) {
     "stewardship":           "Stewardship-Report",
     "stop-loss":             "Stop-Loss-IQ",
     "rx-defense":            "Rx-Defense-IQ",
-    "shady-broker":          "Shady-Broker-Index",
+    "shady-broker":          "Broker-Compensation-Index",
   };
   let doc: jsPDF;
   switch (reportType) {
@@ -4925,7 +4925,7 @@ export async function generateBidRecommendationPDF(
   fillC(251, 183, 36); doc.rect(0, 64, W, 1.5, "F");
   doc.setFont("helvetica", "bold"); doc.setFontSize(16);
   rgbT(251, 183, 36);
-  doc.text("KINCAID IQ — BID RECOMMENDATION", M, 30);
+  doc.text("KINCAID HEALTH — BID RECOMMENDATION", M, 30);
   doc.setFont("helvetica", "normal"); doc.setFontSize(9);
   rgbT(140, 150, 185);
   const detailBits = [
@@ -5057,7 +5057,7 @@ export async function generateBidRecommendationPDF(
   doc.text(`SHA-256 Evidence Manifest: ${manifest}`, M, H - 18);
   rgbT(90, 96, 128);
   doc.text(
-    `Generated by Kincaid IQ Bid Optimizer™ · ${new Date().toISOString()} · CONFIDENTIAL`,
+    `Generated by Kincaid Health Bid Optimizer™ · ${new Date().toISOString()} · CONFIDENTIAL`,
     M, H - 8);
   const tierLabel = bid.confidence === "HIGH" ? "CERTIFIED basis" : "MODELED — bounds disclosed";
   rgbT(251, 183, 36);

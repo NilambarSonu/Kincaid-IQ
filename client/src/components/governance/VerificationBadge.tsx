@@ -20,7 +20,7 @@ export function VerificationBadge({ state, size = "sm", className }: Verificatio
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded border font-mono font-bold tracking-wider",
+        "inline-flex items-center gap-1.5 rounded-full border font-mono font-bold tracking-wider shadow-sm backdrop-blur-sm",
         size === "sm" ? "px-1.5 py-0.5 text-[9px]" : "px-2 py-1 text-[11px]",
         cfg.color,
         className,

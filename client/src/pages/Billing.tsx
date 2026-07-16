@@ -9,8 +9,8 @@ import {
 import { useLocation } from "wouter";
 import { useState } from "react";
 
-const BG = "#07091c";
-const BORDER = "rgba(255,255,255,0.08)";
+const BG = "#F8FAFC";
+const BORDER = "#e2e8f0";
 
 const PLANS = [
   {
@@ -23,7 +23,7 @@ const PLANS = [
     highlight: false,
     modules: [
       "Executive War Room (full KPIs)",
-      "Rx Defense™ — PBM Contract AI",
+      "PBM Contract Clarity 360™ — PBM Contract AI",
       "CAA 2026 Compliance Dashboard",
       "DOL 5500 Intelligence Engine",
       "Board Pack Export",
@@ -81,7 +81,7 @@ const PLANS = [
 
 const COMPARISON_ROWS = [
   { label: "Executive War Room",        fiduciary: true,  broker: true,  enterprise: true  },
-  { label: "Rx Defense™ — PBM AI",      fiduciary: true,  broker: true,  enterprise: true  },
+  { label: "PBM Contract Clarity 360™ — PBM AI",      fiduciary: true,  broker: true,  enterprise: true  },
   { label: "CAA 2026 Compliance",       fiduciary: true,  broker: true,  enterprise: true  },
   { label: "DOL 5500 Intelligence",     fiduciary: true,  broker: true,  enterprise: true  },
   { label: "Board Pack Export",         fiduciary: true,  broker: true,  enterprise: true  },
@@ -111,7 +111,7 @@ const FAQS = [
 ];
 
 function Check({ val, color }: { val: boolean | string; color: string }) {
-  if (val === false) return <span className="text-white/15 text-sm">—</span>;
+  if (val === false) return <span className="text-[var(--kiq-ink)]/15 text-sm">—</span>;
   if (typeof val === "string") return <span className="text-xs font-semibold" style={{ color }}>{val}</span>;
   return <CheckCircle className="w-4 h-4 mx-auto" style={{ color }} />;
 }
@@ -150,7 +150,7 @@ export default function Billing() {
     sub?.status === "active"   ? { text: "text-green-400",  bg: "bg-green-500/10",  border: "border-green-500/25"  } :
     sub?.status === "trialing" ? { text: "text-blue-400",   bg: "bg-blue-500/10",   border: "border-blue-500/25"   } :
     sub?.status === "past_due" ? { text: "text-red-400",    bg: "bg-red-500/10",    border: "border-red-500/25"    } :
-                                 { text: "text-white/40",   bg: "bg-white/5",        border: "border-white/10"      };
+                                 { text: "text-[var(--kiq-ink)]/40",   bg: "bg-[var(--kiq-surface)]/5",        border: "border-white/10"      };
 
   const currentPlan = sub?.plan;
 
@@ -165,11 +165,11 @@ export default function Billing() {
         {/* Header */}
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <CreditCard className="w-5 h-5 text-white/40" />
-            <span className="text-xs text-white/30 uppercase tracking-widest font-medium">Billing</span>
+            <CreditCard className="w-5 h-5 text-[var(--kiq-ink)]/40" />
+            <span className="text-xs text-[var(--kiq-ink)]/30 uppercase tracking-widest font-medium">Billing</span>
           </div>
-          <h1 className="text-3xl font-bold text-white">Plans & Pricing</h1>
-          <p className="text-white/40 mt-1 text-sm">Fiduciary-grade healthcare intelligence. Cancel or change plans anytime.</p>
+          <h1 className="text-3xl font-bold text-[var(--kiq-ink)]">Plans & Pricing</h1>
+          <p className="text-[var(--kiq-ink)]/40 mt-1 text-sm">Fiduciary-grade healthcare intelligence. Cancel or change plans anytime.</p>
         </div>
 
         {/* Success / Canceled banners */}
@@ -178,7 +178,7 @@ export default function Billing() {
             <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
             <div>
               <p className="text-green-400 font-medium text-sm">Subscription activated!</p>
-              <p className="text-green-400/60 text-xs">Your plan is now live. Welcome to Kincaid IQ VERIFY™.</p>
+              <p className="text-green-400/60 text-xs">Your plan is now live. Welcome to Kincaid Health VERIFY™.</p>
             </div>
           </div>
         )}
@@ -196,37 +196,37 @@ export default function Billing() {
           data-testid="current-plan-card"
         >
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold text-white">Current Subscription</h2>
+            <h2 className="font-semibold text-[var(--kiq-ink)]">Current Subscription</h2>
             <Badge className={`capitalize border text-xs ${statusColor.text} ${statusColor.bg} ${statusColor.border}`} data-testid="subscription-status">
               {isLoading ? "Loading…" : (sub?.status || "No subscription")}
             </Badge>
           </div>
 
           {isLoading ? (
-            <div className="h-14 rounded-xl bg-white/5 animate-pulse" />
+            <div className="h-14 rounded-xl bg-[var(--kiq-surface)]/5 animate-pulse" />
           ) : (
-            <div className="flex items-center justify-between p-4 rounded-xl" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${BORDER}` }}>
+            <div className="flex items-center justify-between p-4 rounded-xl" style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}>
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
                   <Zap className="w-4.5 h-4.5 text-blue-400" />
                 </div>
                 <div>
-                  <p className="font-medium text-white text-sm capitalize">
+                  <p className="font-medium text-[var(--kiq-ink)] text-sm capitalize">
                     {currentPlan === "trial" ? "Free Trial" : currentPlan || "No active plan"}
                   </p>
                   {sub?.trial_ends_at && (
-                    <p className="text-white/40 text-xs flex items-center gap-1 mt-0.5">
+                    <p className="text-[var(--kiq-ink)]/40 text-xs flex items-center gap-1 mt-0.5">
                       <Clock className="w-3 h-3" />
                       Trial ends {new Date(sub.trial_ends_at).toLocaleDateString()}
                     </p>
                   )}
                   {sub?.subscription?.current_period_end && (
-                    <p className="text-white/40 text-xs mt-0.5">
+                    <p className="text-[var(--kiq-ink)]/40 text-xs mt-0.5">
                       Renews {new Date(sub.subscription.current_period_end * 1000).toLocaleDateString()}
                     </p>
                   )}
                   {!currentPlan && (
-                    <p className="text-white/30 text-xs mt-0.5">Select a plan below to get started</p>
+                    <p className="text-[var(--kiq-ink)]/30 text-xs mt-0.5">Select a plan below to get started</p>
                   )}
                 </div>
               </div>
@@ -234,7 +234,7 @@ export default function Billing() {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="border-white/15 text-white/60 hover:bg-white/5 gap-1.5 text-xs"
+                  className="border-white/15 text-[var(--kiq-ink)]/60 hover:bg-[var(--kiq-surface)]/5 gap-1.5 text-xs"
                   onClick={() => portalMutation.mutate()}
                   disabled={portalMutation.isPending}
                   data-testid="btn-manage-billing"
@@ -249,7 +249,7 @@ export default function Billing() {
 
         {/* Plan cards */}
         <div>
-          <p className="text-white/30 text-xs uppercase tracking-widest font-medium mb-5">Choose your plan — 14-day free trial on all paid plans</p>
+          <p className="text-[var(--kiq-ink)]/30 text-xs uppercase tracking-widest font-medium mb-5">Choose your plan — 14-day free trial on all paid plans</p>
           <div className="grid md:grid-cols-3 gap-5">
             {PLANS.map((plan) => {
               const isCurrent = currentPlan === plan.id;
@@ -269,7 +269,7 @@ export default function Billing() {
                   {plan.badge && (
                     <div
                       className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full text-xs font-semibold"
-                      style={{ background: plan.color, color: "#07091c" }}
+                      style={{ background: plan.color, color: "#F8FAFC" }}
                     >
                       {plan.badge}
                     </div>
@@ -283,27 +283,27 @@ export default function Billing() {
                       <Icon className="w-4.5 h-4.5" style={{ color: plan.color }} />
                     </div>
                     <div>
-                      <p className="font-semibold text-white text-sm">{plan.name}</p>
-                      <p className="text-white/35 text-xs">{plan.tagline}</p>
+                      <p className="font-semibold text-[var(--kiq-ink)] text-sm">{plan.name}</p>
+                      <p className="text-[var(--kiq-ink)]/35 text-xs">{plan.tagline}</p>
                     </div>
                   </div>
 
                   <div className="mb-5">
                     {isEnterprise ? (
                       <div className="flex items-baseline gap-1">
-                        <span className="text-2xl font-bold text-white">Custom</span>
+                        <span className="text-2xl font-bold text-[var(--kiq-ink)]">Custom</span>
                       </div>
                     ) : (
                       <div className="flex items-baseline gap-1">
-                        <span className="text-2xl font-bold text-white">${plan.price.toLocaleString()}</span>
-                        <span className="text-white/35 text-sm">/mo</span>
+                        <span className="text-2xl font-bold text-[var(--kiq-ink)]">${plan.price.toLocaleString()}</span>
+                        <span className="text-[var(--kiq-ink)]/35 text-sm">/mo</span>
                       </div>
                     )}
                   </div>
 
                   <ul className="space-y-1.5 mb-6 flex-1">
                     {plan.modules.map((f, i) => (
-                      <li key={i} className="flex items-start gap-2 text-xs text-white/55">
+                      <li key={i} className="flex items-start gap-2 text-xs text-[var(--kiq-ink)]/55">
                         <CheckCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: plan.color }} />
                         {f}
                       </li>
@@ -333,7 +333,7 @@ export default function Billing() {
                   ) : (
                     <Button
                       className="w-full text-xs font-semibold gap-2"
-                      style={plan.highlight ? { background: plan.color, color: "#07091c" } : { background: `${plan.color}18`, color: plan.color, border: `1px solid ${plan.color}30` }}
+                      style={plan.highlight ? { background: plan.color, color: "#F8FAFC" } : { background: `${plan.color}18`, color: plan.color, border: `1px solid ${plan.color}30` }}
                       disabled={checkoutMutation.isPending}
                       onClick={() => checkoutMutation.mutate(plan.id)}
                       data-testid={`btn-select-${plan.id}`}
@@ -351,7 +351,7 @@ export default function Billing() {
         {/* Feature comparison toggle */}
         <div>
           <button
-            className="flex items-center gap-2 text-white/50 hover:text-white/80 text-sm transition-colors w-full py-3 border-t border-white/8"
+            className="flex items-center gap-2 text-[var(--kiq-ink)]/50 hover:text-[var(--kiq-ink)]/80 text-sm transition-colors w-full py-3 border-t border-white/8"
             onClick={() => setShowComparison(!showComparison)}
             data-testid="btn-toggle-comparison"
           >
@@ -363,11 +363,11 @@ export default function Billing() {
             <div className="mt-4 rounded-2xl overflow-hidden" style={{ border: `1px solid ${BORDER}` }}>
               <table className="w-full text-sm">
                 <thead>
-                  <tr style={{ background: "rgba(255,255,255,0.04)", borderBottom: `1px solid ${BORDER}` }}>
-                    <th className="text-left px-5 py-3 text-white/40 font-medium text-xs w-2/5">Feature</th>
-                    <th className="text-center px-3 py-3 text-xs font-medium" style={{ color: "#4f7dff" }}>Fiduciary<br /><span className="text-white/30">$297/mo</span></th>
-                    <th className="text-center px-3 py-3 text-xs font-medium" style={{ color: "#f59e0b" }}>Sales IQ<br /><span className="text-white/30">$997/mo</span></th>
-                    <th className="text-center px-3 py-3 text-xs font-medium" style={{ color: "#22c55e" }}>Command<br /><span className="text-white/30">$2,497/mo</span></th>
+                  <tr style={{ background: "#ffffff", borderBottom: `1px solid ${BORDER}` }}>
+                    <th className="text-left px-5 py-3 text-[var(--kiq-ink)]/40 font-medium text-xs w-2/5">Feature</th>
+                    <th className="text-center px-3 py-3 text-xs font-medium" style={{ color: "#4f7dff" }}>Fiduciary<br /><span className="text-[var(--kiq-ink)]/30">$297/mo</span></th>
+                    <th className="text-center px-3 py-3 text-xs font-medium" style={{ color: "#f59e0b" }}>Sales IQ<br /><span className="text-[var(--kiq-ink)]/30">$997/mo</span></th>
+                    <th className="text-center px-3 py-3 text-xs font-medium" style={{ color: "#22c55e" }}>Command<br /><span className="text-[var(--kiq-ink)]/30">$2,497/mo</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -377,7 +377,7 @@ export default function Billing() {
                       className="border-t"
                       style={{ borderColor: BORDER, background: i % 2 === 0 ? "transparent" : "rgba(255,255,255,0.015)" }}
                     >
-                      <td className="px-5 py-2.5 text-white/60 text-xs">{row.label}</td>
+                      <td className="px-5 py-2.5 text-[var(--kiq-ink)]/60 text-xs">{row.label}</td>
                       <td className="text-center px-3 py-2.5"><Check val={row.fiduciary} color="#4f7dff" /></td>
                       <td className="text-center px-3 py-2.5"><Check val={row.broker} color="#f59e0b" /></td>
                       <td className="text-center px-3 py-2.5"><Check val={row.enterprise} color="#22c55e" /></td>
@@ -391,7 +391,7 @@ export default function Billing() {
 
         {/* FAQ */}
         <div>
-          <h3 className="text-white font-semibold mb-4">Frequently asked questions</h3>
+          <h3 className="text-[var(--kiq-ink)] font-semibold mb-4">Frequently asked questions</h3>
           <div className="space-y-2">
             {FAQS.map((faq, i) => (
               <div
@@ -401,15 +401,15 @@ export default function Billing() {
                 data-testid={`faq-${i}`}
               >
                 <button
-                  className="w-full text-left px-5 py-4 flex items-center justify-between text-white/80 hover:text-white text-sm font-medium transition-colors"
-                  style={{ background: openFaq === i ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)" }}
+                  className="w-full text-left px-5 py-4 flex items-center justify-between text-[var(--kiq-ink)]/80 hover:text-[var(--kiq-ink)] text-sm font-medium transition-colors"
+                  style={{ background: openFaq === i ? "#ffffff" : "#ffffff" }}
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                 >
                   {faq.q}
-                  {openFaq === i ? <ChevronUp className="w-4 h-4 text-white/30 flex-shrink-0" /> : <ChevronDown className="w-4 h-4 text-white/30 flex-shrink-0" />}
+                  {openFaq === i ? <ChevronUp className="w-4 h-4 text-[var(--kiq-ink)]/30 flex-shrink-0" /> : <ChevronDown className="w-4 h-4 text-[var(--kiq-ink)]/30 flex-shrink-0" />}
                 </button>
                 {openFaq === i && (
-                  <div className="px-5 pb-4 text-white/50 text-sm leading-relaxed" style={{ background: "rgba(255,255,255,0.04)" }}>
+                  <div className="px-5 pb-4 text-[var(--kiq-ink)]/50 text-sm leading-relaxed" style={{ background: "#ffffff" }}>
                     {faq.a}
                   </div>
                 )}
@@ -421,13 +421,13 @@ export default function Billing() {
         {/* Footer note */}
         <div
           className="p-4 rounded-xl flex items-start gap-3"
-          style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}` }}
+          style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}
         >
-          <Lock className="w-4 h-4 text-white/25 flex-shrink-0 mt-0.5" />
-          <p className="text-white/30 text-xs leading-relaxed">
+          <Lock className="w-4 h-4 text-[var(--kiq-ink)]/25 flex-shrink-0 mt-0.5" />
+          <p className="text-[var(--kiq-ink)]/30 text-xs leading-relaxed">
             All plans include a 14-day free trial — no charge until the trial ends. Payments are processed securely via Stripe.
-            Annual pricing available on request. To activate live billing, a <code className="text-white/40">STRIPE_SECRET_KEY</code> and{" "}
-            <code className="text-white/40">STRIPE_WEBHOOK_SECRET</code> must be configured in the environment.
+            Annual pricing available on request. To activate live billing, a <code className="text-[var(--kiq-ink)]/40">STRIPE_SECRET_KEY</code> and{" "}
+            <code className="text-[var(--kiq-ink)]/40">STRIPE_WEBHOOK_SECRET</code> must be configured in the environment.
           </p>
         </div>
       </div>

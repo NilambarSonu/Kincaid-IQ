@@ -281,13 +281,13 @@ function OppFormModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
       style={{ background: "rgba(0,0,0,0.7)" }}>
       <div className="w-full max-w-2xl rounded-2xl overflow-auto max-h-[90vh]"
-        style={{ background: "#0a0c1e", border: `1px solid ${GOLD}30` }}>
-        <div className="flex items-center justify-between p-6 border-b" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
+        style={{ background: "#F8FAFC", border: `1px solid ${GOLD}30` }}>
+        <div className="flex items-center justify-between p-6 border-b" style={{ borderColor: "#e2e8f0" }}>
           <div>
-            <h2 className="text-white font-bold text-lg">New Opportunity</h2>
+            <h2 className="text-[var(--kiq-ink)] font-bold text-lg">New Opportunity</h2>
             <p className="text-xs text-zinc-500 mt-0.5">Track an RFP or prospect account through your pipeline</p>
           </div>
-          <button onClick={onClose} className="text-zinc-500 hover:text-white"><X className="w-5 h-5" /></button>
+          <button onClick={onClose} className="text-zinc-500 hover:text-[var(--kiq-ink)]"><X className="w-5 h-5" /></button>
         </div>
         <div className="p-6 space-y-4">
           <div className="grid grid-cols-2 gap-4">
@@ -295,49 +295,49 @@ function OppFormModal({
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">Employer Name *</label>
               <Input data-testid="input-employer-name"
                 value={form.employer_name} onChange={e => setForm(f => ({ ...f, employer_name: e.target.value }))}
-                placeholder="Acme Manufacturing Co." className="bg-zinc-900 border-zinc-700 text-white" />
+                placeholder="Acme Manufacturing Co." className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
             </div>
             <div>
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">EIN</label>
               <Input data-testid="input-employer-ein"
                 value={form.employer_ein} onChange={e => setForm(f => ({ ...f, employer_ein: e.target.value }))}
-                placeholder="XX-XXXXXXX" className="bg-zinc-900 border-zinc-700 text-white" />
+                placeholder="XX-XXXXXXX" className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
             </div>
             <div>
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">Industry</label>
               <Input data-testid="input-industry"
                 value={form.industry} onChange={e => setForm(f => ({ ...f, industry: e.target.value }))}
-                placeholder="Manufacturing" className="bg-zinc-900 border-zinc-700 text-white" />
+                placeholder="Manufacturing" className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
             </div>
             <div>
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">State</label>
               <Input data-testid="input-state"
                 value={form.employer_state} onChange={e => setForm(f => ({ ...f, employer_state: e.target.value }))}
-                placeholder="IN" className="bg-zinc-900 border-zinc-700 text-white" />
+                placeholder="IN" className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
             </div>
             <div>
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">City</label>
               <Input data-testid="input-city"
                 value={form.employer_city} onChange={e => setForm(f => ({ ...f, employer_city: e.target.value }))}
-                placeholder="Indianapolis" className="bg-zinc-900 border-zinc-700 text-white" />
+                placeholder="Indianapolis" className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
             </div>
             <div>
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">Participants</label>
               <Input data-testid="input-participants" type="number"
                 value={form.participants} onChange={e => setForm(f => ({ ...f, participants: e.target.value }))}
-                placeholder="350" className="bg-zinc-900 border-zinc-700 text-white" />
+                placeholder="350" className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
             </div>
             <div>
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">Est. Annual Value ($)</label>
               <Input data-testid="input-value" type="number"
                 value={form.estimated_value} onChange={e => setForm(f => ({ ...f, estimated_value: e.target.value }))}
-                placeholder="45000" className="bg-zinc-900 border-zinc-700 text-white" />
+                placeholder="45000" className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
             </div>
             <div>
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">Stage</label>
               <select data-testid="select-stage"
                 value={form.stage} onChange={e => setForm(f => ({ ...f, stage: e.target.value }))}
-                className="w-full bg-zinc-900 border border-zinc-700 rounded-md px-3 py-2 text-white text-sm">
+                className="w-full bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-md px-3 py-2 text-[var(--kiq-ink)] text-sm">
                 {STAGES.map(s => <option key={s.key} value={s.key}>{s.label}</option>)}
               </select>
             </div>
@@ -345,7 +345,7 @@ function OppFormModal({
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">Priority</label>
               <select data-testid="select-priority"
                 value={form.priority} onChange={e => setForm(f => ({ ...f, priority: e.target.value }))}
-                className="w-full bg-zinc-900 border border-zinc-700 rounded-md px-3 py-2 text-white text-sm">
+                className="w-full bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-md px-3 py-2 text-[var(--kiq-ink)] text-sm">
                 {PRIORITIES.map(p => <option key={p.key} value={p.key}>{p.label}</option>)}
               </select>
             </div>
@@ -353,13 +353,13 @@ function OppFormModal({
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">Close Date</label>
               <Input data-testid="input-close-date" type="date"
                 value={form.close_date} onChange={e => setForm(f => ({ ...f, close_date: e.target.value }))}
-                className="bg-zinc-900 border-zinc-700 text-white" />
+                className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
             </div>
             <div>
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">Owner</label>
               <Input data-testid="input-owner"
                 value={form.owner} onChange={e => setForm(f => ({ ...f, owner: e.target.value }))}
-                placeholder="Jane Smith" className="bg-zinc-900 border-zinc-700 text-white" />
+                placeholder="Jane Smith" className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
             </div>
             <div className="col-span-2">
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">
@@ -370,25 +370,25 @@ function OppFormModal({
                 list={COMPETITOR_DATALIST_ID}
                 value={form.known_competitor} onChange={e => setForm(f => ({ ...f, known_competitor: e.target.value }))}
                 placeholder="e.g. CVS Caremark, Express Scripts…"
-                className="bg-zinc-900 border-zinc-700 text-white" />
+                className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
               <CompetitorDatalist options={competitorSuggestions} />
             </div>
             <div className="col-span-2">
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">
-                Rx Defense Contract ID
+                PBM Contract Clarity 360 Contract ID
                 <span className="text-zinc-600 ml-1 normal-case font-normal">(optional — links Rx analysis to this opportunity)</span>
               </label>
               <Input data-testid="input-rx-contract-id"
                 value={form.rx_contract_id} onChange={e => setForm(f => ({ ...f, rx_contract_id: e.target.value }))}
-                placeholder="Paste contract ID from Rx Defense IQ™"
-                className="bg-zinc-900 border-zinc-700 text-white" />
+                placeholder="Paste contract ID from PBM Contract Clarity 360™"
+                className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
             </div>
             <div className="col-span-2">
               <label className="text-xs text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">Notes</label>
               <Textarea data-testid="input-notes"
                 value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
                 placeholder="Context, referral source, key contacts..." rows={3}
-                className="bg-zinc-900 border-zinc-700 text-white" />
+                className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
             </div>
           </div>
           <div className="flex gap-3 pt-2">
@@ -398,7 +398,7 @@ function OppFormModal({
               {mut.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
               Add to Pipeline
             </Button>
-            <Button variant="outline" onClick={onClose} className="border-zinc-700 text-zinc-300">Cancel</Button>
+            <Button variant="outline" onClick={onClose} className="border-[var(--kiq-hairline)] text-[var(--kiq-muted)]">Cancel</Button>
           </div>
         </div>
       </div>
@@ -415,12 +415,12 @@ function OppCard({ opp, onSelect, onDelete }: { opp: Opportunity; onSelect: () =
     <div data-testid={`opp-card-${opp.id}`}
       onClick={onSelect}
       className="rounded-xl p-4 cursor-pointer transition-all"
-      style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)" }}
+      style={{ background: "rgba(255,255,255,0.025)", border: "1px solid #e2e8f0" }}
       onMouseEnter={e => { e.currentTarget.style.borderColor = `${GOLD}30`; e.currentTarget.style.background = `${GOLD}05`; }}
-      onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"; e.currentTarget.style.background = "rgba(255,255,255,0.025)"; }}>
+      onMouseLeave={e => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.background = "rgba(255,255,255,0.025)"; }}>
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex-1 min-w-0">
-          <p className="text-white font-bold text-sm truncate">{opp.employer_name}</p>
+          <p className="text-[var(--kiq-ink)] font-bold text-sm truncate">{opp.employer_name}</p>
           <div className="flex items-center gap-2 mt-0.5">
             {opp.employer_state && <span className="text-xs text-zinc-500 flex items-center gap-0.5"><MapPin className="w-3 h-3" />{opp.employer_state}</span>}
             {opp.industry && <span className="text-xs text-zinc-600">{opp.industry}</span>}
@@ -481,12 +481,12 @@ function BoardCard({ opp, onSelect, dragging }: { opp: Opportunity; onSelect: ()
       onClick={onSelect}
       className="rounded-lg p-3 cursor-pointer transition-colors"
       style={{
-        background: dragging ? `${GOLD}10` : "rgba(255,255,255,0.03)",
-        border: `1px solid ${dragging ? `${GOLD}40` : "rgba(255,255,255,0.08)"}`,
+        background: dragging ? `${GOLD}10` : "#ffffff",
+        border: `1px solid ${dragging ? `${GOLD}40` : "#e2e8f0"}`,
         boxShadow: dragging ? "0 8px 24px rgba(0,0,0,0.45)" : "none",
       }}>
       <div className="flex items-start justify-between gap-2 mb-2">
-        <p className="text-white font-bold text-[13px] leading-snug min-w-0 truncate">{opp.employer_name}</p>
+        <p className="text-[var(--kiq-ink)] font-bold text-[13px] leading-snug min-w-0 truncate">{opp.employer_name}</p>
         <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0"
           style={{ background: `${priority.color}18`, color: priority.color, border: `1px solid ${priority.color}30` }}>
           {priority.label}
@@ -532,17 +532,17 @@ function BoardView({ opps, onSelect, onDragEnd }: {
                   className="flex-shrink-0 w-64 rounded-xl flex flex-col"
                   style={{
                     background: snapshot.isDraggingOver ? `${stage.color}0D` : "rgba(255,255,255,0.015)",
-                    border: `1px solid ${snapshot.isDraggingOver ? `${stage.color}40` : "rgba(255,255,255,0.06)"}`,
+                    border: `1px solid ${snapshot.isDraggingOver ? `${stage.color}40` : "#f1f5f9"}`,
                     transition: "background 0.15s, border-color 0.15s",
                   }}>
                   {/* Column header */}
-                  <div className="flex items-center justify-between px-3 py-2.5 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+                  <div className="flex items-center justify-between px-3 py-2.5 border-b" style={{ borderColor: "#f1f5f9" }}>
                     <div className="flex items-center gap-2">
                       <span className="w-2 h-2 rounded-full" style={{ background: stage.color }} />
                       <span className="text-xs font-bold" style={{ color: stage.color }}>{stage.label}</span>
                     </div>
                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
-                      style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.5)" }}>
+                      style={{ background: "#f1f5f9", color: "#334155" }}>
                       {colOpps.length}
                     </span>
                   </div>
@@ -566,7 +566,7 @@ function BoardView({ opps, onSelect, onDragEnd }: {
                     )}
                   </div>
                   {/* Footer total */}
-                  <div className="px-3 py-2 border-t flex items-center justify-between" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+                  <div className="px-3 py-2 border-t flex items-center justify-between" style={{ borderColor: "#f1f5f9" }}>
                     <span className="text-[10px] text-zinc-600 font-medium">{colOpps.length} deal{colOpps.length === 1 ? "" : "s"}</span>
                     <span className="text-[11px] font-bold" style={{ color: GREEN }} data-testid={`kanban-total-${stage.key}`}>{fmtMoney(colValue)}</span>
                   </div>
@@ -626,11 +626,11 @@ function OppDetail({ opp, onClose }: { opp: Opportunity; onClose: () => void }) 
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-end sm:justify-center p-0 sm:p-4"
       style={{ background: "rgba(0,0,0,0.6)" }}>
       <div className="w-full max-w-xl max-h-[90vh] overflow-auto rounded-t-2xl sm:rounded-2xl"
-        style={{ background: "#07091c", border: `1px solid ${GOLD}25` }}>
+        style={{ background: "#F8FAFC", border: `1px solid ${GOLD}25` }}>
         {/* Header */}
-        <div className="flex items-start justify-between p-5 border-b" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
+        <div className="flex items-start justify-between p-5 border-b" style={{ borderColor: "#e2e8f0" }}>
           <div className="flex-1">
-            <h3 className="text-white font-bold text-base">{opp.employer_name}</h3>
+            <h3 className="text-[var(--kiq-ink)] font-bold text-base">{opp.employer_name}</h3>
             <div className="flex items-center gap-2 mt-1">
               {opp.employer_ein && <span className="text-xs text-zinc-600">EIN: {opp.employer_ein}</span>}
               <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
@@ -643,7 +643,7 @@ function OppDetail({ opp, onClose }: { opp: Opportunity; onClose: () => void }) 
               </span>
             </div>
           </div>
-          <button onClick={onClose} className="text-zinc-500 hover:text-white ml-3"><X className="w-5 h-5" /></button>
+          <button onClick={onClose} className="text-zinc-500 hover:text-[var(--kiq-ink)] ml-3"><X className="w-5 h-5" /></button>
         </div>
 
         <div className="p-5 space-y-5">
@@ -678,9 +678,9 @@ function OppDetail({ opp, onClose }: { opp: Opportunity; onClose: () => void }) 
                   }}
                   className="text-[10px] font-bold px-2.5 py-1 rounded-full transition-all"
                   style={{
-                    background: editStage === s.key ? `${s.color}25` : "rgba(255,255,255,0.04)",
-                    color: editStage === s.key ? s.color : "rgba(255,255,255,0.4)",
-                    border: editStage === s.key ? `1px solid ${s.color}40` : "1px solid rgba(255,255,255,0.08)",
+                    background: editStage === s.key ? `${s.color}25` : "#ffffff",
+                    color: editStage === s.key ? s.color : "#475569",
+                    border: editStage === s.key ? `1px solid ${s.color}40` : "1px solid #e2e8f0",
                   }}>
                   {s.label}
                 </button>
@@ -717,7 +717,7 @@ function OppDetail({ opp, onClose }: { opp: Opportunity; onClose: () => void }) 
                   <div key={i} data-testid={`talking-point-${i}`}
                     className="rounded-lg p-3 space-y-1"
                     style={{ background: `${PURPLE}08`, border: `1px solid ${PURPLE}20` }}>
-                    <p className="text-xs font-bold text-white">{tp.headline}</p>
+                    <p className="text-xs font-bold text-[var(--kiq-ink)]">{tp.headline}</p>
                     <p className="text-[11px] font-semibold" style={{ color: BLUE }}>{tp.evidence}</p>
                     <p className="text-[11px] text-zinc-400 leading-relaxed">{tp.angle}</p>
                   </div>
@@ -774,7 +774,7 @@ function OppDetail({ opp, onClose }: { opp: Opportunity; onClose: () => void }) 
                 </div>
                 {(showDraft || opp.ai_response_draft) && (
                   <div className="p-3">
-                    <p className="text-[11px] text-zinc-300 leading-relaxed whitespace-pre-line">{opp.ai_response_draft}</p>
+                    <p className="text-[11px] text-[var(--kiq-muted)] leading-relaxed whitespace-pre-line">{opp.ai_response_draft}</p>
                   </div>
                 )}
               </div>
@@ -799,7 +799,7 @@ function OppDetail({ opp, onClose }: { opp: Opportunity; onClose: () => void }) 
                 value={editCompetitor}
                 onChange={e => setEditCompetitor(e.target.value)}
                 placeholder="e.g. CVS Caremark, Express Scripts…"
-                className="bg-zinc-900 border-zinc-700 text-white text-sm flex-1"
+                className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)] text-sm flex-1"
               />
               <CompetitorDatalist options={competitorSuggestions} />
               <button
@@ -822,7 +822,7 @@ function OppDetail({ opp, onClose }: { opp: Opportunity; onClose: () => void }) 
             <Textarea data-testid="textarea-opp-notes"
               value={editNotes} onChange={e => setEditNotes(e.target.value)}
               rows={3} placeholder="Add context, contacts, next steps..."
-              className="bg-zinc-900 border-zinc-700 text-white text-sm resize-none" />
+              className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)] text-sm resize-none" />
             <button data-testid="btn-save-notes"
               onClick={() => patchMut.mutate({ notes: editNotes })}
               disabled={editNotes === opp.notes || patchMut.isPending}
@@ -832,7 +832,7 @@ function OppDetail({ opp, onClose }: { opp: Opportunity; onClose: () => void }) 
             </button>
           </div>
 
-          {/* Won → Rx Defense handoff banner */}
+          {/* Won → PBM Contract Clarity 360 handoff banner */}
           {editStage === "won" && (
             <div className="rounded-xl p-4 space-y-2.5"
               style={{ background: "linear-gradient(135deg, rgba(0,255,148,0.07) 0%, rgba(0,255,148,0.03) 100%)", border: `1px solid ${GREEN}35` }}>
@@ -845,12 +845,12 @@ function OppDetail({ opp, onClose }: { opp: Opportunity; onClose: () => void }) 
                 </span>
               </div>
               <p className="text-[11px] text-zinc-400 leading-relaxed">
-                Start fiduciary Rx contract analysis for {opp.employer_name}. The account context will be pre-loaded in Rx Defense IQ™.
+                Start fiduciary Rx contract analysis for {opp.employer_name}. The account context will be pre-loaded in PBM Contract Clarity 360™.
               </p>
               {opp.rx_contract_id && (
                 <div className="flex items-center gap-1.5 text-[10px]" style={{ color: GREEN }}>
                   <CheckCircle2 className="w-3 h-3" />
-                  <span>Rx Defense analysis linked — ID {opp.rx_contract_id.slice(0, 8)}…</span>
+                  <span>PBM Contract Clarity 360 analysis linked — ID {opp.rx_contract_id.slice(0, 8)}…</span>
                   <button
                     data-testid="btn-view-linked-analysis"
                     onClick={() => { onClose(); navigate(`/rx-defense?contract=${opp.rx_contract_id}`); }}
@@ -872,16 +872,16 @@ function OppDetail({ opp, onClose }: { opp: Opportunity; onClose: () => void }) 
                   );
                 }}
                 className="w-full py-2.5 rounded-lg text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2 transition-all"
-                style={{ background: GREEN, color: "#07091c" }}>
+                style={{ background: GREEN, color: "#F8FAFC" }}>
                 <Pill className="w-3.5 h-3.5" />
-                {opp.rx_contract_id ? "Open Rx Defense Analysis" : "Send to Rx Defense IQ™ →"}
+                {opp.rx_contract_id ? "Open PBM Contract Clarity 360 Analysis" : "Send to PBM Contract Clarity 360™ →"}
               </button>
             </div>
           )}
 
           {/* Actions */}
           {opp.employer_ein && (
-            <div className="flex gap-2 pt-2 border-t" style={{ borderColor: "rgba(255,255,255,0.07)" }}>
+            <div className="flex gap-2 pt-2 border-t" style={{ borderColor: "#e2e8f0" }}>
               <a href={`/benefits-benchmarking?ein=${opp.employer_ein}`}
                 data-testid="btn-view-benchmarking"
                 className="flex-1 text-center py-2 rounded-lg text-[11px] font-bold transition-all"
@@ -901,7 +901,7 @@ function OppDetail({ opp, onClose }: { opp: Opportunity; onClose: () => void }) 
                 }}
                 className="flex-1 text-center py-2 rounded-lg text-[11px] font-bold transition-all"
                 style={{ background: `${GREEN}12`, border: `1px solid ${GREEN}25`, color: GREEN }}>
-                <Pill className="w-3 h-3 inline mr-1" /> Rx Defense
+                <Pill className="w-3 h-3 inline mr-1" /> PBM Contract Clarity 360
               </button>
             </div>
           )}
@@ -996,9 +996,9 @@ function PipelineTab({ prefillForm, clearPrefill, focusOppId }: { prefillForm?: 
               onClick={() => setFilterStage(s.key)}
               className="text-[11px] font-bold px-3 py-1 rounded-full transition-all"
               style={{
-                background: filterStage === s.key ? `${GOLD}20` : "rgba(255,255,255,0.04)",
-                color: filterStage === s.key ? GOLD : "rgba(255,255,255,0.4)",
-                border: filterStage === s.key ? `1px solid ${GOLD}30` : "1px solid rgba(255,255,255,0.07)",
+                background: filterStage === s.key ? `${GOLD}20` : "#ffffff",
+                color: filterStage === s.key ? GOLD : "#475569",
+                border: filterStage === s.key ? `1px solid ${GOLD}30` : "1px solid #e2e8f0",
               }}>
               {s.label}
             </button>
@@ -1006,13 +1006,13 @@ function PipelineTab({ prefillForm, clearPrefill, focusOppId }: { prefillForm?: 
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
           {/* View toggle */}
-          <div className="flex rounded-lg overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.1)" }}>
+          <div className="flex rounded-lg overflow-hidden" style={{ border: "1px solid #e2e8f0" }}>
             <button data-testid="btn-view-list"
               onClick={() => setView("list")}
               className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold transition-all"
               style={{
                 background: view === "list" ? `${GOLD}20` : "transparent",
-                color: view === "list" ? GOLD : "rgba(255,255,255,0.4)",
+                color: view === "list" ? GOLD : "#475569",
               }}>
               <ListIcon className="w-3.5 h-3.5" /> List
             </button>
@@ -1021,7 +1021,7 @@ function PipelineTab({ prefillForm, clearPrefill, focusOppId }: { prefillForm?: 
               className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold transition-all"
               style={{
                 background: view === "board" ? `${GOLD}20` : "transparent",
-                color: view === "board" ? GOLD : "rgba(255,255,255,0.4)",
+                color: view === "board" ? GOLD : "#475569",
               }}>
               <LayoutGrid className="w-3.5 h-3.5" /> Board
             </button>
@@ -1041,7 +1041,7 @@ function PipelineTab({ prefillForm, clearPrefill, focusOppId }: { prefillForm?: 
           <Loader2 className="w-5 h-5 animate-spin" /> Loading pipeline…
         </div>
       ) : opps.length === 0 ? (
-        <div className="text-center py-16 rounded-2xl" style={{ border: "1px dashed rgba(255,255,255,0.08)" }}>
+        <div className="text-center py-16 rounded-2xl" style={{ border: "1px dashed #e2e8f0" }}>
           <Target className="w-10 h-10 mx-auto mb-3 text-zinc-700" />
           <p className="text-zinc-500 font-semibold">No opportunities yet</p>
           <p className="text-xs text-zinc-600 mt-1">Click "New Opportunity" to add your first prospect</p>
@@ -1049,7 +1049,7 @@ function PipelineTab({ prefillForm, clearPrefill, focusOppId }: { prefillForm?: 
       ) : view === "board" ? (
         <BoardView opps={opps} onSelect={setSelected} onDragEnd={handleDragEnd} />
       ) : filtered.length === 0 ? (
-        <div className="text-center py-16 rounded-2xl" style={{ border: "1px dashed rgba(255,255,255,0.08)" }}>
+        <div className="text-center py-16 rounded-2xl" style={{ border: "1px dashed #e2e8f0" }}>
           <Target className="w-10 h-10 mx-auto mb-3 text-zinc-700" />
           <p className="text-zinc-500 font-semibold">No opportunities{filterStage !== "all" ? ` in ${filterStage}` : ""}</p>
           <p className="text-xs text-zinc-600 mt-1">Try a different stage filter or add a new prospect</p>
@@ -1219,7 +1219,7 @@ function AnalyzerTab() {
       <div className="rounded-2xl p-6" style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(16,185,129,0.02) 100%)", border: "1px solid rgba(16,185,129,0.2)" }}>
         <div className="flex items-center gap-2 mb-4">
           <Pill className="w-5 h-5" style={{ color: "#10B981" }} />
-          <h3 className="text-white font-bold">Rx Defense Contract Analyzer</h3>
+          <h3 className="text-[var(--kiq-ink)] font-bold">PBM Contract Clarity 360 Contract Analyzer</h3>
           <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
             style={{ background: "rgba(16,185,129,0.15)", border: "1px solid rgba(16,185,129,0.25)", color: "#10B981" }}>
             65 PROVISIONS · 13 TABS
@@ -1232,14 +1232,14 @@ function AnalyzerTab() {
             <Input data-testid="input-employer-name"
               value={employerName} onChange={e => setEmployerName(e.target.value)}
               placeholder="Acme Corp, City of Indianapolis…"
-              className="bg-zinc-900 border-zinc-700 text-white" />
+              className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
           </div>
           <div>
             <label className="text-[10px] text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">PBM Name (optional)</label>
             <Input data-testid="input-pbm-name"
               value={pbmName} onChange={e => setPbmName(e.target.value)}
               placeholder="CVS Caremark, Express Scripts…"
-              className="bg-zinc-900 border-zinc-700 text-white" />
+              className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)]" />
           </div>
           <div>
             <label className="text-[10px] text-zinc-500 font-semibold uppercase tracking-wide mb-1 block">Upload Contract (PDF / DOCX / TXT)</label>
@@ -1302,7 +1302,7 @@ function AnalyzerTab() {
                       className="flex items-start gap-2 p-2.5 rounded-lg"
                       style={{ background: f?.severity === "critical" ? `${RED}06` : `${GOLD}06`, border: `1px solid ${f?.severity === "critical" ? RED : GOLD}15` }}>
                       <AlertOctagon className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" style={{ color: f?.severity === "critical" ? RED : GOLD }} />
-                      <p className="text-xs text-zinc-300 leading-relaxed">{f?.text || f?.finding || JSON.stringify(f)}</p>
+                      <p className="text-xs text-[var(--kiq-muted)] leading-relaxed">{f?.text || f?.finding || JSON.stringify(f)}</p>
                     </div>
                   ))}
                 </div>
@@ -1310,7 +1310,7 @@ function AnalyzerTab() {
             )}
 
             {/* Inline competitive response draft */}
-            <div className="pt-2 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+            <div className="pt-2 border-t" style={{ borderColor: "#f1f5f9" }}>
               <div className="flex items-center justify-between mb-2">
                 <p className="text-xs font-bold text-zinc-400 uppercase tracking-wide flex items-center gap-1.5">
                   <Brain className="w-3.5 h-3.5" style={{ color: GOLD }} /> Competitive Response Draft
@@ -1353,29 +1353,29 @@ function AnalyzerTab() {
                     </div>
                   </div>
                   <div className="p-3 max-h-60 overflow-y-auto">
-                    <p className="text-[11px] text-zinc-300 leading-relaxed whitespace-pre-line">{inlineDraft}</p>
+                    <p className="text-[11px] text-[var(--kiq-muted)] leading-relaxed whitespace-pre-line">{inlineDraft}</p>
                   </div>
                 </div>
               ) : (
                 <div className="rounded-lg p-3 text-center" style={{ background: `${GOLD}04`, border: "1px dashed rgba(255,184,0,0.15)" }}>
-                  <p className="text-[11px] text-zinc-500">Generate an AI-drafted pitch letter using the Rx Defense analysis findings above</p>
+                  <p className="text-[11px] text-zinc-500">Generate an AI-drafted pitch letter using the PBM Contract Clarity 360 analysis findings above</p>
                 </div>
               )}
             </div>
 
             {/* Link to opportunity + view full analysis */}
-            <div className="flex flex-wrap items-center gap-3 pt-2 border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+            <div className="flex flex-wrap items-center gap-3 pt-2 border-t" style={{ borderColor: "#f1f5f9" }}>
               <div className="flex items-center gap-2 flex-1 min-w-0">
                 <select data-testid="select-link-opp"
                   value={linkOppId} onChange={e => setLinkOppId(e.target.value)}
-                  className="flex-1 bg-zinc-900 border border-zinc-700 rounded-lg px-3 py-2 text-white text-xs">
+                  className="flex-1 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-lg px-3 py-2 text-[var(--kiq-ink)] text-xs">
                   <option value="">— Link to pipeline opportunity —</option>
                   {opps.map(o => <option key={o.id} value={String(o.id)}>{o.employer_name}</option>)}
                 </select>
                 <button data-testid="btn-link-contract"
                   disabled={!linkOppId} onClick={linkContractToOpp}
                   className="px-3 py-2 rounded-lg text-xs font-bold transition-all flex-shrink-0"
-                  style={{ background: linkOppId ? `${GREEN}15` : "rgba(255,255,255,0.04)", border: `1px solid ${linkOppId ? GREEN : "rgba(255,255,255,0.08)"}25`, color: linkOppId ? GREEN : "rgba(255,255,255,0.3)" }}>
+                  style={{ background: linkOppId ? `${GREEN}15` : "#ffffff", border: `1px solid ${linkOppId ? GREEN : "#e2e8f0"}25`, color: linkOppId ? GREEN : "#64748b" }}>
                   Link
                 </button>
               </div>
@@ -1392,9 +1392,9 @@ function AnalyzerTab() {
 
       {/* Existing analyses */}
       <div>
-        <h3 className="text-sm font-bold text-zinc-300 mb-3">All Rx Defense Analyses</h3>
+        <h3 className="text-sm font-bold text-[var(--kiq-muted)] mb-3">All PBM Contract Clarity 360 Analyses</h3>
         {contracts.length === 0 ? (
-          <div className="rounded-xl p-6 text-center" style={{ background: "rgba(255,255,255,0.02)", border: "1px dashed rgba(255,255,255,0.08)" }}>
+          <div className="rounded-xl p-6 text-center" style={{ background: "#ffffff", border: "1px dashed #e2e8f0" }}>
             <FileSearch className="w-8 h-8 mx-auto mb-2 text-zinc-700" />
             <p className="text-sm text-zinc-500">No contracts analyzed yet</p>
             <p className="text-xs text-zinc-600 mt-1">Upload a PBM contract above to generate your first analysis</p>
@@ -1407,10 +1407,10 @@ function AnalyzerTab() {
                 onClick={() => setActiveContractId(String(c.id))}
                 style={{
                   background: activeContractId === String(c.id) ? `${GOLD}08` : "rgba(255,255,255,0.025)",
-                  border: `1px solid ${activeContractId === String(c.id) ? GOLD : "rgba(255,255,255,0.07)"}25`,
+                  border: `1px solid ${activeContractId === String(c.id) ? GOLD : "#e2e8f0"}25`,
                 }}>
                 <div>
-                  <p className="text-white font-semibold text-sm">{c.pbm_name || c.contract_filename || "Contract"}</p>
+                  <p className="text-[var(--kiq-ink)] font-semibold text-sm">{c.pbm_name || c.contract_filename || "Contract"}</p>
                   <p className="text-xs text-zinc-500">ID: {c.id} · {new Date(c.created_at).toLocaleDateString()}</p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -1526,8 +1526,8 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
   return (
     <div className="space-y-5">
       {/* Search — by name OR EIN */}
-      <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
-        <h3 className="text-sm font-bold text-zinc-300 mb-3">Employer Intelligence Lookup</h3>
+      <div className="rounded-2xl p-5" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
+        <h3 className="text-sm font-bold text-[var(--kiq-muted)] mb-3">Employer Intelligence Lookup</h3>
 
         {/* Name search with live dropdown */}
         <div className="relative mb-3">
@@ -1538,7 +1538,7 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
                 value={nameInput}
                 onChange={e => { setNameInput(e.target.value); searchByName(e.target.value); }}
                 placeholder="e.g. Tower Health, Walmart, Ford Motor…"
-                className="bg-zinc-900 border-zinc-700 text-white w-full" />
+                className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)] w-full" />
               {nameSearching && (
                 <Loader2 className="w-3.5 h-3.5 animate-spin absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500" />
               )}
@@ -1546,12 +1546,12 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
           </div>
           {nameResults.length > 0 && (
             <div className="absolute z-50 mt-1 w-full rounded-xl overflow-hidden"
-              style={{ background: "#131629", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 8px 32px rgba(0,0,0,0.6)" }}>
+              style={{ background: "#131629", border: "1px solid #e2e8f0", boxShadow: "0 8px 32px rgba(0,0,0,0.6)" }}>
               {nameResults.map((r: any, i: number) => (
                 <button key={i} data-testid={`name-result-${i}`}
                   onClick={() => selectNameResult(r)}
-                  className="w-full text-left px-4 py-3 hover:bg-white/5 transition-colors border-b border-white/5 last:border-b-0">
-                  <p className="text-xs font-bold text-white">{r.sponsor}</p>
+                  className="w-full text-left px-4 py-3 hover:bg-[var(--kiq-surface)]/5 transition-colors border-b border-white/5 last:border-b-0">
+                  <p className="text-xs font-bold text-[var(--kiq-ink)]">{r.sponsor}</p>
                   <p className="text-[10px] text-zinc-500">EIN {r.ein} · {r.city}, {r.state} · {(r.participants || 0).toLocaleString()} participants</p>
                 </button>
               ))}
@@ -1567,7 +1567,7 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
               value={einInput} onChange={e => setEinInput(e.target.value)}
               onKeyDown={e => e.key === "Enter" && handleSearch()}
               placeholder="Enter EIN (e.g. 23-1352204)"
-              className="bg-zinc-900 border-zinc-700 text-white flex-1" />
+              className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)] flex-1" />
             <Button data-testid="btn-lookup-ein"
               onClick={handleSearch} disabled={intelLoading}
               style={{ background: GOLD, color: "#0a0c1e" }} className="font-bold gap-2">
@@ -1589,7 +1589,7 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
       {intelError && (
         <div className="rounded-xl p-5 text-center" style={{ background: "rgba(255,77,109,0.06)", border: "1px solid rgba(255,77,109,0.2)" }}>
           <AlertTriangle className="w-6 h-6 mx-auto mb-2" style={{ color: RED }} />
-          <p className="text-sm text-white font-semibold">No data found for this EIN</p>
+          <p className="text-sm text-[var(--kiq-ink)] font-semibold">No data found for this EIN</p>
           <p className="text-xs text-zinc-500 mt-1">This EIN may not have Form 5500 filings in the database</p>
         </div>
       )}
@@ -1600,7 +1600,7 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
           <div className="rounded-2xl p-5" style={{ background: "rgba(255,184,0,0.05)", border: `1px solid ${GOLD}25` }}>
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="text-white font-bold text-lg">{bench.sponsor_name || intel.ein}</h3>
+                <h3 className="text-[var(--kiq-ink)] font-bold text-lg">{bench.sponsor_name || intel.ein}</h3>
                 <div className="flex items-center gap-3 mt-1">
                   {bench.city && <span className="text-xs text-zinc-500 flex items-center gap-1"><MapPin className="w-3 h-3" />{bench.city}, {bench.state}</span>}
                   <span className="text-xs text-zinc-600">EIN: {intel.ein}</span>
@@ -1618,7 +1618,7 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
                   onClick={() => navigate(`/shady-broker-index`)}
                   className="text-[11px] font-bold flex items-center gap-1 px-3 py-1.5 rounded-lg"
                   style={{ background: `${RED}12`, border: `1px solid ${RED}25`, color: RED }}>
-                  <Shield className="w-3 h-3" /> Shady Broker
+                  <Shield className="w-3 h-3" /> Broker Comp Index
                 </button>
               </div>
             </div>
@@ -1651,7 +1651,7 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
           {/* Shady Broker signals */}
           {Object.keys(sbi).length > 0 && (
             <div>
-              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wide mb-3">Shady Broker Index™ — Key Signals</h4>
+              <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wide mb-3">Broker Compensation Index™ — Key Signals</h4>
               <div className="space-y-2">
                 {[
                   { label: "Broker Commission % of Plan Income", val: `${(sbi.broker_pct || 0).toFixed(1)}%`, threshold: 12.5, current: sbi.broker_pct || 0, format: "pct" },
@@ -1662,7 +1662,7 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
                   return (
                     <div key={row.label} data-testid={`sbi-metric-${row.label.replace(/\s/g, "-").toLowerCase()}`}
                       className="flex items-center justify-between p-3 rounded-lg"
-                      style={{ background: flagged ? `${RED}08` : "rgba(255,255,255,0.025)", border: `1px solid ${flagged ? RED : "rgba(255,255,255,0.07)"}20` }}>
+                      style={{ background: flagged ? `${RED}08` : "rgba(255,255,255,0.025)", border: `1px solid ${flagged ? RED : "#e2e8f0"}20` }}>
                       <span className="text-xs text-zinc-400">{row.label}</span>
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-bold" style={{ color: flagged ? RED : GREEN }}>{row.val}</span>
@@ -1697,7 +1697,7 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
                   <div key={i} data-testid={`intel-talking-point-${i}`}
                     className="rounded-xl p-3 space-y-1"
                     style={{ background: `${PURPLE}07`, border: `1px solid ${PURPLE}18` }}>
-                    <p className="text-xs font-bold text-white">{tp.headline}</p>
+                    <p className="text-xs font-bold text-[var(--kiq-ink)]">{tp.headline}</p>
                     <p className="text-[11px] font-semibold" style={{ color: BLUE }}>{tp.evidence}</p>
                     <p className="text-[11px] text-zinc-400 leading-relaxed">{tp.angle}</p>
                   </div>
@@ -1725,14 +1725,14 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
             {narrative ? (
               <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${RED}20` }}>
                 <div className="px-4 py-2.5" style={{ background: `${RED}08`, borderBottom: `1px solid ${RED}15` }}>
-                  <p className="text-xs font-bold" style={{ color: RED }}>SHADY BROKER INDEX™ — FORENSIC BRIEF</p>
+                  <p className="text-xs font-bold" style={{ color: RED }}>BROKER COMPENSATION INDEX™ — FORENSIC BRIEF</p>
                   {narrative.score && (
-                    <p className="text-xs text-zinc-400 mt-0.5">SBI Score: <span style={{ color: narrative.score < 70 ? RED : GOLD }}>{narrative.score}/100</span></p>
+                    <p className="text-xs text-zinc-400 mt-0.5">BCI Score: <span style={{ color: narrative.score < 70 ? RED : GOLD }}>{narrative.score}/100</span></p>
                   )}
                 </div>
                 <div className="p-4 space-y-4">
                   {narrative.narrative?.headline && (
-                    <p className="text-sm font-bold text-white leading-snug">{narrative.narrative.headline}</p>
+                    <p className="text-sm font-bold text-[var(--kiq-ink)] leading-snug">{narrative.narrative.headline}</p>
                   )}
                   {narrative.narrative?.why_this_scores_poorly && (
                     <p className="text-xs text-zinc-400 leading-relaxed">{narrative.narrative.why_this_scores_poorly}</p>
@@ -1766,7 +1766,7 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
                   {narrative.narrative?.next_step && (
                     <div className="p-3 rounded-lg" style={{ background: `${GREEN}08`, border: `1px solid ${GREEN}18` }}>
                       <p className="text-[10px] font-bold uppercase tracking-wide mb-1" style={{ color: GREEN }}>Recommended Next Step</p>
-                      <p className="text-xs text-zinc-300">{narrative.narrative.next_step}</p>
+                      <p className="text-xs text-[var(--kiq-muted)]">{narrative.narrative.next_step}</p>
                     </div>
                   )}
 
@@ -1785,7 +1785,7 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
                         };
                         const doc = generateShadyBrokerPDF(pdfData);
                         const date = new Date().toISOString().slice(0, 10);
-                        doc.save(`Kincaid-SBI-EIN${queriedEin}-${date}.pdf`);
+                        doc.save(`Kincaid-BCI-EIN${queriedEin}-${date}.pdf`);
                       } catch (err) {
                         console.error("PDF generation error", err);
                         toast({ title: "PDF generation failed", variant: "destructive" });
@@ -1800,7 +1800,7 @@ function IntelTab({ onAddToPipeline }: { onAddToPipeline?: (prefill: Partial<Opp
             ) : (
               <div className="rounded-xl p-4 text-center" style={{ background: `${RED}04`, border: "1px dashed rgba(255,77,109,0.2)" }}>
                 <Shield className="w-5 h-5 mx-auto mb-2" style={{ color: RED }} />
-                <p className="text-xs text-zinc-500">Generate an AI forensic brief using the Shady Broker Index™ methodology — includes compensation signals, CFO questions, and ERISA risk flags</p>
+                <p className="text-xs text-zinc-500">Generate an AI forensic brief using the Broker Compensation Index™ methodology — includes compensation signals, CFO questions, and ERISA risk flags</p>
               </div>
             )}
           </div>
@@ -1927,7 +1927,7 @@ function WatchlistTab({ focusEin }: { focusEin?: string }) {
       {/* Tab header with on-demand check */}
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-sm font-bold text-zinc-200">Watchlist & Alerts</h3>
+          <h3 className="text-sm font-bold text-[var(--kiq-ink-soft)]">Watchlist & Alerts</h3>
           <p className="text-xs text-zinc-600 mt-0.5">
             Auto-checked nightly. Run a check now to verify watched employers immediately.
           </p>
@@ -1971,7 +1971,7 @@ function WatchlistTab({ focusEin }: { focusEin?: string }) {
               {checkResult.new_filings.map((f, i) => (
                 <div key={`${f.ein}-${i}`} data-testid={`check-result-filing-${i}`}
                   className="flex items-center justify-between pl-6 text-xs">
-                  <span className="text-zinc-300 font-semibold">{f.employer_name}</span>
+                  <span className="text-[var(--kiq-muted)] font-semibold">{f.employer_name}</span>
                   <div className="flex items-center gap-3">
                     {f.highlights?.total_income ? (
                       <span className="text-zinc-500">Income: {fmtMoney(f.highlights.total_income)}</span>
@@ -1992,7 +1992,7 @@ function WatchlistTab({ focusEin }: { focusEin?: string }) {
         <div>
           <div className="flex items-center gap-2 mb-3">
             <BellRing className="w-4 h-4" style={{ color: GOLD }} />
-            <h3 className="text-sm font-bold text-zinc-300">Recent Alerts</h3>
+            <h3 className="text-sm font-bold text-[var(--kiq-muted)]">Recent Alerts</h3>
             {newAlerts.length > 0 && (
               <span className="text-[10px] font-black px-2 py-0.5 rounded-full"
                 style={{ background: `${RED}20`, color: RED, border: `1px solid ${RED}30` }}>
@@ -2008,7 +2008,7 @@ function WatchlistTab({ focusEin }: { focusEin?: string }) {
                 <div>
                   <div className="flex items-center gap-2">
                     <BellRing className="w-3.5 h-3.5" style={{ color: GOLD }} />
-                    <p className="text-sm font-bold text-white">{alert.employer_name}</p>
+                    <p className="text-sm font-bold text-[var(--kiq-ink)]">{alert.employer_name}</p>
                     <span className="text-[10px] font-bold px-1.5 py-0.5 rounded" style={{ background: `${GOLD}20`, color: GOLD }}>
                       {alert.filing_year} Filing
                     </span>
@@ -2038,13 +2038,13 @@ function WatchlistTab({ focusEin }: { focusEin?: string }) {
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <Eye className="w-4 h-4 text-zinc-400" />
-            <h3 className="text-sm font-bold text-zinc-300">Watched Employers</h3>
+            <h3 className="text-sm font-bold text-[var(--kiq-muted)]">Watched Employers</h3>
             <span className="text-xs text-zinc-600">({watches.length})</span>
           </div>
           <button data-testid="btn-add-watch"
             onClick={() => setShowAdd(!showAdd)}
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
-            style={{ background: showAdd ? `${BLUE}20` : "rgba(255,255,255,0.05)", border: `1px solid ${showAdd ? BLUE : "rgba(255,255,255,0.1)"}30`, color: showAdd ? BLUE : "rgba(255,255,255,0.6)" }}>
+            style={{ background: showAdd ? `${BLUE}20` : "#f8fafc", border: `1px solid ${showAdd ? BLUE : "#e2e8f0"}30`, color: showAdd ? BLUE : "#1e293b" }}>
             <Plus className="w-3.5 h-3.5" /> Add to Watchlist
           </button>
         </div>
@@ -2058,25 +2058,25 @@ function WatchlistTab({ focusEin }: { focusEin?: string }) {
                 <label className="text-[10px] text-zinc-600 mb-1 block">EIN *</label>
                 <Input data-testid="input-watch-ein"
                   value={addForm.ein} onChange={e => setAddForm(f => ({ ...f, ein: e.target.value }))}
-                  placeholder="XX-XXXXXXX" className="bg-zinc-900 border-zinc-700 text-white text-sm" />
+                  placeholder="XX-XXXXXXX" className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)] text-sm" />
               </div>
               <div>
                 <label className="text-[10px] text-zinc-600 mb-1 block">Employer Name *</label>
                 <Input data-testid="input-watch-name"
                   value={addForm.employer_name} onChange={e => setAddForm(f => ({ ...f, employer_name: e.target.value }))}
-                  placeholder="Acme Corp" className="bg-zinc-900 border-zinc-700 text-white text-sm" />
+                  placeholder="Acme Corp" className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)] text-sm" />
               </div>
               <div>
                 <label className="text-[10px] text-zinc-600 mb-1 block">State</label>
                 <Input data-testid="input-watch-state"
                   value={addForm.employer_state} onChange={e => setAddForm(f => ({ ...f, employer_state: e.target.value }))}
-                  placeholder="IN" className="bg-zinc-900 border-zinc-700 text-white text-sm" />
+                  placeholder="IN" className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)] text-sm" />
               </div>
               <div>
                 <label className="text-[10px] text-zinc-600 mb-1 block">Notes</label>
                 <Input data-testid="input-watch-notes"
                   value={addForm.notes} onChange={e => setAddForm(f => ({ ...f, notes: e.target.value }))}
-                  placeholder="Renewal in Q3..." className="bg-zinc-900 border-zinc-700 text-white text-sm" />
+                  placeholder="Renewal in Q3..." className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)] text-sm" />
               </div>
             </div>
             <div className="flex gap-2 mt-3">
@@ -2087,7 +2087,7 @@ function WatchlistTab({ focusEin }: { focusEin?: string }) {
                 {addMut.isPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Bell className="w-3.5 h-3.5" />}
                 Start Watching
               </Button>
-              <Button variant="outline" onClick={() => setShowAdd(false)} className="border-zinc-700 text-zinc-400 text-sm">Cancel</Button>
+              <Button variant="outline" onClick={() => setShowAdd(false)} className="border-[var(--kiq-hairline)] text-zinc-400 text-sm">Cancel</Button>
             </div>
           </div>
         )}
@@ -2097,7 +2097,7 @@ function WatchlistTab({ focusEin }: { focusEin?: string }) {
             <Loader2 className="w-4 h-4 animate-spin" /> Loading watchlist…
           </div>
         ) : watches.length === 0 ? (
-          <div className="text-center py-12 rounded-2xl" style={{ border: "1px dashed rgba(255,255,255,0.07)" }}>
+          <div className="text-center py-12 rounded-2xl" style={{ border: "1px dashed #e2e8f0" }}>
             <Bell className="w-8 h-8 mx-auto mb-2 text-zinc-700" />
             <p className="text-sm text-zinc-500 font-semibold">No employers being watched</p>
             <p className="text-xs text-zinc-600 mt-1">Add employers to get alerted when they file new Form 5500s</p>
@@ -2110,11 +2110,11 @@ function WatchlistTab({ focusEin }: { focusEin?: string }) {
                 className="flex items-center justify-between p-4 rounded-xl"
                 style={{
                   background: highlightedEin === w.ein ? `${GOLD}12` : "rgba(255,255,255,0.025)",
-                  border: highlightedEin === w.ein ? `1px solid ${GOLD}50` : "1px solid rgba(255,255,255,0.07)",
+                  border: highlightedEin === w.ein ? `1px solid ${GOLD}50` : "1px solid #e2e8f0",
                   transition: "border-color 0.3s, background 0.3s",
                 }}>
                 <div>
-                  <p className="text-white font-semibold text-sm">{w.employer_name}</p>
+                  <p className="text-[var(--kiq-ink)] font-semibold text-sm">{w.employer_name}</p>
                   <div className="flex items-center gap-3 mt-0.5">
                     <span className="text-xs text-zinc-600">EIN: {w.ein}</span>
                     {w.employer_state && <span className="text-xs text-zinc-600">{w.employer_state}</span>}
@@ -2189,9 +2189,9 @@ export default function RfpIntelligenceOS() {
 
   return (
     <Layout>
-      <div className="min-h-screen p-6 space-y-6" style={{ background: "hsl(var(--background))" }}>
+      <div className="kiq-ops-shell min-h-screen space-y-6 p-6">
         {/* Header */}
-        <div className="flex items-start justify-between">
+        <div className="kiq-ops-header flex items-start justify-between rounded-[24px] p-5">
           <div>
             <div className="flex items-center gap-3 mb-2">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center"
@@ -2199,7 +2199,7 @@ export default function RfpIntelligenceOS() {
                 <Radar className="w-5 h-5" style={{ color: GOLD }} />
               </div>
               <div>
-                <h1 className="text-2xl font-black text-white tracking-tight">RFP Intelligence OS</h1>
+                <h1 className="text-2xl font-black text-[var(--kiq-ink)] tracking-tight">RFP Intelligence OS</h1>
                 <p className="text-sm text-zinc-500">Unified sales command center — pipeline, RFP analysis, prospect intel, watchlist</p>
               </div>
             </div>
@@ -2216,8 +2216,8 @@ export default function RfpIntelligenceOS() {
         </div>
 
         {/* Tab navigation */}
-        <div className="flex gap-1 p-1 rounded-xl overflow-x-auto"
-          style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}>
+        <div className="kiq-ops-card flex gap-1 overflow-x-auto rounded-2xl p-1"
+          style={{ background: "rgba(255,255,255,0.72)", border: "1px solid rgba(15,23,42,0.10)" }}>
           {TABS.map(tab => {
             const isActive = activeTab === tab.key;
             return (
@@ -2226,14 +2226,15 @@ export default function RfpIntelligenceOS() {
                 className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all flex-shrink-0"
                 style={{
                   background: isActive ? `${GOLD}15` : "transparent",
-                  color: isActive ? GOLD : "rgba(255,255,255,0.4)",
+                  color: isActive ? GOLD : "#475569",
                   border: isActive ? `1px solid ${GOLD}25` : "1px solid transparent",
+                  boxShadow: isActive ? "0 10px 24px rgba(251,183,36,0.14)" : "none",
                 }}>
                 <tab.icon className="w-4 h-4" />
                 {tab.label}
                 {tab.key === "watchlist" && unreadAlerts > 0 && (
                   <span className="w-4 h-4 rounded-full text-[9px] font-black flex items-center justify-center"
-                    style={{ background: RED, color: "white" }}>
+                    style={{ background: RED, color: "#0F172A" }}>
                     {unreadAlerts}
                   </span>
                 )}
@@ -2243,7 +2244,7 @@ export default function RfpIntelligenceOS() {
         </div>
 
         {/* Tab content */}
-        <div>
+        <div className="kiq-ops-card rounded-[22px] p-5" style={{ background: "rgba(255,255,255,0.64)", border: "1px solid rgba(15,23,42,0.08)" }}>
           {activeTab === "pipeline" && (
             <PipelineTab
               prefillForm={pipelinePrefill}

@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Form 5500 Full Database Search API
+Kincaid Health — Form 5500 Full Database Search API
 Serves the 10-year DOL EBSA Form 5500 dataset (main filings + Schedule A).
 """
 import os

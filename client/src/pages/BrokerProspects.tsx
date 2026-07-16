@@ -230,9 +230,9 @@ function Chip({ active, onClick, children }: { active: boolean; onClick: () => v
   return (
     <button onClick={onClick} style={{
       padding: "8px 14px", borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: "pointer",
-      background: active ? `${GOLD}18` : "rgba(255,255,255,0.04)",
-      border: active ? `1px solid ${GOLD}45` : "1px solid rgba(255,255,255,0.09)",
-      color: active ? GOLD : "rgba(255,255,255,0.5)", transition: "all 0.12s",
+      background: active ? `${GOLD}18` : "#ffffff",
+      border: active ? `1px solid ${GOLD}45` : "1px solid rgba(15,23,42,0.03)",
+      color: active ? GOLD : "#334155", transition: "all 0.12s",
     }}>{children}</button>
   );
 }
@@ -246,26 +246,26 @@ function TnMapView({ metros, onSelect, selectedMetro }: {
   const maxCount = Math.max(...metros.map(m => m.count), 1);
 
   return (
-    <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 20, padding: 24 }}>
+    <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 20, padding: 24 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
         <MapIcon style={{ width: 14, height: 14, color: GOLD }} />
-        <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>
+        <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#475569" }}>
           Tennessee Market Intelligence Map
         </span>
-        <span style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", marginLeft: "auto" }}>Click a market to filter</span>
+        <span style={{ fontSize: 10, color: "rgba(15,23,42,0.08)", marginLeft: "auto" }}>Click a market to filter</span>
       </div>
 
       <div style={{ display: "flex", gap: 24 }}>
         <div style={{ flexShrink: 0 }}>
           <svg viewBox="0 0 360 440" width={280} height={340} style={{ display: "block" }}>
-            <rect x={28} y={28} width={290} height={2} fill="rgba(255,255,255,0.08)" />
-            <rect x={28} y={28} width={2} height={388} fill="rgba(255,255,255,0.08)" />
-            <rect x={318} y={28} width={2} height={388} fill="rgba(255,255,255,0.08)" />
-            <rect x={28} y={416} width={292} height={2} fill="rgba(255,255,255,0.08)" />
+            <rect x={28} y={28} width={290} height={2} fill="#e2e8f0" />
+            <rect x={28} y={28} width={2} height={388} fill="#e2e8f0" />
+            <rect x={318} y={28} width={2} height={388} fill="#e2e8f0" />
+            <rect x={28} y={416} width={292} height={2} fill="#e2e8f0" />
             <rect x={30} y={30} width={288} height={385} rx={4} fill="rgba(255,255,255,0.015)" />
-            <text x={174} y={224} textAnchor="middle" fill="rgba(255,255,255,0.04)" fontSize={28} fontWeight={900} letterSpacing="0.2em">TENNESSEE</text>
-            {[100, 180, 260, 340].map(y => <line key={y} x1={30} y1={y} x2={318} y2={y} stroke="rgba(255,255,255,0.03)" />)}
-            {[100, 180, 260].map(x => <line key={x} x1={x} y1={30} x2={x} y2={415} stroke="rgba(255,255,255,0.03)" />)}
+            <text x={174} y={224} textAnchor="middle" fill="#ffffff" fontSize={28} fontWeight={900} letterSpacing="0.2em">TENNESSEE</text>
+            {[100, 180, 260, 340].map(y => <line key={y} x1={30} y1={y} x2={318} y2={y} stroke="#ffffff" />)}
+            {[100, 180, 260].map(x => <line key={x} x1={x} y1={30} x2={x} y2={415} stroke="#ffffff" />)}
             {metros.map(m => {
               const r = 10 + (m.count / maxCount) * 26;
               const isSelected = selectedMetro === m.key;
@@ -288,7 +288,7 @@ function TnMapView({ metros, onSelect, selectedMetro }: {
         </div>
 
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6 }}>
-          <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 8 }}>
+          <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(15,23,42,0.08)", marginBottom: 8 }}>
             Ranked Markets
           </div>
           {metros.slice(0, 9).map(m => {
@@ -297,20 +297,20 @@ function TnMapView({ metros, onSelect, selectedMetro }: {
             return (
               <button key={m.key} onClick={() => onSelect(m.key)}
                 style={{ display: "flex", alignItems: "center", gap: 10, padding: "7px 10px", borderRadius: 8, cursor: "pointer",
-                  background: isSelected ? `${col}12` : "rgba(255,255,255,0.02)", border: isSelected ? `1px solid ${col}30` : "1px solid transparent",
+                  background: isSelected ? `${col}12` : "#ffffff", border: isSelected ? `1px solid ${col}30` : "1px solid transparent",
                   textAlign: "left" }}>
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: col, flexShrink: 0 }} />
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: isSelected ? col : "rgba(255,255,255,0.7)" }}>{m.label}</div>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: isSelected ? col : "#0f172a" }}>{m.label}</div>
                 </div>
                 <div style={{ fontSize: 11, fontWeight: 900, color: col }}>{m.count}</div>
-                <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>avg {m.avg_score}</div>
+                <div style={{ fontSize: 9, color: "#64748b" }}>avg {m.avg_score}</div>
               </button>
             );
           })}
           {selectedMetro && (
             <button onClick={() => onSelect("")}
-              style={{ marginTop: 8, fontSize: 10, color: "rgba(255,255,255,0.3)", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}>
+              style={{ marginTop: 8, fontSize: 10, color: "#64748b", background: "none", border: "none", cursor: "pointer", textAlign: "left" }}>
               ✕ Clear filter
             </button>
           )}
@@ -356,29 +356,29 @@ function SaveToListDropdown({ prospect, onClose }: { prospect: Prospect; onClose
   return (
     <div onClick={e => e.stopPropagation()} style={{
       position: "absolute", top: "100%", right: 0, zIndex: 50, marginTop: 4,
-      background: "#0a0a14", border: `1px solid ${GOLD}30`, borderRadius: 12,
+      background: "#F8FAFC", border: `1px solid ${GOLD}30`, borderRadius: 12,
       padding: 8, minWidth: 220, boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
     }}>
-      <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", padding: "4px 8px", marginBottom: 4 }}>
+      <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", padding: "4px 8px", marginBottom: 4 }}>
         Save to List
       </div>
       {lists.map(l => (
         <button key={l.id} onClick={() => addItemMut.mutate(l.id)} data-testid={`save-to-list-${l.id}`}
           style={{ display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "8px 10px", borderRadius: 8,
-            background: "none", border: "none", cursor: "pointer", textAlign: "left", color: "rgba(255,255,255,0.7)", fontSize: 12 }}
-          onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}
+            background: "none", border: "none", cursor: "pointer", textAlign: "left", color: "#0f172a", fontSize: 12 }}
+          onMouseEnter={e => (e.currentTarget.style.background = "#f1f5f9")}
           onMouseLeave={e => (e.currentTarget.style.background = "none")}>
           <Bookmark style={{ width: 12, height: 12, color: GOLD }} />
           <span style={{ flex: 1 }}>{l.name}</span>
-          <span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>{l.itemCount}</span>
+          <span style={{ fontSize: 10, color: "#64748b" }}>{l.itemCount}</span>
         </button>
       ))}
       {creating ? (
         <div style={{ display: "flex", gap: 4, padding: "4px 0" }}>
           <input value={newListName} onChange={e => setNewListName(e.target.value)} placeholder="List name..."
             data-testid="new-list-name-input"
-            style={{ flex: 1, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 6,
-              padding: "6px 8px", color: "#fff", fontSize: 11, outline: "none" }}
+            style={{ flex: 1, background: "#f1f5f9", border: "1px solid #cbd5e1", borderRadius: 6,
+              padding: "6px 8px", color: "#0F172A", fontSize: 11, outline: "none" }}
             onKeyDown={e => { if (e.key === "Enter" && newListName.trim()) createListMut.mutate(newListName.trim()); }} />
           <button onClick={() => newListName.trim() && createListMut.mutate(newListName.trim())} data-testid="create-list-confirm"
             style={{ padding: "6px 10px", borderRadius: 6, background: `${GOLD}20`, border: `1px solid ${GOLD}40`, color: GOLD, fontSize: 10, fontWeight: 700, cursor: "pointer" }}>
@@ -450,29 +450,29 @@ function ProspectCard({ p, onSelect, index, divergenceWatch, thresholds }: {
   return (
     <div style={{ position: "relative" }}>
       <button onClick={onSelect} data-testid={`prospect-card-${index}`}
-        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16,
+        style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16,
           padding: "18px 20px", textAlign: "left", cursor: "pointer", transition: "all 0.12s", width: "100%",
           display: "flex", flexDirection: "column", gap: 10, position: "relative", overflow: "hidden" }}
         onMouseEnter={e => { e.currentTarget.style.borderColor = `${sc}30`; e.currentTarget.style.background = `${sc}06`; }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"; e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}>
+        onMouseLeave={e => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.background = "#ffffff"; }}>
 
         <div style={{ position: "absolute", top: -20, right: -20, width: 80, height: 80, borderRadius: "50%",
           background: `radial-gradient(circle, ${sc}12 0%, transparent 70%)`, pointerEvents: "none" }} />
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div style={{ flex: 1, minWidth: 0, paddingRight: 10 }}>
-            <div style={{ fontSize: 13, fontWeight: 800, color: "#fff", marginBottom: 3, lineHeight: 1.3 }}>{p.sponsor_name}</div>
-            <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 10, color: "rgba(255,255,255,0.4)" }}>
+            <div style={{ fontSize: 13, fontWeight: 800, color: "#0F172A", marginBottom: 3, lineHeight: 1.3 }}>{p.sponsor_name}</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 10, color: "#475569" }}>
               <MapPin style={{ width: 10, height: 10 }} />{p.city} · {p.metro_label}
             </div>
           </div>
           <div style={{ textAlign: "center", flexShrink: 0 }}>
             <div style={{ fontSize: 24, fontWeight: 900, color: sc, lineHeight: 1 }}>{p.match_score}</div>
-            <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em" }}>fit score</div>
+            <div style={{ fontSize: 8, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em" }}>fit score</div>
           </div>
         </div>
 
-        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>
+        <div style={{ fontSize: 10, color: "#475569" }}>
           {p.participants?.toLocaleString()} participants · {p.industry} · {p.form_year} filing
         </div>
 
@@ -516,7 +516,7 @@ function ProspectCard({ p, onSelect, index, divergenceWatch, thresholds }: {
         </div>
 
         {p.why_this_account[0] && (
-          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", lineHeight: 1.5, borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 8 }}>
+          <div style={{ fontSize: 11, color: "#334155", lineHeight: 1.5, borderTop: "1px solid #f1f5f9", paddingTop: 8 }}>
             {p.why_this_account[0].slice(0, 110)}{p.why_this_account[0].length > 110 ? "…" : ""}
           </div>
         )}
@@ -524,13 +524,13 @@ function ProspectCard({ p, onSelect, index, divergenceWatch, thresholds }: {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
             <span style={{ fontSize: 14, fontWeight: 900, color: GREEN }}>~${p.est_commission?.toLocaleString()}</span>
-            <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", marginLeft: 4 }}>est. commission</span>
+            <span style={{ fontSize: 9, color: "#64748b", marginLeft: 4 }}>est. commission</span>
           </div>
-          <ChevronRight style={{ width: 14, height: 14, color: "rgba(255,255,255,0.25)" }} />
+          <ChevronRight style={{ width: 14, height: 14, color: "rgba(15,23,42,0.08)" }} />
         </div>
       </button>
       <button onClick={e => { e.stopPropagation(); setShowSave(!showSave); }} data-testid={`save-prospect-${index}`}
-        style={{ position: "absolute", top: 10, right: 10, zIndex: 10, background: "rgba(0,0,0,0.5)", border: `1px solid ${GOLD}30`,
+        style={{ position: "absolute", top: 10, right: 10, zIndex: 10, background: "rgba(0,0,0,0.08)", border: `1px solid ${GOLD}30`,
           borderRadius: 6, padding: "4px 6px", cursor: "pointer", display: "flex", alignItems: "center", gap: 4, color: GOLD, fontSize: 9, fontWeight: 700 }}>
         <Bookmark style={{ width: 10, height: 10 }} /> Save
       </button>
@@ -565,7 +565,7 @@ function ProspectCard({ p, onSelect, index, divergenceWatch, thresholds }: {
             data-testid={`send-to-rx-defense-${index}`}
             style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.28)", borderRadius: 6,
               padding: "4px 9px", cursor: "pointer", display: "flex", alignItems: "center", gap: 3, color: "#10b981", fontSize: 9, fontWeight: 800 }}>
-            💊 Rx Defense
+            💊 PBM Contract Clarity 360
           </button>
         </div>
       )}
@@ -591,15 +591,15 @@ function ProspectDrawer({ p, onClose }: { p: Prospect; onClose: () => void }) {
       onClick={onClose}>
       <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.6)", backdropFilter: "blur(2px)" }} />
       <div onClick={e => e.stopPropagation()}
-        style={{ position: "relative", width: 520, maxWidth: "95vw", height: "100vh", background: "#060610",
+        style={{ position: "relative", width: 520, maxWidth: "95vw", height: "100vh", background: "#F8FAFC",
           borderLeft: `1px solid ${sc}25`, overflowY: "auto", boxShadow: `-20px 0 60px rgba(0,0,0,0.8)` }}>
 
-        <div style={{ padding: "24px 28px", borderBottom: "1px solid rgba(255,255,255,0.07)", position: "sticky", top: 0,
-          background: "#060610", zIndex: 1 }}>
+        <div style={{ padding: "24px 28px", borderBottom: "1px solid #e2e8f0", position: "sticky", top: 0,
+          background: "#F8FAFC", zIndex: 1 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div style={{ flex: 1, paddingRight: 12 }}>
-              <div style={{ fontSize: 16, fontWeight: 900, color: "#fff", marginBottom: 4 }}>{p.sponsor_name}</div>
-              <div style={{ display: "flex", gap: 10, fontSize: 11, color: "rgba(255,255,255,0.4)" }}>
+              <div style={{ fontSize: 16, fontWeight: 900, color: "#0F172A", marginBottom: 4 }}>{p.sponsor_name}</div>
+              <div style={{ display: "flex", gap: 10, fontSize: 11, color: "#475569" }}>
                 <span style={{ display: "flex", alignItems: "center", gap: 4 }}><MapPin style={{ width: 10, height: 10 }} />{p.city}, {p.state || "TN"}</span>
                 <span>·</span>
                 <span>{p.metro_label}</span>
@@ -610,11 +610,11 @@ function ProspectDrawer({ p, onClose }: { p: Prospect; onClose: () => void }) {
             <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
               <div style={{ textAlign: "center" }}>
                 <div style={{ fontSize: 32, fontWeight: 900, color: sc, lineHeight: 1 }}>{p.match_score}</div>
-                <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Fit Score</div>
+                <div style={{ fontSize: 9, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em" }}>Fit Score</div>
               </div>
-              <button onClick={onClose} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)",
+              <button onClick={onClose} style={{ background: "#f8fafc", border: "1px solid #e2e8f0",
                 borderRadius: 8, padding: "8px", cursor: "pointer" }}>
-                <X style={{ width: 14, height: 14, color: "rgba(255,255,255,0.5)" }} />
+                <X style={{ width: 14, height: 14, color: "#334155" }} />
               </button>
             </div>
           </div>
@@ -644,7 +644,7 @@ function ProspectDrawer({ p, onClose }: { p: Prospect; onClose: () => void }) {
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
                 <div>
                   <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: GOLD, marginBottom: 4 }}>SEC EDGAR Intelligence</div>
-                  <div style={{ fontSize: 13, fontWeight: 800, color: "#fff" }}>
+                  <div style={{ fontSize: 13, fontWeight: 800, color: "#0F172A" }}>
                     {p.edgar.legal_name || p.sponsor_name}
                     {p.edgar.ticker && <span style={{ marginLeft: 8, fontSize: 11, color: GOLD }}>({p.edgar.ticker})</span>}
                   </div>
@@ -662,9 +662,9 @@ function ProspectDrawer({ p, onClose }: { p: Prospect; onClose: () => void }) {
                   <div style={{ fontSize: 9, fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.12em", color: "#FF4444", marginBottom: 4 }}>
                     🔥 Active Trigger Event
                   </div>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: "#fff", marginBottom: 2 }}>{p.edgar.trigger_label}</div>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>Filed: {p.edgar.trigger_date}</div>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", marginTop: 6, lineHeight: 1.5 }}>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "#0F172A", marginBottom: 2 }}>{p.edgar.trigger_label}</div>
+                  <div style={{ fontSize: 10, color: "#475569" }}>Filed: {p.edgar.trigger_date}</div>
+                  <div style={{ fontSize: 10, color: "#334155", marginTop: 6, lineHeight: 1.5 }}>
                     {p.edgar.trigger_type === "acquisition" && "M&A events disrupt benefits programs — plan consolidation, carrier review, and broker displacement happen within 90 days of close."}
                     {p.edgar.trigger_type === "ma" && "A material agreement event signals business change — perfect timing for a fiduciary benefits review conversation."}
                     {p.edgar.trigger_type === "leadership" && "New executives audit vendor relationships, including benefits. This is a prime window to introduce yourself as the fiduciary alternative."}
@@ -674,13 +674,13 @@ function ProspectDrawer({ p, onClose }: { p: Prospect; onClose: () => void }) {
                   </div>
                 </div>
               ) : (
-                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>Publicly traded · No material trigger events in the last 180 days</div>
+                <div style={{ fontSize: 10, color: "#475569" }}>Publicly traded · No material trigger events in the last 180 days</div>
               )}
             </div>
           )}
 
           <div>
-            <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 12 }}>Account Details</div>
+            <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 12 }}>Account Details</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
               {[
                 { label: "Industry",     value: p.industry },
@@ -690,16 +690,16 @@ function ProspectDrawer({ p, onClose }: { p: Prospect; onClose: () => void }) {
                 { label: "Est. Commission", value: `~$${p.est_commission?.toLocaleString()}` },
                 { label: "Filing Year",  value: String(p.form_year) },
               ].map(({ label, value }) => (
-                <div key={label} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 10, padding: "10px 14px" }}>
-                  <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 4 }}>{label}</div>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.8)" }}>{value}</div>
+                <div key={label} style={{ background: "#ffffff", border: "1px solid #f1f5f9", borderRadius: 10, padding: "10px 14px" }}>
+                  <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(15,23,42,0.08)", marginBottom: 4 }}>{label}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "#0f172a" }}>{value}</div>
                 </div>
               ))}
             </div>
           </div>
 
           <div>
-            <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 14 }}>6-Factor Fit Score Breakdown</div>
+            <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 14 }}>6-Factor Fit Score Breakdown</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {Object.entries(p.score_breakdown || {}).map(([key, val]) => {
                 const col = scoreColor(val);
@@ -709,7 +709,7 @@ function ProspectDrawer({ p, onClose }: { p: Prospect; onClose: () => void }) {
                       <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>{FACTOR_LABELS[key] || key}</span>
                       <span style={{ fontSize: 11, fontWeight: 900, color: col }}>{val}</span>
                     </div>
-                    <div style={{ height: 5, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden" }}>
+                    <div style={{ height: 5, background: "#f1f5f9", borderRadius: 3, overflow: "hidden" }}>
                       <div style={{ width: `${val}%`, height: "100%", background: col, borderRadius: 3 }} />
                     </div>
                   </div>
@@ -737,7 +737,7 @@ function ProspectDrawer({ p, onClose }: { p: Prospect; onClose: () => void }) {
               <Target style={{ width: 11, height: 11 }} /> Suggested Opening Angle
             </div>
             <div style={{ background: `${GOLD}08`, border: `1px solid ${GOLD}20`, borderLeft: `3px solid ${GOLD}`, borderRadius: 12, padding: "16px 20px",
-              fontSize: 12, color: "rgba(255,255,255,0.7)", lineHeight: 1.7 }}>
+              fontSize: 12, color: "#0f172a", lineHeight: 1.7 }}>
               {p.opening_angle}
             </div>
           </div>
@@ -750,9 +750,9 @@ function ProspectDrawer({ p, onClose }: { p: Prospect; onClose: () => void }) {
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {p.carriers.length > 0 && (
                 <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                  <Building2 style={{ width: 13, height: 13, color: "rgba(255,255,255,0.3)", flexShrink: 0, marginTop: 2 }} />
+                  <Building2 style={{ width: 13, height: 13, color: "#64748b", flexShrink: 0, marginTop: 2 }} />
                   <div>
-                    <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>Incumbent Carrier(s)</div>
+                    <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>Incumbent Carrier(s)</div>
                     <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                       {p.carriers.map(c => (
                         <span key={c} style={{ fontSize: 11, fontWeight: 700, color: BLUE, background: `${BLUE}10`, border: `1px solid ${BLUE}25`, borderRadius: 6, padding: "3px 9px" }}>{c}</span>
@@ -763,28 +763,28 @@ function ProspectDrawer({ p, onClose }: { p: Prospect; onClose: () => void }) {
               )}
 
               <div style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
-                <DollarSign style={{ width: 13, height: 13, color: "rgba(255,255,255,0.3)", flexShrink: 0, marginTop: 2 }} />
+                <DollarSign style={{ width: 13, height: 13, color: "#64748b", flexShrink: 0, marginTop: 2 }} />
                 <div>
-                  <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>Incumbent Broker Revenue</div>
+                  <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 4 }}>Incumbent Broker Revenue</div>
                   {p.broker_comm_actual > 0 ? (
                     <div>
                       <span style={{ fontSize: 15, fontWeight: 900, color: ORANGE }}>${p.broker_comm_actual.toLocaleString()}</span>
-                      <span style={{ fontSize: 9, color: "rgba(255,255,255,0.35)", marginLeft: 6 }}>reported · Form 5500 Sch A</span>
+                      <span style={{ fontSize: 9, color: "#64748b", marginLeft: 6 }}>reported · Form 5500 Sch A</span>
                     </div>
                   ) : (
                     <div>
                       <span style={{ fontSize: 15, fontWeight: 900, color: GOLD }}>~${p.est_commission.toLocaleString()}</span>
-                      <span style={{ fontSize: 9, color: "rgba(255,255,255,0.35)", marginLeft: 6 }}>estimated · {p.participants.toLocaleString()} lives × avg rate</span>
+                      <span style={{ fontSize: 9, color: "#64748b", marginLeft: 6 }}>estimated · {p.participants.toLocaleString()} lives × avg rate</span>
                     </div>
                   )}
                 </div>
               </div>
 
-              <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 10, display: "flex", gap: 10, alignItems: "flex-start" }}>
-                <FileText style={{ width: 13, height: 13, color: "rgba(255,255,255,0.25)", flexShrink: 0, marginTop: 1 }} />
+              <div style={{ borderTop: "1px solid #f1f5f9", paddingTop: 10, display: "flex", gap: 10, alignItems: "flex-start" }}>
+                <FileText style={{ width: 13, height: 13, color: "rgba(15,23,42,0.08)", flexShrink: 0, marginTop: 1 }} />
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", lineHeight: 1.5, marginBottom: 6 }}>
-                    Broker identity is disclosed in <strong style={{ color: "rgba(255,255,255,0.6)" }}>Form 5500 Schedule C</strong> — the service provider filing. Look up this employer's full filing to find the incumbent broker's firm name and total compensation.
+                  <div style={{ fontSize: 10, color: "#475569", lineHeight: 1.5, marginBottom: 6 }}>
+                    Broker identity is disclosed in <strong style={{ color: "#1e293b" }}>Form 5500 Schedule C</strong> — the service provider filing. Look up this employer's full filing to find the incumbent broker's firm name and total compensation.
                   </div>
                   <a
                     href={`https://efts.dol.gov/LATEST/search-index?q=%22${p.ein.replace(/-/g, "")}%22&dateRange=custom&startDate=2022-01-01&endDate=2024-12-31`}
@@ -798,7 +798,7 @@ function ProspectDrawer({ p, onClose }: { p: Prospect; onClose: () => void }) {
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: 10, paddingTop: 8, borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+          <div style={{ display: "flex", gap: 10, paddingTop: 8, borderTop: "1px solid #e2e8f0" }}>
             <div style={{ position: "relative", flex: 1 }}>
               <button onClick={() => setShowSave(!showSave)} data-testid="drawer-save-pipeline"
                 style={{ width: "100%", padding: "12px", borderRadius: 10, fontSize: 12, fontWeight: 800, cursor: "pointer",
@@ -875,7 +875,7 @@ function BookTicker({ analysis }: { analysis: BookAnalysis }) {
           }}>{phrase}</div>
         ))}
       </div>
-      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", flexShrink: 0 }}>BOOK IQ</div>
+      <div style={{ fontSize: 9, color: "#94a3b8", flexShrink: 0 }}>BOOK IQ</div>
     </div>
   );
 }
@@ -955,15 +955,15 @@ function BookAnalyzerView({ onRunBookMatch }: { onRunBookMatch: () => void }) {
     return (
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
         <div style={{ marginBottom: 28 }}>
-          <div style={{ fontSize: 20, fontWeight: 900, color: "#fff", marginBottom: 6 }}>Paste Your Book of Business</div>
-          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", lineHeight: 1.7 }}>
+          <div style={{ fontSize: 20, fontWeight: 900, color: "#0F172A", marginBottom: 6 }}>Paste Your Book of Business</div>
+          <div style={{ fontSize: 12, color: "#475569", lineHeight: 1.7 }}>
             One client per line — comma-separated: <span style={{ color: GOLD, fontFamily: "monospace" }}>Company Name, Industry, Employees, Plan Type, Renewal Month</span>
           </div>
         </div>
 
-        <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: "20px 22px", marginBottom: 16 }}>
+        <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "20px 22px", marginBottom: 16 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>
+            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b" }}>
               Client List {previewCount > 0 && <span style={{ color: GREEN }}>· {previewCount} parsed</span>}
             </span>
             <button onClick={handleUseDemo} data-testid="use-demo-book"
@@ -978,8 +978,8 @@ function BookAnalyzerView({ onRunBookMatch }: { onRunBookMatch: () => void }) {
             placeholder={`Midwest Precision Manufacturing, Manufacturing, 420, Self-Funded, 3\nCircle City Health Partners, Healthcare, 890, Self-Funded, 1\nSummit Logistics LLC, Transportation, 310, Self-Funded, 11\n…paste 10–15 clients`}
             data-testid="book-paste-input"
             rows={12}
-            style={{ width: "100%", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: 10, color: "rgba(255,255,255,0.8)", fontSize: 12, fontFamily: "monospace",
+            style={{ width: "100%", background: "#ffffff", border: "1px solid #e2e8f0",
+              borderRadius: 10, color: "#0f172a", fontSize: 12, fontFamily: "monospace",
               padding: "12px 14px", resize: "vertical", outline: "none", lineHeight: 1.7, boxSizing: "border-box" }}
           />
           {parseError && (
@@ -987,8 +987,8 @@ function BookAnalyzerView({ onRunBookMatch }: { onRunBookMatch: () => void }) {
           )}
         </div>
 
-        <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "14px 18px", marginBottom: 20 }}>
-          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 10 }}>Field Reference</div>
+        <div style={{ background: "#ffffff", border: "1px solid #f1f5f9", borderRadius: 12, padding: "14px 18px", marginBottom: 20 }}>
+          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(15,23,42,0.08)", marginBottom: 10 }}>Field Reference</div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 10 }}>
             {[
               { field: "Company Name", note: "Any name", example: "Acme Corp" },
@@ -997,10 +997,10 @@ function BookAnalyzerView({ onRunBookMatch }: { onRunBookMatch: () => void }) {
               { field: "Plan Type", note: "Optional", example: "Self-Funded" },
               { field: "Renewal Month", note: "1–12", example: "3 = March" },
             ].map(f => (
-              <div key={f.field} style={{ background: "rgba(255,255,255,0.03)", borderRadius: 8, padding: "8px 10px" }}>
+              <div key={f.field} style={{ background: "#ffffff", borderRadius: 8, padding: "8px 10px" }}>
                 <div style={{ fontSize: 10, fontWeight: 800, color: GOLD, marginBottom: 2 }}>{f.field}</div>
-                <div style={{ fontSize: 9, color: "rgba(255,255,255,0.35)" }}>{f.note}</div>
-                <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", fontFamily: "monospace", marginTop: 3 }}>{f.example}</div>
+                <div style={{ fontSize: 9, color: "#64748b" }}>{f.note}</div>
+                <div style={{ fontSize: 9, color: "#94a3b8", fontFamily: "monospace", marginTop: 3 }}>{f.example}</div>
               </div>
             ))}
           </div>
@@ -1008,9 +1008,9 @@ function BookAnalyzerView({ onRunBookMatch }: { onRunBookMatch: () => void }) {
 
         <button onClick={handleAnalyze} disabled={analyzeMut.isPending} data-testid="run-book-analysis"
           style={{ width: "100%", padding: "16px", borderRadius: 14, fontSize: 14, fontWeight: 900, cursor: analyzeMut.isPending ? "default" : "pointer",
-            background: analyzeMut.isPending ? "rgba(255,255,255,0.05)" : `linear-gradient(135deg, ${GOLD}25, ${GOLD}12)`,
-            border: `1px solid ${analyzeMut.isPending ? "rgba(255,255,255,0.08)" : GOLD + "45"}`,
-            color: analyzeMut.isPending ? "rgba(255,255,255,0.3)" : GOLD,
+            background: analyzeMut.isPending ? "#f8fafc" : `linear-gradient(135deg, ${GOLD}25, ${GOLD}12)`,
+            border: `1px solid ${analyzeMut.isPending ? "#e2e8f0" : GOLD + "45"}`,
+            color: analyzeMut.isPending ? "#64748b" : GOLD,
             display: "flex", alignItems: "center", justifyContent: "center", gap: 10 }}>
           {analyzeMut.isPending
             ? <><RefreshCw style={{ width: 15, height: 15, animation: "spin 1s linear infinite" }} /> Analyzing book…</>
@@ -1042,14 +1042,14 @@ function BookAnalyzerView({ onRunBookMatch }: { onRunBookMatch: () => void }) {
   return (
     <div style={{ maxWidth: 900, margin: "0 auto" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
-        <div style={{ fontSize: 20, fontWeight: 900, color: "#fff" }}>Your Book Profile Analysis</div>
+        <div style={{ fontSize: 20, fontWeight: 900, color: "#0F172A" }}>Your Book Profile Analysis</div>
         <button onClick={() => setStep("paste")} data-testid="re-edit-book"
-          style={{ background: "none", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8,
-            color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 700, padding: "5px 12px", cursor: "pointer" }}>
+          style={{ background: "none", border: "1px solid #cbd5e1", borderRadius: 8,
+            color: "#475569", fontSize: 11, fontWeight: 700, padding: "5px 12px", cursor: "pointer" }}>
           ← Re-paste / Edit
         </button>
       </div>
-      <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginBottom: 18 }}>
+      <div style={{ fontSize: 12, color: "#475569", marginBottom: 18 }}>
         Based on your {analysis.totalClients}-client book · real patterns used to target best-fit prospects.
       </div>
 
@@ -1065,7 +1065,7 @@ function BookAnalyzerView({ onRunBookMatch }: { onRunBookMatch: () => void }) {
               borderRadius: 12, padding: "14px 16px", textAlign: "center" }}>
               <Icon style={{ width: 16, height: 16, color: s.color, margin: "0 auto 6px" }} />
               <div style={{ fontSize: s.label === "Top Vertical" || s.label === "Top Plan Type" ? 13 : 20, fontWeight: 900, color: s.color, lineHeight: 1.1, marginBottom: 4 }}>{s.value}</div>
-              <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em" }}>{s.label}</div>
+              <div style={{ fontSize: 9, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.1em" }}>{s.label}</div>
             </div>
           );
         })}
@@ -1073,33 +1073,33 @@ function BookAnalyzerView({ onRunBookMatch }: { onRunBookMatch: () => void }) {
 
       {/* Charts row 1: Industry + Size */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 20 }}>
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "20px 22px" }}>
-          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 14 }}>Industry Concentration</div>
+        <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "20px 22px" }}>
+          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 14 }}>Industry Concentration</div>
           <ResponsiveContainer width="100%" height={170}>
             <BarChart data={industryData} layout="vertical" margin={{ left: 0, right: 24, top: 0, bottom: 0 }}>
               <XAxis type="number" hide />
               <YAxis type="category" dataKey="name" tick={{ fill: "rgba(255,255,255,0.45)", fontSize: 10 }} axisLine={false} tickLine={false} width={100} />
               <Tooltip
                 formatter={(v: any) => [v, "clients"]}
-                contentStyle={{ background: "#080810", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, fontSize: 11 }} />
-              <Bar dataKey="value" radius={[0, 4, 4, 0]} label={{ position: "right", fill: "rgba(255,255,255,0.3)", fontSize: 10, formatter: (v: any) => v > 0 ? v : "" }}>
+                contentStyle={{ background: "#F8FAFC", border: "1px solid #cbd5e1", borderRadius: 8, fontSize: 11 }} />
+              <Bar dataKey="value" radius={[0, 4, 4, 0]} label={{ position: "right", fill: "#64748b", fontSize: 10, formatter: (v: any) => v > 0 ? v : "" }}>
                 {industryData.map((d, i) => <Cell key={i} fill={d.color} fillOpacity={0.85} />)}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "20px 22px" }}>
-          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 14 }}>Employer Size Distribution</div>
+        <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "20px 22px" }}>
+          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 14 }}>Employer Size Distribution</div>
           <ResponsiveContainer width="100%" height={140}>
             <BarChart data={sizeData} margin={{ left: 0, right: 8, top: 4, bottom: 0 }}>
-              <XAxis dataKey="band" tick={{ fill: "rgba(255,255,255,0.35)", fontSize: 8 }} axisLine={false} tickLine={false}
+              <XAxis dataKey="band" tick={{ fill: "#64748b", fontSize: 8 }} axisLine={false} tickLine={false}
                 tickFormatter={v => v.split(" ")[0]} />
               <YAxis hide />
               <Tooltip
                 formatter={(v: any) => [v, "clients"]}
                 labelFormatter={l => `${l}`}
-                contentStyle={{ background: "#080810", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, fontSize: 11 }} />
+                contentStyle={{ background: "#F8FAFC", border: "1px solid #cbd5e1", borderRadius: 8, fontSize: 11 }} />
               <Bar dataKey="count" radius={[4, 4, 0, 0]}>
                 {sizeData.map((d, i) => <Cell key={i} fill={d.fill} fillOpacity={0.85} />)}
               </Bar>
@@ -1113,13 +1113,13 @@ function BookAnalyzerView({ onRunBookMatch }: { onRunBookMatch: () => void }) {
 
       {/* Charts row 2: Renewal histogram + Plan type pie */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 20 }}>
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "20px 22px" }}>
-          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 14 }}>Renewal Month Distribution</div>
+        <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "20px 22px" }}>
+          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 14 }}>Renewal Month Distribution</div>
           <ResponsiveContainer width="100%" height={130}>
             <BarChart data={analysis.renewalDistribution} margin={{ left: 0, right: 0, top: 4, bottom: 0 }}>
-              <XAxis dataKey="month" tick={{ fill: "rgba(255,255,255,0.35)", fontSize: 9 }} axisLine={false} tickLine={false} />
+              <XAxis dataKey="month" tick={{ fill: "#64748b", fontSize: 9 }} axisLine={false} tickLine={false} />
               <YAxis hide />
-              <Tooltip formatter={(v: any) => [v, "clients"]} contentStyle={{ background: "#080810", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, fontSize: 11 }} />
+              <Tooltip formatter={(v: any) => [v, "clients"]} contentStyle={{ background: "#F8FAFC", border: "1px solid #cbd5e1", borderRadius: 8, fontSize: 11 }} />
               <Bar dataKey="count" radius={[3, 3, 0, 0]}>
                 {analysis.renewalDistribution.map((r, i) => (
                   <Cell key={i} fill={r.count === Math.max(...analysis.renewalDistribution.map(x => x.count)) ? GOLD : `${GOLD}45`} />
@@ -1127,26 +1127,26 @@ function BookAnalyzerView({ onRunBookMatch }: { onRunBookMatch: () => void }) {
               </Bar>
             </BarChart>
           </ResponsiveContainer>
-          <div style={{ marginTop: 8, fontSize: 9, color: "rgba(255,255,255,0.25)", textAlign: "center" }}>
+          <div style={{ marginTop: 8, fontSize: 9, color: "rgba(15,23,42,0.08)", textAlign: "center" }}>
             Peak month highlighted in gold
           </div>
         </div>
 
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "20px 22px" }}>
-          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 10 }}>Plan Type Breakdown</div>
+        <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "20px 22px" }}>
+          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 10 }}>Plan Type Breakdown</div>
           <ResponsiveContainer width="100%" height={130}>
             <PieChart>
               <Pie data={planPieData} cx="50%" cy="50%" outerRadius={52} innerRadius={28} dataKey="value" paddingAngle={3}>
                 {planPieData.map((entry, i) => <Cell key={i} fill={entry.fill} fillOpacity={0.85} />)}
               </Pie>
-              <Tooltip formatter={(v: any, name: any) => [v, name]} contentStyle={{ background: "#080810", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, fontSize: 11 }} />
+              <Tooltip formatter={(v: any, name: any) => [v, name]} contentStyle={{ background: "#F8FAFC", border: "1px solid #cbd5e1", borderRadius: 8, fontSize: 11 }} />
             </PieChart>
           </ResponsiveContainer>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 14px", justifyContent: "center" }}>
             {planPieData.map(p => (
               <div key={p.name} style={{ display: "flex", alignItems: "center", gap: 5 }}>
                 <div style={{ width: 7, height: 7, borderRadius: "50%", background: p.fill, flexShrink: 0 }} />
-                <span style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>{p.name} <span style={{ fontWeight: 800, color: "rgba(255,255,255,0.7)" }}>({p.value})</span></span>
+                <span style={{ fontSize: 10, color: "#334155" }}>{p.name} <span style={{ fontWeight: 800, color: "#0f172a" }}>({p.value})</span></span>
               </div>
             ))}
           </div>
@@ -1154,8 +1154,8 @@ function BookAnalyzerView({ onRunBookMatch }: { onRunBookMatch: () => void }) {
       </div>
 
       {/* Whitespace Intelligence */}
-      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "20px 24px", marginBottom: 20 }}>
-        <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 16 }}>
+      <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "20px 24px", marginBottom: 20 }}>
+        <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 16 }}>
           Market Whitespace Intelligence
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -1212,19 +1212,19 @@ function SavedListsPanel() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ["/api/saas/broker/lists"] }),
   });
 
-  if (isLoading) return <div style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", padding: 20 }}>Loading saved lists…</div>;
+  if (isLoading) return <div style={{ fontSize: 12, color: "#64748b", padding: 20 }}>Loading saved lists…</div>;
   if (!lists.length) return (
-    <div style={{ padding: "30px 20px", textAlign: "center", background: "rgba(255,255,255,0.02)", border: "1px dashed rgba(255,255,255,0.1)", borderRadius: 12 }}>
-      <Bookmark style={{ width: 24, height: 24, color: "rgba(255,255,255,0.15)", margin: "0 auto 12px" }} />
-      <div style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>No saved lists yet</div>
-      <div style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", marginTop: 4 }}>Save prospects from the results view to create lists</div>
+    <div style={{ padding: "30px 20px", textAlign: "center", background: "#ffffff", border: "1px dashed #e2e8f0", borderRadius: 12 }}>
+      <Bookmark style={{ width: 24, height: 24, color: "#cbd5e1", margin: "0 auto 12px" }} />
+      <div style={{ fontSize: 12, color: "#64748b" }}>No saved lists yet</div>
+      <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 4 }}>Save prospects from the results view to create lists</div>
     </div>
   );
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
       {lists.map(l => (
-        <div key={l.id} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, overflow: "hidden" }}>
+        <div key={l.id} style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, overflow: "hidden" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 18px", cursor: "pointer" }}
             onClick={() => setExpandedList(expandedList === l.id ? null : l.id)}>
             <Bookmark style={{ width: 14, height: 14, color: GOLD, flexShrink: 0 }} />
@@ -1233,34 +1233,34 @@ function SavedListsPanel() {
                 onKeyDown={e => { if (e.key === "Enter") renameMut.mutate({ id: l.id, name: editName }); }}
                 onBlur={() => renameMut.mutate({ id: l.id, name: editName })}
                 onClick={e => e.stopPropagation()} autoFocus
-                style={{ flex: 1, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: 6,
-                  padding: "4px 8px", color: "#fff", fontSize: 13, fontWeight: 700, outline: "none" }} />
+                style={{ flex: 1, background: "#f1f5f9", border: "1px solid #94a3b8", borderRadius: 6,
+                  padding: "4px 8px", color: "#0F172A", fontSize: 13, fontWeight: 700, outline: "none" }} />
             ) : (
-              <span style={{ flex: 1, fontSize: 13, fontWeight: 700, color: "#fff" }}>{l.name}</span>
+              <span style={{ flex: 1, fontSize: 13, fontWeight: 700, color: "#0F172A" }}>{l.name}</span>
             )}
-            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", background: "rgba(255,255,255,0.05)", borderRadius: 4, padding: "2px 8px" }}>
+            <span style={{ fontSize: 10, color: "#64748b", background: "#f8fafc", borderRadius: 4, padding: "2px 8px" }}>
               {l.itemCount} {l.itemCount === 1 ? "prospect" : "prospects"}
             </span>
             <button onClick={e => { e.stopPropagation(); setEditingId(l.id); setEditName(l.name); }} data-testid={`rename-list-${l.id}`}
               style={{ background: "none", border: "none", cursor: "pointer", padding: 4 }}>
-              <Edit3 style={{ width: 12, height: 12, color: "rgba(255,255,255,0.3)" }} />
+              <Edit3 style={{ width: 12, height: 12, color: "#64748b" }} />
             </button>
             <button onClick={e => { e.stopPropagation(); downloadWithManifest(`/api/saas/broker/lists/${l.id}/export`, { filename: `prospect-list-${l.id}.csv` }); }} data-testid={`export-list-${l.id}`}
               style={{ background: "none", border: "none", cursor: "pointer", padding: 4, display: "flex" }}>
-              <Download style={{ width: 12, height: 12, color: "rgba(255,255,255,0.3)" }} />
+              <Download style={{ width: 12, height: 12, color: "#64748b" }} />
             </button>
-            <ChevronRight style={{ width: 14, height: 14, color: "rgba(255,255,255,0.2)",
+            <ChevronRight style={{ width: 14, height: 14, color: "#94a3b8",
               transform: expandedList === l.id ? "rotate(90deg)" : "none", transition: "transform 0.15s" }} />
           </div>
 
           {expandedList === l.id && l.items.length > 0 && (
-            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", padding: "8px 12px" }}>
+            <div style={{ borderTop: "1px solid #f1f5f9", padding: "8px 12px" }}>
               {l.items.map(item => (
                 <div key={item.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 6px",
-                  borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                  borderBottom: "1px solid #ffffff" }}>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.8)" }}>{item.sponsorName}</div>
-                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)" }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: "#0f172a" }}>{item.sponsorName}</div>
+                    <div style={{ fontSize: 10, color: "#64748b" }}>
                       {item.city} · {item.industry} · {item.participants.toLocaleString()} participants
                     </div>
                     {item.ein && (
@@ -1276,7 +1276,7 @@ function SavedListsPanel() {
                       </div>
                     )}
                     {item.notes && (
-                      <div style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", fontStyle: "italic", marginTop: 2 }}>{item.notes}</div>
+                      <div style={{ fontSize: 10, color: "rgba(15,23,42,0.08)", fontStyle: "italic", marginTop: 2 }}>{item.notes}</div>
                     )}
                   </div>
                   {item.matchScore > 0 && (
@@ -1300,7 +1300,7 @@ function SavedListsPanel() {
                   )}
                   <button onClick={() => deleteItemMut.mutate({ listId: l.id, itemId: item.id })} data-testid={`delete-item-${item.id}`}
                     style={{ background: "none", border: "none", cursor: "pointer", padding: 4 }}>
-                    <Trash2 style={{ width: 12, height: 12, color: "rgba(255,255,255,0.2)" }} />
+                    <Trash2 style={{ width: 12, height: 12, color: "#94a3b8" }} />
                   </button>
                 </div>
               ))}
@@ -1334,10 +1334,10 @@ function QuizFlow({ onComplete, state = "IN" }: { onComplete: (p: URLSearchParam
           {SIZE_OPTIONS.map(s => (
             <button key={s.key} onClick={() => toggleArr("sizes", s.key)}
               style={{ flex: "1 1 150px", padding: "16px 18px", borderRadius: 12, cursor: "pointer", textAlign: "left", transition: "all 0.12s",
-                background: answers.sizes.includes(s.key) ? `${GOLD}15` : "rgba(255,255,255,0.04)",
-                border: answers.sizes.includes(s.key) ? `1px solid ${GOLD}45` : "1px solid rgba(255,255,255,0.1)" }}>
+                background: answers.sizes.includes(s.key) ? `${GOLD}15` : "#ffffff",
+                border: answers.sizes.includes(s.key) ? `1px solid ${GOLD}45` : "1px solid #e2e8f0" }}>
               <div style={{ fontSize: 14, fontWeight: 800, color: answers.sizes.includes(s.key) ? GOLD : "#fff", marginBottom: 4 }}>{s.label}</div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{s.sub}</div>
+              <div style={{ fontSize: 11, color: "#475569" }}>{s.sub}</div>
             </button>
           ))}
         </div>
@@ -1384,16 +1384,16 @@ function QuizFlow({ onComplete, state = "IN" }: { onComplete: (p: URLSearchParam
             return (
               <button key={s.key} onClick={() => setSingle("serviceWedge", s.key)}
                 style={{ padding: "16px 18px", borderRadius: 14, cursor: "pointer", textAlign: "left", transition: "all 0.12s",
-                  background: active ? `${GOLD}12` : "rgba(255,255,255,0.03)",
-                  border: active ? `1px solid ${GOLD}40` : "1px solid rgba(255,255,255,0.08)" }}>
+                  background: active ? `${GOLD}12` : "#ffffff",
+                  border: active ? `1px solid ${GOLD}40` : "1px solid #e2e8f0" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
                   <div style={{ width: 32, height: 32, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center",
-                    background: active ? `${GOLD}20` : "rgba(255,255,255,0.06)", border: `1px solid ${active ? GOLD + "40" : "rgba(255,255,255,0.1)"}` }}>
-                    <Icon style={{ width: 14, height: 14, color: active ? GOLD : "rgba(255,255,255,0.4)" }} />
+                    background: active ? `${GOLD}20` : "#f1f5f9", border: `1px solid ${active ? GOLD + "40" : "#e2e8f0"}` }}>
+                    <Icon style={{ width: 14, height: 14, color: active ? GOLD : "#475569" }} />
                   </div>
                   <span style={{ fontSize: 13, fontWeight: 800, color: active ? GOLD : "#fff" }}>{s.label}</span>
                 </div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", lineHeight: 1.5 }}>{s.sub}</div>
+                <div style={{ fontSize: 11, color: "#475569", lineHeight: 1.5 }}>{s.sub}</div>
               </button>
             );
           })}
@@ -1412,13 +1412,13 @@ function QuizFlow({ onComplete, state = "IN" }: { onComplete: (p: URLSearchParam
             return (
               <button key={m.key} onClick={() => setSingle("salesMotion", m.key)}
                 style={{ padding: "16px 18px", borderRadius: 14, cursor: "pointer", textAlign: "left", transition: "all 0.12s",
-                  background: active ? `${BLUE}10` : "rgba(255,255,255,0.03)",
-                  border: active ? `1px solid ${BLUE}35` : "1px solid rgba(255,255,255,0.08)" }}>
+                  background: active ? `${BLUE}10` : "#ffffff",
+                  border: active ? `1px solid ${BLUE}35` : "1px solid #e2e8f0" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-                  <Icon style={{ width: 16, height: 16, color: active ? BLUE : "rgba(255,255,255,0.4)" }} />
+                  <Icon style={{ width: 16, height: 16, color: active ? BLUE : "#475569" }} />
                   <span style={{ fontSize: 13, fontWeight: 800, color: active ? BLUE : "#fff" }}>{m.label}</span>
                 </div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", lineHeight: 1.5 }}>{m.sub}</div>
+                <div style={{ fontSize: 11, color: "#475569", lineHeight: 1.5 }}>{m.sub}</div>
               </button>
             );
           })}
@@ -1455,15 +1455,15 @@ function QuizFlow({ onComplete, state = "IN" }: { onComplete: (p: URLSearchParam
     <div style={{ maxWidth: 680, margin: "0 auto" }}>
       <div style={{ display: "flex", gap: 6, marginBottom: 32 }}>
         {STEPS.map((_, i) => (
-          <div key={i} style={{ flex: 1, height: 3, borderRadius: 2, background: i <= step ? GOLD : "rgba(255,255,255,0.1)", transition: "background 0.3s" }} />
+          <div key={i} style={{ flex: 1, height: 3, borderRadius: 2, background: i <= step ? GOLD : "#e2e8f0", transition: "background 0.3s" }} />
         ))}
       </div>
 
-      <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 8 }}>
+      <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 8 }}>
         Question {step + 1} of {STEPS.length}
       </div>
-      <div style={{ fontSize: 20, fontWeight: 900, color: "#fff", marginBottom: 6 }}>{current.q}</div>
-      <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginBottom: 24 }}>{current.hint}</div>
+      <div style={{ fontSize: 20, fontWeight: 900, color: "#0F172A", marginBottom: 6 }}>{current.q}</div>
+      <div style={{ fontSize: 12, color: "#475569", marginBottom: 24 }}>{current.hint}</div>
 
       <div style={{ marginBottom: 32 }}>{current.render()}</div>
 
@@ -1471,24 +1471,24 @@ function QuizFlow({ onComplete, state = "IN" }: { onComplete: (p: URLSearchParam
         {step > 0 && (
           <button onClick={() => setStep(s => s - 1)}
             style={{ padding: "12px 20px", borderRadius: 10, fontSize: 12, fontWeight: 700, cursor: "pointer",
-              background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.5)" }}>
+              background: "#ffffff", border: "1px solid #e2e8f0", color: "#334155" }}>
             ← Back
           </button>
         )}
         {step < STEPS.length - 1 ? (
           <button onClick={() => isValid && setStep(s => s + 1)} disabled={!isValid} data-testid="quiz-next"
             style={{ flex: 1, padding: "13px", borderRadius: 10, fontSize: 13, fontWeight: 900, cursor: isValid ? "pointer" : "not-allowed",
-              background: isValid ? `${GOLD}20` : "rgba(255,255,255,0.05)",
-              border: isValid ? `1px solid ${GOLD}40` : "1px solid rgba(255,255,255,0.08)",
-              color: isValid ? GOLD : "rgba(255,255,255,0.25)" }}>
+              background: isValid ? `${GOLD}20` : "#f8fafc",
+              border: isValid ? `1px solid ${GOLD}40` : "1px solid #e2e8f0",
+              color: isValid ? GOLD : "rgba(15,23,42,0.08)" }}>
             Next →
           </button>
         ) : (
           <button onClick={submit} disabled={!isValid} data-testid="quiz-submit"
             style={{ flex: 1, padding: "13px", borderRadius: 10, fontSize: 13, fontWeight: 900, cursor: isValid ? "pointer" : "not-allowed",
-              background: isValid ? `linear-gradient(135deg, ${GOLD}28, ${GOLD}15)` : "rgba(255,255,255,0.05)",
-              border: isValid ? `1px solid ${GOLD}50` : "1px solid rgba(255,255,255,0.08)",
-              color: isValid ? GOLD : "rgba(255,255,255,0.25)" }}>
+              background: isValid ? `linear-gradient(135deg, ${GOLD}28, ${GOLD}15)` : "#f8fafc",
+              border: isValid ? `1px solid ${GOLD}50` : "1px solid #e2e8f0",
+              color: isValid ? GOLD : "rgba(15,23,42,0.08)" }}>
             Find My Recommended Targets →
           </button>
         )}
@@ -1550,7 +1550,7 @@ function ResultsDashboard({ queryParams, onBack, state = "IN", initialFlagFilter
     <div>
       <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 24, flexWrap: "wrap" }}>
         <button onClick={onBack} style={{ display: "flex", alignItems: "center", gap: 6, background: "none", border: "none",
-          color: "rgba(255,255,255,0.4)", fontSize: 12, cursor: "pointer", padding: 0, flexShrink: 0 }}>
+          color: "#475569", fontSize: 12, cursor: "pointer", padding: 0, flexShrink: 0 }}>
           ← Refine Search
         </button>
 
@@ -1562,7 +1562,7 @@ function ResultsDashboard({ queryParams, onBack, state = "IN", initialFlagFilter
           <div style={{ display: "flex", gap: 20, marginLeft: "auto", flexWrap: "wrap" }}>
             {[
               { label: `${stateName} DB Matches`, value: data?.total_found, color: GOLD },
-              { label: "Shown",               value: s.shown,          color: "rgba(255,255,255,0.6)" },
+              { label: "Shown",               value: s.shown,          color: "#1e293b" },
               { label: "Stop-Loss Gaps",       value: s.stop_loss_gaps, color: ORANGE },
               { label: "Rx Opportunities",     value: s.rx_opportunities, color: PURPLE },
               { label: "Total Commission Opp", value: fmtMoney(s.total_opportunity), color: GREEN },
@@ -1570,7 +1570,7 @@ function ResultsDashboard({ queryParams, onBack, state = "IN", initialFlagFilter
             ].map(({ label, value, color }) => (
               <div key={label} style={{ textAlign: "center" }}>
                 <div style={{ fontSize: 18, fontWeight: 900, color, lineHeight: 1 }}>{value}</div>
-                <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.09em", marginTop: 2 }}>{label}</div>
+                <div style={{ fontSize: 9, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.09em", marginTop: 2 }}>{label}</div>
               </div>
             ))}
           </div>
@@ -1581,9 +1581,9 @@ function ResultsDashboard({ queryParams, onBack, state = "IN", initialFlagFilter
         {([["list", LayoutGrid, "Recommended Accounts"], ...(state === "TN" ? [["map", MapIcon, `${stateName} Market Map`]] : []), ["saved", Bookmark, "Saved Lists"]] as ["list" | "map" | "saved", typeof LayoutGrid, string][]).map(([id, Icon, label]) => (
           <button key={id} onClick={() => setViewMode(id)}
             style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: "pointer",
-              background: viewMode === id ? `${GOLD}15` : "rgba(255,255,255,0.04)",
-              border: viewMode === id ? `1px solid ${GOLD}40` : "1px solid rgba(255,255,255,0.08)",
-              color: viewMode === id ? GOLD : "rgba(255,255,255,0.4)" }}>
+              background: viewMode === id ? `${GOLD}15` : "#ffffff",
+              border: viewMode === id ? `1px solid ${GOLD}40` : "1px solid #e2e8f0",
+              color: viewMode === id ? GOLD : "#475569" }}>
             <Icon style={{ width: 12, height: 12 }} />{label}
           </button>
         ))}
@@ -1591,18 +1591,18 @@ function ResultsDashboard({ queryParams, onBack, state = "IN", initialFlagFilter
           {triggeredCount > 0 && (
             <button onClick={() => setTriggeredOnly(t => !t)} data-testid="filter-triggered"
               style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 10, fontWeight: 700, padding: "6px 12px", borderRadius: 7, cursor: "pointer",
-                background: triggeredOnly ? "rgba(255,68,68,0.15)" : "rgba(255,255,255,0.04)",
-                border: triggeredOnly ? "1px solid rgba(255,68,68,0.4)" : "1px solid rgba(255,255,255,0.08)",
-                color: triggeredOnly ? "#FF4444" : "rgba(255,255,255,0.4)" }}>
+                background: triggeredOnly ? "rgba(255,68,68,0.15)" : "#ffffff",
+                border: triggeredOnly ? "1px solid rgba(255,68,68,0.4)" : "1px solid #e2e8f0",
+                color: triggeredOnly ? "#FF4444" : "#475569" }}>
               🔥 Triggered ({triggeredCount})
             </button>
           )}
           {publicCount > 0 && (
             <button onClick={() => setPublicOnly(p => !p)} data-testid="filter-public"
               style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 10, fontWeight: 700, padding: "6px 12px", borderRadius: 7, cursor: "pointer",
-                background: publicOnly ? `${GOLD}15` : "rgba(255,255,255,0.04)",
-                border: publicOnly ? `1px solid ${GOLD}40` : "1px solid rgba(255,255,255,0.08)",
-                color: publicOnly ? GOLD : "rgba(255,255,255,0.4)" }}>
+                background: publicOnly ? `${GOLD}15` : "#ffffff",
+                border: publicOnly ? `1px solid ${GOLD}40` : "1px solid #e2e8f0",
+                color: publicOnly ? GOLD : "#475569" }}>
               📈 Public Co. ({publicCount})
             </button>
           )}
@@ -1629,14 +1629,14 @@ function ResultsDashboard({ queryParams, onBack, state = "IN", initialFlagFilter
       ) : isLoading ? (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 300, gap: 14 }}>
           <RefreshCw style={{ width: 22, height: 22, color: GOLD, animation: "spin 1s linear infinite" }} />
-          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>Querying {stateName} Form 5500 database — live intelligence loading…</div>
+          <div style={{ fontSize: 12, color: "#475569" }}>Querying {stateName} Form 5500 database — live intelligence loading…</div>
         </div>
       ) : viewMode === "map" && data?.metro_distribution ? (
         <TnMapView metros={data.metro_distribution} selectedMetro={metroFilter} onSelect={k => setMetroFilter(k === metroFilter ? "" : k)} />
       ) : !prospects.length ? (
         <div style={{ textAlign: "center", padding: "60px 20px" }}>
-          <div style={{ fontSize: 14, color: "rgba(255,255,255,0.4)" }}>No Recommended Targets found with these filters.</div>
-          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", marginTop: 8 }}>Try broadening your geography or industry selections.</div>
+          <div style={{ fontSize: 14, color: "#475569" }}>No Recommended Targets found with these filters.</div>
+          <div style={{ fontSize: 12, color: "rgba(15,23,42,0.08)", marginTop: 8 }}>Try broadening your geography or industry selections.</div>
         </div>
       ) : (
         <>
@@ -1650,9 +1650,9 @@ function ResultsDashboard({ queryParams, onBack, state = "IN", initialFlagFilter
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 14 }}>
             {prospects.map((p, i) => <ProspectCard key={p.ein + i} p={p} index={i} onSelect={() => setSelectedProspect(p)} divergenceWatch={divergenceWatch} thresholds={thresholds} />)}
           </div>
-          <div style={{ marginTop: 18, padding: "12px 18px", background: "rgba(255,255,255,0.02)",
-            border: "1px solid rgba(255,255,255,0.05)", borderRadius: 10, fontSize: 11, color: "rgba(255,255,255,0.25)", lineHeight: 1.6 }}>
-            Source: U.S. Department of Labor Form 5500 public filings ({stateName}, 2022–2023). Fit scores calculated by Kincaid IQ™ 6-factor model. Commission estimates are projections only.
+          <div style={{ marginTop: 18, padding: "12px 18px", background: "#ffffff",
+            border: "1px solid #f8fafc", borderRadius: 10, fontSize: 11, color: "rgba(15,23,42,0.08)", lineHeight: 1.6 }}>
+            Source: U.S. Department of Labor Form 5500 public filings ({stateName}, 2022–2023). Fit scores calculated by Kincaid Health™ 6-factor model. Commission estimates are projections only.
           </div>
         </>
       )}
@@ -1692,7 +1692,7 @@ function ProspectTicker({ phrases }: { phrases: string[] }) {
           </div>
         ))}
       </div>
-      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", flexShrink: 0 }}>LIVE</div>
+      <div style={{ fontSize: 9, color: "#94a3b8", flexShrink: 0 }}>LIVE</div>
     </div>
   );
 }
@@ -1793,7 +1793,7 @@ export function ProspectsView() {
       display: "flex", alignItems: "center", gap: 14, flexShrink: 0 }}>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontSize: 12, fontWeight: 900, color: GOLD }}>{handoffCompany}</div>
-        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", fontFamily: "monospace" }}>
+        <div style={{ fontSize: 10, color: "#64748b", fontFamily: "monospace" }}>
           EIN {handoffEin} · Handoff context active
         </div>
       </div>
@@ -1812,7 +1812,7 @@ export function ProspectsView() {
         </button>
       </div>
       <button onClick={() => setHandoffDismissed(true)} data-testid="handoff-dismiss"
-        style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", fontSize: 14, padding: 4 }}>
+        style={{ background: "none", border: "none", cursor: "pointer", color: "#64748b", fontSize: 14, padding: 4 }}>
         ✕
       </button>
     </div>
@@ -1830,11 +1830,11 @@ export function ProspectsView() {
           value={selectedState}
           onChange={e => setSelectedState(e.target.value)}
           data-testid="state-selector"
-          style={{ background: "rgba(255,255,255,0.06)", border: `1px solid ${GOLD}35`, borderRadius: 8,
+          style={{ background: "#f1f5f9", border: `1px solid ${GOLD}35`, borderRadius: 8,
             color: GOLD, fontSize: 12, fontWeight: 800, padding: "6px 12px", cursor: "pointer", outline: "none" }}
         >
           {US_STATES.map(s => (
-            <option key={s.abbr} value={s.abbr} style={{ background: "#0d1033", color: "#fff" }}>
+            <option key={s.abbr} value={s.abbr} style={{ background: "#F8FAFC", color: "#0F172A" }}>
               {s.name} ({s.abbr})
             </option>
           ))}
@@ -1846,8 +1846,8 @@ export function ProspectsView() {
           borderRadius: 20, padding: "6px 16px", fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: GOLD, marginBottom: 16 }}>
           <MapPin style={{ width: 11, height: 11 }} /> {stateName} Prospect Engine · Form 5500 Intelligence
         </div>
-        <div style={{ fontSize: 24, fontWeight: 900, color: "#fff", marginBottom: 10 }}>Recommended Target Accounts</div>
-        <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", maxWidth: 540, margin: "0 auto", lineHeight: 1.7 }}>
+        <div style={{ fontSize: 24, fontWeight: 900, color: "#0F172A", marginBottom: 10 }}>Recommended Target Accounts</div>
+        <div style={{ fontSize: 13, color: "#475569", maxWidth: 540, margin: "0 auto", lineHeight: 1.7 }}>
           Powered by real DOL Form 5500 data from {overview ? `${overview.total_prospects.toLocaleString()}+` : "—"} {stateName} employers — identify your best-fit accounts with
           stop-loss gaps, Rx opportunities, and incumbent carrier displacement potential.
         </div>
@@ -1866,16 +1866,16 @@ export function ProspectsView() {
           ] as { label: string; value: string; color: string; icon: typeof Users; flag: string | null }[]).map(({ label, value, color, icon: Icon, flag }) => (
             <button key={label} onClick={() => runTileClick(flag)}
               data-testid={`overview-metric-${label.toLowerCase().replace(/\s+/g,"-")}`}
-              style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14,
+              style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14,
                 padding: "14px 12px", textAlign: "center", position: "relative", overflow: "hidden",
                 cursor: "pointer", transition: "all 0.15s", width: "100%" }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = `${color}40`; e.currentTarget.style.background = `${color}08`; e.currentTarget.style.transform = "translateY(-2px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)"; e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.transform = "translateY(0)"; }}>
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.background = "#ffffff"; e.currentTarget.style.transform = "translateY(0)"; }}>
               <div style={{ position: "absolute", top: -10, right: -10, width: 50, height: 50, borderRadius: "50%",
                 background: `radial-gradient(circle, ${color}12 0%, transparent 70%)`, pointerEvents: "none" }} />
               <Icon style={{ width: 14, height: 14, color, marginBottom: 8 }} />
               <div style={{ fontSize: 22, fontWeight: 900, color, lineHeight: 1 }}>{value}</div>
-              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: 4 }}>{label}</div>
+              <div style={{ fontSize: 8, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.1em", marginTop: 4 }}>{label}</div>
               <div style={{ fontSize: 7, color: `${color}60`, marginTop: 5, letterSpacing: "0.05em" }}>Click to view →</div>
             </button>
           ))}
@@ -1902,17 +1902,17 @@ export function ProspectsView() {
           const Icon = opt.icon;
           return (
             <button key={opt.id} onClick={opt.action} data-testid={`prospect-mode-${opt.id}`}
-              style={{ background: "rgba(255,255,255,0.03)", border: `1px solid rgba(255,255,255,0.08)`,
+              style={{ background: "#ffffff", border: `1px solid #e2e8f0`,
                 borderRadius: 20, padding: "28px 26px", textAlign: "left", cursor: "pointer", transition: "all 0.15s", display: "flex", flexDirection: "column", gap: 16 }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = `${opt.color}40`; e.currentTarget.style.background = `${opt.color}06`; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; e.currentTarget.style.background = "rgba(255,255,255,0.03)"; }}>
+              onMouseLeave={e => { e.currentTarget.style.borderColor = "#e2e8f0"; e.currentTarget.style.background = "#ffffff"; }}>
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{ width: 44, height: 44, borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center",
                   background: `${opt.color}15`, border: `1px solid ${opt.color}30`, flexShrink: 0 }}>
                   <Icon style={{ width: 20, height: 20, color: opt.color }} />
                 </div>
                 <div>
-                  <div style={{ fontSize: 16, fontWeight: 900, color: "#fff" }}>{opt.title}</div>
+                  <div style={{ fontSize: 16, fontWeight: 900, color: "#0F172A" }}>{opt.title}</div>
                   <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: opt.color, marginTop: 2 }}>{opt.sub}</div>
                 </div>
               </div>
@@ -1921,7 +1921,7 @@ export function ProspectsView() {
                 {opt.bullets.map(b => (
                   <div key={b} style={{ display: "flex", gap: 8, alignItems: "center" }}>
                     <span style={{ color: opt.color, fontSize: 11 }}>✓</span>
-                    <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{b}</span>
+                    <span style={{ fontSize: 11, color: "#334155" }}>{b}</span>
                   </div>
                 ))}
               </div>
@@ -1933,12 +1933,12 @@ export function ProspectsView() {
         })}
       </div>
 
-      <div style={{ padding: "14px 18px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)",
+      <div style={{ padding: "14px 18px", background: "#ffffff", border: "1px solid #f1f5f9",
         borderRadius: 12, display: "flex", gap: 12, alignItems: "center" }}>
-        <Shield style={{ width: 16, height: 16, color: "rgba(255,255,255,0.25)", flexShrink: 0 }} />
-        <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", lineHeight: 1.5 }}>
+        <Shield style={{ width: 16, height: 16, color: "rgba(15,23,42,0.08)", flexShrink: 0 }} />
+        <span style={{ fontSize: 11, color: "#64748b", lineHeight: 1.5 }}>
           All recommendations sourced from public DOL Form 5500 annual filings — {stateName} employers only.
-          Fit scores and opportunity flags are generated by Kincaid IQ™ 6-factor model: size (25%), industry (20%),
+          Fit scores and opportunity flags are generated by Kincaid Health™ 6-factor model: size (25%), industry (20%),
           geography (15%), renewal timing (15%), service fit (15%), whitespace (10%). For broker use only.
         </span>
       </div>
@@ -1950,7 +1950,7 @@ export function ProspectsView() {
       {doctrineBar}
       {handoffBanner}
       <button onClick={() => setMode("intro")} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 28,
-        background: "none", border: "none", color: "rgba(255,255,255,0.4)", fontSize: 12, cursor: "pointer", padding: 0 }}>
+        background: "none", border: "none", color: "#475569", fontSize: 12, cursor: "pointer", padding: 0 }}>
         ← Back
       </button>
       <QuizFlow onComplete={runQuizResults} state={selectedState} />
@@ -1962,7 +1962,7 @@ export function ProspectsView() {
       {doctrineBar}
       {handoffBanner}
       <button onClick={() => setMode("intro")} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 24,
-        background: "none", border: "none", color: "rgba(255,255,255,0.4)", fontSize: 12, cursor: "pointer", padding: 0 }}>
+        background: "none", border: "none", color: "#475569", fontSize: 12, cursor: "pointer", padding: 0 }}>
         ← Back
       </button>
       <BookAnalyzerView onRunBookMatch={runBookMatch} />

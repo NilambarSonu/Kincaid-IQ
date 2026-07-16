@@ -3,9 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { DollarSign, TrendingUp, Users, AlertTriangle, CheckCircle, Wifi, RefreshCw, ChevronRight, Shield, Zap, Eye } from "lucide-react";
 
 const C = {
-  bg: "#07091c", card: "#0d1033", border: "rgba(255,255,255,0.08)",
-  accent: "#4f7dff", cyan: "#00D4FF", green: "#22c55e", amber: "#f59e0b",
-  red: "#ef4444", purple: "#A855F7", text1: "#f0f4ff", text2: "#64748b",
+  bg: "#F8FAFC", card: "#ffffff", border: "rgba(15,23,42,0.08)",
+  accent: "#533afd", cyan: "#0ea5e9", green: "#10b981", amber: "#d97706",
+  red: "#e11d48", purple: "#7c3aed", text1: "#0f172a", text2: "#475569",
   qb: "#2CA01C",
 };
 
@@ -24,7 +24,7 @@ function KiqAlert({ level, message }: { level: string; message: string }) {
 
 function StatTile({ label, value, sub, color }: { label: string; value: string; sub?: string; color?: string }) {
   return (
-    <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 10, padding: "16px 18px", flex: 1 }}>
+    <div className="kiq-ops-card" style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: "16px 18px", flex: 1 }}>
       <div style={{ fontSize: 10, color: C.text2, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6 }}>{label}</div>
       <div style={{ fontSize: 22, fontWeight: 800, color: color || C.text1, lineHeight: 1 }}>{value}</div>
       {sub && <div style={{ fontSize: 11, color: C.text2, marginTop: 4 }}>{sub}</div>}
@@ -34,7 +34,7 @@ function StatTile({ label, value, sub, color }: { label: string; value: string; 
 
 function SectionCard({ title, icon, children, accent }: { title: string; icon: React.ReactNode; children: React.ReactNode; accent?: string }) {
   return (
-    <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden", marginBottom: 18 }}>
+    <div className="kiq-ops-card" style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden", marginBottom: 18 }}>
       <div style={{ padding: "12px 18px", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", gap: 10 }}>
         <span style={{ color: accent || C.cyan }}>{icon}</span>
         <span style={{ fontSize: 12, fontWeight: 700, color: accent || C.cyan, textTransform: "uppercase", letterSpacing: "0.1em" }}>{title}</span>
@@ -61,7 +61,7 @@ function ConnectScreen({ onConnect }: { onConnect: () => void }) {
         </svg>
       </div>
       <div style={{ textAlign: "center" }}>
-        <div style={{ fontSize: 20, fontWeight: 800, color: C.text1, marginBottom: 8 }}>Connect QuickBooks Online</div>
+        <div style={{ fontSize: 20, fontWeight: 900, color: C.text1, marginBottom: 8 }}>Connect QuickBooks Online</div>
         <div style={{ fontSize: 13, color: C.text2, maxWidth: 420, lineHeight: 1.6 }}>
           Link the client's QuickBooks company to pull vendor payments, P&L healthcare spend trends,
           payroll headcount, and uncover hidden broker fees in the AP ledger.
@@ -81,7 +81,7 @@ function ConnectScreen({ onConnect }: { onConnect: () => void }) {
       </div>
       <button data-testid="btn-connect-quickbooks" onClick={handleConnect} disabled={loading}
         style={{ padding: "12px 36px", borderRadius: 8, fontWeight: 700, fontSize: 14, cursor: "pointer", border: "none",
-          background: loading ? "rgba(44,160,28,0.4)" : C.qb, color: "white", display: "flex", alignItems: "center", gap: 8 }}>
+          background: loading ? "rgba(44,160,28,0.4)" : C.qb, color: "#ffffff", display: "flex", alignItems: "center", gap: 8 }}>
         {loading ? <><RefreshCw size={15} style={{ animation: "spin 1s linear infinite" }} />Connecting via Intuit OAuth...</> : "Connect via Intuit OAuth 2.0"}
       </button>
       <div style={{ fontSize: 10, color: C.text2, textAlign: "center" }}>
@@ -105,17 +105,17 @@ export default function QuickBooksIntegration() {
   const flagColor = (f: string) => f === "CARRIER" ? C.cyan : f === "BROKER_CURRENT" ? C.amber : f === "BROKER_KINCAID" ? C.green : f === "PBM" ? C.red : f === "TPA" ? C.purple : C.text2;
 
   if (!connected) return (
-    <div style={{ minHeight: "100vh", background: C.bg, padding: 32, fontFamily: "Inter, sans-serif" }}>
-      <div style={{ marginBottom: 24 }}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", background: C.bg, padding: 32, fontFamily: "var(--font-sans)" }}>
+      <div className="kiq-ops-header" style={{ marginBottom: 24, padding: 20, borderRadius: 24 }}>
         <div style={{ fontSize: 11, color: C.text2, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 6 }}>
-          Kincaid IQ VERIFY™ — Integrations
+          Kincaid Health VERIFY™ — Integrations
         </div>
         <h1 style={{ fontSize: 26, fontWeight: 900, color: C.text1, margin: 0 }}>QuickBooks Online Intelligence</h1>
         <p style={{ color: C.text2, fontSize: 13, marginTop: 6 }}>
           Connect client QuickBooks to expose vendor payments, hidden broker fees, and P&L benchmarking against the DOL universe.
         </p>
       </div>
-      <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16 }}>
+      <div className="kiq-ops-card" style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 18 }}>
         <ConnectScreen onConnect={() => setConnected(true)} />
       </div>
     </div>
@@ -128,11 +128,11 @@ export default function QuickBooksIntegration() {
   const plData = ((pl as any)?.pl_data || []).filter((d: any) => d.quarter === "FY");
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, padding: "24px 28px", fontFamily: "Inter, sans-serif" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", background: C.bg, padding: "24px 28px", fontFamily: "var(--font-sans)" }}>
+      <div className="kiq-ops-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, marginBottom: 22, padding: 20, borderRadius: 24, flexWrap: "wrap" }}>
         <div>
           <div style={{ fontSize: 11, color: C.text2, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 4 }}>
-            Kincaid IQ VERIFY™ — QuickBooks Intelligence
+            Kincaid Health VERIFY™ — QuickBooks Intelligence
           </div>
           <h1 style={{ fontSize: 22, fontWeight: 900, color: C.text1, margin: 0 }}>Human Capital Concepts LLC</h1>
           <div style={{ fontSize: 12, color: C.text2, marginTop: 3 }}>QuickBooks Online Advanced · Realm ID: 9341058891748920</div>
@@ -145,7 +145,7 @@ export default function QuickBooksIntegration() {
       </div>
 
       {/* KPI strip */}
-      <div style={{ display: "flex", gap: 12, marginBottom: 20 }}>
+      <div style={{ display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
         <StatTile label="Total Benefits Spend" value={fmt(kpi.total_benefits_spend_2023 || 0)} sub="FY 2023" color={C.cyan} />
         <StatTile label="Broker Payments YTD" value={fmt(kpi.broker_payments_ytd || 0)} sub="DOL verified" color={C.amber} />
         <StatTile label="Hidden Advisory Fees" value={fmt(kpi.hidden_advisory_fees || 0)} sub="Found in AP ledger" color={C.red} />
@@ -158,12 +158,12 @@ export default function QuickBooksIntegration() {
 
       {/* Alerts */}
       {alerts.length > 0 && (
-        <SectionCard title="Kincaid IQ Findings" icon={<Zap size={15} />} accent={C.accent}>
+        <SectionCard title="Kincaid Health Findings" icon={<Zap size={15} />} accent={C.accent}>
           {alerts.map((a: any, i: number) => <KiqAlert key={i} level={a.level} message={a.message} />)}
         </SectionCard>
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 18 }}>
         {/* Vendor Payments */}
         <SectionCard title="Vendor Ledger — Carriers, Brokers & PBMs" icon={<DollarSign size={15} />} accent={C.amber}>
           {(vendors as any)?.vendors?.map((v: any) => {
@@ -262,7 +262,7 @@ export default function QuickBooksIntegration() {
         <SectionCard title="Payroll — Headcount vs DOL Cross-Reference" icon={<Users size={15} />} accent={C.purple}>
           {(payroll as any)?.payroll_periods?.map((p: any, i: number) => (
             <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center",
-              padding: "7px 10px", marginBottom: 6, background: "rgba(255,255,255,0.02)", border: `1px solid ${C.border}`, borderRadius: 7 }}>
+              padding: "7px 10px", marginBottom: 6, background: "#ffffff", border: `1px solid ${C.border}`, borderRadius: 7 }}>
               <span style={{ fontSize: 12, color: C.text1 }}>{p.period}</span>
               <span style={{ fontSize: 11, color: C.text2 }}>{p.total_w2_employees.toLocaleString()} W-2</span>
               <span style={{ fontSize: 11, color: C.text2 }}>{p.benefit_deductions.toLocaleString()} enrolled</span>

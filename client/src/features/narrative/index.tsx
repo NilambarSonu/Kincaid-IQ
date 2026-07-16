@@ -68,11 +68,11 @@ export function NarrativeGuard({ preselectedClaimIds = [], className }: Narrativ
   return (
     <div className={cn("space-y-6", className)} data-testid="narrative-guard">
       {/* Request form */}
-      <div className="rounded-lg border border-slate-800 bg-[#0B1117] p-5 space-y-4">
+      <div className="rounded-lg border border-slate-200 bg-[#0B1117] p-5 space-y-4">
         <div className="flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-[#A855F7]" />
-          <span className="text-sm font-semibold text-white">Policy-Bound Narrative Generator</span>
-          <span className="ml-auto text-[9px] font-mono text-slate-500 border border-slate-700 rounded px-2 py-0.5">
+          <span className="text-sm font-semibold text-slate-900">Policy-Bound Narrative Generator</span>
+          <span className="ml-auto text-[9px] font-mono text-slate-500 border border-slate-200 rounded px-2 py-0.5">
             Every output citation-bound · decision-receipted
           </span>
         </div>
@@ -83,7 +83,7 @@ export function NarrativeGuard({ preselectedClaimIds = [], className }: Narrativ
             value={claimIds}
             onChange={e => setClaimIds(e.target.value)}
             placeholder="CLM-2026-0001, CLM-2026-0003"
-            className="w-full rounded bg-slate-900 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#A855F7]/60"
+            className="w-full rounded bg-slate-50 border border-slate-200 px-3 py-2 text-sm text-slate-900 placeholder-slate-500 focus:outline-none focus:border-[#A855F7]/60"
             data-testid="input-narrative-claims"
           />
         </div>
@@ -95,7 +95,7 @@ export function NarrativeGuard({ preselectedClaimIds = [], className }: Narrativ
             onChange={e => setPrompt(e.target.value)}
             rows={3}
             placeholder="Summarize the pharmacy cost exposure and recommend a containment strategy…"
-            className="w-full rounded bg-slate-900 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#A855F7]/60 resize-none"
+            className="w-full rounded bg-slate-50 border border-slate-200 px-3 py-2 text-sm text-slate-900 placeholder-slate-500 focus:outline-none focus:border-[#A855F7]/60 resize-none"
             data-testid="textarea-narrative-prompt"
           />
         </div>
@@ -112,7 +112,7 @@ export function NarrativeGuard({ preselectedClaimIds = [], className }: Narrativ
                     "px-3 py-1 rounded text-xs font-medium border transition-colors",
                     audience === a
                       ? "bg-[#A855F7]/20 border-[#A855F7]/40 text-[#A855F7]"
-                      : "bg-transparent border-slate-700 text-slate-500 hover:text-slate-300",
+                      : "bg-transparent border-slate-200 text-slate-500 hover:text-slate-500",
                   )}
                   data-testid={`audience-${a}`}
                 >
@@ -149,20 +149,20 @@ export function NarrativeGuard({ preselectedClaimIds = [], className }: Narrativ
             <>
               {/* Narrative text */}
               <div className="rounded-lg border border-[#A855F7]/30 bg-[#0B1117] overflow-hidden">
-                <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800">
+                <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200">
                   <div className="flex items-center gap-2">
                     <FileText className="w-4 h-4 text-[#A855F7]" />
-                    <span className="text-sm font-semibold text-white">Generated Narrative</span>
+                    <span className="text-sm font-semibold text-slate-900">Generated Narrative</span>
                     <span className="text-[10px] font-mono text-slate-500">{AUDIENCE_LABELS[audience]} audience</span>
                   </div>
                   <div className="flex items-center gap-2">
                     {result.receipt_id && (
-                      <span className="text-[9px] font-mono text-slate-500 border border-slate-700 rounded px-1.5 py-0.5">
+                      <span className="text-[9px] font-mono text-slate-500 border border-slate-200 rounded px-1.5 py-0.5">
                         {result.receipt_id}
                       </span>
                     )}
                     <button onClick={handleCopy}
-                      className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors"
+                      className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-500 transition-colors"
                       data-testid="btn-copy-narrative">
                       <Copy className="w-3.5 h-3.5" />
                       {copied ? "Copied!" : "Copy"}
@@ -170,7 +170,7 @@ export function NarrativeGuard({ preselectedClaimIds = [], className }: Narrativ
                   </div>
                 </div>
                 <div className="px-4 py-4">
-                  <p className="text-sm text-slate-300 leading-relaxed whitespace-pre-wrap">
+                  <p className="text-sm text-slate-500 leading-relaxed whitespace-pre-wrap">
                     {result.narrative}
                   </p>
                 </div>
@@ -178,17 +178,17 @@ export function NarrativeGuard({ preselectedClaimIds = [], className }: Narrativ
 
               {/* Citations */}
               {result.claim_citations.length > 0 && (
-                <div className="rounded-lg border border-slate-800 bg-[#0B1117] p-4 space-y-3">
+                <div className="rounded-lg border border-slate-200 bg-[#0B1117] p-4 space-y-3">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-[#00FF94]" />
-                    <span className="text-xs font-semibold text-white">
+                    <span className="text-xs font-semibold text-slate-900">
                       Evidence Citations ({result.claim_citations.length})
                     </span>
                   </div>
                   <div className="space-y-2">
                     {result.claim_citations.map(c => (
                       <div key={c.claim_id}
-                        className="flex items-center justify-between p-2.5 rounded bg-slate-900/60 border border-slate-800"
+                        className="flex items-center justify-between p-2.5 rounded bg-slate-50/60 border border-slate-200"
                         data-testid={`citation-${c.claim_id}`}
                       >
                         <div className="flex items-center gap-2">

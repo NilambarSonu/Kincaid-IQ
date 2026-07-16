@@ -97,7 +97,7 @@ export default function Concierge() {
       {showForm && (
         <div className="metric-card mb-6" style={{ border: "1px solid rgba(0,229,255,0.2)" }} data-testid="card-new-request-form">
           <div className="flex items-center justify-between mb-4">
-            <p className="font-bold text-sm text-white">New Request</p>
+            <p className="font-bold text-sm text-[var(--kiq-ink)]">New Request</p>
             <button onClick={() => setShowForm(false)} style={{ color: "rgba(130,150,200,0.4)" }} data-testid="button-close-form"><X size={14} /></button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
@@ -105,7 +105,7 @@ export default function Concierge() {
               <label className="text-xs text-muted-foreground block mb-1">Title *</label>
               <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
                 placeholder="Describe the request…" className="w-full text-sm px-3 py-2 rounded-lg"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                 data-testid="input-request-title" />
             </div>
             {[
@@ -116,9 +116,9 @@ export default function Concierge() {
                 <label className="text-xs text-muted-foreground block mb-1">{f.label}</label>
                 <select value={(form as any)[f.key]} onChange={e => setForm(prev => ({ ...prev, [f.key]: e.target.value }))}
                   className="w-full text-sm px-3 py-2 rounded-lg"
-                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                  style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                   data-testid={`select-${f.key}`}>
-                  {f.options.map(o => <option key={o} value={o} style={{ background: "#0a0a1a" }}>{o}</option>)}
+                  {f.options.map(o => <option key={o} value={o} style={{ background: "#F8FAFC" }}>{o}</option>)}
                 </select>
               </div>
             ))}
@@ -126,21 +126,21 @@ export default function Concierge() {
               <label className="text-xs text-muted-foreground block mb-1">Assignee</label>
               <input value={form.assignee} onChange={e => setForm(f => ({ ...f, assignee: e.target.value }))}
                 placeholder="e.g., DH (Family Office)" className="w-full text-sm px-3 py-2 rounded-lg"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                 data-testid="input-assignee" />
             </div>
             <div>
               <label className="text-xs text-muted-foreground block mb-1">Due Date</label>
               <input type="date" value={form.dueDate} onChange={e => setForm(f => ({ ...f, dueDate: e.target.value }))}
                 className="w-full text-sm px-3 py-2 rounded-lg"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                 data-testid="input-due-date" />
             </div>
             <div className="sm:col-span-2">
               <label className="text-xs text-muted-foreground block mb-1">Notes</label>
               <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
                 placeholder="Additional context…" rows={2} className="w-full text-sm px-3 py-2 rounded-lg resize-none"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                 data-testid="input-request-notes" />
             </div>
           </div>
@@ -158,7 +158,7 @@ export default function Concierge() {
           <Search size={12} style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", color: "rgba(130,150,200,0.4)" }} />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search requests…"
             className="w-full text-sm pl-8 pr-3 py-2 rounded-xl"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "white" }}
+            style={{ background: "#ffffff", border: "1px solid #e2e8f0", color: "#0F172A" }}
             data-testid="input-concierge-search" />
         </div>
         <div className="flex gap-2 flex-wrap">
@@ -166,14 +166,14 @@ export default function Concierge() {
             const sc = s !== "All" ? STATUS_CONFIG[s] : null;
             return <button key={s} onClick={() => setStatusFilter(s)}
               className="text-xs px-3 py-1.5 rounded-lg font-medium transition-all"
-              style={{ background: statusFilter === s ? (sc?.bg || "rgba(0,168,255,0.1)") : "rgba(255,255,255,0.03)", border: `1px solid ${statusFilter === s ? (sc?.color ? `${sc.color}44` : "rgba(0,168,255,0.25)") : "rgba(255,255,255,0.06)"}`, color: statusFilter === s ? (sc?.color || "#00A8FF") : "rgba(150,170,210,0.5)" }}
+              style={{ background: statusFilter === s ? (sc?.bg || "rgba(0,168,255,0.1)") : "#ffffff", border: `1px solid ${statusFilter === s ? (sc?.color ? `${sc.color}44` : "rgba(0,168,255,0.25)") : "#f1f5f9"}`, color: statusFilter === s ? (sc?.color || "#00A8FF") : "rgba(150,170,210,0.5)" }}
               data-testid={`filter-status-${s.toLowerCase().replace(/\s+/g,"-")}`}>{s}</button>;
           })}
           {["All", ...CATEGORIES].map(c => {
             const cc = c !== "All" ? CATEGORY_CONFIG[c] : null;
             return <button key={c} onClick={() => setCategoryFilter(c)}
               className="text-xs px-2 py-1 rounded-lg transition-all"
-              style={{ background: categoryFilter === c ? (cc?.bg || "rgba(0,168,255,0.1)") : "rgba(255,255,255,0.02)", border: `1px solid ${categoryFilter === c ? (cc?.border || "rgba(0,168,255,0.25)") : "rgba(255,255,255,0.04)"}`, color: categoryFilter === c ? (cc?.color || "#00A8FF") : "rgba(150,170,210,0.4)" }}
+              style={{ background: categoryFilter === c ? (cc?.bg || "rgba(0,168,255,0.1)") : "#ffffff", border: `1px solid ${categoryFilter === c ? (cc?.border || "rgba(0,168,255,0.25)") : "#ffffff"}`, color: categoryFilter === c ? (cc?.color || "#00A8FF") : "rgba(150,170,210,0.4)" }}
               data-testid={`filter-cat-${c.toLowerCase()}`}>{c}</button>;
           })}
         </div>
@@ -200,7 +200,7 @@ export default function Concierge() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <p className={`font-bold text-sm ${isCompleted ? "line-through text-muted-foreground" : "text-white"}`}>{req.title}</p>
+                      <p className={`font-bold text-sm ${isCompleted ? "line-through text-muted-foreground" : "text-[var(--kiq-ink)]"}`}>{req.title}</p>
                       <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{req.notes}</p>
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0">

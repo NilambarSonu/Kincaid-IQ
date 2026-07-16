@@ -1,6 +1,6 @@
 /**
  * api.ts
- * Kincaid IQ VERIFY™ — aggregated API client.
+ * Kincaid Health VERIFY™ — aggregated API client.
  *
  * Combines /api/verify/war-room + /api/verify/ledger + /api/verify/board-pack
  * into the single WarRoomResponse shape expected by KincaidWarRoomLive.

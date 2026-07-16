@@ -16,7 +16,7 @@ function formatBody(body: string) {
     const parts = line.split(/\*\*(.*?)\*\*/g);
     return (
       <p key={i} className="text-sm leading-relaxed text-muted-foreground">
-        {parts.map((part, j) => j % 2 === 1 ? <strong key={j} className="text-white font-semibold">{part}</strong> : part)}
+        {parts.map((part, j) => j % 2 === 1 ? <strong key={j} className="text-[var(--kiq-ink)] font-semibold">{part}</strong> : part)}
       </p>
     );
   });
@@ -48,7 +48,7 @@ export default function AdvisorMessages() {
             <h1 className="text-3xl font-bold" style={{ fontFamily: "var(--font-display)", color: "hsl(var(--primary))" }}>
               Advisor Messaging
             </h1>
-            <p className="text-muted-foreground mt-1 text-sm">Secure communications with your Kincaid RMC advisory team</p>
+            <p className="text-muted-foreground mt-1 text-sm">Secure communications with your Kincaid Health advisory team</p>
           </div>
           {unreadCount > 0 && (
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full" style={{ background: "rgba(255,77,109,0.1)", border: "1px solid rgba(255,77,109,0.2)" }}>
@@ -72,8 +72,8 @@ export default function AdvisorMessages() {
                 onClick={() => { setSelectedId(msg.id); setReplyOpen(false); }}
                 className="w-full text-left p-4 rounded-xl transition-all duration-200"
                 style={{
-                  background: isSelected ? "rgba(0,168,255,0.08)" : "rgba(255,255,255,0.02)",
-                  border: `1px solid ${isSelected ? "rgba(0,168,255,0.25)" : "rgba(255,255,255,0.06)"}`,
+                  background: isSelected ? "rgba(0,168,255,0.08)" : "#ffffff",
+                  border: `1px solid ${isSelected ? "rgba(0,168,255,0.25)" : "#f1f5f9"}`,
                 }}
                 data-testid={`row-message-${msg.id}`}
               >
@@ -118,7 +118,7 @@ export default function AdvisorMessages() {
         <div className="lg:col-span-2" data-testid="panel-message-detail">
           {selected ? (
             <div className="metric-card h-full flex flex-col" style={{ minHeight: 500 }}>
-              <div className="flex items-start justify-between mb-5 pb-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="flex items-start justify-between mb-5 pb-4" style={{ borderBottom: "1px solid #f1f5f9" }}>
                 <div className="flex items-start gap-3">
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold flex-shrink-0"
@@ -127,8 +127,8 @@ export default function AdvisorMessages() {
                     {selected.avatar}
                   </div>
                   <div>
-                    <p className="font-bold text-white">{selected.from}</p>
-                    <p className="text-xs text-muted-foreground">{selected.role} · Kincaid RMC</p>
+                    <p className="font-bold text-[var(--kiq-ink)]">{selected.from}</p>
+                    <p className="text-xs text-muted-foreground">{selected.role} · Kincaid Health</p>
                     <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1">
                       <Clock size={9} /> {new Date(selected.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
                     </p>
@@ -142,14 +142,14 @@ export default function AdvisorMessages() {
                 </div>
               </div>
 
-              <p className="text-base font-bold text-white mb-4">{selected.subject}</p>
+              <p className="text-base font-bold text-[var(--kiq-ink)] mb-4">{selected.subject}</p>
 
               <div className="flex-1 space-y-1 overflow-y-auto custom-scrollbar pr-1">
                 {formatBody(selected.body)}
               </div>
 
               {selected.attachments.length > 0 && (
-                <div className="mt-4 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                <div className="mt-4 pt-4" style={{ borderTop: "1px solid #f1f5f9" }}>
                   <p className="text-xs text-muted-foreground mb-2">Attachments</p>
                   <div className="flex flex-wrap gap-2">
                     {selected.attachments.map((att) => (
@@ -163,7 +163,7 @@ export default function AdvisorMessages() {
                 </div>
               )}
 
-              <div className="mt-4 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="mt-4 pt-4" style={{ borderTop: "1px solid #f1f5f9" }}>
                 {!replyOpen ? (
                   <div className="flex gap-3">
                     <button
@@ -191,7 +191,7 @@ export default function AdvisorMessages() {
                       placeholder={`Reply to ${selected.from}…`}
                       rows={4}
                       className="w-full text-sm px-3 py-2.5 rounded-xl mb-3 resize-none"
-                      style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(0,168,255,0.2)", color: "white" }}
+                      style={{ background: "#f8fafc", border: "1px solid rgba(0,168,255,0.2)", color: "#0F172A" }}
                       data-testid="textarea-reply"
                     />
                     <div className="flex gap-2">
@@ -199,15 +199,15 @@ export default function AdvisorMessages() {
                         onClick={handleReply}
                         disabled={!replyText.trim()}
                         className="px-4 py-2 rounded-xl text-sm font-semibold transition-all"
-                        style={{ background: replyText.trim() ? "rgba(0,255,148,0.12)" : "rgba(255,255,255,0.03)", border: `1px solid ${replyText.trim() ? "rgba(0,255,148,0.25)" : "rgba(255,255,255,0.06)"}`, color: replyText.trim() ? "#00FF94" : "rgba(150,170,210,0.3)", cursor: replyText.trim() ? "pointer" : "not-allowed" }}
+                        style={{ background: replyText.trim() ? "rgba(0,255,148,0.12)" : "#ffffff", border: `1px solid ${replyText.trim() ? "rgba(0,255,148,0.25)" : "#f1f5f9"}`, color: replyText.trim() ? "#00FF94" : "rgba(150,170,210,0.3)", cursor: replyText.trim() ? "pointer" : "not-allowed" }}
                         data-testid="button-send-reply"
                       >
                         Send Reply
                       </button>
                       <button
                         onClick={() => setReplyOpen(false)}
-                        className="px-4 py-2 rounded-xl text-sm font-semibold transition-all text-muted-foreground hover:text-white"
-                        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                        className="px-4 py-2 rounded-xl text-sm font-semibold transition-all text-muted-foreground hover:text-[var(--kiq-ink)]"
+                        style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}
                         data-testid="button-cancel-reply"
                       >
                         Cancel

@@ -21,7 +21,7 @@ export default function UploadBox({
       data-testid="upload-box"
       onClick={() => !disabled && inputRef.current?.click()}
       style={{
-        border:       "1.5px solid rgba(255,255,255,0.12)",
+        border:       "1.5px solid #cbd5e1",
         borderRadius: 10,
         padding:      "16px 18px",
         background:   "#111540",
@@ -37,7 +37,7 @@ export default function UploadBox({
           (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(155,28,46,0.6)";
       }}
       onMouseLeave={e => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.12)";
+        (e.currentTarget as HTMLDivElement).style.borderColor = "#cbd5e1";
       }}
     >
       <div style={{

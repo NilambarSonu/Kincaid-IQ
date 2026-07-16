@@ -55,10 +55,10 @@ export default function EntityMap() {
               <div key={depth}>
                 <div className="flex items-center gap-2 mb-3">
                   <div className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded"
-                    style={{ background: "rgba(255,255,255,0.04)", color: "rgba(150,170,210,0.4)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                    style={{ background: "#ffffff", color: "rgba(150,170,210,0.4)", border: "1px solid #f1f5f9" }}>
                     {depth === 0 ? "Principal" : depth === 1 ? "Tier 1 — Direct Holdings" : "Tier 2 — Sub-Entities"}
                   </div>
-                  <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.05)" }} />
+                  <div className="h-px flex-1" style={{ background: "#f8fafc" }} />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {depthGroup.map((entity) => {
@@ -72,8 +72,8 @@ export default function EntityMap() {
                         onClick={() => setSelected(isSelected ? null : entity.id)}
                         className="text-left p-3.5 rounded-xl transition-all duration-200"
                         style={{
-                          background: isSelected ? `rgba(${color.slice(1).match(/.{2}/g)!.map(h=>parseInt(h,16)).join(",")},0.08)` : "rgba(255,255,255,0.02)",
-                          border: `1px solid ${isSelected ? `${color}30` : "rgba(255,255,255,0.06)"}`,
+                          background: isSelected ? `rgba(${color.slice(1).match(/.{2}/g)!.map(h=>parseInt(h,16)).join(",")},0.08)` : "#ffffff",
+                          border: `1px solid ${isSelected ? `${color}30` : "#f1f5f9"}`,
                           boxShadow: isSelected ? `0 0 20px ${color}10` : undefined,
                         }}
                         data-testid={`entity-${entity.id}`}
@@ -85,7 +85,7 @@ export default function EntityMap() {
                           </div>
                           <div className="min-w-0 flex-1">
                             <div className="flex items-center gap-2 mb-0.5">
-                              <p className="text-sm font-bold text-white truncate">{entity.name}</p>
+                              <p className="text-sm font-bold text-[var(--kiq-ink)] truncate">{entity.name}</p>
                               {isSelected && <ChevronRight size={11} style={{ color, flexShrink: 0 }} />}
                             </div>
                             <div className="flex items-center gap-2 mb-1.5">
@@ -129,7 +129,7 @@ export default function EntityMap() {
                   </div>
                 ); })()}
                 <div>
-                  <p className="font-bold text-white">{selectedEntity.name}</p>
+                  <p className="font-bold text-[var(--kiq-ink)]">{selectedEntity.name}</p>
                   <p className="text-xs text-muted-foreground">{selectedEntity.type}</p>
                 </div>
               </div>
@@ -143,17 +143,17 @@ export default function EntityMap() {
                 ].map((r) => (
                   <div key={r.label} className="flex justify-between text-sm">
                     <span className="text-muted-foreground">{r.label}</span>
-                    <span className="font-semibold text-white">{r.value}</span>
+                    <span className="font-semibold text-[var(--kiq-ink)]">{r.value}</span>
                   </div>
                 ))}
               </div>
               {children.length > 0 && (
-                <div className="mt-4 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                <div className="mt-4 pt-4" style={{ borderTop: "1px solid #f1f5f9" }}>
                   <p className="text-xs text-muted-foreground mb-2">Subsidiary Entities ({children.length})</p>
                   <div className="space-y-1.5">
                     {children.map((c) => (
                       <button key={c.id} onClick={() => setSelected(c.id)}
-                        className="w-full flex items-center justify-between text-xs px-2.5 py-1.5 rounded-lg hover:bg-white/5 transition-colors"
+                        className="w-full flex items-center justify-between text-xs px-2.5 py-1.5 rounded-lg hover:bg-[var(--kiq-surface)]/5 transition-colors"
                         style={{ color: TYPE_COLORS[c.type] || "#00A8FF" }}
                         data-testid={`child-entity-${c.id}`}>
                         <span>{c.name}</span>

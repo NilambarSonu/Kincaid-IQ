@@ -1,6 +1,6 @@
 """
 ════════════════════════════════════════════════════════════════════════════
-KINCAID IQ — kiq_routes.py  v10.0
+KINCAID HEALTH — kiq_routes.py  v10.0
 30 Endpoints · Evidence-Anchored · 4 Hard Rules
 
 R1: /tiles/* always returns exactly 4 tiles
@@ -17,7 +17,7 @@ import math, time, uuid
 from backend.duckdb import get_duck, duck_available, duck_table_count
 from backend.kiq_evidence import build_evidence
 
-router = APIRouter(prefix="/api/kiq", tags=["Kincaid IQ v10"])
+router = APIRouter(prefix="/api/kiq", tags=["Kincaid Health v10"])
 
 # ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -322,7 +322,7 @@ def tiles_mep(eid: str = Query("ENTITY_001")):
 
 _KPI_CATALOG = {
     "INDEX": [
-        {"kpi_id": "KPI-IDX-001", "label": "Shady Broker Index (SBI™)",     "value": 7.4,      "unit": "INDEX",   "delta": "+1.2",           "defensibility": "yellow", "confidence": 0.88, "freshness_days": 18, "verified": True,  "schedule": "C",  "line": "Line 2d"},
+        {"kpi_id": "KPI-IDX-001", "label": "Broker Compensation Index (BCI™)",     "value": 7.4,      "unit": "INDEX",   "delta": "+1.2",           "defensibility": "yellow", "confidence": 0.88, "freshness_days": 18, "verified": True,  "schedule": "C",  "line": "Line 2d"},
         {"kpi_id": "KPI-IDX-002", "label": "Fiduciary Score Index™ (FSI™)", "value": 61.2,     "unit": "INDEX",   "delta": "−8.3",           "defensibility": "red",    "confidence": 0.91, "freshness_days": 18, "verified": True,  "schedule": "H",  "line": "Composite"},
         {"kpi_id": "KPI-IDX-003", "label": "Capital Velocity Index",         "value": 72.8,     "unit": "INDEX",   "delta": "+2.1",           "defensibility": "yellow", "confidence": 0.85, "freshness_days": 21, "verified": True,  "schedule": "H",  "line": "Composite"},
         {"kpi_id": "KPI-IDX-004", "label": "Evidence Coverage %",            "value": 94.2,     "unit": "PERCENT", "delta": "+1.8 pts",       "defensibility": "green",  "confidence": 0.97, "freshness_days": 18, "verified": True,  "schedule": "H",  "line": "System"},

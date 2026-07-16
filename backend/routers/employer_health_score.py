@@ -93,7 +93,7 @@ def calculate_score(req: ScoreRequest, db: Session = Depends(get_db), user: mode
             ] if r
         ],
         "next_steps": [
-            "Schedule a complimentary 45-minute benefits diagnostic call with Kincaid RMC",
+            "Schedule a complimentary 45-minute benefits diagnostic call with Kincaid Health",
             "Request a full PBM contract audit (no cost, no obligation)",
             "Review stop-loss program structure with our actuarial team",
             "Complete ERISA fiduciary readiness assessment",
@@ -135,7 +135,7 @@ def sample_score(db: Session = Depends(get_db), user: models.User = Depends(get_
             "Mental health parity violation risk — NQTL analysis not documented",
         ],
         "next_steps": [
-            "Schedule a complimentary 45-minute benefits diagnostic call with Kincaid RMC",
+            "Schedule a complimentary 45-minute benefits diagnostic call with Kincaid Health",
             "Request a full PBM contract audit (no cost, no obligation)",
             "Complete ERISA fiduciary readiness assessment",
             "Review stop-loss specific deductible vs. current claims profile",

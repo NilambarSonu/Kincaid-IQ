@@ -145,7 +145,7 @@ export default function EarningsTracker() {
                   {filteredEarnings.map(event => (
                     <TableRow
                       key={event.ticker}
-                      className={`border-white/5 hover:bg-white/5 cursor-pointer transition-colors ${selectedStock?.ticker === event.ticker ? "bg-primary/5" : ""}`}
+                      className={`border-white/5 hover:bg-[var(--kiq-surface)]/5 cursor-pointer transition-colors ${selectedStock?.ticker === event.ticker ? "bg-primary/5" : ""}`}
                       onClick={() => setSelectedStock(event)}
                       data-testid={`row-earnings-${event.ticker}`}
                     >
@@ -196,7 +196,7 @@ export default function EarningsTracker() {
                 const day = i - 3;
                 const events = earningsData.filter(e => parseInt(e.reportDate.split("-")[2]) === day);
                 return (
-                  <div key={i} className="min-h-[80px] p-1.5 rounded-lg bg-white/5 border border-white/10 flex flex-col gap-1">
+                  <div key={i} className="min-h-[80px] p-1.5 rounded-lg bg-[var(--kiq-surface)]/5 border border-white/10 flex flex-col gap-1">
                     <span className="text-[9px] font-bold text-muted-foreground">{day > 0 && day <= 31 ? day : ""}</span>
                     {events.map(e => (
                       <div key={e.ticker}
@@ -300,11 +300,11 @@ export default function EarningsTracker() {
                   </h4>
                   <ResponsiveContainer width="100%" height={130}>
                     <BarChart data={epsHistory}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.04)" />
-                      <XAxis dataKey="q" tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 9 }} axisLine={false} />
-                      <YAxis tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 9 }} axisLine={false} tickFormatter={(v) => `$${v}`} />
-                      <Tooltip contentStyle={{ background: "#0c0e1a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }} />
-                      <Bar dataKey="est" fill="rgba(255,255,255,0.1)" radius={[2, 2, 0, 0]} name="Estimate" />
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ffffff" />
+                      <XAxis dataKey="q" tick={{ fill: "#475569", fontSize: 9 }} axisLine={false} />
+                      <YAxis tick={{ fill: "#475569", fontSize: 9 }} axisLine={false} tickFormatter={(v) => `$${v}`} />
+                      <Tooltip contentStyle={{ background: "#F8FAFC", border: "1px solid #e2e8f0", borderRadius: "8px" }} />
+                      <Bar dataKey="est" fill="#e2e8f0" radius={[2, 2, 0, 0]} name="Estimate" />
                       <Bar dataKey="act" fill="#00A8FF" radius={[2, 2, 0, 0]} name="Actual" />
                     </BarChart>
                   </ResponsiveContainer>
@@ -317,10 +317,10 @@ export default function EarningsTracker() {
                   </h4>
                   <ResponsiveContainer width="100%" height={110}>
                     <LineChart data={revHistory}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.04)" />
-                      <XAxis dataKey="q" tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 9 }} axisLine={false} />
-                      <YAxis tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 9 }} axisLine={false} tickFormatter={(v) => `$${v}B`} />
-                      <Tooltip contentStyle={{ background: "#0c0e1a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }} />
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#ffffff" />
+                      <XAxis dataKey="q" tick={{ fill: "#475569", fontSize: 9 }} axisLine={false} />
+                      <YAxis tick={{ fill: "#475569", fontSize: 9 }} axisLine={false} tickFormatter={(v) => `$${v}B`} />
+                      <Tooltip contentStyle={{ background: "#F8FAFC", border: "1px solid #e2e8f0", borderRadius: "8px" }} />
                       <Line type="monotone" dataKey="rev" stroke="#00FF94" strokeWidth={2} dot={{ r: 3, fill: "#00FF94" }} name="Revenue ($B)" />
                     </LineChart>
                   </ResponsiveContainer>

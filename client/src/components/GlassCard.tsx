@@ -18,16 +18,16 @@ export default function GlassCard({
   onClick,
 }: GlassCardProps) {
   const glowClass = glowCrimson
-    ? "glow-crimson"
+    ? "kiq-glow-ruby"
     : glow
-    ? "glow"
+    ? "kiq-glow-indigo"
     : "";
 
-  const pulseClass = pulse ? "glow-pulse" : "";
+  const pulseClass = pulse ? "kiq-glow-pulse" : "";
 
   return (
     <div
-      className={`glass ${glowClass} ${pulseClass} p-4 ${className}`}
+      className={`glass-card ${glowClass} ${pulseClass} p-4 ${className}`}
       onClick={onClick}
       style={onClick ? { cursor: "pointer" } : undefined}
     >
@@ -39,10 +39,10 @@ export default function GlassCard({
 /* ── Severity-aware finding card ──────────────────────────────────────────── */
 
 const SEVERITY_STYLES: Record<string, { label: string; color: string; bg: string }> = {
-  CRITICAL: { label: "CRITICAL", color: "#ff4d4d", bg: "rgba(255,77,77,0.12)" },
-  HIGH:     { label: "HIGH",     color: "#f59e0b", bg: "rgba(245,158,11,0.12)" },
-  MEDIUM:   { label: "MEDIUM",   color: "#4f7dff", bg: "rgba(79,125,255,0.12)" },
-  LOW:      { label: "LOW",      color: "#6b7280", bg: "rgba(107,114,128,0.10)" },
+  CRITICAL: { label: "CRITICAL", color: "#b42318", bg: "rgba(234,34,97,0.09)" },
+  HIGH:     { label: "HIGH",     color: "#a8560b", bg: "rgba(255,137,36,0.1)" },
+  MEDIUM:   { label: "MEDIUM",   color: "#4434d4", bg: "rgba(83,58,253,0.08)" },
+  LOW:      { label: "LOW",      color: "#64748d", bg: "rgba(100,116,141,0.08)" },
 };
 
 interface FindingCardProps {
@@ -73,8 +73,8 @@ export function FindingCard({ issue, impact, severity }: FindingCardProps) {
         {s.label}
       </span>
       <div>
-        <div style={{ fontSize: 13, fontWeight: 600, color: "#e8eeff" }}>{issue}</div>
-        <div style={{ fontSize: 12, color: "#6b7fb5", marginTop: 2 }}>{impact}</div>
+        <div style={{ fontSize: 13, fontWeight: 700, color: "var(--kiq-ink)" }}>{issue}</div>
+        <div style={{ fontSize: 12, color: "var(--kiq-muted)", marginTop: 2 }}>{impact}</div>
       </div>
     </GlassCard>
   );

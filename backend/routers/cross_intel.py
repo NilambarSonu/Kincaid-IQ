@@ -1,7 +1,7 @@
 """
-Kincaid IQ — DOL 5500 × EDGAR Cross-Intelligence Engine
+Kincaid Health — DOL 5500 × EDGAR Cross-Intelligence Engine
 Joins 937k plan filings with 2,014 matched public-company SEC filings.
-Six analytical modules for Jeremiah Shrack / Kincaid RMC.
+Six analytical modules for Jeremiah Shrack / Kincaid Health.
 """
 from __future__ import annotations
 import math, logging, re

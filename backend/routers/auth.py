@@ -85,6 +85,11 @@ def register(user_data: schemas.UserCreate, response: Response, request: Request
     if existing:
         raise HTTPException(status_code=400, detail="Username already taken")
 
+    if user_data.email:
+        existing_email = db.query(models.User).filter(models.User.email == user_data.email).first()
+        if existing_email:
+            raise HTTPException(status_code=400, detail="Email already registered")
+
     user = models.User(
         username=user_data.username,
         email=user_data.email,

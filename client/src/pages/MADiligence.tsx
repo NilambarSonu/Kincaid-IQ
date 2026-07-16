@@ -20,8 +20,8 @@ const PURPLE  = "#A855F7";
 const GOLD    = "#FFB800";
 const T1      = "#fff";
 const T2      = "rgba(255,255,255,0.55)";
-const T3      = "rgba(255,255,255,0.3)";
-const BORDER  = "rgba(255,255,255,0.08)";
+const T3      = "#64748b";
+const BORDER  = "#e2e8f0";
 
 function fmt(v: number | undefined) {
   if (!v) return "—";
@@ -105,9 +105,9 @@ function ScoreBadge({ score }: { score: number }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
       <div style={{ width: 48, height: 48, borderRadius: "50%",
-        background: `conic-gradient(${c} ${score * 3.6}deg, rgba(255,255,255,0.06) 0deg)`,
+        background: `conic-gradient(${c} ${score * 3.6}deg, #f1f5f9 0deg)`,
         display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
-        <div style={{ width: 36, height: 36, borderRadius: "50%", background: "#0a0a14",
+        <div style={{ width: 36, height: 36, borderRadius: "50%", background: "#F8FAFC",
           display: "flex", alignItems: "center", justifyContent: "center" }}>
           <span style={{ fontSize: 11, fontWeight: 900, color: c }}>{score}</span>
         </div>
@@ -140,7 +140,7 @@ function GateCard({
   const [open, setOpen] = useState(defaultOpen ?? true);
   const c = scoreColor(score);
   return (
-    <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${c}22`,
+    <div style={{ background: "#ffffff", border: `1px solid ${c}22`,
       borderLeft: `3px solid ${c}`, borderRadius: 14, overflow: "hidden", marginBottom: 10 }}>
       <button onClick={() => setOpen(o => !o)}
         style={{ width: "100%", display: "flex", alignItems: "center", gap: 12,
@@ -193,7 +193,7 @@ function GateCard({
 function ProgressBar({ value, color, max = 100 }: { value: number; color: string; max?: number }) {
   const pct = Math.min(100, (value / max) * 100);
   return (
-    <div style={{ height: 5, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden" }}>
+    <div style={{ height: 5, background: "#f1f5f9", borderRadius: 3, overflow: "hidden" }}>
       <div style={{ width: `${pct}%`, height: "100%", background: color, borderRadius: 3, transition: "width 0.6s ease" }} />
     </div>
   );
@@ -240,7 +240,7 @@ function EINSearch({ onResult }: { onResult: (data: DiligenceData) => void }) {
         </div>
       </div>
 
-      <div style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${CRIMSON}30`,
+      <div style={{ background: "#ffffff", border: `1px solid ${CRIMSON}30`,
         borderRadius: 18, padding: 28 }}>
         <div style={{ display: "flex", gap: 12, marginBottom: 14 }}>
           <div style={{ flex: 1 }}>
@@ -257,7 +257,7 @@ function EINSearch({ onResult }: { onResult: (data: DiligenceData) => void }) {
                 onChange={e => setEin(e.target.value)}
                 onKeyDown={e => e.key === "Enter" && handleSearch()}
                 placeholder="XX-XXXXXXX"
-                style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: `1px solid ${CRIMSON}30`,
+                style={{ width: "100%", background: "#f8fafc", border: `1px solid ${CRIMSON}30`,
                   borderRadius: 10, padding: "12px 12px 12px 38px", color: T1, fontSize: 14,
                   fontWeight: 700, outline: "none", boxSizing: "border-box",
                   letterSpacing: "0.06em" }} />
@@ -273,7 +273,7 @@ function EINSearch({ onResult }: { onResult: (data: DiligenceData) => void }) {
               value={dealName}
               onChange={e => setDealName(e.target.value)}
               placeholder="e.g. Project Atlas"
-              style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: `1px solid ${BORDER}`,
+              style={{ width: "100%", background: "#f8fafc", border: `1px solid ${BORDER}`,
                 borderRadius: 10, padding: "12px", color: T1, fontSize: 13, outline: "none", boxSizing: "border-box" }} />
           </div>
         </div>
@@ -283,7 +283,7 @@ function EINSearch({ onResult }: { onResult: (data: DiligenceData) => void }) {
             cursor: ein.replace(/\D/g,"").length < 8 ? "not-allowed" : "pointer",
             background: ein.replace(/\D/g,"").length >= 8
               ? `linear-gradient(135deg, ${CRIMSON}, #7B0D1E)`
-              : "rgba(255,255,255,0.06)",
+              : "#f1f5f9",
             border: "none", color: T1,
             display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
             opacity: ein.replace(/\D/g,"").length < 8 ? 0.5 : 1 }}>
@@ -306,7 +306,7 @@ function EINSearch({ onResult }: { onResult: (data: DiligenceData) => void }) {
           { label: "Liability Flags", value: "3 Categories", color: AMBER, icon: AlertTriangle },
           { label: "Report Format", value: "PDF Export", color: GREEN, icon: Download },
         ].map(({ label, value, color, icon: Icon }) => (
-          <div key={label} style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`,
+          <div key={label} style={{ background: "#ffffff", border: `1px solid ${BORDER}`,
             borderRadius: 12, padding: "14px", textAlign: "center" }}>
             <Icon style={{ width: 16, height: 16, color, margin: "0 auto 8px" }} />
             <div style={{ fontSize: 13, fontWeight: 800, color: T1 }}>{value}</div>
@@ -352,7 +352,7 @@ function DocumentVault({ ein }: { ein: string }) {
   const uploaded = Object.values(uploads).filter(u => u.status === "done").length;
 
   return (
-    <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`,
+    <div style={{ background: "#ffffff", border: `1px solid ${BORDER}`,
       borderRadius: 14, padding: 20, marginBottom: 20 }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
         <div>
@@ -378,7 +378,7 @@ function DocumentVault({ ein }: { ein: string }) {
                 data-testid={`upload-${id}`}
                 onClick={() => refs.current[id]?.click()}
                 style={{ width: "100%", padding: "12px 10px",
-                  background: isDone ? "rgba(16,185,129,0.07)" : "rgba(255,255,255,0.02)",
+                  background: isDone ? "rgba(16,185,129,0.07)" : "#ffffff",
                   border: `1px solid ${isDone ? "rgba(16,185,129,0.25)" : BORDER}`,
                   borderRadius: 10, cursor: "pointer", textAlign: "left", transition: "all 0.12s" }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = `${CRIMSON}40`; }}
@@ -426,7 +426,7 @@ function FederalRiskGate({ companyName, ein }: { companyName: string; ein: strin
   const signalTx: Record<string, string> = { HIGH: "#ef4444", ELEVATED: "#f59e0b", WATCH: "#3b82f6", CLEAR: "#10b981" };
 
   if (isLoading) return (
-    <div style={{ marginTop: 14, background: "rgba(255,255,255,0.03)", border: `1px solid ${BORDER}`,
+    <div style={{ marginTop: 14, background: "#ffffff", border: `1px solid ${BORDER}`,
       borderRadius: 10, padding: "12px 16px", display: "flex", alignItems: "center", gap: 10 }}>
       <div style={{ width: 14, height: 14, border: "2px solid #9B1C2E", borderTopColor: "transparent",
         borderRadius: "50%", animation: "spin 0.8s linear infinite" }}/>
@@ -438,7 +438,7 @@ function FederalRiskGate({ companyName, ein }: { companyName: string; ein: strin
 
   const sig = data.risk_signal || "CLEAR";
   return (
-    <div style={{ marginTop: 14, background: signalBg[sig] ?? "rgba(255,255,255,0.03)",
+    <div style={{ marginTop: 14, background: signalBg[sig] ?? "#ffffff",
       border: `1px solid ${signalBd[sig] ?? BORDER}`, borderRadius: 10, padding: "14px 16px" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
         <div style={{ fontSize: 9, fontWeight: 900, color: T3, letterSpacing: "0.12em", textTransform: "uppercase" }}>
@@ -533,7 +533,7 @@ function DiligenceReport({ data, onReset }: { data: DiligenceData; onReset: () =
         <button onClick={exportPDF} disabled={exporting} data-testid="ma-export-pdf"
           style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 18px",
             background: `${CRIMSON}18`, border: `1px solid ${CRIMSON}40`, borderRadius: 10,
-            color: "#fff", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
+            color: "#0F172A", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
           {exporting
             ? <RefreshCw style={{ width: 13, height: 13, animation: "spin 1s linear infinite" }} />
             : <Download style={{ width: 13, height: 13 }} />}
@@ -586,9 +586,9 @@ function DiligenceReport({ data, onReset }: { data: DiligenceData; onReset: () =
               <div style={{ fontSize: 9, fontWeight: 900, color: T3, letterSpacing: "0.1em",
                 textTransform: "uppercase", marginBottom: 8 }}>Overall Plan Risk Score</div>
               <div style={{ width: 100, height: 100, borderRadius: "50%", margin: "0 auto 10px",
-                background: `conic-gradient(${scoreColor(scores.overall)} ${scores.overall * 3.6}deg, rgba(255,255,255,0.05) 0deg)`,
+                background: `conic-gradient(${scoreColor(scores.overall)} ${scores.overall * 3.6}deg, #f8fafc 0deg)`,
                 display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
-                <div style={{ width: 76, height: 76, borderRadius: "50%", background: "#050510",
+                <div style={{ width: 76, height: 76, borderRadius: "50%", background: "#F8FAFC",
                   display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                   <div style={{ fontSize: 26, fontWeight: 900, color: scoreColor(scores.overall), lineHeight: 1 }}>
                     {scores.overall}
@@ -637,7 +637,7 @@ function DiligenceReport({ data, onReset }: { data: DiligenceData; onReset: () =
         </div>
 
         {/* Score summary bar */}
-        <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`,
+        <div style={{ background: "#ffffff", border: `1px solid ${BORDER}`,
           borderRadius: 14, padding: 18, marginBottom: 20 }}>
           <div style={{ fontSize: 11, fontWeight: 900, color: T3, letterSpacing: "0.12em",
             textTransform: "uppercase", marginBottom: 14 }}>6-Gate Score Summary</div>
@@ -722,7 +722,7 @@ function DiligenceReport({ data, onReset }: { data: DiligenceData; onReset: () =
           {year_history.length > 0 && (
             <div style={{ marginTop: 8 }}>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr) 1fr 1fr 1fr", gap: 4,
-                padding: "6px 10px", background: "rgba(255,255,255,0.03)", borderRadius: 6, marginBottom: 4 }}>
+                padding: "6px 10px", background: "#ffffff", borderRadius: 6, marginBottom: 4 }}>
                 {["Year", "Participants", "Income", "Expense"].map(h => (
                   <span key={h} style={{ fontSize: 8, fontWeight: 900, color: T3, textTransform: "uppercase", letterSpacing: "0.08em" }}>{h}</span>
                 ))}
@@ -803,7 +803,7 @@ function DiligenceReport({ data, onReset }: { data: DiligenceData; onReset: () =
 
         <div style={{ fontSize: 9, color: T3, textAlign: "center", padding: "16px 0",
           borderTop: `1px solid ${BORDER}`, marginTop: 8 }}>
-          CONFIDENTIAL — PREPARED FOR AUTHORIZED TRANSACTION COUNSEL AND PRINCIPAL USE ONLY. This Benefits Due Diligence Report is prepared by Kincaid IQ™ and Kincaid RMC exclusively for the named acquirer, its authorized transaction counsel, financial advisors, and other advisors engaged in the identified transaction. This report does not constitute legal advice, tax advice, or actuarial opinion, and does not create an attorney-client relationship. Benefit plan liability estimates are derived from publicly available DOL Form 5500 data, SEC EDGAR filings, and industry actuarial benchmarks; they do not reflect actual plan experience and should not be substituted for independent actuarial analysis, legal due diligence, or plan document review. Kincaid IQ makes no representation or warranty, express or implied, regarding the accuracy, completeness, or fitness for a particular purpose of any estimate or finding herein. Acquirer's ERISA counsel should independently verify all material findings and negotiate appropriate representations, warranties, indemnification obligations, survival periods, and escrow or holdback provisions in the definitive purchase agreement. No portion of this report may be disclosed to the target company, its representatives, or any third party without the prior written consent of Kincaid IQ. Kincaid IQ's aggregate liability arising out of or related to this report shall not exceed the fees paid for this engagement. © Kincaid IQ · Kincaid RMC · M&A Benefits Due Diligence™ · Powered by DOL Form 5500 + SEC EDGAR ·
+          CONFIDENTIAL — PREPARED FOR AUTHORIZED TRANSACTION COUNSEL AND PRINCIPAL USE ONLY. This Benefits Due Diligence Report is prepared by Kincaid Health™ exclusively for the named acquirer, its authorized transaction counsel, financial advisors, and other advisors engaged in the identified transaction. This report does not constitute legal advice, tax advice, or actuarial opinion, and does not create an attorney-client relationship. Benefit plan liability estimates are derived from publicly available DOL Form 5500 data, SEC EDGAR filings, and industry actuarial benchmarks; they do not reflect actual plan experience and should not be substituted for independent actuarial analysis, legal due diligence, or plan document review. Kincaid Health makes no representation or warranty, express or implied, regarding the accuracy, completeness, or fitness for a particular purpose of any estimate or finding herein. Acquirer's ERISA counsel should independently verify all material findings and negotiate appropriate representations, warranties, indemnification obligations, survival periods, and escrow or holdback provisions in the definitive purchase agreement. No portion of this report may be disclosed to the target company, its representatives, or any third party without the prior written consent of Kincaid Health. Kincaid Health's aggregate liability arising out of or related to this report shall not exceed the fees paid for this engagement. © Kincaid Health · M&A Benefits Due Diligence™ · Powered by DOL Form 5500 + SEC EDGAR ·
           {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
         </div>
       </div>
@@ -816,7 +816,7 @@ export default function MADiligence() {
 
   return (
     <Layout>
-      <div style={{ background: "#000", minHeight: "100vh", color: T1 }}>
+      <div style={{ background: "#F8FAFC", minHeight: "100vh", color: T1 }}>
         {/* Sticky header */}
         <div style={{ position: "sticky", top: 0, zIndex: 100,
           background: "rgba(0,0,0,0.94)", backdropFilter: "blur(14px)",
@@ -834,7 +834,7 @@ export default function MADiligence() {
           <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, ${CRIMSON}25, transparent)` }} />
           <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.12em",
             textTransform: "uppercase", color: "rgba(255,255,255,0.18)" }}>
-            Kincaid RMC · Fiduciary Grade · Pre-Acquisition Intelligence
+            Kincaid Health · Fiduciary Grade · Pre-Acquisition Intelligence
           </span>
           <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "3px 9px",
             background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.22)", borderRadius: 6 }}>

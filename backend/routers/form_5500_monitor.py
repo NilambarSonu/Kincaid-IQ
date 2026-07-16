@@ -1,5 +1,5 @@
 """
-Form 5500 Monitoring Engine — Kincaid IQ RFP Intelligence OS
+Form 5500 Monitoring Engine — Kincaid Health RFP Intelligence OS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Monitors the DOL Form 5500 annual-filing dataset for changes in enrolled
@@ -1128,7 +1128,7 @@ def _build_outreach_prompt(alert: dict, account: dict) -> str:
     pct = detail.get("pct_change")
     confidence = detail.get("confidence", "MODELED")
 
-    return f"""You are a senior healthcare benefits consultant at Kincaid RMC drafting a re-engagement email to a {relationship} employer contact.
+    return f"""You are a senior healthcare benefits consultant at Kincaid Health drafting a re-engagement email to a {relationship} employer contact.
 
 MONITORING TRIGGER DETECTED (Form 5500 annual filing data — 12-18 month lag):
 - Trigger: {alert_label}
@@ -1245,7 +1245,7 @@ async def draft_outreach(
                 f"This type of change often carries fiduciary implications under ERISA § 404(a). "
                 f"I'd welcome a 15-minute call to walk through the data and discuss whether your current plan design is still optimized.\n\n"
                 f"Please note: this signal is based on annual DOL filing data and carries a 12–18 month data lag.\n\n"
-                f"Best,\nJeremiah Shrack\nCEO, Kincaid RMC"
+                f"Best,\nJeremiah Shrack\nCEO, Kincaid Health"
             ),
         }
 

@@ -41,10 +41,10 @@ export function EvidencePill({ artifact, hash, artifactType, verified = false, c
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-mono",
+        "inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-mono shadow-sm backdrop-blur-sm",
         verified
           ? "text-[#00FF94] border-[#00FF94]/30 bg-[#00FF94]/5"
-          : "text-slate-400 border-slate-600/40 bg-slate-800/40",
+          : "text-slate-500 border-slate-200/80 bg-white/60",
         className,
       )}
       data-testid="evidence-pill"

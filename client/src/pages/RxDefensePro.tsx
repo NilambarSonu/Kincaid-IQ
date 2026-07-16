@@ -130,7 +130,7 @@ function RoiCalculator() {
         <div style={{ background: "rgba(5,150,105,0.05)", border: "1px solid rgba(5,150,105,0.20)", borderRadius: 14, padding: "20px 24px" }}>
           <div style={{ fontSize: 11, fontWeight: 800, color: "#059669", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 8 }}>Typically Recoverable</div>
           <div style={{ fontSize: 36, fontWeight: 900, color: "#0F172A" }}>${(recoverable / 1000000).toFixed(2)}M</div>
-          <div style={{ fontSize: 12, color: "#64748B", marginTop: 4 }}>through renegotiation using Rx Defense IQ findings</div>
+          <div style={{ fontSize: 12, color: "#64748B", marginTop: 4 }}>through renegotiation using PBM Contract Clarity 360 findings</div>
         </div>
       </div>
       <p style={{ fontSize: 11, color: "#94A3B8", marginTop: 16, textAlign: "center" }}>
@@ -151,7 +151,7 @@ export default function RxDefensePro() {
         <div style={{ textAlign: "center", padding: "80px 0 64px" }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(155,28,46,0.06)", border: "1px solid rgba(155,28,46,0.25)", borderRadius: 100, padding: "6px 18px", marginBottom: 32 }}>
             <Pill size={13} color={BB_CRIMSON} />
-            <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: "0.18em", textTransform: "uppercase", color: BB_CRIMSON }}>Rx Defense IQ™ · Powered by Kincaid IQ</span>
+            <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: "0.18em", textTransform: "uppercase", color: BB_CRIMSON }}>PBM Contract Clarity 360™ · Powered by Kincaid Health</span>
           </div>
 
           <h1 style={{ fontSize: 56, fontWeight: 900, color: "#0F172A", lineHeight: 1.08, letterSpacing: "-0.03em", margin: "0 0 24px" }}>
@@ -167,7 +167,7 @@ export default function RxDefensePro() {
             <button
               data-testid="btn-hero-analyze"
               onClick={() => navigate("/rx-defense")}
-              style={{ display: "flex", alignItems: "center", gap: 8, padding: "16px 36px", background: `linear-gradient(135deg, ${BB_CRIMSON} 0%, #7a1524 100%)`, color: "#fff", border: "none", borderRadius: 14, fontSize: 16, fontWeight: 900, cursor: "pointer", boxShadow: "0 8px 32px rgba(155,28,46,0.30)" }}
+              style={{ display: "flex", alignItems: "center", gap: 8, padding: "16px 36px", background: `linear-gradient(135deg, ${BB_CRIMSON} 0%, #7a1524 100%)`, color: "#0F172A", border: "none", borderRadius: 14, fontSize: 16, fontWeight: 900, cursor: "pointer", boxShadow: "0 8px 32px rgba(155,28,46,0.30)" }}
             >
               Analyze Your Contract <ArrowRight size={18} />
             </button>
@@ -284,7 +284,7 @@ export default function RxDefensePro() {
                   border: tier.highlight ? `2px solid rgba(155,28,46,0.45)` : "1px solid rgba(0,0,0,0.09)",
                   borderRadius: 20, padding: "36px 32px", display: "flex", flexDirection: "column", gap: 20, position: "relative" }}>
                 {tier.highlight && (
-                  <div style={{ position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)", background: BB_CRIMSON, color: "#fff", fontSize: 9, fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase", padding: "4px 16px", borderRadius: 100 }}>Most Popular</div>
+                  <div style={{ position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)", background: BB_CRIMSON, color: "#0F172A", fontSize: 9, fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase", padding: "4px 16px", borderRadius: 100 }}>Most Popular</div>
                 )}
                 <div>
                   <div style={{ fontSize: 13, fontWeight: 800, color: tier.highlight ? BB_CRIMSON : "#94A3B8", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 8 }}>{tier.name}</div>
@@ -318,16 +318,16 @@ export default function RxDefensePro() {
         <div style={{ textAlign: "center", background: `linear-gradient(135deg, rgba(155,28,46,0.06) 0%, rgba(0,43,92,0.08) 100%)`, border: "1.5px solid rgba(155,28,46,0.20)", borderRadius: 24, padding: "64px 48px" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 20 }}>
             <div style={{ width: 36, height: 36, borderRadius: 8, background: "#9B1C2E", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <span style={{ fontSize: 12, fontWeight: 900, color: "#fff", letterSpacing: "0.04em" }}>KIQ</span>
+              <span style={{ fontSize: 12, fontWeight: 900, color: "#0F172A", letterSpacing: "0.04em" }}>KIQ</span>
             </div>
-            <span style={{ fontSize: 15, fontWeight: 800, color: "#475569" }}>Kincaid IQ Intelligence Platform</span>
+            <span style={{ fontSize: 15, fontWeight: 800, color: "#475569" }}>Kincaid Health Intelligence Platform</span>
           </div>
           <h2 style={{ fontSize: 40, fontWeight: 900, color: "#0F172A", margin: "0 0 16px", lineHeight: 1.1 }}>Your clients' PBM contracts<br />are costing them money right now.</h2>
           <p style={{ fontSize: 17, color: "#64748B", margin: "0 0 40px" }}>Upload a contract and have the full fiduciary audit in under 60 seconds.</p>
           <button
             data-testid="btn-footer-cta"
             onClick={() => navigate("/rx-defense")}
-            style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "18px 48px", background: `linear-gradient(135deg, ${BB_CRIMSON} 0%, #7a1524 100%)`, color: "#fff", border: "none", borderRadius: 16, fontSize: 18, fontWeight: 900, cursor: "pointer", boxShadow: "0 10px 40px rgba(155,28,46,0.30)" }}
+            style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "18px 48px", background: `linear-gradient(135deg, ${BB_CRIMSON} 0%, #7a1524 100%)`, color: "#0F172A", border: "none", borderRadius: 16, fontSize: 18, fontWeight: 900, cursor: "pointer", boxShadow: "0 10px 40px rgba(155,28,46,0.30)" }}
           >
             Start Analyzing Contracts <ArrowRight size={20} />
           </button>

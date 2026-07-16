@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { TrendingUp, TrendingDown, AlertTriangle, Package, Truck, Clock, DollarSign } from "lucide-react";
 
-const BG = "#07091c"; const T1 = "#f0f4ff"; const BORDER = "rgba(255,255,255,0.08)";
-const GREEN = "#22c55e"; const RED = "#ef4444"; const AMBER = "#f59e0b";
-const CYAN = "#00D4FF"; const PURPLE = "#A855F7"; const ACCENT = "#4f7dff"; const GOLD = "#FFB800";
+const BG = "#F8FAFC"; const T1 = "#0f172a"; const BORDER = "rgba(15,23,42,0.08)";
+const GREEN = "#10b981"; const RED = "#e11d48"; const AMBER = "#d97706";
+const CYAN = "#0ea5e9"; const PURPLE = "#7c3aed"; const ACCENT = "#533afd"; const GOLD = "#f59e0b";
 const ORANGE = "#FF6B1A";
 
 const KPIs = [
@@ -68,7 +68,7 @@ function statusColor(s: string) {
   if (s === "pass" || s === "opportunity") return GREEN;
   if (s === "warn") return AMBER;
   if (s === "fail") return RED;
-  return "rgba(255,255,255,0.4)";
+  return "#475569";
 }
 
 export default function CapitalVelocity() {
@@ -90,17 +90,17 @@ export default function CapitalVelocity() {
   ];
 
   return (
-    <div style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-body)", padding: "24px 28px" }}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-sans)", padding: "24px 28px" }}>
 
       {/* Header */}
-      <div style={{ marginBottom: 24 }}>
+      <div className="kiq-ops-header" style={{ marginBottom: 24, padding: 24, borderRadius: 24 }}>
         <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.22em", color: ORANGE, marginBottom: 6 }}>
-          ◈ KINCAID IQ · CVI · CAPITAL VELOCITY INDEX · SUPPLY CHAIN INTELLIGENCE · BOARD-GRADE CFO VIEW
+          ◈ KINCAID HEALTH · CVI · CAPITAL VELOCITY INDEX · SUPPLY CHAIN INTELLIGENCE · BOARD-GRADE CFO VIEW
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
           <div>
             <h1 style={{ fontSize: 26, fontWeight: 900, letterSpacing: "-0.02em", margin: 0 }}>Capital Velocity Index™</h1>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>
+            <div style={{ fontSize: 12, color: "#475569", marginTop: 4 }}>
               Freight arbitrage · Inventory drag · Demurrage · Lead-time variance · Working capital cycle
             </div>
           </div>
@@ -108,9 +108,9 @@ export default function CapitalVelocity() {
             {MODES.map(m => (
               <button key={m.id} onClick={() => setActiveMode(m.id)} data-testid={`cvi-mode-${m.id}`}
                 style={{ padding: "8px 14px", borderRadius: 10, fontSize: 11, fontWeight: 900, cursor: "pointer",
-                  background: activeMode === m.id ? `${m.color}20` : "rgba(255,255,255,0.04)",
+                  background: activeMode === m.id ? `${m.color}20` : "#ffffff",
                   border: `1px solid ${activeMode === m.id ? m.color : BORDER}`,
-                  color: activeMode === m.id ? m.color : "rgba(255,255,255,0.4)" }}>
+                  color: activeMode === m.id ? m.color : "#475569" }}>
                 {m.label}
               </button>
             ))}
@@ -123,14 +123,14 @@ export default function CapitalVelocity() {
         border: `1px solid ${cviColor}30`, borderRadius: 14, display: "flex", alignItems: "center", gap: 20 }}>
         <div style={{ textAlign: "center", minWidth: 80 }}>
           <div style={{ fontSize: 36, fontWeight: 900, color: cviColor }}>{cviScore}</div>
-          <div style={{ fontSize: 8, color: "rgba(255,255,255,0.4)", letterSpacing: "0.12em" }}>CVI SCORE</div>
+          <div style={{ fontSize: 8, color: "#475569", letterSpacing: "0.12em" }}>CVI SCORE</div>
         </div>
         <div style={{ flex: 1 }}>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>CVI Composite (target: 75+)</span>
+            <span style={{ fontSize: 11, color: "#334155" }}>CVI Composite (target: 75+)</span>
             <span style={{ fontSize: 11, fontWeight: 900, color: RED }}>21 points below target</span>
           </div>
-          <div style={{ height: 10, background: "rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
+          <div style={{ height: 10, background: "#f1f5f9", borderRadius: 5, overflow: "hidden" }}>
             <div style={{ height: "100%", width: `${cviScore}%`, background: `linear-gradient(90deg, ${RED}, ${AMBER})`,
               borderRadius: 5 }} />
           </div>
@@ -141,7 +141,7 @@ export default function CapitalVelocity() {
           </div>
           <div style={{ display: "flex", gap: 16, marginTop: 4 }}>
             {[["Freight 40%", CYAN], ["Inventory 35%", GOLD], ["Lead-Time 25%", ORANGE]].map(([l, c]) => (
-              <span key={String(l)} style={{ fontSize: 8, color: "rgba(255,255,255,0.3)" }}>{String(l)}</span>
+              <span key={String(l)} style={{ fontSize: 8, color: "#64748b" }}>{String(l)}</span>
             ))}
           </div>
         </div>
@@ -149,9 +149,9 @@ export default function CapitalVelocity() {
 
       {/* Board Memo view */}
       {activeMode === "board" ? (
-        <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${PURPLE}30`, borderRadius: 16, padding: 24 }}>
+        <div style={{ background: "#ffffff", border: `1px solid ${PURPLE}30`, borderRadius: 16, padding: 24 }}>
           <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.18em", color: PURPLE, marginBottom: 16 }}>
-            ◈ BOARD MEMO · CAPITAL VELOCITY INDEX · KINCAID RMC · {new Date().toLocaleDateString()}
+            ◈ BOARD MEMO · CAPITAL VELOCITY INDEX · KINCAID HEALTH · {new Date().toLocaleDateString()}
           </div>
           <div style={{ fontSize: 14, fontWeight: 900, color: T1, marginBottom: 16 }}>
             SUBJECT: Supply Chain Performance — Q4 2024 / Q1 2025 Remediation Briefing
@@ -161,17 +161,17 @@ export default function CapitalVelocity() {
               <div style={{ width: 20, height: 20, borderRadius: 6, background: `${PURPLE}20`,
                 border: `1px solid ${PURPLE}30`, display: "flex", alignItems: "center", justifyContent: "center",
                 fontSize: 9, fontWeight: 900, color: PURPLE, flexShrink: 0 }}>{i + 1}</div>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.65)", lineHeight: 1.7, margin: 0 }}>{line}</p>
+              <p style={{ fontSize: 13, color: "#334155", lineHeight: 1.7, margin: 0 }}>{line}</p>
             </div>
           ))}
-          <div style={{ marginTop: 20, padding: "10px 14px", background: "rgba(0,0,0,0.3)", borderRadius: 10,
+          <div style={{ marginTop: 20, padding: "10px 14px", background: "rgba(0,0,0,0.05)", borderRadius: 10,
             fontFamily: "monospace", fontSize: 9, color: PURPLE }}>
             CVI008:SHA256:9D3A7F2E · KINCAID CVI ENGINE v1.0 · SHRACK-7742 · BOARD MEMO SEALED
           </div>
         </div>
       ) : (
         /* KPI grid */
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 12 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))", gap: 12 }}>
           {KPIs.filter(k => {
             if (activeMode === "freight") return ["CVI-002", "CVI-003", "CVI-007"].includes(k.id);
             if (activeMode === "inventory") return ["CVI-001", "CVI-005", "CVI-006"].includes(k.id);
@@ -179,7 +179,7 @@ export default function CapitalVelocity() {
           }).map(k => (
             <div key={k.id} onClick={() => setOpenKpi(openKpi === k.id ? null : k.id)}
               data-testid={`cvi-kpi-${k.id}`}
-              style={{ background: openKpi === k.id ? `${k.color}08` : "rgba(255,255,255,0.02)",
+              style={{ background: openKpi === k.id ? `${k.color}08` : "#ffffff",
                 border: `1px solid ${openKpi === k.id ? `${k.color}40` : BORDER}`,
                 borderRadius: 14, padding: "16px 18px", cursor: "pointer", transition: "all 0.15s" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
@@ -197,16 +197,16 @@ export default function CapitalVelocity() {
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
                 <span style={{ fontSize: 20, fontWeight: 900, color: k.color }}>{k.value}</span>
                 <div style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)" }}>Benchmark: {k.benchmark}</div>
+                  <div style={{ fontSize: 10, color: "#64748b" }}>Benchmark: {k.benchmark}</div>
                   <div style={{ fontSize: 11, fontWeight: 900, color: statusColor(k.status) }}>{k.delta}</div>
                 </div>
               </div>
               {openKpi === k.id && (
                 <>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", lineHeight: 1.7, marginBottom: 10, marginTop: 8,
+                  <div style={{ fontSize: 11, color: "#334155", lineHeight: 1.7, marginBottom: 10, marginTop: 8,
                     borderTop: `1px solid ${BORDER}`, paddingTop: 10 }}>{k.desc}</div>
-                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", marginBottom: 8 }}>Source: {k.source}</div>
-                  <div style={{ padding: "6px 10px", background: "rgba(0,0,0,0.3)", borderRadius: 8,
+                  <div style={{ fontSize: 9, color: "#64748b", marginBottom: 8 }}>Source: {k.source}</div>
+                  <div style={{ padding: "6px 10px", background: "rgba(0,0,0,0.05)", borderRadius: 8,
                     fontFamily: "monospace", fontSize: 9, color: k.color }}>{k.hash}</div>
                 </>
               )}

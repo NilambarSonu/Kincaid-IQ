@@ -33,7 +33,7 @@ VALID_PAGES = {"war-room", "benchmarking", "rx-defense", "broker-prospects", "sa
 PAGE_LABELS = {
     "war-room":         "CFO War Room",
     "benchmarking":     "Benefits Benchmarking",
-    "rx-defense":       "Rx Defense IQ™",
+    "rx-defense":       "PBM Contract Clarity 360™",
     "broker-prospects": "Broker Console",
 }
 
@@ -49,7 +49,7 @@ class EmailShareIn(BaseModel):
     recipient: str
     note: Optional[str] = ""
     url: Optional[str] = None                  # full short URL as composed by the client
-    sender_name: Optional[str] = "Kincaid IQ"
+    sender_name: Optional[str] = "Kincaid Health"
 
 
 def _gen_short_id(db: Session) -> str:
@@ -79,13 +79,13 @@ def _build_share_email_html(url: str, note: str, sender_name: str) -> str:
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
         <tr><td style="background:linear-gradient(135deg,#0c1a3a,#1a3a6e);border-radius:12px 12px 0 0;padding:32px 36px;">
-          <span style="font-size:10px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.45);">KINCAID RMC · KINCAID IQ</span>
+          <span style="font-size:10px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.45);">KINCAID HEALTH</span>
           <h1 style="font-size:22px;font-weight:800;color:white;margin:8px 0 4px;">A view has been shared with you</h1>
           <p style="font-size:12px;color:rgba(255,255,255,0.5);margin:0;">Fiduciary-Grade Healthcare Benefits Intelligence</p>
         </td></tr>
         <tr><td style="background:white;padding:32px 36px;">
           <p style="font-size:14px;color:#374151;line-height:1.7;margin:0 0 16px;">
-            <strong>{sender_name}</strong> shared a pre-loaded Kincaid IQ view with you. Click below to open the
+            <strong>{sender_name}</strong> shared a pre-loaded Kincaid Health view with you. Click below to open the
             exact dashboard, drill level, and filters they were looking at.
           </p>
           {note_block}
@@ -97,7 +97,7 @@ def _build_share_email_html(url: str, note: str, sender_name: str) -> str:
           </p>
         </td></tr>
         <tr><td style="background:#1F2937;border-radius:0 0 12px 12px;padding:20px 36px;">
-          <p style="font-size:11px;color:rgba(255,255,255,0.5);margin:0;">Sent via the Kincaid IQ platform · Kincaid RMC</p>
+          <p style="font-size:11px;color:rgba(255,255,255,0.5);margin:0;">Sent via the Kincaid Health platform</p>
         </td></tr>
       </table>
     </td></tr>
@@ -155,7 +155,7 @@ def list_links(
         out.append({
             "short_id": row.short_id,
             "page": row.page,
-            "page_label": PAGE_LABELS.get(row.page, "Kincaid IQ"),
+            "page_label": PAGE_LABELS.get(row.page, "Kincaid Health"),
             "title": row.title,
             "created_at": row.created_at.isoformat() if row.created_at else None,
             "expires_at": row.expires_at.isoformat() if row.expires_at else None,
@@ -219,8 +219,8 @@ def email_link(
         raise HTTPException(status_code=400, detail="Recipient required")
 
     url = body.url or f"/s/{short_id}"
-    label = PAGE_LABELS.get(row.page, "Kincaid IQ")
-    sender = body.sender_name or "Kincaid IQ"
+    label = PAGE_LABELS.get(row.page, "Kincaid Health")
+    sender = body.sender_name or "Kincaid Health"
     subject = f"{sender} shared a {label} view with you"
     html = _build_share_email_html(url, body.note or "", sender)
 
@@ -230,7 +230,7 @@ def email_link(
         subject=subject,
         message=body.note or "",
         sender_name=sender,
-        sender_title="Kincaid RMC",
+        sender_title="Kincaid Health",
     )
     sent = try_send_smtp(req, html)
     logger.info(f"[ShareLink] email short_id={short_id} to={body.recipient} smtp_sent={sent}")

@@ -19,26 +19,30 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | 
       const err = this.state.error as Error;
       return (
         <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
-          background: "linear-gradient(135deg,#060b18 0%,#080d1e 50%,#060a16 100%)", fontFamily: "system-ui,sans-serif" }}>
-          <div style={{ maxWidth: 480, padding: "40px 32px", background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, textAlign: "center" }}>
+          background: "#f8fafc", fontFamily: "'Inter', system-ui, sans-serif" }}>
+          <div style={{ maxWidth: 480, padding: "40px 32px", background: "#ffffff",
+            border: "1px solid rgba(0,0,0,0.06)", borderRadius: 20, textAlign: "center",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.06)" }}>
             <div style={{ fontSize: 36, marginBottom: 16 }}>⚠️</div>
-            <h1 style={{ color: "#fff", fontSize: 20, fontWeight: 800, marginBottom: 8 }}>Something went wrong</h1>
-            <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 13, marginBottom: 6 }}>
+            <h1 style={{ color: "#0f172a", fontSize: 20, fontWeight: 800, marginBottom: 8,
+              fontFamily: "'Crimson Pro', Georgia, serif" }}>Something went wrong</h1>
+            <p style={{ color: "#64748b", fontSize: 13, marginBottom: 6 }}>
               {err.message || "An unexpected error occurred."}
             </p>
-            <p style={{ color: "rgba(255,255,255,0.25)", fontSize: 11, marginBottom: 24 }}>
+            <p style={{ color: "#94a3b8", fontSize: 11, marginBottom: 24 }}>
               If you just refreshed, your browser may have cached an old version. Try a hard refresh.
             </p>
             <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
               <button onClick={() => window.location.reload()}
-                style={{ padding: "10px 20px", borderRadius: 10, background: "rgba(0,168,255,0.15)",
-                  border: "1px solid rgba(0,168,255,0.3)", color: "#00a8ff", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+                style={{ padding: "10px 20px", borderRadius: 10,
+                  background: "linear-gradient(135deg, hsl(349,68%,46%), hsl(349,68%,38%))",
+                  border: "none", color: "#0F172A", fontSize: 13, fontWeight: 700, cursor: "pointer",
+                  boxShadow: "0 2px 8px rgba(155,28,46,0.2)" }}>
                 Reload Page
               </button>
               <button onClick={() => { this.setState({ error: null }); window.location.href = "/"; }}
-                style={{ padding: "10px 20px", borderRadius: 10, background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.6)", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
+                style={{ padding: "10px 20px", borderRadius: 10, background: "#f1f5f9",
+                  border: "1px solid rgba(0,0,0,0.08)", color: "#475569", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
                 Go to Dashboard
               </button>
             </div>
@@ -142,6 +146,7 @@ import Pricing from "@/pages/Pricing";
 import SaasFiduciary from "@/pages/SaasFiduciary";
 import SaasBroker from "@/pages/SaasBroker";
 import SalesOS, { SalesOSAccountDetail } from "@/pages/SalesOS";
+import OpportunityOS from "@/pages/OpportunityOS";
 import SaasStopLoss from "@/pages/SaasStopLoss";
 import SaasNetwork from "@/pages/SaasNetwork";
 import NetworkIQ from "@/pages/NetworkIQ";
@@ -213,6 +218,7 @@ import EnterpriseCommandCenter from "@/pages/EnterpriseCommandCenter";
 import EnterpriseReadinessAudit from "@/pages/EnterpriseReadinessAudit";
 import KiqVerify from "@/pages/KiqVerify";
 import OperatingSystems, { OperatingSystemDetail } from "@/pages/OperatingSystems";
+import EngineCatalog, { EngineDetail } from "@/pages/Engines";
 import Company360 from "@/pages/Company360";
 
 function ProtectedRoute({ component: Component }: { component: () => JSX.Element | null }) {
@@ -231,7 +237,7 @@ function ProtectedRoute({ component: Component }: { component: () => JSX.Element
   }
 
   if (!isAuthenticated) {
-    navigate("/login");
+    navigate("/auth");
     return <></>;
   }
 
@@ -254,7 +260,7 @@ function Router() {
 
   return (
     <Switch>
-      <Route path="/login">
+      <Route path="/auth">
         {() => {
           if (!isLoading && isAuthenticated) {
             navigate("/");
@@ -265,6 +271,8 @@ function Router() {
       </Route>
       <Route path="/">{() => <ProtectedRoute component={CfoWarRoom} />}</Route>
       <Route path="/kiq-verify">{() => <ProtectedRoute component={KiqVerify} />}</Route>
+      <Route path="/engines">{() => <ProtectedRoute component={EngineCatalog} />}</Route>
+      <Route path="/engines/:slug">{() => <ProtectedRoute component={EngineDetail} />}</Route>
       <Route path="/operating-systems">{() => <ProtectedRoute component={OperatingSystems} />}</Route>
       <Route path="/operating-systems/:key">{() => <ProtectedRoute component={OperatingSystemDetail} />}</Route>
       <Route path="/dashboard">{() => <ProtectedRoute component={Dashboard} />}</Route>
@@ -375,7 +383,15 @@ function Router() {
       <Route path="/family-offices">{() => <FamilyOfficesPage />}</Route>
       <Route path="/contact">{() => <ContactPage />}</Route>
       <Route path="/demo">{() => <Demo />}</Route>
-      <Route path="/signup">{() => <Signup />}</Route>
+      <Route path="/signup">
+        {() => {
+          if (!isLoading && isAuthenticated) {
+            navigate("/");
+            return null;
+          }
+          return <Signup />;
+        }}
+      </Route>
       <Route path="/verify">{() => <VerifyPackagePublic />}</Route>
       <Route path="/onboarding">{() => <Onboarding />}</Route>
       {/* SaaS — authenticated pages */}
@@ -418,6 +434,7 @@ function Router() {
       <Route path="/enterprise-command-center">{() => <ProtectedRoute component={EnterpriseCommandCenter} />}</Route>
       <Route path="/enterprise-readiness-audit">{() => <ProtectedRoute component={EnterpriseReadinessAudit} />}</Route>
       <Route path="/sales-os">{() => <ProtectedRoute component={SalesOS} />}</Route>
+      <Route path="/opportunity-os">{() => <ProtectedRoute component={OpportunityOS} />}</Route>
       <Route path="/sales-os/prospects">{() => <ProtectedRoute component={SalesOS} />}</Route>
       <Route path="/sales-os/pipeline">{() => <ProtectedRoute component={SalesOS} />}</Route>
       <Route path="/sales-os/alerts">{() => <ProtectedRoute component={SalesOS} />}</Route>

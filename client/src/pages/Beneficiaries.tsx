@@ -60,7 +60,7 @@ export default function Beneficiaries() {
                 </div>
                 <div className="flex-1 min-w-0 text-left">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <p className="font-bold text-white">{b.name}</p>
+                    <p className="font-bold text-[var(--kiq-ink)]">{b.name}</p>
                     <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
                       style={{ background: ss.bg, color: ss.color, border: `1px solid ${ss.border}` }}>
                       {b.status}
@@ -93,7 +93,7 @@ export default function Beneficiaries() {
 
               {isOpen && (
                 <div className="mt-4 pt-4 grid grid-cols-1 sm:grid-cols-3 gap-4"
-                  style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                  style={{ borderTop: "1px solid #f1f5f9" }}>
                   <div>
                     <p className="section-label mb-2">Beneficial Entities</p>
                     <div className="space-y-1">
@@ -111,7 +111,7 @@ export default function Beneficiaries() {
                     <div className="space-y-1.5">
                       <div className="flex justify-between text-xs">
                         <span className="text-muted-foreground">All Time</span>
-                        <span className="font-semibold text-white">{formatCurrency(b.totalDistributions)}</span>
+                        <span className="font-semibold text-[var(--kiq-ink)]">{formatCurrency(b.totalDistributions)}</span>
                       </div>
                       <div className="flex justify-between text-xs">
                         <span className="text-muted-foreground">YTD 2026</span>
@@ -138,7 +138,7 @@ export default function Beneficiaries() {
                               ? <CheckCircle size={12} style={{ color: "#00FF94", flexShrink: 0, marginTop: 1 }} />
                               : <Clock size={12} style={{ color: "#FFB800", flexShrink: 0, marginTop: 1 }} />}
                             <div>
-                              <p className={m.done ? "text-muted-foreground line-through" : "text-white"}>{m.label}</p>
+                              <p className={m.done ? "text-muted-foreground line-through" : "text-[var(--kiq-ink)]"}>{m.label}</p>
                               <p className="text-[10px] text-muted-foreground">{m.date}</p>
                             </div>
                           </div>

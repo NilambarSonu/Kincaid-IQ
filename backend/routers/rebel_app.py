@@ -28,7 +28,7 @@ log = logging.getLogger("rebel_api")
 
 def create_v1_app() -> FastAPI:
     app = FastAPI(
-        title="Kincaid IQ Intelligence API",
+        title="Kincaid Health Intelligence API",
         version="1.0.0",
         description="Machine-to-machine intelligence API for Rebel IQ.",
         docs_url="/docs",

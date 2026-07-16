@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Agent Package
+Kincaid Health — Agent Package
 5-class fiduciary intelligence pipeline, each usable standalone or via kiq_engine router.
 """
 from .ingestion_agent        import IngestionAgent

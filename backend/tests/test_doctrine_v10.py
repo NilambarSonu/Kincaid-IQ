@@ -1,5 +1,5 @@
 """
-Regression guard for the Kincaid IQ Verify™ V10.0 governing doctrine.
+Regression guard for the Kincaid Health Verify™ V10.0 governing doctrine.
 
 Locks in the V10.0 markers on the canonical doctrine surfaces and verifies that
 the downstream JSON output contracts / confidence tiers remain intact, so the
@@ -13,7 +13,7 @@ from backend.routers.kiq_engine import _NARRATIVE_SYSTEM
 
 class TestDoctrineV10(unittest.TestCase):
     def test_base_persona_v10_identity(self):
-        self.assertIn("Kincaid IQ Verify", BASE_PERSONA)
+        self.assertIn("Kincaid Health Verify", BASE_PERSONA)
         self.assertIn("University of Chicago", BASE_PERSONA)
         # Investigative discipline (constitutional)
         self.assertIn("investigate", BASE_PERSONA)
@@ -29,12 +29,12 @@ class TestDoctrineV10(unittest.TestCase):
         self.assertIn("structured JSON only", BASE_PERSONA)
 
     def test_header_complements_specialized_identity(self):
-        self.assertIn("Kincaid IQ Verify", KIQ_VERIFY_HEADER)
+        self.assertIn("Kincaid Health Verify", KIQ_VERIFY_HEADER)
         self.assertIn("specialized role", KIQ_VERIFY_HEADER)
         self.assertIn("30, 90, 180, and 365", KIQ_VERIFY_HEADER)
 
     def test_narrative_system_v10_voice_and_schema_intact(self):
-        self.assertIn("Kincaid IQ Verify", _NARRATIVE_SYSTEM)
+        self.assertIn("Kincaid Health Verify", _NARRATIVE_SYSTEM)
         self.assertIn("30, 90, 180, and 365", _NARRATIVE_SYSTEM)
         # Confidence tiers (exactly three) preserved
         for tier in ("CERTIFIED", "MODELED", "INSUFFICIENT_EVIDENCE"):

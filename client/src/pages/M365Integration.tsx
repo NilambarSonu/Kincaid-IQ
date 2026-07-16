@@ -3,9 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Building2, Users, Calendar, FileText, AlertTriangle, CheckCircle, Wifi, WifiOff, ChevronRight, BarChart2, Shield, Zap, RefreshCw } from "lucide-react";
 
 const C = {
-  bg: "#07091c", card: "#0d1033", border: "rgba(255,255,255,0.08)",
-  accent: "#4f7dff", blue: "#0078d4", cyan: "#00D4FF", green: "#22c55e", amber: "#f59e0b",
-  red: "#ef4444", purple: "#A855F7", text1: "#f0f4ff", text2: "#64748b",
+  bg: "#F8FAFC", card: "#ffffff", border: "rgba(15,23,42,0.08)",
+  accent: "#533afd", blue: "#0078d4", cyan: "#0ea5e9", green: "#10b981", amber: "#d97706",
+  red: "#e11d48", purple: "#7c3aed", text1: "#0f172a", text2: "#475569",
 };
 
 function KiqAlert({ level, message }: { level: string; message: string }) {
@@ -24,7 +24,7 @@ function KiqAlert({ level, message }: { level: string; message: string }) {
 
 function StatTile({ label, value, sub, color }: { label: string; value: string; sub?: string; color?: string }) {
   return (
-    <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 10, padding: "16px 18px", flex: 1 }}>
+    <div className="kiq-ops-card" style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 14, padding: "16px 18px", flex: 1 }}>
       <div style={{ fontSize: 10, color: C.text2, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6 }}>{label}</div>
       <div style={{ fontSize: 22, fontWeight: 800, color: color || C.text1, lineHeight: 1 }}>{value}</div>
       {sub && <div style={{ fontSize: 11, color: C.text2, marginTop: 4 }}>{sub}</div>}
@@ -34,7 +34,7 @@ function StatTile({ label, value, sub, color }: { label: string; value: string; 
 
 function SectionCard({ title, icon, children, accent }: { title: string; icon: React.ReactNode; children: React.ReactNode; accent?: string }) {
   return (
-    <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 12, overflow: "hidden", marginBottom: 18 }}>
+    <div className="kiq-ops-card" style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16, overflow: "hidden", marginBottom: 18 }}>
       <div style={{ padding: "12px 18px", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "center", gap: 10 }}>
         <span style={{ color: accent || C.cyan }}>{icon}</span>
         <span style={{ fontSize: 12, fontWeight: 700, color: accent || C.cyan, textTransform: "uppercase", letterSpacing: "0.1em" }}>{title}</span>
@@ -53,8 +53,8 @@ function ConnectScreen({ onConnect }: { onConnect: () => void }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
       minHeight: 420, gap: 24, padding: 40 }}>
-      <div style={{ width: 80, height: 80, borderRadius: 20, background: "rgba(0,120,212,0.12)",
-        border: "2px solid rgba(0,120,212,0.35)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ width: 92, height: 92, borderRadius: 24, background: "linear-gradient(135deg,#f25022 0 25%,#7fba00 25% 50%,#00a4ef 50% 75%,#ffb900 75% 100%)",
+        border: "1px solid rgba(15,23,42,0.08)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 22px 50px rgba(0,120,212,0.22)" }}>
         <svg viewBox="0 0 24 24" width="44" height="44" fill="none">
           <path d="M11.5 2.5A9.5 9.5 0 0 1 21 12a9.5 9.5 0 0 1-9.5 9.5A9.5 9.5 0 0 1 2 12a9.5 9.5 0 0 1 9.5-9.5z" fill="#0078d4"/>
           <path d="M6 8h5v5H6z" fill="#50e6ff"/>
@@ -64,7 +64,7 @@ function ConnectScreen({ onConnect }: { onConnect: () => void }) {
         </svg>
       </div>
       <div style={{ textAlign: "center" }}>
-        <div style={{ fontSize: 20, fontWeight: 800, color: C.text1, marginBottom: 8 }}>Connect Microsoft 365</div>
+        <div style={{ fontSize: 20, fontWeight: 900, color: C.text1, marginBottom: 8 }}>Connect Microsoft 365</div>
         <div style={{ fontSize: 13, color: C.text2, maxWidth: 420, lineHeight: 1.6 }}>
           Link the client's M365 tenant to pull Azure AD headcount, Outlook calendar renewal events,
           SharePoint plan documents, and cross-reference against DOL 5500 participant data.
@@ -85,7 +85,7 @@ function ConnectScreen({ onConnect }: { onConnect: () => void }) {
       </div>
       <button data-testid="btn-connect-m365" onClick={handleConnect} disabled={loading}
         style={{ padding: "12px 36px", borderRadius: 8, fontWeight: 700, fontSize: 14, cursor: "pointer", border: "none",
-          background: loading ? "rgba(0,120,212,0.4)" : "#0078d4", color: "white", display: "flex", alignItems: "center", gap: 8 }}>
+          background: loading ? "rgba(0,120,212,0.4)" : "#0078d4", color: "#ffffff", display: "flex", alignItems: "center", gap: 8 }}>
         {loading ? <><RefreshCw size={15} style={{ animation: "spin 1s linear infinite" }} />Connecting via Azure AD...</> : "Connect via Microsoft Azure AD"}
       </button>
       <div style={{ fontSize: 10, color: C.text2, textAlign: "center" }}>
@@ -106,17 +106,17 @@ export default function M365Integration() {
   const flagColor = (f: string) => f === "red" ? C.red : f === "amber" ? C.amber : f === "green" ? C.green : f === "blue" ? "#0078d4" : f === "purple" ? C.purple : C.cyan;
 
   if (!connected) return (
-    <div style={{ minHeight: "100vh", background: C.bg, padding: 32, fontFamily: "Inter, sans-serif" }}>
-      <div style={{ marginBottom: 24 }}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", background: C.bg, padding: 32, fontFamily: "var(--font-sans)" }}>
+      <div className="kiq-ops-header" style={{ marginBottom: 24, padding: 20, borderRadius: 24 }}>
         <div style={{ fontSize: 11, color: C.text2, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 6 }}>
-          Kincaid IQ VERIFY™ — Integrations
+          Kincaid Health VERIFY™ — Integrations
         </div>
         <h1 style={{ fontSize: 26, fontWeight: 900, color: C.text1, margin: 0 }}>Microsoft 365 Intelligence</h1>
         <p style={{ color: C.text2, fontSize: 13, marginTop: 6 }}>
           Connect client M365 tenant to cross-reference employee directory, calendar, and documents against DOL filings.
         </p>
       </div>
-      <div style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 16 }}>
+      <div className="kiq-ops-card" style={{ background: C.card, border: `1px solid ${C.border}`, borderRadius: 18 }}>
         <ConnectScreen onConnect={() => setConnected(true)} />
       </div>
     </div>
@@ -126,11 +126,11 @@ export default function M365Integration() {
   const alerts = (summary as any)?.alerts || [];
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, padding: "24px 28px", fontFamily: "Inter, sans-serif" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22 }}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", background: C.bg, padding: "24px 28px", fontFamily: "var(--font-sans)" }}>
+      <div className="kiq-ops-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, marginBottom: 22, padding: 20, borderRadius: 24, flexWrap: "wrap" }}>
         <div>
           <div style={{ fontSize: 11, color: C.text2, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 4 }}>
-            Kincaid IQ VERIFY™ — M365 Intelligence
+            Kincaid Health VERIFY™ — M365 Intelligence
           </div>
           <h1 style={{ fontSize: 22, fontWeight: 900, color: C.text1, margin: 0 }}>Human Capital Concepts LLC</h1>
           <div style={{ fontSize: 12, color: C.text2, marginTop: 3 }}>humancapitalconcepts.com · Microsoft 365 Business Premium</div>
@@ -143,7 +143,7 @@ export default function M365Integration() {
       </div>
 
       {/* KPI strip */}
-      <div style={{ display: "flex", gap: 12, marginBottom: 20 }}>
+      <div style={{ display: "flex", gap: 12, marginBottom: 20, flexWrap: "wrap" }}>
         <StatTile label="M365 Licensed Users" value="312" sub="Azure AD active" color={C.cyan} />
         <StatTile label="Benefit-Eligible (M365)" value={hc ? hc.benefit_eligible.toLocaleString() : "—"} sub="Directory count" color={C.accent} />
         <StatTile label="DOL 5500 Participants" value={hc ? hc.dol_5500_participants.toLocaleString() : "—"} sub="2023 filing" />
@@ -156,12 +156,12 @@ export default function M365Integration() {
 
       {/* Alerts */}
       {alerts.length > 0 && (
-        <SectionCard title="Kincaid IQ Findings" icon={<Zap size={15} />} accent={C.accent}>
+        <SectionCard title="Kincaid Health Findings" icon={<Zap size={15} />} accent={C.accent}>
           {alerts.map((a: any, i: number) => <KiqAlert key={i} level={a.level} message={a.message} />)}
         </SectionCard>
       )}
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 18 }}>
         {/* Headcount */}
         <SectionCard title="Azure AD — Department Headcount" icon={<Users size={15} />} accent={C.cyan}>
           {(headcount as any)?.departments?.map((d: any, i: number) => {
@@ -216,7 +216,7 @@ export default function M365Integration() {
                 d.flag === "TERMINATION" ? C.red : C.text2;
               return (
                 <div key={d.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "7px 10px",
-                  background: "rgba(255,255,255,0.02)", border: `1px solid ${C.border}`, borderRadius: 7 }}>
+                  background: "#ffffff", border: `1px solid ${C.border}`, borderRadius: 7 }}>
                   <FileText size={13} style={{ color: fc || C.text2, flexShrink: 0 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 11, color: C.text1, fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{d.name}</div>

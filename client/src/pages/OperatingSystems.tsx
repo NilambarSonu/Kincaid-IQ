@@ -1,5 +1,5 @@
 /**
- * Operating Systems — overview hub for the four Kincaid IQ operating systems.
+ * Operating Systems — overview hub for the four Kincaid Health operating systems.
  * Index page lists all four; the detail page renders a full spec sheet for one,
  * with a button into the live module.
  */
@@ -39,7 +39,7 @@ const OS_LIST: Os[] = [
     liveRoute: "/hios",
     liveLabel: "Open HIOS",
     summary:
-      "The unified command room for the healthcare value-creation engine. HIOS sits on top of Claims Recovery, Rx Defense, and Fiduciary IQ and runs the operational workflows that turn denied claims, PBM contracts, and plan data into recovered dollars, with a receipt behind every number.",
+      "The unified command room for the healthcare value-creation engine. HIOS sits on top of Claims Recovery, PBM Contract Clarity 360, and Fiduciary IQ and runs the operational workflows that turn denied claims, PBM contracts, and plan data into recovered dollars, with a receipt behind every number.",
     capabilities: [
       "Four-tile doctrine command center with live cross-module metrics that drill into the underlying module",
       "Denied-claim appeals tracked against the 180-day ERISA deadline with color-coded urgency",
@@ -48,7 +48,7 @@ const OS_LIST: Os[] = [
       "Three-tier multi-agent panel operating as PBM forensic auditor, ERISA litigator, McKinsey strategist, and Chief Medical Officer at once",
     ],
     sourcesLabel: "Cross-wired modules",
-    sources: ["Claims Recovery IQ", "Rx Defense IQ", "Fiduciary IQ"],
+    sources: ["Claims Recovery IQ", "PBM Contract Clarity 360", "Fiduciary IQ"],
   },
   {
     key: "sales-os",
@@ -107,15 +107,15 @@ const OS_LIST: Os[] = [
     liveRoute: "/rfp-intelligence",
     liveLabel: "Open RFP Intelligence OS",
     summary:
-      "A higher-tier, fiduciary-focused layer on top of RFP work. It scores each opportunity on a 0 to 100 Fiduciary Score and converts the gaps into pitch narrative, then hands the account off into Rx Defense IQ with pre-loaded context.",
+      "A higher-tier, fiduciary-focused layer on top of RFP work. It scores each opportunity on a 0 to 100 Fiduciary Score and converts the gaps into pitch narrative, then hands the account off into PBM Contract Clarity 360 with pre-loaded context.",
     capabilities: [
       "0 to 100 Fiduciary Score per opportunity",
       "Turns benchmark gaps such as above-market broker compensation into the strongest opening angle",
-      "One-click handoff into Rx Defense IQ with account context pre-loaded",
+      "One-click handoff into PBM Contract Clarity 360 with account context pre-loaded",
       "PDF generation of the resulting intelligence",
     ],
     sourcesLabel: "Hands off into",
-    sources: ["Rx Defense IQ"],
+    sources: ["PBM Contract Clarity 360"],
     note: "Gated module. Requires the rfp-intelligence entitlement.",
   },
 ];
@@ -146,11 +146,11 @@ export default function OperatingSystems() {
               textTransform: "uppercase", color: "rgba(180,210,255,0.55)",
             }}
           >
-            Kincaid IQ · Operating Systems
+            Kincaid Health · Operating Systems
           </p>
           <h1
             data-testid="text-os-title"
-            style={{ fontSize: 30, fontWeight: 900, color: "#fff", marginTop: 6, letterSpacing: "-0.02em" }}
+            style={{ fontSize: 30, fontWeight: 900, color: "#0F172A", marginTop: 6, letterSpacing: "-0.02em" }}
           >
             The Four Operating Systems
           </h1>
@@ -180,7 +180,7 @@ export default function OperatingSystems() {
                   display: "block",
                   padding: 20,
                   borderRadius: 16,
-                  background: `linear-gradient(160deg, ${tint(os.color, 0.08)} 0%, rgba(255,255,255,0.02) 100%)`,
+                  background: `linear-gradient(160deg, ${tint(os.color, 0.08)} 0%, #ffffff 100%)`,
                   border: `1px solid ${tint(os.color, 0.28)}`,
                   textDecoration: "none",
                 }}
@@ -195,10 +195,10 @@ export default function OperatingSystems() {
                     <Icon size={20} color={os.color} strokeWidth={1.8} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontSize: 15, fontWeight: 800, color: "#fff" }}>{os.short}</p>
+                    <p style={{ fontSize: 15, fontWeight: 800, color: "#0F172A" }}>{os.short}</p>
                     <p style={{ fontSize: 11, color: tint(os.color, 0.85), fontWeight: 600 }}>{os.identity}</p>
                   </div>
-                  <ArrowRight size={16} color="rgba(255,255,255,0.35)" />
+                  <ArrowRight size={16} color="#64748b" />
                 </div>
                 <p style={{ fontSize: 12.5, color: "rgba(255,255,255,0.55)", marginTop: 14, lineHeight: 1.6 }}>
                   {os.summary}
@@ -222,7 +222,7 @@ export function OperatingSystemDetail() {
     return (
       <Layout>
         <div style={{ maxWidth: 760, margin: "0 auto", padding: "40px 4px" }}>
-          <p style={{ color: "rgba(255,255,255,0.7)", fontSize: 15 }} data-testid="text-os-notfound">
+          <p style={{ color: "#0f172a", fontSize: 15 }} data-testid="text-os-notfound">
             That operating system does not exist.
           </p>
           <Link
@@ -248,7 +248,7 @@ export function OperatingSystemDetail() {
         <Link
           href="/operating-systems"
           data-testid="link-os-back"
-          style={{ color: "rgba(255,255,255,0.5)", fontSize: 12, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }}
+          style={{ color: "#334155", fontSize: 12, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 6 }}
         >
           <ArrowLeft size={14} /> All operating systems
         </Link>
@@ -259,7 +259,7 @@ export function OperatingSystemDetail() {
             marginTop: 18,
             padding: 28,
             borderRadius: 20,
-            background: `linear-gradient(155deg, ${tint(os.color, 0.12)} 0%, rgba(255,255,255,0.02) 60%)`,
+            background: `linear-gradient(155deg, ${tint(os.color, 0.12)} 0%, #ffffff 60%)`,
             border: `1px solid ${tint(os.color, 0.3)}`,
           }}
         >
@@ -276,13 +276,13 @@ export function OperatingSystemDetail() {
               <p style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase", color: tint(os.color, 0.9) }}>
                 Operating System
               </p>
-              <h1 data-testid="text-os-name" style={{ fontSize: 26, fontWeight: 900, color: "#fff", letterSpacing: "-0.02em", marginTop: 2 }}>
+              <h1 data-testid="text-os-name" style={{ fontSize: 26, fontWeight: 900, color: "#0F172A", letterSpacing: "-0.02em", marginTop: 2 }}>
                 {os.name}
               </h1>
             </div>
           </div>
 
-          <p style={{ fontSize: 14.5, color: "rgba(255,255,255,0.7)", marginTop: 18, lineHeight: 1.7 }}>
+          <p style={{ fontSize: 14.5, color: "#0f172a", marginTop: 18, lineHeight: 1.7 }}>
             {os.summary}
           </p>
 
@@ -329,7 +329,7 @@ export function OperatingSystemDetail() {
                 style={{
                   display: "flex", gap: 12, alignItems: "flex-start",
                   padding: 16, borderRadius: 12,
-                  background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
+                  background: "#ffffff", border: "1px solid #e2e8f0",
                 }}
               >
                 <CheckCircle2 size={17} color={os.color} style={{ flexShrink: 0, marginTop: 1 }} />
@@ -372,13 +372,13 @@ export function OperatingSystemDetail() {
             className="sidebar-nav-item"
             style={{
               flex: 1, padding: 14, borderRadius: 12, textDecoration: "none",
-              background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
+              background: "#ffffff", border: "1px solid #e2e8f0",
             }}
           >
-            <span style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 10, color: "rgba(255,255,255,0.4)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em" }}>
+            <span style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 10, color: "#475569", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em" }}>
               <ArrowLeft size={12} /> Previous
             </span>
-            <p style={{ fontSize: 13, fontWeight: 700, color: "#fff", marginTop: 5 }}>{prev.short}</p>
+            <p style={{ fontSize: 13, fontWeight: 700, color: "#0F172A", marginTop: 5 }}>{prev.short}</p>
           </Link>
           <Link
             href={`/operating-systems/${next.key}`}
@@ -386,13 +386,13 @@ export function OperatingSystemDetail() {
             className="sidebar-nav-item"
             style={{
               flex: 1, padding: 14, borderRadius: 12, textDecoration: "none", textAlign: "right",
-              background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
+              background: "#ffffff", border: "1px solid #e2e8f0",
             }}
           >
-            <span style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 8, fontSize: 10, color: "rgba(255,255,255,0.4)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em" }}>
+            <span style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 8, fontSize: 10, color: "#475569", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em" }}>
               Next <ArrowRight size={12} />
             </span>
-            <p style={{ fontSize: 13, fontWeight: 700, color: "#fff", marginTop: 5 }}>{next.short}</p>
+            <p style={{ fontSize: 13, fontWeight: 700, color: "#0F172A", marginTop: 5 }}>{next.short}</p>
           </Link>
         </div>
       </div>

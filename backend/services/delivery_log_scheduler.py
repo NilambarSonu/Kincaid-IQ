@@ -83,7 +83,7 @@ _CSV_COLUMN_DOCS: list[tuple[str, str]] = [
     ("size_bytes",
      "Size of the attachment in bytes. 0 when the size was not recorded."),
     ("component_count",
-     "Number of artifacts bundled inside the package (e.g. Rx Defense redline, "
+     "Number of artifacts bundled inside the package (e.g. PBM Contract Clarity 360 redline, "
      "scorecard, benchmarking reports, board pack). 0 for delivery-log emails, "
      "which carry the audit CSV only and have no package components."),
     ("ein",
@@ -97,8 +97,8 @@ _CSV_COLUMN_DOCS: list[tuple[str, str]] = [
      "'true' when SMTP actually delivered the message; 'false' when it was "
      "queued (SMTP not configured in this environment) or the send failed."),
     ("rx_defense_id",
-     "Identifier of the Rx Defense contract the package was generated from. "
-     "Blank when the send was not tied to an Rx Defense contract."),
+     "Identifier of the PBM Contract Clarity 360 contract the package was generated from. "
+     "Blank when the send was not tied to a PBM Contract Clarity 360 contract."),
 ]
 
 # Single source of truth for the CSV header row. Derived directly from
@@ -166,7 +166,7 @@ def build_history_readme() -> str:
     """
     generated = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
     lines: list[str] = []
-    lines.append("Kincaid IQ — Client-Package Delivery Log")
+    lines.append("Kincaid Health — Client-Package Delivery Log")
     lines.append("Data Dictionary & Audit README")
     lines.append("=" * 56)
     lines.append("")
@@ -174,7 +174,7 @@ def build_history_readme() -> str:
     lines.append("")
     lines.append(
         "This package contains a CSV export of client-package email "
-        "deliveries for a single Kincaid IQ user, intended for compliance "
+        "deliveries for a single Kincaid Health user, intended for compliance "
         "review, audits, and RFP responses. Each row in the CSV is one "
         "delivery — a manually emailed package, a scheduled delivery-log "
         "email, an emailed executive-summary diff, or a local download (see "
@@ -205,7 +205,7 @@ def build_history_readme() -> str:
     for chunk in _wrap(
         "Some fields can be blank/null. Fields such as ein, client_name, and "
         "rx_defense_id are only populated when a send is scoped to a specific "
-        "employer or Rx Defense contract. Scheduled delivery-log emails carry "
+        "employer or PBM Contract Clarity 360 contract. Scheduled delivery-log emails carry "
         "the audit CSV only, so they have no ein, client_name, rx_defense_id, "
         "or package components (component_count = 0). Legacy rows recorded "
         "before a field existed may also be blank.", 72,
@@ -330,7 +330,7 @@ def send_delivery_log_email_for_user(
     zip_bytes = build_history_zip(csv_bytes, csv_filename)
     filename = f"client-package-deliveries-{stamp}.zip"
     subject  = (schedule.subject or "").strip() or (
-        f"[Kincaid IQ] {_freq_label(schedule).title()} client-package delivery log — {row_count} deliveries"
+        f"[Kincaid Health] {_freq_label(schedule).title()} client-package delivery log — {row_count} deliveries"
     )
 
     broker_label = getattr(user, "full_name", None) or getattr(user, "username", None) or getattr(user, "email", None) or "Broker"
@@ -348,7 +348,7 @@ def send_delivery_log_email_for_user(
         f"{'s' if row_count != 1 else ''} as of "
         f"{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')}.</p>"
         f"{breakdown_html}"
-        f"<p style='color:#9CA3AF;font-size:11px;'>Sent automatically by Kincaid IQ. "
+        f"<p style='color:#9CA3AF;font-size:11px;'>Sent automatically by Kincaid Health. "
         f"Manage this schedule on the Client Package page.</p>"
         f"</body></html>"
     )
@@ -365,7 +365,7 @@ def send_delivery_log_email_for_user(
         try:
             msg = MIMEMultipart("mixed")
             msg["Subject"] = subject
-            msg["From"]    = f"Kincaid IQ <{smtp_user}>"
+            msg["From"]    = f"Kincaid Health <{smtp_user}>"
             msg["To"]      = ", ".join(to_list)
             if cc_list:
                 msg["Cc"] = ", ".join(cc_list)

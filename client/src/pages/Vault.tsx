@@ -140,7 +140,7 @@ export default function Vault() {
           </div>
           <div
             className="border-2 border-dashed rounded-xl p-8 text-center mb-4 cursor-pointer transition-all"
-            style={{ borderColor: selectedFile ? "rgba(168,85,247,0.4)" : "rgba(255,255,255,0.08)", background: selectedFile ? "rgba(168,85,247,0.05)" : "transparent" }}
+            style={{ borderColor: selectedFile ? "rgba(168,85,247,0.4)" : "#e2e8f0", background: selectedFile ? "rgba(168,85,247,0.05)" : "transparent" }}
             onClick={() => fileInputRef.current?.click()}
             data-testid="dropzone-upload"
           >
@@ -171,10 +171,10 @@ export default function Vault() {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className="w-full text-sm px-3 py-2 rounded-lg"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                 data-testid="select-category"
               >
-                {CATEGORIES.map((c) => <option key={c} value={c} style={{ background: "#0a0a1a" }}>{c}</option>)}
+                {CATEGORIES.map((c) => <option key={c} value={c} style={{ background: "#F8FAFC" }}>{c}</option>)}
               </select>
             </div>
             <div>
@@ -183,11 +183,11 @@ export default function Vault() {
                 value={linkedAsset}
                 onChange={(e) => setLinkedAsset(e.target.value)}
                 className="w-full text-sm px-3 py-2 rounded-lg"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                 data-testid="select-linked-asset"
               >
-                <option value="" style={{ background: "#0a0a1a" }}>None</option>
-                {ASSETS.map((a) => <option key={a} value={a} style={{ background: "#0a0a1a" }}>{a}</option>)}
+                <option value="" style={{ background: "#F8FAFC" }}>None</option>
+                {ASSETS.map((a) => <option key={a} value={a} style={{ background: "#F8FAFC" }}>{a}</option>)}
               </select>
             </div>
             <div>
@@ -198,7 +198,7 @@ export default function Vault() {
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Optional notes"
                 className="w-full text-sm px-3 py-2 rounded-lg"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                 data-testid="input-description"
               />
             </div>
@@ -229,8 +229,8 @@ export default function Vault() {
             onClick={() => setFilterCategory(cat)}
             className="text-xs px-3 py-1 rounded-lg transition-all"
             style={{
-              background: filterCategory === cat ? "rgba(168,85,247,0.12)" : "rgba(255,255,255,0.03)",
-              border: `1px solid ${filterCategory === cat ? "rgba(168,85,247,0.3)" : "rgba(255,255,255,0.06)"}`,
+              background: filterCategory === cat ? "rgba(168,85,247,0.12)" : "#ffffff",
+              border: `1px solid ${filterCategory === cat ? "rgba(168,85,247,0.3)" : "#f1f5f9"}`,
               color: filterCategory === cat ? "#A855F7" : "rgba(150,170,210,0.6)",
             }}
             data-testid={`filter-${cat.toLowerCase().replace(/\s+/g, "-")}`}
@@ -242,7 +242,7 @@ export default function Vault() {
 
       {isLoading ? (
         <div className="space-y-3">
-          {[1, 2, 3].map((i) => <div key={i} className="h-16 rounded-xl animate-pulse" style={{ background: "rgba(255,255,255,0.03)" }} />)}
+          {[1, 2, 3].map((i) => <div key={i} className="h-16 rounded-xl animate-pulse" style={{ background: "#ffffff" }} />)}
         </div>
       ) : filteredDocs.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 rounded-2xl" style={{ border: "1px dashed rgba(168,85,247,0.15)" }} data-testid="empty-vault">

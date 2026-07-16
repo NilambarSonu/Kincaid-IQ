@@ -62,7 +62,7 @@ export default function StaffDirectory() {
             value={search} onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by name, title, or firm…"
             className="w-full text-sm pl-9 pr-4 py-2.5 rounded-xl"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "white" }}
+            style={{ background: "#ffffff", border: "1px solid #e2e8f0", color: "#0F172A" }}
             data-testid="input-staff-search"
           />
         </div>
@@ -73,8 +73,8 @@ export default function StaffDirectory() {
               <button key={cat} onClick={() => setCategory(cat)}
                 className="text-xs px-3 py-2 rounded-xl font-medium transition-all"
                 style={{
-                  background: category === cat ? (cs?.bg || "rgba(0,168,255,0.1)") : "rgba(255,255,255,0.03)",
-                  border: `1px solid ${category === cat ? (cs?.border || "rgba(0,168,255,0.25)") : "rgba(255,255,255,0.06)"}`,
+                  background: category === cat ? (cs?.bg || "rgba(0,168,255,0.1)") : "#ffffff",
+                  border: `1px solid ${category === cat ? (cs?.border || "rgba(0,168,255,0.25)") : "#f1f5f9"}`,
                   color: category === cat ? (cs?.color || "#00A8FF") : "rgba(150,170,210,0.5)",
                 }}
                 data-testid={`filter-staff-${cat.toLowerCase().replace(/\s+/g,"-")}`}
@@ -94,7 +94,7 @@ export default function StaffDirectory() {
                   style={{ background: cs.bg, color: cs.color, border: `1px solid ${cs.border}` }}>
                   {cat}
                 </span>
-                <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.05)" }} />
+                <div className="h-px flex-1" style={{ background: "#f8fafc" }} />
                 <span className="text-[10px] text-muted-foreground">{members.length}</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
@@ -112,7 +112,7 @@ export default function StaffDirectory() {
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between gap-1">
-                            <p className="font-bold text-sm text-white truncate">{person.name}</p>
+                            <p className="font-bold text-sm text-[var(--kiq-ink)] truncate">{person.name}</p>
                             {person.linkedin && <Linkedin size={11} style={{ color: "#0077B5", flexShrink: 0 }} />}
                           </div>
                           <p className="text-[11px] text-muted-foreground truncate">{person.title}</p>
@@ -120,7 +120,7 @@ export default function StaffDirectory() {
                           <p className="text-[10px] text-muted-foreground mt-0.5">Since {person.since}</p>
                         </div>
                       </div>
-                      <div className="mt-3 pt-3 flex items-center gap-4" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+                      <div className="mt-3 pt-3 flex items-center gap-4" style={{ borderTop: "1px solid #f8fafc" }}>
                         <a href={`tel:${person.phone}`} className="flex items-center gap-1.5 text-[10px] hover:opacity-80 transition-opacity"
                           style={{ color: "rgba(150,170,210,0.6)" }}
                           data-testid={`phone-${person.id}`}>

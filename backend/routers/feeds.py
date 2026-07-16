@@ -25,7 +25,7 @@ SAM_API_KEY = os.environ.get("SAM_API_KEY", "")
 
 
 BASE_HEADERS = {
-    "User-Agent": "Kincaid RMC research@kincaidrmc.com",
+    "User-Agent": "Kincaid Health research@kincaidrmc.com",
     "Accept": "application/json",
 }
 
@@ -345,7 +345,7 @@ async def usaspending_search(
             r = await client.post(
                 "https://api.usaspending.gov/api/v2/search/spending_by_award/",
                 json=payload,
-                headers={"Content-Type": "application/json", "User-Agent": "Kincaid RMC research@kincaidrmc.com"},
+                headers={"Content-Type": "application/json", "User-Agent": "Kincaid Health research@kincaidrmc.com"},
             )
             r.raise_for_status()
             data = r.json()

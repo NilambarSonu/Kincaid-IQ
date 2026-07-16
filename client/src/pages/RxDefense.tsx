@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { usePersistentState } from "@/hooks/use-persistent-state";
+import { useDebounce } from "@/hooks/use-debounce";
 import { createPortal } from "react-dom";
 import { AIHistoryPanel } from "@/components/AIHistoryPanel";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -24,7 +25,8 @@ import {
   DollarSign, AlertOctagon, Gavel, ListChecks, Columns,
   CheckSquare, Square, PlusCircle, Clock, RotateCcw, StickyNote, Edit3,
   Monitor, Brain, Users, Copy, ChevronUp, MapPin, Maximize2, Minimize2, Printer, Archive,
-  Scale, Landmark, ShieldAlert
+  Scale, Landmark, ShieldAlert,
+  Search, Building2, Activity
 } from "lucide-react";
 
 type Rating = "excellent" | "good" | "fair" | "concern" | "red_flag";
@@ -182,7 +184,7 @@ function IssueCard({ issue, issueNumber }: { issue: Issue; issueNumber?: number 
           </span>
         )}
         <IssueStatusIcon status={s} found={issue.found} />
-        <span className="flex-1 text-sm text-slate-800 font-medium leading-snug">{issue.text}</span>
+        <span className="flex-1 text-sm text-[var(--kiq-ink-soft)] font-medium leading-snug">{issue.text}</span>
         <div className="flex items-center gap-1.5 flex-shrink-0">
           {sevCfg && (
             <span className="text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded"
@@ -207,7 +209,7 @@ function IssueCard({ issue, issueNumber }: { issue: Issue; issueNumber?: number 
             </span>
           )}
           {issue.confidence !== undefined && (
-            <span className="text-[10px] text-slate-500">
+            <span className="text-[10px] text-[var(--kiq-muted)]">
               {issue.confidence}% confidence
             </span>
           )}
@@ -216,7 +218,7 @@ function IssueCard({ issue, issueNumber }: { issue: Issue; issueNumber?: number 
       {/* Row 3: verbatim quote */}
       {issue.quote && (
         <div className="pl-6">
-          <p className="text-[10px] italic text-slate-500 leading-relaxed border-l-2 pl-3"
+          <p className="text-[10px] italic text-[var(--kiq-muted)] leading-relaxed border-l-2 pl-3"
             style={{ borderColor: "rgba(0,0,0,0.15)" }}>
             "{issue.quote}"
           </p>
@@ -226,14 +228,14 @@ function IssueCard({ issue, issueNumber }: { issue: Issue; issueNumber?: number 
       {issue.gap && (
         <div className="pl-6 flex items-start gap-2">
           <AlertTriangle className="w-3 h-3 flex-shrink-0 mt-0.5" style={{ color: NEON.gold }} />
-          <p className="text-xs text-slate-600 leading-relaxed">{issue.gap}</p>
+          <p className="text-xs text-[var(--kiq-muted)] leading-relaxed">{issue.gap}</p>
         </div>
       )}
       {/* Row 5: explanation */}
       {issue.explanation && (
         <div className="pl-6 flex items-start gap-2">
           <Brain className="w-3 h-3 flex-shrink-0 mt-0.5" style={{ color: NEON.purple }} />
-          <p className="text-xs text-slate-500 leading-relaxed">{issue.explanation}</p>
+          <p className="text-xs text-[var(--kiq-muted)] leading-relaxed">{issue.explanation}</p>
         </div>
       )}
     </div>
@@ -412,7 +414,7 @@ function UploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
   const isBusy = uploadMutation.isPending || demoMutation.isPending || demoPairMutation.isPending || !!batchProgress;
 
   if (creditsLoading) return (
-    <div className="flex items-center justify-center py-8 text-slate-400 text-xs gap-2">
+    <div className="flex items-center justify-center py-8 text-[var(--kiq-subtle)] text-xs gap-2">
       <Loader2 className="w-4 h-4 animate-spin" /> Checking credits…
     </div>
   );
@@ -424,7 +426,7 @@ function UploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
       style={{ background: "rgba(239,68,68,0.04)", borderColor: "rgba(239,68,68,0.18)" }}
     >
       <Lock className="w-6 h-6 mx-auto" style={{ color: "#ef4444" }} />
-      <p className="text-sm font-semibold text-slate-900">No Rx Defense Credits</p>
+      <p className="text-sm font-semibold text-[var(--kiq-ink)]">No PBM Contract Clarity 360 Credits</p>
       <p className="text-xs text-zinc-500">Each analysis costs one report credit ($999).</p>
       <button
         data-testid="rx-button-buy-credits"
@@ -432,7 +434,7 @@ function UploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
         className="w-full py-2 rounded-lg text-xs font-semibold transition-colors"
         style={{ background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.3)", color: "#ef4444" }}
       >
-        Purchase Rx Defense Report →
+        Purchase PBM Contract Clarity 360 Report →
       </button>
     </div>
   );
@@ -505,10 +507,10 @@ function UploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
         ) : (
           <div className="flex flex-col items-center gap-1.5">
             <Upload className="w-5 h-5" style={{ color: ACCENT }} />
-            <p className="text-xs text-slate-700 font-medium">
+            <p className="text-xs text-[var(--kiq-ink-soft)] font-medium">
               {multiMode ? "Drop contracts here" : "Drop contract here"}
             </p>
-            <p className="text-[10px] text-slate-400">PDF · DOCX · TXT{multiMode ? " · multiple files" : ""}</p>
+            <p className="text-[10px] text-[var(--kiq-subtle)]">PDF · DOCX · TXT{multiMode ? " · multiple files" : ""}</p>
           </div>
         )}
       </div>
@@ -520,12 +522,12 @@ function UploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
             <div key={f.name} data-testid={`rx-queued-file-${i}`}
               className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg"
               style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.08)" }}>
-              <FileText className="w-3 h-3 flex-shrink-0 text-slate-400" />
-              <span className="flex-1 text-[11px] text-slate-600 truncate">{f.name}</span>
+              <FileText className="w-3 h-3 flex-shrink-0 text-[var(--kiq-subtle)]" />
+              <span className="flex-1 text-[11px] text-[var(--kiq-muted)] truncate">{f.name}</span>
               <button
                 data-testid={`rx-remove-queued-${i}`}
                 onClick={() => setQueue(prev => prev.filter((_, j) => j !== i))}
-                className="text-slate-400 hover:text-red-500 transition-colors flex-shrink-0"
+                className="text-[var(--kiq-subtle)] hover:text-red-500 transition-colors flex-shrink-0"
               >
                 <X className="w-3 h-3" />
               </button>
@@ -536,7 +538,7 @@ function UploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
 
       <input
         data-testid="rx-input-pbm-name"
-        className="w-full bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs text-slate-900 placeholder-gray-400 focus:outline-none focus:border-blue-400"
+        className="w-full bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg px-3 py-2 text-xs text-[var(--kiq-ink)] placeholder-gray-400 focus:outline-none focus:border-blue-400"
         placeholder="PBM name (optional)"
         value={pbmName}
         onChange={(e) => setPbmName(e.target.value)}
@@ -582,8 +584,8 @@ function ContractList({ selected, onSelect }: { selected: string | null; onSelec
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["/api/rx-defense/contracts"] }); toast({ title: "Deleted" }); },
   });
 
-  if (isLoading) return <div className="flex justify-center py-6"><Loader2 className="w-4 h-4 animate-spin text-slate-400" /></div>;
-  if (!contracts.length) return <p className="text-slate-400 text-xs text-center py-4">No contracts yet.</p>;
+  if (isLoading) return <div className="flex justify-center py-6"><Loader2 className="w-4 h-4 animate-spin text-[var(--kiq-subtle)]" /></div>;
+  if (!contracts.length) return <p className="text-[var(--kiq-subtle)] text-xs text-center py-4">No contracts yet.</p>;
 
   return (
     <div className="space-y-1.5">
@@ -598,9 +600,9 @@ function ContractList({ selected, onSelect }: { selected: string | null; onSelec
               background: isSelected ? "rgba(16,185,129,0.08)" : "transparent",
               border: `1px solid ${isSelected ? ACCENT_BORDER : "rgba(0,0,0,0.08)"}`,
             }}>
-            <FileText className="w-3.5 h-3.5 flex-shrink-0 text-slate-400" />
+            <FileText className="w-3.5 h-3.5 flex-shrink-0 text-[var(--kiq-subtle)]" />
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-slate-800 truncate font-medium">{c.pbm_name || c.contract_filename}</p>
+              <p className="text-xs text-[var(--kiq-ink-soft)] truncate font-medium">{c.pbm_name || c.contract_filename}</p>
             </div>
             {c.status === "analyzing" || c.status === "pending"
               ? <Loader2 className="w-3 h-3 animate-spin flex-shrink-0" style={{ color: ACCENT }} />
@@ -609,7 +611,7 @@ function ContractList({ selected, onSelect }: { selected: string | null; onSelec
               : c.status === "error" ? <XCircle className="w-3 h-3 text-[#FF4D6D] flex-shrink-0" /> : null}
             <button data-testid={`rx-button-delete-${c.id}`}
               onClick={(e) => { e.stopPropagation(); deleteMutation.mutate(c.id); }}
-              className="opacity-0 group-hover:opacity-100 p-0.5 hover:text-red-500 text-slate-400 transition-colors">
+              className="opacity-0 group-hover:opacity-100 p-0.5 hover:text-red-500 text-[var(--kiq-subtle)] transition-colors">
               <Trash2 className="w-3 h-3" />
             </button>
           </div>
@@ -652,7 +654,7 @@ function ReportCard({ contract, cardRef }: { contract: Contract; cardRef: React.
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 36 }}>
         <div>
           <div style={{ fontSize: 11, fontWeight: 900, letterSpacing: "0.25em", color: "#94A3B8", textTransform: "uppercase" }}>
-            KINCAID IQ · RX DEFENSE IQ™
+            KINCAID HEALTH · RX DEFENSE IQ™
           </div>
           <div style={{ fontSize: 11, color: "#CBD5E1", marginTop: 2, letterSpacing: "0.1em" }}>
             Fiduciary PBM Contract Analysis
@@ -773,12 +775,12 @@ function ReportViewer({ contract, onClose }: { contract: Contract; onClose: () =
   const rating  = contract.rating ? RATING_CONFIG[contract.rating] : RATING_CONFIG.concern;
   const score   = contract.overall_score ?? 0;
   const pbm     = contract.pbm_name || contract.contract_filename;
-  const shareText = `📊 PBM Contract Analysis — ${pbm}\nFiduciary Score: ${Math.round(score)}/100 (${rating.label})\n\nPowered by Kincaid IQ Rx Defense IQ™ — evaluating 60 fiduciary issues across 13 provisions.\n\n#FiduciaryHealth #PBM #HealthcareBroker #CAA2026`;
+  const shareText = `📊 PBM Contract Analysis — ${pbm}\nFiduciary Score: ${Math.round(score)}/100 (${rating.label})\n\nPowered by Kincaid Health PBM Contract Clarity 360™ — evaluating 60 fiduciary issues across 13 provisions.\n\n#FiduciaryHealth #PBM #HealthcareBroker #CAA2026`;
   const shareUrl  = typeof window !== "undefined" ? window.location.origin : "https://kincaidiq.com";
 
   async function captureCard(): Promise<HTMLCanvasElement | null> {
     if (!cardRef.current) return null;
-    return html2canvas(cardRef.current, { backgroundColor: "#FFFFFF", scale: 2, useCORS: true, logging: false });
+    return html2canvas(cardRef.current, { backgroundColor: "#0F172A", scale: 2, useCORS: true, logging: false });
   }
 
   async function downloadImage(filename: string) {
@@ -815,7 +817,7 @@ function ReportViewer({ contract, onClose }: { contract: Contract; onClose: () =
       label: "LinkedIn",
       sublabel: "Share post",
       color: "#0A66C2",
-      gradient: "linear-gradient(135deg,#0077b5,#0A66C2)",
+      gradient: "linear-gradient(135deg, #F8FAFC, #F1F5F9)",
       icon: Linkedin,
       action: () => openShare(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}&summary=${encodeURIComponent(shareText)}`),
     },
@@ -832,7 +834,7 @@ function ReportViewer({ contract, onClose }: { contract: Contract; onClose: () =
       id: "twitter",
       label: "Twitter / X",
       sublabel: "Post tweet",
-      color: "#fff",
+      color: "#0F172A",
       gradient: "linear-gradient(135deg,#333,#111)",
       icon: X,
       action: () => openShare(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`),
@@ -845,9 +847,9 @@ function ReportViewer({ contract, onClose }: { contract: Contract; onClose: () =
       gradient: `linear-gradient(135deg,${NEON.green}22,${NEON.green}44)`,
       icon: Mail,
       action: () => {
-        const subject = encodeURIComponent(`Rx Defense IQ™ Report — ${pbm} — Score ${Math.round(score)}/100`);
+        const subject = encodeURIComponent(`PBM Contract Clarity 360™ Report — ${pbm} — Score ${Math.round(score)}/100`);
         const body = encodeURIComponent(
-          `Rx Defense IQ™ Fiduciary Analysis Report\n${"─".repeat(40)}\n\nPBM: ${pbm}\nFiduciary Score: ${Math.round(score)}/100 (${rating.label})\nCAA 2026 Aligned\n\nProvision Breakdown:\n${contract.provision_scores.map(p => `  ${p.id}. ${p.name}: ${p.score.toFixed(1)}/10 (${RATING_CONFIG[p.rating]?.label})`).join("\n")}\n\nKey Findings:\n${contract.key_findings.slice(0,5).map(f => `  [${f.severity.toUpperCase()}] ${f.text}`).join("\n")}\n\n─────────────────────────────\nGenerated by Kincaid IQ · Rx Defense IQ™\nFiduciary-grade PBM contract intelligence\nAccount: SHRACK-7742`
+          `PBM Contract Clarity 360™ Fiduciary Analysis Report\n${"─".repeat(40)}\n\nPBM: ${pbm}\nFiduciary Score: ${Math.round(score)}/100 (${rating.label})\nCAA 2026 Aligned\n\nProvision Breakdown:\n${contract.provision_scores.map(p => `  ${p.id}. ${p.name}: ${p.score.toFixed(1)}/10 (${RATING_CONFIG[p.rating]?.label})`).join("\n")}\n\nKey Findings:\n${contract.key_findings.slice(0,5).map(f => `  [${f.severity.toUpperCase()}] ${f.text}`).join("\n")}\n\n─────────────────────────────\nGenerated by Kincaid Health · PBM Contract Clarity 360™\nFiduciary-grade PBM contract intelligence\nAccount: SHRACK-7742`
         );
         window.location.href = `mailto:?subject=${subject}&body=${body}`;
       },
@@ -877,12 +879,12 @@ function ReportViewer({ contract, onClose }: { contract: Contract; onClose: () =
           className="absolute top-0 right-0 z-10 w-9 h-9 flex items-center justify-center rounded-full transition-colors"
           style={{ background: "rgba(0,0,0,0.06)", border: "1px solid rgba(0,0,0,0.10)" }}
         >
-          <X className="w-4 h-4 text-slate-600" />
+          <X className="w-4 h-4 text-[var(--kiq-muted)]" />
         </button>
 
         {/* Card preview */}
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500 mb-3">Report Preview</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--kiq-muted)] mb-3">Report Preview</p>
           <div className="rounded-2xl overflow-hidden shadow-lg" style={{ border: `1px solid ${rating.border}` }}>
             <ReportCard contract={contract} cardRef={cardRef} />
           </div>
@@ -891,8 +893,8 @@ function ReportViewer({ contract, onClose }: { contract: Contract; onClose: () =
         {/* Share panel */}
         <div className="w-64 flex-shrink-0 pt-6">
           <div className="mb-6">
-            <h3 className="text-slate-900 font-black text-lg">Share Report</h3>
-            <p className="text-xs text-slate-500 mt-1">Export or share this fiduciary analysis directly to your platform of choice.</p>
+            <h3 className="text-[var(--kiq-ink)] font-black text-lg">Share Report</h3>
+            <p className="text-xs text-[var(--kiq-muted)] mt-1">Export or share this fiduciary analysis directly to your platform of choice.</p>
           </div>
 
           <div className="space-y-2.5">
@@ -919,12 +921,12 @@ function ReportViewer({ contract, onClose }: { contract: Contract; onClose: () =
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
                     style={{ background: p.gradient }}>
                     {isLoading
-                      ? <Loader2 className="w-4 h-4 text-white animate-spin" />
-                      : <Icon className="w-4 h-4 text-white" />}
+                      ? <Loader2 className="w-4 h-4 text-[var(--kiq-ink)] animate-spin" />
+                      : <Icon className="w-4 h-4 text-[var(--kiq-ink)]" />}
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-slate-900">{p.label}</p>
-                    <p className="text-[10px] text-slate-400">{p.sublabel}</p>
+                    <p className="text-sm font-bold text-[var(--kiq-ink)]">{p.label}</p>
+                    <p className="text-[10px] text-[var(--kiq-subtle)]">{p.sublabel}</p>
                   </div>
                 </button>
               );
@@ -933,15 +935,15 @@ function ReportViewer({ contract, onClose }: { contract: Contract; onClose: () =
 
           {/* Copy text */}
           <div className="mt-5 pt-5" style={{ borderTop: "1px solid rgba(0,0,0,0.07)" }}>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Share Caption</p>
-            <div className="rounded-xl px-3 py-2.5 text-[11px] text-slate-500 leading-relaxed select-all cursor-text"
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--kiq-muted)] mb-2">Share Caption</p>
+            <div className="rounded-xl px-3 py-2.5 text-[11px] text-[var(--kiq-muted)] leading-relaxed select-all cursor-text"
               style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.08)" }}>
               {shareText}
             </div>
             <button
               data-testid="rx-copy-caption"
               onClick={() => { navigator.clipboard.writeText(shareText); toast({ title: "Caption copied!" }); }}
-              className="mt-2 w-full py-2 rounded-xl text-xs font-semibold text-slate-500 transition-colors"
+              className="mt-2 w-full py-2 rounded-xl text-xs font-semibold text-[var(--kiq-muted)] transition-colors"
               style={{ background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.08)" }}
             >
               Copy Caption
@@ -1001,7 +1003,7 @@ function printContractSummary(contract: Contract) {
 <html>
 <head>
   <meta charset="UTF-8"/>
-  <title>Rx Defense IQ — ${contract.pbm_name || contract.contract_filename}</title>
+  <title>PBM Contract Clarity 360 — ${contract.pbm_name || contract.contract_filename}</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
     *{box-sizing:border-box;margin:0;padding:0;}
@@ -1025,7 +1027,7 @@ function printContractSummary(contract: Contract) {
 <body>
   <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:18px;">
     <div>
-      <div class="subtitle">Rx Defense IQ™ · Fiduciary Analysis Summary</div>
+      <div class="subtitle">PBM Contract Clarity 360™ · Fiduciary Analysis Summary</div>
       <h1>${contract.pbm_name || contract.contract_filename}</h1>
       <div style="font-size:11px;color:#888;margin-top:4px;">${contract.contract_filename} &nbsp;·&nbsp; Analyzed ${new Date(contract.created_at).toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})}</div>
     </div>
@@ -1060,9 +1062,9 @@ function printContractSummary(contract: Contract) {
   </table>
 
   <div class="footer">
-    <span class="logo">KINCAID IQ</span>
+    <span class="logo">KINCAID HEALTH</span>
     <span>Confidential — For internal use only</span>
-    <span>Rx Defense IQ™ · ${new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})}</span>
+    <span>PBM Contract Clarity 360™ · ${new Date().toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})}</span>
   </div>
 </body>
 </html>`;
@@ -1099,12 +1101,12 @@ function ReportHeader({ contract, onShare, onFullReport, onPresent, onBuildPacka
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <Pill className="w-4 h-4" style={{ color: ACCENT }} />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Rx Defense IQ™ · Fiduciary Analysis</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--kiq-subtle)]">PBM Contract Clarity 360™ · Fiduciary Analysis</span>
             </div>
-            <h2 className="text-2xl font-black text-slate-900 truncate leading-tight" data-testid="rx-contract-title">
+            <h2 className="text-2xl font-black text-[var(--kiq-ink)] truncate leading-tight" data-testid="rx-contract-title">
               {contract.pbm_name || contract.contract_filename}
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5 truncate">{contract.contract_filename}</p>
+            <p className="text-xs text-[var(--kiq-subtle)] mt-0.5 truncate">{contract.contract_filename}</p>
           </div>
 
           {/* Score block */}
@@ -1113,7 +1115,7 @@ function ReportHeader({ contract, onShare, onFullReport, onPresent, onBuildPacka
               {Math.round(score)}
             </div>
             <div className="text-xs font-bold uppercase tracking-widest mt-1" style={{ color: rating.color }}>{rating.label}</div>
-            <div className="text-[10px] text-slate-400 mt-0.5">out of 100</div>
+            <div className="text-[10px] text-[var(--kiq-subtle)] mt-0.5">out of 100</div>
           </div>
         </div>
 
@@ -1128,7 +1130,7 @@ function ReportHeader({ contract, onShare, onFullReport, onPresent, onBuildPacka
           ].map(({ label, value, color }) => (
             <div key={label}>
               <div className="text-lg font-black leading-none" style={{ color }}>{value}</div>
-              <div className="text-[9px] font-bold uppercase tracking-widest text-slate-400 mt-0.5">{label}</div>
+              <div className="text-[9px] font-bold uppercase tracking-widest text-[var(--kiq-subtle)] mt-0.5">{label}</div>
             </div>
           ))}
 
@@ -1307,7 +1309,7 @@ function QuickLookTab({ contract, planRxSpend, planMembers, hideFindings }: { co
 
       {/* Provision grid */}
       <div className="space-y-1.5">
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-3">All 13 Provisions — MIT × Stanford Law Framework</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--kiq-subtle)] mb-3">All 13 Provisions — MIT × Stanford Law Framework</p>
         {provisions.map((p) => {
           const qlRaw = (p as ProvisionScore).quick_look || "concern";
           const ql: QuickLook = (qlRaw === "good" || qlRaw === "concern" || qlRaw === "red_flag") ? qlRaw : qlRaw === "excellent" ? "good" : "concern";
@@ -1318,9 +1320,9 @@ function QuickLookTab({ contract, planRxSpend, planMembers, hideFindings }: { co
             <div key={p.id} className="flex items-center gap-3 rounded-xl px-4 py-3 transition-colors"
               style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.07)" }}
               data-testid={`rx-quicklook-provision-${p.id}`}>
-              <span className="text-xs font-black text-slate-400 w-5 text-right">{p.id}</span>
+              <span className="text-xs font-black text-[var(--kiq-subtle)] w-5 text-right">{p.id}</span>
               <Icon className="w-4 h-4 flex-shrink-0" style={{ color: cfg.color }} />
-              <span className="flex-1 text-sm text-slate-700 font-medium">{p.name}</span>
+              <span className="flex-1 text-sm text-[var(--kiq-ink-soft)] font-medium">{p.name}</span>
               {score !== undefined && (
                 <div className="w-24 flex items-center gap-2">
                   <ProvisionBar score={score} />
@@ -1337,7 +1339,7 @@ function QuickLookTab({ contract, planRxSpend, planMembers, hideFindings }: { co
       {/* Key Findings */}
       {!hideFindings && contract.key_findings.length > 0 && (
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-3">Key Findings</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--kiq-subtle)] mb-3">Key Findings</p>
           <div className="space-y-2">
             {contract.key_findings.map((f, i) => {
               const color = f.severity === "critical" ? NEON.red : f.severity === "warning" ? NEON.gold : NEON.green;
@@ -1350,7 +1352,7 @@ function QuickLookTab({ contract, planRxSpend, planMembers, hideFindings }: { co
                   <Icon className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color }} />
                   <div className="flex-1">
                     <span className="text-[9px] font-black uppercase tracking-widest mr-2" style={{ color: `${color}99` }}>{label}</span>
-                    <p className="text-sm text-slate-700 mt-0.5">{f.text}</p>
+                    <p className="text-sm text-[var(--kiq-ink-soft)] mt-0.5">{f.text}</p>
                   </div>
                 </div>
               );
@@ -1432,11 +1434,11 @@ function QuickLookTab({ contract, planRxSpend, planMembers, hideFindings }: { co
                   <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded"
                     style={{ color: NEON.gold, background: `${NEON.gold}15`, border: `1px solid ${NEON.gold}30` }}>MODELED</span>
                 </div>
-                <p className="text-[9px] text-slate-500">Estimated annual leakage by category · see $ Exposure tab for member × PMPY detail</p>
+                <p className="text-[9px] text-[var(--kiq-muted)]">Estimated annual leakage by category · see $ Exposure tab for member × PMPY detail</p>
               </div>
               <div className="ml-auto text-right">
-                <p className="text-lg font-black text-slate-900">{fmtAmt(grandMin)}–{fmtAmt(grandMax)}</p>
-                <p className="text-[9px] text-slate-500">
+                <p className="text-lg font-black text-[var(--kiq-ink)]">{fmtAmt(grandMin)}–{fmtAmt(grandMax)}</p>
+                <p className="text-[9px] text-[var(--kiq-muted)]">
                   {isScaled
                     ? (capUsesActualSpend
                         ? `scaled to your ${fmtAmt(rxSpendDollars)} Rx spend · ≤30% cap`
@@ -1459,8 +1461,8 @@ function QuickLookTab({ contract, planRxSpend, planMembers, hideFindings }: { co
                           style={{ color: cfg.color, background: `${cfg.color}12`, border: `1px solid ${cfg.color}25` }}>
                           {cfg.abbr || mech}
                         </span>
-                        <span className="text-xs text-slate-600">{mech}</span>
-                        <span className="text-[9px] text-slate-400">{vals.count} issue{vals.count !== 1 ? "s" : ""}</span>
+                        <span className="text-xs text-[var(--kiq-muted)]">{mech}</span>
+                        <span className="text-[9px] text-[var(--kiq-subtle)]">{vals.count} issue{vals.count !== 1 ? "s" : ""}</span>
                       </div>
                       <span className="text-xs font-bold" style={{ color: cfg.color }}>
                         {fmtAmt(scaledMin)}–{fmtAmt(scaledMax)}
@@ -1477,15 +1479,15 @@ function QuickLookTab({ contract, planRxSpend, planMembers, hideFindings }: { co
               <div className="mt-4 flex items-start gap-2 rounded-lg px-3 py-2"
                 style={{ background: "rgba(255,184,0,0.06)", border: "1px solid rgba(255,184,0,0.2)" }}>
                 <AlertTriangle className="w-3 h-3 flex-shrink-0 mt-0.5" style={{ color: NEON.gold }} />
-                <p className="text-[9px] text-slate-500 leading-relaxed">
+                <p className="text-[9px] text-[var(--kiq-muted)] leading-relaxed">
                   Figures capped at 30% of {capUsesActualSpend
-                    ? <>your <strong className="text-slate-700">{fmtAmt(rxSpendDollars)}</strong> annual Rx spend</>
-                    : <>a modeled Rx spend baseline (<strong className="text-slate-700">{fmtAmt(capBaseline)}</strong>) — enter actual spend to refine</>}.
+                    ? <>your <strong className="text-[var(--kiq-ink-soft)]">{fmtAmt(rxSpendDollars)}</strong> annual Rx spend</>
+                    : <>a modeled Rx spend baseline (<strong className="text-[var(--kiq-ink-soft)]">{fmtAmt(capBaseline)}</strong>) — enter actual spend to refine</>}.
                   Even an egregious PBM contract cannot leak more than ~30% of total pharmacy spend. Use the $ Exposure tab for provision-level PMPY detail.
                 </p>
               </div>
             ) : (
-              <p className="text-[9px] text-slate-400 mt-4 text-center">
+              <p className="text-[9px] text-[var(--kiq-subtle)] mt-4 text-center">
                 MODELED from member_count ({members.toLocaleString()}) × PMPY × risk_fraction. Enter your plan size in Plan Profile for plan-specific figures. Not legal advice.
               </p>
             )}
@@ -1501,7 +1503,7 @@ function QuickLookTab({ contract, planRxSpend, planMembers, hideFindings }: { co
             <Target className="w-4 h-4" style={{ color: NEON.blue }} />
             <div>
               <p className="text-[10px] font-black uppercase tracking-widest" style={{ color: NEON.blue }}>Control Theory Map</p>
-              <p className="text-[9px] text-slate-500">Who controls each economic dimension of this contract</p>
+              <p className="text-[9px] text-[var(--kiq-muted)]">Who controls each economic dimension of this contract</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-2">
@@ -1516,13 +1518,13 @@ function QuickLookTab({ contract, planRxSpend, planMembers, hideFindings }: { co
               <div key={label} className="rounded-xl p-3"
                 style={{ background: bad ? "rgba(220,38,38,0.05)" : "rgba(217,119,6,0.05)", border: `1px solid ${bad ? "rgba(220,38,38,0.18)" : "rgba(217,119,6,0.18)"}` }}>
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-bold text-slate-800">{label}</span>
+                  <span className="text-xs font-bold text-[var(--kiq-ink-soft)]">{label}</span>
                   <span className="text-[9px] font-black px-1.5 py-0.5 rounded"
                     style={{ color: bad ? NEON.red : NEON.gold, background: bad ? `${NEON.red}15` : `${NEON.gold}15` }}>
                     {controller}
                   </span>
                 </div>
-                <p className="text-[10px] text-slate-500">{detail}</p>
+                <p className="text-[10px] text-[var(--kiq-muted)]">{detail}</p>
               </div>
             ))}
           </div>
@@ -1744,7 +1746,7 @@ function ScorecardTab({ contract, externalRxSpend, externalMembers, onSaveRxSpen
         style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.08)" }}>
         <ScoreGauge score={contract.overall_score ?? 0} />
         <div className="flex-1">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-2">Score Legend</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--kiq-subtle)] mb-2">Score Legend</p>
           <div className="space-y-1.5">
             {(["excellent","good","fair","concern","red_flag"] as Rating[]).map((r) => {
               const cfg = RATING_CONFIG[r];
@@ -1755,7 +1757,7 @@ function ScorecardTab({ contract, externalRxSpend, externalMembers, onSaveRxSpen
                   style={{ background: current ? cfg.bg : "transparent", border: `1px solid ${current ? cfg.border : "transparent"}` }}>
                   <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: cfg.color }} />
                   <span className="text-xs font-bold" style={{ color: cfg.color }}>{cfg.label}</span>
-                  <span className="text-[10px] text-slate-400 ml-auto">{range}</span>
+                  <span className="text-[10px] text-[var(--kiq-subtle)] ml-auto">{range}</span>
                   {current && <span className="text-[9px] font-black uppercase tracking-widest" style={{ color: cfg.color }}>← THIS CONTRACT</span>}
                 </div>
               );
@@ -1771,8 +1773,8 @@ function ScorecardTab({ contract, externalRxSpend, externalMembers, onSaveRxSpen
       <div>
         <div className="flex items-center justify-between mb-4">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">60-Issue X-Ray Grid</p>
-            <p className="text-[10px] text-slate-400 mt-0.5">MIT × Stanford Law Fiduciary–Economic Distortion Analysis</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--kiq-subtle)]">60-Issue X-Ray Grid</p>
+            <p className="text-[10px] text-[var(--kiq-subtle)] mt-0.5">MIT × Stanford Law Fiduciary–Economic Distortion Analysis</p>
           </div>
           <div className="flex items-center gap-2">
             {/* Mechanism legend */}
@@ -1815,13 +1817,13 @@ function ScorecardTab({ contract, externalRxSpend, externalMembers, onSaveRxSpen
                   onClick={() => toggleProvision(p.id)}>
                   {/* Provision index + issue range stacked */}
                   <div className="flex flex-col items-end flex-shrink-0 w-10">
-                    <span className="text-xs font-black text-slate-400 leading-none">{String(p.id).padStart(2,"0")}</span>
+                    <span className="text-xs font-black text-[var(--kiq-subtle)] leading-none">{String(p.id).padStart(2,"0")}</span>
                     <span className="text-[8px] font-bold tabular-nums leading-none mt-0.5"
                       style={{ color: "rgba(0,0,0,0.25)" }}>
                       #{issueStart}–{issueEnd}
                     </span>
                   </div>
-                  <span className="flex-1 text-sm text-slate-800 font-semibold">{p.name}</span>
+                  <span className="flex-1 text-sm text-[var(--kiq-ink-soft)] font-semibold">{p.name}</span>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     {criticalCount > 0 && (
                       <span className="text-[9px] font-black px-1.5 py-0.5 rounded"
@@ -1829,13 +1831,13 @@ function ScorecardTab({ contract, externalRxSpend, externalMembers, onSaveRxSpen
                         {criticalCount} CRITICAL
                       </span>
                     )}
-                    <span className="text-[10px] text-slate-400">{foundCount}/{p.issues.length} met</span>
+                    <span className="text-[10px] text-[var(--kiq-subtle)]">{foundCount}/{p.issues.length} met</span>
                     <span className="text-xs font-black" style={{ color: cfg.color }}>{p.score.toFixed(1)}</span>
                     <span className="text-[10px] px-2 py-0.5 rounded-md font-bold uppercase tracking-wide"
                       style={{ color: cfg.color, background: cfg.bg }}>{cfg.label}</span>
                     {isExpanded
-                      ? <ChevronUp className="w-3.5 h-3.5 text-slate-400" />
-                      : <ChevronDown className="w-3.5 h-3.5 text-slate-400" />}
+                      ? <ChevronUp className="w-3.5 h-3.5 text-[var(--kiq-subtle)]" />
+                      : <ChevronDown className="w-3.5 h-3.5 text-[var(--kiq-subtle)]" />}
                   </div>
                 </button>
 
@@ -1857,11 +1859,11 @@ function ScorecardTab({ contract, externalRxSpend, externalMembers, onSaveRxSpen
                       <div className="rounded-xl p-4 mt-3"
                         style={{ background: "rgba(124,58,237,0.05)", border: `1px solid rgba(124,58,237,0.18)` }}>
                         <p className="text-[9px] font-black uppercase tracking-widest mb-2" style={{ color: NEON.purple }}>Negotiation Guide</p>
-                        <p className="text-xs text-slate-600 mb-2">{p.negotiation.gap_summary}</p>
+                        <p className="text-xs text-[var(--kiq-muted)] mb-2">{p.negotiation.gap_summary}</p>
                         {p.negotiation.model_language && (
                           <div className="mt-2">
-                            <p className="text-[9px] font-bold uppercase tracking-wider text-slate-400 mb-1">Model Language</p>
-                            <p className="text-[11px] italic text-slate-500 border-l-2 pl-3"
+                            <p className="text-[9px] font-bold uppercase tracking-wider text-[var(--kiq-subtle)] mb-1">Model Language</p>
+                            <p className="text-[11px] italic text-[var(--kiq-muted)] border-l-2 pl-3"
                               style={{ borderColor: `${NEON.purple}40` }}>
                               "{p.negotiation.model_language}"
                             </p>
@@ -1870,7 +1872,7 @@ function ScorecardTab({ contract, externalRxSpend, externalMembers, onSaveRxSpen
                         {p.negotiation.talking_point && (
                           <div className="mt-2 flex items-start gap-2">
                             <Zap className="w-3 h-3 flex-shrink-0 mt-0.5" style={{ color: NEON.green }} />
-                            <p className="text-[11px] text-slate-600">{p.negotiation.talking_point}</p>
+                            <p className="text-[11px] text-[var(--kiq-muted)]">{p.negotiation.talking_point}</p>
                           </div>
                         )}
                       </div>
@@ -1914,7 +1916,7 @@ function NegotiationTab({ contract, members, rxSpend }: { contract: Contract; me
       <div className="flex items-center gap-3 rounded-xl px-5 py-3"
         style={{ background: "rgba(255,184,0,0.07)", border: "1px solid rgba(255,184,0,0.25)", borderLeft: `3px solid ${NEON.gold}` }}>
         <AlertTriangle className="w-4 h-4 flex-shrink-0" style={{ color: NEON.gold }} />
-        <p className="text-sm text-slate-700 flex-1">
+        <p className="text-sm text-[var(--kiq-ink-soft)] flex-1">
           <span className="font-black" style={{ color: NEON.gold }}>{redFlags.length} provisions</span> require negotiation.
           Start with Red Flag items — these carry the highest fiduciary risk.
         </p>
@@ -1967,14 +1969,14 @@ function NegotiationTab({ contract, members, rxSpend }: { contract: Contract; me
                 style={{ background: cfg.bg, color: cfg.color, border: `1px solid ${cfg.border}` }}>
                 {p.id}
               </span>
-              <span className="flex-1 text-sm text-slate-800 font-semibold">{p.name}</span>
-              <span className="text-[10px] text-slate-400 mr-2">{found}/{total}</span>
+              <span className="flex-1 text-sm text-[var(--kiq-ink-soft)] font-semibold">{p.name}</span>
+              <span className="text-[10px] text-[var(--kiq-subtle)] mr-2">{found}/{total}</span>
               <span className="text-[10px] px-2 py-0.5 rounded-md font-bold uppercase tracking-wide mr-2"
                 style={{ color: cfg.color, background: cfg.bg }}>{cfg.label}</span>
               <span className="text-xs font-black mr-2" style={{ color: cfg.color }}>{p.score?.toFixed(1)}/10</span>
               {isOpen
-                ? <ChevronDown className="w-4 h-4 flex-shrink-0 text-slate-400" />
-                : <ChevronRight className="w-4 h-4 flex-shrink-0 text-slate-400" />}
+                ? <ChevronDown className="w-4 h-4 flex-shrink-0 text-[var(--kiq-subtle)]" />
+                : <ChevronRight className="w-4 h-4 flex-shrink-0 text-[var(--kiq-subtle)]" />}
             </button>
 
             {isOpen && neg.gap_summary && (
@@ -1986,7 +1988,7 @@ function NegotiationTab({ contract, members, rxSpend }: { contract: Contract; me
                     <Target className="w-3 h-3" style={{ color: NEON.red }} />
                     <span className="text-[10px] font-black uppercase tracking-[0.15em] text-zinc-500">Gap Summary</span>
                   </div>
-                  <p className="text-sm text-zinc-300 leading-relaxed pl-4" style={{ borderLeft: `2px solid ${NEON.red}40` }}>
+                  <p className="text-sm text-[var(--kiq-muted)] leading-relaxed pl-4" style={{ borderLeft: `2px solid ${NEON.red}40` }}>
                     {neg.gap_summary}
                   </p>
                 </div>
@@ -2016,7 +2018,7 @@ function NegotiationTab({ contract, members, rxSpend }: { contract: Contract; me
                     </div>
                     <div className="rounded-xl px-5 py-4"
                       style={{ background: "rgba(217,119,6,0.05)", border: `1px solid ${NEON.gold}25` }}>
-                      <p className="text-sm text-slate-600 italic leading-relaxed">"{neg.talking_point}"</p>
+                      <p className="text-sm text-[var(--kiq-muted)] italic leading-relaxed">"{neg.talking_point}"</p>
                     </div>
                   </div>
                 )}
@@ -2052,7 +2054,7 @@ function NegotiationTab({ contract, members, rxSpend }: { contract: Contract; me
                               </div>
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 flex-wrap">
-                                  <p className={`text-xs font-medium leading-tight ${isPresent ? "text-zinc-300" : "text-zinc-400"}`}>{issue.text}</p>
+                                  <p className={`text-xs font-medium leading-tight ${isPresent ? "text-[var(--kiq-muted)]" : "text-zinc-400"}`}>{issue.text}</p>
                                   {issue.severity && (
                                     <span className="text-[9px] font-bold px-1.5 py-0.5 rounded flex-shrink-0"
                                       style={{ color: sevColor, background: `${sevColor}15`, border: `1px solid ${sevColor}30` }}>
@@ -2088,7 +2090,7 @@ function NegotiationTab({ contract, members, rxSpend }: { contract: Contract; me
                                       </span>
                                     )}
                                     {issue.confidence !== undefined && (
-                                      <span className="text-[9px] text-slate-500 flex items-center gap-1">
+                                      <span className="text-[9px] text-[var(--kiq-muted)] flex items-center gap-1">
                                         <span>Confidence:</span>
                                         <span className="font-bold" style={{ color: issue.confidence >= 80 ? NEON.green : issue.confidence >= 60 ? NEON.gold : NEON.red }}>
                                           {issue.confidence}%
@@ -2129,10 +2131,10 @@ function IndexTab() {
         style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.08)" }}>
         <div className="flex items-center gap-2 mb-1">
           <Trophy className="w-4 h-4" style={{ color: NEON.gold }} />
-          <h3 className="text-slate-900 font-black text-sm">PBM Accountability Index</h3>
+          <h3 className="text-[var(--kiq-ink)] font-black text-sm">PBM Accountability Index</h3>
         </div>
-        <p className="text-xs text-slate-500">{data?.description}</p>
-        <p className="text-[10px] text-slate-400 mt-1 uppercase tracking-widest">Updated {data?.updated}</p>
+        <p className="text-xs text-[var(--kiq-muted)]">{data?.description}</p>
+        <p className="text-[10px] text-[var(--kiq-subtle)] mt-1 uppercase tracking-widest">Updated {data?.updated}</p>
       </div>
 
       <div className="space-y-3">
@@ -2145,7 +2147,7 @@ function IndexTab() {
                 style={{ background: cfg.bg, borderBottom: `1px solid ${cfg.border}` }}>
                 <div className="w-2 h-2 rounded-full" style={{ background: cfg.color }} />
                 <span className="text-xs font-black uppercase tracking-widest" style={{ color: cfg.color }}>{cfg.label}</span>
-                <span className="text-[10px] text-slate-400 ml-auto">{tier.range}</span>
+                <span className="text-[10px] text-[var(--kiq-subtle)] ml-auto">{tier.range}</span>
               </div>
               <div className="px-4 py-3 flex flex-wrap gap-2"
                 style={{ background: "rgba(0,0,0,0.02)" }}>
@@ -2161,7 +2163,7 @@ function IndexTab() {
         })}
       </div>
 
-      <p className="text-[10px] text-slate-400 text-center uppercase tracking-widest">
+      <p className="text-[10px] text-[var(--kiq-subtle)] text-center uppercase tracking-widest">
         Ratings based on explicit contract language only — not marketing claims.
       </p>
     </div>
@@ -2202,11 +2204,11 @@ function ComparisonTab({ contract, selectedId }: { contract: Contract; selectedI
       {/* Selector */}
       <div className="rounded-xl p-5"
         style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.08)" }}>
-        <p className="text-sm font-bold text-slate-900 mb-1">Compare Against Another Contract</p>
-        <p className="text-xs text-slate-500 mb-4">Select the <em>original</em> contract (Contract A) to compare against this renegotiated version (Contract B).</p>
+        <p className="text-sm font-bold text-[var(--kiq-ink)] mb-1">Compare Against Another Contract</p>
+        <p className="text-xs text-[var(--kiq-muted)] mb-4">Select the <em>original</em> contract (Contract A) to compare against this renegotiated version (Contract B).</p>
         <div className="flex gap-3">
           <select data-testid="rx-select-compare-contract"
-            className="flex-1 bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-slate-900 focus:outline-none"
+            className="flex-1 bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-xl px-3 py-2.5 text-sm text-[var(--kiq-ink)] focus:outline-none"
             value={contractAId} onChange={(e) => setContractAId(e.target.value)}>
             <option value="">Select original contract…</option>
             {otherContracts.map((c) => (
@@ -2223,7 +2225,7 @@ function ComparisonTab({ contract, selectedId }: { contract: Contract; selectedI
           </button>
         </div>
         {otherContracts.length === 0 && (
-          <p className="text-[10px] text-slate-400 mt-3">Use "Demo Comparison" above to auto-generate a before/after pair.</p>
+          <p className="text-[10px] text-[var(--kiq-subtle)] mt-3">Use "Demo Comparison" above to auto-generate a before/after pair.</p>
         )}
       </div>
 
@@ -2231,7 +2233,7 @@ function ComparisonTab({ contract, selectedId }: { contract: Contract; selectedI
         <div className="flex justify-center py-8">
           <div className="flex flex-col items-center gap-3">
             <Loader2 className="w-6 h-6 animate-spin" style={{ color: ACCENT }} />
-            <p className="text-slate-500 text-sm">Running fiduciary comparison…</p>
+            <p className="text-[var(--kiq-muted)] text-sm">Running fiduciary comparison…</p>
           </div>
         </div>
       )}
@@ -2252,8 +2254,8 @@ function ComparisonTab({ contract, selectedId }: { contract: Contract; selectedI
                   {result.score_change >= 0 ? "+" : ""}{Math.round(result.score_change)}
                 </div>
                 <div>
-                  <p className="text-lg font-black text-slate-900">{vc.label}</p>
-                  <p className="text-xs text-slate-500 mt-0.5 max-w-md">{result.summary}</p>
+                  <p className="text-lg font-black text-[var(--kiq-ink)]">{vc.label}</p>
+                  <p className="text-xs text-[var(--kiq-muted)] mt-0.5 max-w-md">{result.summary}</p>
                 </div>
               </div>
             </div>
@@ -2269,7 +2271,7 @@ function ComparisonTab({ contract, selectedId }: { contract: Contract; selectedI
                   style={{ background: "rgba(0,0,0,0.02)", border: `1px solid rgba(0,0,0,0.08)` }}>
                   <Icon className="w-5 h-5 mx-auto mb-1" style={{ color }} />
                   <p className="text-3xl font-black" style={{ color }}>{count}</p>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-0.5">{label}</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-[var(--kiq-subtle)] mt-0.5">{label}</p>
                 </div>
               ))}
             </div>
@@ -2286,11 +2288,11 @@ function ComparisonTab({ contract, selectedId }: { contract: Contract; selectedI
                       style={{ background: "rgba(5,150,105,0.05)", border: `1px solid ${NEON.green}20` }}
                       data-testid={`rx-compare-improvement-${item.provision_id}`}>
                       <div className="flex-1">
-                        <p className="text-sm text-slate-800 font-semibold">{item.provision_name}</p>
-                        <p className="text-xs text-slate-500 mt-0.5">{item.description}</p>
+                        <p className="text-sm text-[var(--kiq-ink-soft)] font-semibold">{item.provision_name}</p>
+                        <p className="text-xs text-[var(--kiq-muted)] mt-0.5">{item.description}</p>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <p className="text-xs text-slate-500">{item.before.toFixed(1)} → <span className="font-black" style={{ color: NEON.green }}>{item.after.toFixed(1)}</span></p>
+                        <p className="text-xs text-[var(--kiq-muted)]">{item.before.toFixed(1)} → <span className="font-black" style={{ color: NEON.green }}>{item.after.toFixed(1)}</span></p>
                         <p className="text-sm font-black" style={{ color: NEON.green }}>{item.change}</p>
                       </div>
                     </div>
@@ -2311,11 +2313,11 @@ function ComparisonTab({ contract, selectedId }: { contract: Contract; selectedI
                       style={{ background: "rgba(220,38,38,0.04)", border: `1px solid ${NEON.red}20` }}
                       data-testid={`rx-compare-regression-${item.provision_id}`}>
                       <div className="flex-1">
-                        <p className="text-sm text-slate-800 font-semibold">{item.provision_name}</p>
-                        <p className="text-xs text-slate-500 mt-0.5">{item.description}</p>
+                        <p className="text-sm text-[var(--kiq-ink-soft)] font-semibold">{item.provision_name}</p>
+                        <p className="text-xs text-[var(--kiq-muted)] mt-0.5">{item.description}</p>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <p className="text-xs text-slate-500">{item.before.toFixed(1)} → <span className="font-black" style={{ color: NEON.red }}>{item.after.toFixed(1)}</span></p>
+                        <p className="text-xs text-[var(--kiq-muted)]">{item.before.toFixed(1)} → <span className="font-black" style={{ color: NEON.red }}>{item.after.toFixed(1)}</span></p>
                         <p className="text-sm font-black" style={{ color: NEON.red }}>{item.change}</p>
                       </div>
                     </div>
@@ -2327,15 +2329,15 @@ function ComparisonTab({ contract, selectedId }: { contract: Contract; selectedI
             {/* Unchanged */}
             {result.unchanged.length > 0 && (
               <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-2 flex items-center gap-1.5 text-slate-400">
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] mb-2 flex items-center gap-1.5 text-[var(--kiq-subtle)]">
                   <Minus className="w-3 h-3" /> Unchanged
                 </p>
                 <div className="space-y-1.5">
                   {result.unchanged.map((item, i) => (
                     <div key={i} className="flex items-center gap-4 rounded-xl px-4 py-2.5"
                       style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.07)" }}>
-                      <span className="flex-1 text-sm text-slate-600">{item.provision_name}</span>
-                      <span className="text-xs text-slate-400">{item.score.toFixed(1)}/10</span>
+                      <span className="flex-1 text-sm text-[var(--kiq-muted)]">{item.provision_name}</span>
+                      <span className="text-xs text-[var(--kiq-subtle)]">{item.score.toFixed(1)}/10</span>
                     </div>
                   ))}
                 </div>
@@ -2353,7 +2355,7 @@ function ComparisonTab({ contract, selectedId }: { contract: Contract; selectedI
                     <div key={i} className="flex items-start gap-2.5 rounded-xl px-4 py-2.5"
                       style={{ background: "rgba(217,119,6,0.05)", border: `1px solid ${NEON.gold}20` }}>
                       <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: NEON.gold }} />
-                      <p className="text-xs text-slate-600">{gap}</p>
+                      <p className="text-xs text-[var(--kiq-muted)]">{gap}</p>
                     </div>
                   ))}
                 </div>
@@ -2365,8 +2367,8 @@ function ComparisonTab({ contract, selectedId }: { contract: Contract; selectedI
 
       {!result && !compareMutation.isPending && contract.compare_contract_id && (
         <div className="flex flex-col items-center py-8 gap-2">
-          <Loader2 className="w-5 h-5 animate-spin text-slate-400" />
-          <p className="text-slate-500 text-sm">Loading comparison…</p>
+          <Loader2 className="w-5 h-5 animate-spin text-[var(--kiq-subtle)]" />
+          <p className="text-[var(--kiq-muted)] text-sm">Loading comparison…</p>
         </div>
       )}
     </div>
@@ -2471,7 +2473,7 @@ function RedFlagTab({ contract, planRxSpend, planMembers }: { contract: Contract
         <div className="flex items-start gap-6">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-500">Estimated Annual Exposure</span>
+              <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--kiq-muted)]">Estimated Annual Exposure</span>
               {hasExposureData && (
                 <span className="text-[8px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded"
                   style={{ background: `${NEON.gold}18`, color: NEON.gold, border: `1px solid ${NEON.gold}40` }}>MODELED</span>
@@ -2505,7 +2507,7 @@ function RedFlagTab({ contract, planRxSpend, planMembers }: { contract: Contract
             ].map(s => (
               <div key={s.label} className="text-center">
                 <div className="text-2xl font-black" style={{ color: s.color }}>{s.value}</div>
-                <div className="text-[9px] font-bold uppercase tracking-widest text-slate-400 mt-0.5">{s.label}</div>
+                <div className="text-[9px] font-bold uppercase tracking-widest text-[var(--kiq-subtle)] mt-0.5">{s.label}</div>
               </div>
             ))}
           </div>
@@ -2514,7 +2516,7 @@ function RedFlagTab({ contract, planRxSpend, planMembers }: { contract: Contract
 
       {/* Priority flags */}
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-3">Top 5 Priority Flags — Click to Expand Remediation Playbook</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--kiq-subtle)] mb-3">Top 5 Priority Flags — Click to Expand Remediation Playbook</p>
         <div className="space-y-3">
           {ranked.map((p, i) => {
             const pColor = priorityColor(i);
@@ -2538,24 +2540,24 @@ function RedFlagTab({ contract, planRxSpend, planMembers }: { contract: Contract
                       <span className="text-[9px] font-black uppercase tracking-widest" style={{ color: pColor }}>
                         {priorityLabel(i)}
                       </span>
-                      <span className="text-[9px] text-slate-400">·</span>
-                      <span className="text-[9px] font-bold text-slate-500">
+                      <span className="text-[9px] text-[var(--kiq-subtle)]">·</span>
+                      <span className="text-[9px] font-bold text-[var(--kiq-muted)]">
                         {p.issues.filter(iss => !iss.found).length} of {p.issues.length} protections missing
                       </span>
                     </div>
-                    <p className="text-sm font-bold text-slate-800 truncate">{p.name}</p>
+                    <p className="text-sm font-bold text-[var(--kiq-ink-soft)] truncate">{p.name}</p>
                   </div>
                   {(() => { const ex = Math.round(provExposure(p) * scaleFactor); return ex > 0 ? (
                     <div className="flex-shrink-0 text-right mr-2">
                       <div className="text-xs font-black" style={{ color: pColor }}>
                         {fmtDollar(Math.round(ex * 0.75))}–{fmtDollar(Math.round(ex * 1.25))}
                       </div>
-                      <div className="text-[9px] text-slate-400">MODELED annual exposure</div>
+                      <div className="text-[9px] text-[var(--kiq-subtle)]">MODELED annual exposure</div>
                     </div>
                   ) : null; })()}
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <span className="text-xs font-black" style={{ color: pColor }}>{p.score.toFixed(1)}/10</span>
-                    <ChevronRight className="w-4 h-4 text-slate-400 transition-transform"
+                    <ChevronRight className="w-4 h-4 text-[var(--kiq-subtle)] transition-transform"
                       style={{ transform: isOpen ? "rotate(90deg)" : "none" }} />
                   </div>
                 </button>
@@ -2566,14 +2568,14 @@ function RedFlagTab({ contract, planRxSpend, planMembers }: { contract: Contract
                     {/* Missing protections */}
                     {worstIssues.length > 0 && (
                       <div className="mt-4">
-                        <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">Missing Protections</p>
+                        <p className="text-[9px] font-black uppercase tracking-widest text-[var(--kiq-subtle)] mb-2">Missing Protections</p>
                         <div className="space-y-1.5">
                           {worstIssues.map((iss, j) => (
                             <div key={j} className="flex items-start gap-2.5 rounded-lg px-3 py-2"
                               style={{ background: "rgba(220,38,38,0.05)", border: "1px solid rgba(220,38,38,0.15)" }}>
                               <XCircle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: NEON.red }} />
-                              <p className="text-xs text-slate-700">{iss.text}</p>
-                              {iss.gap && <p className="text-[10px] text-slate-500 mt-1">{iss.gap}</p>}
+                              <p className="text-xs text-[var(--kiq-ink-soft)]">{iss.text}</p>
+                              {iss.gap && <p className="text-[10px] text-[var(--kiq-muted)] mt-1">{iss.gap}</p>}
                             </div>
                           ))}
                         </div>
@@ -2586,8 +2588,8 @@ function RedFlagTab({ contract, planRxSpend, planMembers }: { contract: Contract
                         style={{ background: "rgba(255,184,0,0.06)", border: "1px solid rgba(255,184,0,0.2)" }}>
                         <DollarSign className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: NEON.gold }} />
                         <div>
-                          <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Risk Basis</p>
-                          <p className="text-xs text-slate-600">{riskBasis}</p>
+                          <p className="text-[9px] font-black uppercase tracking-widest text-[var(--kiq-subtle)] mb-0.5">Risk Basis</p>
+                          <p className="text-xs text-[var(--kiq-muted)]">{riskBasis}</p>
                         </div>
                       </div>
                     )}
@@ -2595,7 +2597,7 @@ function RedFlagTab({ contract, planRxSpend, planMembers }: { contract: Contract
                     {/* Model language */}
                     {p.negotiation?.model_language && (
                       <div>
-                        <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2">
+                        <p className="text-[9px] font-black uppercase tracking-widest text-[var(--kiq-subtle)] mb-2">
                           <Gavel className="w-3 h-3 inline mr-1" style={{ color: NEON.blue }} />
                           Model Contract Language
                         </p>
@@ -2612,8 +2614,8 @@ function RedFlagTab({ contract, planRxSpend, planMembers }: { contract: Contract
                         style={{ background: "rgba(191,95,255,0.06)", border: "1px solid rgba(191,95,255,0.2)" }}>
                         <Zap className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: NEON.purple }} />
                         <div>
-                          <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-0.5">Negotiation Talking Point</p>
-                          <p className="text-xs text-slate-600">{p.negotiation.talking_point}</p>
+                          <p className="text-[9px] font-black uppercase tracking-widest text-[var(--kiq-subtle)] mb-0.5">Negotiation Talking Point</p>
+                          <p className="text-xs text-[var(--kiq-muted)]">{p.negotiation.talking_point}</p>
                         </div>
                       </div>
                     )}
@@ -2628,13 +2630,13 @@ function RedFlagTab({ contract, planRxSpend, planMembers }: { contract: Contract
       {/* Critical findings strip */}
       {criticals.length > 0 && (
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-3">Critical Findings From AI Analysis</p>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--kiq-subtle)] mb-3">Critical Findings From AI Analysis</p>
           <div className="space-y-2">
             {criticals.map((f, i) => (
               <div key={i} className="flex items-start gap-3 rounded-xl px-4 py-3"
                 style={{ background: "rgba(220,38,38,0.05)", border: "1px solid rgba(220,38,38,0.18)", borderLeft: `3px solid ${NEON.red}` }}>
                 <AlertOctagon className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: NEON.red }} />
-                <p className="text-sm text-slate-700">{f.text}</p>
+                <p className="text-sm text-[var(--kiq-ink-soft)]">{f.text}</p>
               </div>
             ))}
           </div>
@@ -2676,7 +2678,7 @@ function CaaTab({ contract }: { contract: Contract }) {
           <div key={s.label} className="rounded-2xl p-4 text-center"
             style={{ background: "rgba(0,0,0,0.02)", border: `1px solid ${s.color}25` }}>
             <div className="text-2xl font-black" style={{ color: s.color }}>{s.value}</div>
-            <div className="text-[9px] font-bold uppercase tracking-widest text-slate-400 mt-1">{s.label}</div>
+            <div className="text-[9px] font-bold uppercase tracking-widest text-[var(--kiq-subtle)] mt-1">{s.label}</div>
           </div>
         ))}
       </div>
@@ -2687,15 +2689,15 @@ function CaaTab({ contract }: { contract: Contract }) {
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <ListChecks className="w-4 h-4" style={{ color: riskColor }} />
-            <span className="text-sm font-black text-slate-900">CAA 2026 Compliance Scorecard</span>
+            <span className="text-sm font-black text-[var(--kiq-ink)]">CAA 2026 Compliance Scorecard</span>
           </div>
           <span className="text-xs font-black" style={{ color: riskColor }}>{pct}% Compliant</span>
         </div>
-        <div className="w-full h-3 rounded-full bg-gray-100 overflow-hidden" style={{ border: "1px solid rgba(0,0,0,0.06)" }}>
+        <div className="w-full h-3 rounded-full bg-[var(--kiq-canvas-parchment)] overflow-hidden" style={{ border: "1px solid rgba(0,0,0,0.06)" }}>
           <div className="h-full rounded-full transition-all duration-700"
             style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${riskColor}cc, ${riskColor})` }} />
         </div>
-        <p className="text-[10px] text-slate-400 mt-2">
+        <p className="text-[10px] text-[var(--kiq-subtle)] mt-2">
           Consolidated Appropriations Act · Plan Year 2026 · ERISA § 408(b)(2) Enhanced Disclosure Standards
         </p>
       </div>
@@ -2723,8 +2725,8 @@ function CaaTab({ contract }: { contract: Contract }) {
                     ? <CheckSquare className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: NEON.green }} />
                     : <Square className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: NEON.red }} />}
                   <div className="flex-1">
-                    <p className="text-xs text-slate-700">{r.text}</p>
-                    <p className="text-[9px] text-slate-400 mt-0.5">Provision {r.provision_id} · Score {r.score.toFixed(1)}/10 · Threshold {r.threshold}/10</p>
+                    <p className="text-xs text-[var(--kiq-ink-soft)]">{r.text}</p>
+                    <p className="text-[9px] text-[var(--kiq-subtle)] mt-0.5">Provision {r.provision_id} · Score {r.score.toFixed(1)}/10 · Threshold {r.threshold}/10</p>
                   </div>
                   <span className="text-[9px] font-black flex-shrink-0 px-2 py-0.5 rounded-md"
                     style={{ color: r.pass ? NEON.green : NEON.red, background: r.pass ? "rgba(0,255,148,0.08)" : "rgba(255,77,109,0.08)" }}>
@@ -2737,7 +2739,7 @@ function CaaTab({ contract }: { contract: Contract }) {
         );
       })}
 
-      <p className="text-[10px] text-slate-400 text-center uppercase tracking-widest">
+      <p className="text-[10px] text-[var(--kiq-subtle)] text-center uppercase tracking-widest">
         Pass/Fail derived from AI contract analysis scores · not legal advice · consult ERISA counsel
       </p>
     </div>
@@ -2808,7 +2810,7 @@ function TrackerTab({ contract }: { contract: Contract }) {
           <div key={s.label} className="rounded-2xl p-4 text-center"
             style={{ background: "rgba(0,0,0,0.02)", border: `1px solid ${s.color}20` }}>
             <div className="text-2xl font-black" style={{ color: s.color }}>{s.value}</div>
-            <div className="text-[9px] font-bold uppercase tracking-widest text-slate-400 mt-1">{s.label}</div>
+            <div className="text-[9px] font-bold uppercase tracking-widest text-[var(--kiq-subtle)] mt-1">{s.label}</div>
           </div>
         ))}
       </div>
@@ -2816,22 +2818,22 @@ function TrackerTab({ contract }: { contract: Contract }) {
       {/* Completion bar */}
       <div className="rounded-2xl px-5 py-4" style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.08)" }}>
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm font-black text-slate-900">Renegotiation Progress</span>
+          <span className="text-sm font-black text-[var(--kiq-ink)]">Renegotiation Progress</span>
           <span className="text-xs font-black" style={{ color: pct >= 80 ? NEON.green : pct >= 50 ? NEON.gold : NEON.red }}>{pct}% Complete</span>
         </div>
-        <div className="w-full h-2.5 rounded-full bg-gray-100 overflow-hidden">
+        <div className="w-full h-2.5 rounded-full bg-[var(--kiq-canvas-parchment)] overflow-hidden">
           <div className="h-full rounded-full transition-all duration-700"
             style={{ width: `${pct}%`, background: `linear-gradient(90deg, ${NEON.green}cc, ${NEON.green})` }} />
         </div>
-        <p className="text-[10px] text-slate-400 mt-2">Progress is saved locally in your browser. {pct === 100 && "🎉 All gaps closed!"}</p>
+        <p className="text-[10px] text-[var(--kiq-subtle)] mt-2">Progress is saved locally in your browser. {pct === 100 && "🎉 All gaps closed!"}</p>
       </div>
 
       {/* Gap list by provision */}
       {provisionGroups.map(p => (
         <div key={p.id}>
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-[9px] font-black text-slate-400">{String(p.id).padStart(2,"0")}</span>
-            <p className="text-[10px] font-black uppercase tracking-widest text-slate-600">{p.name}</p>
+            <span className="text-[9px] font-black text-[var(--kiq-subtle)]">{String(p.id).padStart(2,"0")}</span>
+            <p className="text-[10px] font-black uppercase tracking-widest text-[var(--kiq-muted)]">{p.name}</p>
           </div>
           <div className="space-y-2">
             {p.issues.filter(iss => !iss.found).map((iss, i) => {
@@ -2848,19 +2850,19 @@ function TrackerTab({ contract }: { contract: Contract }) {
                   <div className="flex items-start gap-3 px-4 py-3">
                     <scfg.icon className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: scfg.color }} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs text-slate-700">{iss.text}</p>
+                      <p className="text-xs text-[var(--kiq-ink-soft)]">{iss.text}</p>
                       {gapState?.note && !isEditing && (
-                        <p className="text-[10px] text-slate-500 mt-1 italic">{gapState.note}</p>
+                        <p className="text-[10px] text-[var(--kiq-muted)] mt-1 italic">{gapState.note}</p>
                       )}
                       {isEditing && (
                         <div className="mt-2 flex gap-2">
-                          <input className="flex-1 bg-white border border-gray-200 rounded-lg px-2 py-1 text-xs text-slate-900 focus:outline-none focus:border-gray-400"
+                          <input className="flex-1 bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg px-2 py-1 text-xs text-[var(--kiq-ink)] focus:outline-none focus:border-gray-400"
                             placeholder="Add a note…" value={noteText}
                             onChange={e => setNoteText(e.target.value)}
                             onKeyDown={e => e.key === "Enter" && saveNote(gapId)} autoFocus />
                           <button onClick={() => saveNote(gapId)} className="text-[10px] px-2 py-1 rounded-lg font-bold"
                             style={{ background: ACCENT_BG, border: `1px solid ${ACCENT_BORDER}`, color: ACCENT }}>Save</button>
-                          <button onClick={() => setEditingNote(null)} className="text-[10px] px-2 py-1 rounded-lg text-slate-400 hover:text-slate-700">✕</button>
+                          <button onClick={() => setEditingNote(null)} className="text-[10px] px-2 py-1 rounded-lg text-[var(--kiq-subtle)] hover:text-[var(--kiq-ink-soft)]">✕</button>
                         </div>
                       )}
                     </div>
@@ -2878,13 +2880,13 @@ function TrackerTab({ contract }: { contract: Contract }) {
                         </button>
                       ))}
                       <button onClick={() => { setEditingNote(gapId); setNoteText(gapState?.note || ""); }}
-                        className="ml-1 p-1 rounded-lg text-slate-400 hover:text-slate-600 transition-colors">
+                        className="ml-1 p-1 rounded-lg text-[var(--kiq-subtle)] hover:text-[var(--kiq-muted)] transition-colors">
                         <Edit3 className="w-3 h-3" />
                       </button>
                     </div>
                   </div>
                   {gapState?.updated && (
-                    <div className="px-4 pb-2 text-[8px] text-slate-400">Last updated {gapState.updated}</div>
+                    <div className="px-4 pb-2 text-[8px] text-[var(--kiq-subtle)]">Last updated {gapState.updated}</div>
                   )}
                 </div>
               );
@@ -2896,8 +2898,8 @@ function TrackerTab({ contract }: { contract: Contract }) {
       {allGaps.length === 0 && (
         <div className="text-center py-12">
           <CheckCircle2 className="w-10 h-10 mx-auto mb-3" style={{ color: NEON.green }} />
-          <p className="text-slate-900 font-bold">No open gaps to track!</p>
-          <p className="text-slate-500 text-sm mt-1">This contract has no missing protections.</p>
+          <p className="text-[var(--kiq-ink)] font-bold">No open gaps to track!</p>
+          <p className="text-[var(--kiq-muted)] text-sm mt-1">This contract has no missing protections.</p>
         </div>
       )}
     </div>
@@ -2969,16 +2971,16 @@ function PortfolioTab({ currentContract }: { currentContract: Contract }) {
     <div className="p-6 space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-1">Multi-Contract Portfolio</p>
-          <h3 className="text-slate-900 font-black text-sm">Side-by-Side Comparison · Up to 5 Contracts</h3>
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--kiq-subtle)] mb-1">Multi-Contract Portfolio</p>
+          <h3 className="text-[var(--kiq-ink)] font-black text-sm">Side-by-Side Comparison · Up to 5 Contracts</h3>
         </div>
         {overallWinner && (
           <div className="flex items-center gap-2 px-4 py-2 rounded-xl"
             style={{ background: "rgba(5,150,105,0.06)", border: "1px solid rgba(5,150,105,0.2)" }}>
             <Trophy className="w-4 h-4" style={{ color: NEON.green }} />
             <div>
-              <p className="text-[9px] text-slate-400 uppercase tracking-widest">Overall Winner</p>
-              <p className="text-xs font-black text-slate-900">{overallWinner.pbm_name || "Contract"}</p>
+              <p className="text-[9px] text-[var(--kiq-subtle)] uppercase tracking-widest">Overall Winner</p>
+              <p className="text-xs font-black text-[var(--kiq-ink)]">{overallWinner.pbm_name || "Contract"}</p>
             </div>
             <span className="text-lg font-black ml-2" style={{ color: NEON.green }}>{Math.round(overallWinner.overall_score ?? 0)}</span>
           </div>
@@ -2990,10 +2992,10 @@ function PortfolioTab({ currentContract }: { currentContract: Contract }) {
         <table className="w-full text-xs" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
           <thead>
             <tr>
-              <th className="text-left text-[9px] font-black uppercase tracking-widest text-slate-400 pb-3 pr-4 w-40">Provision</th>
+              <th className="text-left text-[9px] font-black uppercase tracking-widest text-[var(--kiq-subtle)] pb-3 pr-4 w-40">Provision</th>
               {displayContracts.map(c => (
                 <th key={c.id} className="text-center pb-3 px-2 min-w-[100px]">
-                  <div className="font-black text-slate-900 truncate max-w-[90px] mx-auto" title={c.pbm_name || "Contract"}>
+                  <div className="font-black text-[var(--kiq-ink)] truncate max-w-[90px] mx-auto" title={c.pbm_name || "Contract"}>
                     {(c.pbm_name || "Contract").slice(0, 10)}
                   </div>
                   {c.id === overallWinner?.id && (
@@ -3006,7 +3008,7 @@ function PortfolioTab({ currentContract }: { currentContract: Contract }) {
           <tbody>
             {/* Overall score */}
             <tr style={{ borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
-              <td className="py-2.5 pr-4 text-slate-500 font-bold text-[10px] uppercase tracking-wider">Overall Score</td>
+              <td className="py-2.5 pr-4 text-[var(--kiq-muted)] font-bold text-[10px] uppercase tracking-wider">Overall Score</td>
               {displayContracts.map(c => {
                 const score = c.overall_score ?? 0;
                 const color = cellColor(score / 10);
@@ -3028,7 +3030,7 @@ function PortfolioTab({ currentContract }: { currentContract: Contract }) {
               return (
                 <tr key={provId} data-testid={`rx-portfolio-row-${provId}`}
                   style={{ borderBottom: "1px solid rgba(0,0,0,0.05)", background: idx % 2 === 0 ? "rgba(0,0,0,0.015)" : "transparent" }}>
-                  <td className="py-2.5 pr-4 text-slate-500 text-[10px]">{name}</td>
+                  <td className="py-2.5 pr-4 text-[var(--kiq-muted)] text-[10px]">{name}</td>
                   {displayContracts.map(c => {
                     const score = getScore(c, provId);
                     const color = cellColor(score);
@@ -3055,7 +3057,7 @@ function PortfolioTab({ currentContract }: { currentContract: Contract }) {
 
       {/* Color legend */}
       <div className="flex items-center gap-4 pt-2" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
-        <span className="text-[9px] text-slate-400 uppercase tracking-widest">Score Legend:</span>
+        <span className="text-[9px] text-[var(--kiq-subtle)] uppercase tracking-widest">Score Legend:</span>
         {[
           { label: "8–10 Excellent", color: NEON.green },
           { label: "6–8 Good",      color: "#10B981" },
@@ -3065,14 +3067,14 @@ function PortfolioTab({ currentContract }: { currentContract: Contract }) {
         ].map(l => (
           <div key={l.label} className="flex items-center gap-1.5">
             <div className="w-2 h-2 rounded-full" style={{ background: l.color }} />
-            <span className="text-[9px] text-slate-500">{l.label}</span>
+            <span className="text-[9px] text-[var(--kiq-muted)]">{l.label}</span>
           </div>
         ))}
-        <span className="ml-auto text-[9px] text-slate-400">Underline = winner for that provision</span>
+        <span className="ml-auto text-[9px] text-[var(--kiq-subtle)]">Underline = winner for that provision</span>
       </div>
 
       {displayContracts.length < 2 && (
-        <p className="text-center text-slate-500 text-xs py-2">
+        <p className="text-center text-[var(--kiq-muted)] text-xs py-2">
           Upload more contracts to enable side-by-side comparison. Currently showing {displayContracts.length} contract.
         </p>
       )}
@@ -3146,7 +3148,7 @@ function ExposureTab({ contract, members, rxSpend, onLoadingChange, onSaveMember
         {/* Header row */}
         <div className="flex items-center gap-3">
           <DollarSign className="w-4 h-4 flex-shrink-0" style={{ color: NEON.gold }} />
-          <span className="text-sm font-black text-slate-900 flex-1">Dollar Exposure Estimator</span>
+          <span className="text-sm font-black text-[var(--kiq-ink)] flex-1">Dollar Exposure Estimator</span>
           {/* Plan Profile badge */}
           <div style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(16,185,129,0.07)", border: "1px solid rgba(16,185,129,0.2)", borderRadius: 8, padding: "4px 10px", flexShrink: 0 }}>
             <Users size={11} style={{ color: "#10B981" }} />
@@ -3261,8 +3263,8 @@ function ExposureTab({ contract, members, rxSpend, onLoadingChange, onSaveMember
               <div key={s.label} className="rounded-2xl p-5 text-center"
                 style={{ background: "rgba(0,0,0,0.02)", border: `1px solid ${s.color}20` }}>
                 <div className="text-2xl font-black" style={{ color: s.color }}>{s.value}</div>
-                <div className="text-[9px] font-bold uppercase tracking-widest text-slate-400 mt-1">{s.label}</div>
-                <div className="text-[9px] text-slate-400 mt-0.5">{s.sub}</div>
+                <div className="text-[9px] font-bold uppercase tracking-widest text-[var(--kiq-subtle)] mt-1">{s.label}</div>
+                <div className="text-[9px] text-[var(--kiq-subtle)] mt-0.5">{s.sub}</div>
               </div>
             ))}
           </div>
@@ -3270,7 +3272,7 @@ function ExposureTab({ contract, members, rxSpend, onLoadingChange, onSaveMember
             <div className="rounded-xl px-5 py-3 flex items-center gap-3"
               style={{ background: "rgba(255,77,109,0.06)", border: "1px solid rgba(255,77,109,0.2)" }}>
               <AlertOctagon className="w-4 h-4 flex-shrink-0" style={{ color: NEON.red }} />
-              <p className="text-sm text-slate-700">
+              <p className="text-sm text-[var(--kiq-ink-soft)]">
                 Estimated exposure represents <span className="font-black" style={{ color: NEON.red }}>{data.exposure_as_pct_of_spend}%</span> of your annual Rx spend — recoverable through renegotiation.
               </p>
             </div>
@@ -3278,13 +3280,13 @@ function ExposureTab({ contract, members, rxSpend, onLoadingChange, onSaveMember
 
           {/* Per-provision table */}
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-3">Provision-Level Dollar Exposure (Sorted by Risk)</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--kiq-subtle)] mb-3">Provision-Level Dollar Exposure (Sorted by Risk)</p>
             <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(0,0,0,0.08)" }}>
               <table className="w-full text-sm">
                 <thead>
                   <tr style={{ background: "rgba(0,0,0,0.03)", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
                     {["Provision", "Category", "Score", "PMPY Rate", "Est. Exposure", "Severity"].map(h => (
-                      <th key={h} className="text-left px-4 py-3 text-[9px] font-black uppercase tracking-widest text-slate-400">{h}</th>
+                      <th key={h} className="text-left px-4 py-3 text-[9px] font-black uppercase tracking-widest text-[var(--kiq-subtle)]">{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -3296,10 +3298,10 @@ function ExposureTab({ contract, members, rxSpend, onLoadingChange, onSaveMember
                         style={{ borderBottom: i < data.items.length - 1 ? "1px solid rgba(0,0,0,0.05)" : "none",
                           background: item.severity === "critical" ? "rgba(220,38,38,0.03)" : "transparent" }}
                         data-testid={`rx-exposure-row-${item.provision_id}`}>
-                        <td className="px-4 py-3 text-xs text-slate-700 font-medium">{item.label}</td>
-                        <td className="px-4 py-3 text-[10px] text-slate-500">{item.category}</td>
+                        <td className="px-4 py-3 text-xs text-[var(--kiq-ink-soft)] font-medium">{item.label}</td>
+                        <td className="px-4 py-3 text-[10px] text-[var(--kiq-muted)]">{item.category}</td>
                         <td className="px-4 py-3 text-xs font-black" style={{ color: sc }}>{item.score.toFixed(1)}/10</td>
-                        <td className="px-4 py-3 text-xs text-slate-500">${item.pmpy_at_risk}/mbr</td>
+                        <td className="px-4 py-3 text-xs text-[var(--kiq-muted)]">${item.pmpy_at_risk}/mbr</td>
                         <td className="px-4 py-3 text-sm font-black" style={{ color: item.exposure > 0 ? sc : "#CBD5E1" }}>
                           {item.exposure > 0 ? fmt(item.exposure) : "–"}
                         </td>
@@ -3315,7 +3317,7 @@ function ExposureTab({ contract, members, rxSpend, onLoadingChange, onSaveMember
             </div>
           </div>
 
-          <p className="text-[9px] text-slate-400 text-center">
+          <p className="text-[9px] text-[var(--kiq-subtle)] text-center">
             Exposure estimates based on industry benchmarks for plans of this size. Actual amounts vary by utilization, drug mix, and market conditions.
             Not a guarantee of savings. Consult a benefits attorney before renegotiating.
           </p>
@@ -3415,7 +3417,7 @@ function ExecSummaryTab({ contract, planMembers, planRxSpend }: { contract: Cont
         <div>
           <div className="flex items-center gap-2 mb-1">
             <Brain className="w-4 h-4" style={{ color: NEON.purple }} />
-            <span className="text-sm font-black text-slate-900">Executive Summary</span>
+            <span className="text-sm font-black text-[var(--kiq-ink)]">Executive Summary</span>
             {data?.ai_generated && (
               <span className="text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-widest"
                 style={{ background: "rgba(191,95,255,0.12)", color: NEON.purple, border: `1px solid ${NEON.purple}30` }}>
@@ -3423,7 +3425,7 @@ function ExecSummaryTab({ contract, planMembers, planRxSpend }: { contract: Cont
               </span>
             )}
           </div>
-          <p className="text-xs text-slate-500">Plain-English brief for CFO / HR Director — no jargon</p>
+          <p className="text-xs text-[var(--kiq-muted)]">Plain-English brief for CFO / HR Director — no jargon</p>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
           <button
@@ -3465,7 +3467,7 @@ function ExecSummaryTab({ contract, planMembers, planRxSpend }: { contract: Cont
       {isLoading && (
         <div className="flex flex-col items-center justify-center py-12 gap-3">
           <Loader2 className="w-6 h-6 animate-spin" style={{ color: NEON.purple }} />
-          <p className="text-xs text-slate-500">Generating plain-English summary…</p>
+          <p className="text-xs text-[var(--kiq-muted)]">Generating plain-English summary…</p>
         </div>
       )}
 
@@ -3474,7 +3476,7 @@ function ExecSummaryTab({ contract, planMembers, planRxSpend }: { contract: Cont
           {/* Headline */}
           <div className="rounded-2xl px-6 py-5"
             style={{ background: "rgba(191,95,255,0.06)", border: `1px solid ${NEON.purple}25`, borderLeft: `4px solid ${NEON.purple}` }}>
-            <p className="text-base font-black text-slate-900 leading-snug" data-testid="rx-exec-headline">{data.headline}</p>
+            <p className="text-base font-black text-[var(--kiq-ink)] leading-snug" data-testid="rx-exec-headline">{data.headline}</p>
           </div>
 
           {/* Paragraphs */}
@@ -3485,7 +3487,7 @@ function ExecSummaryTab({ contract, planMembers, planRxSpend }: { contract: Cont
                   style={{ background: "rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.08)", color: "#94A3B8" }}>
                   {i + 1}
                 </div>
-                <p className="text-sm text-slate-600 leading-relaxed" data-testid={`rx-exec-para-${i}`}>{para}</p>
+                <p className="text-sm text-[var(--kiq-muted)] leading-relaxed" data-testid={`rx-exec-para-${i}`}>{para}</p>
               </div>
             ))}
           </div>
@@ -3496,13 +3498,13 @@ function ExecSummaryTab({ contract, planMembers, planRxSpend }: { contract: Cont
               style={{ background: "rgba(0,255,148,0.05)", border: `1px solid ${NEON.green}25` }}>
               <Zap className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: NEON.green }} />
               <div>
-                <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mb-1">Recommended Next Step (30 Days)</p>
-                <p className="text-sm font-bold text-slate-900" data-testid="rx-exec-action">{data.action}</p>
+                <p className="text-[9px] font-black uppercase tracking-widest text-[var(--kiq-subtle)] mb-1">Recommended Next Step (30 Days)</p>
+                <p className="text-sm font-bold text-[var(--kiq-ink)]" data-testid="rx-exec-action">{data.action}</p>
               </div>
             </div>
           )}
 
-          <p className="text-[9px] text-slate-400 text-center">
+          <p className="text-[9px] text-[var(--kiq-subtle)] text-center">
             {data.ai_generated
               ? "Generated by GPT-5 based on contract analysis data. Not legal advice."
               : "Summary generated from contract analysis data. Consult ERISA counsel before action."}
@@ -3551,9 +3553,9 @@ function BenchmarksTab({ contract }: { contract: Contract }) {
         <div>
           <div className="flex items-center gap-2 mb-1">
             <BarChart3 className="w-4 h-4" style={{ color: NEON.blue }} />
-            <span className="text-sm font-black text-slate-900">PBM Market Benchmarks</span>
+            <span className="text-sm font-black text-[var(--kiq-ink)]">PBM Market Benchmarks</span>
           </div>
-          <p className="text-xs text-slate-500">Your contract vs. CVS Caremark, Express Scripts, OptumRx, and Best-in-Class</p>
+          <p className="text-xs text-[var(--kiq-muted)]">Your contract vs. CVS Caremark, Express Scripts, OptumRx, and Best-in-Class</p>
         </div>
       </div>
 
@@ -3570,7 +3572,7 @@ function BenchmarksTab({ contract }: { contract: Contract }) {
             {[["Your Contract", NEON.purple], ...Object.entries(PBM_COLORS)].map(([name, color]) => (
               <div key={name} className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded-full" style={{ background: color as string }} />
-                <span className="text-[10px] text-slate-500">{name}</span>
+                <span className="text-[10px] text-[var(--kiq-muted)]">{name}</span>
               </div>
             ))}
           </div>
@@ -3580,13 +3582,13 @@ function BenchmarksTab({ contract }: { contract: Contract }) {
             <table className="w-full text-xs">
               <thead>
                 <tr style={{ background: "rgba(0,0,0,0.03)", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
-                  <th className="text-left px-4 py-3 text-[9px] font-black uppercase tracking-widest text-slate-400">Provision</th>
+                  <th className="text-left px-4 py-3 text-[9px] font-black uppercase tracking-widest text-[var(--kiq-subtle)]">Provision</th>
                   <th className="px-3 py-3 text-[9px] font-black uppercase tracking-widest text-center" style={{ color: NEON.purple }}>Your Contract</th>
                   {Object.keys(PBM_COLORS).map(pbm => (
                     <th key={pbm} className="px-3 py-3 text-[9px] font-black uppercase tracking-widest text-center"
                       style={{ color: PBM_COLORS[pbm] }}>{pbm.replace("Express Scripts","ESI").replace("Best-in-Class","Best")}</th>
                   ))}
-                  <th className="px-3 py-3 text-[9px] font-black uppercase tracking-widest text-slate-400 text-center">vs ESI Avg</th>
+                  <th className="px-3 py-3 text-[9px] font-black uppercase tracking-widest text-[var(--kiq-subtle)] text-center">vs ESI Avg</th>
                 </tr>
               </thead>
               <tbody>
@@ -3598,7 +3600,7 @@ function BenchmarksTab({ contract }: { contract: Contract }) {
                     <tr key={prov.id}
                       style={{ borderBottom: idx < data.provisions.length - 1 ? "1px solid rgba(0,0,0,0.05)" : "none" }}
                       data-testid={`rx-benchmark-row-${prov.id}`}>
-                      <td className="px-4 py-3 text-slate-700">{prov.name}</td>
+                      <td className="px-4 py-3 text-[var(--kiq-ink-soft)]">{prov.name}</td>
                       <td className="px-3 py-3 text-center font-black"
                         style={{ color: yourScore != null ? scoreColor(yourScore) : "#CBD5E1" }}>
                         {yourScore != null ? yourScore.toFixed(1) : "—"}
@@ -3642,14 +3644,336 @@ function BenchmarksTab({ contract }: { contract: Contract }) {
               <div key={s.label} className="rounded-2xl p-4 text-center"
                 style={{ background: "rgba(0,0,0,0.02)", border: `1px solid ${s.color}20` }}>
                 <div className="text-2xl font-black" style={{ color: s.color }}>{s.value}</div>
-                <div className="text-[9px] font-bold uppercase tracking-widest text-slate-400 mt-1">{s.label}</div>
-                <div className="text-[9px] text-slate-400 mt-0.5">{s.sub}</div>
+                <div className="text-[9px] font-bold uppercase tracking-widest text-[var(--kiq-subtle)] mt-1">{s.label}</div>
+                <div className="text-[9px] text-[var(--kiq-subtle)] mt-0.5">{s.sub}</div>
               </div>
             ))}
           </div>
 
-          <p className="text-[9px] text-slate-400 text-center">{data.source} · {data.note}</p>
+          <p className="text-[9px] text-[var(--kiq-subtle)] text-center">{data.source} · {data.note}</p>
         </>
+      )}
+    </div>
+  );
+}
+
+
+/* ─── HEALTHCARE COST BENCHMARKS (live DOL Form 5500) ─────────────────────── */
+
+interface BenchEmployer {
+  ein: string; name: string; state: string; city: string;
+  industryLabel: string; maxParticipants: number; latestYear: number;
+  totalWelfarePremiums: number; totalBrokerCommissions: number;
+  totalAdminFees: number; totalIncome: number;
+}
+interface BenchNat {
+  planCount: number; avgParticipants: number;
+  p50Income: number; p75Income: number;
+  p50AdminFees: number; p75AdminFees: number; p90AdminFees: number;
+  p50BrokerComm: number; p75BrokerComm: number; p90BrokerComm: number;
+}
+interface BenchState {
+  planCount: number; avgParticipants: number;
+  p25Income: number; p50Income: number; p75Income: number;
+  p50AdminFees: number; p75AdminFees: number; p90AdminFees: number;
+  p50Commissions: number; p75Commissions: number; p90Commissions: number;
+}
+interface BenchYear { year: number; avgPremiums: number; avgCommissions: number; avgAdminFees: number; }
+interface EmployerBenchmark {
+  employer: BenchEmployer;
+  employerPmpm: number | null; natPmpm: number | null;
+  percentiles: { adminFees: number | null; brokerCommissions: number | null; totalIncome: number | null };
+  statePercentiles: { adminFees: number | null; brokerCommissions: number | null; totalIncome: number | null };
+  nationalBenchmark: BenchNat | null;
+  stateBenchmark: BenchState | null;
+  yearTrends: BenchYear[];
+}
+interface EmpHit {
+  ein: string; name: string; state: string; city: string;
+  industryLabel: string; maxParticipants: number;
+}
+
+function CostPctBar({ label, scope, pct, cost }: { label: string; scope: string; pct: number | null; cost: boolean }) {
+  const val = pct ?? 0;
+  const color = pct == null ? "#CBD5E1" : !cost ? NEON.blue : val <= 50 ? NEON.green : val <= 75 ? NEON.gold : NEON.red;
+  return (
+    <div data-testid={`rx-cost-pctbar-${(label + "-" + scope).toLowerCase().replace(/\s+/g, "-")}`}>
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-[11px] text-[var(--kiq-muted)] font-semibold">{label} <span className="text-[var(--kiq-subtle)] font-normal">· {scope}</span></span>
+        <span className="text-[11px] font-black" style={{ color }}>{pct == null ? "n/a" : `${val}th pct`}</span>
+      </div>
+      <div className="h-2 rounded-full overflow-hidden" style={{ background: "rgba(0,0,0,0.06)" }}>
+        <div className="h-full rounded-full" style={{ width: `${Math.max(2, Math.min(100, val))}%`, background: color }} />
+      </div>
+    </div>
+  );
+}
+
+function HealthcareCostTab({ contract: _contract }: { contract: Contract }) {
+  const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<{ ein: string; name: string } | null>(null);
+  const debounced = useDebounce(query, 250);
+  const boxRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const h = (e: MouseEvent) => { if (boxRef.current && !boxRef.current.contains(e.target as Node)) setOpen(false); };
+    document.addEventListener("mousedown", h);
+    return () => document.removeEventListener("mousedown", h);
+  }, []);
+
+  const canSearch = debounced.trim().length >= 2 && !selected;
+  const search = useQuery<{ results: EmpHit[] }>({
+    queryKey: [`/api/benchmark/lookup?q=${encodeURIComponent(debounced.trim())}&limit=8`],
+    enabled: canSearch,
+  });
+  const bench = useQuery<EmployerBenchmark>({
+    queryKey: [`/api/benchmark/employer/${selected?.ein}`],
+    enabled: !!selected?.ein,
+  });
+
+  const pick = (hit: EmpHit) => { setSelected({ ein: hit.ein, name: hit.name }); setQuery(hit.name); setOpen(false); };
+  const clear = () => { setSelected(null); setQuery(""); setOpen(false); };
+
+  const benchErrMsg = /503/.test(String((bench.error as Error | undefined)?.message ?? ""))
+    ? "DOL benchmark data is currently unavailable. Try again shortly."
+    : selected ? `No filed DOL Form 5500 benchmark on record for ${selected.name}.` : "";
+
+  const money = (n?: number | null) => {
+    const v = Number(n || 0);
+    if (v >= 1_000_000) return `$${(v / 1_000_000).toFixed(2)}M`;
+    if (v >= 1000) return `$${(v / 1000).toFixed(1)}K`;
+    return `$${Math.round(v)}`;
+  };
+
+  const emp = bench.data?.employer;
+  const nat = bench.data?.nationalBenchmark;
+  const st  = bench.data?.stateBenchmark;
+  const trends = bench.data?.yearTrends ?? [];
+  const pmpm = bench.data?.employerPmpm ?? null;
+  const natPmpm = bench.data?.natPmpm ?? null;
+  const pctN = bench.data?.percentiles;
+  const pctS = bench.data?.statePercentiles;
+
+  return (
+    <div className="p-6 space-y-5">
+      {/* Header */}
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <Activity className="w-4 h-4" style={{ color: NEON.green }} />
+          <span className="text-sm font-black text-[var(--kiq-ink)]">Healthcare Cost Benchmarks</span>
+          <span className="text-[9px] font-bold px-1.5 py-0.5 rounded" style={{ background: `${NEON.green}14`, color: NEON.green, border: `1px solid ${NEON.green}30` }}>LIVE DOL 5500</span>
+        </div>
+        <p className="text-xs text-[var(--kiq-muted)] max-w-2xl">
+          Benchmark this plan's administrative fees, broker commissions, and PMPM against national and in-state peers in the same industry, drawn from filed DOL Form 5500 data. Filed dollar figures are CERTIFIED; percentile placement is MODELED.
+        </p>
+      </div>
+
+      {/* Employer picker */}
+      <div ref={boxRef} className="relative max-w-md">
+        <div className="flex items-center gap-2 rounded-xl px-3 py-2" style={{ border: "1px solid rgba(0,0,0,0.12)", background: "#fff" }}>
+          <Search className="w-4 h-4 text-[var(--kiq-subtle)] shrink-0" />
+          <input
+            value={query}
+            onChange={e => { setQuery(e.target.value); setOpen(true); if (selected) setSelected(null); }}
+            onFocus={() => setOpen(true)}
+            placeholder="Search employer by name or EIN…"
+            className="w-full bg-transparent text-sm text-[var(--kiq-ink-soft)] placeholder:text-[var(--kiq-subtle)] focus:outline-none"
+            data-testid="rx-cost-search"
+          />
+          {search.isFetching && <Loader2 className="w-4 h-4 text-[var(--kiq-subtle)] animate-spin shrink-0" />}
+          {(query || selected) && (
+            <button onClick={clear} data-testid="rx-cost-clear" className="text-[var(--kiq-subtle)] hover:text-[var(--kiq-muted)] shrink-0"><X className="w-4 h-4" /></button>
+          )}
+        </div>
+        {open && canSearch && (
+          <div className="absolute z-30 mt-1.5 w-full rounded-xl overflow-hidden shadow-xl max-h-72 overflow-y-auto" style={{ border: "1px solid rgba(0,0,0,0.12)", background: "#fff" }}>
+            {search.isLoading && <div className="px-3 py-3 text-xs text-[var(--kiq-subtle)]">Searching…</div>}
+            {!search.isLoading && (search.data?.results?.length ?? 0) === 0 && (
+              <div className="px-3 py-3 text-xs text-[var(--kiq-subtle)]">No employers match "{debounced.trim()}".</div>
+            )}
+            {search.data?.results?.map(hit => (
+              <button key={hit.ein} onClick={() => pick(hit)} data-testid={`rx-cost-option-${hit.ein}`}
+                className="w-full flex items-center justify-between gap-3 px-3 py-2.5 text-left hover:bg-[var(--kiq-canvas-soft)] transition-colors"
+                style={{ borderBottom: "1px solid rgba(0,0,0,0.05)" }}>
+                <div className="min-w-0">
+                  <p className="text-sm text-[var(--kiq-ink-soft)] truncate">{hit.name}</p>
+                  <p className="text-[10px] text-[var(--kiq-subtle)] truncate">{hit.city}, {hit.state} · {hit.industryLabel} · {(hit.maxParticipants || 0).toLocaleString()} participants</p>
+                </div>
+                <ArrowRight className="w-4 h-4 text-[var(--kiq-muted)] shrink-0" />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Empty prompt */}
+      {!selected && (
+        <div className="rounded-2xl px-4 py-8 text-center" style={{ background: "rgba(0,0,0,0.02)", border: "1px dashed rgba(0,0,0,0.10)" }}>
+          <Building2 className="w-6 h-6 mx-auto mb-2 text-[var(--kiq-muted)]" />
+          <p className="text-xs text-[var(--kiq-muted)]">Search for the plan sponsor to benchmark their filed healthcare costs against national and in-state peers.</p>
+        </div>
+      )}
+
+      {/* Loading */}
+      {selected && bench.isLoading && (
+        <div className="flex items-center gap-2 py-8 justify-center text-sm text-[var(--kiq-subtle)]">
+          <Loader2 className="w-5 h-5 animate-spin" /> Benchmarking {selected.name}…
+        </div>
+      )}
+
+      {/* Error / no data */}
+      {selected && bench.isError && (
+        <div className="flex items-center gap-2 rounded-xl px-3 py-3 text-sm" style={{ background: `${NEON.red}0D`, border: `1px solid ${NEON.red}30`, color: NEON.red }}>
+          <AlertTriangle className="w-4 h-4 shrink-0" /> {benchErrMsg}
+        </div>
+      )}
+
+      {/* Results */}
+      {selected && emp && (
+        <div className="space-y-5">
+          {/* Identity */}
+          <div className="rounded-2xl p-4 flex items-start justify-between gap-4 flex-wrap" style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.08)" }}>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${NEON.blue}14`, border: `1px solid ${NEON.blue}30` }}>
+                <Building2 className="w-5 h-5" style={{ color: NEON.blue }} />
+              </div>
+              <div>
+                <p className="text-sm font-black text-[var(--kiq-ink)]" data-testid="rx-cost-employer">{emp.name}</p>
+                <p className="text-[11px] text-[var(--kiq-muted)] flex items-center gap-1">
+                  <MapPin className="w-3 h-3" /> {emp.city}, {emp.state} · {emp.industryLabel} · {(emp.maxParticipants || 0).toLocaleString()} participants · FY{emp.latestYear}
+                </p>
+              </div>
+            </div>
+            <span className="inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-black" style={{ color: NEON.green, border: `1px solid ${NEON.green}40`, background: `${NEON.green}12` }}>
+              <ShieldCheck className="w-3 h-3" /> CERTIFIED · FILED 5500
+            </span>
+          </div>
+
+          {/* Metric cards */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            {[
+              { label: "PMPM (plan)", value: pmpm != null ? `$${pmpm}` : "n/a", sub: natPmpm != null ? `Nat avg $${natPmpm}` : "vs national", color: NEON.blue },
+              { label: "Admin Fees (filed)", value: money(emp.totalAdminFees), sub: nat ? `Nat P50 ${money(nat.p50AdminFees)}` : "filed total", color: NEON.gold },
+              { label: "Broker Comm (filed)", value: money(emp.totalBrokerCommissions), sub: nat ? `Nat P50 ${money(nat.p50BrokerComm)}` : "filed total", color: NEON.orange },
+              { label: "Plan Income (filed)", value: money(emp.totalIncome), sub: nat ? `Nat P50 ${money(nat.p50Income)}` : "filed total", color: NEON.purple },
+            ].map(c => (
+              <div key={c.label} className="rounded-2xl p-4" style={{ background: "rgba(0,0,0,0.02)", border: `1px solid ${c.color}20` }}>
+                <div className="text-xl font-black" style={{ color: c.color }}>{c.value}</div>
+                <div className="text-[9px] font-bold uppercase tracking-widest text-[var(--kiq-subtle)] mt-1">{c.label}</div>
+                <div className="text-[9px] text-[var(--kiq-subtle)] mt-0.5">{c.sub}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Percentile placement */}
+          <div className="rounded-2xl p-4 space-y-3" style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.08)" }}>
+            <div className="flex items-center gap-2 flex-wrap">
+              <BarChart3 className="w-4 h-4" style={{ color: NEON.blue }} />
+              <span className="text-xs font-black text-[var(--kiq-ink-soft)]">Percentile Placement</span>
+              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded" style={{ background: `${NEON.gold}14`, color: NEON.gold, border: `1px solid ${NEON.gold}30` }}>MODELED</span>
+              <span className="text-[10px] text-[var(--kiq-subtle)] ml-auto">Lower is better for fees & commissions</span>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-3">
+              <CostPctBar label="Admin Fees" scope="National" pct={pctN?.adminFees ?? null} cost />
+              <CostPctBar label="Admin Fees" scope={`${emp.state} peers`} pct={pctS?.adminFees ?? null} cost />
+              <CostPctBar label="Broker Commissions" scope="National" pct={pctN?.brokerCommissions ?? null} cost />
+              <CostPctBar label="Broker Commissions" scope={`${emp.state} peers`} pct={pctS?.brokerCommissions ?? null} cost />
+            </div>
+          </div>
+
+          {/* Benchmark tables */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {nat && (
+              <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(0,0,0,0.08)" }}>
+                <div className="px-4 py-2.5" style={{ background: "rgba(0,0,0,0.03)", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-[var(--kiq-muted)]">National Industry Benchmark · {nat.planCount.toLocaleString()} plans</p>
+                </div>
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr style={{ borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
+                      {["Metric", "This Plan", "P50", "P75", "P90"].map(h => (
+                        <th key={h} className="text-left px-3 py-2 text-[9px] font-black uppercase tracking-wider text-[var(--kiq-subtle)]">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { m: "Admin Fees", filed: emp.totalAdminFees, p50: nat.p50AdminFees, p75: nat.p75AdminFees, p90: nat.p90AdminFees as number | null },
+                      { m: "Broker Comm", filed: emp.totalBrokerCommissions, p50: nat.p50BrokerComm, p75: nat.p75BrokerComm, p90: nat.p90BrokerComm as number | null },
+                      { m: "Plan Income", filed: emp.totalIncome, p50: nat.p50Income, p75: nat.p75Income, p90: null as number | null },
+                    ].map((r, i) => (
+                      <tr key={r.m} style={{ borderBottom: i < 2 ? "1px solid rgba(0,0,0,0.05)" : "none" }} data-testid={`rx-cost-nat-${r.m.toLowerCase().replace(/\s+/g, "-")}`}>
+                        <td className="px-3 py-2 text-[var(--kiq-ink-soft)]">{r.m}</td>
+                        <td className="px-3 py-2 font-black text-[var(--kiq-ink)]">{money(r.filed)}</td>
+                        <td className="px-3 py-2 text-[var(--kiq-muted)]">{money(r.p50)}</td>
+                        <td className="px-3 py-2 text-[var(--kiq-muted)]">{money(r.p75)}</td>
+                        <td className="px-3 py-2 text-[var(--kiq-muted)]">{r.p90 != null ? money(r.p90) : "-"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            {st && (
+              <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(0,0,0,0.08)" }}>
+                <div className="px-4 py-2.5" style={{ background: "rgba(0,0,0,0.03)", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-[var(--kiq-muted)]">{emp.state} Peer Benchmark · {st.planCount.toLocaleString()} plans</p>
+                </div>
+                <table className="w-full text-xs">
+                  <thead>
+                    <tr style={{ borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
+                      {["Metric", "This Plan", "P50", "P75", "P90"].map(h => (
+                        <th key={h} className="text-left px-3 py-2 text-[9px] font-black uppercase tracking-wider text-[var(--kiq-subtle)]">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      { m: "Admin Fees", filed: emp.totalAdminFees, p50: st.p50AdminFees, p75: st.p75AdminFees, p90: st.p90AdminFees as number | null },
+                      { m: "Broker Comm", filed: emp.totalBrokerCommissions, p50: st.p50Commissions, p75: st.p75Commissions, p90: st.p90Commissions as number | null },
+                      { m: "Plan Income", filed: emp.totalIncome, p50: st.p50Income, p75: st.p75Income, p90: null as number | null },
+                    ].map((r, i) => (
+                      <tr key={r.m} style={{ borderBottom: i < 2 ? "1px solid rgba(0,0,0,0.05)" : "none" }} data-testid={`rx-cost-state-${r.m.toLowerCase().replace(/\s+/g, "-")}`}>
+                        <td className="px-3 py-2 text-[var(--kiq-ink-soft)]">{r.m}</td>
+                        <td className="px-3 py-2 font-black text-[var(--kiq-ink)]">{money(r.filed)}</td>
+                        <td className="px-3 py-2 text-[var(--kiq-muted)]">{money(r.p50)}</td>
+                        <td className="px-3 py-2 text-[var(--kiq-muted)]">{money(r.p75)}</td>
+                        <td className="px-3 py-2 text-[var(--kiq-muted)]">{r.p90 != null ? money(r.p90) : "-"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+          {/* Year trend */}
+          {trends.length > 0 && (() => {
+            const maxAdmin = Math.max(...trends.map(t => t.avgAdminFees), 1);
+            return (
+              <div className="rounded-2xl p-4" style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.08)" }}>
+                <div className="flex items-center gap-2 mb-3">
+                  <TrendingUp className="w-4 h-4" style={{ color: NEON.blue }} />
+                  <span className="text-xs font-black text-[var(--kiq-ink-soft)]">National Cost Trend · Avg Admin Fees per Plan</span>
+                </div>
+                <div className="flex items-end gap-3 h-28" data-testid="rx-cost-trend">
+                  {trends.map(t => (
+                    <div key={t.year} className="flex-1 flex flex-col items-center justify-end gap-1">
+                      <span className="text-[9px] font-bold text-[var(--kiq-muted)]">{money(t.avgAdminFees)}</span>
+                      <div className="w-full rounded-t" style={{ height: `${Math.max(4, (t.avgAdminFees / maxAdmin) * 90)}%`, background: NEON.blue }} />
+                      <span className="text-[9px] text-[var(--kiq-subtle)]">{t.year}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
+
+          <p className="text-[9px] text-[var(--kiq-subtle)] text-center">
+            Source: DOL EFAST2 Form 5500 filings · national & state percentiles by industry (business code). Percentile placement is MODELED from filed quartiles; filed dollar figures are CERTIFIED.
+          </p>
+        </div>
       )}
     </div>
   );
@@ -3675,8 +3999,8 @@ function PresentationMode({ contract, onClose }: { contract: Contract; onClose: 
       <div className="flex items-center justify-between px-8 py-4" style={{ borderBottom: "1px solid rgba(0,0,0,0.08)", background: "#FFFFFF" }}>
         <div className="flex items-center gap-3">
           <Pill className="w-5 h-5" style={{ color: ACCENT }} />
-          <span className="text-slate-900 font-black text-sm">Rx Defense IQ™ — Presentation Mode</span>
-          <span className="text-[10px] text-slate-400 uppercase tracking-widest">| {contract.pbm_name}</span>
+          <span className="text-[var(--kiq-ink)] font-black text-sm">PBM Contract Clarity 360™ — Presentation Mode</span>
+          <span className="text-[10px] text-[var(--kiq-subtle)] uppercase tracking-widest">| {contract.pbm_name}</span>
         </div>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-1">
@@ -3695,7 +4019,7 @@ function PresentationMode({ contract, onClose }: { contract: Contract; onClose: 
           <button data-testid="rx-presentation-close" onClick={onClose}
             className="w-8 h-8 flex items-center justify-center rounded-full transition-colors"
             style={{ background: "rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.10)" }}>
-            <X className="w-4 h-4 text-slate-600" />
+            <X className="w-4 h-4 text-[var(--kiq-muted)]" />
           </button>
         </div>
       </div>
@@ -3705,15 +4029,15 @@ function PresentationMode({ contract, onClose }: { contract: Contract; onClose: 
         {slide === 0 && (
           <div className="max-w-4xl mx-auto space-y-10">
             <div className="text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.3em] text-slate-400 mb-4">Fiduciary Contract Analysis</p>
-              <h1 className="text-5xl font-black text-slate-900 mb-3">{contract.pbm_name || "PBM Contract"}</h1>
-              <p className="text-slate-500 text-sm">Rx Defense IQ™ · CAA 2026 Aligned · {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-[var(--kiq-subtle)] mb-4">Fiduciary Contract Analysis</p>
+              <h1 className="text-5xl font-black text-[var(--kiq-ink)] mb-3">{contract.pbm_name || "PBM Contract"}</h1>
+              <p className="text-[var(--kiq-muted)] text-sm">PBM Contract Clarity 360™ · CAA 2026 Aligned · {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
             </div>
             <div className="flex items-center justify-center gap-12">
               <div className="text-center">
                 <div className="text-9xl font-black" style={{ color: rating.color }}>{Math.round(score)}</div>
                 <div className="text-lg font-bold uppercase tracking-widest mt-2" style={{ color: rating.color }}>{rating.label}</div>
-                <div className="text-sm text-slate-400 mt-1">out of 100</div>
+                <div className="text-sm text-[var(--kiq-subtle)] mt-1">out of 100</div>
               </div>
               <div className="space-y-4">
                 {[
@@ -3724,7 +4048,7 @@ function PresentationMode({ contract, onClose }: { contract: Contract; onClose: 
                 ].map(s => (
                   <div key={s.label} className="flex items-center gap-4">
                     <div className="text-3xl font-black" style={{ color: s.color }}>{s.value}</div>
-                    <div className="text-sm text-slate-500">{s.label}</div>
+                    <div className="text-sm text-[var(--kiq-muted)]">{s.label}</div>
                   </div>
                 ))}
               </div>
@@ -3734,7 +4058,7 @@ function PresentationMode({ contract, onClose }: { contract: Contract; onClose: 
 
         {slide === 1 && (
           <div className="max-w-4xl mx-auto space-y-6">
-            <h2 className="text-3xl font-black text-slate-900 text-center mb-8">Provisions Requiring Action</h2>
+            <h2 className="text-3xl font-black text-[var(--kiq-ink)] text-center mb-8">Provisions Requiring Action</h2>
             <div className="space-y-4">
               {redFlagProvisions.map((p) => {
                 const cfg = RATING_CONFIG[p.rating] || RATING_CONFIG.concern;
@@ -3744,11 +4068,11 @@ function PresentationMode({ contract, onClose }: { contract: Contract; onClose: 
                     <div className="text-5xl font-black" style={{ color: cfg.color }}>{p.score.toFixed(1)}</div>
                     <div className="flex-1">
                       <div className="text-[10px] font-black uppercase tracking-widest mb-1" style={{ color: cfg.color }}>{cfg.label}</div>
-                      <p className="text-lg font-bold text-slate-900">{p.name}</p>
-                      <p className="text-xs text-slate-500 mt-1">{p.issues.filter(i => !i.found).length} of {p.issues.length} protections missing</p>
+                      <p className="text-lg font-bold text-[var(--kiq-ink)]">{p.name}</p>
+                      <p className="text-xs text-[var(--kiq-muted)] mt-1">{p.issues.filter(i => !i.found).length} of {p.issues.length} protections missing</p>
                     </div>
                     {p.negotiation?.gap_summary && (
-                      <p className="text-sm text-slate-500 max-w-sm">{p.negotiation.gap_summary}</p>
+                      <p className="text-sm text-[var(--kiq-muted)] max-w-sm">{p.negotiation.gap_summary}</p>
                     )}
                   </div>
                 );
@@ -3759,39 +4083,39 @@ function PresentationMode({ contract, onClose }: { contract: Contract; onClose: 
 
         {slide === 2 && (
           <div className="max-w-4xl mx-auto space-y-6">
-            <h2 className="text-3xl font-black text-slate-900 text-center mb-8">Key Findings</h2>
+            <h2 className="text-3xl font-black text-[var(--kiq-ink)] text-center mb-8">Key Findings</h2>
             {criticals.length > 0 && (
               <div className="space-y-3">
-                <p className="text-xs font-black uppercase tracking-widest text-slate-400">Critical</p>
+                <p className="text-xs font-black uppercase tracking-widest text-[var(--kiq-subtle)]">Critical</p>
                 {criticals.map((f, i) => (
                   <div key={i} className="flex items-start gap-4 rounded-2xl px-6 py-4"
                     style={{ background: "rgba(220,38,38,0.05)", border: "1px solid rgba(220,38,38,0.22)", borderLeft: `4px solid ${NEON.red}` }}>
                     <XCircle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: NEON.red }} />
-                    <p className="text-base text-slate-700">{f.text}</p>
+                    <p className="text-base text-[var(--kiq-ink-soft)]">{f.text}</p>
                   </div>
                 ))}
               </div>
             )}
             {warnings.length > 0 && (
               <div className="space-y-3">
-                <p className="text-xs font-black uppercase tracking-widest text-slate-400">Warnings</p>
+                <p className="text-xs font-black uppercase tracking-widest text-[var(--kiq-subtle)]">Warnings</p>
                 {warnings.map((f, i) => (
                   <div key={i} className="flex items-start gap-4 rounded-2xl px-6 py-4"
                     style={{ background: "rgba(217,119,6,0.05)", border: "1px solid rgba(217,119,6,0.22)", borderLeft: `4px solid ${NEON.gold}` }}>
                     <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: NEON.gold }} />
-                    <p className="text-base text-slate-700">{f.text}</p>
+                    <p className="text-base text-[var(--kiq-ink-soft)]">{f.text}</p>
                   </div>
                 ))}
               </div>
             )}
             {positives.length > 0 && (
               <div className="space-y-3">
-                <p className="text-xs font-black uppercase tracking-widest text-slate-400">Strengths</p>
+                <p className="text-xs font-black uppercase tracking-widest text-[var(--kiq-subtle)]">Strengths</p>
                 {positives.map((f, i) => (
                   <div key={i} className="flex items-start gap-4 rounded-2xl px-6 py-4"
                     style={{ background: "rgba(5,150,105,0.05)", border: "1px solid rgba(5,150,105,0.20)", borderLeft: `4px solid ${NEON.green}` }}>
                     <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: NEON.green }} />
-                    <p className="text-base text-slate-700">{f.text}</p>
+                    <p className="text-base text-[var(--kiq-ink-soft)]">{f.text}</p>
                   </div>
                 ))}
               </div>
@@ -3801,7 +4125,7 @@ function PresentationMode({ contract, onClose }: { contract: Contract; onClose: 
 
         {slide === 3 && (
           <div className="max-w-4xl mx-auto space-y-6">
-            <h2 className="text-3xl font-black text-slate-900 text-center mb-8">Recommended Actions</h2>
+            <h2 className="text-3xl font-black text-[var(--kiq-ink)] text-center mb-8">Recommended Actions</h2>
             {redFlagProvisions.slice(0, 5).map((p, i) => (
               <div key={p.id} className="rounded-2xl px-6 py-5"
                 style={{ border: "1px solid rgba(0,0,0,0.08)", background: "rgba(0,0,0,0.02)" }}>
@@ -3811,9 +4135,9 @@ function PresentationMode({ contract, onClose }: { contract: Contract; onClose: 
                     {i + 1}
                   </div>
                   <div>
-                    <p className="font-black text-slate-900 text-base">{p.name}</p>
+                    <p className="font-black text-[var(--kiq-ink)] text-base">{p.name}</p>
                     {p.negotiation?.talking_point && (
-                      <p className="text-sm text-slate-500 mt-1">{p.negotiation.talking_point}</p>
+                      <p className="text-sm text-[var(--kiq-muted)] mt-1">{p.negotiation.talking_point}</p>
                     )}
                     {p.negotiation?.model_language && (
                       <div className="mt-3 rounded-xl px-4 py-3 font-mono text-xs text-emerald-700"
@@ -3826,8 +4150,8 @@ function PresentationMode({ contract, onClose }: { contract: Contract; onClose: 
               </div>
             ))}
             <div className="text-center pt-6">
-              <p className="text-sm text-slate-500">Use the Negotiation Guide tab for full model language · Download Redline (.docx) for attorney review</p>
-              <p className="text-[10px] text-slate-400 mt-2">Kincaid IQ · Rx Defense IQ™ · Not legal advice · CAA 2026</p>
+              <p className="text-sm text-[var(--kiq-muted)]">Use the Negotiation Guide tab for full model language · Download Redline (.docx) for attorney review</p>
+              <p className="text-[10px] text-[var(--kiq-subtle)] mt-2">Kincaid Health · PBM Contract Clarity 360™ · Not legal advice · CAA 2026</p>
             </div>
           </div>
         )}
@@ -3975,12 +4299,12 @@ function DualEngineTab({ contract, members, rxSpend }: { contract: Contract; mem
     const isHigher = higher === eng.engine;
     if (!eng.ok) {
       return (
-        <div className="rounded-2xl p-6 flex flex-col" style={{ border: `1px solid rgba(0,0,0,0.10)`, background: "rgba(0,0,0,0.02)" }}>
+        <div className="kiq-forensic-card rounded-2xl p-6 flex flex-col">
           <div className="flex items-center gap-2 mb-3">
             <span className="text-sm font-black" style={{ color: meta.color }}>{meta.label}</span>
             <span className="text-[10px] font-bold px-1.5 py-0.5 rounded" style={{ background: `${meta.color}18`, color: meta.color }}>{eng.model}</span>
           </div>
-          <div className="flex items-center gap-2 text-xs text-slate-500 py-8 justify-center">
+          <div className="flex items-center gap-2 text-xs text-[var(--kiq-muted)] py-8 justify-center">
             <AlertOctagon className="w-4 h-4" style={{ color: NEON.red }} />
             {eng.error || "This engine did not return a result."}
           </div>
@@ -3990,7 +4314,7 @@ function DualEngineTab({ contract, members, rxSpend }: { contract: Contract; mem
     return (
       <div
         data-testid={`rx-dual-col-${eng.engine}`}
-        className="rounded-2xl p-6 flex flex-col relative"
+        className="kiq-forensic-card rounded-2xl p-6 flex flex-col relative"
         style={{
           border: `1.5px solid ${isChosen ? meta.color : `${meta.color}30`}`,
           background: isChosen ? `${meta.color}08` : "#fff",
@@ -4009,33 +4333,33 @@ function DualEngineTab({ contract, members, rxSpend }: { contract: Contract; mem
 
         <div className="grid grid-cols-2 gap-3 mb-4">
           <div className="rounded-xl p-3" style={{ background: "rgba(0,0,0,0.03)" }}>
-            <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Fiduciary score</div>
-            <div className="text-2xl font-black" style={{ color: meta.color }}>{Math.round(eng.overall_score || 0)}<span className="text-sm text-slate-400">/100</span></div>
-            <div className="text-[10px] text-slate-500 capitalize">{eng.rating}</div>
+            <div className="text-[10px] uppercase tracking-wider text-[var(--kiq-muted)] font-bold">Fiduciary score</div>
+            <div className="text-2xl font-black" style={{ color: meta.color }}>{Math.round(eng.overall_score || 0)}<span className="text-sm text-[var(--kiq-subtle)]">/100</span></div>
+            <div className="text-[10px] text-[var(--kiq-muted)] capitalize">{eng.rating}</div>
           </div>
           <div className="rounded-xl p-3" style={{ background: "rgba(0,0,0,0.03)" }}>
-            <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Damaging clauses</div>
-            <div className="text-2xl font-black" style={{ color: NEON.red }}>{eng.damaging_count}<span className="text-sm text-slate-400">/13</span></div>
-            {eng.savings?.spend_pct != null && <div className="text-[10px] text-slate-500">{eng.savings.spend_pct}% of Rx spend</div>}
+            <div className="text-[10px] uppercase tracking-wider text-[var(--kiq-muted)] font-bold">Damaging clauses</div>
+            <div className="text-2xl font-black" style={{ color: NEON.red }}>{eng.damaging_count}<span className="text-sm text-[var(--kiq-subtle)]">/13</span></div>
+            {eng.savings?.spend_pct != null && <div className="text-[10px] text-[var(--kiq-muted)]">{eng.savings.spend_pct}% of Rx spend</div>}
           </div>
         </div>
 
         <div className="rounded-xl p-4 mb-4 text-center" style={{ background: `${meta.color}0d`, border: `1px solid ${meta.color}22` }}>
-          <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Recoverable savings / yr (base case)</div>
+          <div className="text-[10px] uppercase tracking-wider text-[var(--kiq-muted)] font-bold mb-1">Recoverable savings / yr (base case)</div>
           <div className="text-3xl font-black" style={{ color: meta.color }} data-testid={`rx-dual-savings-${eng.engine}`}>{fmt(eng.savings?.base)}</div>
-          <div className="text-[11px] text-slate-500 mt-1">Range {fmt(eng.savings?.low)} – {fmt(eng.savings?.high)}</div>
+          <div className="text-[11px] text-[var(--kiq-muted)] mt-1">Range {fmt(eng.savings?.low)} – {fmt(eng.savings?.high)}</div>
         </div>
 
         <div className="flex-1">
-          <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-2">Top savings drivers</div>
+          <div className="text-[10px] uppercase tracking-wider text-[var(--kiq-muted)] font-bold mb-2">Top savings drivers</div>
           <div className="space-y-1.5">
             {(eng.top_provisions || []).map((p) => (
               <div key={p.id} className="flex items-center justify-between text-xs">
-                <span className="truncate pr-2 text-slate-700">{p.name}</span>
+                <span className="truncate pr-2 text-[var(--kiq-ink-soft)]">{p.name}</span>
                 <span className="font-bold flex-shrink-0" style={{ color: meta.color }}>{fmt(p.save_base)}</span>
               </div>
             ))}
-            {(eng.top_provisions || []).length === 0 && <div className="text-xs text-slate-400">No damaging provisions found.</div>}
+            {(eng.top_provisions || []).length === 0 && <div className="text-xs text-[var(--kiq-subtle)]">No damaging provisions found.</div>}
           </div>
         </div>
 
@@ -4062,13 +4386,13 @@ function DualEngineTab({ contract, members, rxSpend }: { contract: Contract; mem
 
   return (
     <div className="px-6 pb-6">
-      <div className="rounded-2xl p-5 mb-5 flex flex-col sm:flex-row sm:items-center gap-4 justify-between"
+      <div className="kiq-forensic-card rounded-2xl p-5 mb-5 flex flex-col sm:flex-row sm:items-center gap-4 justify-between"
         style={{ background: "linear-gradient(135deg, rgba(124,58,237,0.06), rgba(5,150,105,0.06))", border: "1px solid rgba(0,0,0,0.08)" }}>
         <div className="flex items-start gap-3">
           <GitCompare className="w-6 h-6 flex-shrink-0" style={{ color: NEON.purple }} />
           <div>
-            <div className="text-sm font-black text-slate-800">Dual-Engine Savings Comparison</div>
-            <div className="text-xs text-slate-500 max-w-xl mt-0.5">
+            <div className="text-sm font-black text-[var(--kiq-ink-soft)]">Dual-Engine Savings Comparison</div>
+            <div className="text-xs text-[var(--kiq-muted)] max-w-xl mt-0.5">
               Score this contract with <b>Claude</b> and <b>OpenAI</b> at the same time, then apply whichever
               savings estimate you trust. Both run identical cap rules ({members.toLocaleString()} members{spendNum ? ` · ${fmt(spendNum)} Rx spend` : ""}).
             </div>
@@ -4078,7 +4402,7 @@ function DualEngineTab({ contract, members, rxSpend }: { contract: Contract; mem
           data-testid="rx-dual-run"
           onClick={() => run.mutate()}
           disabled={run.isPending}
-          className="flex-shrink-0 px-5 py-2.5 rounded-xl text-sm font-bold text-white transition-all disabled:opacity-60 flex items-center gap-2"
+          className="flex-shrink-0 px-5 py-2.5 rounded-xl text-sm font-bold text-[var(--kiq-ink)] transition-all disabled:opacity-60 flex items-center gap-2"
           style={{ background: NEON.purple }}
         >
           {run.isPending
@@ -4090,12 +4414,12 @@ function DualEngineTab({ contract, members, rxSpend }: { contract: Contract; mem
       {run.isPending && (
         <div className="flex flex-col items-center justify-center py-16 gap-3">
           <Loader2 className="w-7 h-7 animate-spin" style={{ color: NEON.purple }} />
-          <p className="text-xs text-slate-500 tracking-widest uppercase">Claude &amp; OpenAI analyzing in parallel…</p>
+          <p className="text-xs text-[var(--kiq-muted)] tracking-widest uppercase">Claude &amp; OpenAI analyzing in parallel…</p>
         </div>
       )}
 
       {!run.isPending && !data && (
-        <div className="text-center py-16 text-sm text-slate-400">
+        <div className="text-center py-16 text-sm text-[var(--kiq-subtle)]">
           Run the comparison to see Claude and OpenAI side by side.
         </div>
       )}
@@ -4103,7 +4427,7 @@ function DualEngineTab({ contract, members, rxSpend }: { contract: Contract; mem
       {data && !run.isPending && (
         <>
           {baseVals && (
-            <div className="text-center text-xs text-slate-500 mb-4">
+            <div className="text-center text-xs text-[var(--kiq-muted)] mb-4">
               Engines differ by <b style={{ color: NEON.gold }}>{fmt(Math.abs(baseVals[0] - baseVals[1]))}</b> on base-case annual savings.
             </div>
           )}
@@ -4111,7 +4435,7 @@ function DualEngineTab({ contract, members, rxSpend }: { contract: Contract; mem
             <EngineColumn eng={data.claude} />
             <EngineColumn eng={data.openai} />
           </div>
-          <div className="text-[11px] text-slate-400 mt-4 text-center">{data.cap_note}</div>
+          <div className="text-[11px] text-[var(--kiq-subtle)] mt-4 text-center">{data.cap_note}</div>
         </>
       )}
     </div>
@@ -4140,11 +4464,11 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
     return (
       <div className="flex flex-col items-center justify-center py-20 gap-3">
         <Loader2 className="w-7 h-7 animate-spin" style={{ color: NEON.gold }} />
-        <p className="text-xs text-slate-500 tracking-widest uppercase">Compiling Strategic Forensic Report…</p>
+        <p className="text-xs text-[var(--kiq-muted)] tracking-widest uppercase">Compiling Strategic Forensic Report…</p>
       </div>
     );
   }
-  if (!data) return <div className="p-10 text-center text-sm text-slate-500">Unable to generate report.</div>;
+  if (!data) return <div className="p-10 text-center text-sm text-[var(--kiq-muted)]">Unable to generate report.</div>;
 
   const SEV_COLOR: Record<string, string> = {
     CRITICAL: NEON.red, HIGH: NEON.orange, MODERATE: NEON.gold, LOW: NEON.green
@@ -4175,8 +4499,8 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
       {/* Toolbar */}
       <div className="no-print flex items-center justify-between mb-4 px-2">
         <div>
-          <div className="text-[10px] uppercase tracking-[0.3em] text-slate-400">Kincaid Strategic Advisory</div>
-          <div className="text-sm font-black text-slate-900">Strategic Forensic Report</div>
+          <div className="text-[10px] uppercase tracking-[0.3em] text-[var(--kiq-subtle)]">Kincaid Strategic Advisory</div>
+          <div className="text-sm font-black text-[var(--kiq-ink)]">Strategic Forensic Report</div>
         </div>
         <div className="flex gap-2">
           <button
@@ -4201,8 +4525,7 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
 
       {/* THE REPORT */}
       <div id="rxd-savings-report" ref={reportRef}
-        className="rounded-2xl overflow-hidden"
-        style={{ background: "#FFFFFF", border: "1px solid rgba(0,0,0,0.08)" }}>
+        className="kiq-forensic-card rounded-2xl overflow-hidden">
 
         {/* === COVER === */}
         <div className="p-12 page-break print-bg"
@@ -4211,12 +4534,12 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
           <div className="text-[10px] uppercase tracking-[0.5em] mb-8" style={{ color: NEON.gold }}>
             {data.engagement.firm} · {data.engagement.practice}
           </div>
-          <div className="text-[10px] uppercase tracking-[0.3em] text-slate-400 mb-3">Strategic Advisory Deliverable</div>
-          <h1 className="text-4xl font-black text-slate-900 print-dark leading-tight mb-2"
+          <div className="text-[10px] uppercase tracking-[0.3em] text-[var(--kiq-subtle)] mb-3">Strategic Advisory Deliverable</div>
+          <h1 className="text-4xl font-black text-[var(--kiq-ink)] print-dark leading-tight mb-2"
             style={{ fontFamily: "ui-serif, Georgia, serif", letterSpacing: "-0.02em" }}>
             {data.narrative.engagement_title}
           </h1>
-          <h2 className="text-xl text-slate-500 print-dark italic mb-12"
+          <h2 className="text-xl text-[var(--kiq-muted)] print-dark italic mb-12"
             style={{ fontFamily: "ui-serif, Georgia, serif" }}>
             Forensic Review of Pharmacy Benefit Contract<br/>
             with Model Remediation Pathway
@@ -4230,8 +4553,8 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
               { label: "Report Date", value: dateStr },
             ].map(x => (
               <div key={x.label}>
-                <div className="text-[9px] uppercase tracking-widest text-slate-400 mb-1">{x.label}</div>
-                <div className="text-sm font-bold text-slate-900 print-dark">{x.value}</div>
+                <div className="text-[9px] uppercase tracking-widest text-[var(--kiq-subtle)] mb-1">{x.label}</div>
+                <div className="text-sm font-bold text-[var(--kiq-ink)] print-dark">{x.value}</div>
               </div>
             ))}
           </div>
@@ -4239,18 +4562,18 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
           {/* Headline findings summary */}
           <div className="rounded-xl p-8 rxd-print-card"
             style={{ background: "rgba(217,119,6,0.05)", border: `1px solid ${NEON.gold}30` }}>
-            <div className="text-[10px] uppercase tracking-[0.4em] text-slate-400 mb-2">Fiduciary Findings Summary</div>
+            <div className="text-[10px] uppercase tracking-[0.4em] text-[var(--kiq-subtle)] mb-2">Fiduciary Findings Summary</div>
             <div className="flex items-baseline gap-3">
               <span className="text-6xl font-black" style={{ color: NEON.gold,
                 fontFamily: "ui-serif, Georgia, serif" }}>{data.savings.damaging_count}</span>
-              <span className="text-slate-500 text-sm">of {data.savings.provisions_total} provisions below fiduciary baseline</span>
+              <span className="text-[var(--kiq-muted)] text-sm">of {data.savings.provisions_total} provisions below fiduciary baseline</span>
             </div>
-            <div className="mt-3 text-xs text-slate-500 print-dark">
+            <div className="mt-3 text-xs text-[var(--kiq-muted)] print-dark">
               Each damaging provision is detailed below with quoted contract language, its economic mechanism, and model remediation language.
             </div>
           </div>
 
-          <div className="mt-10 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-400">
+          <div className="mt-10 flex items-center justify-between text-[10px] uppercase tracking-widest text-[var(--kiq-subtle)]">
             <span>Confidential — Prepared for Plan Committee</span>
             <span>{data.engagement.voice}</span>
           </div>
@@ -4272,7 +4595,7 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
                   {p.label}
                 </span>
               </div>
-              <p className="text-sm text-slate-600 print-dark leading-relaxed pl-4"
+              <p className="text-sm text-[var(--kiq-muted)] print-dark leading-relaxed pl-4"
                 style={{ fontFamily: "ui-serif, Georgia, serif", fontSize: "15px", lineHeight: 1.7 }}>
                 {p.body}
               </p>
@@ -4293,8 +4616,8 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
               <div className="p-8 rounded-xl text-center rxd-print-card"
                 style={{ background: "rgba(5,150,105,0.04)", border: `1px solid ${NEON.green}25` }}>
                 <CheckCircle2 className="w-8 h-8 mx-auto mb-2" style={{ color: NEON.green }} />
-                <p className="text-sm font-bold text-slate-900 print-dark">No damaging provisions identified.</p>
-                <p className="text-xs text-slate-500 mt-1">Contract scored above fiduciary baseline on all 13 provisions.</p>
+                <p className="text-sm font-bold text-[var(--kiq-ink)] print-dark">No damaging provisions identified.</p>
+                <p className="text-xs text-[var(--kiq-muted)] mt-1">Contract scored above fiduciary baseline on all 13 provisions.</p>
               </div>
             )}
           </div>
@@ -4312,12 +4635,12 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
                   borderTop: `3px solid ${[NEON.blue, NEON.gold, NEON.green][i]}` }}>
                 <div className="text-[10px] uppercase tracking-widest font-black mb-1"
                   style={{ color: [NEON.blue, NEON.gold, NEON.green][i] }}>{r.horizon}</div>
-                <div className="text-sm font-black text-slate-900 print-dark mb-3"
+                <div className="text-sm font-black text-[var(--kiq-ink)] print-dark mb-3"
                   style={{ fontFamily: "ui-serif, Georgia, serif" }}>{r.phase}</div>
                 <ul className="space-y-2">
                   {r.actions.map((a, j) => (
-                    <li key={j} className="flex gap-2 text-xs text-slate-600 print-dark leading-snug">
-                      <span className="text-slate-400 font-mono flex-shrink-0">{String(j+1).padStart(2,'0')}</span>
+                    <li key={j} className="flex gap-2 text-xs text-[var(--kiq-muted)] print-dark leading-snug">
+                      <span className="text-[var(--kiq-subtle)] font-mono flex-shrink-0">{String(j+1).padStart(2,'0')}</span>
                       <span>{a}</span>
                     </li>
                   ))}
@@ -4339,32 +4662,32 @@ function SavingsReportTab({ contract, members, rxSpend }: { contract: Contract; 
               ["Confidence",  data.methodology.confidence],
             ].map(([k, v]) => (
               <div key={k}>
-                <div className="text-[9px] uppercase tracking-widest text-slate-400 mb-1">{k}</div>
-                <p className="text-xs text-slate-600 print-dark leading-relaxed">{v}</p>
+                <div className="text-[9px] uppercase tracking-widest text-[var(--kiq-subtle)] mb-1">{k}</div>
+                <p className="text-xs text-[var(--kiq-muted)] print-dark leading-relaxed">{v}</p>
               </div>
             ))}
           </div>
           <div className="mb-6">
-            <div className="text-[9px] uppercase tracking-widest text-slate-400 mb-2">Authoritative Sources</div>
+            <div className="text-[9px] uppercase tracking-widest text-[var(--kiq-subtle)] mb-2">Authoritative Sources</div>
             <ul className="grid grid-cols-2 gap-1.5">
               {data.methodology.sources.map((s, i) => (
-                <li key={i} className="text-xs text-slate-500 print-dark">— {s}</li>
+                <li key={i} className="text-xs text-[var(--kiq-muted)] print-dark">— {s}</li>
               ))}
             </ul>
           </div>
           <div className="rounded-lg p-4 rxd-print-card"
             style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.06)" }}>
-            <div className="text-[9px] uppercase tracking-widest text-slate-400 mb-2">Disclaimers</div>
+            <div className="text-[9px] uppercase tracking-widest text-[var(--kiq-subtle)] mb-2">Disclaimers</div>
             {data.methodology.disclaimers.map((d, i) => (
-              <p key={i} className="text-[11px] text-slate-500 leading-relaxed mb-1">{d}</p>
+              <p key={i} className="text-[11px] text-[var(--kiq-muted)] leading-relaxed mb-1">{d}</p>
             ))}
           </div>
-          <div className="mt-10 pt-6 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-400"
+          <div className="mt-10 pt-6 flex items-center justify-between text-[10px] uppercase tracking-widest text-[var(--kiq-subtle)]"
             style={{ borderTop: "1px solid rgba(0,0,0,0.08)" }}>
             <span>{data.engagement.firm} · {data.engagement.practice}</span>
             <span>Generated {dateStr}</span>
             <span className="font-mono tabular-nums" style={{ color: NEON.gold }}>Page 5 of 5</span>
-            <span>© Kincaid Risk Management Consulting</span>
+            <span>© Kincaid Health</span>
           </div>
         </div>
       </div>
@@ -4377,12 +4700,12 @@ function SectionHeader({ number, label, subtitle }: { number: string; label: str
     <div className="mb-7">
       <div className="flex items-baseline gap-4 mb-2">
         <span className="text-[11px] font-mono" style={{ color: NEON.gold }}>{number}</span>
-        <h3 className="text-xl font-black text-slate-900 print-dark"
+        <h3 className="text-xl font-black text-[var(--kiq-ink)] print-dark"
           style={{ fontFamily: "ui-serif, Georgia, serif", letterSpacing: "-0.01em" }}>
           {label}
         </h3>
       </div>
-      {subtitle && <p className="text-xs text-slate-500 leading-relaxed pl-9 max-w-3xl">{subtitle}</p>}
+      {subtitle && <p className="text-xs text-[var(--kiq-muted)] leading-relaxed pl-9 max-w-3xl">{subtitle}</p>}
       <div className="mt-4 h-px" style={{ background: "linear-gradient(90deg, rgba(217,119,6,0.4), transparent)" }} />
     </div>
   );
@@ -4392,7 +4715,7 @@ function SectionHeader({ number, label, subtitle }: { number: string; label: str
    screen and in print so each page is easy to reference and navigate. */
 function ReportPageFooter({ n, total }: { n: number; total: number }) {
   return (
-    <div className="mt-10 pt-4 flex items-center justify-between text-[9px] uppercase tracking-widest text-slate-400"
+    <div className="mt-10 pt-4 flex items-center justify-between text-[9px] uppercase tracking-widest text-[var(--kiq-subtle)]"
       style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
       <span>Kincaid Strategic Advisory — Strategic Forensic Report</span>
       <span className="font-mono tabular-nums" style={{ color: NEON.gold }}>Page {n} of {total}</span>
@@ -4411,11 +4734,11 @@ function FindingBlock({ f, idx, sevColor, tierColor }: {
       <div className="px-6 py-4 flex items-center justify-between gap-4"
         style={{ background: "rgba(0,0,0,0.02)", borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
         <div className="flex items-center gap-4 min-w-0">
-          <span className="text-[11px] font-mono text-slate-400">F.{String(idx+1).padStart(2,'0')}</span>
+          <span className="text-[11px] font-mono text-[var(--kiq-subtle)]">F.{String(idx+1).padStart(2,'0')}</span>
           <div className="min-w-0">
-            <div className="text-base font-black text-slate-900 print-dark truncate"
+            <div className="text-base font-black text-[var(--kiq-ink)] print-dark truncate"
               style={{ fontFamily: "ui-serif, Georgia, serif" }}>{f.provision_name}</div>
-            <div className="text-[10px] text-slate-500 uppercase tracking-widest">{f.category}</div>
+            <div className="text-[10px] text-[var(--kiq-muted)] uppercase tracking-widest">{f.category}</div>
           </div>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
@@ -4427,7 +4750,7 @@ function FindingBlock({ f, idx, sevColor, tierColor }: {
             style={{ background: `${tierColor}15`, color: tierColor, border: `1px solid ${tierColor}40` }}>
             {f.confidence_tier.replace(/_/g, " ")}
           </span>
-          <span className="text-[10px] font-mono text-slate-400 ml-1">Score {f.score.toFixed(1)}/10</span>
+          <span className="text-[10px] font-mono text-[var(--kiq-subtle)] ml-1">Score {f.score.toFixed(1)}/10</span>
         </div>
       </div>
 
@@ -4435,33 +4758,33 @@ function FindingBlock({ f, idx, sevColor, tierColor }: {
         {/* Left column — narrative */}
         <div className="col-span-8 space-y-5">
           <div>
-            <div className="text-[9px] uppercase tracking-widest text-slate-400 mb-1.5">Economic Mechanism</div>
-            <p className="text-[13px] text-slate-600 print-dark leading-relaxed">{f.economic_mechanism}</p>
+            <div className="text-[9px] uppercase tracking-widest text-[var(--kiq-subtle)] mb-1.5">Economic Mechanism</div>
+            <p className="text-[13px] text-[var(--kiq-muted)] print-dark leading-relaxed">{f.economic_mechanism}</p>
           </div>
 
           {f.issues.length > 0 && (
             <div>
-              <div className="text-[9px] uppercase tracking-widest text-slate-400 mb-2">Damaging Clauses ({f.issues.length})</div>
+              <div className="text-[9px] uppercase tracking-widest text-[var(--kiq-subtle)] mb-2">Damaging Clauses ({f.issues.length})</div>
               <div className="space-y-3">
                 {f.issues.map((c, i) => (
                   <div key={i} className="rounded-lg p-3 rxd-print-card"
                     style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.06)",
                       borderLeft: `3px solid ${c.severity === "Critical" ? NEON.red : c.severity === "High" ? NEON.orange : NEON.gold}` }}>
                     <div className="flex items-start justify-between gap-3 mb-1.5">
-                      <div className="text-xs font-bold text-slate-800 print-dark">{c.text}</div>
-                      <span className="text-[9px] font-mono text-slate-400 flex-shrink-0 whitespace-nowrap">
+                      <div className="text-xs font-bold text-[var(--kiq-ink-soft)] print-dark">{c.text}</div>
+                      <span className="text-[9px] font-mono text-[var(--kiq-subtle)] flex-shrink-0 whitespace-nowrap">
                         {c.status}{c.confidence != null ? ` · ${c.confidence}% conf` : ""}
                       </span>
                     </div>
                     {c.quote && (
-                      <div className="my-2 pl-3 italic text-[12px] text-slate-500 print-dark"
+                      <div className="my-2 pl-3 italic text-[12px] text-[var(--kiq-muted)] print-dark"
                         style={{ borderLeft: "2px solid rgba(0,0,0,0.12)", fontFamily: "ui-serif, Georgia, serif" }}>
                         "{c.quote}"
                       </div>
                     )}
                     {c.gap && (
-                      <p className="text-[11px] text-slate-500 print-dark leading-snug">
-                        <span className="text-slate-400 font-bold uppercase tracking-widest text-[9px]">Gap · </span>
+                      <p className="text-[11px] text-[var(--kiq-muted)] print-dark leading-snug">
+                        <span className="text-[var(--kiq-subtle)] font-bold uppercase tracking-widest text-[9px]">Gap · </span>
                         {c.gap}
                       </p>
                     )}
@@ -4479,14 +4802,14 @@ function FindingBlock({ f, idx, sevColor, tierColor }: {
           {f.remediation.model_language && (
             <div>
               <div className="text-[9px] uppercase tracking-widest mb-1.5" style={{ color: NEON.green }}>Model Remediation Language</div>
-              <div className="rounded-lg p-4 rxd-print-card text-[12px] text-slate-700 print-dark leading-relaxed"
+              <div className="rounded-lg p-4 rxd-print-card text-[12px] text-[var(--kiq-ink-soft)] print-dark leading-relaxed"
                 style={{ background: "rgba(5,150,105,0.04)", border: `1px solid ${NEON.green}25`,
                   fontFamily: "ui-serif, Georgia, serif" }}>
                 {f.remediation.model_language}
               </div>
               {f.remediation.talking_point && (
-                <p className="mt-2 text-[11px] text-slate-500 leading-snug">
-                  <span className="font-bold uppercase tracking-widest text-[9px] text-slate-400">Talking Point · </span>
+                <p className="mt-2 text-[11px] text-[var(--kiq-muted)] leading-snug">
+                  <span className="font-bold uppercase tracking-widest text-[9px] text-[var(--kiq-subtle)]">Talking Point · </span>
                   {f.remediation.talking_point}
                 </p>
               )}
@@ -4498,20 +4821,20 @@ function FindingBlock({ f, idx, sevColor, tierColor }: {
         <div className="col-span-4">
           <div className="rounded-xl p-4 rxd-print-card"
             style={{ background: "rgba(217,119,6,0.04)", border: `1px solid ${NEON.gold}25` }}>
-            <div className="text-[9px] uppercase tracking-widest text-slate-400 mb-1">Annual Exposure</div>
+            <div className="text-[9px] uppercase tracking-widest text-[var(--kiq-subtle)] mb-1">Annual Exposure</div>
             <div className="text-3xl font-black mb-1" style={{ color: NEON.gold,
               fontFamily: "ui-serif, Georgia, serif" }}>{fmt$(f.exposure.annual_exposure)}</div>
-            <div className="text-[10px] text-slate-400 mb-4">modeled · at full risk</div>
+            <div className="text-[10px] text-[var(--kiq-subtle)] mb-4">modeled · at full risk</div>
 
-            <div className="mt-4 pt-3 text-[10px] text-slate-500"
+            <div className="mt-4 pt-3 text-[10px] text-[var(--kiq-muted)]"
               style={{ borderTop: "1px solid rgba(0,0,0,0.08)" }}>
               <div className="flex justify-between mb-1"><span>PMPY at full risk</span><span className="font-mono">${f.exposure.pmpy_at_full_risk}</span></div>
               <div className="flex justify-between"><span>Risk fraction</span><span className="font-mono">{Math.round(f.exposure.risk_fraction * 100)}%</span></div>
             </div>
           </div>
 
-          <div className="mt-3 text-[10px] text-slate-500 leading-snug">
-            <span className="text-slate-400 uppercase tracking-widest text-[9px] font-bold">Deadline · </span>
+          <div className="mt-3 text-[10px] text-[var(--kiq-muted)] leading-snug">
+            <span className="text-[var(--kiq-subtle)] uppercase tracking-widest text-[9px] font-bold">Deadline · </span>
             {f.remediation.deadline}
           </div>
         </div>
@@ -4523,7 +4846,7 @@ function FindingBlock({ f, idx, sevColor, tierColor }: {
 /* ─── REPORT PAGES ────────────────────────────────────────────────────────── */
 
 type PageId =
-  | "overview" | "exec_summary" | "financial" | "dual" | "risk"
+  | "overview" | "exec_summary" | "financial" | "dual" | "risk" | "cost_bench"
   | "redflags" | "compliance" | "negotiation" | "tracker" | "comparison";
 
 const REPORT_PAGES: { id: PageId; title: string; icon: typeof ShieldCheck; desc: string; color: string }[] = [
@@ -4532,6 +4855,7 @@ const REPORT_PAGES: { id: PageId; title: string; icon: typeof ShieldCheck; desc:
   { id: "financial",    title: "Financial Analysis",         icon: DollarSign,     desc: "Dollar exposure & forensic findings", color: NEON.red },
   { id: "dual",         title: "Dual-Engine Savings",        icon: GitCompare,     desc: "Claude vs OpenAI — pick the estimate", color: NEON.purple },
   { id: "risk",         title: "Risk Architecture",          icon: BarChart3,      desc: "13-provision scorecard & benchmarks", color: NEON.purple },
+  { id: "cost_bench",   title: "Cost Benchmarks",            icon: Activity,       desc: "Plan cost vs national & state peers", color: NEON.green },
   { id: "redflags",     title: "Red Flags & DOL Gaps",       icon: AlertOctagon,   desc: "Flags, DOL gap & PBM index",          color: NEON.red },
   { id: "compliance",   title: "Regulatory Compliance",      icon: ListChecks,     desc: "CAA 2026 & ERISA matrix",             color: NEON.blue },
   { id: "negotiation",  title: "Negotiation Playbook",       icon: BookOpen,       desc: "Model language & sequence",           color: NEON.gold },
@@ -4570,7 +4894,7 @@ function PageSectionHeading({ icon: Icon, title, subtitle, color }: { icon: type
         <Icon className="w-3.5 h-3.5" style={{ color }} />
       </div>
       <div>
-        <p className="text-sm font-black text-white leading-tight">{title}</p>
+        <p className="text-sm font-black text-[var(--kiq-ink)] leading-tight">{title}</p>
         {subtitle && <p className="text-[11px] text-zinc-600">{subtitle}</p>}
       </div>
     </div>
@@ -4605,9 +4929,9 @@ function OverviewPage({ contract, planMembers, planRxSpend }: { contract: Contra
             <div className="flex-1 min-w-[260px]">
               <div className="flex items-center gap-2 mb-1">
                 <Pill className="w-4 h-4" style={{ color: ACCENT }} />
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600">Rx Defense IQ™ · Fiduciary Analysis</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600">PBM Contract Clarity 360™ · Fiduciary Analysis</span>
               </div>
-              <h2 className="text-2xl font-black text-white leading-tight truncate" data-testid="rx-overview-title">
+              <h2 className="text-2xl font-black text-[var(--kiq-ink)] leading-tight truncate" data-testid="rx-overview-title">
                 {contract.pbm_name || contract.contract_filename}
               </h2>
               <p className="text-xs text-zinc-600 mt-0.5 truncate">{contract.contract_filename}</p>
@@ -4628,7 +4952,7 @@ function OverviewPage({ contract, planMembers, planRxSpend }: { contract: Contra
             </div>
           </div>
           {/* Stat strip */}
-          <div className="relative flex items-center gap-6 mt-5 pt-5 flex-wrap" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+          <div className="relative flex items-center gap-6 mt-5 pt-5 flex-wrap" style={{ borderTop: "1px solid rgba(15,23,42,0.03)" }}>
             {[
               { label: "PROVISIONS",        value: "13",                   color: NEON.blue },
               { label: "ISSUES EVALUATED",  value: `${total || 60}`,       color: NEON.purple },
@@ -4692,7 +5016,7 @@ function KeyFindingsBlock({ findings }: { findings: KeyFinding[] }) {
               <Icon className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color }} />
               <div className="flex-1">
                 <span className="text-[9px] font-black uppercase tracking-widest mr-2" style={{ color: `${color}99` }}>{label}</span>
-                <p className="text-sm text-zinc-200 mt-0.5">{f.text}</p>
+                <p className="text-sm text-[var(--kiq-ink-soft)] mt-0.5">{f.text}</p>
               </div>
             </div>
           );
@@ -4716,7 +5040,7 @@ function ErisaNotes() {
       <div className="space-y-2">
         {notes.map((n, i) => (
           <div key={i} className="flex items-start gap-3 rounded-xl px-4 py-3"
-            style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+            style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)" }}>
             <Gavel className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: NEON.blue }} />
             <p className="text-xs text-zinc-400 leading-relaxed">{n}</p>
           </div>
@@ -4953,34 +5277,34 @@ function StrategicReportPanel({ contractId, members, rxSpend, pbmName, onClose }
   const pct = Math.round((doneCount / total) * 100);
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-6" style={{ background: "rgba(0,0,0,0.88)", backdropFilter: "blur(8px)" }} data-testid="strategic-report-panel">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-6" style={{ background: "rgba(15,23,42,0.55)", backdropFilter: "blur(8px)" }} data-testid="strategic-report-panel">
       <motion.div
         initial={{ opacity: 0, scale: 0.96, y: 16 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
         className="relative w-full max-w-5xl max-h-[92vh] overflow-hidden rounded-2xl flex flex-col"
-        style={{ background: "linear-gradient(160deg, #04060d 0%, #0a0e1c 55%, #04060d 100%)", border: "1px solid rgba(16,185,129,0.30)", boxShadow: "0 0 60px rgba(16,185,129,0.18)" }}
+        style={{ background: "#ffffff", border: "1px solid rgba(5,150,105,0.30)", boxShadow: "0 24px 60px rgba(15,23,42,0.22)" }}
       >
         {/* Header */}
-        <div className="relative px-8 py-6 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "linear-gradient(135deg, #000, #050a14)" }}>
-          <button onClick={onClose} data-testid="strategic-report-close" className="absolute top-5 right-5 text-zinc-500 hover:text-white transition-colors">
+        <div className="relative px-8 py-6 flex-shrink-0" style={{ borderBottom: "1px solid rgba(15,23,42,0.08)", background: "linear-gradient(135deg, #f8fafc, #eef2f7)" }}>
+          <button onClick={onClose} data-testid="strategic-report-close" className="absolute top-5 right-5 text-[var(--kiq-subtle)] hover:text-[var(--kiq-ink)] transition-colors">
             <X className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2 mb-1">
-            <Scale className="w-4 h-4" style={{ color: "#10B981" }} />
-            <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-600">Kincaid IQ Strategic Advisory</span>
+            <Scale className="w-4 h-4" style={{ color: "#059669" }} />
+            <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--kiq-muted)]">Kincaid Health Strategic Advisory</span>
           </div>
-          <h2 className="text-2xl font-black text-white leading-tight">12-Attorney ERISA Panel Engagement</h2>
-          <p className="text-xs text-zinc-500 mt-1">
+          <h2 className="text-2xl font-black text-[var(--kiq-ink)] leading-tight">12-Attorney ERISA Panel Engagement</h2>
+          <p className="text-xs text-[var(--kiq-muted)] mt-1">
             {phase === "running" && "Convening the panel — 12 specialist attorneys analyzing your contract in parallel…"}
             {phase === "done" && "Engagement complete. Your 100+ page strategic report has been downloaded."}
             {phase === "error" && "The engagement could not be completed. Please try again."}
           </p>
           {/* Progress bar */}
-          <div className="mt-4 h-1.5 w-full rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
-            <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg,#10B981,#00D4FF)" }} animate={{ width: `${pct}%` }} transition={{ ease: "easeOut", duration: 0.6 }} />
+          <div className="mt-4 h-1.5 w-full rounded-full overflow-hidden" style={{ background: "rgba(15,23,42,0.08)" }}>
+            <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg, #F8FAFC, #F1F5F9)" }} animate={{ width: `${pct}%` }} transition={{ ease: "easeOut", duration: 0.6 }} />
           </div>
-          <div className="mt-1.5 flex justify-between text-[10px] font-bold uppercase tracking-widest text-zinc-600">
+          <div className="mt-1.5 flex justify-between text-[10px] font-bold uppercase tracking-widest text-[var(--kiq-muted)]">
             <span>{doneCount} / {total} chapters resolved</span>
             <span>{pct}%</span>
           </div>
@@ -4992,7 +5316,7 @@ function StrategicReportPanel({ contractId, members, rxSpend, pbmName, onClose }
             {RX_ATTORNEYS_META.map((a, i) => {
               const st = cards[i];
               const Icon = a.icon;
-              const color = st === "done" ? "#10B981" : st === "active" ? "#00D4FF" : "#3a4358";
+              const color = st === "done" ? "#059669" : st === "active" ? "#0284c7" : "#94a3b8";
               return (
                 <motion.div
                   key={a.id}
@@ -5002,13 +5326,13 @@ function StrategicReportPanel({ contractId, members, rxSpend, pbmName, onClose }
                   transition={{ delay: i * 0.04 }}
                   className="relative rounded-xl p-3.5 overflow-hidden"
                   style={{
-                    background: st === "active" ? "rgba(0,212,255,0.06)" : st === "done" ? "rgba(16,185,129,0.05)" : "rgba(255,255,255,0.015)",
-                    border: `1px solid ${st === "pending" ? "rgba(255,255,255,0.06)" : color + "55"}`,
+                    background: st === "active" ? "rgba(2,132,199,0.06)" : st === "done" ? "rgba(5,150,105,0.06)" : "rgba(15,23,42,0.02)",
+                    border: `1px solid ${st === "pending" ? "rgba(15,23,42,0.10)" : color + "55"}`,
                     transition: "all 0.4s",
                   }}
                 >
                   {st === "active" && (
-                    <motion.div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at 50% 0%, rgba(0,212,255,0.12), transparent 70%)" }} animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1.6 }} />
+                    <motion.div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at 50% 0%, rgba(2,132,199,0.10), transparent 70%)" }} animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1.6 }} />
                   )}
                   <div className="relative flex items-start gap-2.5">
                     <div className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: color + "1a", border: `1px solid ${color}44` }}>
@@ -5019,12 +5343,12 @@ function StrategicReportPanel({ contractId, members, rxSpend, pbmName, onClose }
                           : <Icon className="w-4 h-4" style={{ color }} />}
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="text-[11px] font-black text-white truncate">{a.name}</div>
+                      <div className="text-[11px] font-black text-[var(--kiq-ink)] truncate">{a.name}</div>
                       <div className="text-[9px] font-semibold uppercase tracking-wider truncate" style={{ color }}>{a.specialty}</div>
-                      <div className="text-[9px] text-zinc-600 truncate mt-0.5">{a.title}</div>
+                      <div className="text-[9px] text-[var(--kiq-muted)] truncate mt-0.5">{a.title}</div>
                     </div>
                   </div>
-                  <div className="relative mt-2 text-[8.5px] font-bold uppercase tracking-widest" style={{ color: st === "pending" ? "#3a4358" : color }}>
+                  <div className="relative mt-2 text-[8.5px] font-bold uppercase tracking-widest" style={{ color: st === "pending" ? "#94a3b8" : color }}>
                     {st === "done" ? "✓ Chapter Drafted" : st === "active" ? "Analyzing…" : "Queued"}
                   </div>
                 </motion.div>
@@ -5033,16 +5357,16 @@ function StrategicReportPanel({ contractId, members, rxSpend, pbmName, onClose }
           </div>
 
           {/* Managing Partner synthesis */}
-          <div className="mt-4 rounded-xl p-4 relative overflow-hidden" style={{ background: synthState === "done" ? "rgba(255,184,0,0.06)" : "rgba(255,255,255,0.02)", border: `1px solid ${synthState === "pending" ? "rgba(255,255,255,0.06)" : "rgba(255,184,0,0.4)"}` }}>
+          <div className="mt-4 rounded-xl p-4 relative overflow-hidden" style={{ background: synthState === "done" ? "rgba(176,122,10,0.08)" : "rgba(15,23,42,0.02)", border: `1px solid ${synthState === "pending" ? "rgba(15,23,42,0.10)" : "rgba(176,122,10,0.35)"}` }}>
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(255,184,0,0.12)", border: "1px solid rgba(255,184,0,0.4)" }}>
-                {synthState === "done" ? <CheckCircle2 className="w-5 h-5" style={{ color: "#FFB800" }} /> : synthState === "active" ? <Loader2 className="w-5 h-5 animate-spin" style={{ color: "#FFB800" }} /> : <Brain className="w-5 h-5" style={{ color: "#6b6b4a" }} />}
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "rgba(176,122,10,0.12)", border: "1px solid rgba(176,122,10,0.35)" }}>
+                {synthState === "done" ? <CheckCircle2 className="w-5 h-5" style={{ color: "#B07A0A" }} /> : synthState === "active" ? <Loader2 className="w-5 h-5 animate-spin" style={{ color: "#B07A0A" }} /> : <Brain className="w-5 h-5" style={{ color: "#94a3b8" }} />}
               </div>
               <div className="flex-1">
-                <div className="text-sm font-black text-white">Managing Partner — Executive Synthesis</div>
-                <div className="text-[10px] text-zinc-500">Cross-cutting themes, board slides, and the engagement bottom line</div>
+                <div className="text-sm font-black text-[var(--kiq-ink)]">Managing Partner — Executive Synthesis</div>
+                <div className="text-[10px] text-[var(--kiq-muted)]">Cross-cutting themes, board slides, and the engagement bottom line</div>
               </div>
-              <div className="text-[9px] font-bold uppercase tracking-widest" style={{ color: synthState === "pending" ? "#3a4358" : "#FFB800" }}>
+              <div className="text-[9px] font-bold uppercase tracking-widest" style={{ color: synthState === "pending" ? "#94a3b8" : "#B07A0A" }}>
                 {synthState === "done" ? "✓ Synthesized" : synthState === "active" ? "Synthesizing…" : "Awaiting chapters"}
               </div>
             </div>
@@ -5050,8 +5374,8 @@ function StrategicReportPanel({ contractId, members, rxSpend, pbmName, onClose }
         </div>
 
         {/* Footer */}
-        <div className="px-8 py-4 flex-shrink-0 flex items-center justify-between gap-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", background: "#03050b" }}>
-          <div className="text-[10px] text-zinc-600 font-mono truncate flex-1">
+        <div className="px-8 py-4 flex-shrink-0 flex items-center justify-between gap-4" style={{ borderTop: "1px solid rgba(15,23,42,0.08)", background: "#f8fafc" }}>
+          <div className="text-[10px] text-[var(--kiq-muted)] font-mono truncate flex-1">
             {sha ? <>SHA-256 · {sha.slice(0, 24)}…</> : phase === "running" ? "Computing evidence manifest on completion…" : ""}
           </div>
           {phase === "done" && (
@@ -5061,7 +5385,7 @@ function StrategicReportPanel({ contractId, members, rxSpend, pbmName, onClose }
                   data-testid="strategic-report-view"
                   onClick={() => { if (blobRef.current) window.open(blobRef.current, "_blank"); }}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider"
-                  style={{ background: "rgba(0,212,255,0.10)", border: "1px solid rgba(0,212,255,0.4)", color: "#00D4FF" }}
+                  style={{ background: "rgba(2,132,199,0.08)", border: "1px solid rgba(2,132,199,0.35)", color: "#0284c7" }}
                 >
                   <Eye className="w-3.5 h-3.5" /> View Report
                 </button>
@@ -5070,14 +5394,14 @@ function StrategicReportPanel({ contractId, members, rxSpend, pbmName, onClose }
                 data-testid="strategic-report-done"
                 onClick={onClose}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider"
-                style={{ background: "rgba(16,185,129,0.12)", border: "1px solid rgba(16,185,129,0.45)", color: "#10B981" }}
+                style={{ background: "rgba(5,150,105,0.12)", border: "1px solid rgba(5,150,105,0.45)", color: "#059669" }}
               >
                 <CheckCircle2 className="w-3.5 h-3.5" /> Done
               </button>
             </div>
           )}
           {phase === "error" && (
-            <button onClick={onClose} className="px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider" style={{ background: "rgba(255,60,80,0.12)", border: "1px solid rgba(255,60,80,0.4)", color: "#ff4458" }}>
+            <button onClick={onClose} className="px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider" style={{ background: "rgba(220,38,38,0.10)", border: "1px solid rgba(220,38,38,0.4)", color: "#dc2626" }}>
               Close
             </button>
           )}
@@ -5182,7 +5506,7 @@ export default function RxDefense() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Serialize the full Rx Defense view-state for short share links.
+  // Serialize the full PBM Contract Clarity 360 view-state for short share links.
   function getShareState(): Record<string, any> {
     const state: Record<string, any> = {};
     if (selectedId) state.contract = selectedId;
@@ -5355,10 +5679,10 @@ export default function RxDefense() {
 
   return (
     <Layout fullBleed>
-      <div className="flex h-full overflow-hidden" style={{ background: "#F8FAFC" }}>
+      <div className="kiq-forensic-shell flex h-full overflow-hidden">
 
         {/* ── Left sidebar ── */}
-        <div className="w-64 flex-shrink-0 flex flex-col" style={{ background: "#FFFFFF", borderRight: "1px solid rgba(0,0,0,0.08)" }}>
+        <div className="w-64 flex-shrink-0 flex flex-col" style={{ background: "rgba(255,255,255,0.82)", borderRight: "1px solid rgba(13,37,61,0.08)", backdropFilter: "blur(18px) saturate(150%)" }}>
           {/* RxPBM back-link */}
           <button
             onClick={() => navigate("/rx-pbm")}
@@ -5369,17 +5693,17 @@ export default function RxDefense() {
             <Pill className="w-3.5 h-3.5 shrink-0" style={{ color: "#059669" }} />
             <div className="flex-1 min-w-0">
               <p className="text-[10px] font-bold text-emerald-700 tracking-wide">RxPBM Intelligence Hub</p>
-              <p className="text-[9px] text-slate-400">Drug pricing · PBM directory · RFP bank</p>
+              <p className="text-[9px] text-[var(--kiq-subtle)]">Drug pricing · PBM directory · RFP bank</p>
             </div>
-            <ArrowRight className="w-3 h-3 text-slate-400" />
+            <ArrowRight className="w-3 h-3 text-[var(--kiq-subtle)]" />
           </button>
 
           <div className="px-4 py-4" style={{ borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
             <div className="flex items-center gap-2 mb-0.5">
               <Pill className="w-4 h-4" style={{ color: ACCENT }} />
-              <span className="text-slate-900 font-black text-sm">Rx Defense IQ™</span>
+              <span className="text-[var(--kiq-ink)] font-black text-sm">PBM Contract Clarity 360™</span>
             </div>
-            <p className="text-[10px] text-slate-400 uppercase tracking-widest">PBM Contract Intelligence</p>
+            <p className="text-[10px] text-[var(--kiq-subtle)] uppercase tracking-widest">PBM Contract Intelligence</p>
             {isComplete && (
               <div className="mt-2 flex flex-col gap-1.5">
                 <button onClick={() => downloadPDF("rx-defense", { ...(contract ?? {}), members: planMembers, plan_members: planMembers, rx_spend: planRxSpend })} data-testid="rx-download-btn"
@@ -5409,34 +5733,34 @@ export default function RxDefense() {
           <div className="px-4 py-4" style={{ borderBottom: "1px solid rgba(0,0,0,0.06)" }}>
             <div className="flex items-center gap-1.5 mb-3">
               <Users className="w-3.5 h-3.5" style={{ color: ACCENT }} />
-              <span className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">Plan Profile</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.18em] text-[var(--kiq-muted)]">Plan Profile</span>
             </div>
             <div className="flex flex-col gap-2">
               <div>
-                <label className="text-[9px] font-bold uppercase tracking-widest text-slate-500 block mb-1">Employees / Members</label>
+                <label className="text-[9px] font-bold uppercase tracking-widest text-[var(--kiq-muted)] block mb-1">Employees / Members</label>
                 <input
                   data-testid="rx-plan-members"
                   type="number"
                   min={1}
                   value={planMembers}
                   onChange={e => setPlanMembers(parseInt(e.target.value) || 500)}
-                  className="w-full bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-slate-900 text-xs font-bold focus:outline-none focus:border-emerald-400 transition-colors"
+                  className="w-full bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg px-3 py-1.5 text-[var(--kiq-ink)] text-xs font-bold focus:outline-none focus:border-emerald-400 transition-colors"
                   placeholder="500"
                 />
               </div>
               <div>
-                <label className="text-[9px] font-bold uppercase tracking-widest text-slate-500 block mb-1">Annual Rx Spend ($)</label>
+                <label className="text-[9px] font-bold uppercase tracking-widest text-[var(--kiq-muted)] block mb-1">Annual Rx Spend ($)</label>
                 <input
                   data-testid="rx-plan-rxspend"
                   type="number"
                   min={0}
                   value={planRxSpend}
                   onChange={e => setPlanRxSpend(e.target.value)}
-                  className="w-full bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-slate-900 text-xs focus:outline-none focus:border-emerald-400 transition-colors"
+                  className="w-full bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg px-3 py-1.5 text-[var(--kiq-ink)] text-xs focus:outline-none focus:border-emerald-400 transition-colors"
                   placeholder="e.g. 3000000"
                 />
               </div>
-              <p className="text-[9px] text-slate-400 italic">Powers $ Exposure tab + financial estimator</p>
+              <p className="text-[9px] text-[var(--kiq-subtle)] italic">Powers $ Exposure tab + financial estimator</p>
               {!profileIsDefault && (
                 resetConfirming ? (
                   <div className="flex items-center gap-2 mt-1" data-testid="rx-plan-reset-confirm-sidebar">
@@ -5447,11 +5771,11 @@ export default function RxDefense() {
                     >
                       Confirm reset
                     </button>
-                    <span className="text-slate-400 text-[9px]">·</span>
+                    <span className="text-[var(--kiq-subtle)] text-[9px]">·</span>
                     <button
                       data-testid="rx-plan-reset-cancel-sidebar"
                       onClick={() => setResetConfirming(false)}
-                      className="text-[9px] font-bold uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-colors"
+                      className="text-[9px] font-bold uppercase tracking-widest text-[var(--kiq-subtle)] hover:text-[var(--kiq-muted)] transition-colors"
                     >
                       Cancel
                     </button>
@@ -5460,7 +5784,7 @@ export default function RxDefense() {
                   <button
                     data-testid="rx-plan-reset-sidebar"
                     onClick={() => setResetConfirming(true)}
-                    className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest text-slate-400 hover:text-red-500 transition-colors mt-1"
+                    className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest text-[var(--kiq-subtle)] hover:text-red-500 transition-colors mt-1"
                   >
                     <X className="w-3 h-3" /> Reset to defaults
                   </button>
@@ -5470,19 +5794,19 @@ export default function RxDefense() {
           </div>
 
           <div className="flex-1 overflow-y-auto px-4 py-4">
-            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-3">Analyzed Contracts</p>
+            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--kiq-subtle)] mb-3">Analyzed Contracts</p>
             <ContractList selected={selectedId} onSelect={setSelectedId} />
           </div>
 
           <div className="px-4 py-4" style={{ borderTop: "1px solid rgba(0,0,0,0.06)" }}>
-            <p className="text-[9px] text-slate-400 leading-relaxed">
-              Scoring based on <span className="text-slate-500">explicit contract language</span> — not business practices or verbal commitments. CAA 2026 aligned.
+            <p className="text-[9px] text-[var(--kiq-subtle)] leading-relaxed">
+              Scoring based on <span className="text-[var(--kiq-muted)]">explicit contract language</span> — not business practices or verbal commitments. CAA 2026 aligned.
             </p>
           </div>
         </div>
 
         {/* ── Main report panel ── */}
-        <div ref={mainPanelRef} className="flex-1 overflow-y-auto" style={{ background: "#F8FAFC" }}>
+        <div ref={mainPanelRef} className="flex-1 overflow-y-auto">
           {!selectedId ? (
             <div className="flex flex-col items-center justify-center h-full text-center px-12 py-16">
               <div className="relative mb-8">
@@ -5491,11 +5815,11 @@ export default function RxDefense() {
                   <Pill className="w-10 h-10" style={{ color: ACCENT }} />
                 </div>
               </div>
-              <h2 className="text-3xl font-black text-slate-900 mb-3">Rx Defense IQ™</h2>
-              <p className="text-slate-500 max-w-md mb-1 text-sm leading-relaxed">
-                Upload your PBM contract or run the demo. We evaluate <span className="font-black text-slate-800">60 fiduciary issues</span> across <span className="font-black text-slate-800">13 provisions</span> and score it 0–100.
+              <h2 className="text-3xl font-black text-[var(--kiq-ink)] mb-3">PBM Contract Clarity 360™</h2>
+              <p className="text-[var(--kiq-muted)] max-w-md mb-1 text-sm leading-relaxed">
+                Upload your PBM contract or run the demo. We evaluate <span className="font-black text-[var(--kiq-ink-soft)]">60 fiduciary issues</span> across <span className="font-black text-[var(--kiq-ink-soft)]">13 provisions</span> and score it 0–100.
               </p>
-              <p className="text-slate-400 text-xs mb-10 uppercase tracking-widest">Consolidated Appropriations Act · 2026</p>
+              <p className="text-[var(--kiq-subtle)] text-xs mb-10 uppercase tracking-widest">Consolidated Appropriations Act · 2026</p>
 
               <div className="grid grid-cols-5 gap-2 w-full max-w-xl">
                 {(["excellent","good","fair","concern","red_flag"] as Rating[]).map((r) => {
@@ -5512,7 +5836,7 @@ export default function RxDefense() {
               </div>
 
               <div className="mt-12 pt-8 w-full max-w-xl" style={{ borderTop: "1px solid rgba(0,0,0,0.07)" }}>
-                <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-4">PBM Accountability Index Preview</p>
+                <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--kiq-subtle)] mb-4">PBM Accountability Index Preview</p>
                 <IndexTab />
               </div>
             </div>
@@ -5526,8 +5850,8 @@ export default function RxDefense() {
                 <Loader2 className="w-10 h-10 animate-spin" style={{ color: ACCENT }} />
                 <div className="absolute inset-0 blur-lg" style={{ background: ACCENT, opacity: 0.15 }} />
               </div>
-              <p className="text-slate-800 font-bold">Analyzing contract…</p>
-              <p className="text-slate-400 text-xs uppercase tracking-widest">Evaluating 60 issues across 13 provisions</p>
+              <p className="text-[var(--kiq-ink-soft)] font-bold">Analyzing contract…</p>
+              <p className="text-[var(--kiq-subtle)] text-xs uppercase tracking-widest">Evaluating 60 issues across 13 provisions</p>
             </div>
           ) : isError ? (
             <div className="flex flex-col items-center justify-center h-64 gap-4 px-8">
@@ -5535,8 +5859,8 @@ export default function RxDefense() {
                 <XCircle className="w-8 h-8" style={{ color: NEON.red }} />
               </div>
               <div className="text-center">
-                <p className="text-slate-900 font-bold text-lg mb-1">Analysis could not complete</p>
-                <p className="text-slate-500 text-sm max-w-sm">
+                <p className="text-[var(--kiq-ink)] font-bold text-lg mb-1">Analysis could not complete</p>
+                <p className="text-[var(--kiq-muted)] text-sm max-w-sm">
                   {contract?.error_message?.includes("ApiKey") || contract?.error_message?.includes("401")
                     ? "The AI analysis service was temporarily unavailable. Click Retry to re-run the analysis now."
                     : contract?.error_message?.includes("PDF") || contract?.error_message?.includes("text")
@@ -5610,7 +5934,7 @@ export default function RxDefense() {
                     <span className="text-xs font-bold" style={{ color: "#00FF94" }}>
                       {rfpCompany.current ? `Won: ${rfpCompany.current}` : "Won Account"}
                     </span>
-                    <span className="text-[11px] text-slate-500 ml-2">
+                    <span className="text-[11px] text-[var(--kiq-muted)] ml-2">
                       Upload the PBM contract to analyze, then link this analysis back to the RFP opportunity.
                     </span>
                   </div>
@@ -5650,38 +5974,38 @@ export default function RxDefense() {
                 </div>
               )}
               {/* Report header */}
-              <ReportHeader contract={contract} onShare={() => setShowViewer(true)} onFullReport={() => setShowFullReport(true)} onPresent={() => setShowPresentation(true)} onBuildPackage={() => setClientPkgOpen(true)} onStrategicReport={() => setShowStrategicReport(true)} shareSlot={<ShareMenu page="rx-defense" getState={getShareState} getTitle={() => contract?.pbm_name || contract?.contract_filename || "Rx Defense"} accent="#BF5FFF" testIdPrefix="share-rxdefense" />} />
+              <ReportHeader contract={contract} onShare={() => setShowViewer(true)} onFullReport={() => setShowFullReport(true)} onPresent={() => setShowPresentation(true)} onBuildPackage={() => setClientPkgOpen(true)} onStrategicReport={() => setShowStrategicReport(true)} shareSlot={<ShareMenu page="rx-defense" getState={getShareState} getTitle={() => contract?.pbm_name || contract?.contract_filename || "PBM Contract Clarity 360"} accent="#BF5FFF" testIdPrefix="share-rxdefense" />} />
 
               {/* Plan Profile strip */}
-              <div className="flex items-center gap-5 px-8 py-3" style={{ background: "#F9FAFB", borderBottom: "1px solid rgba(0,0,0,0.07)" }}>
+              <div className="kiq-forensic-header flex items-center gap-5 px-8 py-3">
                 <div className="flex items-center gap-1.5 flex-shrink-0">
                   <Users className="w-3.5 h-3.5" style={{ color: ACCENT }} />
-                  <span className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">Plan Profile</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.18em] text-[var(--kiq-muted)]">Plan Profile</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Users className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">Employees / Members</label>
+                  <Users className="w-3.5 h-3.5 text-[var(--kiq-subtle)] flex-shrink-0" />
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-[var(--kiq-muted)] whitespace-nowrap">Employees / Members</label>
                   <input
                     data-testid="rx-plan-members"
                     type="number"
                     min={1}
                     value={planMembers}
                     onChange={e => setPlanMembers(parseInt(e.target.value) || 500)}
-                    className="w-28 bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-slate-900 text-xs font-bold focus:outline-none focus:border-emerald-400 transition-colors"
+                    className="w-28 bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg px-3 py-1.5 text-[var(--kiq-ink)] text-xs font-bold focus:outline-none focus:border-emerald-400 transition-colors"
                     placeholder="500"
                   />
                 </div>
                 <div className="w-px h-5 bg-gray-200 flex-shrink-0" />
                 <div className="flex items-center gap-2">
-                  <DollarSign className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
-                  <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500 whitespace-nowrap">Annual Rx Spend</label>
+                  <DollarSign className="w-3.5 h-3.5 text-[var(--kiq-subtle)] flex-shrink-0" />
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-[var(--kiq-muted)] whitespace-nowrap">Annual Rx Spend</label>
                   <input
                     data-testid="rx-plan-rxspend"
                     type="number"
                     min={0}
                     value={planRxSpend}
                     onChange={e => setPlanRxSpend(e.target.value)}
-                    className="w-36 bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-slate-900 text-xs focus:outline-none focus:border-emerald-400 transition-colors"
+                    className="w-36 bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg px-3 py-1.5 text-[var(--kiq-ink)] text-xs focus:outline-none focus:border-emerald-400 transition-colors"
                     placeholder="$0 (optional)"
                   />
                 </div>
@@ -5689,7 +6013,7 @@ export default function RxDefense() {
                   {(bgFetching || exposureLoading) ? (
                     <div className="flex items-center gap-1.5" data-testid="rx-exposure-recalculating">
                       <Loader2 className="w-3 h-3 animate-spin" style={{ color: NEON.gold }} />
-                      <span className="text-[9px] text-slate-500 uppercase tracking-widest">Recalculating…</span>
+                      <span className="text-[9px] text-[var(--kiq-muted)] uppercase tracking-widest">Recalculating…</span>
                     </div>
                   ) : exposureUpdatedLabel ? (
                     <span
@@ -5700,7 +6024,7 @@ export default function RxDefense() {
                       {exposureUpdatedLabel}
                     </span>
                   ) : null}
-                  <span className="text-[9px] text-slate-400 italic">Used in $ Exposure tab and sidebar estimator</span>
+                  <span className="text-[9px] text-[var(--kiq-subtle)] italic">Used in $ Exposure tab and sidebar estimator</span>
                   {!profileIsDefault && (
                     resetConfirming ? (
                       <div className="flex items-center gap-2 ml-1" data-testid="rx-plan-reset-confirm-strip">
@@ -5711,11 +6035,11 @@ export default function RxDefense() {
                         >
                           Confirm reset
                         </button>
-                        <span className="text-slate-400 text-[9px]">·</span>
+                        <span className="text-[var(--kiq-subtle)] text-[9px]">·</span>
                         <button
                           data-testid="rx-plan-reset-cancel-strip"
                           onClick={() => setResetConfirming(false)}
-                          className="text-[9px] font-bold uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-colors"
+                          className="text-[9px] font-bold uppercase tracking-widest text-[var(--kiq-subtle)] hover:text-[var(--kiq-muted)] transition-colors"
                         >
                           Cancel
                         </button>
@@ -5724,7 +6048,7 @@ export default function RxDefense() {
                       <button
                         data-testid="rx-plan-reset-strip"
                         onClick={() => setResetConfirming(true)}
-                        className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest text-slate-400 hover:text-red-500 transition-colors ml-1"
+                        className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-widest text-[var(--kiq-subtle)] hover:text-red-500 transition-colors ml-1"
                       >
                         <X className="w-3 h-3" /> Reset
                       </button>
@@ -5749,7 +6073,7 @@ export default function RxDefense() {
                 >
                   <div className="flex items-center justify-between px-3 py-3" style={{ borderBottom: "1px solid rgba(0,0,0,0.07)" }}>
                     {!outlineCollapsed && (
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">Report Outline</span>
+                      <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[var(--kiq-subtle)]">Report Outline</span>
                     )}
                     <button
                       data-testid="rx-outline-toggle"
@@ -5758,8 +6082,8 @@ export default function RxDefense() {
                       title={outlineCollapsed ? "Expand outline" : "Collapse outline"}
                     >
                       {outlineCollapsed
-                        ? <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-                        : <ChevronDown className="w-3.5 h-3.5 text-slate-400 rotate-90" />}
+                        ? <ChevronRight className="w-3.5 h-3.5 text-[var(--kiq-subtle)]" />
+                        : <ChevronDown className="w-3.5 h-3.5 text-[var(--kiq-subtle)] rotate-90" />}
                     </button>
                   </div>
                   <div className="flex-1 overflow-y-auto py-2">
@@ -5800,7 +6124,7 @@ export default function RxDefense() {
                                     style={{ background: p.color, boxShadow: `0 0 6px ${p.color}` }} />
                                 )}
                               </span>
-                              <span className="block text-[10px] text-slate-400 truncate mt-0.5">{p.desc}</span>
+                              <span className="block text-[10px] text-[var(--kiq-subtle)] truncate mt-0.5">{p.desc}</span>
                             </span>
                           )}
                         </button>
@@ -5814,8 +6138,8 @@ export default function RxDefense() {
                   {/* Page header bar */}
                   <div
                     data-testid="rx-page-header"
-                    className="sticky top-0 z-10 flex items-center gap-3 px-6 py-3.5"
-                    style={{ background: "rgba(248,250,252,0.95)", backdropFilter: "blur(8px)", borderBottom: "1px solid rgba(0,0,0,0.08)" }}
+                    className="kiq-forensic-header sticky top-0 z-10 flex items-center gap-3 px-6 py-3.5"
+                    style={{ background: "rgba(255,255,255,0.86)", backdropFilter: "blur(18px) saturate(150%)" }}
                   >
                     {currentPage && (() => { const Icon = currentPage.icon; return (
                       <>
@@ -5828,10 +6152,10 @@ export default function RxDefense() {
                             <span className="text-[10px] font-black uppercase tracking-[0.18em]" style={{ color: currentPage.color }} data-testid="rx-page-indicator">
                               Page {currentIdx + 1} of {pages.length}
                             </span>
-                            <span className="text-slate-300 text-[10px]">—</span>
-                            <span className="text-sm font-black text-slate-900 truncate">{currentPage.title}</span>
+                            <span className="text-[var(--kiq-muted)] text-[10px]">—</span>
+                            <span className="text-sm font-black text-[var(--kiq-ink)] truncate">{currentPage.title}</span>
                           </div>
-                          <p className="text-[10px] text-slate-400 truncate">{currentPage.desc}</p>
+                          <p className="text-[10px] text-[var(--kiq-subtle)] truncate">{currentPage.desc}</p>
                         </div>
                         <div className="flex items-center gap-1.5 flex-shrink-0">
                           <button
@@ -5886,6 +6210,10 @@ export default function RxDefense() {
                     <PageSectionHeading icon={BarChart3} title="PBM Benchmarks" subtitle="Provision-level comparison vs major PBMs" color={NEON.blue} />
                     <BenchmarksTab contract={contract} />
                   </div>
+                  <div style={{ display: activePage === "cost_bench" ? "block" : "none" }} data-testid="rx-page-cost_bench">
+                    <PageSectionHeading icon={Activity} title="Healthcare Cost Benchmarks" subtitle="Plan admin fees, broker comp & PMPM vs national and in-state peers" color={NEON.green} />
+                    <HealthcareCostTab contract={contract} />
+                  </div>
                   <div style={{ display: activePage === "redflags" ? "block" : "none" }} data-testid="rx-page-redflags">
                     <PageSectionHeading icon={AlertOctagon} title="Red Flags" subtitle="Highest-severity contract risks" color={NEON.red} />
                     <RedFlagTab contract={contract} planRxSpend={planRxSpend} planMembers={planMembers} />
@@ -5930,11 +6258,11 @@ export default function RxDefense() {
                     >
                       <ChevronUp className="w-3.5 h-3.5 -rotate-90" />
                       <span className="text-left">
-                        <span className="block text-[9px] uppercase tracking-widest text-slate-400">Previous</span>
+                        <span className="block text-[9px] uppercase tracking-widest text-[var(--kiq-subtle)]">Previous</span>
                         <span className="block">{currentIdx > 0 ? pages[currentIdx - 1].title : "—"}</span>
                       </span>
                     </button>
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 flex-shrink-0">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--kiq-subtle)] flex-shrink-0">
                       Page {currentIdx + 1} / {pages.length}
                     </span>
                     <button

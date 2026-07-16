@@ -30,12 +30,12 @@ export default function DrillCompliance() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-zinc-950 p-6 space-y-6">
+      <div className="min-h-screen bg-[var(--kiq-surface)] p-6 space-y-6">
 
         <div className="flex items-start gap-4">
           <button onClick={() => navigate("/governance-war-room")}
             data-testid="btn-back-compliance"
-            className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-zinc-300 border border-zinc-800/40 rounded-lg px-2.5 py-1.5 flex-shrink-0 mt-1">
+            className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-[var(--kiq-muted)] border border-[var(--kiq-hairline)]/40 rounded-lg px-2.5 py-1.5 flex-shrink-0 mt-1">
             <ArrowLeft className="w-3 h-3" />
             War Room
           </button>
@@ -44,7 +44,7 @@ export default function DrillCompliance() {
               <Shield className="w-4 h-4 text-[#A855F7]" />
               <span className="text-[10px] font-mono uppercase tracking-widest text-[#A855F7]">Drill Surface · Compliance</span>
             </div>
-            <h1 className="text-2xl font-black text-zinc-100">Compliance Matrix</h1>
+            <h1 className="text-2xl font-black text-[var(--kiq-ink)]">Compliance Matrix</h1>
             <p className="text-xs text-zinc-500 mt-1">ERISA · ACA · HIPAA · CAA · COBRA · PCORI · MHPAEA</p>
           </div>
         </div>
@@ -55,7 +55,7 @@ export default function DrillCompliance() {
             { label: "Action Items", value: counts.warn, color: "#FFB800" },
             { label: "Critical",     value: counts.fail, color: "#FF4D6D" },
           ].map(({ label, value, color }) => (
-            <div key={label} className="bg-zinc-950/80 border border-zinc-800/50 rounded-xl p-4">
+            <div key={label} className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-xl p-4">
               <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-600 mb-1">{label}</p>
               <p className="text-3xl font-black font-mono" style={{ color }}>{value}</p>
             </div>
@@ -70,13 +70,13 @@ export default function DrillCompliance() {
               <span className="text-xs font-bold text-[#FF4D6D] uppercase tracking-widest">Immediate Action Required</span>
             </div>
             {COMPLIANCE_ITEMS.filter(i => i.status === "fail").map(item => (
-              <div key={item.id} className="bg-zinc-900/60 border border-[#FF4D6D30] rounded-xl p-4 mb-2">
+              <div key={item.id} className="bg-[var(--kiq-canvas-soft)]/60 border border-[#FF4D6D30] rounded-xl p-4 mb-2">
                 <div className="flex items-start gap-3">
                   <XCircle className="w-4 h-4 text-[#FF4D6D] flex-shrink-0 mt-0.5" />
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <p className="text-xs font-bold text-zinc-100">{item.title}</p>
-                      <span className="text-[9px] font-mono text-zinc-600 bg-zinc-800/60 rounded px-1.5 py-0.5">{item.id}</span>
+                      <p className="text-xs font-bold text-[var(--kiq-ink)]">{item.title}</p>
+                      <span className="text-[9px] font-mono text-zinc-600 bg-[var(--kiq-surface)]/60 rounded px-1.5 py-0.5">{item.id}</span>
                     </div>
                     <p className="text-xs text-[#FF4D6D]">{item.detail}</p>
                   </div>
@@ -87,8 +87,8 @@ export default function DrillCompliance() {
         )}
 
         {/* Full matrix */}
-        <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-2xl overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-3.5 border-b border-zinc-800/40">
+        <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-2xl overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-3.5 border-b border-[var(--kiq-hairline)]/40">
             <FileText className="w-3.5 h-3.5 text-zinc-500" />
             <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Full Compliance Register</span>
           </div>
@@ -98,18 +98,18 @@ export default function DrillCompliance() {
               const color = COLOR_MAP[item.status as keyof typeof COLOR_MAP];
               return (
                 <div key={item.id}
-                  className="flex items-start gap-4 px-5 py-4 hover:bg-zinc-900/20"
+                  className="flex items-start gap-4 px-5 py-4 hover:bg-[var(--kiq-canvas-soft)]/20"
                   data-testid={`compliance-${item.id}`}>
                   <Icon className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color }} />
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">
-                      <p className="text-xs font-medium text-zinc-200">{item.title}</p>
-                      <span className="text-[9px] font-mono text-zinc-700 bg-zinc-900/60 rounded px-1 py-0.5">{item.id}</span>
+                      <p className="text-xs font-medium text-[var(--kiq-ink-soft)]">{item.title}</p>
+                      <span className="text-[9px] font-mono text-zinc-700 bg-[var(--kiq-canvas-soft)]/60 rounded px-1 py-0.5">{item.id}</span>
                     </div>
                     <p className="text-[11px] text-zinc-500">{item.detail}</p>
                   </div>
                   <div className="flex-shrink-0 text-right">
-                    <span className="text-[9px] font-mono text-zinc-600 bg-zinc-900/50 rounded px-1.5 py-0.5">{item.category}</span>
+                    <span className="text-[9px] font-mono text-zinc-600 bg-[var(--kiq-canvas-soft)]/50 rounded px-1.5 py-0.5">{item.category}</span>
                     <p className="text-[9px] font-mono text-zinc-600 mt-1 flex items-center gap-1 justify-end">
                       <Clock className="w-2.5 h-2.5" />
                       {item.due}

@@ -1,10 +1,10 @@
 """
-Shady Broker Index — fiduciary-grade broker scoring engine.
+Broker Compensation Index (formerly Shady Broker Index) — fiduciary-grade broker scoring engine.
 
 Score model (0–100, higher = cleaner):
   - 10 weighted categories computed from DOL Form 5500 Schedule A/H filings
   - Per-category score, severity, evidence, and remediation
-  - Overall = weighted average; rating tier mirrors Rx Defense (excellent/good/fair/concern/red_flag)
+  - Overall = weighted average; rating tier mirrors PBM Contract Clarity 360 (excellent/good/fair/concern/red_flag)
 
 Endpoints:
   GET /api/shady-broker/analyze/{ein}
@@ -864,7 +864,7 @@ async def narrative(ein: str):
         for c in report["categories"] if c["score"] < 70
     )
     system = (
-        "You are a senior investigative analyst at the Shady Broker Index — a fiduciary "
+        "You are a senior investigative analyst at the Broker Compensation Index — a fiduciary "
         "transparency platform for employer health plans. Voice: McKinsey partner overlaid "
         "with Pulitzer-grade investigative journalist. Tone: data-driven, legally cautious, "
         "executive-grade. Frame all conclusions as RISK INDICATORS, PROBABILITY SIGNALS, or "

@@ -122,7 +122,7 @@ async def analyze_meeting(session_id: int, db: Session = Depends(get_db)):
     session.status = "analyzing"
     db.commit()
 
-    prompt = f"""You are a fiduciary intelligence analyst for Kincaid IQ, a Private Banking & Healthcare Fiduciary Intelligence Platform. Analyze the following client meeting transcript.
+    prompt = f"""You are a fiduciary intelligence analyst for Kincaid Health, a Private Banking & Healthcare Fiduciary Intelligence Platform. Analyze the following client meeting transcript.
 
 Meeting Details:
 - Client: {session.client_name}

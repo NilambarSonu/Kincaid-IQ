@@ -19,7 +19,7 @@ const GREEN  = "#10B981";
 const BLUE   = "#00D4FF";
 const PURPLE = "#BF5FFF";
 const AMBER  = "#FFB800";
-const BORDER = "rgba(255,255,255,0.07)";
+const BORDER = "#e2e8f0";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type MeetingStatus = "draft" | "complete" | "analyzing" | "analyzed";
@@ -90,7 +90,7 @@ function formatDate(d: string): string {
 
 function statusBadge(s: MeetingStatus) {
   const cfg: Record<MeetingStatus, { label: string; color: string }> = {
-    draft:     { label: "Draft",     color: "rgba(255,255,255,0.3)" },
+    draft:     { label: "Draft",     color: "#64748b" },
     complete:  { label: "Complete",  color: BLUE },
     analyzing: { label: "Analyzing…", color: AMBER },
     analyzed:  { label: "Analyzed",  color: GREEN },
@@ -123,20 +123,20 @@ function NewMeetingModal({ onClose, onCreated }: { onClose: () => void; onCreate
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center" style={{ background: "rgba(0,0,0,0.8)", backdropFilter: "blur(6px)" }}>
-      <div className="rounded-2xl w-full max-w-md p-7 relative" style={{ background: "#0d0d0d", border: `1px solid ${GOLD}30` }}>
-        <button onClick={onClose} className="absolute top-4 right-4 text-zinc-600 hover:text-zinc-300 transition-colors">
+      <div className="rounded-2xl w-full max-w-md p-7 relative" style={{ background: "#F8FAFC", border: `1px solid ${GOLD}30` }}>
+        <button onClick={onClose} className="absolute top-4 right-4 text-zinc-600 hover:text-[var(--kiq-muted)] transition-colors">
           <X className="w-4 h-4" />
         </button>
         <div className="flex items-center gap-2 mb-5">
           <Mic className="w-5 h-5" style={{ color: GOLD }} />
-          <h2 className="text-lg font-black text-white">New Meeting Session</h2>
+          <h2 className="text-lg font-black text-[var(--kiq-ink)]">New Meeting Session</h2>
         </div>
         <div className="space-y-4">
           <div>
             <label className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-1 block">Session Title</label>
             <input
-              className="w-full px-4 py-2.5 rounded-xl text-sm text-white placeholder-zinc-600 outline-none transition-colors"
-              style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${BORDER}` }}
+              className="w-full px-4 py-2.5 rounded-xl text-sm text-[var(--kiq-ink)] placeholder-zinc-600 outline-none transition-colors"
+              style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}
               placeholder="Q2 Portfolio Review"
               value={form.title}
               onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
@@ -146,8 +146,8 @@ function NewMeetingModal({ onClose, onCreated }: { onClose: () => void; onCreate
           <div>
             <label className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-1 block">Client Name</label>
             <input
-              className="w-full px-4 py-2.5 rounded-xl text-sm text-white placeholder-zinc-600 outline-none"
-              style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${BORDER}` }}
+              className="w-full px-4 py-2.5 rounded-xl text-sm text-[var(--kiq-ink)] placeholder-zinc-600 outline-none"
+              style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}
               placeholder="James Hargrove III"
               value={form.client_name}
               onChange={e => setForm(f => ({ ...f, client_name: e.target.value }))}
@@ -158,8 +158,8 @@ function NewMeetingModal({ onClose, onCreated }: { onClose: () => void; onCreate
             <div>
               <label className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-1 block">Meeting Type</label>
               <select
-                className="w-full px-3 py-2.5 rounded-xl text-sm text-white outline-none"
-                style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${BORDER}` }}
+                className="w-full px-3 py-2.5 rounded-xl text-sm text-[var(--kiq-ink)] outline-none"
+                style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}
                 value={form.meeting_type}
                 onChange={e => setForm(f => ({ ...f, meeting_type: e.target.value }))}
                 data-testid="select-meeting-type">
@@ -174,8 +174,8 @@ function NewMeetingModal({ onClose, onCreated }: { onClose: () => void; onCreate
               <label className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-1 block">Date</label>
               <input
                 type="date"
-                className="w-full px-3 py-2.5 rounded-xl text-sm text-white outline-none"
-                style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${BORDER}` }}
+                className="w-full px-3 py-2.5 rounded-xl text-sm text-[var(--kiq-ink)] outline-none"
+                style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}
                 value={form.date}
                 onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
                 data-testid="input-meeting-date"
@@ -184,8 +184,8 @@ function NewMeetingModal({ onClose, onCreated }: { onClose: () => void; onCreate
           </div>
         </div>
         <div className="flex gap-3 mt-6">
-          <button onClick={onClose} className="flex-1 py-2.5 rounded-xl text-sm font-bold transition-colors text-zinc-400 hover:text-white"
-            style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${BORDER}` }}>
+          <button onClick={onClose} className="flex-1 py-2.5 rounded-xl text-sm font-bold transition-colors text-zinc-400 hover:text-[var(--kiq-ink)]"
+            style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}>
             Cancel
           </button>
           <button
@@ -223,11 +223,11 @@ function RecordingBar({ onStop }: { onStop: (secs: number) => void }) {
         <div className="w-3 h-3 rounded-full animate-pulse" style={{ background: RED }} />
         <span className="text-sm font-black" style={{ color: RED }}>REC</span>
       </div>
-      <span className="text-base font-mono font-black text-white tabular-nums">{fmt(secs)}</span>
+      <span className="text-base font-mono font-black text-[var(--kiq-ink)] tabular-nums">{fmt(secs)}</span>
       <div className="flex items-center gap-2 ml-auto">
         <button onClick={() => setPaused(p => !p)}
           className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
-          style={{ background: "rgba(255,255,255,0.06)", border: `1px solid ${BORDER}`, color: "rgba(255,255,255,0.6)" }}
+          style={{ background: "#f1f5f9", border: `1px solid ${BORDER}`, color: "#1e293b" }}
           data-testid="button-pause-recording">
           {paused ? <Play className="w-3 h-3" /> : <Pause className="w-3 h-3" />}
         </button>
@@ -321,7 +321,7 @@ export default function MeetingIntelligence() {
 
   return (
     <Layout>
-      <div className="h-full flex flex-col min-h-screen" style={{ background: "#000" }}>
+      <div className="h-full flex flex-col min-h-screen" style={{ background: "#F8FAFC" }}>
 
         {/* ── Header ── */}
         <div className="relative overflow-hidden px-8 py-7"
@@ -332,20 +332,20 @@ export default function MeetingIntelligence() {
             <div>
               <div className="flex items-center gap-2 mb-1.5">
                 <Mic className="w-5 h-5" style={{ color: GOLD }} />
-                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-600">Kincaid IQ · Client Intelligence</span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-600">Kincaid Health · Client Intelligence</span>
               </div>
-              <h1 className="text-3xl font-black text-white leading-tight tracking-tight mb-0.5">
+              <h1 className="text-3xl font-black text-[var(--kiq-ink)] leading-tight tracking-tight mb-0.5">
                 Meeting Intelligence™
                 <span className="text-xl font-light ml-3" style={{ color: GOLD }}>— White Label</span>
               </h1>
               <p className="text-zinc-500 text-sm">Capture, transcribe, and analyze every client conversation with fiduciary-grade AI</p>
             </div>
             <div className="flex items-center gap-3">
-              <div className="text-center px-4 py-2.5 rounded-xl" style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}` }}>
+              <div className="text-center px-4 py-2.5 rounded-xl" style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}>
                 <p className="text-xl font-black" style={{ color: GOLD }}>{meetings.length}</p>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-zinc-600">Sessions</p>
               </div>
-              <div className="text-center px-4 py-2.5 rounded-xl" style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}` }}>
+              <div className="text-center px-4 py-2.5 rounded-xl" style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}>
                 <p className="text-xl font-black" style={{ color: GREEN }}>{meetings.filter(m => m.status === "analyzed").length}</p>
                 <p className="text-[9px] font-bold uppercase tracking-widest text-zinc-600">Analyzed</p>
               </div>
@@ -368,10 +368,10 @@ export default function MeetingIntelligence() {
             style={{ borderRight: `1px solid ${BORDER}` }}>
             <div className="p-4 flex-shrink-0" style={{ borderBottom: `1px solid ${BORDER}` }}>
               <div className="flex items-center gap-2 px-3 py-2 rounded-xl"
-                style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${BORDER}` }}>
+                style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}>
                 <Search className="w-3.5 h-3.5 text-zinc-600" />
                 <input
-                  className="flex-1 bg-transparent text-sm text-white placeholder-zinc-600 outline-none"
+                  className="flex-1 bg-transparent text-sm text-[var(--kiq-ink)] placeholder-zinc-600 outline-none"
                   placeholder="Search sessions…"
                   value={search}
                   onChange={e => setSearch(e.target.value)}
@@ -405,7 +405,7 @@ export default function MeetingIntelligence() {
                   }}
                   data-testid={`meeting-list-item-${m.id}`}>
                   <div className="flex items-start justify-between gap-2">
-                    <p className="text-sm font-bold text-white leading-tight">{m.title}</p>
+                    <p className="text-sm font-bold text-[var(--kiq-ink)] leading-tight">{m.title}</p>
                     {statusBadge(m.status)}
                   </div>
                   <div className="flex items-center gap-2 mt-1.5">
@@ -438,13 +438,13 @@ export default function MeetingIntelligence() {
           {/* ── Right: meeting detail ── */}
           <div className="flex-1 flex flex-col overflow-hidden">
             {!selected ? (
-              <div className="flex-1 flex flex-col items-center justify-center" style={{ background: "#000" }}>
+              <div className="flex-1 flex flex-col items-center justify-center" style={{ background: "#F8FAFC" }}>
                 <div className="text-center max-w-sm">
                   <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
                     style={{ background: `${GOLD}10`, border: `1px solid ${GOLD}20` }}>
                     <MessageSquare className="w-7 h-7" style={{ color: GOLD }} />
                   </div>
-                  <p className="text-lg font-black text-white mb-2">Select a Meeting Session</p>
+                  <p className="text-lg font-black text-[var(--kiq-ink)] mb-2">Select a Meeting Session</p>
                   <p className="text-sm text-zinc-600">Choose a session from the list, or create a new one to begin capturing client intelligence.</p>
                 </div>
               </div>
@@ -462,7 +462,7 @@ export default function MeetingIntelligence() {
                         </span>
                         {statusBadge(selected.status)}
                       </div>
-                      <h2 className="text-xl font-black text-white leading-tight">{selected.title}</h2>
+                      <h2 className="text-xl font-black text-[var(--kiq-ink)] leading-tight">{selected.title}</h2>
                       <div className="flex items-center gap-4 mt-1.5">
                         <div className="flex items-center gap-1.5">
                           <Users className="w-3.5 h-3.5 text-zinc-600" />
@@ -493,7 +493,7 @@ export default function MeetingIntelligence() {
                       <button
                         onClick={() => { if (confirm("Delete this meeting session?")) deleteMutation.mutate(selected.id); }}
                         className="p-2 rounded-xl text-zinc-600 hover:text-red-400 transition-colors"
-                        style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${BORDER}` }}
+                        style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}
                         data-testid="button-delete-meeting">
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -516,7 +516,7 @@ export default function MeetingIntelligence() {
                       onClick={() => setActiveTab(tab.id)}
                       className="flex items-center gap-1.5 px-4 py-3.5 text-xs font-bold transition-all border-b-2"
                       style={{
-                        color: activeTab === tab.id ? GOLD : "rgba(255,255,255,0.35)",
+                        color: activeTab === tab.id ? GOLD : "#64748b",
                         borderBottomColor: activeTab === tab.id ? GOLD : "transparent",
                       }}
                       data-testid={`tab-${tab.id}`}>
@@ -547,15 +547,15 @@ export default function MeetingIntelligence() {
                           {!editingTranscript ? (
                             <button onClick={() => setEditingTranscript(true)}
                               className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all"
-                              style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${BORDER}`, color: "rgba(255,255,255,0.6)" }}
+                              style={{ background: "#ffffff", border: `1px solid ${BORDER}`, color: "#1e293b" }}
                               data-testid="button-edit-transcript">
                               <Edit3 className="w-3 h-3" /> Edit
                             </button>
                           ) : (
                             <>
                               <button onClick={() => { setEditingTranscript(false); setDraftTranscript(selected.transcript ?? ""); }}
-                                className="px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-zinc-500 hover:text-zinc-300"
-                                style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${BORDER}` }}>
+                                className="px-3 py-1.5 rounded-xl text-xs font-bold transition-all text-zinc-500 hover:text-[var(--kiq-muted)]"
+                                style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}>
                                 Cancel
                               </button>
                               <button onClick={saveTranscript}
@@ -600,9 +600,9 @@ Example:
 Advisor: Good morning, Mr. Hargrove. Let's review your Q2 portfolio performance...
 Client: I was hoping to discuss rebalancing toward more fixed income...
 Advisor: That's a great point. Given the current rate environment, we recommend..."
-                        className="w-full h-80 text-sm text-zinc-300 placeholder-zinc-700 outline-none leading-relaxed resize-none rounded-xl px-5 py-4 transition-all"
+                        className="w-full h-80 text-sm text-[var(--kiq-muted)] placeholder-zinc-700 outline-none leading-relaxed resize-none rounded-xl px-5 py-4 transition-all"
                         style={{
-                          background: editingTranscript ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)",
+                          background: editingTranscript ? "#ffffff" : "#ffffff",
                           border: `1px solid ${editingTranscript ? GOLD + "40" : BORDER}`,
                           fontFamily: "ui-monospace, monospace",
                           fontSize: "12px",
@@ -631,7 +631,7 @@ Advisor: That's a great point. Given the current rate environment, we recommend.
                             style={{ background: `${GOLD}10`, border: `1px solid ${GOLD}20` }}>
                             <BrainCircuit className="w-6 h-6" style={{ color: GOLD }} />
                           </div>
-                          <p className="text-base font-black text-white mb-2">No Analysis Yet</p>
+                          <p className="text-base font-black text-[var(--kiq-ink)] mb-2">No Analysis Yet</p>
                           <p className="text-sm text-zinc-600 max-w-xs">Add a transcript and click "Analyze with KIQ™" to generate AI-powered meeting intelligence.</p>
                           <button
                             onClick={() => setActiveTab("transcript")}
@@ -645,19 +645,19 @@ Advisor: That's a great point. Given the current rate environment, we recommend.
                           {/* KIQ Score + Sentiment row */}
                           <div className="grid grid-cols-3 gap-4">
                             <div className="rounded-2xl p-5 col-span-1"
-                              style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${GOLD}25` }}>
+                              style={{ background: "#ffffff", border: `1px solid ${GOLD}25` }}>
                               <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-2">KIQ Score</p>
                               <div className="flex items-end gap-2">
                                 <span className="text-4xl font-black" style={{ color: GOLD }}>{selected.ai_analysis.kiq_score}</span>
                                 <span className="text-sm text-zinc-500 mb-1">/100</span>
                               </div>
-                              <div className="mt-2 h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.07)" }}>
+                              <div className="mt-2 h-1.5 rounded-full" style={{ background: "#e2e8f0" }}>
                                 <div className="h-full rounded-full transition-all" style={{ width: `${selected.ai_analysis.kiq_score}%`, background: GOLD }} />
                               </div>
                               <p className="text-[10px] text-zinc-600 mt-1.5">Meeting Effectiveness</p>
                             </div>
                             <div className="rounded-2xl p-5 col-span-2"
-                              style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${sentimentColor(selected.ai_analysis.sentiment)}25` }}>
+                              style={{ background: "#ffffff", border: `1px solid ${sentimentColor(selected.ai_analysis.sentiment)}25` }}>
                               <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-2">Client Sentiment</p>
                               <div className="flex items-center gap-2 mb-2">
                                 <span className="text-2xl font-black capitalize" style={{ color: sentimentColor(selected.ai_analysis.sentiment) }}>
@@ -672,7 +672,7 @@ Advisor: That's a great point. Given the current rate environment, we recommend.
                           </div>
 
                           {/* Key Topics */}
-                          <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}` }}>
+                          <div className="rounded-2xl p-5" style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}>
                             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-3">Key Topics Discussed</p>
                             <div className="flex flex-wrap gap-2">
                               {selected.ai_analysis.key_topics.map((t, i) => (
@@ -686,7 +686,7 @@ Advisor: That's a great point. Given the current rate environment, we recommend.
 
                           {/* Portfolio Signals */}
                           {selected.ai_analysis.portfolio_signals.length > 0 && (
-                            <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}` }}>
+                            <div className="rounded-2xl p-5" style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}>
                               <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-3">Portfolio Signals</p>
                               <div className="space-y-2">
                                 {selected.ai_analysis.portfolio_signals.map((s, i) => (
@@ -694,7 +694,7 @@ Advisor: That's a great point. Given the current rate environment, we recommend.
                                     style={{ background: `${signalTypeColor(s.type)}08`, border: `1px solid ${signalTypeColor(s.type)}20` }}>
                                     <Activity className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: signalTypeColor(s.type) }} />
                                     <div className="flex-1 min-w-0">
-                                      <p className="text-sm text-white">{s.signal}</p>
+                                      <p className="text-sm text-[var(--kiq-ink)]">{s.signal}</p>
                                     </div>
                                     <div className="flex flex-col items-end gap-1">
                                       <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded"
@@ -711,7 +711,7 @@ Advisor: That's a great point. Given the current rate environment, we recommend.
 
                           {/* Follow-up Recommendations */}
                           {selected.ai_analysis.follow_up_recommendations.length > 0 && (
-                            <div className="rounded-2xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}` }}>
+                            <div className="rounded-2xl p-5" style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}>
                               <div className="flex items-center gap-2 mb-3">
                                 <Lightbulb className="w-3.5 h-3.5" style={{ color: AMBER }} />
                                 <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">Follow-up Recommendations</p>
@@ -720,7 +720,7 @@ Advisor: That's a great point. Given the current rate environment, we recommend.
                                 {selected.ai_analysis.follow_up_recommendations.map((r, i) => (
                                   <div key={i} className="flex items-start gap-2.5">
                                     <ChevronRight className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: AMBER }} />
-                                    <p className="text-sm text-zinc-300">{r}</p>
+                                    <p className="text-sm text-[var(--kiq-muted)]">{r}</p>
                                   </div>
                                 ))}
                               </div>
@@ -737,7 +737,7 @@ Advisor: That's a great point. Given the current rate environment, we recommend.
                       {!selected.ai_analysis?.action_items?.length ? (
                         <div className="flex flex-col items-center justify-center py-16 text-center">
                           <ListChecks className="w-10 h-10 text-zinc-700 mb-3" />
-                          <p className="text-base font-black text-white mb-1">No Action Items</p>
+                          <p className="text-base font-black text-[var(--kiq-ink)] mb-1">No Action Items</p>
                           <p className="text-sm text-zinc-600">Run the KIQ™ analysis to automatically extract action items from the transcript.</p>
                         </div>
                       ) : (
@@ -748,7 +748,7 @@ Advisor: That's a great point. Given the current rate environment, we recommend.
                           <div className="space-y-2">
                             {selected.ai_analysis.action_items.map((a, i) => (
                               <div key={i} className="flex items-start gap-4 px-5 py-4 rounded-2xl"
-                                style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}` }}>
+                                style={{ background: "#ffffff", border: `1px solid ${BORDER}` }}>
                                 <div className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
                                   style={{ background: `${priorityColor(a.priority)}14`, border: `1px solid ${priorityColor(a.priority)}30` }}>
                                   <span className="text-[9px] font-black" style={{ color: priorityColor(a.priority) }}>
@@ -756,7 +756,7 @@ Advisor: That's a great point. Given the current rate environment, we recommend.
                                   </span>
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-bold text-white">{a.item}</p>
+                                  <p className="text-sm font-bold text-[var(--kiq-ink)]">{a.item}</p>
                                   <div className="flex items-center gap-3 mt-1.5">
                                     <div className="flex items-center gap-1">
                                       <Users className="w-3 h-3 text-zinc-600" />
@@ -786,7 +786,7 @@ Advisor: That's a great point. Given the current rate environment, we recommend.
                       {!selected.ai_analysis?.fiduciary_summary ? (
                         <div className="flex flex-col items-center justify-center py-16 text-center">
                           <Shield className="w-10 h-10 text-zinc-700 mb-3" />
-                          <p className="text-base font-black text-white mb-1">No Fiduciary Summary</p>
+                          <p className="text-base font-black text-[var(--kiq-ink)] mb-1">No Fiduciary Summary</p>
                           <p className="text-sm text-zinc-600">Run KIQ™ analysis to auto-generate a compliance-ready fiduciary summary.</p>
                         </div>
                       ) : (
@@ -804,7 +804,7 @@ Advisor: That's a great point. Given the current rate environment, we recommend.
                               <button
                                 onClick={() => {
                                   const blob = new Blob([
-                                    `KINCAID IQ™ — FIDUCIARY MEETING SUMMARY\n\n` +
+                                    `KINCAID HEALTH™ — FIDUCIARY MEETING SUMMARY\n\n` +
                                     `Client: ${selected.client_name}\nDate: ${formatDate(selected.date)}\nType: ${meetingTypeLabel(selected.meeting_type)}\n` +
                                     (selected.duration_mins ? `Duration: ${selected.duration_mins} minutes\n` : "") +
                                     `\n─────────────────────────────────────────\n\n` +
@@ -818,23 +818,23 @@ Advisor: That's a great point. Given the current rate environment, we recommend.
                                   URL.revokeObjectURL(url);
                                 }}
                                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all"
-                                style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${BORDER}`, color: "rgba(255,255,255,0.5)" }}
+                                style={{ background: "#ffffff", border: `1px solid ${BORDER}`, color: "#334155" }}
                                 data-testid="button-download-summary">
                                 <Download className="w-3 h-3" /> Export
                               </button>
                             </div>
                           </div>
-                          <div className="rounded-2xl p-7" style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${GREEN}18` }}>
+                          <div className="rounded-2xl p-7" style={{ background: "#ffffff", border: `1px solid ${GREEN}18` }}>
                             <div className="flex items-center gap-2 mb-5 pb-4" style={{ borderBottom: `1px solid ${BORDER}` }}>
                               <Shield className="w-4 h-4" style={{ color: GREEN }} />
                               <div>
-                                <p className="text-sm font-black text-white">{selected.title}</p>
+                                <p className="text-sm font-black text-[var(--kiq-ink)]">{selected.title}</p>
                                 <p className="text-[10px] text-zinc-600">{selected.client_name} · {formatDate(selected.date)}</p>
                               </div>
                             </div>
                             <div className="prose prose-invert max-w-none">
                               {selected.ai_analysis.fiduciary_summary.split("\n").filter(Boolean).map((para, i) => (
-                                <p key={i} className="text-sm text-zinc-300 leading-relaxed mb-4 last:mb-0">{para}</p>
+                                <p key={i} className="text-sm text-[var(--kiq-muted)] leading-relaxed mb-4 last:mb-0">{para}</p>
                               ))}
                             </div>
                           </div>

@@ -49,18 +49,18 @@ export default function KincaidWarRoomLive() {
 
   if (loading || !data) {
     return (
-      <div className="min-h-screen bg-slate-950 text-white p-8">
+      <div className="min-h-screen bg-white text-slate-900 p-8">
         Loading War Room...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white p-6">
+    <div className="min-h-screen bg-white text-slate-900 p-6">
       <div className="mb-6 flex items-center justify-between">
         <div>
           <div className="text-xs uppercase tracking-[0.25em] text-cyan-300">
-            KINCAID IQ VERIFY
+            KINCAID HEALTH VERIFY
           </div>
           <h1 className="mt-2 text-4xl font-semibold">Live War Room</h1>
         </div>
@@ -115,11 +115,11 @@ export default function KincaidWarRoomLive() {
               onClick={() => setSelectedKpi(tile.primary)}
               className="w-full rounded-2xl border border-white/10 bg-black/20 p-4 text-left"
             >
-              <div className="text-xs text-white/45">{tile.primary.title}</div>
+              <div className="text-xs text-slate-900/45">{tile.primary.title}</div>
               <div className="mt-2 text-3xl font-semibold">
                 {tile.primary.policy.allowed ? tile.primary.display_value : "Blocked"}
               </div>
-              <div className="mt-2 text-xs text-white/50">
+              <div className="mt-2 text-xs text-slate-900/50">
                 {tile.primary.policy.reason_code}
               </div>
             </button>
@@ -132,7 +132,7 @@ export default function KincaidWarRoomLive() {
                   className="w-full rounded-xl border border-white/10 bg-white/[0.03] p-3 text-left"
                 >
                   <div className="flex items-center justify-between">
-                    <div className="text-sm text-white/70">{kpi.title}</div>
+                    <div className="text-sm text-slate-900/70">{kpi.title}</div>
                     <div className="text-[10px] text-cyan-300">
                       {kpi.policy.freshness_status}
                     </div>
@@ -157,9 +157,9 @@ export default function KincaidWarRoomLive() {
             >
               <div className="flex items-center justify-between">
                 <div className="text-sm font-medium">{event.event_type}</div>
-                <div className="text-xs text-white/45">{event.created_at}</div>
+                <div className="text-xs text-slate-900/45">{event.created_at}</div>
               </div>
-              <div className="mt-1 text-sm text-white/60">{event.event_message}</div>
+              <div className="mt-1 text-sm text-slate-900/60">{event.event_message}</div>
               {event.related_kpi_key ? (
                 <div className="mt-1 text-xs text-cyan-300">{event.related_kpi_key}</div>
               ) : null}
@@ -174,7 +174,7 @@ export default function KincaidWarRoomLive() {
             className="flex-1 bg-black/60"
             onClick={() => setSelectedKpi(null)}
           />
-          <div className="w-full max-w-2xl overflow-y-auto border-l border-white/10 bg-slate-950 p-6">
+          <div className="w-full max-w-2xl overflow-y-auto border-l border-white/10 bg-white p-6">
             <button
               onClick={() => setSelectedKpi(null)}
               className="mb-4 text-sm underline"
@@ -187,7 +187,7 @@ export default function KincaidWarRoomLive() {
               {selectedKpi.policy.allowed ? selectedKpi.display_value : "Blocked"}
             </div>
 
-            <div className="mt-6 space-y-2 text-sm text-white/70">
+            <div className="mt-6 space-y-2 text-sm text-slate-900/70">
               <div>Reason: {selectedKpi.policy.reason_code}</div>
               <div>Verified: {selectedKpi.policy.verified_status}</div>
               <div>Freshness: {selectedKpi.policy.freshness_status}</div>
@@ -198,7 +198,7 @@ export default function KincaidWarRoomLive() {
 
             <div className="mt-6">
               <div className="mb-2 text-sm font-medium">Formula</div>
-              <div className="rounded-xl border border-white/10 bg-black/20 p-3 text-sm text-white/70">
+              <div className="rounded-xl border border-white/10 bg-black/20 p-3 text-sm text-slate-900/70">
                 {selectedKpi.formula_text}
               </div>
             </div>
@@ -212,9 +212,9 @@ export default function KincaidWarRoomLive() {
                     className="rounded-xl border border-white/10 bg-black/20 p-3"
                   >
                     <div className="font-medium">{e.source_name}</div>
-                    <div className="mt-1 text-xs text-white/50">{e.evidence_id}</div>
+                    <div className="mt-1 text-xs text-slate-900/50">{e.evidence_id}</div>
                     <div className="mt-1 text-xs text-cyan-300">{e.source_hash}</div>
-                    <div className="mt-1 text-xs text-white/50">{e.received_at}</div>
+                    <div className="mt-1 text-xs text-slate-900/50">{e.received_at}</div>
                   </div>
                 ))}
               </div>
@@ -222,7 +222,7 @@ export default function KincaidWarRoomLive() {
 
             <div className="mt-6">
               <div className="mb-2 text-sm font-medium">Transform</div>
-              <div className="rounded-xl border border-white/10 bg-black/20 p-3 text-sm text-white/70">
+              <div className="rounded-xl border border-white/10 bg-black/20 p-3 text-sm text-slate-900/70">
                 <div>Hash: {selectedKpi.transform.transform_hash}</div>
                 <div>Version: {selectedKpi.transform.code_version}</div>
                 <div>Params Hash: {selectedKpi.transform.params_hash}</div>
@@ -239,7 +239,7 @@ export default function KincaidWarRoomLive() {
 function MetricCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-      <div className="text-xs text-white/45">{label}</div>
+      <div className="text-xs text-slate-900/45">{label}</div>
       <div className="mt-1 text-2xl font-semibold">{value}</div>
     </div>
   );

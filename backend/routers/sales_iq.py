@@ -1,5 +1,5 @@
 """
-Sales IQ Intelligence Module — Kincaid IQ
+Sales IQ Intelligence Module — Kincaid Health
 Multi-state regulatory, pricing, and compliance intelligence across all 50 U.S. states.
 California is the priority state with advanced SB-17 override logic.
 
@@ -804,7 +804,7 @@ async def _claude_sales_angle(state: dict, client_type: str, employer_size: str,
         sales_opportunity = state["sales_profile"].get("opportunity", "MEDIUM")
         key_differentiator = state["sales_profile"].get("key_differentiator", "")
 
-        prompt = f"""You are a senior benefits consultant and sales strategist for a fiduciary PBM advisory firm (Kincaid IQ).
+        prompt = f"""You are a senior benefits consultant and sales strategist for a fiduciary PBM advisory firm (Kincaid Health).
 Generate a Sales Angle for the following scenario:
 
 State: {state['name']} ({state['code']})

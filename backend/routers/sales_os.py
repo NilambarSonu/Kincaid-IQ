@@ -1,7 +1,7 @@
 """
 Sales OS for Founders — Pre-Call Intelligence Engine
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Powered by Kincaid IQ × SiriusB iQ Ai Data Sciences Lab
+Powered by Kincaid Health × SiriusB iQ Ai Data Sciences Lab
 
 Cold call is dead. Evidence briefing is the motion.
 
@@ -601,7 +601,7 @@ def health_check():
     return {
         "status": "operational",
         "service": "Sales OS for Founders",
-        "brand": "KINCAID IQ VERIFY™ × SIRIUSB iQ",
+        "brand": "KINCAID HEALTH VERIFY™ × SIRIUSB iQ",
         "tagline": "Cold call is dead. Evidence briefing is the motion.",
         "accounts_loaded": len(SEED_ACCOUNTS),
         "evidence_architecture": "SHA-256 on every record",
@@ -661,7 +661,7 @@ def get_brief(account_id: str):
         "overall_confidence": acct.get("overall_confidence", "MODELED"),
         "upgrade_path": "Provide NDC-level Rx claims + PBM remittance report → CERTIFIED",
         "generated_at": iso_now(),
-        "brand": "KINCAID IQ VERIFY™ · SALES OS · FOUNDER EDITION",
+        "brand": "KINCAID HEALTH VERIFY™ · SALES OS · FOUNDER EDITION",
         "disclaimer": "AI-Generated · Evidence-Anchored · MODELED — Not CERTIFIED without complete federal filing cross-reference.",
     }
     return {"data": brief, "confidence": "MODELED"}
@@ -1406,7 +1406,7 @@ def get_analytics(state: Optional[str] = Query(None), db: Session = Depends(get_
 
 # ── AI Sales Copilot ──────────────────────────────────────────────────────────
 
-_COPILOT_SYSTEM = """You are the Kincaid IQ Sales Intelligence Copilot — an AI advisor for commercial health
+_COPILOT_SYSTEM = """You are the Kincaid Health Sales Intelligence Copilot — an AI advisor for commercial health
 benefits brokers and consultants. Help analyze employers, craft outreach strategies, interpret DOL Form 5500
 data, and identify fiduciary arbitrage opportunities.
 
@@ -1862,7 +1862,7 @@ def compute_ai_score(body: dict, db: Session = Depends(get_db)):
     }
 
 
-_COPILOT_SYSTEM = """You are the Kincaid IQ Sales OS™ AI Copilot — a senior benefits consultant
+_COPILOT_SYSTEM = """You are the Kincaid Health Sales OS™ AI Copilot — a senior benefits consultant
 and fiduciary advisor. Generate concise, evidence-anchored sales content for benefits consultants.
 
 Rules:

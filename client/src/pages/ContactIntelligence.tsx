@@ -139,7 +139,7 @@ function ConfidenceBar({ score }: { score: number }) {
   const color = pct >= 70 ? "#10b981" : pct >= 40 ? "#f59e0b" : "#ef4444";
   return (
     <div className="flex items-center gap-2">
-      <div style={{ width: 64, height: 5, background: "rgba(255,255,255,0.1)", borderRadius: 99 }}>
+      <div style={{ width: 64, height: 5, background: "#e2e8f0", borderRadius: 99 }}>
         <div style={{ width: `${pct}%`, height: "100%", background: color, borderRadius: 99, transition: "width 0.4s" }} />
       </div>
       <span style={{ fontSize: 10, color, fontWeight: 700 }}>{pct}%</span>
@@ -150,7 +150,7 @@ function ConfidenceBar({ score }: { score: number }) {
 function stateColor(count: number, max: number, isSelected: boolean, isHovered: boolean): string {
   if (isSelected) return BB_CRIMSON;
   if (isHovered) return "#c0253a";
-  if (!count || max === 0) return "rgba(255,255,255,0.06)";
+  if (!count || max === 0) return "#f1f5f9";
   const t = Math.min(count / max, 1);
   const r = Math.round(0 + t * 155);
   const g = Math.round(43 * (1 - t));
@@ -290,18 +290,18 @@ export default function ContactIntelligence() {
 
   return (
     <Layout>
-      <div style={{ minHeight: "100vh", background: "linear-gradient(160deg,#060b18 0%,#080d1e 50%,#060a16 100%)", padding: "32px 32px 80px" }}>
+      <div className="kiq-ops-shell" style={{ minHeight: "100vh", padding: "32px 32px 80px", fontFamily: "var(--font-sans)" }}>
 
         {/* Header */}
-        <div style={{ marginBottom: 24 }}>
+        <div className="kiq-ops-header" style={{ marginBottom: 24, padding: 22, borderRadius: 18 }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(155,28,46,0.12)", border: "1px solid rgba(155,28,46,0.35)", borderRadius: 100, padding: "5px 16px", marginBottom: 14 }}>
             <Mail size={12} color={BB_CRIMSON} />
-            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.18em", textTransform: "uppercase", color: BB_CRIMSON }}>Kincaid IQ · Contact Intelligence</span>
+            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.18em", textTransform: "uppercase", color: BB_CRIMSON }}>Kincaid Health · Contact Intelligence</span>
           </div>
-          <h1 style={{ fontSize: 34, fontWeight: 900, color: "#fff", margin: "0 0 6px", letterSpacing: "-0.02em" }}>
+          <h1 style={{ fontSize: 34, fontWeight: 900, color: "#0F172A", margin: "0 0 6px", letterSpacing: "-0.02em" }}>
             Prospect Contact Discovery
           </h1>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.40)", margin: 0, maxWidth: 620 }}>
+          <p style={{ fontSize: 13, color: "#3f516a", margin: 0, maxWidth: 620, fontWeight: 600 }}>
             Click any state on the map — an enlarged view with city filter appears instantly. Select a plan sponsor and run AI-powered email discovery.
           </p>
         </div>
@@ -319,15 +319,15 @@ export default function ContactIntelligence() {
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
 
             {/* US Map */}
-            <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "14px 14px 6px", overflow: "hidden" }}>
+            <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "14px 14px 6px", overflow: "hidden" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>
+                <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#64748b" }}>
                   {selectedState ? `${ABBR_TO_NAME[selectedState] || selectedState} selected` : "Select State"}
                 </div>
                 {selectedState && (
                   <button
                     onClick={() => { setSelectedState(null); setStateProspects([]); setSelected(null); setResult(null); setSelectedCity(null); }}
-                    style={{ display: "flex", alignItems: "center", gap: 4, padding: "2px 8px", borderRadius: 6, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.4)", fontSize: 10, cursor: "pointer" }}
+                    style={{ display: "flex", alignItems: "center", gap: 4, padding: "2px 8px", borderRadius: 6, background: "#f1f5f9", border: "1px solid #cbd5e1", color: "#475569", fontSize: 10, cursor: "pointer" }}
                   >
                     <X size={10} /> Clear
                   </button>
@@ -354,7 +354,7 @@ export default function ContactIntelligence() {
                           style={{
                             default: {
                               fill: stateColor(count, maxCount, isSelected, false),
-                              stroke: isSelected ? "#fff" : "rgba(255,255,255,0.12)",
+                              stroke: isSelected ? "#fff" : "#cbd5e1",
                               strokeWidth: isSelected ? 1.5 : 0.5,
                               outline: "none",
                               cursor: abbr ? "pointer" : "default",
@@ -383,44 +383,44 @@ export default function ContactIntelligence() {
 
               {/* Legend */}
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 2, paddingBottom: 4 }}>
-                <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)", fontWeight: 600 }}>Fewer</span>
-                <div style={{ flex: 1, height: 4, borderRadius: 99, background: `linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(155,28,46,0.9) 100%)` }} />
-                <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)", fontWeight: 600 }}>More</span>
+                <span style={{ fontSize: 8, color: "#94a3b8", fontWeight: 600 }}>Fewer</span>
+                <div style={{ flex: 1, height: 4, borderRadius: 99, background: `linear-gradient(90deg, #f1f5f9 0%, rgba(155,28,46,0.9) 100%)` }} />
+                <span style={{ fontSize: 8, color: "#94a3b8", fontWeight: 600 }}>More</span>
               </div>
             </div>
 
             {/* Name Search */}
-            <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 14 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 8 }}>
+            <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, padding: 14 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#64748b", marginBottom: 8 }}>
                 {selectedState ? `Search within ${ABBR_TO_NAME[selectedState] || selectedState}` : "Search by name"}
               </div>
               <div style={{ position: "relative" }}>
-                <Search size={13} style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.3)" }} />
+                <Search size={13} style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", color: "#64748b" }} />
                 <input
                   data-testid="input-employer-search"
                   value={query}
                   onChange={e => handleSearch(e.target.value)}
                   placeholder="Type company name…"
-                  style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "8px 10px 8px 30px", color: "#fff", fontSize: 12, outline: "none", boxSizing: "border-box" }}
+                  style={{ width: "100%", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 10, padding: "8px 10px 8px 30px", color: "#0F172A", fontSize: 12, outline: "none", boxSizing: "border-box" }}
                 />
-                {searching && <Loader2 size={12} style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.3)", animation: "spin 1s linear infinite" }} />}
+                {searching && <Loader2 size={12} style={{ position: "absolute", right: 10, top: "50%", transform: "translateY(-50%)", color: "#64748b", animation: "spin 1s linear infinite" }} />}
               </div>
 
               {/* Search dropdown */}
               {query.trim().length >= 2 && searchResults.length > 0 && (
-                <div style={{ marginTop: 6, borderRadius: 10, overflow: "hidden", border: "1px solid rgba(255,255,255,0.08)" }}>
+                <div style={{ marginTop: 6, borderRadius: 10, overflow: "hidden", border: "1px solid #e2e8f0" }}>
                   {searchResults.map(emp => (
                     <button
                       key={emp.ein}
                       onClick={() => selectEmployer(emp)}
-                      style={{ width: "100%", textAlign: "left", padding: "9px 12px", background: "rgba(255,255,255,0.03)", border: "none", borderBottom: "1px solid rgba(255,255,255,0.04)", cursor: "pointer", display: "flex", gap: 8, alignItems: "center" }}
+                      style={{ width: "100%", textAlign: "left", padding: "9px 12px", background: "#ffffff", border: "none", borderBottom: "1px solid rgba(15,23,42,0.08)", cursor: "pointer", display: "flex", gap: 8, alignItems: "center" }}
                       onMouseEnter={e => e.currentTarget.style.background = "rgba(155,28,46,0.1)"}
-                      onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.03)"}
+                      onMouseLeave={e => e.currentTarget.style.background = "#ffffff"}
                     >
-                      <Building2 size={11} color="rgba(255,255,255,0.25)" style={{ flexShrink: 0 }} />
+                      <Building2 size={11} color="#64748b" style={{ flexShrink: 0 }} />
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontSize: 11, fontWeight: 700, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{emp.name}</div>
-                        <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>{emp.city}, {emp.state} · {(emp.participants || 0).toLocaleString()} lives</div>
+                        <div style={{ fontSize: 11, fontWeight: 700, color: "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{emp.name}</div>
+                        <div style={{ fontSize: 9, color: "#64748b" }}>{emp.city}, {emp.state} · {(emp.participants || 0).toLocaleString()} lives</div>
                       </div>
                     </button>
                   ))}
@@ -432,16 +432,16 @@ export default function ContactIntelligence() {
             {selected && (
               <div style={{ background: "rgba(155,28,46,0.07)", border: "1px solid rgba(155,28,46,0.25)", borderRadius: 14, padding: 14 }}>
                 <div style={{ fontSize: 9, fontWeight: 700, color: BB_CRIMSON, marginBottom: 6, letterSpacing: "0.10em", textTransform: "uppercase" }}>Selected Prospect</div>
-                <div style={{ fontSize: 13, fontWeight: 800, color: "#fff", marginBottom: 2 }}>{selected.name}</div>
-                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginBottom: 10 }}>{selected.city}, {selected.state} · EIN {selected.ein}</div>
+                <div style={{ fontSize: 13, fontWeight: 800, color: "#0F172A", marginBottom: 2 }}>{selected.name}</div>
+                <div style={{ fontSize: 10, color: "#64748b", marginBottom: 10 }}>{selected.city}, {selected.state} · EIN {selected.ein}</div>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
                   {[
                     { label: "Covered Lives", val: (selected.participants || 0).toLocaleString(), icon: <Users size={10} /> },
                     { label: "Welfare Premiums", val: `$${((selected.welfare_premiums || 0) / 1000).toFixed(0)}K`, icon: <DollarSign size={10} /> },
                   ].map(m => (
-                    <div key={m.label} style={{ background: "rgba(0,0,0,0.3)", borderRadius: 7, padding: "7px 9px" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 3, color: "rgba(255,255,255,0.35)", marginBottom: 2 }}>{m.icon}<span style={{ fontSize: 8, fontWeight: 600, textTransform: "uppercase" }}>{m.label}</span></div>
-                      <div style={{ fontSize: 13, fontWeight: 800, color: "#fff" }}>{m.val}</div>
+                    <div key={m.label} style={{ background: "rgba(0,0,0,0.05)", borderRadius: 7, padding: "7px 9px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 3, color: "#64748b", marginBottom: 2 }}>{m.icon}<span style={{ fontSize: 8, fontWeight: 600, textTransform: "uppercase" }}>{m.label}</span></div>
+                      <div style={{ fontSize: 13, fontWeight: 800, color: "#0F172A" }}>{m.val}</div>
                     </div>
                   ))}
                 </div>
@@ -457,7 +457,7 @@ export default function ContactIntelligence() {
                 width: "100%", padding: "13px 20px", borderRadius: 12, fontSize: 12, fontWeight: 800,
                 letterSpacing: "0.05em", textTransform: "uppercase",
                 background: running || !selected ? "rgba(155,28,46,0.25)" : `linear-gradient(135deg, ${BB_CRIMSON} 0%, #7a1525 100%)`,
-                color: running || !selected ? "rgba(255,255,255,0.4)" : "#fff",
+                color: running || !selected ? "#475569" : "#fff",
                 border: `1px solid ${running || !selected ? "rgba(155,28,46,0.2)" : BB_CRIMSON}`,
                 cursor: running || !selected ? "not-allowed" : "pointer",
                 display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
@@ -480,7 +480,7 @@ export default function ContactIntelligence() {
                   <div style={{ width: 14, height: 14, borderRadius: "50%", background: "rgba(0,43,92,0.5)", border: "1px solid rgba(0,43,92,0.6)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
                     <span style={{ fontSize: 7, fontWeight: 900, color: "rgba(100,160,220,0.8)" }}>{i + 1}</span>
                   </div>
-                  <span style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", lineHeight: 1.5 }}>{step}</span>
+                  <span style={{ fontSize: 10, color: "#64748b", lineHeight: 1.5 }}>{step}</span>
                 </div>
               ))}
             </div>
@@ -494,10 +494,10 @@ export default function ContactIntelligence() {
               <div style={{ background: "rgba(155,28,46,0.05)", border: `1px solid rgba(155,28,46,0.25)`, borderRadius: 16, padding: 16, overflow: "hidden" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
                   <div>
-                    <div style={{ fontSize: 22, fontWeight: 900, color: "#fff", letterSpacing: "-0.02em" }}>
+                    <div style={{ fontSize: 22, fontWeight: 900, color: "#0F172A", letterSpacing: "-0.02em" }}>
                       {ABBR_TO_NAME[selectedState] || selectedState}
                     </div>
-                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginTop: 1 }}>
+                    <div style={{ fontSize: 10, color: "#64748b", marginTop: 1 }}>
                       <MapPin size={9} style={{ display: "inline", marginRight: 4 }} />
                       {(stateCounts[selectedState] || 0).toLocaleString()} plan sponsors
                     </div>
@@ -507,7 +507,7 @@ export default function ContactIntelligence() {
 
                 {/* Zoomed state shape */}
                 {stateGeo && (
-                  <div style={{ borderRadius: 12, overflow: "hidden", background: "rgba(0,0,0,0.2)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div style={{ borderRadius: 12, overflow: "hidden", background: "rgba(0,0,0,0.2)", border: "1px solid #f1f5f9" }}>
                     <ComposableMap
                       projection="geoMercator"
                       projectionConfig={{ center: stateGeo.center, scale: stateGeo.scale }}
@@ -525,13 +525,13 @@ export default function ContactIntelligence() {
                                 geography={geo}
                                 style={{
                                   default: {
-                                    fill: isThis ? BB_CRIMSON : "rgba(255,255,255,0.04)",
-                                    stroke: isThis ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.06)",
+                                    fill: isThis ? BB_CRIMSON : "#ffffff",
+                                    stroke: isThis ? "#334155" : "#f1f5f9",
                                     strokeWidth: isThis ? 0.8 : 0.3,
                                     outline: "none",
                                     filter: isThis ? "drop-shadow(0 0 8px rgba(155,28,46,0.6))" : "none",
                                   },
-                                  hover: { fill: isThis ? BB_CRIMSON : "rgba(255,255,255,0.04)", outline: "none" },
+                                  hover: { fill: isThis ? BB_CRIMSON : "#ffffff", outline: "none" },
                                   pressed: { outline: "none" },
                                 }}
                               />
@@ -546,8 +546,8 @@ export default function ContactIntelligence() {
 
               {/* City Filter Chips */}
               {cityCounts.length > 0 && (
-                <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 14 }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 10 }}>
+                <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, padding: 14 }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#64748b", marginBottom: 10 }}>
                     Filter by City
                   </div>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
@@ -557,9 +557,9 @@ export default function ContactIntelligence() {
                       onClick={() => setSelectedCity(null)}
                       style={{
                         padding: "4px 12px", borderRadius: 99, fontSize: 10, fontWeight: 700, cursor: "pointer",
-                        background: !selectedCity ? `rgba(155,28,46,0.25)` : "rgba(255,255,255,0.05)",
-                        border: !selectedCity ? `1px solid rgba(155,28,46,0.5)` : "1px solid rgba(255,255,255,0.1)",
-                        color: !selectedCity ? "#fff" : "rgba(255,255,255,0.45)",
+                        background: !selectedCity ? `rgba(155,28,46,0.25)` : "#f8fafc",
+                        border: !selectedCity ? `1px solid rgba(155,28,46,0.5)` : "1px solid #e2e8f0",
+                        color: !selectedCity ? BB_CRIMSON : "#334155",
                       }}
                     >
                       All <span style={{ opacity: 0.6 }}>({stateProspects.length})</span>
@@ -573,9 +573,9 @@ export default function ContactIntelligence() {
                           onClick={() => setSelectedCity(isActive ? null : city)}
                           style={{
                             padding: "4px 12px", borderRadius: 99, fontSize: 10, fontWeight: 700, cursor: "pointer",
-                            background: isActive ? `rgba(155,28,46,0.25)` : "rgba(255,255,255,0.05)",
-                            border: isActive ? `1px solid rgba(155,28,46,0.5)` : "1px solid rgba(255,255,255,0.08)",
-                            color: isActive ? "#fff" : "rgba(255,255,255,0.5)",
+                            background: isActive ? `rgba(155,28,46,0.25)` : "#f8fafc",
+                            border: isActive ? `1px solid rgba(155,28,46,0.5)` : "1px solid #e2e8f0",
+                            color: isActive ? "#fff" : "#334155",
                             transition: "all 0.12s",
                           }}
                         >
@@ -584,7 +584,7 @@ export default function ContactIntelligence() {
                       );
                     })}
                     {cityCounts.length > 18 && (
-                      <span style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", padding: "5px 0", alignSelf: "center" }}>
+                      <span style={{ fontSize: 9, color: "#94a3b8", padding: "5px 0", alignSelf: "center" }}>
                         +{cityCounts.length - 18} more
                       </span>
                     )}
@@ -594,17 +594,17 @@ export default function ContactIntelligence() {
 
               {/* Prospect List */}
               {(displayList.length > 0 || loadingState) && (
-                <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, overflow: "hidden" }}>
-                  <div style={{ padding: "10px 14px 8px", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>
+                <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, overflow: "hidden" }}>
+                  <div style={{ padding: "10px 14px 8px", borderBottom: "1px solid #f1f5f9", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "#64748b" }}>
                       {selectedCity ? `${selectedCity} Sponsors` : `${ABBR_TO_NAME[selectedState] || selectedState} Sponsors`}
                     </div>
-                    {!loadingState && <span style={{ fontSize: 9, color: "rgba(255,255,255,0.25)" }}>{displayList.length}</span>}
+                    {!loadingState && <span style={{ fontSize: 9, color: "#64748b", fontWeight: 700 }}>{displayList.length}</span>}
                   </div>
                   {loadingState ? (
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 20, gap: 8 }}>
                       <Loader2 size={14} color={BB_CRIMSON} style={{ animation: "spin 1s linear infinite" }} />
-                      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>Loading…</span>
+                      <span style={{ fontSize: 11, color: "#64748b" }}>Loading…</span>
                     </div>
                   ) : (
                     <div style={{ maxHeight: 340, overflowY: "auto" }}>
@@ -616,16 +616,16 @@ export default function ContactIntelligence() {
                           style={{
                             width: "100%", textAlign: "left", padding: "10px 14px",
                             background: selected?.ein === emp.ein ? "rgba(155,28,46,0.12)" : "none",
-                            border: "none", borderBottom: "1px solid rgba(255,255,255,0.04)",
+                            border: "none", borderBottom: "1px solid rgba(15,23,42,0.08)",
                             cursor: "pointer", display: "flex", alignItems: "center", gap: 8,
                           }}
                           onMouseEnter={e => { if (selected?.ein !== emp.ein) e.currentTarget.style.background = "rgba(155,28,46,0.07)"; }}
                           onMouseLeave={e => { e.currentTarget.style.background = selected?.ein === emp.ein ? "rgba(155,28,46,0.12)" : "none"; }}
                         >
-                          <Building2 size={12} color={selected?.ein === emp.ein ? BB_CRIMSON : "rgba(255,255,255,0.25)"} style={{ flexShrink: 0 }} />
+                          <Building2 size={12} color={selected?.ein === emp.ein ? BB_CRIMSON : "#64748b"} style={{ flexShrink: 0 }} />
                           <div style={{ flex: 1, minWidth: 0 }}>
-                            <div style={{ fontSize: 11, fontWeight: 700, color: selected?.ein === emp.ein ? "#fff" : "rgba(255,255,255,0.75)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{emp.name}</div>
-                            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.28)", marginTop: 1 }}>
+                            <div style={{ fontSize: 11, fontWeight: 800, color: selected?.ein === emp.ein ? BB_CRIMSON : "#1e2f46", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{emp.name}</div>
+                            <div style={{ fontSize: 9, color: "#64748b", marginTop: 1, fontWeight: 600 }}>
                               {emp.city} · {(emp.participants || 0).toLocaleString()} lives
                               {emp.has_health && <span style={{ marginLeft: 5, padding: "1px 4px", borderRadius: 3, background: "rgba(16,185,129,0.15)", color: "#10b981", fontSize: 8 }}>Health</span>}
                               {emp.has_stop_loss && <span style={{ marginLeft: 3, padding: "1px 4px", borderRadius: 3, background: "rgba(59,130,246,0.15)", color: "#60a5fa", fontSize: 8 }}>SL</span>}
@@ -633,7 +633,7 @@ export default function ContactIntelligence() {
                           </div>
                           {selected?.ein === emp.ein
                             ? <div style={{ width: 5, height: 5, borderRadius: "50%", background: BB_CRIMSON, flexShrink: 0 }} />
-                            : <ChevronRight size={10} color="rgba(255,255,255,0.12)" />}
+                            : <ChevronRight size={10} color="#cbd5e1" />}
                         </button>
                       ))}
                     </div>
@@ -643,14 +643,14 @@ export default function ContactIntelligence() {
 
               {/* Empty state for city filter */}
               {displayList.length === 0 && !loadingState && stateProspects.length > 0 && selectedCity && (
-                <div style={{ textAlign: "center", padding: "24px 16px", color: "rgba(255,255,255,0.25)", fontSize: 11 }}>
+                <div style={{ textAlign: "center", padding: "24px 16px", color: "#64748b", fontSize: 11, fontWeight: 600 }}>
                   No prospects in {selectedCity}. Try another city or "All".
                 </div>
               )}
 
               {/* No state prospects yet (no loadingState, no search) */}
               {stateProspects.length === 0 && !loadingState && !query.trim() && (
-                <div style={{ textAlign: "center", padding: "30px 16px", color: "rgba(255,255,255,0.2)", fontSize: 11 }}>
+                <div style={{ textAlign: "center", padding: "30px 16px", color: "#94a3b8", fontSize: 11 }}>
                   No Form 5500 data found for this state.
                 </div>
               )}
@@ -660,20 +660,20 @@ export default function ContactIntelligence() {
           {/* ── COL 3 (or COL 2 when no state): Discovery Results ──────── */}
           <div>
             {!selectedState && !result && !running && (
-              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px dashed rgba(255,255,255,0.07)", borderRadius: 16, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 480, textAlign: "center" }}>
-                <MapPin size={36} color="rgba(255,255,255,0.1)" style={{ marginBottom: 14 }} />
-                <div style={{ fontSize: 14, fontWeight: 700, color: "rgba(255,255,255,0.4)", marginBottom: 6 }}>Click a state to begin</div>
-                <div style={{ fontSize: 12, color: "rgba(255,255,255,0.2)", maxWidth: 260 }}>The state zooms in on the map and cities appear for filtering</div>
+              <div style={{ background: "#ffffff", border: "1px dashed #e2e8f0", borderRadius: 16, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 480, textAlign: "center" }}>
+                <MapPin size={36} color="#e2e8f0" style={{ marginBottom: 14 }} />
+                <div style={{ fontSize: 14, fontWeight: 700, color: "#475569", marginBottom: 6 }}>Click a state to begin</div>
+                <div style={{ fontSize: 12, color: "#94a3b8", maxWidth: 260 }}>The state zooms in on the map and cities appear for filtering</div>
               </div>
             )}
 
             {selectedState && !result && !running && (
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 480, textAlign: "center", opacity: 0.5 }}>
-                <MailOpen size={44} color="rgba(255,255,255,0.2)" style={{ marginBottom: 14 }} />
-                <div style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.5)", marginBottom: 6 }}>
+                <MailOpen size={44} color="#94a3b8" style={{ marginBottom: 14 }} />
+                <div style={{ fontSize: 13, fontWeight: 700, color: "#334155", marginBottom: 6 }}>
                   {selected ? "Ready to discover" : "Select a sponsor"}
                 </div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>
+                <div style={{ fontSize: 11, color: "#64748b" }}>
                   {selected ? `Click Run Email Discovery for ${selected.name}` : "Pick a plan sponsor from the city list"}
                 </div>
               </div>
@@ -682,8 +682,8 @@ export default function ContactIntelligence() {
             {running && (
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: 480, gap: 16 }}>
                 <Loader2 size={36} color={BB_CRIMSON} style={{ animation: "spin 1s linear infinite" }} />
-                <div style={{ fontSize: 14, fontWeight: 700, color: "rgba(255,255,255,0.6)" }}>Running discovery pipeline…</div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", maxWidth: 280, textAlign: "center" }}>Querying Hunter.io, verifying emails, generating AI outreach draft</div>
+                <div style={{ fontSize: 14, fontWeight: 700, color: "#1e293b" }}>Running discovery pipeline…</div>
+                <div style={{ fontSize: 11, color: "#64748b", maxWidth: 280, textAlign: "center" }}>Querying Hunter.io, verifying emails, generating AI outreach draft</div>
               </div>
             )}
 
@@ -691,20 +691,20 @@ export default function ContactIntelligence() {
               <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
                 {/* Section 1 — Identified Contact */}
-                <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 20 }}>
+                <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: 20 }}>
                   <SectionHeader n={1} label="Identified Contact" />
                   {result.best_contact ? (
                     <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
                       <div style={{ width: 42, height: 42, borderRadius: 12, background: `linear-gradient(135deg, ${BB_CRIMSON}, #7a1525)`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                        <span style={{ fontSize: 14, fontWeight: 900, color: "#fff" }}>
+                        <span style={{ fontSize: 14, fontWeight: 900, color: "#0F172A" }}>
                           {(result.best_contact.first_name?.[0] || "") + (result.best_contact.last_name?.[0] || "") || "?"}
                         </span>
                       </div>
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: 16, fontWeight: 800, color: "#fff" }}>
+                        <div style={{ fontSize: 16, fontWeight: 800, color: "#0F172A" }}>
                           {result.best_contact.first_name} {result.best_contact.last_name}
                         </div>
-                        <div style={{ fontSize: 12, color: "rgba(255,255,255,0.50)", marginBottom: 8 }}>
+                        <div style={{ fontSize: 12, color: "#3f516a", marginBottom: 8, fontWeight: 600 }}>
                           {result.best_contact.position || "—"} · {result.employer.name}
                         </div>
                         <div style={{ fontSize: 13, color: "#60a5fa", fontWeight: 600 }}>{result.best_contact.email}</div>
@@ -715,18 +715,18 @@ export default function ContactIntelligence() {
                       </div>
                     </div>
                   ) : (
-                    <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 13 }}>No verified contact found — outreach draft still generated below.</div>
+                    <div style={{ color: "#64748b", fontSize: 13 }}>No verified contact found — outreach draft still generated below.</div>
                   )}
                 </div>
 
                 {/* Section 2 — Company Domain */}
-                <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 20 }}>
+                <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: 20 }}>
                   <SectionHeader n={2} label="Company Domain" />
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                    <Globe size={20} color="rgba(255,255,255,0.4)" />
+                    <Globe size={20} color="#475569" />
                     <div>
-                      <div style={{ fontSize: 16, fontWeight: 800, color: "#fff" }}>{result.employer.domain}</div>
-                      <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>
+                      <div style={{ fontSize: 16, fontWeight: 800, color: "#0F172A" }}>{result.employer.domain}</div>
+                      <div style={{ fontSize: 11, color: "#64748b" }}>
                         {result.hunter_meta.total_emails_found} email{result.hunter_meta.total_emails_found !== 1 ? "s" : ""} found · {result.hunter_meta.organization || result.employer.name}
                       </div>
                     </div>
@@ -734,24 +734,24 @@ export default function ContactIntelligence() {
                 </div>
 
                 {/* Section 3 — Candidate Emails */}
-                <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 20 }}>
+                <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: 20 }}>
                   <SectionHeader n={3} label="Candidate Emails" />
                   {result.candidates.length === 0 ? (
-                    <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 13 }}>No email addresses found for this domain.</div>
+                    <div style={{ color: "#64748b", fontSize: 13 }}>No email addresses found for this domain.</div>
                   ) : (
                     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                       {result.candidates.map((c, i) => (
-                        <div key={i} data-testid={`candidate-email-${i}`} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: "rgba(255,255,255,0.03)", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
+                        <div key={i} data-testid={`candidate-email-${i}`} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: "#ffffff", borderRadius: 10, border: "1px solid #f1f5f9" }}>
                           <div style={{ fontSize: 12, fontWeight: 700, color: BB_CRIMSON, minWidth: 18 }}>#{i + 1}</div>
                           <div style={{ flex: 1 }}>
-                            <div style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>{c.email}</div>
-                            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)" }}>
+                            <div style={{ fontSize: 12, fontWeight: 700, color: "#0F172A" }}>{c.email}</div>
+                            <div style={{ fontSize: 10, color: "#64748b" }}>
                               {c.first_name} {c.last_name}{c.position ? ` · ${c.position}` : ""} · {c.sources} source{c.sources !== 1 ? "s" : ""}
                             </div>
                           </div>
                           <div>
                             <ConfidenceBar score={c.confidence} />
-                            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", textAlign: "right", marginTop: 2 }}>Hunter confidence</div>
+                            <div style={{ fontSize: 9, color: "#64748b", textAlign: "right", marginTop: 2, fontWeight: 700 }}>Hunter confidence</div>
                           </div>
                         </div>
                       ))}
@@ -760,17 +760,17 @@ export default function ContactIntelligence() {
                 </div>
 
                 {/* Section 4 — Verification Results */}
-                <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 20 }}>
+                <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: 20 }}>
                   <SectionHeader n={4} label="Verification Results" />
                   {result.verified.length === 0 ? (
-                    <div style={{ color: "rgba(255,255,255,0.35)", fontSize: 13 }}>No emails were verified.</div>
+                    <div style={{ color: "#64748b", fontSize: 13 }}>No emails were verified.</div>
                   ) : (
                     <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                       {result.verified.map((v, i) => (
-                        <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: "rgba(255,255,255,0.03)", borderRadius: 10, border: "1px solid rgba(255,255,255,0.06)" }}>
+                        <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: "#ffffff", borderRadius: 10, border: "1px solid #f1f5f9" }}>
                           <div style={{ flex: 1 }}>
-                            <div style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>{v.email}</div>
-                            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>
+                            <div style={{ fontSize: 12, fontWeight: 700, color: "#0F172A" }}>{v.email}</div>
+                            <div style={{ fontSize: 10, color: "#64748b", marginTop: 2 }}>
                               {v.mx_records ? "MX records valid" : "No MX records"} · {v.disposable ? "⚠ Disposable" : "Not disposable"}
                             </div>
                           </div>
@@ -792,7 +792,7 @@ export default function ContactIntelligence() {
                       <Shield size={22} color="#10b981" />
                       <div style={{ flex: 1 }}>
                         <div style={{ fontSize: 18, fontWeight: 900, color: "#10b981", letterSpacing: "-0.01em" }}>{result.best_contact.email}</div>
-                        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.40)", marginTop: 2 }}>Selected based on verification status and role relevance</div>
+                        <div style={{ fontSize: 11, color: "#3f516a", marginTop: 2, fontWeight: 600 }}>Selected based on verification status and role relevance</div>
                       </div>
                       <button
                         data-testid="btn-copy-email"
@@ -807,19 +807,19 @@ export default function ContactIntelligence() {
 
                 {/* Section 6 — Outreach Draft */}
                 {result.outreach?.email_body && (
-                  <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 20 }}>
+                  <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: 20 }}>
                     <SectionHeader n={6} label="AI-Generated Outreach Draft" />
                     {result.outreach.subject_lines?.length > 0 && (
                       <div style={{ marginBottom: 16 }}>
-                        <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 8 }}>Suggested Subject Lines</div>
+                        <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "#64748b", marginBottom: 8 }}>Suggested Subject Lines</div>
                         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                           {result.outreach.subject_lines.map((sl, i) => (
-                            <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "rgba(255,255,255,0.03)", borderRadius: 8, border: "1px solid rgba(255,255,255,0.07)" }}>
-                              <div style={{ flex: 1, fontSize: 12, color: "rgba(255,255,255,0.75)", fontStyle: "italic" }}>"{sl}"</div>
+                            <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "8px 12px", background: "#ffffff", borderRadius: 8, border: "1px solid #e2e8f0" }}>
+                              <div style={{ flex: 1, fontSize: 12, color: "#1e2f46", fontStyle: "italic", fontWeight: 600 }}>"{sl}"</div>
                               <button
                                 data-testid={`btn-copy-subject-${i}`}
                                 onClick={() => { copyText(sl, () => setCopiedSubject(i)); setTimeout(() => setCopiedSubject(null), 2000); }}
-                                style={{ padding: "4px 10px", borderRadius: 6, background: copiedSubject === i ? "rgba(16,185,129,0.15)" : "rgba(255,255,255,0.05)", border: copiedSubject === i ? "1px solid rgba(16,185,129,0.3)" : "1px solid rgba(255,255,255,0.10)", color: copiedSubject === i ? "#10b981" : "rgba(255,255,255,0.4)", fontSize: 10, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}
+                                style={{ padding: "4px 10px", borderRadius: 6, background: copiedSubject === i ? "rgba(16,185,129,0.15)" : "#f8fafc", border: copiedSubject === i ? "1px solid rgba(16,185,129,0.3)" : "1px solid rgba(15,23,42,0.06)", color: copiedSubject === i ? "#10b981" : "#475569", fontSize: 10, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}
                               >
                                 <Copy size={10} /> {copiedSubject === i ? "Copied!" : "Copy"}
                               </button>
@@ -829,15 +829,15 @@ export default function ContactIntelligence() {
                       </div>
                     )}
                     <div>
-                      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 8 }}>Email Body</div>
-                      <div style={{ background: "rgba(0,0,0,0.3)", borderRadius: 12, padding: 18, border: "1px solid rgba(255,255,255,0.06)", position: "relative" }}>
-                        <pre style={{ fontSize: 12, color: "rgba(255,255,255,0.75)", whiteSpace: "pre-wrap", wordBreak: "break-word", margin: 0, fontFamily: "inherit", lineHeight: 1.7 }}>
+                      <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "#64748b", marginBottom: 8 }}>Email Body</div>
+                      <div style={{ background: "rgba(0,0,0,0.05)", borderRadius: 12, padding: 18, border: "1px solid #f1f5f9", position: "relative" }}>
+                        <pre style={{ fontSize: 12, color: "#1e2f46", whiteSpace: "pre-wrap", wordBreak: "break-word", margin: 0, fontFamily: "inherit", lineHeight: 1.7, fontWeight: 600 }}>
                           {result.outreach.email_body}
                         </pre>
                         <button
                           data-testid="btn-copy-body"
                           onClick={() => { copyText(result!.outreach.email_body, () => setCopiedBody(true)); setTimeout(() => setCopiedBody(false), 2000); }}
-                          style={{ position: "absolute", top: 12, right: 12, padding: "5px 10px", borderRadius: 7, background: copiedBody ? "rgba(16,185,129,0.15)" : "rgba(255,255,255,0.05)", border: copiedBody ? "1px solid rgba(16,185,129,0.3)" : "1px solid rgba(255,255,255,0.1)", color: copiedBody ? "#10b981" : "rgba(255,255,255,0.4)", fontSize: 10, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}
+                          style={{ position: "absolute", top: 12, right: 12, padding: "5px 10px", borderRadius: 7, background: copiedBody ? "rgba(16,185,129,0.15)" : "#f8fafc", border: copiedBody ? "1px solid rgba(16,185,129,0.3)" : "1px solid #e2e8f0", color: copiedBody ? "#10b981" : "#475569", fontSize: 10, fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", gap: 5 }}
                         >
                           <Copy size={10} /> {copiedBody ? "Copied!" : "Copy Email"}
                         </button>
@@ -858,7 +858,7 @@ export default function ContactIntelligence() {
   );
 }
 
-function SectionHeader({ n, label, color = "rgba(255,255,255,0.55)" }: { n: number; label: string; color?: string }) {
+function SectionHeader({ n, label, color = "#334155" }: { n: number; label: string; color?: string }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
       <div style={{ width: 20, height: 20, borderRadius: "50%", background: "rgba(155,28,46,0.2)", border: "1px solid rgba(155,28,46,0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>

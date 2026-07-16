@@ -57,8 +57,8 @@ export default function CapitalCalls() {
           <button key={v} onClick={() => setView(v)}
             className="text-xs px-4 py-2 rounded-xl font-semibold capitalize transition-all"
             style={{
-              background: view === v ? "rgba(0,168,255,0.1)" : "rgba(255,255,255,0.03)",
-              border: `1px solid ${view === v ? "rgba(0,168,255,0.3)" : "rgba(255,255,255,0.06)"}`,
+              background: view === v ? "rgba(0,168,255,0.1)" : "#ffffff",
+              border: `1px solid ${view === v ? "rgba(0,168,255,0.3)" : "#f1f5f9"}`,
               color: view === v ? "#00A8FF" : "rgba(150,170,210,0.5)",
             }}
             data-testid={`tab-${v}`}>{v === "funds" ? "All Funds" : v === "upcoming" ? `Upcoming Calls (${capitalCallsData.upcomingCalls.length})` : "Distribution Log"}</button>
@@ -72,8 +72,8 @@ export default function CapitalCalls() {
               <button key={t} onClick={() => setTypeFilter(t)}
                 className="text-xs px-2.5 py-1 rounded-lg transition-all"
                 style={{
-                  background: typeFilter === t ? "rgba(0,168,255,0.08)" : "rgba(255,255,255,0.02)",
-                  border: `1px solid ${typeFilter === t ? "rgba(0,168,255,0.25)" : "rgba(255,255,255,0.06)"}`,
+                  background: typeFilter === t ? "rgba(0,168,255,0.08)" : "#ffffff",
+                  border: `1px solid ${typeFilter === t ? "rgba(0,168,255,0.25)" : "#f1f5f9"}`,
                   color: typeFilter === t ? "#00A8FF" : "rgba(150,170,210,0.5)",
                 }}
                 data-testid={`filter-type-${t.toLowerCase().replace(/\s+/g,"-")}`}>{t}</button>
@@ -90,20 +90,20 @@ export default function CapitalCalls() {
                   <button className="w-full flex items-center gap-4" onClick={() => setExpanded(isExpanded ? null : fund.id)}>
                     <div className="flex-1 min-w-0 text-left">
                       <div className="flex items-center gap-2 mb-0.5">
-                        <p className="font-bold text-sm text-white">{fund.name}</p>
+                        <p className="font-bold text-sm text-[var(--kiq-ink)]">{fund.name}</p>
                         <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded" style={{ background: `${color}12`, color, border: `1px solid ${color}22` }}>{fund.type}</span>
                         <span className="text-[9px] text-muted-foreground">Vintage {fund.vintage}</span>
                         {fund.currency !== "USD" && <span className="text-[9px] text-muted-foreground">{fund.currency}</span>}
                       </div>
                       <div className="flex items-center gap-1 mt-1.5">
-                        <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)", maxWidth: 200 }}>
+                        <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "#f8fafc", maxWidth: 200 }}>
                           <div className="h-full rounded-full" style={{ width: `${callPct}%`, background: color }} />
                         </div>
                         <span className="text-[9px] text-muted-foreground">{callPct.toFixed(0)}% called</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-6 text-right flex-shrink-0">
-                      <div><p className="text-[9px] text-muted-foreground">Committed</p><p className="text-sm font-bold text-white">{formatCurrency(fund.committed)}</p></div>
+                      <div><p className="text-[9px] text-muted-foreground">Committed</p><p className="text-sm font-bold text-[var(--kiq-ink)]">{formatCurrency(fund.committed)}</p></div>
                       <div><p className="text-[9px] text-muted-foreground">NAV</p><p className="text-sm font-bold" style={{ color }}>{formatCurrency(fund.nav)}</p></div>
                       <div><p className="text-[9px] text-muted-foreground">TVPI</p><p className="text-sm font-bold" style={{ color: fund.tvpi >= 1.5 ? "#00FF94" : fund.tvpi >= 1.2 ? "#FFB800" : "#FF4D6D" }}>{fund.tvpi.toFixed(2)}x</p></div>
                       <div><p className="text-[9px] text-muted-foreground">IRR</p><p className="text-sm font-bold" style={{ color: fund.irr >= 20 ? "#00FF94" : fund.irr >= 12 ? "#FFB800" : "#FF4D6D" }}>{fund.irr.toFixed(1)}%</p></div>
@@ -111,13 +111,13 @@ export default function CapitalCalls() {
                     </div>
                   </button>
                   {isExpanded && (
-                    <div className="mt-3 pt-3 grid grid-cols-2 sm:grid-cols-5 gap-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                    <div className="mt-3 pt-3 grid grid-cols-2 sm:grid-cols-5 gap-3" style={{ borderTop: "1px solid #f1f5f9" }}>
                       {[
                         { l: "Called", v: formatCurrency(fund.called) }, { l: "Uncalled", v: formatCurrency(fund.uncalled) },
                         { l: "Distributions", v: formatCurrency(fund.distributions) }, { l: "DPI", v: `${fund.dpi.toFixed(2)}x` },
                         { l: "Manager", v: fund.manager },
                       ].map((r) => (
-                        <div key={r.l}><p className="text-[9px] text-muted-foreground">{r.l}</p><p className="text-sm font-semibold text-white">{r.v}</p></div>
+                        <div key={r.l}><p className="text-[9px] text-muted-foreground">{r.l}</p><p className="text-sm font-semibold text-[var(--kiq-ink)]">{r.v}</p></div>
                       ))}
                     </div>
                   )}
@@ -140,7 +140,7 @@ export default function CapitalCalls() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-0.5">
-                      <p className="font-bold text-sm text-white">{call.fund}</p>
+                      <p className="font-bold text-sm text-[var(--kiq-ink)]">{call.fund}</p>
                       <span className="text-[9px] font-semibold px-1.5 py-0.5 rounded" style={{ background: "rgba(255,77,109,0.08)", color: "#FF4D6D", border: "1px solid rgba(255,77,109,0.2)" }}>Call #{call.callNumber}</span>
                     </div>
                     <p className="text-xs text-muted-foreground">{call.notes}</p>
@@ -156,7 +156,7 @@ export default function CapitalCalls() {
           })}
           <div className="metric-card" style={{ background: "rgba(255,77,109,0.03)", border: "1px solid rgba(255,77,109,0.1)" }}>
             <div className="flex justify-between text-sm">
-              <span className="font-semibold text-white">Total Upcoming Calls</span>
+              <span className="font-semibold text-[var(--kiq-ink)]">Total Upcoming Calls</span>
               <span className="font-bold" style={{ color: "#FF4D6D" }}>{formatCurrency(capitalCallsData.upcomingCalls.reduce((s, c) => s + c.estimatedAmount, 0))}</span>
             </div>
           </div>
@@ -175,7 +175,7 @@ export default function CapitalCalls() {
                   <div className="flex items-start gap-3 min-w-0">
                     <ArrowDownLeft size={16} style={{ color: "#00FF94", flexShrink: 0, marginTop: 2 }} />
                     <div className="min-w-0">
-                      <p className="font-bold text-sm text-white">{d.fund}</p>
+                      <p className="font-bold text-sm text-[var(--kiq-ink)]">{d.fund}</p>
                       <p className="text-xs text-muted-foreground mt-0.5">{d.notes}</p>
                       <div className="flex items-center gap-2 mt-1">
                         <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded" style={{ background: "rgba(0,255,148,0.08)", color: "#00FF94", border: "1px solid rgba(0,255,148,0.2)" }}>{d.type}</span>

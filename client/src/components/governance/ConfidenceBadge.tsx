@@ -20,14 +20,14 @@ export function ConfidenceBadge({ score, showBar = true, size = "sm", className 
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded border font-mono",
+        "inline-flex items-center gap-1.5 rounded-full border font-mono shadow-sm backdrop-blur-sm",
         size === "sm" ? "px-1.5 py-0.5 text-[9px]" : "px-2 py-1 text-[11px]",
         cfg.border, cfg.text, className,
       )}
       data-testid="confidence-badge"
     >
       {showBar && (
-        <span className="relative w-12 h-1 rounded-full bg-white/10 overflow-hidden">
+        <span className="relative w-12 h-1 rounded-full bg-slate-200/70 overflow-hidden">
           <span className={cn("absolute inset-y-0 left-0 rounded-full", cfg.bar)}
             style={{ width: `${pct}%` }} />
         </span>

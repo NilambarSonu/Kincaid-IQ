@@ -17,7 +17,7 @@ const GREEN  = "#00FF94";
 const BLUE   = "#00D4FF";
 const ORANGE = "#FF6B1A";
 const PURPLE = "#A855F7";
-const BG     = "#07080f";
+const BG     = "transparent";
 
 /* ─── TYPES ──────────────────────────────────────────────────────────────── */
 interface CounterPositioning {
@@ -77,7 +77,7 @@ function tierColor(tier: string) {
   return ORANGE;
 }
 function lossRateColor(rate: number | null) {
-  if (rate === null) return "rgba(255,255,255,0.4)";
+  if (rate === null) return "#475569";
   if (rate >= 70) return RED;
   if (rate >= 50) return ORANGE;
   if (rate >= 30) return GOLD;
@@ -99,10 +99,10 @@ function EmptyState() {
         <Swords style={{ width: 32, height: 32, color: RED }} />
       </div>
       <div>
-        <div style={{ fontSize: 18, fontWeight: 800, color: "rgba(255,255,255,0.9)", marginBottom: 8 }}>
+        <div style={{ fontSize: 18, fontWeight: 800, color: "#0f172a", marginBottom: 8 }}>
           No Competitor Data Yet
         </div>
-        <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", maxWidth: 380, lineHeight: 1.7 }}>
+        <div style={{ fontSize: 13, color: "#475569", maxWidth: 380, lineHeight: 1.7 }}>
           Battlecards are auto-built from your win/loss records. Log outcomes on opportunities in the{" "}
           <Link href="/rfp-intelligence" style={{ color: GOLD, textDecoration: "underline" }}>
             RFP Intelligence OS
@@ -123,7 +123,7 @@ function StatPill({ label, value, color }: { label: string; value: string; color
       background: `${color}10`, border: `1px solid ${color}25`,
     }}>
       <span style={{ fontSize: 18, fontWeight: 900, color }}>{value}</span>
-      <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>{label}</span>
+      <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "#64748b" }}>{label}</span>
     </div>
   );
 }
@@ -146,7 +146,7 @@ function CompetitorCard({ card, selected, onClick }: {
       style={{
         width: "100%", textAlign: "left", padding: 20, borderRadius: 16, cursor: "pointer",
         background: selected ? "rgba(255,72,109,0.08)" : "rgba(255,255,255,0.025)",
-        border: selected ? `1px solid ${RED}40` : "1px solid rgba(255,255,255,0.07)",
+        border: selected ? `1px solid ${RED}40` : "1px solid #e2e8f0",
         transition: "all 0.15s",
       }}
     >
@@ -159,7 +159,7 @@ function CompetitorCard({ card, selected, onClick }: {
           <Shield style={{ width: 18, height: 18, color: lrColor }} />
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: 14, fontWeight: 800, color: "#fff", marginBottom: 3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+          <div style={{ fontSize: 14, fontWeight: 800, color: "#0F172A", marginBottom: 3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
             {card.competitor}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -168,26 +168,26 @@ function CompetitorCard({ card, selected, onClick }: {
               color: threatCol, background: `${threatCol}18`, border: `1px solid ${threatCol}30`,
               borderRadius: 3, padding: "1px 5px",
             }}>{threat} THREAT</span>
-            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>
+            <span style={{ fontSize: 10, color: "#64748b" }}>
               {card.total_encounters} encounter{card.total_encounters !== 1 ? "s" : ""}
             </span>
           </div>
         </div>
-        <ChevronRight style={{ width: 14, height: 14, color: "rgba(255,255,255,0.25)", flexShrink: 0 }} />
+        <ChevronRight style={{ width: 14, height: 14, color: "rgba(15,23,42,0.08)", flexShrink: 0 }} />
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8 }}>
         <div style={{ textAlign: "center" }}>
           <div style={{ fontSize: 20, fontWeight: 900, color: lrColor }}>{fmtPct(card.our_loss_rate)}</div>
-          <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Our Loss Rate</div>
+          <div style={{ fontSize: 8, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em" }}>Our Loss Rate</div>
         </div>
         <div style={{ textAlign: "center" }}>
           <div style={{ fontSize: 20, fontWeight: 900, color: ORANGE }}>{card.times_they_won}</div>
-          <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Their Wins</div>
+          <div style={{ fontSize: 8, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em" }}>Their Wins</div>
         </div>
         <div style={{ textAlign: "center" }}>
           <div style={{ fontSize: 20, fontWeight: 900, color: GREEN }}>{card.our_wins_against}</div>
-          <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Our Wins</div>
+          <div style={{ fontSize: 8, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em" }}>Our Wins</div>
         </div>
       </div>
 
@@ -201,7 +201,7 @@ function CompetitorCard({ card, selected, onClick }: {
             }}>{g}</span>
           ))}
           {card.top_product_gaps.length > 3 && (
-            <span style={{ fontSize: 9, color: "rgba(255,255,255,0.25)" }}>+{card.top_product_gaps.length - 3} more</span>
+            <span style={{ fontSize: 9, color: "rgba(15,23,42,0.08)" }}>+{card.top_product_gaps.length - 3} more</span>
           )}
         </div>
       )}
@@ -228,19 +228,19 @@ function CounterPositioningPanel({ cp }: { cp: CounterPositioning }) {
             borderRadius: 3, padding: "1px 6px",
           }}>AI LOCKED</span>
         </div>
-        <p style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.7, margin: 0 }}>
+        <p style={{ fontSize: 12, color: "#334155", lineHeight: 1.7, margin: 0 }}>
           {cp.summary}
         </p>
         {cp.min_required && (
           <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 6 }}>
-            <div style={{ flex: 1, height: 3, borderRadius: 2, background: "rgba(255,255,255,0.05)", overflow: "hidden" }}>
+            <div style={{ flex: 1, height: 3, borderRadius: 2, background: "#f8fafc", overflow: "hidden" }}>
               <div style={{
                 height: "100%", borderRadius: 2, background: ORANGE,
                 width: `${Math.min(100, (cp.data_basis / cp.min_required) * 100)}%`,
                 transition: "width 0.4s",
               }} />
             </div>
-            <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", whiteSpace: "nowrap" }}>
+            <span style={{ fontSize: 9, color: "#64748b", whiteSpace: "nowrap" }}>
               {cp.data_basis}/{cp.min_required} records
             </span>
           </div>
@@ -260,7 +260,7 @@ function CounterPositioningPanel({ cp }: { cp: CounterPositioning }) {
           <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: col }}>
             {cp.confidence_tier}
           </span>
-          <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>· {cp.data_basis} outcome{cp.data_basis !== 1 ? "s" : ""} analyzed</span>
+          <span style={{ fontSize: 9, color: "#64748b" }}>· {cp.data_basis} outcome{cp.data_basis !== 1 ? "s" : ""} analyzed</span>
         </div>
         {cp.positioning_headline && (
           <p style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.85)", margin: 0, lineHeight: 1.5 }}>
@@ -271,14 +271,14 @@ function CounterPositioningPanel({ cp }: { cp: CounterPositioning }) {
 
       {cp.talking_points.length > 0 && (
         <div>
-          <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 10 }}>
+          <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "#64748b", marginBottom: 10 }}>
             Counter-Positioning Talking Points
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {cp.talking_points.map((tp, i) => (
               <div key={i} style={{
                 padding: 14, borderRadius: 12,
-                background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)",
+                background: "#ffffff", border: "1px solid #e2e8f0",
               }}>
                 <div style={{ display: "flex", gap: 10, marginBottom: 6 }}>
                   <div style={{
@@ -294,7 +294,7 @@ function CounterPositioningPanel({ cp }: { cp: CounterPositioning }) {
                 {tp.evidence_basis && (
                   <div style={{ display: "flex", alignItems: "flex-start", gap: 6, paddingLeft: 30 }}>
                     <CheckCircle2 style={{ width: 10, height: 10, color: GREEN, flexShrink: 0, marginTop: 2 }} />
-                    <span style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", fontStyle: "italic" }}>
+                    <span style={{ fontSize: 10, color: "#64748b", fontStyle: "italic" }}>
                       {tp.evidence_basis}
                     </span>
                   </div>
@@ -314,20 +314,20 @@ function CounterPositioningPanel({ cp }: { cp: CounterPositioning }) {
             <Target style={{ width: 12, height: 12, color: RED }} />
             <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: RED }}>Key Vulnerability</span>
           </div>
-          <p style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", margin: 0, lineHeight: 1.6 }}>{cp.key_vulnerability}</p>
+          <p style={{ fontSize: 12, color: "#0f172a", margin: 0, lineHeight: 1.6 }}>{cp.key_vulnerability}</p>
         </div>
       )}
 
       {cp.recommended_proof_points && cp.recommended_proof_points.length > 0 && (
         <div>
-          <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 8 }}>
+          <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "#64748b", marginBottom: 8 }}>
             Bring to the Meeting
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             {cp.recommended_proof_points.map((pp, i) => (
               <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
                 <ArrowRight style={{ width: 12, height: 12, color: BLUE, flexShrink: 0, marginTop: 2 }} />
-                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>{pp}</span>
+                <span style={{ fontSize: 11, color: "#1e293b" }}>{pp}</span>
               </div>
             ))}
           </div>
@@ -360,13 +360,13 @@ function BattleCardDetail({ competitor, onClose }: { competitor: string; onClose
         style={{
           width: 680, maxWidth: "95vw", height: "100vh", overflowY: "auto",
           background: "linear-gradient(180deg, #0d0f1e 0%, #08091a 100%)",
-          border: "1px solid rgba(255,255,255,0.08)", borderRight: "none",
+          border: "1px solid #e2e8f0", borderRight: "none",
           display: "flex", flexDirection: "column",
         }}
       >
         {/* Header */}
         <div style={{
-          padding: "20px 24px", borderBottom: "1px solid rgba(255,255,255,0.07)",
+          padding: "20px 24px", borderBottom: "1px solid #e2e8f0",
           display: "flex", alignItems: "center", gap: 14, flexShrink: 0,
           position: "sticky", top: 0, zIndex: 10,
           background: "rgba(13,15,30,0.96)", backdropFilter: "blur(12px)",
@@ -379,12 +379,12 @@ function BattleCardDetail({ competitor, onClose }: { competitor: string; onClose
             <Swords style={{ width: 20, height: 20, color: RED }} />
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: 16, fontWeight: 900, color: "#fff" }}>{competitor}</div>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)" }}>Competitive Battlecard</div>
+            <div style={{ fontSize: 16, fontWeight: 900, color: "#0F172A" }}>{competitor}</div>
+            <div style={{ fontSize: 10, color: "#64748b" }}>Competitive Battlecard</div>
           </div>
           <button onClick={onClose} data-testid="close-battlecard"
-            style={{ padding: 8, borderRadius: 8, background: "rgba(255,255,255,0.05)", border: "none", cursor: "pointer" }}>
-            <X style={{ width: 16, height: 16, color: "rgba(255,255,255,0.5)" }} />
+            style={{ padding: 8, borderRadius: 8, background: "#f8fafc", border: "none", cursor: "pointer" }}>
+            <X style={{ width: 16, height: 16, color: "#334155" }} />
           </button>
         </div>
 
@@ -393,7 +393,7 @@ function BattleCardDetail({ competitor, onClose }: { competitor: string; onClose
           {isLoading && (
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 60, gap: 10 }}>
               <RefreshCw style={{ width: 18, height: 18, color: BLUE, animation: "spin 1s linear infinite" }} />
-              <span style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>Loading battlecard…</span>
+              <span style={{ fontSize: 13, color: "#475569" }}>Loading battlecard…</span>
             </div>
           )}
           {isError && (
@@ -424,7 +424,7 @@ function BattleCardDetail({ competitor, onClose }: { competitor: string; onClose
                   {data.counter_positioning ? (
                     <CounterPositioningPanel cp={data.counter_positioning} />
                   ) : (
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", padding: 16, textAlign: "center" }}>
+                    <div style={{ fontSize: 12, color: "#64748b", padding: 16, textAlign: "center" }}>
                       Counter-positioning not available.
                     </div>
                   )}
@@ -458,7 +458,7 @@ function BattleCardDetail({ competitor, onClose }: { competitor: string; onClose
                       <div key={i} style={{
                         padding: "10px 14px", borderRadius: 10,
                         background: "rgba(0,212,255,0.05)", border: "1px solid rgba(0,212,255,0.15)",
-                        fontSize: 12, color: "rgba(255,255,255,0.7)", lineHeight: 1.6,
+                        fontSize: 12, color: "#0f172a", lineHeight: 1.6,
                       }}>{p}</div>
                     ))}
                   </div>
@@ -474,7 +474,7 @@ function BattleCardDetail({ competitor, onClose }: { competitor: string; onClose
                       {data.industries_won_in.map(ind => (
                         <div key={ind} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                           <Building2 style={{ width: 10, height: 10, color: GOLD }} />
-                          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>{ind}</span>
+                          <span style={{ fontSize: 11, color: "#1e293b" }}>{ind}</span>
                         </div>
                       ))}
                     </div>
@@ -487,7 +487,7 @@ function BattleCardDetail({ competitor, onClose }: { competitor: string; onClose
                       {data.size_bands_won_in.map(s => (
                         <div key={s} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                           <Users style={{ width: 10, height: 10, color: BLUE }} />
-                          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>{s}</span>
+                          <span style={{ fontSize: 11, color: "#1e293b" }}>{s}</span>
                         </div>
                       ))}
                     </div>
@@ -503,11 +503,11 @@ function BattleCardDetail({ competitor, onClose }: { competitor: string; onClose
                     {data.recent_losses.map((r, i) => (
                       <div key={i} style={{
                         padding: 14, borderRadius: 12,
-                        background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)",
+                        background: "#ffffff", border: "1px solid #e2e8f0",
                       }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
                           <Briefcase style={{ width: 12, height: 12, color: RED }} />
-                          <span style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.8)" }}>
+                          <span style={{ fontSize: 12, fontWeight: 700, color: "#0f172a" }}>
                             {r.employer_name || "Unknown Employer"}
                           </span>
                           {r.contract_value && (
@@ -518,17 +518,17 @@ function BattleCardDetail({ competitor, onClose }: { competitor: string; onClose
                         </div>
                         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
                           {r.industry && (
-                            <span style={{ fontSize: 9, color: "rgba(255,255,255,0.35)" }}>{r.industry}</span>
+                            <span style={{ fontSize: 9, color: "#64748b" }}>{r.industry}</span>
                           )}
                           {r.participants && (
-                            <span style={{ fontSize: 9, color: "rgba(255,255,255,0.35)" }}>{r.participants.toLocaleString()} members</span>
+                            <span style={{ fontSize: 9, color: "#64748b" }}>{r.participants.toLocaleString()} members</span>
                           )}
                           {r.decision_date && (
-                            <span style={{ fontSize: 9, color: "rgba(255,255,255,0.35)" }}>{r.decision_date}</span>
+                            <span style={{ fontSize: 9, color: "#64748b" }}>{r.decision_date}</span>
                           )}
                         </div>
                         {r.lessons_learned && (
-                          <div style={{ marginTop: 8, fontSize: 11, color: "rgba(255,255,255,0.5)", fontStyle: "italic", lineHeight: 1.5 }}>
+                          <div style={{ marginTop: 8, fontSize: 11, color: "#334155", fontStyle: "italic", lineHeight: 1.5 }}>
                             "{r.lessons_learned}"
                           </div>
                         )}
@@ -547,7 +547,7 @@ function BattleCardDetail({ competitor, onClose }: { competitor: string; onClose
                 <Zap style={{ width: 16, height: 16, color: GOLD, flexShrink: 0 }} />
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 11, fontWeight: 700, color: GOLD }}>Improve this battlecard</div>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)" }}>
+                  <div style={{ fontSize: 10, color: "#64748b" }}>
                     Log more outcomes in RFP Intelligence OS to strengthen counter-positioning.
                   </div>
                 </div>
@@ -571,7 +571,7 @@ function BattleCardDetail({ competitor, onClose }: { competitor: string; onClose
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>
+    <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase", color: "#64748b" }}>
       {children}
     </div>
   );
@@ -603,16 +603,16 @@ export function InlineBattleCard({ opportunityId }: { opportunityId: string }) {
         data-testid={`inline-battlecard-empty-${opportunityId}`}
         style={{
           borderRadius: 12, padding: "12px 16px",
-          background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
+          background: "#ffffff", border: "1px solid #e2e8f0",
           display: "flex", alignItems: "center", gap: 10,
         }}
       >
-        <Swords style={{ width: 14, height: 14, color: "rgba(255,255,255,0.35)", flexShrink: 0 }} />
+        <Swords style={{ width: 14, height: 14, color: "#64748b", flexShrink: 0 }} />
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.7)" }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "#0f172a" }}>
             Known Competitor: <span style={{ color: "rgba(255,255,255,0.85)" }}>{competitor}</span>
           </div>
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>
+          <div style={{ fontSize: 10, color: "#64748b", marginTop: 2 }}>
             Not enough outcomes logged yet for {competitor} to build a battlecard.
           </div>
         </div>
@@ -649,39 +649,39 @@ export function InlineBattleCard({ opportunityId }: { opportunityId: string }) {
       >
         <Swords style={{ width: 14, height: 14, color: RED, flexShrink: 0 }} />
         <div style={{ flex: 1 }}>
-          <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.8)" }}>
+          <span style={{ fontSize: 11, fontWeight: 700, color: "#0f172a" }}>
             Known Competitor: <span style={{ color: RED }}>{competitor}</span>
           </span>
-          <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", marginLeft: 8 }}>
+          <span style={{ fontSize: 9, color: "#64748b", marginLeft: 8 }}>
             {fmtPct(battlecard.our_loss_rate)} loss rate against them
           </span>
         </div>
         <ChevronRight style={{
-          width: 14, height: 14, color: "rgba(255,255,255,0.35)",
+          width: 14, height: 14, color: "#64748b",
           transform: expanded ? "rotate(90deg)" : "none", transition: "transform 0.2s",
         }} />
       </button>
 
       {expanded && (
-        <div style={{ padding: "0 16px 16px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ padding: "0 16px 16px", borderTop: "1px solid #f1f5f9" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8, marginTop: 12, marginBottom: 12 }}>
             <div style={{ textAlign: "center" }}>
               <div style={{ fontSize: 18, fontWeight: 900, color: lrColor }}>{fmtPct(battlecard.our_loss_rate)}</div>
-              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>Loss Rate</div>
+              <div style={{ fontSize: 8, color: "#64748b", textTransform: "uppercase" }}>Loss Rate</div>
             </div>
             <div style={{ textAlign: "center" }}>
               <div style={{ fontSize: 18, fontWeight: 900, color: ORANGE }}>{battlecard.times_they_won}</div>
-              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>Their Wins</div>
+              <div style={{ fontSize: 8, color: "#64748b", textTransform: "uppercase" }}>Their Wins</div>
             </div>
             <div style={{ textAlign: "center" }}>
               <div style={{ fontSize: 18, fontWeight: 900, color: GREEN }}>{battlecard.our_wins_against}</div>
-              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>Our Wins</div>
+              <div style={{ fontSize: 8, color: "#64748b", textTransform: "uppercase" }}>Our Wins</div>
             </div>
           </div>
 
           {battlecard.top_product_gaps.length > 0 && (
             <div style={{ marginBottom: 10 }}>
-              <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", marginBottom: 6 }}>Common Gaps</div>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", textTransform: "uppercase", marginBottom: 6 }}>Common Gaps</div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
                 {battlecard.top_product_gaps.slice(0, 4).map(g => (
                   <span key={g} style={{
@@ -734,12 +734,14 @@ export default function BattleCards() {
   }, [search, competitors]);
 
   return (
-    <div style={{ minHeight: "100vh", background: BG, color: "#fff" }}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", background: BG, color: "#0F172A", fontFamily: "var(--font-sans)" }}>
       {/* Header */}
-      <div style={{
+      <div className="kiq-ops-header" style={{
         padding: "28px 32px 20px",
-        borderBottom: "1px solid rgba(255,255,255,0.06)",
-        background: "linear-gradient(180deg, rgba(255,72,109,0.05) 0%, transparent 100%)",
+        borderRadius: 18,
+        margin: "24px 24px 18px",
+        border: "1px solid rgba(15,23,42,0.10)",
+        background: "rgba(255,255,255,0.82)",
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 6 }}>
           <div style={{
@@ -753,7 +755,7 @@ export default function BattleCards() {
             <h1 style={{ margin: 0, fontSize: 20, fontWeight: 900, letterSpacing: "-0.02em" }}>
               Competitive Battlecards
             </h1>
-            <p style={{ margin: 0, fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
+            <p style={{ margin: 0, fontSize: 12, color: "#475569" }}>
               Per-competitor win/loss intelligence — auto-built from your outcome history
             </p>
           </div>
@@ -761,19 +763,19 @@ export default function BattleCards() {
             {totalOutcomes > 0 && (
               <div style={{
                 padding: "8px 16px", borderRadius: 10,
-                background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)",
+                background: "#ffffff", border: "1px solid #e2e8f0",
               }}>
                 <div style={{ fontSize: 16, fontWeight: 900, color: GOLD, textAlign: "center" }}>{totalOutcomes}</div>
-                <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Total Outcomes</div>
+                <div style={{ fontSize: 8, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em" }}>Total Outcomes</div>
               </div>
             )}
             {competitors.length > 0 && (
               <div style={{
                 padding: "8px 16px", borderRadius: 10,
-                background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)",
+                background: "#ffffff", border: "1px solid #e2e8f0",
               }}>
                 <div style={{ fontSize: 16, fontWeight: 900, color: BLUE, textAlign: "center" }}>{competitors.length}</div>
-                <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Competitors</div>
+                <div style={{ fontSize: 8, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em" }}>Competitors</div>
               </div>
             )}
           </div>
@@ -799,7 +801,7 @@ export default function BattleCards() {
         {isLoading && (
           <div style={{ display: "flex", alignItems: "center", gap: 10, padding: 40 }}>
             <RefreshCw style={{ width: 18, height: 18, color: BLUE, animation: "spin 1s linear infinite" }} />
-            <span style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>Loading battlecards…</span>
+            <span style={{ fontSize: 13, color: "#475569" }}>Loading battlecards…</span>
           </div>
         )}
 
@@ -809,7 +811,7 @@ export default function BattleCards() {
           <div style={{ display: "grid", gridTemplateColumns: "320px 1fr", gap: 24, alignItems: "start" }}>
             {/* Competitor list */}
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 4 }}>
+              <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase", color: "#64748b", marginBottom: 4 }}>
                 Competitors ({competitors.length})
               </div>
               {competitors.map(card => (
@@ -827,13 +829,13 @@ export default function BattleCards() {
               {!selected && (
                 <div style={{
                   padding: 48, borderRadius: 20, textAlign: "center",
-                  background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)",
+                  background: "#ffffff", border: "1px solid #f1f5f9",
                 }}>
-                  <Swords style={{ width: 36, height: 36, color: "rgba(255,255,255,0.12)", margin: "0 auto 16px" }} />
-                  <div style={{ fontSize: 14, fontWeight: 700, color: "rgba(255,255,255,0.4)", marginBottom: 8 }}>
+                  <Swords style={{ width: 36, height: 36, color: "#cbd5e1", margin: "0 auto 16px" }} />
+                  <div style={{ fontSize: 14, fontWeight: 700, color: "#475569", marginBottom: 8 }}>
                     Select a competitor
                   </div>
-                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.25)" }}>
+                  <div style={{ fontSize: 12, color: "rgba(15,23,42,0.08)" }}>
                     Click any card on the left to view the full battlecard and AI counter-positioning.
                   </div>
                 </div>
@@ -897,11 +899,11 @@ function SelectedCompetitorPanel({ competitor, onClose }: { competitor: string; 
   return (
     <div style={{
       borderRadius: 20, overflow: "hidden",
-      background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.08)",
+      background: "rgba(255,255,255,0.025)", border: "1px solid #e2e8f0",
     }}>
       {/* Panel header */}
       <div style={{
-        padding: "18px 22px", borderBottom: "1px solid rgba(255,255,255,0.07)",
+        padding: "18px 22px", borderBottom: "1px solid #e2e8f0",
         display: "flex", alignItems: "center", gap: 12,
       }}>
         <div style={{
@@ -912,8 +914,8 @@ function SelectedCompetitorPanel({ competitor, onClose }: { competitor: string; 
           <Shield style={{ width: 18, height: 18, color: RED }} />
         </div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 15, fontWeight: 900, color: "#fff" }}>{competitor}</div>
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)" }}>Competitive Battlecard</div>
+          <div style={{ fontSize: 15, fontWeight: 900, color: "#0F172A" }}>{competitor}</div>
+          <div style={{ fontSize: 10, color: "#64748b" }}>Competitive Battlecard</div>
         </div>
         <button
           onClick={handleExport}
@@ -936,7 +938,7 @@ function SelectedCompetitorPanel({ competitor, onClose }: { competitor: string; 
           {exporting ? "Generating…" : "Download PDF"}
         </button>
         <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", padding: 6 }}>
-          <X style={{ width: 16, height: 16, color: "rgba(255,255,255,0.35)" }} />
+          <X style={{ width: 16, height: 16, color: "#64748b" }} />
         </button>
       </div>
 
@@ -944,7 +946,7 @@ function SelectedCompetitorPanel({ competitor, onClose }: { competitor: string; 
         {isLoading && (
           <div style={{ display: "flex", alignItems: "center", gap: 10, padding: 40, justifyContent: "center" }}>
             <RefreshCw style={{ width: 16, height: 16, color: BLUE, animation: "spin 1s linear infinite" }} />
-            <span style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>Building battlecard…</span>
+            <span style={{ fontSize: 12, color: "#475569" }}>Building battlecard…</span>
           </div>
         )}
         {isError && (
@@ -970,7 +972,7 @@ function SelectedCompetitorPanel({ competitor, onClose }: { competitor: string; 
                 {data.counter_positioning ? (
                   <CounterPositioningPanel cp={data.counter_positioning} />
                 ) : (
-                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", padding: 16, textAlign: "center" }}>
+                  <div style={{ fontSize: 12, color: "#64748b", padding: 16, textAlign: "center" }}>
                     Counter-positioning not yet available.
                   </div>
                 )}
@@ -1049,7 +1051,7 @@ function SelectedCompetitorPanel({ competitor, onClose }: { competitor: string; 
                   {data.recent_losses.map((r, i) => (
                     <div key={i} style={{
                       padding: 12, borderRadius: 10,
-                      background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)",
+                      background: "#ffffff", border: "1px solid #f1f5f9",
                     }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
                         <span style={{ fontSize: 12, fontWeight: 700, color: "rgba(255,255,255,0.75)" }}>
@@ -1062,9 +1064,9 @@ function SelectedCompetitorPanel({ competitor, onClose }: { competitor: string; 
                         )}
                       </div>
                       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                        {r.industry && <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>{r.industry}</span>}
-                        {r.participants && <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>{r.participants.toLocaleString()} members</span>}
-                        {r.decision_date && <span style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>{r.decision_date}</span>}
+                        {r.industry && <span style={{ fontSize: 9, color: "#64748b" }}>{r.industry}</span>}
+                        {r.participants && <span style={{ fontSize: 9, color: "#64748b" }}>{r.participants.toLocaleString()} members</span>}
+                        {r.decision_date && <span style={{ fontSize: 9, color: "#64748b" }}>{r.decision_date}</span>}
                       </div>
                       {r.lessons_learned && (
                         <div style={{ marginTop: 6, fontSize: 10, color: "rgba(255,255,255,0.45)", fontStyle: "italic", lineHeight: 1.5 }}>

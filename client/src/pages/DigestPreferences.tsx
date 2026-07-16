@@ -181,9 +181,9 @@ export default function DigestPreferences() {
 
   return (
     <Layout>
-      <div style={{
+      <div className="kiq-ops-shell kiq-readable-surface" style={{
         minHeight: "100vh",
-        background: "linear-gradient(160deg,#060d1e 0%,#08111e 50%,#060b18 100%)",
+        background: "linear-gradient(160deg,#F8FAFC 0%,#EEF4FF 48%,#FFFFFF 100%)",
         padding: "32px 28px",
       }}>
         {/* Header */}
@@ -199,15 +199,15 @@ export default function DigestPreferences() {
                   <Mail size={17} color={GOLD} strokeWidth={2} />
                 </div>
                 <div>
-                  <h1 style={{ fontSize: 20, fontWeight: 800, color: "white", margin: 0 }}>
+                  <h1 style={{ fontSize: 20, fontWeight: 800, color: "#0F172A", margin: 0 }}>
                     Intelligence Digest
                   </h1>
-                  <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", margin: 0 }}>
+                  <p style={{ fontSize: 11, color: "#64748b", margin: 0 }}>
                     RFP Intelligence OS · Email Preferences
                   </p>
                 </div>
               </div>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", maxWidth: 480, margin: 0 }}>
+              <p style={{ fontSize: 13, color: "#334155", maxWidth: 480, margin: 0 }}>
                 A scheduled roll-up of new RFPs, 5500 alerts, top opportunities, and upcoming
                 deadlines — delivered to your inbox so you act on intelligence without logging in.
               </p>
@@ -263,18 +263,18 @@ export default function DigestPreferences() {
             </div>
           )}
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 18 }}>
 
             {/* ── Opt-in / Schedule Card ── */}
             <div style={{ gridColumn: "1 / -1" }}>
               <div style={{
-                background: "rgba(13,25,41,0.8)", border: "1px solid rgba(255,255,255,0.06)",
-                borderRadius: 12, padding: "22px 24px",
+                background: "linear-gradient(135deg, rgba(255,255,255,0.92), rgba(248,250,252,0.70))", border: "1px solid rgba(15,23,42,0.08)",
+                borderRadius: 18, padding: "22px 24px", boxShadow: "0 18px 46px rgba(15,23,42,0.06)",
               }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <Bell size={15} color={GOLD} />
-                    <span style={{ fontSize: 13, fontWeight: 700, color: "white" }}>Digest Delivery</span>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: "#0F172A" }}>Digest Delivery</span>
                   </div>
                   <button
                     data-testid="toggle-digest-enabled"
@@ -283,17 +283,17 @@ export default function DigestPreferences() {
                   >
                     {merged.enabled
                       ? <ToggleRight size={28} color={GREEN} />
-                      : <ToggleLeft size={28} color="rgba(255,255,255,0.25)" />}
-                    <span style={{ fontSize: 12, color: merged.enabled ? GREEN : "rgba(255,255,255,0.35)", fontWeight: 700 }}>
+                      : <ToggleLeft size={28} color="rgba(15,23,42,0.08)" />}
+                    <span style={{ fontSize: 12, color: merged.enabled ? GREEN : "#64748b", fontWeight: 700 }}>
                       {merged.enabled ? "Enabled" : "Disabled"}
                     </span>
                   </button>
                 </div>
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 14 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 14 }}>
                   {/* Frequency */}
                   <div>
-                    <label style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>
+                    <label style={{ fontSize: 10, fontWeight: 700, color: "#475569", letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>
                       Frequency
                     </label>
                     <div style={{ display: "flex", gap: 6 }}>
@@ -305,9 +305,9 @@ export default function DigestPreferences() {
                           style={{
                             flex: 1, padding: "8px 0", borderRadius: 8, cursor: "pointer",
                             fontSize: 12, fontWeight: 700, textTransform: "capitalize",
-                            background: merged.frequency === f ? `rgba(251,183,36,0.15)` : "rgba(255,255,255,0.04)",
-                            border: `1px solid ${merged.frequency === f ? "rgba(251,183,36,0.4)" : "rgba(255,255,255,0.08)"}`,
-                            color: merged.frequency === f ? GOLD : "rgba(255,255,255,0.45)",
+                            background: merged.frequency === f ? `rgba(251,183,36,0.15)` : "#ffffff",
+                            border: `1px solid ${merged.frequency === f ? "rgba(251,183,36,0.4)" : "#e2e8f0"}`,
+                            color: merged.frequency === f ? GOLD : "#475569",
                           }}
                         >
                           {f}
@@ -318,7 +318,7 @@ export default function DigestPreferences() {
 
                   {/* Day of week (weekly only) */}
                   <div style={{ opacity: merged.frequency === "weekly" ? 1 : 0.35 }}>
-                    <label style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>
+                    <label style={{ fontSize: 10, fontWeight: 700, color: "#475569", letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>
                       Day (Weekly)
                     </label>
                     <select
@@ -328,8 +328,8 @@ export default function DigestPreferences() {
                       onChange={e => patch({ day_of_week: Number(e.target.value) })}
                       style={{
                         width: "100%", padding: "8px 10px", borderRadius: 8,
-                        background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
-                        color: "white", fontSize: 12, cursor: "pointer",
+                        background: "#f1f5f9", border: "1px solid #e2e8f0",
+                        color: "#0F172A", fontSize: 12, cursor: "pointer",
                       }}
                     >
                       {DAY_NAMES.map((d, i) => (
@@ -340,7 +340,7 @@ export default function DigestPreferences() {
 
                   {/* Send time */}
                   <div>
-                    <label style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>
+                    <label style={{ fontSize: 10, fontWeight: 700, color: "#475569", letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>
                       Send Time
                     </label>
                     <select
@@ -349,8 +349,8 @@ export default function DigestPreferences() {
                       onChange={e => patch({ hour_utc: Number(e.target.value) })}
                       style={{
                         width: "100%", padding: "8px 10px", borderRadius: 8,
-                        background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
-                        color: "white", fontSize: 12, cursor: "pointer",
+                        background: "#f1f5f9", border: "1px solid #e2e8f0",
+                        color: "#0F172A", fontSize: 12, cursor: "pointer",
                       }}
                     >
                       {HOUR_OPTIONS.map(h => (
@@ -365,20 +365,20 @@ export default function DigestPreferences() {
             {/* ── Digest Sections ── */}
             <div style={{ gridColumn: "1 / -1" }}>
               <div style={{
-                background: "rgba(13,25,41,0.8)", border: "1px solid rgba(255,255,255,0.06)",
+                background: "linear-gradient(135deg, rgba(255,255,255,0.92), rgba(248,250,252,0.70))", border: "1px solid rgba(15,23,42,0.08)",
                 borderRadius: 12, padding: "22px 24px",
               }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 18 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <Settings size={15} color={BLUE} />
-                    <span style={{ fontSize: 13, fontWeight: 700, color: "white" }}>Digest Sections</span>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: "#0F172A" }}>Digest Sections</span>
                   </div>
-                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>
+                  <span style={{ fontSize: 11, color: "#64748b" }}>
                     {enabledSections} of {SECTIONS.length} enabled
                   </span>
                 </div>
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 10 }}>
                   {SECTIONS.map(section => {
                     const Icon = section.icon;
                     const active = merged[section.key] as boolean;
@@ -390,29 +390,29 @@ export default function DigestPreferences() {
                         style={{
                           display: "flex", alignItems: "flex-start", gap: 12,
                           padding: "14px 16px", borderRadius: 10, cursor: "pointer", textAlign: "left",
-                          background: active ? `rgba(${section.color === GOLD ? "251,183,36" : section.color === BLUE ? "0,212,255" : section.color === GREEN ? "16,185,129" : "239,68,68"},0.07)` : "rgba(255,255,255,0.03)",
-                          border: `1px solid ${active ? section.color + "33" : "rgba(255,255,255,0.07)"}`,
+                          background: active ? `rgba(${section.color === GOLD ? "251,183,36" : section.color === BLUE ? "0,212,255" : section.color === GREEN ? "16,185,129" : "239,68,68"},0.07)` : "#ffffff",
+                          border: `1px solid ${active ? section.color + "33" : "#e2e8f0"}`,
                           transition: "all 0.15s",
                         }}
                       >
                         <div style={{
                           width: 32, height: 32, borderRadius: 8, flexShrink: 0,
-                          background: active ? `${section.color}22` : "rgba(255,255,255,0.05)",
-                          border: `1px solid ${active ? section.color + "44" : "rgba(255,255,255,0.08)"}`,
+                          background: active ? `${section.color}22` : "#f8fafc",
+                          border: `1px solid ${active ? section.color + "44" : "#e2e8f0"}`,
                           display: "flex", alignItems: "center", justifyContent: "center",
                         }}>
-                          <Icon size={15} color={active ? section.color : "rgba(255,255,255,0.25)"} strokeWidth={2} />
+                          <Icon size={15} color={active ? section.color : "rgba(15,23,42,0.08)"} strokeWidth={2} />
                         </div>
                         <div style={{ flex: 1, minWidth: 0 }}>
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
-                            <span style={{ fontSize: 12, fontWeight: 700, color: active ? "white" : "rgba(255,255,255,0.4)" }}>
+                            <span style={{ fontSize: 12, fontWeight: 700, color: active ? "white" : "#475569" }}>
                               {section.label}
                             </span>
                             {active
                               ? <ToggleRight size={18} color={section.color} />
-                              : <ToggleLeft size={18} color="rgba(255,255,255,0.2)" />}
+                              : <ToggleLeft size={18} color="#94a3b8" />}
                           </div>
-                          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", margin: 0, lineHeight: 1.4 }}>
+                          <p style={{ fontSize: 11, color: "#64748b", margin: 0, lineHeight: 1.4 }}>
                             {section.description}
                           </p>
                         </div>
@@ -426,13 +426,13 @@ export default function DigestPreferences() {
             {/* ── Additional Recipients ── */}
             <div style={{ gridColumn: "1 / -1" }}>
               <div style={{
-                background: "rgba(13,25,41,0.8)", border: "1px solid rgba(255,255,255,0.06)",
+                background: "linear-gradient(135deg, rgba(255,255,255,0.92), rgba(248,250,252,0.70))", border: "1px solid rgba(15,23,42,0.08)",
                 borderRadius: 12, padding: "22px 24px",
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
                   <Mail size={15} color={PURPLE} />
-                  <span style={{ fontSize: 13, fontWeight: 700, color: "white" }}>Additional Recipients</span>
-                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "#0F172A" }}>Additional Recipients</span>
+                  <span style={{ fontSize: 11, color: "#64748b" }}>
                     — CC'd on every digest
                   </span>
                 </div>
@@ -447,8 +447,8 @@ export default function DigestPreferences() {
                     placeholder="colleague@firm.com"
                     style={{
                       flex: 1, padding: "8px 12px", borderRadius: 8,
-                      background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
-                      color: "white", fontSize: 13, outline: "none",
+                      background: "#f1f5f9", border: "1px solid #e2e8f0",
+                      color: "#0F172A", fontSize: 13, outline: "none",
                     }}
                   />
                   <button
@@ -465,7 +465,7 @@ export default function DigestPreferences() {
                 </div>
 
                 {merged.recipients.length === 0 ? (
-                  <p style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", margin: 0 }}>
+                  <p style={{ fontSize: 12, color: "rgba(15,23,42,0.08)", margin: 0 }}>
                     No additional recipients — digest sends only to your account email.
                   </p>
                 ) : (
@@ -497,14 +497,14 @@ export default function DigestPreferences() {
           {/* ── Save Bar ── */}
           <div style={{
             marginTop: 20, padding: "14px 20px", borderRadius: 10,
-            background: isDirty ? "rgba(251,183,36,0.07)" : "rgba(255,255,255,0.02)",
-            border: `1px solid ${isDirty ? "rgba(251,183,36,0.2)" : "rgba(255,255,255,0.06)"}`,
+            background: isDirty ? "rgba(251,183,36,0.07)" : "#ffffff",
+            border: `1px solid ${isDirty ? "rgba(251,183,36,0.2)" : "#f1f5f9"}`,
             display: "flex", alignItems: "center", justifyContent: "space-between",
             transition: "all 0.2s",
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <Info size={14} color={isDirty ? GOLD : "rgba(255,255,255,0.25)"} />
-              <span style={{ fontSize: 12, color: isDirty ? GOLD : "rgba(255,255,255,0.35)" }}>
+              <Info size={14} color={isDirty ? GOLD : "rgba(15,23,42,0.08)"} />
+              <span style={{ fontSize: 12, color: isDirty ? GOLD : "#64748b" }}>
                 {isDirty ? "You have unsaved changes" : "Preferences saved"}
               </span>
             </div>
@@ -515,8 +515,8 @@ export default function DigestPreferences() {
               style={{
                 display: "flex", alignItems: "center", gap: 6,
                 padding: "9px 20px", borderRadius: 8,
-                background: isDirty ? GOLD : "rgba(255,255,255,0.06)",
-                border: "none", color: isDirty ? "#060d1e" : "rgba(255,255,255,0.3)",
+                background: isDirty ? GOLD : "#f1f5f9",
+                border: "none", color: isDirty ? "#060d1e" : "#64748b",
                 fontSize: 13, fontWeight: 800, cursor: isDirty ? "pointer" : "not-allowed",
                 opacity: saveMutation.isPending ? 0.7 : 1,
               }}
@@ -530,7 +530,7 @@ export default function DigestPreferences() {
           {/* ── Preview Panel ── */}
           {showPreview && previewData && (
             <div style={{
-              marginTop: 20, background: "rgba(13,25,41,0.8)",
+              marginTop: 20, background: "linear-gradient(135deg, rgba(255,255,255,0.92), rgba(248,250,252,0.70))",
               border: "1px solid rgba(0,212,255,0.2)", borderRadius: 12, overflow: "hidden",
             }}>
               <div style={{
@@ -541,21 +541,21 @@ export default function DigestPreferences() {
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <Eye size={14} color={BLUE} />
                   <span style={{ fontSize: 13, fontWeight: 700, color: BLUE }}>Digest Preview</span>
-                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>
+                  <span style={{ fontSize: 11, color: "#64748b" }}>
                     — content that would appear in next digest
                   </span>
                 </div>
                 <button
                   data-testid="button-close-preview"
                   onClick={() => setShowPreview(false)}
-                  style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.4)", fontSize: 18 }}
+                  style={{ background: "none", border: "none", cursor: "pointer", color: "#475569", fontSize: 18 }}
                 >
                   ×
                 </button>
               </div>
               <div style={{ padding: "20px 24px" }}>
                 {!previewData.digest?.has_content ? (
-                  <div style={{ textAlign: "center", padding: "24px 0", color: "rgba(255,255,255,0.35)", fontSize: 13 }}>
+                  <div style={{ textAlign: "center", padding: "24px 0", color: "#64748b", fontSize: 13 }}>
                     Nothing new to report in the current period — your pipeline is quiet.
                   </div>
                 ) : (
@@ -583,15 +583,15 @@ export default function DigestPreferences() {
                           {items.map((item: any, idx: number) => (
                             <div key={idx} style={{
                               padding: "10px 14px", borderRadius: 8,
-                              background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)",
+                              background: "#ffffff", border: "1px solid #e2e8f0",
                               display: "flex", alignItems: "center", justifyContent: "space-between",
                             }}>
                               <div>
-                                <div style={{ fontSize: 13, fontWeight: 600, color: "white" }}>
+                                <div style={{ fontSize: 13, fontWeight: 600, color: "#0F172A" }}>
                                   {item.title || item.summary || item.employer || "—"}
                                 </div>
                                 {item.employer && item.title && (
-                                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{item.employer}</div>
+                                  <div style={{ fontSize: 11, color: "#475569" }}>{item.employer}</div>
                                 )}
                               </div>
                               <div style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
@@ -604,7 +604,7 @@ export default function DigestPreferences() {
                                   <span style={{ fontSize: 11, fontWeight: 700, color: GOLD }}>{Math.round(item.score)}</span>
                                 )}
                                 {item.deadline && (
-                                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{item.deadline}</span>
+                                  <span style={{ fontSize: 11, color: "#334155" }}>{item.deadline}</span>
                                 )}
                               </div>
                             </div>

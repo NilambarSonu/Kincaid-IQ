@@ -253,8 +253,8 @@ function TierBadge({ tier, copay, pa, st }: FormularyTier) {
       <span className="text-[10px] text-zinc-500 text-center leading-tight">{copay}</span>
       {(pa || st) && (
         <div className="flex gap-1 justify-center mt-0.5">
-          {pa && <span className="text-[9px] bg-zinc-800 text-zinc-400 px-1 rounded">PA</span>}
-          {st && <span className="text-[9px] bg-zinc-800 text-zinc-400 px-1 rounded">ST</span>}
+          {pa && <span className="text-[9px] bg-[var(--kiq-surface)] text-zinc-400 px-1 rounded">PA</span>}
+          {st && <span className="text-[9px] bg-[var(--kiq-surface)] text-zinc-400 px-1 rounded">ST</span>}
         </div>
       )}
     </div>
@@ -301,15 +301,15 @@ function OnboardingBanner({ onDismiss, onTabSwitch }: { onDismiss: () => void; o
                 <button key={phase.num} data-testid={`btn-onboarding-phase-${phase.num}`}
                   onClick={() => onTabSwitch(phase.tab)}
                   className="flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all group"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
+                  style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}
                   onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(16,185,129,0.3)"; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"; }}>
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e2e8f0"; }}>
                   <span className="w-5 h-5 rounded-full text-[9px] font-black flex items-center justify-center shrink-0"
                     style={{ background: "rgba(16,185,129,0.15)", color: "#34d399", border: "1px solid rgba(16,185,129,0.25)" }}>
                     {phase.num}
                   </span>
                   <div>
-                    <div className="text-[10px] font-bold text-zinc-300 leading-tight">{phase.label}</div>
+                    <div className="text-[10px] font-bold text-[var(--kiq-muted)] leading-tight">{phase.label}</div>
                     <div className="text-[9px] text-zinc-600 leading-tight hidden sm:block">{phase.desc}</div>
                   </div>
                   <ChevronRight className="w-3 h-3 text-zinc-700 group-hover:text-emerald-500 transition-colors ml-1" />
@@ -340,7 +340,7 @@ function SummaryBar({
   const hasSavings = modelerResult !== null;
 
   return (
-    <div className="flex-shrink-0 border-b border-zinc-800/60"
+    <div className="flex-shrink-0 border-b border-[var(--kiq-hairline)]/60"
       style={{ background: "rgba(255,255,255,0.01)" }}>
       <div className="flex items-center gap-0 px-4 py-2 overflow-x-auto scrollbar-none divide-x divide-zinc-800/60">
         {/* Total Savings */}
@@ -468,13 +468,13 @@ function ExportReportModal({
       <div className="fixed inset-0 z-50 flex items-center justify-center no-print"
         style={{ background: "rgba(0,0,0,0.75)" }}
         onClick={onClose}>
-        <div className="relative bg-zinc-950 border border-zinc-700 rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl"
+        <div className="relative bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl"
           onClick={e => e.stopPropagation()}>
           {/* Modal header */}
-          <div className="flex items-center justify-between px-5 py-3.5 border-b border-zinc-800">
+          <div className="flex items-center justify-between px-5 py-3.5 border-b border-[var(--kiq-hairline)]">
             <div className="flex items-center gap-2">
               <FileOutput className="w-4 h-4 text-emerald-400" />
-              <span className="text-sm font-black text-zinc-100">Export Summary Report</span>
+              <span className="text-sm font-black text-[var(--kiq-ink)]">Export Summary Report</span>
             </div>
             <div className="flex items-center gap-2">
               <Button data-testid="btn-print-report" size="sm" onClick={handlePrint}
@@ -482,7 +482,7 @@ function ExportReportModal({
                 <Printer className="w-3.5 h-3.5 mr-1.5" /> Print / Save PDF
               </Button>
               <button data-testid="btn-close-export" onClick={onClose}
-                className="text-zinc-500 hover:text-zinc-300 transition-colors p-1">
+                className="text-zinc-500 hover:text-[var(--kiq-muted)] transition-colors p-1">
                 <X className="w-4 h-4" />
               </button>
             </div>
@@ -492,12 +492,12 @@ function ExportReportModal({
           <div className="flex-1 overflow-y-auto p-5">
             <div id="rxpbm-print-area" ref={printRef}
               style={{ background: "white", color: "#111", fontFamily: "system-ui, sans-serif", padding: 0 }}
-              className="rounded-xl overflow-hidden border border-zinc-800 print:border-none print:rounded-none">
+              className="rounded-xl overflow-hidden border border-[var(--kiq-hairline)] print:border-none print:rounded-none">
 
               {/* Report header */}
-              <div style={{ background: "#064e3b", color: "white", padding: "24px 28px" }}>
+              <div style={{ background: "#F8FAFC", color: "#0F172A", padding: "24px 28px" }}>
                 <div style={{ fontSize: 11, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.15em", color: "#6ee7b7", marginBottom: 6 }}>
-                  Kincaid IQ · RxPBM Intelligence
+                  Kincaid Health · RxPBM Intelligence
                 </div>
                 <h1 style={{ fontSize: 22, fontWeight: 900, margin: 0, marginBottom: 4 }}>PBM Audit Summary Report</h1>
                 <p style={{ fontSize: 11, color: "#a7f3d0", margin: 0 }}>Generated {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</p>
@@ -584,7 +584,7 @@ function ExportReportModal({
                 )}
                 <div style={{ marginTop: 16, padding: "10px 14px", background: "#f9fafb", border: "1px solid #e5e7eb", borderRadius: 6 }}>
                   <p style={{ fontSize: 10, color: "#9ca3af", margin: 0 }}>
-                    This report is generated by Kincaid IQ RxPBM Intelligence. Estimates are based on industry-average spread rates and FTC interim reports. Not legal or financial advice. Consult qualified ERISA counsel before taking action.
+                    This report is generated by Kincaid Health RxPBM Intelligence. Estimates are based on industry-average spread rates and FTC interim reports. Not legal or financial advice. Consult qualified ERISA counsel before taking action.
                   </p>
                 </div>
               </div>
@@ -719,35 +719,35 @@ export default function RxPBM() {
 
   const downloadRfp = () => {
     const lines = RFP.flatMap(c => [`\n## ${c.cat}`, ...c.qs.map((q, i) => `${i + 1}. ${q}`)]);
-    const blob = new Blob([`PBM RFP Question Bank — Kincaid IQ / RxPBM\n${lines.join("\n")}`], { type: "text/plain" });
+    const blob = new Blob([`PBM RFP Question Bank — Kincaid Health / RxPBM\n${lines.join("\n")}`], { type: "text/plain" });
     const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = url; a.download = "PBM_RFP_Questions.txt"; a.click();
   };
 
   return (
     <Layout fullBleed>
-      <div className="h-full flex flex-col bg-zinc-950 text-zinc-100 overflow-hidden">
+      <div className="h-full flex flex-col bg-[var(--kiq-surface)] text-[var(--kiq-ink)] overflow-hidden">
 
         {/* ── Top bar ──────────────────────────────────────────────────────── */}
-        <div className="flex-shrink-0 border-b border-zinc-800 bg-zinc-950" style={{ boxShadow: "0 1px 0 rgba(255,255,255,0.04)" }}>
+        <div className="flex-shrink-0 border-b border-[var(--kiq-hairline)] bg-[var(--kiq-surface)]" style={{ boxShadow: "0 1px 0 #ffffff" }}>
           <div className="flex items-center gap-3 px-5 py-2.5">
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 rounded-lg bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
                 <Pill className="w-3.5 h-3.5 text-emerald-400" />
               </div>
               <div>
-                <p className="text-sm font-black text-zinc-100 leading-tight">RxPBM Intelligence</p>
+                <p className="text-sm font-black text-[var(--kiq-ink)] leading-tight">RxPBM Intelligence</p>
                 <p className="text-[9px] text-zinc-600 leading-none uppercase tracking-widest">Drug Pricing · PBM Analytics · Contract Intelligence</p>
               </div>
             </div>
 
-            <div className="h-5 w-px bg-zinc-800 mx-1" />
+            <div className="h-5 w-px bg-[var(--kiq-surface)] mx-1" />
 
             {/* Tabs */}
             <div className="flex items-center gap-0.5 flex-1 overflow-x-auto scrollbar-none">
               {TABS.map(tab => (
                 <button key={tab.id} data-testid={`tab-rxpbm-${tab.id}`}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-all ${activeTab === tab.id ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30" : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/60"}`}
+                  className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-all ${activeTab === tab.id ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30" : "text-zinc-500 hover:text-[var(--kiq-muted)] hover:bg-[var(--kiq-surface)]/60"}`}
                 >
                   <tab.icon className="w-3 h-3 shrink-0" />
                   {tab.label}
@@ -795,7 +795,7 @@ export default function RxPBM() {
             <div className="p-5 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-1">
                 <div className="flex-1">
-                  <h2 className="text-base font-black text-zinc-100">Drug Pricing Intelligence</h2>
+                  <h2 className="text-base font-black text-[var(--kiq-ink)]">Drug Pricing Intelligence</h2>
                   <p className="text-xs text-zinc-500">CMS NADAC · AWP RedBook · Manufacturer WAC — {DRUGS.length} specialty & high-cost drugs · Q1 2026</p>
                 </div>
                 <div className="flex gap-2">
@@ -803,10 +803,10 @@ export default function RxPBM() {
                     <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" />
                     <Input data-testid="input-drug-search" placeholder="Search drug…" value={drugSearch}
                       onChange={e => setDrugSearch(e.target.value)}
-                      className="pl-8 h-8 text-xs bg-zinc-900 border-zinc-800 text-zinc-200 placeholder:text-zinc-600 w-48" />
+                      className="pl-8 h-8 text-xs bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink-soft)] placeholder:text-zinc-600 w-48" />
                   </div>
                   <select data-testid="select-drug-class" value={drugClass} onChange={e => setDrugClass(e.target.value)}
-                    className="h-8 text-xs bg-zinc-900 border border-zinc-800 text-zinc-300 rounded-lg px-2 max-w-[180px]">
+                    className="h-8 text-xs bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] text-[var(--kiq-muted)] rounded-lg px-2 max-w-[180px]">
                     {drugClasses.map(c => <option key={c}>{c}</option>)}
                   </select>
                 </div>
@@ -820,31 +820,31 @@ export default function RxPBM() {
                   { v: "12–70%", l: "AWP-to-NADAC spread range", c: "text-amber-400" },
                   { v: "Q1 2026", l: "Data reference period", c: "text-zinc-400" },
                 ].map(s => (
-                  <div key={s.l} className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-center">
+                  <div key={s.l} className="bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-lg p-3 text-center">
                     <div className={`text-lg font-black ${s.c}`}>{s.v}</div>
                     <div className="text-[10px] text-zinc-600 mt-0.5">{s.l}</div>
                   </div>
                 ))}
               </div>
 
-              <div className="overflow-x-auto rounded-xl border border-zinc-800">
+              <div className="overflow-x-auto rounded-xl border border-[var(--kiq-hairline)]">
                 <table className="w-full text-sm">
-                  <thead className="bg-zinc-900/80 border-b border-zinc-800">
+                  <thead className="bg-[var(--kiq-canvas-soft)]/80 border-b border-[var(--kiq-hairline)]">
                     <tr>{["Drug Name", "Dosage / Form", "Class", "AWP (30-day)", "WAC", "NADAC (CMS)", "Spread"].map(h =>
                       <th key={h} className="text-left py-2.5 px-3 text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap">{h}</th>)}
                     </tr>
                   </thead>
                   <tbody>
                     {filteredDrugs.map((d, i) => (
-                      <tr key={i} className="border-b border-zinc-800/60 hover:bg-zinc-900/50 transition-colors" data-testid={`row-drug-${i}`}>
-                        <td className="py-2.5 px-3 font-bold text-xs text-zinc-200">{d.name}</td>
+                      <tr key={i} className="border-b border-[var(--kiq-hairline)]/60 hover:bg-[var(--kiq-canvas-soft)]/50 transition-colors" data-testid={`row-drug-${i}`}>
+                        <td className="py-2.5 px-3 font-bold text-xs text-[var(--kiq-ink-soft)]">{d.name}</td>
                         <td className="py-2.5 px-3 text-[10px] text-zinc-500 max-w-[180px]">{d.generic}</td>
-                        <td className="py-2.5 px-3"><span className="text-[10px] text-zinc-400 bg-zinc-800 px-2 py-0.5 rounded">{d.class}</span></td>
-                        <td className="py-2.5 px-3 font-mono text-xs text-zinc-300">{fmt$(d.awp)}</td>
+                        <td className="py-2.5 px-3"><span className="text-[10px] text-zinc-400 bg-[var(--kiq-surface)] px-2 py-0.5 rounded">{d.class}</span></td>
+                        <td className="py-2.5 px-3 font-mono text-xs text-[var(--kiq-muted)]">{fmt$(d.awp)}</td>
                         <td className="py-2.5 px-3 font-mono text-xs text-zinc-500">{fmt$(d.wac)}</td>
                         <td className="py-2.5 px-3 font-mono text-xs font-bold text-emerald-400">{fmt$(d.nadac)}</td>
                         <td className="py-2.5 px-3">
-                          <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${d.spread > 25 ? "bg-red-500/15 text-red-400" : d.spread > 18 ? "bg-amber-500/15 text-amber-400" : "bg-zinc-800 text-zinc-400"}`}>
+                          <span className={`text-xs font-bold px-1.5 py-0.5 rounded ${d.spread > 25 ? "bg-red-500/15 text-red-400" : d.spread > 18 ? "bg-amber-500/15 text-amber-400" : "bg-[var(--kiq-surface)] text-zinc-400"}`}>
                             {d.spread.toFixed(1)}%
                           </span>
                         </td>
@@ -854,7 +854,7 @@ export default function RxPBM() {
                   </tbody>
                 </table>
               </div>
-              <div className="flex items-start gap-3 p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-xs text-zinc-500">
+              <div className="flex items-start gap-3 p-3 rounded-lg bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] text-xs text-zinc-500">
                 <Info className="w-3.5 h-3.5 text-zinc-600 shrink-0 mt-0.5" />
                 <span>Spread = (AWP − NADAC) / AWP × 100. Red &gt;25% indicates high PBM overcharge risk. Source: CMS NADAC database (weekly updates), manufacturer WAC filings, Q1 2026. AWP from RedBook. Not legal or financial advice.</span>
               </div>
@@ -866,7 +866,7 @@ export default function RxPBM() {
             <div className="p-5 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <div className="flex-1">
-                  <h2 className="text-base font-black text-zinc-100">PBM Directory</h2>
+                  <h2 className="text-base font-black text-[var(--kiq-ink)]">PBM Directory</h2>
                   <p className="text-xs text-zinc-500">24 PBMs compared on fiduciary transparency. Sources: Drug Channels Institute 2025, FTC Interim Staff Reports, SEC filings.</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -874,13 +874,13 @@ export default function RxPBM() {
                     <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" />
                     <Input data-testid="input-pbm-search" placeholder="Search PBMs…" value={pbmSearch}
                       onChange={e => setPbmSearch(e.target.value)}
-                      className="pl-8 h-8 text-xs bg-zinc-900 border-zinc-800 text-zinc-200 placeholder:text-zinc-600 w-44" />
+                      className="pl-8 h-8 text-xs bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink-soft)] placeholder:text-zinc-600 w-44" />
                   </div>
                   {/* Risk rating filter */}
                   <select data-testid="select-pbm-risk"
                     value={pbmRiskFilter}
                     onChange={e => setPbmRiskFilter(e.target.value as typeof pbmRiskFilter)}
-                    className="h-8 text-xs bg-zinc-900 border border-zinc-800 text-zinc-300 rounded-lg px-2">
+                    className="h-8 text-xs bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] text-[var(--kiq-muted)] rounded-lg px-2">
                     <option value="all">All Risk Levels</option>
                     <option value="high">High Risk</option>
                     <option value="medium">Medium Risk</option>
@@ -890,7 +890,7 @@ export default function RxPBM() {
                   <select data-testid="select-pbm-model"
                     value={pbmModelFilter}
                     onChange={e => setPbmModelFilter(e.target.value as typeof pbmModelFilter)}
-                    className="h-8 text-xs bg-zinc-900 border border-zinc-800 text-zinc-300 rounded-lg px-2">
+                    className="h-8 text-xs bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] text-[var(--kiq-muted)] rounded-lg px-2">
                     <option value="all">All Models</option>
                     <option value="Spread">Spread</option>
                     <option value="Hybrid">Hybrid</option>
@@ -899,17 +899,17 @@ export default function RxPBM() {
                 </div>
               </div>
 
-              <div className="overflow-x-auto rounded-xl border border-zinc-800">
+              <div className="overflow-x-auto rounded-xl border border-[var(--kiq-hairline)]">
                 <table className="w-full text-sm">
-                  <thead className="bg-zinc-900/80 border-b border-zinc-800">
+                  <thead className="bg-[var(--kiq-canvas-soft)]/80 border-b border-[var(--kiq-hairline)]">
                     <tr>{["PBM", "Parent / Owner", "Model", "Pass-Through", "100% Rebates", "Audit Rights", "Spread", "Owned Rx", "Market", "Risk"].map(h =>
                       <th key={h} className="text-left py-2.5 px-3 text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap">{h}</th>)}
                     </tr>
                   </thead>
                   <tbody>
                     {filteredPbms.map((p, i) => (
-                      <tr key={i} className="border-b border-zinc-800/60 hover:bg-zinc-900/50 transition-colors" data-testid={`row-pbm-${i}`}>
-                        <td className="py-2.5 px-3 font-bold text-xs text-zinc-200 whitespace-nowrap">{p.name}</td>
+                      <tr key={i} className="border-b border-[var(--kiq-hairline)]/60 hover:bg-[var(--kiq-canvas-soft)]/50 transition-colors" data-testid={`row-pbm-${i}`}>
+                        <td className="py-2.5 px-3 font-bold text-xs text-[var(--kiq-ink-soft)] whitespace-nowrap">{p.name}</td>
                         <td className="py-2.5 px-3 text-[10px] text-zinc-500">{p.owner}</td>
                         <td className="py-2.5 px-3">
                           <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${p.model === "Spread" ? "bg-red-500/10 text-red-400" : p.model === "Pass-Through" ? "bg-emerald-500/10 text-emerald-400" : "bg-amber-500/10 text-amber-400"}`}>{p.model}</span>
@@ -943,19 +943,19 @@ export default function RxPBM() {
             <div className="p-5 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <div className="flex-1">
-                  <h2 className="text-base font-black text-zinc-100">Formulary Coverage Checker</h2>
+                  <h2 className="text-base font-black text-[var(--kiq-ink)]">Formulary Coverage Checker</h2>
                   <p className="text-xs text-zinc-500">See which PBMs cover a drug, tier placement, prior auth requirements, and estimated copays.</p>
                 </div>
                 <div className="relative w-56">
                   <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500" />
                   <Input data-testid="input-formulary-search" placeholder="Search drug or class…" value={formularySearch}
                     onChange={e => setFormularySearch(e.target.value)}
-                    className="pl-8 h-8 text-xs bg-zinc-900 border-zinc-800 text-zinc-200 placeholder:text-zinc-600" />
+                    className="pl-8 h-8 text-xs bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink-soft)] placeholder:text-zinc-600" />
                 </div>
               </div>
 
               {/* Tier legend */}
-              <div className="flex flex-wrap gap-2 p-3 bg-zinc-900 border border-zinc-800 rounded-lg">
+              <div className="flex flex-wrap gap-2 p-3 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-lg">
                 <span className="text-[10px] text-zinc-600 font-semibold uppercase tracking-wider mr-1">Tiers:</span>
                 {Object.entries(TIERS).map(([k, v]) => (
                   <span key={k} className="text-[10px] font-semibold px-1.5 py-0.5 rounded" style={{ color: v.color, background: v.bg }}>{v.label}</span>
@@ -963,9 +963,9 @@ export default function RxPBM() {
                 <span className="text-[10px] text-zinc-500 ml-2">PA = Prior Auth required · ST = Step Therapy required</span>
               </div>
 
-              <div className="overflow-x-auto rounded-xl border border-zinc-800">
+              <div className="overflow-x-auto rounded-xl border border-[var(--kiq-hairline)]">
                 <table className="w-full text-sm">
-                  <thead className="bg-zinc-900/80 border-b border-zinc-800">
+                  <thead className="bg-[var(--kiq-canvas-soft)]/80 border-b border-[var(--kiq-hairline)]">
                     <tr>
                       <th className="text-left py-2.5 px-3 text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Drug</th>
                       <th className="text-left py-2.5 px-3 text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Class</th>
@@ -976,12 +976,12 @@ export default function RxPBM() {
                   </thead>
                   <tbody>
                     {filteredFormulary.map((f, i) => (
-                      <tr key={i} className="border-b border-zinc-800/60 hover:bg-zinc-900/50 transition-colors" data-testid={`row-formulary-${i}`}>
+                      <tr key={i} className="border-b border-[var(--kiq-hairline)]/60 hover:bg-[var(--kiq-canvas-soft)]/50 transition-colors" data-testid={`row-formulary-${i}`}>
                         <td className="py-3 px-3">
-                          <div className="font-bold text-xs text-zinc-200">{f.drug}</div>
+                          <div className="font-bold text-xs text-[var(--kiq-ink-soft)]">{f.drug}</div>
                           <div className="text-[10px] text-zinc-600">{f.generic}</div>
                         </td>
-                        <td className="py-3 px-3"><span className="text-[10px] text-zinc-400 bg-zinc-800 px-1.5 py-0.5 rounded">{f.class}</span></td>
+                        <td className="py-3 px-3"><span className="text-[10px] text-zinc-400 bg-[var(--kiq-surface)] px-1.5 py-0.5 rounded">{f.class}</span></td>
                         {[f.cvs, f.esi, f.optum, f.medimpact, f.navitus].map((tier, j) => (
                           <td key={j} className="py-3 px-3"><TierBadge {...tier} /></td>
                         ))}
@@ -1001,7 +1001,7 @@ export default function RxPBM() {
           {/* ══ COST MODELER ══════════════════════════════════════════════════ */}
           {activeTab === "modeler" && (
             <div className="p-5 max-w-3xl">
-              <h2 className="text-base font-black text-zinc-100 mb-1">Cost Variance Modeler</h2>
+              <h2 className="text-base font-black text-[var(--kiq-ink)] mb-1">Cost Variance Modeler</h2>
               <p className="text-xs text-zinc-500 mb-5">Estimate savings from switching PBM models based on your plan size and drug spend. Results update as you type.</p>
 
               {/* Primary inputs */}
@@ -1009,12 +1009,12 @@ export default function RxPBM() {
                 <div>
                   <label className="text-xs text-zinc-400 font-semibold block mb-1.5">Covered Lives</label>
                   <Input data-testid="input-lives" type="number" value={lives} onChange={e => setLives(e.target.value)}
-                    className="bg-zinc-900 border-zinc-800 text-zinc-200 text-sm" placeholder="e.g. 500" />
+                    className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink-soft)] text-sm" placeholder="e.g. 500" />
                 </div>
                 <div>
                   <label className="text-xs text-zinc-400 font-semibold block mb-1.5">Annual Drug Spend ($)</label>
                   <Input data-testid="input-spend" type="number" value={annualSpend} onChange={e => setAnnualSpend(e.target.value)}
-                    className="bg-zinc-900 border-zinc-800 text-zinc-200 text-sm" placeholder="e.g. 1500000" />
+                    className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink-soft)] text-sm" placeholder="e.g. 1500000" />
                 </div>
               </div>
 
@@ -1034,14 +1034,14 @@ export default function RxPBM() {
               {/* Advanced options toggle */}
               <button data-testid="btn-advanced-toggle"
                 onClick={() => setShowAdvanced(v => !v)}
-                className="flex items-center gap-2 text-xs font-semibold text-zinc-400 hover:text-zinc-200 transition-colors mb-4 group">
+                className="flex items-center gap-2 text-xs font-semibold text-zinc-400 hover:text-[var(--kiq-ink-soft)] transition-colors mb-4 group">
                 <SlidersHorizontal className="w-3.5 h-3.5" />
                 Advanced options
                 {showAdvanced ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
               </button>
 
               {showAdvanced && (
-                <div className="space-y-5 mb-5 p-4 rounded-xl border border-zinc-800 bg-zinc-900/40">
+                <div className="space-y-5 mb-5 p-4 rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/40">
                   <div>
                     <label className="text-xs text-zinc-400 font-semibold block mb-2">Current PBM Model</label>
                     <div className="grid grid-cols-3 gap-3">
@@ -1051,7 +1051,7 @@ export default function RxPBM() {
                         { v: "transparent" as PbmModel, label: "Transparent Pass-Through", desc: "Full ingredient cost + rebate pass, no spread" },
                       ] as const).map(opt => (
                         <button key={opt.v} data-testid={`btn-model-${opt.v}`} onClick={() => setPbmModel(opt.v)}
-                          className={`text-left p-3 rounded-xl border transition-all text-xs ${pbmModel === opt.v ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-200" : "border-zinc-800 bg-zinc-900 text-zinc-400 hover:border-zinc-600"}`}>
+                          className={`text-left p-3 rounded-xl border transition-all text-xs ${pbmModel === opt.v ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-200" : "border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)] text-zinc-400 hover:border-zinc-600"}`}>
                           <div className="font-bold mb-1">{opt.label}</div>
                           <div className="text-zinc-500 text-[10px] leading-relaxed">{opt.desc}</div>
                         </button>
@@ -1063,7 +1063,7 @@ export default function RxPBM() {
                     <label className="text-xs text-zinc-400 font-semibold block mb-2">Generic Dispensing Rate: <span className="text-emerald-400">{genericRate}%</span></label>
                     <input type="range" min={75} max={95} step={1} value={genericRate} onChange={e => setGenericRate(+e.target.value)}
                       data-testid="slider-generic-rate"
-                      className="w-full h-1.5 bg-zinc-800 rounded-full appearance-none cursor-pointer accent-emerald-500" />
+                      className="w-full h-1.5 bg-[var(--kiq-surface)] rounded-full appearance-none cursor-pointer accent-emerald-500" />
                     <div className="flex justify-between text-[10px] text-zinc-600 mt-1"><span>75%</span><span>Industry avg: 85%</span><span>95%</span></div>
                   </div>
                 </div>
@@ -1083,14 +1083,14 @@ export default function RxPBM() {
                       { label: "Total Variance", v: `$${modelerResult.total.toLocaleString("en-US", { maximumFractionDigits: 0 })}`, c: "text-amber-400", sub: "Combined estimated savings" },
                       { label: "Per Covered Life", v: `$${modelerResult.perLife.toLocaleString("en-US", { maximumFractionDigits: 0 })}`, c: "text-violet-400", sub: "Annual cost reduction per member" },
                     ].map(s => (
-                      <div key={s.label} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-center" data-testid={`result-${s.label.replace(/\s/g,"-").toLowerCase()}`}>
+                      <div key={s.label} className="bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl p-4 text-center" data-testid={`result-${s.label.replace(/\s/g,"-").toLowerCase()}`}>
                         <div className={`text-xl font-black ${s.c}`}>{s.v}</div>
-                        <div className="text-xs font-semibold text-zinc-300 mt-1">{s.label}</div>
+                        <div className="text-xs font-semibold text-[var(--kiq-muted)] mt-1">{s.label}</div>
                         <div className="text-[10px] text-zinc-600 mt-0.5 leading-tight">{s.sub}</div>
                       </div>
                     ))}
                   </div>
-                  <div className="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-xs text-zinc-500">
+                  <div className="p-3 rounded-lg bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] text-xs text-zinc-500">
                     <Info className="w-3.5 h-3.5 inline mr-1.5 text-zinc-600" />
                     Estimates based on industry-average spread rates (9% traditional, 4% regional, 0% transparent) and rebate leakage assumptions from FTC interim reports. Actual variance depends on your specific formulary, drug mix, and contract terms. For informational purposes only — not financial advice.
                   </div>
@@ -1104,7 +1104,7 @@ export default function RxPBM() {
             <div className="p-5 space-y-4">
               <div className="flex items-center justify-between flex-wrap gap-3">
                 <div>
-                  <h2 className="text-base font-black text-zinc-100">PBM RFP Question Bank</h2>
+                  <h2 className="text-base font-black text-[var(--kiq-ink)]">PBM RFP Question Bank</h2>
                   <p className="text-xs text-zinc-500">
                     25 fiduciary-aligned procurement questions across 5 categories. Select questions to include in your export report.
                     {selectedRfpQuestions.size > 0 && (
@@ -1117,12 +1117,12 @@ export default function RxPBM() {
                   <select data-testid="select-rfp-category"
                     value={rfpCatFilter}
                     onChange={e => setRfpCatFilter(e.target.value)}
-                    className="h-8 text-xs bg-zinc-900 border border-zinc-800 text-zinc-300 rounded-lg px-2">
+                    className="h-8 text-xs bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] text-[var(--kiq-muted)] rounded-lg px-2">
                     <option value="All">All Categories</option>
                     {RFP.map(c => <option key={c.cat} value={c.cat}>{c.cat}</option>)}
                   </select>
                   <Button variant="outline" size="sm" data-testid="btn-download-rfp" onClick={downloadRfp}
-                    className="border-zinc-700 text-zinc-300 hover:bg-zinc-800 text-xs">
+                    className="border-[var(--kiq-hairline)] text-[var(--kiq-muted)] hover:bg-[var(--kiq-surface)] text-xs">
                     <Download className="w-3.5 h-3.5 mr-1.5" /> Download All
                   </Button>
                 </div>
@@ -1152,11 +1152,11 @@ export default function RxPBM() {
                               background: isSelected ? cat.color : "transparent",
                               borderColor: isSelected ? cat.color : "rgba(113,113,122,1)",
                             }}>
-                            {isSelected && <CheckCircle2 className="w-3 h-3 text-white" />}
+                            {isSelected && <CheckCircle2 className="w-3 h-3 text-[var(--kiq-ink)]" />}
                           </button>
                           <span className="w-5 h-5 rounded-full text-[10px] font-black flex items-center justify-center shrink-0"
                             style={{ background: `${cat.color}20`, color: cat.color }}>{i + 1}</span>
-                          <span className="text-sm text-zinc-300 leading-relaxed flex-1">{q}</span>
+                          <span className="text-sm text-[var(--kiq-muted)] leading-relaxed flex-1">{q}</span>
                           <button data-testid={`btn-copy-rfp-${cat.cat}-${i}`}
                             onClick={() => copyQuestion(q)}
                             className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors flex items-center gap-1 shrink-0 mt-0.5">
@@ -1176,14 +1176,14 @@ export default function RxPBM() {
             <div className="p-5 space-y-4">
               <div className="flex items-center justify-between flex-wrap gap-3">
                 <div>
-                  <h2 className="text-base font-black text-zinc-100">PBM Intelligence Articles</h2>
+                  <h2 className="text-base font-black text-[var(--kiq-ink)]">PBM Intelligence Articles</h2>
                   <p className="text-xs text-zinc-500">Analysis of PBM pricing, contract strategies, and pharmacy benefit optimization for self-funded employers.</p>
                 </div>
                 <div className="flex gap-2 flex-wrap">
                   {articleCats.map(c => (
                     <button key={c} data-testid={`filter-article-${c}`} onClick={() => setArticleCat(c)}
-                      className={`text-xs font-semibold px-2.5 py-1 rounded-lg transition-all ${articleCat === c ? "text-zinc-100" : "bg-zinc-900 text-zinc-500 hover:text-zinc-300 border border-zinc-800"}`}
-                      style={articleCat === c && c !== "All" ? { background: `${catColor[c]}20`, border: `1px solid ${catColor[c]}50`, color: catColor[c] } : articleCat === c ? { background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff" } : {}}>
+                      className={`text-xs font-semibold px-2.5 py-1 rounded-lg transition-all ${articleCat === c ? "text-[var(--kiq-ink)]" : "bg-[var(--kiq-canvas-soft)] text-zinc-500 hover:text-[var(--kiq-muted)] border border-[var(--kiq-hairline)]"}`}
+                      style={articleCat === c && c !== "All" ? { background: `${catColor[c]}20`, border: `1px solid ${catColor[c]}50`, color: catColor[c] } : articleCat === c ? { background: "#e2e8f0", border: "1px solid #cbd5e1", color: "#0F172A" } : {}}>
                       {c}
                     </button>
                   ))}
@@ -1193,14 +1193,14 @@ export default function RxPBM() {
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                 {filteredArticles.map((a, i) => (
                   <div key={i} data-testid={`card-article-${i}`}
-                    className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 hover:border-zinc-700 transition-all group flex flex-col">
+                    className="bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl p-5 hover:border-[var(--kiq-hairline)] transition-all group flex flex-col">
                     <div className="flex items-center gap-2 mb-3">
                       <span className="text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider"
                         style={{ color: catColor[a.category] ?? "#6b7280", background: `${catColor[a.category] ?? "#6b7280"}20` }}>{a.category}</span>
                       <span className="text-[10px] text-zinc-600">{a.date}</span>
                       <span className="text-[10px] text-zinc-700 ml-auto">{a.readMin} min read</span>
                     </div>
-                    <h3 className="text-sm font-bold text-zinc-200 leading-snug mb-2 group-hover:text-white transition-colors flex-1">{a.title}</h3>
+                    <h3 className="text-sm font-bold text-[var(--kiq-ink-soft)] leading-snug mb-2 group-hover:text-[var(--kiq-ink)] transition-colors flex-1">{a.title}</h3>
                     <p className="text-[11px] text-zinc-500 leading-relaxed">{a.summary}</p>
                   </div>
                 ))}
@@ -1331,7 +1331,7 @@ const PHASES = [
       "Score the PBM on five dimensions: (1) Pricing transparency, (2) Rebate pass-through rate, (3) Audit rights, (4) Conflict of interest (owned Rx/specialty), (5) Contract flexibility. Rate each 1–5.",
       "Identify 'quick wins' — contract amendments that can be negotiated without a full RFP. Examples: adding audit rights, requiring rebate reconciliation, removing clawback provisions.",
       "If spread pricing is confirmed, calculate the dollar value and prepare a written demand for credit or contract renegotiation.",
-      "If switching is indicated, issue an RFP to 3–5 PBMs using the Kincaid IQ RFP Question Bank. Require responses on all 25 fiduciary questions.",
+      "If switching is indicated, issue an RFP to 3–5 PBMs using the Kincaid Health RFP Question Bank. Require responses on all 25 fiduciary questions.",
       "Document findings in a fiduciary file. ERISA requires plan sponsors to demonstrate prudent oversight of pharmacy benefits — your analysis is both a tool and a compliance record.",
     ],
     flags: [
@@ -1364,14 +1364,14 @@ function PbmAnalysisGuide({ onTabSwitch }: { onTabSwitch: (t: Tab) => void }) {
     <div className="p-5 space-y-6 max-w-4xl">
 
       {/* Header */}
-      <div className="rounded-2xl p-6" style={{ background: "linear-gradient(135deg,rgba(79,125,255,0.08),rgba(16,185,129,0.04))", border: "1px solid rgba(255,255,255,0.07)" }}>
+      <div className="rounded-2xl p-6" style={{ background: "linear-gradient(135deg,rgba(79,125,255,0.08),rgba(16,185,129,0.04))", border: "1px solid #e2e8f0" }}>
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0" style={{ background: "rgba(79,125,255,0.12)", border: "1px solid rgba(79,125,255,0.25)" }}>
             <ClipboardList className="w-6 h-6" style={{ color: "#4f7dff" }} />
           </div>
           <div className="flex-1">
-            <p className="text-[10px] font-black tracking-widest uppercase mb-1" style={{ color: "rgba(79,125,255,0.8)" }}>Kincaid IQ · Methodology</p>
-            <h2 className="text-xl font-black text-white mb-2">How to Conduct a PBM Analysis</h2>
+            <p className="text-[10px] font-black tracking-widest uppercase mb-1" style={{ color: "rgba(79,125,255,0.8)" }}>Kincaid Health · Methodology</p>
+            <h2 className="text-xl font-black text-[var(--kiq-ink)] mb-2">How to Conduct a PBM Analysis</h2>
             <p className="text-sm text-zinc-400 leading-relaxed max-w-2xl">
               A 6-phase fiduciary-grade framework for self-funded employers. Follow these steps to uncover spread pricing, rebate leakage, and contract risks — and build a documented prudence record under ERISA.
             </p>
@@ -1382,9 +1382,9 @@ function PbmAnalysisGuide({ onTabSwitch }: { onTabSwitch: (t: Tab) => void }) {
               {(["pricing","directory","modeler","rfp"] as Tab[]).map(tab => (
                 <button key={tab} onClick={() => onTabSwitch(tab)}
                   className="text-[10px] font-bold px-2 py-0.5 rounded transition-all"
-                  style={{ background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.4)", border: "1px solid rgba(255,255,255,0.08)" }}
-                  onMouseEnter={e => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.background = "rgba(255,255,255,0.10)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.4)"; e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}>
+                  style={{ background: "#f8fafc", color: "#475569", border: "1px solid #e2e8f0" }}
+                  onMouseEnter={e => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.background = "rgba(15,23,42,0.06)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = "#475569"; e.currentTarget.style.background = "#f8fafc"; }}>
                   {tab === "pricing" ? "Drug Pricing" : tab === "directory" ? "PBM Directory" : tab === "modeler" ? "Cost Modeler" : "RFP Bank"}
                 </button>
               ))}
@@ -1398,7 +1398,7 @@ function PbmAnalysisGuide({ onTabSwitch }: { onTabSwitch: (t: Tab) => void }) {
         {PHASES.map((phase, idx) => {
           const open = expanded === idx;
           return (
-            <div key={idx} className="rounded-xl overflow-hidden transition-all" style={{ border: `1px solid ${open ? phase.color + "35" : "rgba(255,255,255,0.06)"}`, background: open ? `${phase.color}06` : "rgba(255,255,255,0.02)" }}>
+            <div key={idx} className="rounded-xl overflow-hidden transition-all" style={{ border: `1px solid ${open ? phase.color + "35" : "#f1f5f9"}`, background: open ? `${phase.color}06` : "#ffffff" }}>
               <button data-testid={`phase-toggle-${idx}`} className="w-full flex items-center gap-4 px-5 py-4 text-left transition-all"
                 onClick={() => setExpanded(open ? null : idx)}>
                 <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: `${phase.color}15`, border: `1px solid ${phase.color}30` }}>
@@ -1406,7 +1406,7 @@ function PbmAnalysisGuide({ onTabSwitch }: { onTabSwitch: (t: Tab) => void }) {
                 </div>
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                   <span className="text-[10px] font-black font-mono w-12 shrink-0" style={{ color: phase.color }}>Phase {phase.num}</span>
-                  <span className="text-sm font-black text-white">{phase.label}</span>
+                  <span className="text-sm font-black text-[var(--kiq-ink)]">{phase.label}</span>
                   <span className="text-xs text-zinc-500 hidden sm:block truncate">{phase.tagline}</span>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
@@ -1425,7 +1425,7 @@ function PbmAnalysisGuide({ onTabSwitch }: { onTabSwitch: (t: Tab) => void }) {
                     <div className="space-y-2">
                       <p className="text-[9px] font-black tracking-widest uppercase text-zinc-600">Analysis Steps</p>
                       {phase.steps.map((step, si) => (
-                        <div key={si} className="flex items-start gap-3 p-3 rounded-lg" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                        <div key={si} className="flex items-start gap-3 p-3 rounded-lg" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid #f8fafc" }}>
                           <span className="w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-black shrink-0 mt-0.5" style={{ background: `${phase.color}18`, color: phase.color }}>{si + 1}</span>
                           <p className="text-xs text-zinc-400 leading-relaxed">{step}</p>
                         </div>
@@ -1457,11 +1457,11 @@ function PbmAnalysisGuide({ onTabSwitch }: { onTabSwitch: (t: Tab) => void }) {
       </div>
 
       {/* Interactive Scorecard */}
-      <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.07)" }}>
-        <div className="flex items-center justify-between px-5 py-3.5" style={{ background: "rgba(255,255,255,0.03)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid #e2e8f0" }}>
+        <div className="flex items-center justify-between px-5 py-3.5" style={{ background: "#ffffff", borderBottom: "1px solid #f1f5f9" }}>
           <div className="flex items-center gap-2">
             <ListChecks className="w-4 h-4 text-emerald-400" />
-            <span className="text-sm font-black text-white">Quick PBM Risk Scorecard</span>
+            <span className="text-sm font-black text-[var(--kiq-ink)]">Quick PBM Risk Scorecard</span>
           </div>
           {Object.keys(scores).length === SCORECARD.length && (
             <div className="flex items-center gap-2">
@@ -1476,7 +1476,7 @@ function PbmAnalysisGuide({ onTabSwitch }: { onTabSwitch: (t: Tab) => void }) {
           {SCORECARD.map((row, i) => (
             <div key={i} data-testid={`scorecard-row-${i}`} className="flex items-center gap-4">
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-bold text-zinc-300 leading-tight">{row.dim}</p>
+                <p className="text-xs font-bold text-[var(--kiq-muted)] leading-tight">{row.dim}</p>
                 <p className="text-[10px] text-zinc-600 leading-tight mt-0.5">{row.q}</p>
               </div>
               <div className="flex gap-1 shrink-0">
@@ -1485,9 +1485,9 @@ function PbmAnalysisGuide({ onTabSwitch }: { onTabSwitch: (t: Tab) => void }) {
                     onClick={() => setScores(prev => ({ ...prev, [i]: n }))}
                     className="w-8 h-8 rounded-lg text-xs font-black transition-all"
                     style={{
-                      background: scores[i] === n ? (n <= 2 ? "rgba(239,68,68,0.3)" : n === 3 ? "rgba(245,158,11,0.3)" : "rgba(16,185,129,0.3)") : "rgba(255,255,255,0.04)",
-                      color: scores[i] === n ? (n <= 2 ? "#ef4444" : n === 3 ? "#f59e0b" : "#10b981") : "rgba(255,255,255,0.3)",
-                      border: `1px solid ${scores[i] === n ? (n <= 2 ? "rgba(239,68,68,0.4)" : n === 3 ? "rgba(245,158,11,0.4)" : "rgba(16,185,129,0.4)") : "rgba(255,255,255,0.07)"}`,
+                      background: scores[i] === n ? (n <= 2 ? "rgba(239,68,68,0.3)" : n === 3 ? "rgba(245,158,11,0.3)" : "rgba(16,185,129,0.3)") : "#ffffff",
+                      color: scores[i] === n ? (n <= 2 ? "#ef4444" : n === 3 ? "#f59e0b" : "#10b981") : "#64748b",
+                      border: `1px solid ${scores[i] === n ? (n <= 2 ? "rgba(239,68,68,0.4)" : n === 3 ? "rgba(245,158,11,0.4)" : "rgba(16,185,129,0.4)") : "#e2e8f0"}`,
                     }}>
                     {n}
                   </button>
@@ -1520,7 +1520,7 @@ function PbmAnalysisGuide({ onTabSwitch }: { onTabSwitch: (t: Tab) => void }) {
       </div>
 
       {/* Footer disclaimer */}
-      <div className="flex items-start gap-2.5 p-3 rounded-lg" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
+      <div className="flex items-start gap-2.5 p-3 rounded-lg" style={{ background: "#ffffff", border: "1px solid #f8fafc" }}>
         <Info className="w-3.5 h-3.5 text-zinc-600 shrink-0 mt-0.5" />
         <p className="text-[10px] text-zinc-600 leading-relaxed">
           This methodology is based on FTC Interim Staff Reports on PBMs (2022–2024), DOL guidance on ERISA plan fiduciary obligations, Drug Channels Institute 2025 research, and CAA 2026 transparency requirements. It is educational in nature and does not constitute legal, financial, or actuarial advice. Plan sponsors should consult qualified ERISA counsel before taking action.

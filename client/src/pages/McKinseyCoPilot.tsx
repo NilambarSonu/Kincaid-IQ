@@ -12,9 +12,9 @@ import {
   Copy, Check, RotateCcw, BrainCircuit, Loader2, Paperclip, X,
 } from "lucide-react";
 
-const BG = "#07091c";
-const SURFACE = "rgba(255,255,255,0.04)";
-const BORDER = "rgba(255,255,255,0.08)";
+const BG = "#F8FAFC";
+const SURFACE = "#ffffff";
+const BORDER = "#e2e8f0";
 const ACCENT = "#4f7dff";
 
 const ICON_MAP: Record<string, any> = {
@@ -54,14 +54,14 @@ function MarkdownText({ content }: { content: string }) {
         }
         if (line.startsWith("# ")) {
           return (
-            <h1 key={i} className="text-lg font-bold mt-4 mb-1 text-white">
+            <h1 key={i} className="text-lg font-bold mt-4 mb-1 text-[var(--kiq-ink)]">
               {line.replace("# ", "")}
             </h1>
           );
         }
         if (line.startsWith("### ")) {
           return (
-            <h3 key={i} className="text-sm font-semibold mt-3 mb-1 text-white">
+            <h3 key={i} className="text-sm font-semibold mt-3 mb-1 text-[var(--kiq-ink)]">
               {line.replace("### ", "")}
             </h3>
           );
@@ -70,7 +70,7 @@ function MarkdownText({ content }: { content: string }) {
           return (
             <div key={i} className="flex gap-2 items-start">
               <span style={{ color: ACCENT }} className="mt-0.5 text-xs flex-shrink-0">●</span>
-              <span style={{ color: "rgba(255,255,255,0.8)" }}>
+              <span style={{ color: "#0f172a" }}>
                 {line.replace(/^[-•]\s/, "")}
               </span>
             </div>
@@ -81,7 +81,7 @@ function MarkdownText({ content }: { content: string }) {
           return (
             <div key={i} className="flex gap-2 items-start">
               <span style={{ color: ACCENT, minWidth: "20px" }} className="font-bold text-xs">{num}.</span>
-              <span style={{ color: "rgba(255,255,255,0.8)" }}>
+              <span style={{ color: "#0f172a" }}>
                 {line.replace(/^\d+\.\s/, "")}
               </span>
             </div>
@@ -89,7 +89,7 @@ function MarkdownText({ content }: { content: string }) {
         }
         if (line.startsWith("**") && line.endsWith("**")) {
           return (
-            <p key={i} className="font-semibold text-white">
+            <p key={i} className="font-semibold text-[var(--kiq-ink)]">
               {line.replace(/\*\*/g, "")}
             </p>
           );
@@ -100,7 +100,7 @@ function MarkdownText({ content }: { content: string }) {
           <p key={i} style={{ color: "rgba(255,255,255,0.75)" }}>
             {parts.map((part, j) =>
               part.startsWith("**") && part.endsWith("**") ? (
-                <strong key={j} className="text-white font-semibold">
+                <strong key={j} className="text-[var(--kiq-ink)] font-semibold">
                   {part.replace(/\*\*/g, "")}
                 </strong>
               ) : part
@@ -176,12 +176,12 @@ export default function McKinseyCoPilot() {
     <Layout>
       <div
         className="flex h-screen overflow-hidden"
-        style={{ background: BG, color: "white" }}
+        style={{ background: BG, color: "#0F172A" }}
       >
         {/* Sidebar — Frameworks */}
         <div
           className="w-72 flex-shrink-0 flex flex-col border-r overflow-y-auto"
-          style={{ borderColor: BORDER, background: "rgba(255,255,255,0.02)" }}
+          style={{ borderColor: BORDER, background: "#ffffff" }}
         >
           <div className="p-4 border-b" style={{ borderColor: BORDER }}>
             <div className="flex items-center gap-2 mb-1">
@@ -194,7 +194,7 @@ export default function McKinseyCoPilot() {
                 ENTERPRISE
               </Badge>
             </div>
-            <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+            <p className="text-xs" style={{ color: "#475569" }}>
               Elite strategic advisor powered by McKinsey frameworks
             </p>
           </div>
@@ -203,7 +203,7 @@ export default function McKinseyCoPilot() {
           <div className="p-4">
             <p
               className="text-xs font-semibold uppercase tracking-widest mb-3"
-              style={{ color: "rgba(255,255,255,0.35)" }}
+              style={{ color: "#64748b" }}
             >
               Apply a Framework
             </p>
@@ -215,7 +215,7 @@ export default function McKinseyCoPilot() {
                 style={{
                   background: !selectedFramework ? "rgba(79,125,255,0.15)" : "transparent",
                   border: `1px solid ${!selectedFramework ? "rgba(79,125,255,0.4)" : "transparent"}`,
-                  color: !selectedFramework ? ACCENT : "rgba(255,255,255,0.5)",
+                  color: !selectedFramework ? ACCENT : "#334155",
                 }}
               >
                 Free-form chat
@@ -232,7 +232,7 @@ export default function McKinseyCoPilot() {
                     style={{
                       background: active ? "rgba(79,125,255,0.15)" : "transparent",
                       border: `1px solid ${active ? "rgba(79,125,255,0.4)" : "transparent"}`,
-                      color: active ? ACCENT : "rgba(255,255,255,0.6)",
+                      color: active ? ACCENT : "#1e293b",
                     }}
                   >
                     <div className="flex items-center gap-2">
@@ -241,7 +241,7 @@ export default function McKinseyCoPilot() {
                     </div>
                     <p
                       className="text-xs mt-1 pl-5"
-                      style={{ color: "rgba(255,255,255,0.35)" }}
+                      style={{ color: "#64748b" }}
                     >
                       {fw.description}
                     </p>
@@ -256,7 +256,7 @@ export default function McKinseyCoPilot() {
             <div className="p-4 border-t" style={{ borderColor: BORDER }}>
               <p
                 className="text-xs font-semibold uppercase tracking-widest mb-3"
-                style={{ color: "rgba(255,255,255,0.35)" }}
+                style={{ color: "#64748b" }}
               >
                 Try These
               </p>
@@ -268,7 +268,7 @@ export default function McKinseyCoPilot() {
                     onClick={() => setInput(p)}
                     className="w-full text-left px-3 py-2 rounded-lg text-xs transition-all"
                     style={{
-                      background: "rgba(255,255,255,0.03)",
+                      background: "#ffffff",
                       border: `1px solid ${BORDER}`,
                       color: "rgba(255,255,255,0.55)",
                     }}
@@ -301,7 +301,7 @@ export default function McKinseyCoPilot() {
             </div>
             <div>
               <div className="font-bold text-sm">McKinsey Co-Pilot™</div>
-              <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+              <div className="text-xs" style={{ color: "#475569" }}>
                 {activeFramework
                   ? `Framework: ${activeFramework.name} active`
                   : "Fiduciary-grade strategic intelligence · MECE · Hypothesis-led"}
@@ -313,9 +313,9 @@ export default function McKinseyCoPilot() {
                 onClick={() => setMessages([])}
                 className="ml-auto flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg transition-all"
                 style={{
-                  background: "rgba(255,255,255,0.05)",
+                  background: "#f8fafc",
                   border: `1px solid ${BORDER}`,
-                  color: "rgba(255,255,255,0.4)",
+                  color: "#475569",
                 }}
               >
                 <RotateCcw size={12} />
@@ -379,7 +379,7 @@ export default function McKinseyCoPilot() {
                       ? {
                           background: "rgba(79,125,255,0.15)",
                           border: "1px solid rgba(79,125,255,0.25)",
-                          color: "white",
+                          color: "#0F172A",
                           borderBottomRightRadius: 4,
                         }
                       : {
@@ -399,7 +399,7 @@ export default function McKinseyCoPilot() {
                       data-testid={`btn-copy-${idx}`}
                       onClick={() => copyMessage(msg.content, idx)}
                       className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded"
-                      style={{ color: "rgba(255,255,255,0.3)" }}
+                      style={{ color: "#64748b" }}
                     >
                       {copiedIdx === idx ? (
                         <Check size={13} style={{ color: "#22c55e" }} />
@@ -429,7 +429,7 @@ export default function McKinseyCoPilot() {
                   }}
                 >
                   <Loader2 size={14} className="animate-spin" style={{ color: ACCENT }} />
-                  <span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  <span className="text-xs" style={{ color: "#475569" }}>
                     Applying McKinsey frameworks…
                   </span>
                 </div>
@@ -513,7 +513,7 @@ export default function McKinseyCoPilot() {
                 style={{
                   background: SURFACE,
                   border: `1px solid ${BORDER}`,
-                  color: "white",
+                  color: "#0F172A",
                   borderRadius: 12,
                 }}
                 rows={2}
@@ -525,7 +525,7 @@ export default function McKinseyCoPilot() {
                 style={{
                   background: showUpload ? "rgba(79,125,255,0.2)" : SURFACE,
                   border: `1px solid ${showUpload ? "rgba(79,125,255,0.4)" : BORDER}`,
-                  color: showUpload ? ACCENT : "rgba(255,255,255,0.35)",
+                  color: showUpload ? ACCENT : "#64748b",
                 }}
                 title="Attach document"
               >
@@ -545,7 +545,7 @@ export default function McKinseyCoPilot() {
                 )}
               </Button>
             </div>
-            <p className="text-xs mt-2 text-center" style={{ color: "rgba(255,255,255,0.2)" }}>
+            <p className="text-xs mt-2 text-center" style={{ color: "#94a3b8" }}>
               McKinsey Co-Pilot uses Claude claude-opus-4-5 with proprietary McKinsey frameworks · Enterprise only
             </p>
           </div>

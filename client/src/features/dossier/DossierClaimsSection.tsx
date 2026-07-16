@@ -27,12 +27,12 @@ export function DossierClaimsSection({ claims, className }: DossierClaimsSection
 
   return (
     <div
-      className={cn("rounded-xl border border-zinc-800 bg-zinc-900/60 overflow-hidden", className)}
+      className={cn("rounded-xl border border-slate-200 bg-slate-50/60 overflow-hidden", className)}
       data-testid="dossier-claims-section"
     >
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-800">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-200">
         <Shield className="w-3.5 h-3.5 text-zinc-500" />
-        <span className="text-xs font-semibold text-zinc-200">Governed Claims</span>
+        <span className="text-xs font-semibold text-slate-700">Governed Claims</span>
         <span className="ml-auto text-[9px] font-mono text-zinc-600">{claims.length}</span>
       </div>
 
@@ -45,7 +45,7 @@ export function DossierClaimsSection({ claims, className }: DossierClaimsSection
           >
             <div className="grid grid-cols-[1fr_auto_auto_auto] gap-3 items-center">
               <div className="min-w-0">
-                <p className="text-xs font-medium text-zinc-200 truncate">{c.title}</p>
+                <p className="text-xs font-medium text-slate-700 truncate">{c.title}</p>
                 <div className="flex items-center gap-2 mt-0.5 flex-wrap">
                   <span className="font-mono text-[9px] text-zinc-600">{c.claim_id}</span>
                   {c.layer && <span className="text-[9px] font-mono text-zinc-700">{c.layer}</span>}

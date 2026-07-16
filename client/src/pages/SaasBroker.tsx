@@ -69,7 +69,7 @@ const BASE_TICKERS = [
   { label: "SPREAD PRICING FLAGS", value: "3 clients", delta: "HIGH EXPOSURE", up: false },
   { label: "AGGREGATE RISK", value: "2 plans", delta: "≥85% MLR", up: false },
   { label: "EST. NEGOTIATION ROI", value: "$4.1M", delta: "portfolio", up: true },
-  { label: "KINCAID IQ™", value: "LIVE", delta: "v2026.1", up: null },
+  { label: "KINCAID HEALTH™", value: "LIVE", delta: "v2026.1", up: null },
 ];
 
 /* ─── TICKER BAR ─────────────────────────────────────────────────────────── */
@@ -94,26 +94,26 @@ function TickerBar() {
   const items = [...ticks, ...ticks];
 
   return (
-    <div style={{ background: "linear-gradient(90deg,#060212 0%,#050a18 50%,#060212 100%)", borderBottom: `1px solid ${GOLD}30`, overflow: "hidden",
+    <div style={{ background: "linear-gradient(90deg, rgba(255,255,255,0.92) 0%, rgba(248,250,252,0.72) 50%, rgba(255,255,255,0.92) 100%)", borderBottom: "1px solid rgba(15,23,42,0.08)", overflow: "hidden",
       height: 36, display: "flex", alignItems: "center", position: "relative" }}>
       {/* Gradient fade edges */}
       <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 60, zIndex: 2,
-        background: "linear-gradient(90deg, #040408 0%, transparent 100%)", pointerEvents: "none" }} />
+        background: "linear-gradient(90deg, rgba(255,255,255,0.98) 0%, transparent 100%)", pointerEvents: "none" }} />
       <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 60, zIndex: 2,
-        background: "linear-gradient(270deg, #040408 0%, transparent 100%)", pointerEvents: "none" }} />
+        background: "linear-gradient(270deg, rgba(255,255,255,0.98) 0%, transparent 100%)", pointerEvents: "none" }} />
 
       <div ref={tickerRef} style={{ display: "flex", alignItems: "center", gap: 0,
         transform: `translateX(${offset}px)`, whiteSpace: "nowrap", willChange: "transform" }}>
         {items.map((t, i) => (
           <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 24px",
-            borderRight: "1px solid rgba(255,255,255,0.05)" }}>
-            <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>
+            borderRight: "1px solid rgba(15,23,42,0.08)" }}>
+            <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", color: "#64748b", textTransform: "uppercase" }}>
               {t.label}
             </span>
             <span style={{ fontSize: 11, fontWeight: 900, color: GOLD }}>{t.value}</span>
             {t.delta && (
               <span style={{ fontSize: 9, fontWeight: 700,
-                color: t.up === true ? GREEN : t.up === false ? RED : "rgba(255,255,255,0.3)" }}>
+                color: t.up === true ? GREEN : t.up === false ? RED : "#64748b" }}>
                 {t.up === true ? "▲" : t.up === false ? "▼" : "●"} {t.delta}
               </span>
             )}
@@ -146,11 +146,11 @@ function UrgencyChip({ days }: { days: number }) {
   if (days <= 30)  return <span style={{ fontSize: 9, fontWeight: 900, background: "rgba(255,77,109,0.15)", color: RED,    border: `1px solid ${RED}30`,    borderRadius: 4, padding: "1px 6px", letterSpacing: "0.1em" }}>URGENT</span>;
   if (days <= 60)  return <span style={{ fontSize: 9, fontWeight: 900, background: "rgba(255,107,26,0.12)", color: ORANGE, border: `1px solid ${ORANGE}30`, borderRadius: 4, padding: "1px 6px", letterSpacing: "0.1em" }}>ATTENTION</span>;
   if (days <= 90)  return <span style={{ fontSize: 9, fontWeight: 900, background: "rgba(255,184,0,0.12)", color: GOLD,   border: `1px solid ${GOLD}30`,   borderRadius: 4, padding: "1px 6px", letterSpacing: "0.1em" }}>MONITOR</span>;
-  return <span style={{ fontSize: 9, fontWeight: 900, background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 4, padding: "1px 6px", letterSpacing: "0.1em" }}>TRACKING</span>;
+  return <span style={{ fontSize: 9, fontWeight: 900, background: "#f8fafc", color: "#64748b", border: "1px solid #e2e8f0", borderRadius: 4, padding: "1px 6px", letterSpacing: "0.1em" }}>TRACKING</span>;
 }
 
 function StatusDot({ status }: { status: "analyzed" | "pending" | "none" | string }) {
-  const color = status === "analyzed" ? GREEN : status === "pending" ? GOLD : "rgba(255,255,255,0.15)";
+  const color = status === "analyzed" ? GREEN : status === "pending" ? GOLD : "#cbd5e1";
   return (
     <span style={{ display: "inline-block", width: 7, height: 7, borderRadius: "50%", background: color,
       boxShadow: status === "pending" ? `0 0 6px ${GOLD}` : status === "analyzed" ? `0 0 6px ${GREEN}` : "none" }} />
@@ -161,7 +161,7 @@ function HealthBar({ score }: { score: number }) {
   const color = score >= 75 ? GREEN : score >= 55 ? GOLD : score >= 35 ? ORANGE : RED;
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-      <div style={{ width: 60, height: 4, background: "rgba(255,255,255,0.07)", borderRadius: 2, overflow: "hidden", flexShrink: 0 }}>
+      <div style={{ width: 60, height: 4, background: "#e2e8f0", borderRadius: 2, overflow: "hidden", flexShrink: 0 }}>
         <div style={{ width: `${score}%`, height: "100%", background: color, borderRadius: 2 }} />
       </div>
       <span style={{ fontSize: 11, fontWeight: 900, color }}>{score}</span>
@@ -184,7 +184,7 @@ function ActivityFeed({ items }: { items: ActivityItem[] }) {
         const Icon = cfg.icon;
         return (
           <div key={i} style={{ display: "flex", gap: 10, padding: "11px 0",
-            borderBottom: i < items.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
+            borderBottom: i < items.length - 1 ? "1px solid #f8fafc" : "none" }}>
             <div style={{ flexShrink: 0, width: 26, height: 26, borderRadius: 8, display: "flex",
               alignItems: "center", justifyContent: "center", background: `${cfg.color}12`,
               border: `1px solid ${cfg.color}25`, marginTop: 1 }}>
@@ -192,7 +192,7 @@ function ActivityFeed({ items }: { items: ActivityItem[] }) {
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.75)", lineHeight: 1.4 }}>{item.msg}</div>
-              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>
+              <div style={{ fontSize: 10, color: "#64748b", marginTop: 2 }}>
                 <span style={{ color: GOLD, fontWeight: 700 }}>{item.client}</span> · {item.time}
               </div>
             </div>
@@ -225,67 +225,65 @@ function CommandCenterHero({ data, onWarRoom }: { data: DashboardData; onWarRoom
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1.55fr 0.9fr", gap: 16, marginBottom: 24 }}>
       {/* Left — welcome card */}
-      <div style={{ background: "linear-gradient(135deg, #0f1a2e 0%, #0c1525 50%, #0a1020 100%)",
-        border: `1px solid ${GOLD}35`, borderRadius: 20, padding: "26px 28px", position: "relative", overflow: "hidden",
-        boxShadow: `0 0 40px ${GOLD}10, inset 0 0 60px rgba(0,212,255,0.04)` }}>
+      <div style={{ background: "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)",
+        border: "1px solid rgba(2,132,199,0.15)", borderRadius: 20, padding: "26px 28px", position: "relative", overflow: "hidden",
+        boxShadow: "0 10px 25px -5px rgba(2,132,199,0.05), inset 0 0 60px rgba(255,255,255,0.4)" }}>
         <div style={{ position: "absolute", top: -80, right: -80, width: 280, height: 280, borderRadius: "50%",
-          background: `radial-gradient(circle, ${GOLD}22 0%, transparent 65%)`, pointerEvents: "none" }} />
+          background: "radial-gradient(circle, rgba(2,132,199,0.06) 0%, transparent 65%)", pointerEvents: "none" }} />
         <div style={{ position: "absolute", bottom: -60, left: -40, width: 200, height: 200, borderRadius: "50%",
-          background: `radial-gradient(circle, ${BLUE}15 0%, transparent 65%)`, pointerEvents: "none" }} />
-        <div style={{ position: "absolute", top: "40%", left: "45%", width: 140, height: 140, borderRadius: "50%",
-          background: `radial-gradient(circle, ${PURPLE}10 0%, transparent 65%)`, pointerEvents: "none" }} />
-        <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.22em", textTransform: "uppercase", color: BLUE, marginBottom: 10, display: "flex", alignItems: "center", gap: 7 }}>
-          <span>✦</span> Kincaid IQ™ Broker Command Center
+          background: "radial-gradient(circle, rgba(3,105,161,0.04) 0%, transparent 65%)", pointerEvents: "none" }} />
+        <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.22em", textTransform: "uppercase", color: "#0369a1", marginBottom: 10, display: "flex", alignItems: "center", gap: 7 }}>
+          <span>✦</span> Kincaid Health™ Broker Command Center
         </div>
-        <div style={{ fontSize: 30, fontWeight: 900, color: "#fff", lineHeight: 1.2, marginBottom: 8 }}>
+        <div style={{ fontSize: 30, fontWeight: 900, color: "#0F172A", lineHeight: 1.2, marginBottom: 8 }}>
           Good morning, Jeremiah.
         </div>
-        <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: 520, marginBottom: 20 }}>
+        <div style={{ fontSize: 13, color: "#334155", lineHeight: 1.6, maxWidth: 520, marginBottom: 20 }}>
           Your book is active, your renewal windows are tightening, and {s.open_actions} accounts need stewardship action this week.
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
           {quickStats.map(q => (
             <div key={q.label} style={{ borderRadius: 14,
-              border: `1px solid ${q.highlight ? GOLD + "50" : "rgba(0,212,255,0.2)"}`,
-              background: q.highlight ? `${GOLD}10` : "rgba(0,212,255,0.07)",
+              border: `1px solid ${q.highlight ? "rgba(212,175,55,0.3)" : "rgba(2,132,199,0.15)"}`,
+              background: "#ffffff",
               padding: "12px 14px",
-              boxShadow: q.highlight ? `0 0 16px ${GOLD}18` : `0 0 12px ${BLUE}10` }}>
-              <div style={{ fontSize: 9, color: q.highlight ? `${GOLD}90` : `${BLUE}90`, marginBottom: 6, letterSpacing: "0.06em", fontWeight: 800 }}>{q.label}</div>
-              <div style={{ fontSize: 22, fontWeight: 900, color: q.highlight ? GOLD : BLUE }}>{q.value}</div>
+              boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
+              <div style={{ fontSize: 9, color: q.highlight ? "#d97706" : "#0284c7", marginBottom: 6, letterSpacing: "0.06em", fontWeight: 800 }}>{q.label}</div>
+              <div style={{ fontSize: 22, fontWeight: 900, color: q.highlight ? "#d97706" : "#0284c7" }}>{q.value}</div>
             </div>
           ))}
         </div>
       </div>
 
       {/* Right — Broker Intelligence card */}
-      <div style={{ background: `linear-gradient(145deg, ${GOLD}12 0%, ${ORANGE}08 50%, rgba(0,0,0,0.1) 100%)`,
-        border: `1px solid ${GOLD}45`, borderRadius: 20, padding: "22px 22px", display: "flex", flexDirection: "column", gap: 14,
-        boxShadow: `0 0 40px ${GOLD}15` }}>
+      <div style={{ background: "linear-gradient(145deg, rgba(251,191,36,0.06) 0%, rgba(249,115,22,0.02) 100%)",
+        border: "1px solid rgba(251,191,36,0.25)", borderRadius: 20, padding: "22px 22px", display: "flex", flexDirection: "column", gap: 14,
+        boxShadow: "0 10px 25px -5px rgba(251,191,36,0.05)" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ fontSize: 13, fontWeight: 800, color: "#fff" }}>Broker Intelligence</div>
-          <span style={{ fontSize: 8, fontWeight: 900, letterSpacing: "0.12em", background: `${GREEN}12`, color: GREEN, border: `1px solid ${GREEN}25`, borderRadius: 5, padding: "2px 7px", textTransform: "uppercase" }}>Live</span>
+          <div style={{ fontSize: 13, fontWeight: 800, color: "#0F172A" }}>Broker Intelligence</div>
+          <span style={{ fontSize: 8, fontWeight: 900, letterSpacing: "0.12em", background: "rgba(34,197,94,0.1)", color: "#16a34a", border: "1px solid rgba(34,197,94,0.2)", borderRadius: 5, padding: "2px 7px", textTransform: "uppercase" }}>Live</span>
         </div>
-        <div style={{ background: "rgba(0,0,0,0.25)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: "13px 15px", fontSize: 12, color: "rgba(255,255,255,0.65)", lineHeight: 1.65 }}>
+        <div style={{ background: "#ffffff", border: "1px solid rgba(0,0,0,0.05)", borderRadius: 12, padding: "13px 15px", fontSize: 12, color: "#334155", lineHeight: 1.65, boxShadow: "0 2px 6px rgba(0,0,0,0.02)" }}>
           {bestOpening}
         </div>
-        <div style={{ background: "rgba(0,0,0,0.25)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: "13px 15px", fontSize: 12, color: "rgba(255,255,255,0.55)", lineHeight: 1.65 }}>
-          <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: GOLD }}>Best Opening Angle</span><br />
+        <div style={{ background: "#ffffff", border: "1px solid rgba(0,0,0,0.05)", borderRadius: 12, padding: "13px 15px", fontSize: 12, color: "#334155", lineHeight: 1.65, boxShadow: "0 2px 6px rgba(0,0,0,0.02)" }}>
+          <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: "#d97706" }}>Best Opening Angle</span><br />
           {bestAngle}
         </div>
-        <div style={{ background: `${BLUE}08`, border: `1px solid ${BLUE}22`, borderRadius: 12, padding: "13px 15px", fontSize: 12, color: `${BLUE}cc`, lineHeight: 1.65 }}>
-          <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: BLUE }}>Tennessee Whitespace Signal</span><br />
+        <div style={{ background: "rgba(2,132,199,0.04)", border: "1px solid rgba(2,132,199,0.15)", borderRadius: 12, padding: "13px 15px", fontSize: 12, color: "#334155", lineHeight: 1.65 }}>
+          <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: "#0284c7" }}>Tennessee Whitespace Signal</span><br />
           Prospect cluster detected in Middle Tennessee logistics corridor — 4 self-funded employers over 250 lives with no incumbent stop-loss broker visibility.
         </div>
         <div style={{ display: "flex", gap: 8 }}>
           <button onClick={onWarRoom} data-testid="launch-war-room"
             style={{ flex: 1, padding: "10px", borderRadius: 12, fontSize: 11, fontWeight: 900, cursor: "pointer",
-              background: `${GOLD}18`, border: `1px solid ${GOLD}40`, color: GOLD }}>
-            Launch Renewal War Room →
+              background: "linear-gradient(135deg, #d97706 0%, #b45309 100%)", border: "none", color: "#ffffff", boxShadow: "0 4px 10px rgba(217,119,6,0.2)" }}>
+            Launch Renewal War Room
           </button>
           <button data-testid="upload-contract-batch"
             style={{ padding: "10px 14px", borderRadius: 12, fontSize: 11, fontWeight: 900, cursor: "pointer",
-              background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.55)",
-              display: "flex", alignItems: "center", gap: 6 }}>
+              background: "#ffffff", border: "1px solid #cbd5e1", color: "#475569",
+              display: "flex", alignItems: "center", gap: 6, boxShadow: "0 2px 6px rgba(0,0,0,0.03)" }}>
             <Upload style={{ width: 12, height: 12 }} /> Batch Upload
           </button>
         </div>
@@ -314,7 +312,7 @@ function LiveMarketBoard({ clients }: { clients: Client[] }) {
               boxShadow: `0 0 16px ${p.color}12` }}>
             <div style={{ fontSize: 9, fontWeight: 800, color: `${p.color}90`, marginBottom: 6, letterSpacing:"0.08em" }}>{p.label}</div>
             <div style={{ fontSize: 18, fontWeight: 900, color: p.color, textShadow: `0 0 12px ${p.color}55` }}>{p.value}</div>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", marginTop: 3 }}>{p.sub}</div>
+            <div style={{ fontSize: 9, color: "#475569", marginTop: 3 }}>{p.sub}</div>
           </div>
         ))}
       </div>
@@ -357,10 +355,10 @@ function DashboardTab({ data, onSelectClient }: { data: DashboardData; onSelectC
                   background: `${color}25`, border: `1px solid ${color}55`, boxShadow: `0 0 10px ${color}20` }}>
                   <Icon style={{ width: 13, height: 13, color }} />
                 </div>
-                <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>{label}</span>
+                <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b" }}>{label}</span>
               </div>
               <div style={{ fontSize: 32, fontWeight: 900, color, lineHeight: 1 }}>{value}</div>
-              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>{sub}</div>
+              <div style={{ fontSize: 10, color: "#64748b", marginTop: 4 }}>{sub}</div>
             </div>
           ))}
         </div>
@@ -386,9 +384,9 @@ function DashboardTab({ data, onSelectClient }: { data: DashboardData; onSelectC
                     <Icon style={{ width: 15, height: 15, color }} />
                   </div>
                   <div>
-                    <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 3 }}>{label}</div>
+                    <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "#64748b", marginBottom: 3 }}>{label}</div>
                     <div style={{ fontSize: 24, fontWeight: 900, color, lineHeight: 1 }}>{value}</div>
-                    <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>{sub}</div>
+                    <div style={{ fontSize: 9, color: "#64748b", marginTop: 2 }}>{sub}</div>
                   </div>
                 </div>
               ))}
@@ -410,19 +408,19 @@ function DashboardTab({ data, onSelectClient }: { data: DashboardData; onSelectC
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.2em", textTransform: "uppercase",
               color: "#00D4FF", marginBottom: 5 }}>◈ MODULE · ERISA §430/436 · Schedule SB</div>
-            <div style={{ fontSize: 16, fontWeight: 900, color: "#fff", marginBottom: 5 }}>
+            <div style={{ fontSize: 16, fontWeight: 900, color: "#0F172A", marginBottom: 5 }}>
               Actuarial Engine IQ™
             </div>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 1.6, maxWidth: 520 }}>
+            <div style={{ fontSize: 12, color: "#334155", lineHeight: 1.6, maxWidth: 520 }}>
               Funded status · AFTAP · At-risk liability · Contribution gap · IRC §436 restrictions · Segment rates ·
               Actuary concentration · SHA-256 sealed evidence spine across 81,280 Schedule SB rows.
             </div>
             <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
               {[["84.7%","Funded Ratio","rgba(255,176,32,0.8)"],["82.3%","AFTAP","rgba(255,61,96,0.8)"],["$2.84M","At-Risk","rgba(255,61,96,0.8)"],["$1.64M","MRC Gap","rgba(255,176,32,0.8)"]].map(([val,lbl,col]) => (
                 <div key={lbl} style={{ padding: "4px 10px", borderRadius: 8,
-                  background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                  background: "#ffffff", border: "1px solid #e2e8f0" }}>
                   <div style={{ fontSize: 13, fontWeight: 900, color: String(col) }}>{val}</div>
-                  <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em" }}>{lbl}</div>
+                  <div style={{ fontSize: 8, color: "#64748b", letterSpacing: "0.08em" }}>{lbl}</div>
                 </div>
               ))}
             </div>
@@ -437,7 +435,7 @@ function DashboardTab({ data, onSelectClient }: { data: DashboardData; onSelectC
               <Calculator style={{ width: 14, height: 14 }} />
               Open Actuarial Engine →
             </a>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", textAlign: "center", marginTop: 6 }}>
+            <div style={{ fontSize: 9, color: "rgba(15,23,42,0.08)", textAlign: "center", marginTop: 6 }}>
               AFTAP · §436 · Segment Rates
             </div>
           </div>
@@ -456,28 +454,28 @@ function DashboardTab({ data, onSelectClient }: { data: DashboardData; onSelectC
               {urgentClients.map(c => (
                 <button key={c.id} onClick={() => onSelectClient(c.id)}
                   data-testid={`urgent-client-${c.id}`}
-                  style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${c.days_to_renewal <= 30 ? RED + "30" : ORANGE + "25"}`, borderRadius: 12,
+                  style={{ background: "#ffffff", border: `1px solid ${c.days_to_renewal <= 30 ? RED + "30" : ORANGE + "25"}`, borderRadius: 12,
                     padding: "14px 16px", textAlign: "left", cursor: "pointer", transition: "all 0.15s" }}
-                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}
-                  onMouseLeave={e => (e.currentTarget.style.background = "rgba(255,255,255,0.03)")}>
+                  onMouseEnter={e => (e.currentTarget.style.background = "#f1f5f9")}
+                  onMouseLeave={e => (e.currentTarget.style.background = "#ffffff")}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
-                    <span style={{ fontSize: 12, fontWeight: 800, color: "#fff" }}>{c.name}</span>
+                    <span style={{ fontSize: 12, fontWeight: 800, color: "#0F172A" }}>{c.name}</span>
                     <UrgencyChip days={c.days_to_renewal} />
                   </div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginBottom: 6 }}>{c.industry} · {c.employees} lives</div>
+                  <div style={{ fontSize: 11, color: "#475569", marginBottom: 6 }}>{c.industry} · {c.employees} lives</div>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     <span style={{ fontSize: 13, fontWeight: 900, color: c.days_to_renewal <= 30 ? RED : ORANGE }}>
                       {c.days_to_renewal}d
                     </span>
-                    <span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>to renewal · {fmtDate(c.renewal_date)}</span>
+                    <span style={{ fontSize: 10, color: "#64748b" }}>to renewal · {fmtDate(c.renewal_date)}</span>
                   </div>
                   <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
-                    <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "rgba(255,255,255,0.4)" }}>
-                      <Pill style={{ width: 10, height: 10, color: c.rx_status === "analyzed" ? GREEN : c.rx_status === "pending" ? GOLD : "rgba(255,255,255,0.2)" }} />
+                    <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "#475569" }}>
+                      <Pill style={{ width: 10, height: 10, color: c.rx_status === "analyzed" ? GREEN : c.rx_status === "pending" ? GOLD : "#94a3b8" }} />
                       Rx {c.rx_score !== null ? `${c.rx_score}/100` : c.rx_status}
                     </span>
-                    <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "rgba(255,255,255,0.4)" }}>
-                      <Activity style={{ width: 10, height: 10, color: c.sl_status === "analyzed" ? GREEN : c.sl_status === "pending" ? GOLD : "rgba(255,255,255,0.2)" }} />
+                    <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "#475569" }}>
+                      <Activity style={{ width: 10, height: 10, color: c.sl_status === "analyzed" ? GREEN : c.sl_status === "pending" ? GOLD : "#94a3b8" }} />
                       S/L {c.sl_score !== null ? `${c.sl_score}/100` : c.sl_status}
                     </span>
                   </div>
@@ -491,15 +489,15 @@ function DashboardTab({ data, onSelectClient }: { data: DashboardData; onSelectC
         <div style={{ background: `linear-gradient(135deg, ${GOLD}07 0%, rgba(0,0,0,0.15) 100%)`, border: `1px solid ${GOLD}30`, borderRadius: 16, padding: "20px 22px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 18 }}>
             <TrendingUp style={{ width: 14, height: 14, color: GOLD }} />
-            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>Commission Revenue · Rolling 7 Months</span>
+            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#334155" }}>Commission Revenue · Rolling 7 Months</span>
           </div>
           <ResponsiveContainer width="100%" height={160}>
             <BarChart data={data.revenue_trend} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-              <XAxis dataKey="month" tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 10 }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 10 }} axisLine={false} tickLine={false}
+              <XAxis dataKey="month" tick={{ fill: "#64748b", fontSize: 10 }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fill: "#64748b", fontSize: 10 }} axisLine={false} tickLine={false}
                 tickFormatter={v => `$${(v / 1000).toFixed(0)}K`} width={46} />
               <Tooltip formatter={(v: any) => [`$${(v / 1000).toFixed(1)}K`]} contentStyle={{
-                background: "#080810", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, fontSize: 11 }} />
+                background: "#F8FAFC", border: "1px solid #cbd5e1", borderRadius: 8, fontSize: 11 }} />
               <Bar dataKey="commission" fill={GOLD} radius={[4, 4, 0, 0]} opacity={0.85} />
             </BarChart>
           </ResponsiveContainer>
@@ -509,17 +507,17 @@ function DashboardTab({ data, onSelectClient }: { data: DashboardData; onSelectC
       {/* Right column — activity feed */}
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {/* Portfolio health */}
-        <div style={{ background: `linear-gradient(135deg, ${RED}07 0%, ${GOLD}05 50%, rgba(0,0,0,0.1) 100%)`, border: `1px solid rgba(255,255,255,0.1)`, borderRadius: 16, padding: "18px 20px" }}>
+        <div style={{ background: `linear-gradient(135deg, ${RED}07 0%, ${GOLD}05 50%, rgba(0,0,0,0.1) 100%)`, border: `1px solid #e2e8f0`, borderRadius: 16, padding: "18px 20px" }}>
           <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: GOLD, marginBottom: 14 }}>Portfolio Risk Profile</div>
           {data.risk_distribution.map((r, i) => {
             const colors = [GREEN, GOLD, RED];
             return (
               <div key={i} style={{ marginBottom: 10 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                  <span style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>{r.band}</span>
+                  <span style={{ fontSize: 10, color: "#334155" }}>{r.band}</span>
                   <span style={{ fontSize: 11, fontWeight: 700, color: colors[i] }}>{r.count} clients</span>
                 </div>
-                <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden" }}>
+                <div style={{ height: 6, background: "#f1f5f9", borderRadius: 3, overflow: "hidden" }}>
                   <div style={{ width: `${r.pct}%`, height: "100%", background: colors[i], borderRadius: 3,
                     boxShadow: `0 0 6px ${colors[i]}55` }} />
                 </div>
@@ -532,7 +530,7 @@ function DashboardTab({ data, onSelectClient }: { data: DashboardData; onSelectC
         <div style={{ background: `linear-gradient(135deg, ${PURPLE}07 0%, rgba(0,0,0,0.15) 100%)`, border: `1px solid ${PURPLE}25`, borderRadius: 16, padding: "18px 20px", flex: 1 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
             <Bell style={{ width: 13, height: 13, color: PURPLE }} />
-            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Live Activity Feed</span>
+            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#475569" }}>Live Activity Feed</span>
             <div style={{ marginLeft: "auto", width: 6, height: 6, borderRadius: "50%", background: GREEN, boxShadow: `0 0 6px ${GREEN}` }} />
           </div>
           <ActivityFeed items={data.activity_feed.slice(0, 8)} />
@@ -543,7 +541,7 @@ function DashboardTab({ data, onSelectClient }: { data: DashboardData; onSelectC
         <div style={{ background: `linear-gradient(135deg, ${GREEN}09 0%, rgba(0,0,0,0.15) 100%)`, border: `1px solid ${GREEN}35`, borderRadius: 16, padding: "18px 20px", boxShadow: `0 0 20px ${GREEN}08` }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
             <MapPin style={{ width: 13, height: 13, color: GREEN }} />
-            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Top Prospect Signals</span>
+            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#475569" }}>Top Prospect Signals</span>
             <div style={{ marginLeft: "auto", width: 6, height: 6, borderRadius: "50%", background: GREEN, boxShadow: `0 0 6px ${GREEN}` }} />
           </div>
           {[
@@ -554,14 +552,14 @@ function DashboardTab({ data, onSelectClient }: { data: DashboardData; onSelectC
             const fitColor = p.fit >= 90 ? GREEN : p.fit >= 80 ? GOLD : ORANGE;
             return (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 12px",
-                background: "rgba(0,0,0,0.2)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 11, marginBottom: 8 }}>
+                background: "rgba(0,0,0,0.2)", border: "1px solid #e2e8f0", borderRadius: 11, marginBottom: 8 }}>
                 <div style={{ flexShrink: 0, textAlign: "center" }}>
                   <div style={{ fontSize: 18, fontWeight: 900, color: fitColor, lineHeight: 1 }}>{p.fit}</div>
-                  <div style={{ fontSize: 7, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>fit</div>
+                  <div style={{ fontSize: 7, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(15,23,42,0.08)" }}>fit</div>
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.company}</div>
-                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>{p.region}</div>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.company}</div>
+                  <div style={{ fontSize: 9, color: "#475569", marginTop: 2 }}>{p.region}</div>
                 </div>
                 <span style={{ fontSize: 8, fontWeight: 900, letterSpacing: "0.08em", textTransform: "uppercase",
                   color: BLUE, background: `${BLUE}10`, border: `1px solid ${BLUE}25`, borderRadius: 4, padding: "2px 6px", flexShrink: 0 }}>{p.wedge}</span>
@@ -587,16 +585,16 @@ function ClientRow({ c, onSelect }: { c: Client; onSelect: (id: string) => void 
       data-testid={`client-row-${c.id}`}
       style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr 90px 90px 80px 80px 60px",
         gap: 8, padding: "12px 16px",
-        background: c.days_to_renewal <= 30 ? `${RED}07` : c.days_to_renewal <= 60 ? `${ORANGE}06` : "rgba(255,255,255,0.03)",
-        border: `1px solid ${c.days_to_renewal <= 30 ? RED+"30" : c.days_to_renewal <= 60 ? ORANGE+"25" : "rgba(255,255,255,0.08)"}`,
-        borderLeft: `3px solid ${c.days_to_renewal <= 30 ? RED : c.days_to_renewal <= 60 ? ORANGE : c.tier === "platinum" ? BLUE : c.tier === "gold" ? GOLD : "rgba(255,255,255,0.15)"}`,
+        background: c.days_to_renewal <= 30 ? `${RED}07` : c.days_to_renewal <= 60 ? `${ORANGE}06` : "#ffffff",
+        border: `1px solid ${c.days_to_renewal <= 30 ? RED+"30" : c.days_to_renewal <= 60 ? ORANGE+"25" : "#e2e8f0"}`,
+        borderLeft: `3px solid ${c.days_to_renewal <= 30 ? RED : c.days_to_renewal <= 60 ? ORANGE : c.tier === "platinum" ? BLUE : c.tier === "gold" ? GOLD : "#cbd5e1"}`,
         borderRadius: 12, cursor: "pointer", textAlign: "left", alignItems: "center", transition: "all 0.12s", width: "100%" }}
       onMouseEnter={e => { e.currentTarget.style.background = c.days_to_renewal <= 30 ? `${RED}12` : `rgba(255,184,0,0.06)`; e.currentTarget.style.borderColor = `${GOLD}35`; }}
-      onMouseLeave={e => { e.currentTarget.style.background = c.days_to_renewal <= 30 ? `${RED}07` : "rgba(255,255,255,0.03)"; e.currentTarget.style.borderColor = c.days_to_renewal <= 30 ? `${RED}30` : "rgba(255,255,255,0.08)"; }}>
+      onMouseLeave={e => { e.currentTarget.style.background = c.days_to_renewal <= 30 ? `${RED}07` : "#ffffff"; e.currentTarget.style.borderColor = c.days_to_renewal <= 30 ? `${RED}30` : "#e2e8f0"; }}>
 
       <div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <div style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>{c.name}</div>
+          <div style={{ fontSize: 12, fontWeight: 700, color: "#0F172A" }}>{c.name}</div>
           <span style={{ fontSize: 8, fontWeight: 900, color: tierCfg.color, background: tierCfg.bg, border: `1px solid ${tierCfg.border}`,
             borderRadius: 4, padding: "1px 5px", letterSpacing: "0.08em", textTransform: "uppercase" }}>{c.tier}</span>
           {c.open_actions > 0 && (
@@ -604,7 +602,7 @@ function ClientRow({ c, onSelect }: { c: Client; onSelect: (id: string) => void 
               border: `1px solid ${PURPLE}25`, borderRadius: 4, padding: "1px 6px" }}>{c.open_actions} actions</span>
           )}
         </div>
-        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>
+        <div style={{ fontSize: 10, color: "#64748b", marginTop: 2 }}>
           {(c.employees ?? 0).toLocaleString()} lives · {c.city}, {c.state} · {c.tpa}
         </div>
       </div>
@@ -616,28 +614,28 @@ function ClientRow({ c, onSelect }: { c: Client; onSelect: (id: string) => void 
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <UrgencyChip days={c.days_to_renewal} />
         </div>
-        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", marginTop: 3 }}>
-          {fmtDate(c.renewal_date)} · <span style={{ fontWeight: 700, color: c.days_to_renewal <= 30 ? RED : c.days_to_renewal <= 60 ? ORANGE : "rgba(255,255,255,0.5)" }}>{c.days_to_renewal}d</span>
+        <div style={{ fontSize: 10, color: "#475569", marginTop: 3 }}>
+          {fmtDate(c.renewal_date)} · <span style={{ fontWeight: 700, color: c.days_to_renewal <= 30 ? RED : c.days_to_renewal <= 60 ? ORANGE : "#334155" }}>{c.days_to_renewal}d</span>
         </div>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
         <StatusDot status={c.rx_status} />
-        <span style={{ fontSize: 11, color: c.rx_score !== null ? (c.rx_score < 50 ? RED : c.rx_score < 70 ? GOLD : GREEN) : "rgba(255,255,255,0.3)" }}>
+        <span style={{ fontSize: 11, color: c.rx_score !== null ? (c.rx_score < 50 ? RED : c.rx_score < 70 ? GOLD : GREEN) : "#64748b" }}>
           {c.rx_score !== null ? `${c.rx_score}/100` : c.rx_status === "pending" ? "…" : "—"}
         </span>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
         <StatusDot status={c.sl_status} />
-        <span style={{ fontSize: 11, color: c.sl_score !== null ? (c.sl_score < 50 ? RED : c.sl_score < 70 ? GOLD : GREEN) : "rgba(255,255,255,0.3)" }}>
+        <span style={{ fontSize: 11, color: c.sl_score !== null ? (c.sl_score < 50 ? RED : c.sl_score < 70 ? GOLD : GREEN) : "#64748b" }}>
           {c.sl_score !== null ? `${c.sl_score}/100` : c.sl_status === "pending" ? "…" : "—"}
         </span>
       </div>
 
       <HealthBar score={c.health_score} />
       <div style={{ fontSize: 12, fontWeight: 700, color: GOLD }}>{fmtMoney(c.annual_spend)}</div>
-      <ChevronRight style={{ width: 14, height: 14, color: "rgba(255,255,255,0.2)" }} />
+      <ChevronRight style={{ width: 14, height: 14, color: "#94a3b8" }} />
     </button>
   );
 }
@@ -689,7 +687,7 @@ function BookOfBusiness({ clients, onSelect }: { clients: Client[]; onSelect: (i
       style={{ fontSize: 10, fontWeight: 700, padding: "4px 10px", borderRadius: 6, cursor: "pointer",
         background: sort === val ? `${GOLD}18` : "transparent",
         border: sort === val ? `1px solid ${GOLD}40` : "1px solid transparent",
-        color: sort === val ? GOLD : "rgba(255,255,255,0.4)" }}>
+        color: sort === val ? GOLD : "#475569" }}>
       {label}
     </button>
   );
@@ -700,7 +698,7 @@ function BookOfBusiness({ clients, onSelect }: { clients: Client[]; onSelect: (i
       style={{ fontSize: 10, fontWeight: 700, padding: "4px 10px", borderRadius: 6, cursor: "pointer",
         background: groupBy === val ? `${BLUE}22` : "transparent",
         border: groupBy === val ? `1px solid ${BLUE}50` : "1px solid transparent",
-        color: groupBy === val ? BLUE : "rgba(255,255,255,0.4)",
+        color: groupBy === val ? BLUE : "#475569",
         display: "flex", alignItems: "center", gap: 4 }}>
       <MapPin style={{ width: 10, height: 10 }} /> {label}
     </button>
@@ -710,7 +708,7 @@ function BookOfBusiness({ clients, onSelect }: { clients: Client[]; onSelect: (i
     <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr 90px 90px 80px 80px 60px",
       gap: 8, padding: "8px 16px", marginBottom: 4 }}>
       {["Client", "Industry", "Plan Type", "Renewal", "Rx", "Stop-Loss", "Health", "Premium", ""].map(h => (
-        <span key={h} style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>{h}</span>
+        <span key={h} style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(15,23,42,0.08)" }}>{h}</span>
       ))}
     </div>
   );
@@ -742,17 +740,17 @@ function BookOfBusiness({ clients, onSelect }: { clients: Client[]; onSelect: (i
               background: `${BLUE}0D`, border: `1px solid ${BLUE}25`, borderRadius: 10,
               padding: "10px 16px", cursor: "pointer", marginBottom: isOpen ? 6 : 0 }}>
             <MapPin style={{ width: 13, height: 13, color: BLUE, flexShrink: 0 }} />
-            <span style={{ fontSize: 13, fontWeight: 800, color: "#fff", flex: 1, textAlign: "left" }}>{label}</span>
+            <span style={{ fontSize: 13, fontWeight: 800, color: "#0F172A", flex: 1, textAlign: "left" }}>{label}</span>
             <span style={{ fontSize: 10, color: "rgba(255,255,255,0.45)", marginRight: 4 }}>
               {group.length} account{group.length !== 1 ? "s" : ""}
             </span>
-            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginRight: 4 }}>
+            <span style={{ fontSize: 10, color: "#64748b", marginRight: 4 }}>
               {totalLives.toLocaleString()} lives
             </span>
             <span style={{ fontSize: 11, fontWeight: 700, color: GOLD, marginRight: 8 }}>
               {fmtMoney(totalPremium)}
             </span>
-            <ChevronRight style={{ width: 13, height: 13, color: "rgba(255,255,255,0.3)",
+            <ChevronRight style={{ width: 13, height: 13, color: "#64748b",
               transform: isOpen ? "rotate(90deg)" : "none", transition: "transform 0.15s" }} />
           </button>
           {isOpen && (
@@ -770,14 +768,14 @@ function BookOfBusiness({ clients, onSelect }: { clients: Client[]; onSelect: (i
       {/* Toolbar row 1 */}
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
         <div style={{ flex: 1, position: "relative" }}>
-          <Search style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 13, height: 13, color: "rgba(255,255,255,0.3)" }} />
+          <Search style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 13, height: 13, color: "#64748b" }} />
           <input
             data-testid="broker-search"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search by client, city, state, industry…"
-            style={{ width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: 10, padding: "8px 12px 8px 34px", color: "#fff", fontSize: 12, outline: "none", boxSizing: "border-box" }} />
+            style={{ width: "100%", background: "#ffffff", border: "1px solid #e2e8f0",
+              borderRadius: 10, padding: "8px 12px 8px 34px", color: "#0F172A", fontSize: 12, outline: "none", boxSizing: "border-box" }} />
         </div>
 
         {/* State filter */}
@@ -785,8 +783,8 @@ function BookOfBusiness({ clients, onSelect }: { clients: Client[]; onSelect: (i
           data-testid="state-filter"
           value={stateFilter}
           onChange={e => setStateFilter(e.target.value)}
-          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 10,
-            padding: "8px 12px", color: stateFilter === "ALL" ? "rgba(255,255,255,0.4)" : "#fff",
+          style={{ background: "#ffffff", border: "1px solid #cbd5e1", borderRadius: 10,
+            padding: "8px 12px", color: stateFilter === "ALL" ? "#475569" : "#fff",
             fontSize: 12, cursor: "pointer", outline: "none", minWidth: 110 }}>
           <option value="ALL">All States</option>
           {allStates.map(s => (
@@ -797,7 +795,7 @@ function BookOfBusiness({ clients, onSelect }: { clients: Client[]; onSelect: (i
         </select>
 
         {/* Sort buttons */}
-        <div style={{ display: "flex", gap: 4, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: 4 }}>
+        <div style={{ display: "flex", gap: 4, background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 8, padding: 4 }}>
           <SortBtn val="renewal" label="Renewal" />
           <SortBtn val="risk"    label="Risk" />
           <SortBtn val="health"  label="Health" />
@@ -805,24 +803,24 @@ function BookOfBusiness({ clients, onSelect }: { clients: Client[]; onSelect: (i
         </div>
 
         {/* Geography group buttons */}
-        <div style={{ display: "flex", gap: 4, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: 4 }}>
+        <div style={{ display: "flex", gap: 4, background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 8, padding: 4 }}>
           <GeoBtn val="state" label="By State" />
           <GeoBtn val="city"  label="By City" />
         </div>
 
-        <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", whiteSpace: "nowrap" }}>{filtered.length} accounts</span>
+        <span style={{ fontSize: 11, color: "#64748b", whiteSpace: "nowrap" }}>{filtered.length} accounts</span>
       </div>
 
       {/* State filter active chip */}
       {stateFilter !== "ALL" && (
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-          <span style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>Filtered to:</span>
+          <span style={{ fontSize: 10, color: "#475569" }}>Filtered to:</span>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11, fontWeight: 700,
             background: `${BLUE}18`, border: `1px solid ${BLUE}35`, borderRadius: 20, padding: "3px 10px", color: BLUE }}>
             <MapPin style={{ width: 9, height: 9 }} />
             {STATE_NAMES[stateFilter] || stateFilter} ({stateFilter})
             <button onClick={() => setStateFilter("ALL")} data-testid="clear-state-filter"
-              style={{ background: "none", border: "none", color: "rgba(255,255,255,0.5)", cursor: "pointer", padding: 0, marginLeft: 2, fontSize: 12, lineHeight: 1 }}>×</button>
+              style={{ background: "none", border: "none", color: "#334155", cursor: "pointer", padding: 0, marginLeft: 2, fontSize: 12, lineHeight: 1 }}>×</button>
           </span>
         </div>
       )}
@@ -850,7 +848,7 @@ function BookOfBusiness({ clients, onSelect }: { clients: Client[]; onSelect: (i
             <div style={{ background: "linear-gradient(135deg, rgba(255,184,0,0.05) 0%, rgba(255,184,0,0.02) 100%)", border: "1px solid rgba(255,184,0,0.2)", borderRadius: 16, padding: "20px 24px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13, fontWeight: 800, color: "#fff", marginBottom: 4 }}>
+                  <div style={{ fontSize: 13, fontWeight: 800, color: "#0F172A", marginBottom: 4 }}>
                     Find Similar Prospects
                   </div>
                   <div style={{ fontSize: 11, color: "rgba(255,255,255,0.40)", lineHeight: 1.5 }}>
@@ -881,7 +879,7 @@ function BookOfBusiness({ clients, onSelect }: { clients: Client[]; onSelect: (i
               </div>
               {bookStates.length > 1 && stateFilter === "ALL" && (
                 <div style={{ marginTop: 14, display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
-                  <span style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.25)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Quick state prospecting:</span>
+                  <span style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.08)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Quick state prospecting:</span>
                   {bookStates.slice(0, 6).map(st => (
                     <button
                       key={st}
@@ -912,10 +910,10 @@ function RenewalTimeline({ stages, daysToRenewal }: { stages: TimelineStage[]; d
       {/* Progress bar */}
       <div style={{ marginBottom: 24 }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{complete} of {stages.length} stages complete</span>
+          <span style={{ fontSize: 11, color: "#334155" }}>{complete} of {stages.length} stages complete</span>
           <span style={{ fontSize: 11, fontWeight: 700, color: GOLD }}>{daysToRenewal} days to renewal</span>
         </div>
-        <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden" }}>
+        <div style={{ height: 6, background: "#f1f5f9", borderRadius: 3, overflow: "hidden" }}>
           <div style={{ width: `${(complete / stages.length) * 100}%`, height: "100%",
             background: `linear-gradient(90deg, ${GREEN}bb, ${GREEN})`, borderRadius: 3 }} />
         </div>
@@ -928,8 +926,8 @@ function RenewalTimeline({ stages, daysToRenewal }: { stages: TimelineStage[]; d
           const cfg = stage.status === "complete"
             ? { lineColor: GREEN,  dotBg: `${GREEN}20`, dotBorder: GREEN,  dotFill: GREEN,  textColor: "rgba(255,255,255,0.55)", labelColor: "rgba(255,255,255,0.55)" }
             : stage.status === "active"
-            ? { lineColor: GOLD,   dotBg: `${GOLD}15`,  dotBorder: GOLD,   dotFill: GOLD,   textColor: "rgba(255,255,255,0.8)",  labelColor: "#fff" }
-            : { lineColor: "rgba(255,255,255,0.08)", dotBg: "rgba(255,255,255,0.04)", dotBorder: "rgba(255,255,255,0.12)", dotFill: "transparent", textColor: "rgba(255,255,255,0.3)", labelColor: "rgba(255,255,255,0.35)" };
+            ? { lineColor: GOLD,   dotBg: `${GOLD}15`,  dotBorder: GOLD,   dotFill: GOLD,   textColor: "#0f172a",  labelColor: "#fff" }
+            : { lineColor: "#e2e8f0", dotBg: "#ffffff", dotBorder: "#cbd5e1", dotFill: "transparent", textColor: "#64748b", labelColor: "#64748b" };
 
           return (
             <div key={stage.id} style={{ display: "flex", gap: 0 }}>
@@ -941,7 +939,7 @@ function RenewalTimeline({ stages, daysToRenewal }: { stages: TimelineStage[]; d
                     ? <CheckCircle2 style={{ width: 14, height: 14, color: GREEN }} />
                     : stage.status === "active"
                     ? <div style={{ width: 10, height: 10, borderRadius: "50%", background: GOLD, boxShadow: `0 0 8px ${GOLD}` }} />
-                    : <div style={{ width: 8, height: 8, borderRadius: "50%", background: "rgba(255,255,255,0.12)" }} />}
+                    : <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#cbd5e1" }} />}
                 </div>
                 {!isLast && <div style={{ width: 2, flex: 1, minHeight: 24, background: cfg.lineColor, opacity: 0.3, marginTop: 2 }} />}
               </div>
@@ -954,7 +952,7 @@ function RenewalTimeline({ stages, daysToRenewal }: { stages: TimelineStage[]; d
                     border: `1px solid ${cfg.dotBorder}25`, borderRadius: 4, padding: "1px 6px", letterSpacing: "0.08em", textTransform: "uppercase" }}>
                     {stage.status === "complete" ? "✓ Done" : stage.status === "active" ? "In Progress" : `${stage.trigger}d out`}
                   </span>
-                  <span style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", marginLeft: "auto" }}>Owner: {stage.owner}</span>
+                  <span style={{ fontSize: 9, color: "rgba(15,23,42,0.08)", marginLeft: "auto" }}>Owner: {stage.owner}</span>
                 </div>
                 <div style={{ fontSize: 11, color: cfg.textColor, lineHeight: 1.6 }}>{stage.description}</div>
               </div>
@@ -981,12 +979,12 @@ function DocumentVault({ docs, docsUploaded, docsRequired }: { docs: Document[];
   return (
     <div>
       {/* Progress */}
-      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "16px 20px", marginBottom: 16 }}>
+      <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 12, padding: "16px 20px", marginBottom: 16 }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
           <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>{docsUploaded} of {docsRequired} documents uploaded</span>
           {needed > 0 && <span style={{ fontSize: 11, fontWeight: 700, color: ORANGE }}>{needed} still needed</span>}
         </div>
-        <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden" }}>
+        <div style={{ height: 6, background: "#f1f5f9", borderRadius: 3, overflow: "hidden" }}>
           <div style={{ width: `${(docsUploaded / Math.max(docsRequired, 1)) * 100}%`, height: "100%",
             background: docsUploaded >= docsRequired ? GREEN : GOLD, borderRadius: 3 }} />
         </div>
@@ -996,32 +994,32 @@ function DocumentVault({ docs, docsUploaded, docsRequired }: { docs: Document[];
       {docs.length > 0 ? (
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {docs.map(doc => {
-            const typeColor = TYPE_COLORS[doc.type] || "rgba(255,255,255,0.4)";
+            const typeColor = TYPE_COLORS[doc.type] || "#475569";
             return (
               <div key={doc.id} style={{ display: "flex", alignItems: "center", gap: 14, padding: "12px 16px",
-                background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12 }}>
+                background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 12 }}>
                 <div style={{ width: 36, height: 36, borderRadius: 10, display: "flex", alignItems: "center",
                   justifyContent: "center", background: `${typeColor}12`, border: `1px solid ${typeColor}25`, flexShrink: 0 }}>
                   <FileText style={{ width: 16, height: 16, color: typeColor }} />
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 12, fontWeight: 600, color: "#fff", marginBottom: 2 }}>{doc.name}</div>
+                  <div style={{ fontSize: 12, fontWeight: 600, color: "#0F172A", marginBottom: 2 }}>{doc.name}</div>
                   <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
                     <span style={{ fontSize: 9, fontWeight: 900, color: typeColor, background: `${typeColor}12`,
                       border: `1px solid ${typeColor}25`, borderRadius: 4, padding: "1px 6px", textTransform: "uppercase", letterSpacing: "0.08em" }}>{doc.type}</span>
-                    <span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>{doc.size} · {fmtDate(doc.uploaded)}</span>
+                    <span style={{ fontSize: 10, color: "#64748b" }}>{doc.size} · {fmtDate(doc.uploaded)}</span>
                   </div>
                 </div>
                 {doc.score !== null && (
                   <div style={{ textAlign: "right", flexShrink: 0 }}>
                     <div style={{ fontSize: 16, fontWeight: 900, color: doc.score < 50 ? RED : doc.score < 70 ? GOLD : GREEN }}>{doc.score}/100</div>
-                    <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Fiduciary Score</div>
+                    <div style={{ fontSize: 9, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em" }}>Fiduciary Score</div>
                   </div>
                 )}
                 <div style={{ flexShrink: 0 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
                     <StatusDot status={doc.status} />
-                    <span style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", textTransform: "capitalize" }}>{doc.status}</span>
+                    <span style={{ fontSize: 9, color: "#475569", textTransform: "capitalize" }}>{doc.status}</span>
                   </div>
                 </div>
               </div>
@@ -1029,10 +1027,10 @@ function DocumentVault({ docs, docsUploaded, docsRequired }: { docs: Document[];
           })}
         </div>
       ) : (
-        <div style={{ padding: "40px 20px", textAlign: "center", background: "rgba(255,255,255,0.02)", border: "1px dashed rgba(255,255,255,0.1)", borderRadius: 12 }}>
-          <Upload style={{ width: 28, height: 28, color: "rgba(255,255,255,0.2)", margin: "0 auto 12px" }} />
-          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>No documents uploaded yet</div>
-          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", marginTop: 4 }}>Upload Rx contract and stop-loss policy to begin analysis</div>
+        <div style={{ padding: "40px 20px", textAlign: "center", background: "#ffffff", border: "1px dashed #e2e8f0", borderRadius: 12 }}>
+          <Upload style={{ width: 28, height: 28, color: "#94a3b8", margin: "0 auto 12px" }} />
+          <div style={{ fontSize: 12, color: "#64748b" }}>No documents uploaded yet</div>
+          <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 4 }}>Upload Rx contract and stop-loss policy to begin analysis</div>
         </div>
       )}
 
@@ -1060,7 +1058,7 @@ function RxDefenseTab({ c }: { c: Client }) {
   ];
 
   const actions = [
-    c.rx_status === "none"     && "Upload Rx/PBM contract for Rx Defense IQ™ analysis",
+    c.rx_status === "none"     && "Upload Rx/PBM contract for PBM Contract Clarity 360™ analysis",
     c.rx_status === "pending"  && "Analysis in progress — review will complete within 24 hours",
     score !== null && score < 50 && "Critical: Rx fiduciary score below threshold — schedule CFO conversation",
     score !== null && score < 70 && "Request PBM contract exhibits and spread-pricing disclosure",
@@ -1076,13 +1074,13 @@ function RxDefenseTab({ c }: { c: Client }) {
             <div style={{ fontSize: 56, fontWeight: 900, color: scoreColor, lineHeight: 1 }}>
               {score !== null ? score : "—"}
             </div>
-            <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginTop: 4 }}>Rx Defense IQ™ Score</div>
-            <div style={{ height: 5, background: "rgba(255,255,255,0.06)", borderRadius: 3, marginTop: 10, overflow: "hidden", width: 100 }}>
+            <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "#64748b", marginTop: 4 }}>PBM Contract Clarity 360™ Score</div>
+            <div style={{ height: 5, background: "#f1f5f9", borderRadius: 3, marginTop: 10, overflow: "hidden", width: 100 }}>
               <div style={{ width: `${score ?? 0}%`, height: "100%", background: scoreColor, borderRadius: 3 }} />
             </div>
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 14, fontWeight: 900, color: "#fff", marginBottom: 6 }}>Rx Fiduciary Status</div>
+            <div style={{ fontSize: 14, fontWeight: 900, color: "#0F172A", marginBottom: 6 }}>Rx Fiduciary Status</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
               {[
                 { label: "PBM",          value: c.pbm         },
@@ -1090,8 +1088,8 @@ function RxDefenseTab({ c }: { c: Client }) {
                 { label: "Status",       value: c.rx_status   },
                 { label: "Employees",    value: `${(c.employees ?? 0).toLocaleString()} lives` },
               ].map(({ label, value }) => (
-                <div key={label} style={{ background: "rgba(0,0,0,0.3)", borderRadius: 9, padding: "8px 12px" }}>
-                  <div style={{ fontSize: 8, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 3 }}>{label}</div>
+                <div key={label} style={{ background: "rgba(0,0,0,0.05)", borderRadius: 9, padding: "8px 12px" }}>
+                  <div style={{ fontSize: 8, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(15,23,42,0.08)", marginBottom: 3 }}>{label}</div>
                   <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.75)", textTransform: "capitalize" }}>{value}</div>
                 </div>
               ))}
@@ -1100,8 +1098,8 @@ function RxDefenseTab({ c }: { c: Client }) {
         </div>
 
         {/* Risk signals */}
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "18px 20px" }}>
-          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: 14 }}>Rx Risk Signals & Contract Flags</div>
+        <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, padding: "18px 20px" }}>
+          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#475569", marginBottom: 14 }}>Rx Risk Signals & Contract Flags</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {signals.map((s, i) => (
               <div key={i} style={{ display: "flex", gap: 12, padding: "12px 14px", background: `${s.color}06`, border: `1px solid ${s.color}18`, borderLeft: `3px solid ${s.color}`, borderRadius: 10 }}>
@@ -1109,8 +1107,8 @@ function RxDefenseTab({ c }: { c: Client }) {
                   <span style={{ fontSize: 7, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: s.color, background: `${s.color}12`, border: `1px solid ${s.color}25`, borderRadius: 3, padding: "2px 5px" }}>{s.risk}</span>
                 </div>
                 <div>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: "#fff", marginBottom: 3 }}>{s.flag}</div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", lineHeight: 1.55 }}>{s.desc}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "#0F172A", marginBottom: 3 }}>{s.flag}</div>
+                  <div style={{ fontSize: 11, color: "#334155", lineHeight: 1.55 }}>{s.desc}</div>
                 </div>
               </div>
             ))}
@@ -1121,13 +1119,13 @@ function RxDefenseTab({ c }: { c: Client }) {
         <a href="/rx-defense" data-testid="rx-fullreport-cta"
           style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, padding: "13px", borderRadius: 12, fontSize: 12, fontWeight: 900, cursor: "pointer",
             background: `${PURPLE}14`, border: `1px solid ${PURPLE}35`, color: PURPLE, textDecoration: "none" }}>
-          Open Full Rx Defense IQ™ Report →
+          Open Full PBM Contract Clarity 360™ Report →
         </a>
       </div>
 
       {/* Right — action items */}
       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-        <div style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${PURPLE}20`, borderRadius: 14, padding: "16px 18px" }}>
+        <div style={{ background: "#ffffff", border: `1px solid ${PURPLE}20`, borderRadius: 14, padding: "16px 18px" }}>
           <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: PURPLE, marginBottom: 12 }}>Action Items</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
             {actions.map((a, i) => (
@@ -1138,8 +1136,8 @@ function RxDefenseTab({ c }: { c: Client }) {
             ))}
           </div>
         </div>
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "16px 18px" }}>
-          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 12 }}>CAA 2026 Rx Checklist</div>
+        <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, padding: "16px 18px" }}>
+          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 12 }}>CAA 2026 Rx Checklist</div>
           {[
             ["Broker compensation disclosed",         true  ],
             ["PBM spread-pricing disclosure obtained", false ],
@@ -1147,9 +1145,9 @@ function RxDefenseTab({ c }: { c: Client }) {
             ["Rebate pass-through analyzed",          false ],
             ["Plan sponsor advised of fiduciary duty", true  ],
           ].map(([label, done]) => (
-            <div key={String(label)} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-              <span style={{ fontSize: 12, color: done ? GREEN : "rgba(255,255,255,0.2)" }}>{done ? "✓" : "○"}</span>
-              <span style={{ fontSize: 11, color: done ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.3)" }}>{String(label)}</span>
+            <div key={String(label)} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: "1px solid #ffffff" }}>
+              <span style={{ fontSize: 12, color: done ? GREEN : "#94a3b8" }}>{done ? "✓" : "○"}</span>
+              <span style={{ fontSize: 11, color: done ? "#1e293b" : "#64748b" }}>{String(label)}</span>
             </div>
           ))}
         </div>
@@ -1187,13 +1185,13 @@ function StopLossTab({ c }: { c: Client }) {
             <div style={{ fontSize: 56, fontWeight: 900, color: scoreColor, lineHeight: 1 }}>
               {score !== null ? score : "—"}
             </div>
-            <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginTop: 4 }}>Stop-Loss IQ™ Score</div>
-            <div style={{ height: 5, background: "rgba(255,255,255,0.06)", borderRadius: 3, marginTop: 10, overflow: "hidden", width: 100 }}>
+            <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "#64748b", marginTop: 4 }}>Stop-Loss IQ™ Score</div>
+            <div style={{ height: 5, background: "#f1f5f9", borderRadius: 3, marginTop: 10, overflow: "hidden", width: 100 }}>
               <div style={{ width: `${score ?? 0}%`, height: "100%", background: scoreColor, borderRadius: 3 }} />
             </div>
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 14, fontWeight: 900, color: "#fff", marginBottom: 6 }}>Stop-Loss Policy Overview</div>
+            <div style={{ fontSize: 14, fontWeight: 900, color: "#0F172A", marginBottom: 6 }}>Stop-Loss Policy Overview</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
               {[
                 { label: "Carrier",      value: c.sl_carrier || "Unassigned"     },
@@ -1201,8 +1199,8 @@ function StopLossTab({ c }: { c: Client }) {
                 { label: "Status",       value: c.sl_status                       },
                 { label: "Lives",        value: `${(c.employees ?? 0).toLocaleString()}` },
               ].map(({ label, value }) => (
-                <div key={label} style={{ background: "rgba(0,0,0,0.3)", borderRadius: 9, padding: "8px 12px" }}>
-                  <div style={{ fontSize: 8, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 3 }}>{label}</div>
+                <div key={label} style={{ background: "rgba(0,0,0,0.05)", borderRadius: 9, padding: "8px 12px" }}>
+                  <div style={{ fontSize: 8, fontWeight: 900, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(15,23,42,0.08)", marginBottom: 3 }}>{label}</div>
                   <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.75)", textTransform: "capitalize" }}>{value}</div>
                 </div>
               ))}
@@ -1211,8 +1209,8 @@ function StopLossTab({ c }: { c: Client }) {
         </div>
 
         {/* Signals */}
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "18px 20px" }}>
-          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: 14 }}>Stop-Loss Risk Signals</div>
+        <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, padding: "18px 20px" }}>
+          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#475569", marginBottom: 14 }}>Stop-Loss Risk Signals</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {signals.map((s, i) => (
               <div key={i} style={{ display: "flex", gap: 12, padding: "12px 14px", background: `${s.color}06`, border: `1px solid ${s.color}18`, borderLeft: `3px solid ${s.color}`, borderRadius: 10 }}>
@@ -1220,8 +1218,8 @@ function StopLossTab({ c }: { c: Client }) {
                   <span style={{ fontSize: 7, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: s.color, background: `${s.color}12`, border: `1px solid ${s.color}25`, borderRadius: 3, padding: "2px 5px" }}>{s.risk}</span>
                 </div>
                 <div>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: "#fff", marginBottom: 3 }}>{s.flag}</div>
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", lineHeight: 1.55 }}>{s.desc}</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "#0F172A", marginBottom: 3 }}>{s.flag}</div>
+                  <div style={{ fontSize: 11, color: "#334155", lineHeight: 1.55 }}>{s.desc}</div>
                 </div>
               </div>
             ))}
@@ -1238,7 +1236,7 @@ function StopLossTab({ c }: { c: Client }) {
 
       {/* Right — action items */}
       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-        <div style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${ORANGE}20`, borderRadius: 14, padding: "16px 18px" }}>
+        <div style={{ background: "#ffffff", border: `1px solid ${ORANGE}20`, borderRadius: 14, padding: "16px 18px" }}>
           <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: ORANGE, marginBottom: 12 }}>Action Items</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
             {actions.map((a, i) => (
@@ -1249,8 +1247,8 @@ function StopLossTab({ c }: { c: Client }) {
             ))}
           </div>
         </div>
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "16px 18px" }}>
-          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 12 }}>Stop-Loss Renewal Checklist</div>
+        <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, padding: "16px 18px" }}>
+          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 12 }}>Stop-Loss Renewal Checklist</div>
           {[
             ["Renewal terms received from carrier",    false ],
             ["Competing markets quoted",               false ],
@@ -1259,9 +1257,9 @@ function StopLossTab({ c }: { c: Client }) {
             ["Run-out liability assessed",             false ],
             ["Client advised on specific limit",       true  ],
           ].map(([label, done]) => (
-            <div key={String(label)} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-              <span style={{ fontSize: 12, color: done ? GREEN : "rgba(255,255,255,0.2)" }}>{done ? "✓" : "○"}</span>
-              <span style={{ fontSize: 11, color: done ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.3)" }}>{String(label)}</span>
+            <div key={String(label)} style={{ display: "flex", alignItems: "center", gap: 8, padding: "6px 0", borderBottom: "1px solid #ffffff" }}>
+              <span style={{ fontSize: 12, color: done ? GREEN : "#94a3b8" }}>{done ? "✓" : "○"}</span>
+              <span style={{ fontSize: 11, color: done ? "#1e293b" : "#64748b" }}>{String(label)}</span>
             </div>
           ))}
         </div>
@@ -1277,14 +1275,14 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
 
   if (isLoading || !c) return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: 300 }}>
-      <div style={{ fontSize: 13, color: "rgba(255,255,255,0.3)" }}>Loading client…</div>
+      <div style={{ fontSize: 13, color: "#64748b" }}>Loading client…</div>
     </div>
   );
 
   const tierCfg = TIER_CFG[c.tier] || TIER_CFG.silver;
   const TABS = [
     { id: "overview",   label: "Overview",     icon: LayoutDashboard },
-    { id: "rx",         label: "Rx Defense",   icon: Pill            },
+    { id: "rx",         label: "PBM Contract Clarity 360",   icon: Pill            },
     { id: "stoploss",   label: "Stop-Loss",    icon: Activity        },
     { id: "timeline",   label: "Timeline",     icon: Calendar        },
     { id: "documents",  label: "Documents",    icon: FileText        },
@@ -1305,12 +1303,12 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
       {/* Back + breadcrumb */}
       <button onClick={onBack} data-testid="client-back-btn"
         style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 20, background: "none", border: "none",
-          color: "rgba(255,255,255,0.4)", fontSize: 12, cursor: "pointer", padding: 0 }}>
+          color: "#475569", fontSize: 12, cursor: "pointer", padding: 0 }}>
         ← Book of Business <ChevronRight style={{ width: 12, height: 12 }} /> <span style={{ color: GOLD }}>{c.name}</span>
       </button>
 
       {/* Client hero */}
-      <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)",
+      <div style={{ background: "#ffffff", border: "1px solid #e2e8f0",
         borderRadius: 20, padding: "24px 28px", marginBottom: 20, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: -40, right: -40, width: 200, height: 200, borderRadius: "50%",
           background: `radial-gradient(circle, ${GOLD}10 0%, transparent 65%)`, pointerEvents: "none" }} />
@@ -1318,18 +1316,18 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 24 }}>
           <div style={{ flex: 1 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-              <div style={{ fontSize: 22, fontWeight: 900, color: "#fff" }}>{c.name}</div>
+              <div style={{ fontSize: 22, fontWeight: 900, color: "#0F172A" }}>{c.name}</div>
               <span style={{ fontSize: 9, fontWeight: 900, color: tierCfg.color, background: tierCfg.bg,
                 border: `1px solid ${tierCfg.border}`, borderRadius: 4, padding: "2px 8px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                 {c.tier}
               </span>
-              <span style={{ fontSize: 9, fontWeight: 700, color: c.status === "active" ? GREEN : "rgba(255,255,255,0.3)",
-                background: c.status === "active" ? `${GREEN}10` : "rgba(255,255,255,0.04)", border: `1px solid ${c.status === "active" ? GREEN + "30" : "rgba(255,255,255,0.08)"}`,
+              <span style={{ fontSize: 9, fontWeight: 700, color: c.status === "active" ? GREEN : "#64748b",
+                background: c.status === "active" ? `${GREEN}10` : "#ffffff", border: `1px solid ${c.status === "active" ? GREEN + "30" : "#e2e8f0"}`,
                 borderRadius: 4, padding: "2px 8px", textTransform: "uppercase", letterSpacing: "0.08em" }}>
                 {c.status}
               </span>
             </div>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginBottom: 12 }}>
+            <div style={{ fontSize: 12, color: "#475569", marginBottom: 12 }}>
               {c.industry} · {(c.employees ?? 0).toLocaleString()} employees · {c.city}, {c.state} · {c.plan_type}
             </div>
             <div style={{ display: "flex", gap: 20 }}>
@@ -1339,8 +1337,8 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
                 { label: "TPA", value: c.tpa, icon: Building2 },
               ].map(({ label, value, icon: Icon }) => (
                 <div key={label} style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <Icon style={{ width: 12, height: 12, color: "rgba(255,255,255,0.3)" }} />
-                  <span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>{label}:</span>
+                  <Icon style={{ width: 12, height: 12, color: "#64748b" }} />
+                  <span style={{ fontSize: 10, color: "#64748b" }}>{label}:</span>
                   <span style={{ fontSize: 10, fontWeight: 600, color: "rgba(255,255,255,0.65)" }}>{value}</span>
                 </div>
               ))}
@@ -1357,19 +1355,19 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
               textShadow: `0 0 20px ${c.days_to_renewal <= 30 ? RED : GOLD}40` }}>
               {c.days_to_renewal}
             </div>
-            <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginTop: 4 }}>days to renewal</div>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", marginTop: 6 }}>{fmtDate(c.renewal_date)}</div>
+            <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginTop: 4 }}>days to renewal</div>
+            <div style={{ fontSize: 10, color: "#475569", marginTop: 6 }}>{fmtDate(c.renewal_date)}</div>
             <div style={{ marginTop: 8 }}><UrgencyChip days={c.days_to_renewal} /></div>
           </div>
         </div>
 
         {/* KPI strip */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 12, marginTop: 20,
-          paddingTop: 20, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          paddingTop: 20, borderTop: "1px solid #f1f5f9" }}>
           {kpis.map(({ label, value, color }) => (
             <div key={label}>
               <div style={{ fontSize: 18, fontWeight: 900, color, lineHeight: 1 }}>{value}</div>
-              <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginTop: 4 }}>{label}</div>
+              <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#64748b", marginTop: 4 }}>{label}</div>
             </div>
           ))}
         </div>
@@ -1378,20 +1376,20 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
       {/* Contract scores */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
         {[
-          { label: "Rx Defense IQ™", icon: Pill, status: c.rx_status, score: c.rx_score, color: c.rx_status === "analyzed" ? (c.rx_score !== null && c.rx_score < 50 ? RED : GOLD) : BLUE },
+          { label: "PBM Contract Clarity 360™", icon: Pill, status: c.rx_status, score: c.rx_score, color: c.rx_status === "analyzed" ? (c.rx_score !== null && c.rx_score < 50 ? RED : GOLD) : BLUE },
           { label: "Stop-Loss IQ™",  icon: Activity, status: c.sl_status, score: c.sl_score, color: c.sl_status === "analyzed" ? (c.sl_score !== null && c.sl_score < 50 ? RED : GOLD) : BLUE },
         ].map(({ label, icon: Icon, status, score, color }) => (
-          <div key={label} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "16px 20px",
+          <div key={label} style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, padding: "16px 20px",
             display: "flex", alignItems: "center", gap: 16 }}>
             <div style={{ width: 40, height: 40, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center",
               background: `${color}12`, border: `1px solid ${color}25` }}>
               <Icon style={{ width: 18, height: 18, color }} />
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 11, fontWeight: 900, color: "rgba(255,255,255,0.6)", marginBottom: 2 }}>{label}</div>
+              <div style={{ fontSize: 11, fontWeight: 900, color: "#1e293b", marginBottom: 2 }}>{label}</div>
               {score !== null
-                ? <div style={{ fontSize: 24, fontWeight: 900, color, lineHeight: 1 }}>{score}<span style={{ fontSize: 12, fontWeight: 400, color: "rgba(255,255,255,0.3)" }}>/100</span></div>
-                : <div style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", fontStyle: "italic" }}>
+                ? <div style={{ fontSize: 24, fontWeight: 900, color, lineHeight: 1 }}>{score}<span style={{ fontSize: 12, fontWeight: 400, color: "#64748b" }}>/100</span></div>
+                : <div style={{ fontSize: 12, color: "#64748b", fontStyle: "italic" }}>
                     {status === "pending" ? "Analysis in progress…" : "Contract not yet uploaded"}
                   </div>}
             </div>
@@ -1401,12 +1399,12 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
       </div>
 
       {/* Tabs */}
-      <div style={{ display: "flex", gap: 2, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 12, padding: 4, marginBottom: 20 }}>
+      <div style={{ display: "flex", gap: 2, background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 12, padding: 4, marginBottom: 20 }}>
         {TABS.map(({ id, label, icon: Icon }) => {
           const isRx = id === "rx";    const isSL = id === "stoploss";
           const badgeVal = isRx ? (c.rx_score !== null ? c.rx_score : null) : isSL ? (c.sl_score !== null ? c.sl_score : null) : null;
           const badgeColor = badgeVal !== null ? (badgeVal < 50 ? RED : badgeVal < 70 ? GOLD : GREEN) : null;
-          const tabColor = tab === id ? (isRx ? PURPLE : isSL ? ORANGE : GOLD) : "rgba(255,255,255,0.4)";
+          const tabColor = tab === id ? (isRx ? PURPLE : isSL ? ORANGE : GOLD) : "#475569";
           const activeBg = isRx ? `${PURPLE}12` : isSL ? `${ORANGE}10` : `${GOLD}15`;
           const activeBorder = isRx ? `${PURPLE}30` : isSL ? `${ORANGE}30` : `${GOLD}35`;
           return (
@@ -1415,7 +1413,7 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
                 borderRadius: 9, fontSize: 11, fontWeight: 700, cursor: "pointer", transition: "all 0.12s",
                 background: tab === id ? activeBg : "transparent",
                 border: tab === id ? `1px solid ${activeBorder}` : "1px solid transparent",
-                color: tab === id ? tabColor : "rgba(255,255,255,0.4)" }}>
+                color: tab === id ? tabColor : "#475569" }}>
               <Icon style={{ width: 12, height: 12 }} />
               {label}
               {badgeVal !== null && (
@@ -1438,7 +1436,7 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
                 </div>
                 {[
                   c.docs_uploaded < c.docs_required && `Upload ${c.docs_required - c.docs_uploaded} remaining document(s)`,
-                  c.rx_status === "none" && "Upload Rx/PBM contract for Rx Defense IQ™ analysis",
+                  c.rx_status === "none" && "Upload Rx/PBM contract for PBM Contract Clarity 360™ analysis",
                   c.sl_status === "none" && "Upload stop-loss policy for Stop-Loss IQ™ analysis",
                   c.rx_status === "analyzed" && c.rx_score !== null && c.rx_score < 50 && "Review critical Rx fiduciary gaps — score below 50",
                   c.sl_status === "analyzed" && c.sl_score !== null && c.sl_score < 50 && "Review critical stop-loss gaps — score below 50",
@@ -1454,8 +1452,8 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
             )}
 
             {/* Plan details */}
-            <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "16px 20px" }}>
-              <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 14 }}>Plan Details</div>
+            <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, padding: "16px 20px" }}>
+              <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 14 }}>Plan Details</div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                 {[
                   { label: "Plan Type", value: c.plan_type },
@@ -1466,8 +1464,8 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
                   { label: "Employees", value: (c.employees ?? 0).toLocaleString() },
                 ].map(({ label, value }) => (
                   <div key={label}>
-                    <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 3 }}>{label}</div>
-                    <div style={{ fontSize: 12, color: "rgba(255,255,255,0.7)" }}>{value}</div>
+                    <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(15,23,42,0.08)", marginBottom: 3 }}>{label}</div>
+                    <div style={{ fontSize: 12, color: "#0f172a" }}>{value}</div>
                   </div>
                 ))}
               </div>
@@ -1475,28 +1473,28 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
 
             {/* Broker notes */}
             {c.notes && (
-              <div style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${GOLD}15`, borderRadius: 14, padding: "16px 20px", borderLeft: `3px solid ${GOLD}` }}>
+              <div style={{ background: "#ffffff", border: `1px solid ${GOLD}15`, borderRadius: 14, padding: "16px 20px", borderLeft: `3px solid ${GOLD}` }}>
                 <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: GOLD, marginBottom: 8 }}>Broker Notes</div>
-                <div style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", lineHeight: 1.7 }}>{c.notes}</div>
+                <div style={{ fontSize: 12, color: "#1e293b", lineHeight: 1.7 }}>{c.notes}</div>
               </div>
             )}
           </div>
 
           {/* Contact + doc summary */}
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "16px 20px" }}>
-              <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 12 }}>Primary Contact</div>
-              <div style={{ fontSize: 14, fontWeight: 800, color: "#fff", marginBottom: 4 }}>{c.contact_name}</div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginBottom: 4 }}>{c.contact_title}</div>
+            <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, padding: "16px 20px" }}>
+              <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 12 }}>Primary Contact</div>
+              <div style={{ fontSize: 14, fontWeight: 800, color: "#0F172A", marginBottom: 4 }}>{c.contact_name}</div>
+              <div style={{ fontSize: 11, color: "#475569", marginBottom: 4 }}>{c.contact_title}</div>
               <div style={{ fontSize: 11, color: BLUE }}>{c.contact_email}</div>
             </div>
-            <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: "16px 20px" }}>
-              <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 12 }}>Document Status</div>
+            <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, padding: "16px 20px" }}>
+              <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 12 }}>Document Status</div>
               <div style={{ fontSize: 28, fontWeight: 900, color: c.docs_uploaded >= c.docs_required ? GREEN : GOLD }}>
-                {c.docs_uploaded}<span style={{ fontSize: 14, color: "rgba(255,255,255,0.3)", fontWeight: 400 }}>/{c.docs_required}</span>
+                {c.docs_uploaded}<span style={{ fontSize: 14, color: "#64748b", fontWeight: 400 }}>/{c.docs_required}</span>
               </div>
-              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>documents uploaded</div>
-              <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden", marginTop: 12 }}>
+              <div style={{ fontSize: 10, color: "#64748b", marginTop: 4 }}>documents uploaded</div>
+              <div style={{ height: 6, background: "#f1f5f9", borderRadius: 3, overflow: "hidden", marginTop: 12 }}>
                 <div style={{ width: `${Math.min((c.docs_uploaded / Math.max(c.docs_required, 1)) * 100, 100)}%`, height: "100%",
                   background: c.docs_uploaded >= c.docs_required ? GREEN : GOLD, borderRadius: 3 }} />
               </div>
@@ -1509,7 +1507,7 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
       {tab === "stoploss" && <StopLossTab   c={c} />}
 
       {tab === "timeline" && c.timeline && (
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "24px 28px" }}>
+        <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "24px 28px" }}>
           <RenewalTimeline stages={c.timeline} daysToRenewal={c.days_to_renewal} />
         </div>
       )}
@@ -1519,16 +1517,16 @@ function ClientWorkspace({ clientId, onBack }: { clientId: string; onBack: () =>
       )}
 
       {tab === "notes" && (
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "24px 28px" }}>
-          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 16 }}>Broker Notes & Service Log</div>
+        <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 16, padding: "24px 28px" }}>
+          <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748b", marginBottom: 16 }}>Broker Notes & Service Log</div>
           {c.notes && (
             <div style={{ background: `${GOLD}08`, border: `1px solid ${GOLD}20`, borderLeft: `3px solid ${GOLD}`, borderRadius: 12, padding: "16px 20px", marginBottom: 16 }}>
               <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: GOLD, marginBottom: 8 }}>Latest Note</div>
-              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", lineHeight: 1.7 }}>{c.notes}</div>
-              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", marginTop: 8 }}>Jeremiah Shrack · Kincaid RMC</div>
+              <div style={{ fontSize: 13, color: "#0f172a", lineHeight: 1.7 }}>{c.notes}</div>
+              <div style={{ fontSize: 10, color: "rgba(15,23,42,0.08)", marginTop: 8 }}>Jeremiah Shrack · Kincaid Health</div>
             </div>
           )}
-          <div style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, padding: "14px 16px", minHeight: 100, color: "rgba(255,255,255,0.25)", fontSize: 12, fontStyle: "italic" }}>
+          <div style={{ background: "rgba(0,0,0,0.05)", border: "1px solid #e2e8f0", borderRadius: 10, padding: "14px 16px", minHeight: 100, color: "rgba(15,23,42,0.08)", fontSize: 12, fontStyle: "italic" }}>
             Add new note…
           </div>
         </div>
@@ -1563,11 +1561,12 @@ export default function SaasBroker() {
 
   return (
     <Layout>
-      <div style={{ background: "#000", minHeight: "100vh", color: "#fff" }}>
+      <div style={{ background: "#F8FAFC", minHeight: "100vh", color: "#0F172A" }}>
         {/* ── BROKER IQ CONSOLE — Sticky top bar ── */}
         <div style={{ position: "sticky", top: 0, zIndex: 100,
-          background: "rgba(0,0,0,0.92)", backdropFilter: "blur(12px)",
-          borderBottom: `1px solid ${GOLD}22`,
+          background: "linear-gradient(180deg, rgba(255,255,255,0.88), rgba(248,250,252,0.70))", backdropFilter: "blur(18px) saturate(160%)",
+          WebkitBackdropFilter: "blur(18px) saturate(160%)",
+          borderBottom: "1px solid rgba(15,23,42,0.08)",
           padding: "0 32px", display: "flex", alignItems: "center", gap: 12, height: 38 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 7,
             background: `linear-gradient(90deg, ${GOLD}16, ${GOLD}06)`,
@@ -1579,7 +1578,7 @@ export default function SaasBroker() {
           </div>
           <div style={{ height: 1, flex: 1, background: `linear-gradient(90deg, ${GOLD}18, transparent)` }} />
           <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase",
-            color: "rgba(255,255,255,0.18)" }}>Kincaid RMC · Fiduciary Grade · SHRACK-7742</span>
+            color: "rgba(255,255,255,0.18)" }}>Kincaid Health · Fiduciary Grade · SHRACK-7742</span>
           <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "3px 9px",
             background: "rgba(0,255,148,0.07)", border: "1px solid rgba(0,255,148,0.18)", borderRadius: 6 }}>
             <div style={{ width: 5, height: 5, borderRadius: "50%", background: GREEN, boxShadow: `0 0 5px ${GREEN}` }} />
@@ -1591,7 +1590,7 @@ export default function SaasBroker() {
         <TickerBar />
 
         {/* Broker hero header */}
-        <div style={{ padding: "20px 32px 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        <div style={{ padding: "20px 32px 0", borderBottom: "1px solid #f1f5f9" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
               {/* Avatar */}
@@ -1601,7 +1600,7 @@ export default function SaasBroker() {
               </div>
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <span style={{ fontSize: 18, fontWeight: 900, color: "#fff" }}>
+                  <span style={{ fontSize: 18, fontWeight: 900, color: "#0F172A" }}>
                     {broker?.name || "Jeremiah Shrack"}
                   </span>
                   <span style={{ fontSize: 9, fontWeight: 900, background: `${GOLD}15`, color: GOLD, border: `1px solid ${GOLD}30`,
@@ -1609,8 +1608,8 @@ export default function SaasBroker() {
                     SHRACK-7742
                   </span>
                 </div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>
-                  {broker?.title || "Chief Executive Officer"} · {broker?.firm || "Kincaid RMC"}
+                <div style={{ fontSize: 11, color: "#475569", marginTop: 2 }}>
+                  {broker?.title || "Chief Executive Officer"} · {broker?.firm || "Kincaid Health"}
                 </div>
               </div>
             </div>
@@ -1621,7 +1620,7 @@ export default function SaasBroker() {
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: GREEN, boxShadow: `0 0 6px ${GREEN}` }} />
                 <span style={{ fontSize: 10, fontWeight: 700, color: GREEN }}>LIVE</span>
               </div>
-              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>
+              <div style={{ fontSize: 10, color: "#64748b" }}>
                 {new Date().toLocaleDateString("en-US", { weekday: "short", month: "long", day: "numeric", year: "numeric" })}
               </div>
             </div>
@@ -1790,7 +1789,7 @@ export default function SaasBroker() {
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: 300 }}>
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
                 <RefreshCw style={{ width: 22, height: 22, color: GOLD, animation: "spin 1s linear infinite" }} />
-                <span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>Loading broker console…</span>
+                <span style={{ fontSize: 12, color: "#64748b" }}>Loading broker console…</span>
               </div>
             </div>
           ) : view === "intelligence" ? (

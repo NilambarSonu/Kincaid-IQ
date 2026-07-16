@@ -2,15 +2,15 @@ import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 
-const BG = "#07091c";
-const CARD = "#0d1033";
-const BORDER = "rgba(255,255,255,0.08)";
-const TEXT1 = "#f0f4ff";
-const ACCENT = "#4f7dff";
-const GREEN = "#22c55e";
-const AMBER = "#f59e0b";
-const RED = "#ef4444";
-const MUTED = "rgba(240,244,255,0.45)";
+const BG = "#F8FAFC";
+const CARD = "#ffffff";
+const BORDER = "rgba(15,23,42,0.08)";
+const TEXT1 = "#0f172a";
+const ACCENT = "#533afd";
+const GREEN = "#10b981";
+const AMBER = "#d97706";
+const RED = "#e11d48";
+const MUTED = "#475569";
 
 const CATEGORY_COLORS: Record<string, string> = {
   "Payroll & HR": "#818cf8",
@@ -59,10 +59,10 @@ function IntegrationCard({ item, onClick }: { item: Integration; onClick: () => 
       onClick={onClick}
       data-testid={`integration-card-${item.slug}`}
       style={{
-        background: CARD, border: `1px solid ${connected ? color+"44" : BORDER}`,
+        background: "linear-gradient(135deg, rgba(255,255,255,0.94), rgba(248,250,252,0.72))", border: `1px solid ${connected ? color+"44" : BORDER}`,
         borderRadius: 10, padding: "16px 18px", cursor: "pointer",
         display: "flex", flexDirection: "column", gap: 10, minHeight: 140,
-        boxShadow: connected ? `0 0 16px ${color}18` : "none",
+        boxShadow: connected ? `0 18px 44px ${color}16` : "0 18px 44px rgba(15,23,42,0.06)",
         transition: "all 0.15s",
       }}
       onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = color+"88"; (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)"; }}
@@ -81,7 +81,7 @@ function IntegrationCard({ item, onClick }: { item: Integration; onClick: () => 
         {connected
           ? <span style={{ fontSize: 8, fontWeight: 800, color: GREEN, background: "rgba(34,197,94,0.12)",
               border: "1px solid rgba(34,197,94,0.3)", borderRadius: 4, padding: "2px 7px", letterSpacing: "0.1em" }}>LIVE</span>
-          : <span style={{ fontSize: 8, fontWeight: 800, color: MUTED, background: "rgba(255,255,255,0.04)",
+          : <span style={{ fontSize: 8, fontWeight: 800, color: MUTED, background: "#ffffff",
               border: `1px solid ${BORDER}`, borderRadius: 4, padding: "2px 7px", letterSpacing: "0.1em" }}>CONNECT</span>
         }
       </div>
@@ -119,7 +119,8 @@ function ConnectButton({ slug, status, onSuccess }: { slug: string; status: stri
     <button data-testid={`btn-connect-${slug}`} onClick={() => connect.mutate()}
       disabled={connect.isPending}
       style={{ padding: "8px 24px", borderRadius: 7, border: "none",
-        background: SLUG_COLORS[slug] || ACCENT, color: "#fff", cursor: "pointer", fontSize: 13, fontWeight: 700 }}>
+        background: SLUG_COLORS[slug] || ACCENT, color: "#ffffff", cursor: "pointer", fontSize: 13, fontWeight: 800,
+        boxShadow: `0 12px 24px ${(SLUG_COLORS[slug] || ACCENT)}33` }}>
       {connect.isPending ? "Connecting…" : "Connect (Demo)"}
     </button>
   );
@@ -149,9 +150,9 @@ function IntegrationDrawer({ slug, onClose }: { slug: string; onClose: () => voi
 
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 1000, display: "flex" }} onClick={onClose}>
-      <div style={{ flex: 1, background: "rgba(0,0,0,0.55)" }} />
+      <div style={{ flex: 1, background: "rgba(15,23,42,0.32)", backdropFilter: "blur(12px)" }} />
       <div onClick={e => e.stopPropagation()}
-        style={{ width: 620, height: "100%", background: "#0a0d28", borderLeft: `1px solid ${BORDER}`,
+        style={{ width: 620, maxWidth: "100vw", height: "100%", background: "#F8FAFC", borderLeft: `1px solid ${BORDER}`,
           overflowY: "auto", display: "flex", flexDirection: "column" }}>
         {/* Header */}
         <div style={{ padding: "24px 28px 20px", borderBottom: `1px solid ${BORDER}`, display: "flex", alignItems: "center", gap: 14, background: color+"08" }}>
@@ -376,7 +377,7 @@ function IntegrationDrawer({ slug, onClose }: { slug: string; onClose: () => voi
           {/* Generic preview for not-connected integrations */}
           {!connected && idata?.preview && slug !== "anthem" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <SectionHead title="What Kincaid IQ Pulls From This Integration" />
+              <SectionHead title="What Kincaid Health Pulls From This Integration" />
               {idata.preview.data_available && (
                 <div style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 8, padding: "14px 16px" }}>
                   <div style={{ fontSize: 10, fontWeight: 700, color: MUTED, marginBottom: 8, letterSpacing: "0.1em" }}>DATA AVAILABLE</div>
@@ -389,7 +390,7 @@ function IntegrationDrawer({ slug, onClose }: { slug: string; onClose: () => voi
               )}
               {idata.preview.kincaid_use_case && (
                 <div style={{ background: ACCENT+"10", border: `1px solid ${ACCENT}30`, borderRadius: 8, padding: "14px 18px" }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: ACCENT, marginBottom: 6, letterSpacing: "0.1em" }}>KINCAID IQ USE CASE</div>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: ACCENT, marginBottom: 6, letterSpacing: "0.1em" }}>KINCAID HEALTH USE CASE</div>
                   <div style={{ fontSize: 12, color: TEXT1, lineHeight: 1.6 }}>{idata.preview.kincaid_use_case}</div>
                 </div>
               )}
@@ -445,9 +446,9 @@ export default function IntegrationsHub() {
   }, {} as Record<string, Integration[]>);
 
   return (
-    <div style={{ minHeight: "100vh", background: BG, padding: "28px 32px", fontFamily: "'Inter',sans-serif" }}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", background: BG, padding: "28px 32px", fontFamily: "var(--font-sans)" }}>
       {/* Title */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 28 }}>
+      <div className="kiq-ops-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 18, marginBottom: 28, padding: 20, borderRadius: 24, flexWrap: "wrap" }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <div style={{ width: 40, height: 40, borderRadius: 10, background: ACCENT+"20", border: `1px solid ${ACCENT}44`,
@@ -458,11 +459,11 @@ export default function IntegrationsHub() {
             </div>
             <div>
               <h1 style={{ fontSize: 22, fontWeight: 900, color: TEXT1, margin: 0, letterSpacing: "-0.02em" }}>Client Integrations Hub</h1>
-              <div style={{ fontSize: 12, color: MUTED, marginTop: 2 }}>Kincaid IQ VERIFY™ · All Client Data Sources</div>
+              <div style={{ fontSize: 12, color: MUTED, marginTop: 2 }}>Kincaid Health VERIFY™ · All Client Data Sources</div>
             </div>
           </div>
         </div>
-        <div style={{ display: "flex", gap: 16 }}>
+        <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
           <div style={{ background: CARD, border: `1px solid ${GREEN}40`, borderRadius: 10, padding: "10px 20px", textAlign: "center" }}>
             <div style={{ fontSize: 22, fontWeight: 800, color: GREEN }}>{connected + 2}</div>
             <div style={{ fontSize: 10, color: MUTED }}>Connected</div>
@@ -496,7 +497,7 @@ export default function IntegrationsHub() {
       </div>
 
       {/* Also-connected: M365 + QuickBooks banner */}
-      <div style={{ background: CARD, border: `1px solid ${GREEN}30`, borderRadius: 10, padding: "14px 20px", marginBottom: 24, display: "flex", alignItems: "center", gap: 16 }}>
+      <div className="kiq-ops-card" style={{ background: CARD, border: `1px solid ${GREEN}30`, borderRadius: 16, padding: "14px 20px", marginBottom: 24, display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
         <span style={{ fontSize: 10, fontWeight: 800, color: GREEN, letterSpacing: "0.1em" }}>● ALSO CONNECTED</span>
         <a href="/integrations/m365" style={{ fontSize: 12, fontWeight: 600, color: "#0078d4", textDecoration: "none" }}>Microsoft 365</a>
         <span style={{ color: MUTED }}>·</span>

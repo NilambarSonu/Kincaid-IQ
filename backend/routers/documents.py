@@ -1,5 +1,5 @@
 """
-Generic document upload endpoint — used by multiple Kincaid IQ pages
+Generic document upload endpoint — used by multiple Kincaid Health pages
 to accept PDF, DOCX, TXT, CSV, and XLSX uploads and extract text content.
 """
 

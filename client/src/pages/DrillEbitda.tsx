@@ -42,13 +42,13 @@ export default function DrillEbitda() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-zinc-950 p-6 space-y-6">
+      <div className="min-h-screen bg-[var(--kiq-surface)] p-6 space-y-6">
 
         {/* Header */}
         <div className="flex items-start gap-4">
           <button onClick={() => navigate("/governance-war-room")}
             data-testid="btn-back-war-room"
-            className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-zinc-300 transition-colors border border-zinc-800/40 rounded-lg px-2.5 py-1.5 flex-shrink-0 mt-1">
+            className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-[var(--kiq-muted)] transition-colors border border-[var(--kiq-hairline)]/40 rounded-lg px-2.5 py-1.5 flex-shrink-0 mt-1">
             <ArrowLeft className="w-3 h-3" />
             War Room
           </button>
@@ -59,7 +59,7 @@ export default function DrillEbitda() {
                 Drill Surface · EBITDA
               </span>
             </div>
-            <h1 className="text-2xl font-black text-zinc-100">EBITDA Drag Analysis</h1>
+            <h1 className="text-2xl font-black text-[var(--kiq-ink)]">EBITDA Drag Analysis</h1>
             <p className="text-xs text-zinc-500 mt-1">
               Benefit cost overruns · Provider leakage · Actuarial variance decomposition
             </p>
@@ -74,7 +74,7 @@ export default function DrillEbitda() {
             { label: "Drag Margin",         value: "36.3%",            color: "#FFB800", sub: "of EBITDA" },
             { label: "Recovery Opportunity",value: fmtD(740_000),      color: "#A855F7", sub: "estimated" },
           ].map(({ label, value, color, sub }) => (
-            <div key={label} className="bg-zinc-950/80 border border-zinc-800/50 rounded-xl p-4">
+            <div key={label} className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-xl p-4">
               <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-600 mb-1">{label}</p>
               <p className="text-xl font-black font-mono" style={{ color }}>{value}</p>
               <p className="text-[10px] text-zinc-700 mt-1">{sub}</p>
@@ -83,7 +83,7 @@ export default function DrillEbitda() {
         </div>
 
         {/* Trend bars */}
-        <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-2xl p-6">
+        <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-2xl p-6">
           <div className="flex items-center gap-2 mb-5">
             <BarChart3 className="w-3.5 h-3.5 text-[#00A8FF]" />
             <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">EBITDA Drag Trend — 6 Quarters</span>
@@ -104,8 +104,8 @@ export default function DrillEbitda() {
         </div>
 
         {/* Drag decomposition */}
-        <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-2xl overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-3.5 border-b border-zinc-800/40">
+        <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-2xl overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-3.5 border-b border-[var(--kiq-hairline)]/40">
             <AlertTriangle className="w-3.5 h-3.5 text-[#FF4D6D]" />
             <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Drag Category Decomposition</span>
           </div>
@@ -114,8 +114,8 @@ export default function DrillEbitda() {
               <div key={d.category} className="flex items-center gap-4 px-5 py-3.5"
                 data-testid={`drag-row-${d.category.replace(/\s+/g, "-").toLowerCase()}`}>
                 <div className="flex-1">
-                  <p className="text-xs text-zinc-200 font-medium">{d.category}</p>
-                  <div className="mt-1.5 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                  <p className="text-xs text-[var(--kiq-ink-soft)] font-medium">{d.category}</p>
+                  <div className="mt-1.5 h-1.5 bg-[var(--kiq-surface)] rounded-full overflow-hidden">
                     <div className="h-full rounded-full bg-[#FF4D6D]/60" style={{ width: `${d.pct}%` }} />
                   </div>
                 </div>

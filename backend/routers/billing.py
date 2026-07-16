@@ -115,7 +115,7 @@ PRODUCTS = [
 
 RX_DEFENSE_REPORT = {
     "id": "rx-defense-report",
-    "name": "Rx Defense IQ™ Analysis",
+    "name": "PBM Contract Clarity 360™ Analysis",
     "description": "AI-powered PBM contract analysis against 50 fiduciary issues across 10 provisions. Scored 0–100.",
     "price_cents": 99900,
     "price_display": "$999",
@@ -135,7 +135,7 @@ PLANS = [
         "description": "For self-funded plan sponsors managing fiduciary obligations",
         "features": [
             "Executive War Room (full)",
-            "Rx Defense™ — PBM Contract AI",
+            "PBM Contract Clarity 360™ — PBM Contract AI",
             "CAA 2026 Compliance Dashboard",
             "DOL 5500 Intelligence Engine",
             "Board Pack Export",

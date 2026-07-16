@@ -83,7 +83,7 @@ export default function TaxHarvest() {
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
                 {["", "Position", "Asset Class", "Shares", "Cost Basis", "Current Price", "Unrealized P&L", "Holding", "Action"].map((h) => (
                   <th key={h} className="text-left px-3 py-2 text-muted-foreground font-medium whitespace-nowrap">{h}</th>
                 ))}
@@ -98,8 +98,8 @@ export default function TaxHarvest() {
                   <>
                     <tr
                       key={lot.id}
-                      className="hover:bg-white/5 transition-colors cursor-pointer"
-                      style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
+                      className="hover:bg-[var(--kiq-surface)]/5 transition-colors cursor-pointer"
+                      style={{ borderBottom: "1px solid #ffffff" }}
                       data-testid={`row-lot-${lot.id}`}
                     >
                       <td className="px-3 py-2.5">
@@ -116,7 +116,7 @@ export default function TaxHarvest() {
                       </td>
                       <td className="px-3 py-2.5">
                         <div>
-                          <p className="font-semibold text-white">{lot.ticker}</p>
+                          <p className="font-semibold text-[var(--kiq-ink)]">{lot.ticker}</p>
                           <p className="text-muted-foreground text-[10px]">{lot.name}</p>
                         </div>
                       </td>
@@ -127,7 +127,7 @@ export default function TaxHarvest() {
                       </td>
                       <td className="px-3 py-2.5 text-muted-foreground">{lot.shares.toLocaleString()}</td>
                       <td className="px-3 py-2.5 text-muted-foreground">${lot.costBasis.toFixed(2)}</td>
-                      <td className="px-3 py-2.5 text-white font-semibold">${lot.currentPrice.toFixed(2)}</td>
+                      <td className="px-3 py-2.5 text-[var(--kiq-ink)] font-semibold">${lot.currentPrice.toFixed(2)}</td>
                       <td className="px-3 py-2.5">
                         <div className="flex items-center gap-1" style={{ color: isGain ? "#00FF94" : "#FF4D6D" }}>
                           {isGain ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
@@ -156,13 +156,13 @@ export default function TaxHarvest() {
                       </td>
                     </tr>
                     {showReplacement === lot.id && repl && (
-                      <tr key={`repl-${lot.id}`} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)", background: "rgba(0,255,148,0.03)" }}>
+                      <tr key={`repl-${lot.id}`} style={{ borderBottom: "1px solid #ffffff", background: "rgba(0,255,148,0.03)" }}>
                         <td />
                         <td colSpan={8} className="px-3 py-2.5">
                           <div className="flex items-center gap-3 text-xs">
                             <CheckCircle size={12} style={{ color: "#00FF94" }} />
                             <span className="text-muted-foreground">Replace with:</span>
-                            <span className="font-bold text-white">{repl.ticker}</span>
+                            <span className="font-bold text-[var(--kiq-ink)]">{repl.ticker}</span>
                             <span className="text-muted-foreground">{repl.name}</span>
                             <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold" style={{ background: "rgba(0,255,148,0.08)", color: "#00FF94" }}>
                               {(repl.correlation * 100).toFixed(0)}% corr.

@@ -14,7 +14,7 @@ export default function RealEstate() {
 
   return (
     <Layout>
-      <div className="mb-8">
+      <div className="kiq-command-hero mb-8 px-6 py-5">
         <p className="section-label mb-1">Real Assets</p>
         <h1 className="text-3xl font-bold" style={{ fontFamily: "var(--font-display)", color: "hsl(var(--primary))" }}>
           Real Estate Portfolio
@@ -25,16 +25,16 @@ export default function RealEstate() {
       {/* Summary */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div
-          className="rounded-2xl p-6 cursor-pointer"
-          style={{ background: "hsl(var(--primary))" }}
+          className="kiq-command-card p-6 cursor-pointer"
+          style={{ borderTop: "3px solid hsl(var(--kiq-primary))" }}
           data-testid="card-re-total-value"
           onClick={() => open("net-worth")}
         >
-          <p className="text-sm font-medium mb-2" style={{ color: "hsl(38 20% 70%)" }}>Total Portfolio Value</p>
-          <p className="text-2xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>
+          <p className="text-sm font-medium mb-2 text-[var(--kiq-muted)]">Total Portfolio Value</p>
+          <p className="text-2xl font-bold text-[var(--kiq-ink)]" style={{ fontFamily: "var(--font-display)" }}>
             {formatCurrency(totalValue)}
           </p>
-          <p className="text-xs mt-1" style={{ color: "hsl(38 40% 60%)" }}>{realEstatePortfolio.length} properties</p>
+          <p className="text-xs mt-1 text-[var(--kiq-muted)]">{realEstatePortfolio.length} properties</p>
         </div>
         <div className="metric-card" data-testid="card-re-debt">
           <p className="section-label mb-2">Total Debt</p>

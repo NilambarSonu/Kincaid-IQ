@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Plan Metrics Intelligence (Expansion Suite)
+Kincaid Health — Plan Metrics Intelligence (Expansion Suite)
 ========================================================
 A self-contained expansion of the "live plan metrics" engine. Computes 11
 employer-level intelligence sections from the DOL Form 5500 DuckDB store
@@ -394,7 +394,7 @@ def _sec_pbm_exposure(filings: list[dict]) -> dict:
         "rebate_retention": INSUFFICIENT,
         "note": ("Rx spend is MODELED from headcount × national PMPY. Actual spread pricing "
                  "and rebate retention are INSUFFICIENT_EVIDENCE — they require the PBM "
-                 "contract (see the Rx Defense module for contract-level analysis)."),
+                 "contract (see the PBM Contract Clarity 360 module for contract-level analysis)."),
     }
 
 
@@ -656,7 +656,7 @@ def _metric_pwi(pbm: dict) -> dict:
         "note": ("(Spread + Rebate Leakage + Formulary Distortion) / Total Rx Spend. Rx spend "
                  "is MODELED from headcount, but the three waste components require PBM claim "
                  "and rebate files, so the index is INSUFFICIENT_EVIDENCE. Unlock: PBM claims "
-                 "+ rebate remittances (see the Rx Defense module)."),
+                 "+ rebate remittances (see the PBM Contract Clarity 360 module)."),
     }
 
 
@@ -687,7 +687,7 @@ def _metric_glp1(header: dict) -> dict:
 
 
 def _metric_sbi(provider_leakage: dict) -> dict:
-    """Shady Broker Index. MODELED over the 2 of 4 components 5500 data supports."""
+    """Broker Compensation Index. MODELED over the 2 of 4 components 5500 data supports."""
     if provider_leakage.get("tier") == INSUFFICIENT:
         return {"tier": INSUFFICIENT, "value": None, "unit": "0-100",
                 "note": ("No carrier-attributed compensation on file. Unlock: Schedule A "
@@ -719,7 +719,7 @@ def _metric_sbi(provider_leakage: dict) -> dict:
             "rebate_distortion": INSUFFICIENT,
             "spread_pricing_linkage": INSUFFICIENT,
         },
-        "note": ("SBI = Opacity(.30) + Renewal Bias(.25) + Rebate Distortion(.25) + Spread "
+        "note": ("BCI = Opacity(.30) + Renewal Bias(.25) + Rebate Distortion(.25) + Spread "
                  "Linkage(.20). Only the first two are computable from Schedule A, so the "
                  "composite is MODELED over the available weights. Unlock: Schedule C + PBM "
                  "data for the remaining two components."),
@@ -761,7 +761,7 @@ def metrics_canon(
         {"key": "PWI", "label": "Pharmacy Waste Index",
          "formula": "W% = (Spread + Rebate Leakage + Formulary Distortion) / Total Rx Spend",
          **_guard(_metric_pwi, pbm)},
-        {"key": "SBI", "label": "Shady Broker Index",
+        {"key": "BCI", "label": "Broker Compensation Index",
          "formula": "(Opacity x .30) + (Renewal Bias x .25) + (Rebate Distortion x .25) + (Spread Linkage x .20)",
          **_guard(_metric_sbi, provider_leakage)},
         {"key": "GLP1", "label": "GLP-1 Utilization",

@@ -73,13 +73,13 @@ export default function Foundation() {
           <p className="section-label mb-4">Annual Grants History</p>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={foundationData.grantHistory} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
               <XAxis dataKey="year" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 9 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fill: "rgba(130,150,200,0.4)", fontSize: 9 }} axisLine={false} tickLine={false}
                 tickFormatter={(v) => `$${(v/1e6).toFixed(0)}M`} width={32} />
               <Tooltip content={({ active, payload, label }) => active && payload?.length ? (
                 <div className="rounded-xl px-3 py-2 text-xs" style={{ background: "rgba(8,10,40,0.95)", border: "1px solid rgba(0,140,255,0.2)" }}>
-                  <p className="font-bold text-white">{label}</p>
+                  <p className="font-bold text-[var(--kiq-ink)]">{label}</p>
                   <p style={{ color: "#00FF94" }}>{formatCurrency(payload[0].value as number)}</p>
                 </div>
               ) : null} />
@@ -95,13 +95,13 @@ export default function Foundation() {
           </div>
           <div className="grid grid-cols-2 gap-3">
             {foundationData.impactMetrics.map((m) => (
-              <div key={m.label} className="p-2.5 rounded-xl" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
+              <div key={m.label} className="p-2.5 rounded-xl" style={{ background: "#ffffff", border: "1px solid #f8fafc" }}>
                 <p className="text-[10px] text-muted-foreground mb-0.5 leading-tight">{m.label}</p>
                 <p className="text-sm font-bold" style={{ color: "#00FF94", fontFamily: "var(--font-display)" }}>{m.value}</p>
               </div>
             ))}
           </div>
-          <div className="mt-4 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="mt-4 pt-4" style={{ borderTop: "1px solid #f1f5f9" }}>
             <p className="section-label mb-2">By Focus Area</p>
             {areaBreakdown.map(([area, amt]) => (
               <div key={area} className="flex justify-between items-center text-xs mb-1.5">
@@ -125,13 +125,13 @@ export default function Foundation() {
             const StatusIcon = grant.status === "Paid" ? CheckCircle : Clock;
             return (
               <div key={grant.id}
-                className="flex items-center gap-4 p-3 rounded-xl transition-colors hover:bg-white/5"
-                style={{ border: "1px solid rgba(255,255,255,0.05)" }}
+                className="flex items-center gap-4 p-3 rounded-xl transition-colors hover:bg-[var(--kiq-surface)]/5"
+                style={{ border: "1px solid #f8fafc" }}
                 data-testid={`row-grant-${grant.id}`}>
                 <StatusIcon size={14} style={{ color: ss.color, flexShrink: 0 }} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <p className="text-sm font-bold text-white truncate">{grant.recipient}</p>
+                    <p className="text-sm font-bold text-[var(--kiq-ink)] truncate">{grant.recipient}</p>
                     {grant.multi_year && (
                       <span className="text-[9px] px-1.5 py-0.5 rounded font-semibold"
                         style={{ background: "rgba(168,85,247,0.08)", color: "#A855F7", border: "1px solid rgba(168,85,247,0.2)" }}>

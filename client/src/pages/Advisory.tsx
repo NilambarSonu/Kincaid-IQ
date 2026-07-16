@@ -36,9 +36,9 @@ export default function Advisory() {
 
   return (
     <Layout>
-      <div className="mb-8 animate-float-up">
+      <div className="kiq-command-hero mb-8 animate-float-up px-6 py-5">
         <p className="section-label mb-1">Intelligence Layer</p>
-        <h1 className="text-3xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>
+        <h1 className="text-3xl font-bold text-[var(--kiq-ink)]" style={{ fontFamily: "var(--font-display)" }}>
           AI <span className="gold-text-glow">Advisory</span>
         </h1>
         <p className="text-muted-foreground mt-1 text-sm">
@@ -50,20 +50,20 @@ export default function Advisory() {
       <div
         className="flex items-center gap-3 mb-6 p-4 rounded-2xl"
         style={{
-          background: "rgba(5, 8, 40, 0.7)",
-          border: "1px solid rgba(0,140,255,0.12)",
+          background: "rgba(255,255,255,0.68)",
+          border: "1px solid rgba(13,37,61,0.08)",
         }}
       >
         <BrainCircuit size={18} style={{ color: "hsl(44 100% 65%)" }} />
-        <span className="text-sm font-medium text-white">Dual-Engine Active</span>
+        <span className="text-sm font-medium text-[var(--kiq-ink)]">Dual-Engine Active</span>
         <div className="flex items-center gap-5 ml-auto">
           <div className="flex items-center gap-2">
             <div className="live-dot" style={{ background: "hsl(150 100% 50%)", boxShadow: "0 0 8px hsl(150 100% 50%)" }} />
-            <span className="text-xs" style={{ color: "rgba(130,160,200,0.7)" }}>OpenAI GPT</span>
+            <span className="text-xs text-[var(--kiq-muted)]">OpenAI GPT</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="live-dot" style={{ background: "#FFB800", boxShadow: "0 0 8px #FFB800" }} />
-            <span className="text-xs" style={{ color: "rgba(130,160,200,0.7)" }}>Anthropic Claude</span>
+            <span className="text-xs text-[var(--kiq-muted)]">Anthropic Claude</span>
           </div>
         </div>
       </div>
@@ -79,19 +79,19 @@ export default function Advisory() {
                 onClick={() => setPrompt(p)}
                 className="text-left text-sm px-4 py-3 rounded-xl transition-all duration-200 group"
                 style={{
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(0,140,255,0.1)",
-                  color: "rgba(160,190,230,0.7)",
+                  background: "rgba(255,255,255,0.72)",
+                  border: "1px solid rgba(13,37,61,0.08)",
+                  color: "var(--kiq-muted)",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(0,140,255,0.07)";
-                  e.currentTarget.style.borderColor = "rgba(0,160,255,0.22)";
-                  e.currentTarget.style.color = "white";
+                  e.currentTarget.style.background = "rgba(255,255,255,0.92)";
+                  e.currentTarget.style.borderColor = "rgba(83,58,253,0.22)";
+                  e.currentTarget.style.color = "var(--kiq-ink)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.03)";
-                  e.currentTarget.style.borderColor = "rgba(0,140,255,0.1)";
-                  e.currentTarget.style.color = "rgba(160,190,230,0.7)";
+                  e.currentTarget.style.background = "rgba(255,255,255,0.72)";
+                  e.currentTarget.style.borderColor = "rgba(13,37,61,0.08)";
+                  e.currentTarget.style.color = "var(--kiq-muted)";
                 }}
                 data-testid={`button-example-prompt-${i}`}
               >
@@ -110,8 +110,8 @@ export default function Advisory() {
         <div
           className="rounded-2xl overflow-hidden transition-all duration-200"
           style={{
-            background: "rgba(5, 8, 40, 0.8)",
-            border: "1px solid rgba(0,140,255,0.15)",
+            background: "rgba(255,255,255,0.78)",
+            border: "1px solid rgba(13,37,61,0.08)",
             boxShadow: "0 0 0 0 rgba(0,140,255,0)",
           }}
           onFocus={(e) => e.currentTarget.style.borderColor = "rgba(0,160,255,0.3)"}
@@ -123,13 +123,13 @@ export default function Advisory() {
             onKeyDown={handleKeyDown}
             placeholder="Ask your private banking advisor anything... (⌘+Enter to submit)"
             className="w-full min-h-[130px] p-5 bg-transparent border-none resize-none focus:outline-none text-base"
-            style={{ color: "rgba(220,235,255,0.9)" }}
+            style={{ color: "var(--kiq-ink)" }}
             disabled={isPending}
             data-testid="input-advisory-prompt"
           />
           <div
             className="flex items-center justify-between px-5 py-3"
-            style={{ borderTop: "1px solid rgba(0,140,255,0.08)", background: "rgba(255,255,255,0.02)" }}
+            style={{ borderTop: "1px solid rgba(13,37,61,0.08)", background: "rgba(255,255,255,0.62)" }}
           >
             <p className="text-xs" style={{ color: "rgba(130,160,200,0.45)" }}>
               Fiduciary-grade · logged to transparency record
@@ -140,12 +140,12 @@ export default function Advisory() {
               className="px-5 py-2 rounded-xl font-semibold flex items-center gap-2 text-sm transition-all duration-200"
               style={{
                 background: prompt.trim() && !isPending
-                  ? "linear-gradient(135deg, rgba(0,140,255,0.3), rgba(0,100,200,0.2))"
-                  : "rgba(255,255,255,0.04)",
-                color: prompt.trim() && !isPending ? "hsl(207 100% 70%)" : "rgba(130,160,200,0.3)",
+                  ? "linear-gradient(135deg, var(--kiq-primary), var(--kiq-primary-deep))"
+                  : "rgba(255,255,255,0.74)",
+                color: prompt.trim() && !isPending ? "#ffffff" : "rgba(100,116,139,0.45)",
                 border: prompt.trim() && !isPending
                   ? "1px solid rgba(0,160,255,0.28)"
-                  : "1px solid rgba(255,255,255,0.05)",
+                  : "1px solid #f8fafc",
                 boxShadow: prompt.trim() && !isPending ? "0 0 16px rgba(0,140,255,0.15)" : "none",
                 cursor: !prompt.trim() || isPending ? "not-allowed" : "pointer",
               }}

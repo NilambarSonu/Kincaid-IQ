@@ -376,12 +376,12 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
       data-testid="command-palette-overlay"
     >
       <div
-        className="w-full max-w-[640px] mx-4 rounded-2xl overflow-hidden flex flex-col"
+        className="kiq-liquid-command w-full max-w-[640px] mx-4 rounded-2xl overflow-hidden flex flex-col"
         style={{
-          background: "linear-gradient(180deg, rgba(14,20,50,0.98) 0%, rgba(8,12,34,0.99) 100%)",
-          border: "1px solid rgba(100,130,255,0.22)",
+          background: "rgba(255,255,255,0.82)",
+          border: "1px solid rgba(15,23,42,0.10)",
           boxShadow:
-            "0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04) inset, 0 0 60px rgba(79,125,255,0.08)",
+            "0 32px 80px rgba(15,23,42,0.18), 0 0 0 1px rgba(255,255,255,0.74) inset",
           maxHeight: "70vh",
         }}
         data-testid="command-palette-modal"
@@ -390,8 +390,8 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
         <div
           className="flex items-center gap-3 px-4 py-3"
           style={{
-            borderBottom: "1px solid rgba(100,130,255,0.14)",
-            background: "rgba(255,255,255,0.02)",
+            borderBottom: "1px solid rgba(15,23,42,0.08)",
+            background: "rgba(255,255,255,0.74)",
           }}
         >
           <Search size={17} style={{ color: "rgba(150,170,255,0.5)", flexShrink: 0 }} />
@@ -401,7 +401,7 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search companies, pages, tools, and actions…"
             className="flex-1 bg-transparent outline-none text-sm"
-            style={{ color: "rgba(220,230,255,0.92)", caretColor: "#4f7dff" }}
+            style={{ color: "#08111f", caretColor: "#533afd" }}
             data-testid="command-palette-input"
           />
           <div className="flex items-center gap-1.5">
@@ -420,8 +420,8 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
                 fontWeight: 700,
                 letterSpacing: "0.04em",
                 color: "rgba(130,150,220,0.5)",
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.08)",
+                background: "#f8fafc",
+                border: "1px solid #e2e8f0",
                 borderRadius: 5,
                 padding: "2px 6px",
                 fontFamily: "system-ui, sans-serif",
@@ -718,8 +718,8 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
         <div
           className="px-4 py-2 flex items-center gap-4"
           style={{
-            borderTop: "1px solid rgba(100,130,255,0.10)",
-            background: "rgba(0,0,0,0.2)",
+            borderTop: "1px solid rgba(15,23,42,0.08)",
+            background: "linear-gradient(180deg, rgba(255,255,255,0.70), rgba(248,250,252,0.82))",
           }}
         >
           {[
@@ -734,9 +734,9 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
                   style={{
                     fontSize: 9,
                     fontWeight: 700,
-                    color: "rgba(140,160,220,0.5)",
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.08)",
+                    color: "#334155",
+                    background: "rgba(255,255,255,0.86)",
+                    border: "1px solid rgba(15,23,42,0.12)",
                     borderRadius: 4,
                     padding: "1px 5px",
                     fontFamily: "system-ui, sans-serif",
@@ -745,11 +745,11 @@ export function CommandPalette({ open, onClose }: CommandPaletteProps) {
                   {k}
                 </kbd>
               ))}
-              <span style={{ fontSize: 10, color: "rgba(130,150,200,0.4)" }}>{label}</span>
+              <span style={{ fontSize: 10, color: "#64748b", fontWeight: 650 }}>{label}</span>
             </div>
           ))}
           <div className="flex-1" />
-          <span style={{ fontSize: 10, color: "rgba(100,120,180,0.35)" }}>
+          <span style={{ fontSize: 10, color: "#64748b", fontWeight: 650 }}>
             {totalPageCount} pages · {quickActions.length} actions
           </span>
         </div>

@@ -75,7 +75,7 @@ export function FileHashVerifier({ defaultExpected = "" }: { defaultExpected?: s
 
   return (
     <div className="space-y-4" data-testid="file-hash-verifier">
-      <p className="text-[11px] text-zinc-500 leading-relaxed">
+      <p className="text-[12px] text-slate-600 leading-relaxed font-medium">
         Drop a file you downloaded earlier and paste the SHA-256 we showed when you
         exported it. Your browser hashes the file locally — nothing is uploaded — and
         confirms it still matches the platform's evidence record (Hard Rule #03).
@@ -90,10 +90,10 @@ export function FileHashVerifier({ defaultExpected = "" }: { defaultExpected?: s
         onDragLeave={() => setDragOver(false)}
         onDrop={onDrop}
         onClick={() => inputRef.current?.click()}
-        className={`cursor-pointer rounded-xl border border-dashed px-4 py-6 text-center transition-colors ${
+        className={`kiq-dropzone-glow cursor-pointer rounded-2xl border border-dashed px-4 py-8 text-center transition-all ${
           dragOver
-            ? "border-[#00A8FF] bg-[#00A8FF]/5"
-            : "border-zinc-700/70 bg-zinc-900/40 hover:border-zinc-600"
+            ? "is-dragging border-[#00A8FF] bg-[#00A8FF]/10 shadow-[0_0_34px_rgba(0,168,255,0.18)]"
+            : "border-slate-200/80 bg-white/58 hover:border-[#00A8FF]/50 hover:bg-white/76"
         }`}
         data-testid="dropzone-verify-file"
       >
@@ -110,7 +110,7 @@ export function FileHashVerifier({ defaultExpected = "" }: { defaultExpected?: s
         {fileName ? (
           <div className="flex items-center justify-center gap-2">
             <FileCheck2 className="w-4 h-4 text-[#00A8FF]" />
-            <span className="text-xs font-mono text-zinc-200" data-testid="text-verify-filename">
+            <span className="text-xs font-mono text-slate-700" data-testid="text-verify-filename">
               {fileName}
             </span>
             <span className="text-[10px] font-mono text-zinc-600">{fmtSize(fileSize)}</span>
@@ -119,7 +119,7 @@ export function FileHashVerifier({ defaultExpected = "" }: { defaultExpected?: s
                 e.stopPropagation();
                 reset();
               }}
-              className="ml-1 text-zinc-500 hover:text-zinc-300"
+              className="ml-1 text-zinc-500 hover:text-slate-500"
               data-testid="button-clear-verify-file"
               title="Choose a different file"
             >
@@ -128,8 +128,8 @@ export function FileHashVerifier({ defaultExpected = "" }: { defaultExpected?: s
           </div>
         ) : (
           <div className="flex flex-col items-center gap-1.5">
-            <Upload className="w-5 h-5 text-zinc-500" />
-            <span className="text-xs font-mono text-zinc-400">
+            <Upload className="w-6 h-6 text-[#533afd]" />
+            <span className="text-xs font-mono text-slate-600 font-semibold">
               Drop a file here, or click to browse
             </span>
           </div>
@@ -138,7 +138,7 @@ export function FileHashVerifier({ defaultExpected = "" }: { defaultExpected?: s
 
       {/* Expected hash input */}
       <div>
-        <label className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">
+        <label className="text-[10px] font-mono uppercase tracking-widest text-slate-500 font-bold">
           Expected SHA-256
         </label>
         <input
@@ -146,7 +146,7 @@ export function FileHashVerifier({ defaultExpected = "" }: { defaultExpected?: s
           value={expected}
           onChange={(e) => setExpected(e.target.value)}
           placeholder="Paste the SHA-256 from the download toast / manifest…"
-          className="mt-1.5 w-full bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-2 text-[11px] font-mono text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
+          className="mt-1.5 w-full bg-white/72 border border-slate-200/80 rounded-xl px-3 py-2.5 text-[11px] font-mono text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#533afd] focus:ring-4 focus:ring-[#533afd]/10"
           data-testid="input-expected-hash"
           spellCheck={false}
         />
@@ -205,7 +205,7 @@ export function FileHashVerifier({ defaultExpected = "" }: { defaultExpected?: s
           )}
 
           {/* Computed hash */}
-          <div className="rounded-lg border border-zinc-800/60 bg-zinc-900/40 px-3 py-2.5">
+          <div className="rounded-lg border border-slate-200/60 bg-slate-50/40 px-3 py-2.5">
             <div className="flex items-center justify-between mb-1">
               <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">
                 Computed SHA-256
@@ -220,7 +220,7 @@ export function FileHashVerifier({ defaultExpected = "" }: { defaultExpected?: s
                     /* noop */
                   }
                 }}
-                className="flex items-center gap-1 text-[10px] font-mono text-zinc-500 hover:text-zinc-300"
+                className="flex items-center gap-1 text-[10px] font-mono text-zinc-500 hover:text-slate-500"
                 data-testid="button-copy-computed-hash"
               >
                 <Copy className="w-3 h-3" />
@@ -229,7 +229,7 @@ export function FileHashVerifier({ defaultExpected = "" }: { defaultExpected?: s
             </div>
             <p
               className={`text-[11px] font-mono break-all ${
-                mismatch ? "text-[#FF4D6D]" : match ? "text-[#00FF94]" : "text-zinc-300"
+                mismatch ? "text-[#FF4D6D]" : match ? "text-[#00FF94]" : "text-slate-500"
               }`}
               data-testid="text-computed-hash"
             >

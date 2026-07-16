@@ -73,7 +73,7 @@ function Pill({ children, color, bg, border }: { children: React.ReactNode; colo
   );
 }
 
-function SectionHead({ icon: Icon, label, count, color = "rgba(255,255,255,0.5)" }: { icon: any; label: string; count?: number; color?: string }) {
+function SectionHead({ icon: Icon, label, count, color = "#334155" }: { icon: any; label: string; count?: number; color?: string }) {
   return (
     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
       <Icon size={14} color={color} />
@@ -91,15 +91,15 @@ function ScoreMeter({ score, grade }: { score: number; grade: string }) {
   const color = grade === "HIGH" ? "#ef4444" : grade === "MODERATE" ? "#f59e0b" : "#10b981";
   return (
     <div style={{ background: `${color}08`, border: `1px solid ${color}30`, borderRadius: 14, padding: 20 }}>
-      <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Language Risk Score</div>
+      <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Language Risk Score</div>
       <div style={{ display: "flex", alignItems: "flex-end", gap: 10, marginBottom: 12 }}>
         <div style={{ fontSize: 52, fontWeight: 900, color, lineHeight: 1, letterSpacing: "-0.04em" }}>{score}</div>
         <div style={{ paddingBottom: 6 }}>
           <div style={{ fontSize: 9, fontWeight: 800, color, letterSpacing: "0.14em", textTransform: "uppercase" }}>{grade} CHANGE</div>
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>out of 100</div>
+          <div style={{ fontSize: 10, color: "#64748b" }}>out of 100</div>
         </div>
       </div>
-      <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 99, overflow: "hidden" }}>
+      <div style={{ height: 6, background: "#f1f5f9", borderRadius: 99, overflow: "hidden" }}>
         <div style={{ width: `${score}%`, height: "100%", background: `linear-gradient(90deg, ${color}80, ${color})`, borderRadius: 99 }} />
       </div>
     </div>
@@ -122,7 +122,7 @@ const COMPONENT_MAXES: Record<string, number> = {
 
 function ScoreBreakdown({ components }: { components: Record<string, number> }) {
   return (
-    <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 18 }}>
+    <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, padding: 18 }}>
       <SectionHead icon={BarChart3} label="Score Breakdown" />
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         {Object.entries(components).map(([key, val]) => {
@@ -132,10 +132,10 @@ function ScoreBreakdown({ components }: { components: Record<string, number> }) 
           return (
             <div key={key}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                <span style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>{COMPONENT_LABELS[key] || key}</span>
+                <span style={{ fontSize: 11, color: "#475569" }}>{COMPONENT_LABELS[key] || key}</span>
                 <span style={{ fontSize: 11, fontWeight: 800, color }}>{val}/{max}</span>
               </div>
-              <div style={{ height: 4, background: "rgba(255,255,255,0.06)", borderRadius: 99, overflow: "hidden" }}>
+              <div style={{ height: 4, background: "#f1f5f9", borderRadius: 99, overflow: "hidden" }}>
                 <div style={{ width: `${pct}%`, height: "100%", background: color, borderRadius: 99 }} />
               </div>
             </div>
@@ -157,7 +157,7 @@ function DealRadarCard({ radar }: { radar: DealRadar }) {
         <IconComp size={18} color={cfg.text} />
         <div>
           <div style={{ fontSize: 12, fontWeight: 900, color: cfg.text, letterSpacing: "0.04em" }}>{radar.label}</div>
-          <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>{radar.description}</div>
+          <div style={{ fontSize: 10, color: "#64748b", marginTop: 2 }}>{radar.description}</div>
         </div>
         <span style={{ marginLeft: "auto", fontSize: 9, fontWeight: 900, color: cfg.text, background: `${cfg.text}20`, border: `1px solid ${cfg.border}`, borderRadius: 4, padding: "2px 8px", letterSpacing: "0.1em", textTransform: "uppercase" }}>
           DEAL RADAR™
@@ -166,7 +166,7 @@ function DealRadarCard({ radar }: { radar: DealRadar }) {
       {radar.signals.length > 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
           {radar.signals.map((s, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 11, color: "rgba(255,255,255,0.6)" }}>
+            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 11, color: "#1e293b" }}>
               <div style={{ width: 5, height: 5, borderRadius: "50%", background: cfg.text, marginTop: 5, flexShrink: 0 }} />
               {s}
             </div>
@@ -181,8 +181,8 @@ function DealRadarCard({ radar }: { radar: DealRadar }) {
 
 function EventFeed({ events }: { events: Event8K[] }) {
   if (events.length === 0) return (
-    <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 14, padding: "16px 18px", textAlign: "center" }}>
-      <div style={{ fontSize: 11, color: "rgba(255,255,255,0.25)" }}>No 8-K events found</div>
+    <div style={{ background: "#ffffff", border: "1px solid #f1f5f9", borderRadius: 14, padding: "16px 18px", textAlign: "center" }}>
+      <div style={{ fontSize: 11, color: "#64748b" }}>No 8-K events found</div>
     </div>
   );
 
@@ -192,7 +192,7 @@ function EventFeed({ events }: { events: Event8K[] }) {
         const impactColor = IMPACT_COLORS[e.impact] || "#94a3b8";
         const signalColor = SIGNAL_COLORS[e.signal] || "#94a3b8";
         return (
-          <div key={i} style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${e.color}22`, borderRadius: 12, padding: "12px 16px" }}>
+          <div key={i} style={{ background: "#ffffff", border: `1px solid ${e.color}22`, borderRadius: 12, padding: "12px 16px" }}>
             <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
               <div style={{ width: 8, height: 8, borderRadius: "50%", background: e.color, marginTop: 5, flexShrink: 0 }} />
               <div style={{ flex: 1, minWidth: 0 }}>
@@ -200,9 +200,9 @@ function EventFeed({ events }: { events: Event8K[] }) {
                   <span style={{ fontSize: 12, fontWeight: 800, color: e.color }}>{e.label}</span>
                   <Pill color={impactColor} bg={`${impactColor}15`} border={`${impactColor}30`}>{e.impact}</Pill>
                   <Pill color={signalColor} bg={`${signalColor}15`} border={`${signalColor}30`}>{e.signal}</Pill>
-                  <span style={{ marginLeft: "auto", fontSize: 10, color: "rgba(255,255,255,0.3)" }}>{e.filing_date}</span>
+                  <span style={{ marginLeft: "auto", fontSize: 10, color: "#64748b" }}>{e.filing_date}</span>
                 </div>
-                {e.summary && <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", lineHeight: 1.5 }}>{e.summary}</div>}
+                {e.summary && <div style={{ fontSize: 11, color: "#475569", lineHeight: 1.5 }}>{e.summary}</div>}
               </div>
             </div>
           </div>
@@ -257,8 +257,8 @@ function SparkBar({ data, color }: { data: XbrlMetric[]; color: string }) {
 function XbrlPanel({ xbrl }: { xbrl: Record<string, XbrlMetric[]> }) {
   const keys = Object.keys(xbrl).filter(k => xbrl[k].length > 0);
   if (keys.length === 0) return (
-    <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 14, padding: "16px 18px", textAlign: "center" }}>
-      <div style={{ fontSize: 11, color: "rgba(255,255,255,0.25)" }}>XBRL financial data not available for this company</div>
+    <div style={{ background: "#ffffff", border: "1px solid #f1f5f9", borderRadius: 14, padding: "16px 18px", textAlign: "center" }}>
+      <div style={{ fontSize: 11, color: "#64748b" }}>XBRL financial data not available for this company</div>
     </div>
   );
 
@@ -274,8 +274,8 @@ function XbrlPanel({ xbrl }: { xbrl: Record<string, XbrlMetric[]> }) {
           delta = (latest.value - prior.value) / Math.abs(prior.value);
         }
         return (
-          <div key={key} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: 14 }}>
-            <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>{cfg.label}</div>
+          <div key={key} style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 12, padding: 14 }}>
+            <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>{cfg.label}</div>
             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: 10 }}>
               <div style={{ fontSize: 20, fontWeight: 900, color: cfg.color }}>{formatVal(latest?.value ?? null, cfg.prefix)}</div>
               {delta !== null && (
@@ -286,7 +286,7 @@ function XbrlPanel({ xbrl }: { xbrl: Record<string, XbrlMetric[]> }) {
               )}
             </div>
             <SparkBar data={series} color={cfg.color} />
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", marginTop: 6, textAlign: "right" }}>{series[0]?.period?.slice(0, 4)} — {latest?.period?.slice(0, 4)}</div>
+            <div style={{ fontSize: 9, color: "#94a3b8", marginTop: 6, textAlign: "right" }}>{series[0]?.period?.slice(0, 4)} — {latest?.period?.slice(0, 4)}</div>
           </div>
         );
       })}
@@ -306,8 +306,8 @@ function DiffPanel({ items, type }: { items: string[]; type: "added" | "removed"
   const visible = expanded ? items : items.slice(0, 4);
 
   if (items.length === 0) return (
-    <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "12px 16px" }}>
-      <div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>{label} — None</div>
+    <div style={{ background: "#ffffff", border: "1px solid #f1f5f9", borderRadius: 12, padding: "12px 16px" }}>
+      <div style={{ fontSize: 10, color: "#94a3b8", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>{label} — None</div>
     </div>
   );
 
@@ -320,7 +320,7 @@ function DiffPanel({ items, type }: { items: string[]; type: "added" | "removed"
       </div>
       <div style={{ padding: "10px 14px", display: "flex", flexDirection: "column", gap: 8 }}>
         {visible.map((s, i) => (
-          <div key={i} style={{ fontSize: 11, color: "rgba(255,255,255,0.65)", lineHeight: 1.6, paddingLeft: 10, borderLeft: `2px solid ${color}40` }}>{s}</div>
+          <div key={i} style={{ fontSize: 11, color: "#334155", lineHeight: 1.6, paddingLeft: 10, borderLeft: `2px solid ${color}40` }}>{s}</div>
         ))}
         {items.length > 4 && (
           <button onClick={() => setExpanded(!expanded)} style={{ display: "flex", alignItems: "center", gap: 5, background: "none", border: "none", color, fontSize: 10, fontWeight: 700, cursor: "pointer", padding: "2px 0" }}>
@@ -337,31 +337,31 @@ function DiffPanel({ items, type }: { items: string[]; type: "added" | "removed"
 
 function EscalationTable({ escalations }: { escalations: Escalation[] }) {
   if (!escalations.length) return (
-    <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "12px 16px", textAlign: "center" }}>
-      <div style={{ fontSize: 11, color: "rgba(255,255,255,0.2)" }}>No keyword escalations detected</div>
+    <div style={{ background: "#ffffff", border: "1px solid #f1f5f9", borderRadius: 12, padding: "12px 16px", textAlign: "center" }}>
+      <div style={{ fontSize: 11, color: "#94a3b8" }}>No keyword escalations detected</div>
     </div>
   );
   return (
     <div style={{ background: "rgba(245,158,11,0.04)", border: "1px solid rgba(245,158,11,0.18)", borderRadius: 12, overflow: "hidden" }}>
       <table style={{ width: "100%", borderCollapse: "collapse" }}>
         <thead>
-          <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+          <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
             {["Type", "From", "→ To", "Before", "After"].map(h => (
-              <th key={h} style={{ padding: "8px 12px", textAlign: "left", fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
+              <th key={h} style={{ padding: "8px 12px", textAlign: "left", fontSize: 9, fontWeight: 700, color: "#64748b", letterSpacing: "0.1em", textTransform: "uppercase" }}>{h}</th>
             ))}
           </tr>
         </thead>
         <tbody>
           {escalations.map((e, i) => (
-            <tr key={i} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+            <tr key={i} style={{ borderBottom: "1px solid #ffffff" }}>
               <td style={{ padding: "8px 12px" }}>
                 <Pill color={e.type === "new_severity" ? "#ef4444" : "#f59e0b"} bg={e.type === "new_severity" ? "rgba(239,68,68,0.12)" : "rgba(245,158,11,0.12)"} border={e.type === "new_severity" ? "rgba(239,68,68,0.3)" : "rgba(245,158,11,0.3)"}>
                   {e.type === "new_severity" ? "New Term" : "Escalated"}
                 </Pill>
               </td>
-              <td style={{ padding: "8px 12px", fontSize: 11, color: "rgba(255,255,255,0.4)", fontStyle: "italic" }}>"{e.from_term}"</td>
+              <td style={{ padding: "8px 12px", fontSize: 11, color: "#475569", fontStyle: "italic" }}>"{e.from_term}"</td>
               <td style={{ padding: "8px 12px", fontSize: 11, color: "#f59e0b", fontWeight: 700 }}>"{e.to_term}"</td>
-              <td style={{ padding: "8px 12px", fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{e.from_count}</td>
+              <td style={{ padding: "8px 12px", fontSize: 11, color: "#64748b" }}>{e.from_count}</td>
               <td style={{ padding: "8px 12px", fontSize: 11, color: "#ef4444", fontWeight: 800 }}>+{e.to_count}</td>
             </tr>
           ))}
@@ -378,10 +378,10 @@ function ToneCard({ tone }: { tone: string }) {
     <div style={{ background: "linear-gradient(135deg, rgba(0,43,92,0.3), rgba(155,28,46,0.1))", border: "1px solid rgba(0,43,92,0.4)", borderRadius: 14, padding: 20 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
         <Brain size={14} color={BB_CRIMSON} />
-        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }}>AI Analyst Briefing</span>
+        <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", color: "#475569" }}>AI Analyst Briefing</span>
         <span style={{ marginLeft: "auto", fontSize: 9, fontWeight: 700, padding: "2px 8px", borderRadius: 4, background: "rgba(155,28,46,0.15)", border: "1px solid rgba(155,28,46,0.3)", color: BB_CRIMSON, textTransform: "uppercase", letterSpacing: "0.1em" }}>Claude 3.5</span>
       </div>
-      <p style={{ fontSize: 12, color: "rgba(255,255,255,0.7)", lineHeight: 1.8, margin: 0, whiteSpace: "pre-wrap" }}>{tone}</p>
+      <p style={{ fontSize: 12, color: "#0f172a", lineHeight: 1.8, margin: 0, whiteSpace: "pre-wrap" }}>{tone}</p>
     </div>
   );
 }
@@ -430,60 +430,60 @@ export default function EdgarIntelligence() {
 
   return (
     <Layout>
-      <div style={{ minHeight: "100vh", background: "linear-gradient(160deg,#060b18 0%,#080d1e 50%,#060a16 100%)", padding: "28px 28px 80px" }}>
+      <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", background: "linear-gradient(160deg,#F8FAFC 0%,#FFFFFF 50%,#F8FAFC 100%)", padding: "28px 28px 80px", fontFamily: "var(--font-sans)" }}>
 
         {/* Header */}
         <div style={{ marginBottom: 22 }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(155,28,46,0.12)", border: "1px solid rgba(155,28,46,0.35)", borderRadius: 100, padding: "4px 14px", marginBottom: 12 }}>
             <Target size={11} color={BB_CRIMSON} />
-            <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.18em", textTransform: "uppercase", color: BB_CRIMSON }}>Kincaid IQ · EDGAR Intelligence Platform™</span>
+            <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.18em", textTransform: "uppercase", color: BB_CRIMSON }}>Kincaid Health · EDGAR Intelligence Platform™</span>
           </div>
-          <h1 style={{ fontSize: 30, fontWeight: 900, color: "#fff", margin: "0 0 6px", letterSpacing: "-0.02em" }}>EDGAR Language Change Engine™</h1>
-          <p style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", margin: 0, maxWidth: 600 }}>
+          <h1 style={{ fontSize: 30, fontWeight: 900, color: "#0F172A", margin: "0 0 6px", letterSpacing: "-0.02em" }}>EDGAR Language Change Engine™</h1>
+          <p style={{ fontSize: 12, color: "#64748b", margin: 0, maxWidth: 600 }}>
             Risk Factors language diff · Multi-factor risk scoring · 8-K event classification · XBRL financials · Deal Radar™ signal detection
           </p>
         </div>
 
         {/* Input */}
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: 20, marginBottom: 20 }}>
+        <div style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 14, padding: 20, marginBottom: 20 }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr auto auto", gap: 10, alignItems: "end" }}>
             <div>
-              <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 7 }}>Ticker Symbol</div>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 7 }}>Ticker Symbol</div>
               <div style={{ position: "relative" }}>
-                <Search size={13} style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.25)" }} />
+                <Search size={13} style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)", color: "#64748b" }} />
                 <input
                   data-testid="input-edgar-ticker"
                   value={ticker}
                   onChange={e => setTicker(e.target.value.toUpperCase())}
                   onKeyDown={e => e.key === "Enter" && analyze()}
                   placeholder="CVS, UNH, CI, AAPL…"
-                  style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9, padding: "11px 11px 11px 32px", color: "#fff", fontSize: 15, fontWeight: 700, outline: "none", boxSizing: "border-box", letterSpacing: "0.04em" }}
+                  style={{ width: "100%", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: 9, padding: "11px 11px 11px 32px", color: "#0F172A", fontSize: 15, fontWeight: 700, outline: "none", boxSizing: "border-box", letterSpacing: "0.04em" }}
                 />
               </div>
             </div>
             <div>
-              <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 7 }}>Form Type</div>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "#64748b", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 7 }}>Form Type</div>
               <div style={{ display: "flex", gap: 5 }}>
                 {(["10-K", "10-Q"] as const).map(ft => (
                   <button key={ft} data-testid={`btn-form-type-${ft.replace("-", "")}`} onClick={() => setFormType(ft)}
-                    style={{ padding: "11px 16px", borderRadius: 9, fontSize: 12, fontWeight: 800, cursor: "pointer", background: formType === ft ? "rgba(155,28,46,0.2)" : "rgba(255,255,255,0.04)", border: formType === ft ? "1px solid rgba(155,28,46,0.45)" : "1px solid rgba(255,255,255,0.08)", color: formType === ft ? "#fff" : "rgba(255,255,255,0.35)" }}>
+                    style={{ padding: "11px 16px", borderRadius: 9, fontSize: 12, fontWeight: 800, cursor: "pointer", background: formType === ft ? "rgba(155,28,46,0.2)" : "#ffffff", border: formType === ft ? "1px solid rgba(155,28,46,0.45)" : "1px solid #e2e8f0", color: formType === ft ? "#fff" : "#64748b" }}>
                     {ft}
                   </button>
                 ))}
               </div>
             </div>
             <button data-testid="btn-edgar-analyze" onClick={() => analyze()} disabled={loading || !ticker.trim()}
-              style={{ padding: "11px 24px", borderRadius: 9, fontSize: 12, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase", background: loading || !ticker.trim() ? "rgba(155,28,46,0.15)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${loading || !ticker.trim() ? "rgba(155,28,46,0.15)" : BB_CRIMSON}`, color: loading || !ticker.trim() ? "rgba(255,255,255,0.25)" : "#fff", cursor: loading || !ticker.trim() ? "not-allowed" : "pointer", display: "flex", alignItems: "center", gap: 7, whiteSpace: "nowrap" }}>
+              style={{ padding: "11px 24px", borderRadius: 9, fontSize: 12, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase", background: loading || !ticker.trim() ? "rgba(155,28,46,0.12)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${loading || !ticker.trim() ? "rgba(155,28,46,0.15)" : BB_CRIMSON}`, color: loading || !ticker.trim() ? "#64748b" : "#fff", cursor: loading || !ticker.trim() ? "not-allowed" : "pointer", display: "flex", alignItems: "center", gap: 7, whiteSpace: "nowrap" }}>
               {loading ? <><Loader2 size={13} style={{ animation: "spin 1s linear infinite" }} /> Analyzing…</> : <><Zap size={13} /> Run Intel</>}
             </button>
           </div>
           <div style={{ marginTop: 12, display: "flex", flexWrap: "wrap", gap: 5, alignItems: "center" }}>
-            <span style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginRight: 4 }}>Watch:</span>
+            <span style={{ fontSize: 9, color: "#94a3b8", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginRight: 4 }}>Watch:</span>
             {POPULAR.map(p => (
               <button key={p.ticker} data-testid={`ticker-quick-${p.ticker}`} onClick={() => analyze(p.ticker)} disabled={loading}
-                style={{ padding: "3px 10px", borderRadius: 5, fontSize: 10, fontWeight: 700, cursor: loading ? "not-allowed" : "pointer", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.38)" }}
-                onMouseEnter={e => { if (!loading) e.currentTarget.style.color = "#fff"; }}
-                onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.38)"; }}>
+                style={{ padding: "3px 10px", borderRadius: 5, fontSize: 10, fontWeight: 800, cursor: loading ? "not-allowed" : "pointer", background: "#ffffff", border: "1px solid #e2e8f0", color: "#475569" }}
+                onMouseEnter={e => { if (!loading) e.currentTarget.style.color = BB_CRIMSON; }}
+                onMouseLeave={e => { e.currentTarget.style.color = "#475569"; }}>
                 {p.ticker}
               </button>
             ))}
@@ -491,13 +491,13 @@ export default function EdgarIntelligence() {
         </div>
 
         {/* Always-visible Tab Bar */}
-        <div style={{ display: "flex", gap: 4, marginBottom: 18, borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+        <div style={{ display: "flex", gap: 4, marginBottom: 18, borderBottom: "1px solid #e2e8f0" }}>
           {TABS.map(tab => {
             const Icon = tab.icon;
             const active = activeTab === tab.id;
             return (
               <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                style={{ display: "flex", alignItems: "center", gap: 7, padding: "10px 16px", background: "none", border: "none", borderBottom: active ? `2px solid ${BB_CRIMSON}` : "2px solid transparent", color: active ? "#fff" : "rgba(255,255,255,0.35)", fontSize: 11, fontWeight: 700, cursor: "pointer", letterSpacing: "0.04em", marginBottom: -1 }}>
+                style={{ display: "flex", alignItems: "center", gap: 7, padding: "10px 16px", background: "none", border: "none", borderBottom: active ? `2px solid ${BB_CRIMSON}` : "2px solid transparent", color: active ? BB_CRIMSON : "#64748b", fontSize: 11, fontWeight: 800, cursor: "pointer", letterSpacing: "0.04em", marginBottom: -1 }}>
                 <Icon size={13} />
                 {tab.label}
               </button>
@@ -509,8 +509,8 @@ export default function EdgarIntelligence() {
         {loading && (
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "70px 0", gap: 14 }}>
             <Loader2 size={36} color={BB_CRIMSON} style={{ animation: "spin 1s linear infinite" }} />
-            <div style={{ fontSize: 14, fontWeight: 700, color: "rgba(255,255,255,0.55)" }}>Running full intelligence sweep for {ticker}…</div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", maxWidth: 380, textAlign: "center" }}>
+            <div style={{ fontSize: 14, fontWeight: 800, color: "#334155" }}>Running full intelligence sweep for {ticker}…</div>
+            <div style={{ fontSize: 11, color: "#64748b", maxWidth: 380, textAlign: "center" }}>
               Fetching {formType} filings · Extracting Risk Factors · Pulling XBRL financials · Classifying 8-K events · Running Deal Radar™
             </div>
           </div>
@@ -527,10 +527,10 @@ export default function EdgarIntelligence() {
                   { icon: <Brain size={18} color={BB_CRIMSON} />, t: "AI Analyst Briefing", d: "Claude reads the language changes and writes a structured analyst note on tone, key signals, what to watch" },
                   { icon: <Newspaper size={18} color="#60a5fa" />, t: "8-K Event Preview", d: "Top 3 classified 8-K events surfaced on the dashboard — click 8-K Firehose for the full feed" },
                 ].map((c, i) => (
-                  <div key={i} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: 18 }}>
+                  <div key={i} style={{ background: "#ffffff", border: "1px solid #f1f5f9", borderRadius: 12, padding: 18 }}>
                     <div style={{ marginBottom: 8 }}>{c.icon}</div>
-                    <div style={{ fontSize: 12, fontWeight: 800, color: "#fff", marginBottom: 5 }}>{c.t}</div>
-                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", lineHeight: 1.6 }}>{c.d}</div>
+                    <div style={{ fontSize: 12, fontWeight: 800, color: "#0F172A", marginBottom: 5 }}>{c.t}</div>
+                    <div style={{ fontSize: 10, color: "#64748b", lineHeight: 1.6 }}>{c.d}</div>
                   </div>
                 ))}
               </div>
@@ -541,10 +541,10 @@ export default function EdgarIntelligence() {
                   { icon: <FileText size={18} color={BB_CRIMSON} />, t: "Language Diff", d: "Sentence-level comparison of consecutive 10-K or 10-Q Risk Factors sections — NEW, MODIFIED, REMOVED" },
                   { icon: <TrendingUp size={18} color="#f59e0b" />, t: "Keyword Escalation", d: 'Detects when soft language hardens — "may" → "will", "risk" → "material risk", "possible" → "probable"' },
                 ].map((c, i) => (
-                  <div key={i} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: 18 }}>
+                  <div key={i} style={{ background: "#ffffff", border: "1px solid #f1f5f9", borderRadius: 12, padding: 18 }}>
                     <div style={{ marginBottom: 8 }}>{c.icon}</div>
-                    <div style={{ fontSize: 12, fontWeight: 800, color: "#fff", marginBottom: 5 }}>{c.t}</div>
-                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", lineHeight: 1.6 }}>{c.d}</div>
+                    <div style={{ fontSize: 12, fontWeight: 800, color: "#0F172A", marginBottom: 5 }}>{c.t}</div>
+                    <div style={{ fontSize: 10, color: "#64748b", lineHeight: 1.6 }}>{c.d}</div>
                   </div>
                 ))}
               </div>
@@ -557,10 +557,10 @@ export default function EdgarIntelligence() {
                   { icon: <Shield size={16} color="#60a5fa" />, t: "Regulatory Actions", d: "DOJ, FTC, SEC, FDA, OIG inquiries, subpoenas, penalties" },
                   { icon: <FileText size={16} color="#8b5cf6" />, t: "Material Agreements", d: "Credit facilities, material contracts, amendments, waivers" },
                 ].map((c, i) => (
-                  <div key={i} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: 18 }}>
+                  <div key={i} style={{ background: "#ffffff", border: "1px solid #f1f5f9", borderRadius: 12, padding: 18 }}>
                     <div style={{ marginBottom: 8 }}>{c.icon}</div>
-                    <div style={{ fontSize: 12, fontWeight: 800, color: "#fff", marginBottom: 5 }}>{c.t}</div>
-                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", lineHeight: 1.6 }}>{c.d}</div>
+                    <div style={{ fontSize: 12, fontWeight: 800, color: "#0F172A", marginBottom: 5 }}>{c.t}</div>
+                    <div style={{ fontSize: 10, color: "#64748b", lineHeight: 1.6 }}>{c.d}</div>
                   </div>
                 ))}
               </div>
@@ -573,16 +573,16 @@ export default function EdgarIntelligence() {
                   { icon: <BarChart3 size={16} color="#f59e0b" />, t: "Debt Levels", d: "Long-term debt time-series — rising debt + rising risk disclosures = Deal Radar trigger" },
                   { icon: <Activity size={16} color="#8b5cf6" />, t: "Cash Flow", d: "Operating cash flow trend — the canary in the coal mine for financial stress" },
                 ].map((c, i) => (
-                  <div key={i} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: 18 }}>
+                  <div key={i} style={{ background: "#ffffff", border: "1px solid #f1f5f9", borderRadius: 12, padding: 18 }}>
                     <div style={{ marginBottom: 8 }}>{c.icon}</div>
-                    <div style={{ fontSize: 12, fontWeight: 800, color: "#fff", marginBottom: 5 }}>{c.t}</div>
-                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", lineHeight: 1.6 }}>{c.d}</div>
+                    <div style={{ fontSize: 12, fontWeight: 800, color: "#0F172A", marginBottom: 5 }}>{c.t}</div>
+                    <div style={{ fontSize: 10, color: "#64748b", lineHeight: 1.6 }}>{c.d}</div>
                   </div>
                 ))}
               </div>
             )}
-            <div style={{ marginTop: 20, textAlign: "center", fontSize: 11, color: "rgba(255,255,255,0.2)" }}>
-              Enter a ticker above and click <strong style={{ color: "rgba(255,255,255,0.45)" }}>Run Intel</strong> to populate all 4 tabs
+            <div style={{ marginTop: 20, textAlign: "center", fontSize: 11, color: "#94a3b8" }}>
+              Enter a ticker above and click <strong style={{ color: BB_CRIMSON }}>Run Intel</strong> to populate all 4 tabs
             </div>
           </div>
         )}
@@ -598,10 +598,10 @@ export default function EdgarIntelligence() {
                 { label: "Current Filing", value: result.current_filing.filing_date, sub: `Period: ${result.current_filing.report_date}` },
                 { label: "Prior Filing", value: result.prior_filing.filing_date, sub: `Period: ${result.prior_filing.report_date}` },
               ].map(c => (
-                <div key={c.label} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 11, padding: "12px 14px" }}>
-                  <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.25)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 5 }}>{c.label}</div>
-                  <div style={{ fontSize: 13, fontWeight: 900, color: "#fff", marginBottom: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.value}</div>
-                  <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>{c.sub}</div>
+                <div key={c.label} style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 11, padding: "12px 14px" }}>
+                  <div style={{ fontSize: 9, fontWeight: 800, color: "#64748b", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 5 }}>{c.label}</div>
+                  <div style={{ fontSize: 13, fontWeight: 900, color: "#0F172A", marginBottom: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.value}</div>
+                  <div style={{ fontSize: 10, color: "#64748b" }}>{c.sub}</div>
                 </div>
               ))}
             </div>
@@ -644,7 +644,7 @@ export default function EdgarIntelligence() {
                     <SectionHead icon={Newspaper} label="Recent 8-K Events (Preview)" count={result.events_8k.length} color="rgba(96,165,250,0.7)" />
                     <EventFeed events={result.events_8k.slice(0, 3)} />
                     {result.events_8k.length > 3 && (
-                      <button onClick={() => setActiveTab("events")} style={{ marginTop: 8, background: "none", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "7px 16px", color: "rgba(255,255,255,0.4)", fontSize: 11, fontWeight: 700, cursor: "pointer" }}>
+                      <button onClick={() => setActiveTab("events")} style={{ marginTop: 8, background: "none", border: "1px solid #e2e8f0", borderRadius: 8, padding: "7px 16px", color: "#475569", fontSize: 11, fontWeight: 700, cursor: "pointer" }}>
                         View all {result.events_8k.length} events →
                       </button>
                     )}
@@ -681,14 +681,14 @@ export default function EdgarIntelligence() {
               <div>
                 <div style={{ marginBottom: 14 }}>
                   <SectionHead icon={Newspaper} label="8-K Event Intelligence Layer" count={result.events_8k.length} color="rgba(96,165,250,0.7)" />
-                  <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", margin: "0 0 14px" }}>
+                  <p style={{ fontSize: 11, color: "#64748b", margin: "0 0 14px" }}>
                     M&A · Executive changes · Regulatory actions · Material agreements — auto-classified and impact-rated
                   </p>
                 </div>
                 {/* Impact legend */}
                 <div style={{ display: "flex", gap: 12, marginBottom: 14 }}>
                   {[["HIGH", "#ef4444"], ["MEDIUM", "#f59e0b"], ["LOW", "#10b981"]].map(([lvl, col]) => (
-                    <div key={lvl} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 10, color: "rgba(255,255,255,0.4)", fontWeight: 700 }}>
+                    <div key={lvl} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 10, color: "#475569", fontWeight: 700 }}>
                       <div style={{ width: 8, height: 8, borderRadius: "50%", background: col as string }} />
                       {lvl}
                     </div>
@@ -703,7 +703,7 @@ export default function EdgarIntelligence() {
               <div>
                 <div style={{ marginBottom: 14 }}>
                   <SectionHead icon={DollarSign} label="XBRL Financial Intelligence" color="rgba(96,165,250,0.7)" />
-                  <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", margin: "0 0 14px" }}>
+                  <p style={{ fontSize: 11, color: "#64748b", margin: "0 0 14px" }}>
                     Annual financials pulled directly from SEC EDGAR companyfacts API · Last 6 fiscal years
                   </p>
                 </div>
@@ -716,7 +716,7 @@ export default function EdgarIntelligence() {
                       <AlertTriangle size={16} color="#ef4444" />
                       <span style={{ fontSize: 12, fontWeight: 800, color: "#ef4444" }}>Convergence Signal</span>
                     </div>
-                    <p style={{ fontSize: 11, color: "rgba(255,255,255,0.55)", margin: 0, lineHeight: 1.7 }}>
+                    <p style={{ fontSize: 11, color: "#334155", margin: 0, lineHeight: 1.7 }}>
                       Financial data is available alongside a <strong style={{ color: "#f59e0b" }}>risk language score of {result.risk_score.total}</strong>. When declining financials converge with rising risk language, this is a high-confidence stress signal. Review the Language Analysis tab for specific escalations.
                     </p>
                   </div>

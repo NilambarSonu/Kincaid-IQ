@@ -59,8 +59,8 @@ function CompCard({ comp, checked, onToggle }: { comp: CompSpec; checked: boolea
       onClick={enabled ? onToggle : undefined}
       className="w-full text-left rounded-xl p-3.5 transition-all"
       style={{
-        background: checked && enabled ? `${comp.color}10` : "rgba(255,255,255,0.02)",
-        border: `1px solid ${checked && enabled ? comp.color + "45" : "rgba(255,255,255,0.07)"}`,
+        background: checked && enabled ? `${comp.color}10` : "#ffffff",
+        border: `1px solid ${checked && enabled ? comp.color + "45" : "#e2e8f0"}`,
         opacity: enabled ? 1 : 0.45,
         cursor: enabled ? "pointer" : "not-allowed",
       }}>
@@ -71,7 +71,7 @@ function CompCard({ comp, checked, onToggle }: { comp: CompSpec; checked: boolea
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-            <span className="text-[11px] font-bold text-white/90">{comp.label}</span>
+            <span className="text-[11px] font-bold text-slate-900/90">{comp.label}</span>
             <StatusBadge status={comp.status} />
           </div>
           <p className="text-[9px] text-zinc-500 leading-relaxed">{comp.tooltip ?? comp.desc}</p>
@@ -160,7 +160,7 @@ export function ClientPackageDrawer({
   const components: CompSpec[] = [
     {
       id:     "rx_redline",
-      label:  "Rx Defense — Redline (.docx)",
+      label:  "PBM Contract Clarity 360 — Redline (.docx)",
       desc:   "Model contract language for all weak PBM provisions",
       icon:   Pill,
       color:  GREEN,
@@ -170,11 +170,11 @@ export function ClientPackageDrawer({
           ? `${contract?.pbm_name || contractId} · Score ${Math.round(contract?.overall_score ?? 0)}/100`
           : contractLoading ? "Checking…"
           : "Contract analysis not complete"
-        : "Open Rx Defense and analyze a contract first",
+        : "Open PBM Contract Clarity 360 and analyze a contract first",
     },
     {
       id:     "rx_scorecard",
-      label:  "Rx Defense — Scorecard (JSON)",
+      label:  "PBM Contract Clarity 360 — Scorecard (JSON)",
       desc:   "Provision scores, key findings, and risk flags",
       icon:   FileText,
       color:  PURPLE,
@@ -182,7 +182,7 @@ export function ClientPackageDrawer({
       tooltip: contractId
         ? contractReady ? `13 provisions · ${contract?.key_findings?.length ?? 0} findings`
           : "Contract not complete"
-        : "Open Rx Defense first",
+        : "Open PBM Contract Clarity 360 first",
     },
     {
       id:     "benchmarking_employer",
@@ -268,8 +268,8 @@ export function ClientPackageDrawer({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="right"
-        className="w-[480px] max-w-full overflow-y-auto p-0 border-l border-zinc-800"
-        style={{ background: "#060810" }}
+        className="w-[480px] max-w-full overflow-y-auto p-0 border-l border-slate-200"
+        style={{ background: "#F8FAFC" }}
       >
         <SheetHeader className="px-6 pt-6 pb-4 border-b border-zinc-900">
           <div className="flex items-center gap-3">
@@ -278,7 +278,7 @@ export function ClientPackageDrawer({
               <Archive className="w-4.5 h-4.5" style={{ color: GOLD }} />
             </div>
             <div>
-              <SheetTitle className="text-white text-base font-black">Client Package Builder</SheetTitle>
+              <SheetTitle className="text-slate-900 text-base font-black">Client Package Builder</SheetTitle>
               <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-[0.2em]">
                 Unified deliverable · multi-tool export
               </p>
@@ -297,15 +297,15 @@ export function ClientPackageDrawer({
               value={clientName}
               onChange={e => setClientName(e.target.value)}
               placeholder={einName || "e.g. Acme Corp, Benefits Team"}
-              className="w-full text-xs text-white placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)" }}
+              className="w-full text-xs text-slate-900 placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none"
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)" }}
             />
           </div>
 
           {/* Context row */}
           {(contractId || ein) && (
             <div className="rounded-xl p-3 text-[9px] font-mono space-y-1.5"
-              style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
               <div className="font-bold uppercase tracking-[0.2em] text-zinc-600 mb-2">
                 Detected context
               </div>
@@ -313,7 +313,7 @@ export function ClientPackageDrawer({
                 <div className="flex items-center gap-2">
                   <Pill className="w-3 h-3 flex-shrink-0" style={{ color: GREEN }} />
                   <span className="text-zinc-400">Rx:</span>
-                  <span className="text-zinc-300 truncate">{contract?.pbm_name || contractId}</span>
+                  <span className="text-slate-500 truncate">{contract?.pbm_name || contractId}</span>
                   {contractLoading && <RefreshCw className="w-2.5 h-2.5 animate-spin text-zinc-600 flex-shrink-0" />}
                 </div>
               )}
@@ -321,7 +321,7 @@ export function ClientPackageDrawer({
                 <div className="flex items-center gap-2">
                   <Building2 className="w-3 h-3 flex-shrink-0" style={{ color: BLUE }} />
                   <span className="text-zinc-400">EIN:</span>
-                  <span className="text-zinc-300">{ein}</span>
+                  <span className="text-slate-500">{ein}</span>
                   {einName && <span className="text-zinc-500 truncate">— {einName}</span>}
                 </div>
               )}
@@ -336,9 +336,9 @@ export function ClientPackageDrawer({
                 <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color: GOLD }} />
                 <p className="text-[10px] text-zinc-500 leading-relaxed">
                   No context detected. To enable Rx components, analyze a contract in{" "}
-                  <a href="/rx-defense" className="underline hover:text-zinc-300">Rx Defense</a>.
+                  <a href="/rx-defense" className="underline hover:text-slate-500">PBM Contract Clarity 360</a>.
                   For benchmarking, load a company in the{" "}
-                  <a href="/" className="underline hover:text-zinc-300">War Room</a>.
+                  <a href="/" className="underline hover:text-slate-500">War Room</a>.
                 </p>
               </div>
             </div>
@@ -351,7 +351,7 @@ export function ClientPackageDrawer({
                 {readyComps.length} of {components.length} available
               </span>
               {readyComps.length > 0 && (
-                <button className="text-[9px] font-mono text-zinc-500 hover:text-zinc-300 transition-colors"
+                <button className="text-[9px] font-mono text-zinc-500 hover:text-slate-500 transition-colors"
                   onClick={() => {
                     const allOn = readyComps.every(c => checked[c.id]);
                     const next = { ...checked };
@@ -411,9 +411,9 @@ export function ClientPackageDrawer({
             disabled={!canDl}
             className="w-full flex items-center justify-center gap-2.5 rounded-xl py-3.5 font-bold text-sm transition-all"
             style={{
-              background: canDl ? `linear-gradient(135deg, ${GOLD}18, ${GOLD}08)` : "rgba(255,255,255,0.03)",
-              border: canDl ? `1px solid ${GOLD}50` : "1px solid rgba(255,255,255,0.07)",
-              color: canDl ? GOLD : "rgba(255,255,255,0.2)",
+              background: canDl ? `linear-gradient(135deg, ${GOLD}18, ${GOLD}08)` : "#ffffff",
+              border: canDl ? `1px solid ${GOLD}50` : "1px solid #e2e8f0",
+              color: canDl ? GOLD : "#94a3b8",
               cursor: canDl ? "pointer" : "not-allowed",
               boxShadow: canDl ? `0 0 28px ${GOLD}18` : "none",
             }}>

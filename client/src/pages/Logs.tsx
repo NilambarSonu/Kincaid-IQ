@@ -40,7 +40,7 @@ export default function Logs() {
         {isLoading ? (
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="h-24 bg-white/40 rounded-2xl border border-border/50 animate-pulse" />
+              <div key={i} className="h-24 bg-[var(--kiq-surface)]/40 rounded-2xl border border-border/50 animate-pulse" />
             ))}
           </div>
         ) : error ? (
@@ -81,7 +81,7 @@ function LogCard({ log, isExpanded, onToggle }: { log: Log, isExpanded: boolean,
     <div className="glass-card rounded-2xl overflow-hidden transition-all duration-300">
       <button
         onClick={onToggle}
-        className="w-full text-left p-5 flex flex-col sm:flex-row sm:items-center gap-4 hover:bg-white/[0.03] transition-colors"
+        className="w-full text-left p-5 flex flex-col sm:flex-row sm:items-center gap-4 hover:bg-[var(--kiq-surface)]/[0.03] transition-colors"
       >
         <div className="flex-shrink-0">
           <div
@@ -151,7 +151,7 @@ function LogCard({ log, isExpanded, onToggle }: { log: Log, isExpanded: boolean,
                 </h4>
                 <div
                   className="p-5 rounded-xl text-sm overflow-x-auto"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(0,140,255,0.1)" }}
+                  style={{ background: "#ffffff", border: "1px solid rgba(0,140,255,0.1)" }}
                 >
                   <div className="prose prose-sm max-w-none prose-invert">
                     <ReactMarkdown>{log.response}</ReactMarkdown>

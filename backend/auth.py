@@ -81,7 +81,9 @@ def get_current_user(
 
 
 def authenticate_user(db: Session, username: str, password: str) -> Optional[models.User]:
-    user = db.query(models.User).filter(models.User.username == username).first()
+    user = db.query(models.User).filter(
+        (models.User.username == username) | (models.User.email == username)
+    ).first()
     if not user or not user.hashed_password:
         return None
     if not verify_password(password, user.hashed_password):

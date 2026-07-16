@@ -100,7 +100,7 @@ function scoreColor(score: number): string {
   return "#10b981";
 }
 function mapFillColor(state: StateSummary | undefined): string {
-  if (!state) return "rgba(255,255,255,0.06)";
+  if (!state) return "rgba(15,23,42,0.03)";
   if (state.priority === "PRIORITY") return "#9B1C2E";
   if (state.priority === "HIGH") return "#c2410c";
   const s = state.scores.regulatory_strictness;
@@ -121,7 +121,7 @@ function ScoreBadge({ label, value, max = 10 }: { label: string; value: number; 
         <span style={{ fontSize: 10, color: "rgba(255,255,255,0.45)" }}>{label}</span>
         <span style={{ fontSize: 11, fontWeight: 800, color }}>{value.toFixed(1)}</span>
       </div>
-      <div style={{ height: 4, background: "rgba(255,255,255,0.06)", borderRadius: 99, overflow: "hidden" }}>
+      <div style={{ height: 4, background: "rgba(15,23,42,0.03)", borderRadius: 99, overflow: "hidden" }}>
         <div style={{ width: `${pct}%`, height: "100%", background: color, borderRadius: 99 }} />
       </div>
     </div>
@@ -145,7 +145,7 @@ function AlertCard({ alert }: { alert: StateAlert & { state?: string; state_name
         <AlertTriangle size={14} color={sevColor} style={{ flexShrink: 0, marginTop: 2 }} />
         <div style={{ flex: 1 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 4 }}>
-            <span style={{ fontSize: 12, fontWeight: 800, color: "#fff" }}>{alert.title}</span>
+            <span style={{ fontSize: 12, fontWeight: 800, color: "#0F172A" }}>{alert.title}</span>
             <Chip color={sevColor}>{alert.severity}</Chip>
             {alert.state && alert.state !== "ALL" && <Chip color={typeColor}>{alert.state}</Chip>}
           </div>
@@ -196,7 +196,7 @@ function StateDetailPanel({ state, onClose }: { state: StateDetail; onClose: () 
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-            <span style={{ fontSize: 22, fontWeight: 900, color: "#fff" }}>{state.name}</span>
+            <span style={{ fontSize: 22, fontWeight: 900, color: "#0F172A" }}>{state.name}</span>
             {isCA && (
               <span style={{ fontSize: 9, fontWeight: 900, padding: "3px 10px", borderRadius: 100, background: `${BB_CRIMSON}25`, border: `1px solid ${BB_CRIMSON}50`, color: BB_CRIMSON, letterSpacing: "0.14em", textTransform: "uppercase" }}>
                 ★ Priority State
@@ -204,16 +204,16 @@ function StateDetailPanel({ state, onClose }: { state: StateDetail; onClose: () 
             )}
             {!isCA && state.priority === "HIGH" && <Chip color="#f59e0b">High Priority</Chip>}
           </div>
-          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>{state.region} · {state.regulatory_rules.enforcement_body}</span>
+          <span style={{ fontSize: 11, color: "rgba(15,23,42,0.10)" }}>{state.region} · {state.regulatory_rules.enforcement_body}</span>
         </div>
-        <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.35)", padding: 4 }}>
+        <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(15,23,42,0.10)", padding: 4 }}>
           <X size={16} />
         </button>
       </div>
 
       {/* Regulatory summary */}
-      <div style={{ background: isCA ? "rgba(155,28,46,0.08)" : "rgba(255,255,255,0.03)", border: isCA ? `1px solid rgba(155,28,46,0.3)` : "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: 14 }}>
-        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 6 }}>Regulatory Overview</div>
+      <div style={{ background: isCA ? "rgba(155,28,46,0.08)" : "rgba(15,23,42,0.03)", border: isCA ? `1px solid rgba(155,28,46,0.3)` : "1px solid rgba(15,23,42,0.03)", borderRadius: 12, padding: 14 }}>
+        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 6 }}>Regulatory Overview</div>
         <p style={{ fontSize: 11, color: "rgba(255,255,255,0.65)", margin: "0 0 10px", lineHeight: 1.7 }}>{state.regulatory_rules.summary}</p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
           {state.regulatory_rules.key_legislation.map(l => (
@@ -223,8 +223,8 @@ function StateDetailPanel({ state, onClose }: { state: StateDetail; onClose: () 
       </div>
 
       {/* Scores */}
-      <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: 16 }}>
-        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Intelligence Scores</div>
+      <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 12, padding: 16 }}>
+        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Intelligence Scores</div>
         <ScoreBadge label="Transparency Score" value={state.scores.transparency} />
         <ScoreBadge label="Regulatory Strictness" value={state.scores.regulatory_strictness} />
         <ScoreBadge label="PBM Risk Score" value={state.scores.pbm_risk} />
@@ -232,19 +232,19 @@ function StateDetailPanel({ state, onClose }: { state: StateDetail; onClose: () 
       </div>
 
       {/* Market Norms */}
-      <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: 14 }}>
-        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Market Norms</div>
+      <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 12, padding: 14 }}>
+        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Market Norms</div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 12 }}>
           <div style={{ textAlign: "center" }}>
             <div style={{ fontSize: 28, fontWeight: 900, color: spread >= 55 ? "#ef4444" : "#f59e0b" }}>{spread}%</div>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", fontWeight: 700 }}>SPREAD PRICING</div>
+            <div style={{ fontSize: 9, color: "rgba(15,23,42,0.10)", fontWeight: 700 }}>SPREAD PRICING</div>
           </div>
           <div style={{ textAlign: "center" }}>
             <div style={{ fontSize: 28, fontWeight: 900, color: pass >= 65 ? "#10b981" : "#60a5fa" }}>{pass}%</div>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", fontWeight: 700 }}>PASS-THROUGH</div>
+            <div style={{ fontSize: 9, color: "rgba(15,23,42,0.10)", fontWeight: 700 }}>PASS-THROUGH</div>
           </div>
         </div>
-        <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 99, overflow: "hidden", marginBottom: 10 }}>
+        <div style={{ height: 6, background: "rgba(15,23,42,0.03)", borderRadius: 99, overflow: "hidden", marginBottom: 10 }}>
           <div style={{ width: `${spread}%`, height: "100%", background: "#ef4444", borderRadius: "99px 0 0 99px" }} />
         </div>
         {[
@@ -255,8 +255,8 @@ function StateDetailPanel({ state, onClose }: { state: StateDetail; onClose: () 
           ["Gag Clauses", state.pbm_constraints.gag_clauses],
           ["Audit Rights", state.pbm_constraints.auditing_rights],
         ].map(([k, v]) => (
-          <div key={k} style={{ display: "flex", justifyContent: "space-between", padding: "5px 0", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.35)" }}>{k}</span>
+          <div key={k} style={{ display: "flex", justifyContent: "space-between", padding: "5px 0", borderBottom: "1px solid rgba(15,23,42,0.03)" }}>
+            <span style={{ fontSize: 10, color: "rgba(15,23,42,0.10)" }}>{k}</span>
             <span style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.7)", maxWidth: 180, textAlign: "right" }}>{v}</span>
           </div>
         ))}
@@ -274,14 +274,14 @@ function StateDetailPanel({ state, onClose }: { state: StateDetail; onClose: () 
 
       {/* Sales Profile */}
       <div style={{ background: "linear-gradient(135deg, rgba(0,43,92,0.3), rgba(155,28,46,0.08))", border: "1px solid rgba(0,43,92,0.35)", borderRadius: 12, padding: 16 }}>
-        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Sales Profile</div>
+        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Sales Profile</div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 12 }}>
           {[
             { label: "Difficulty", value: state.sales_profile.difficulty, color: state.sales_profile.difficulty.includes("HIGH") ? "#ef4444" : "#f59e0b" },
             { label: "Opportunity", value: state.sales_profile.opportunity, color: state.sales_profile.opportunity.includes("HIGH") ? "#10b981" : "#60a5fa" },
           ].map(s => (
-            <div key={s.label} style={{ background: "rgba(255,255,255,0.04)", borderRadius: 8, padding: "10px 12px", textAlign: "center" }}>
-              <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.1em" }}>{s.label}</div>
+            <div key={s.label} style={{ background: "rgba(15,23,42,0.03)", borderRadius: 8, padding: "10px 12px", textAlign: "center" }}>
+              <div style={{ fontSize: 9, color: "rgba(15,23,42,0.10)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.1em" }}>{s.label}</div>
               <div style={{ fontSize: 11, fontWeight: 800, color: s.color }}>{s.value}</div>
             </div>
           ))}
@@ -289,8 +289,8 @@ function StateDetailPanel({ state, onClose }: { state: StateDetail; onClose: () 
         <div style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", lineHeight: 1.6, marginBottom: 10 }}>
           <span style={{ fontWeight: 700, color: "#f59e0b" }}>Urgency: </span>{state.sales_profile.urgency_hook}
         </div>
-        <div style={{ background: "rgba(255,255,255,0.04)", borderRadius: 8, padding: "10px 12px", marginBottom: 8 }}>
-          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", marginBottom: 4 }}>COMMON OBJECTION</div>
+        <div style={{ background: "rgba(15,23,42,0.03)", borderRadius: 8, padding: "10px 12px", marginBottom: 8 }}>
+          <div style={{ fontSize: 9, color: "rgba(15,23,42,0.10)", marginBottom: 4 }}>COMMON OBJECTION</div>
           <div style={{ fontSize: 11, fontStyle: "italic", color: "rgba(255,255,255,0.5)", marginBottom: 6 }}>"{state.sales_profile.objection}"</div>
           <div style={{ fontSize: 11, color: "rgba(255,255,255,0.75)", fontWeight: 600 }}>{state.sales_profile.objection_response}</div>
         </div>
@@ -372,7 +372,7 @@ function SalesAngleGenerator({ selectedState, statesData }: { selectedState: str
     <div style={{ display: "flex", flexDirection: "column", gap: 14, height: "100%", overflowY: "auto" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
         <Zap size={16} color={BB_CRIMSON} />
-        <span style={{ fontSize: 14, fontWeight: 900, color: "#fff" }}>Sales Angle Generator</span>
+        <span style={{ fontSize: 14, fontWeight: 900, color: "#0F172A" }}>Sales Angle Generator</span>
         {result?.ai_generated && <Chip color="#8b5cf6">AI-Generated</Chip>}
       </div>
 
@@ -380,15 +380,15 @@ function SalesAngleGenerator({ selectedState, statesData }: { selectedState: str
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
         {/* State dropdown */}
         <div>
-          <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>State</div>
+          <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>State</div>
           <select
             data-testid="dropdown-state"
             value={stateCode}
             onChange={e => setStateCode(e.target.value)}
-            style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, padding: "9px 12px", color: "#fff", fontSize: 12, fontWeight: 700, outline: "none", boxSizing: "border-box", cursor: "pointer", appearance: "auto" }}
+            style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 8, padding: "9px 12px", color: "#0F172A", fontSize: 12, fontWeight: 700, outline: "none", boxSizing: "border-box", cursor: "pointer", appearance: "auto" }}
           >
             {ALL_STATES.map(s => (
-              <option key={s.code} value={s.code} style={{ background: "#0d1526", color: "#fff" }}>
+              <option key={s.code} value={s.code} style={{ background: "#F8FAFC", color: "#0F172A" }}>
                 {s.name} — {s.code}
               </option>
             ))}
@@ -397,12 +397,12 @@ function SalesAngleGenerator({ selectedState, statesData }: { selectedState: str
 
         {/* Industry chips + custom fallback */}
         <div>
-          <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Industry (Optional)</div>
+          <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Industry (Optional)</div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 5, marginBottom: 7 }}>
             {INDUSTRY_PRESETS.map(preset => (
               <button key={preset} data-testid={`chip-industry-${preset}`}
                 onClick={() => { setIndustry(industry === preset ? "" : preset); setCustomIndustry(""); }}
-                style={{ padding: "4px 10px", borderRadius: 100, fontSize: 9, fontWeight: 800, cursor: "pointer", letterSpacing: "0.06em", background: industry === preset ? "rgba(155,28,46,0.25)" : "rgba(255,255,255,0.04)", border: industry === preset ? "1px solid rgba(155,28,46,0.5)" : "1px solid rgba(255,255,255,0.08)", color: industry === preset ? "#fff" : "rgba(255,255,255,0.4)" }}>
+                style={{ padding: "4px 10px", borderRadius: 100, fontSize: 9, fontWeight: 800, cursor: "pointer", letterSpacing: "0.06em", background: industry === preset ? "rgba(155,28,46,0.25)" : "rgba(15,23,42,0.03)", border: industry === preset ? "1px solid rgba(155,28,46,0.5)" : "1px solid rgba(15,23,42,0.03)", color: industry === preset ? "#fff" : "rgba(255,255,255,0.4)" }}>
                 {preset}
               </button>
             ))}
@@ -410,51 +410,51 @@ function SalesAngleGenerator({ selectedState, statesData }: { selectedState: str
           {!industry && (
             <input value={customIndustry} onChange={e => setCustomIndustry(e.target.value)} placeholder="Or type custom industry…"
               data-testid="input-industry-custom"
-              style={{ width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 7, padding: "7px 10px", color: "#fff", fontSize: 11, outline: "none", boxSizing: "border-box" }} />
+              style={{ width: "100%", background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 7, padding: "7px 10px", color: "#0F172A", fontSize: 11, outline: "none", boxSizing: "border-box" }} />
           )}
         </div>
       </div>
 
       {/* State risk snapshot strip */}
       {selectedStateSummary && (
-        <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 10, padding: "10px 14px", display: "flex", gap: 20, flexWrap: "wrap" }}>
+        <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 10, padding: "10px 14px", display: "flex", gap: 20, flexWrap: "wrap" }}>
           <div>
-            <div style={{ fontSize: 8, fontWeight: 700, color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 2 }}>Reg. Strictness</div>
-            <div style={{ fontSize: 18, fontWeight: 900, color: scoreColor(selectedStateSummary.scores.regulatory_strictness) }}>{selectedStateSummary.scores.regulatory_strictness.toFixed(1)}<span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>/10</span></div>
+            <div style={{ fontSize: 8, fontWeight: 700, color: "rgba(15,23,42,0.08)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 2 }}>Reg. Strictness</div>
+            <div style={{ fontSize: 18, fontWeight: 900, color: scoreColor(selectedStateSummary.scores.regulatory_strictness) }}>{selectedStateSummary.scores.regulatory_strictness.toFixed(1)}<span style={{ fontSize: 10, color: "rgba(15,23,42,0.10)" }}>/10</span></div>
           </div>
           <div>
-            <div style={{ fontSize: 8, fontWeight: 700, color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 2 }}>PBM Risk</div>
-            <div style={{ fontSize: 18, fontWeight: 900, color: scoreColor(selectedStateSummary.scores.pbm_risk) }}>{selectedStateSummary.scores.pbm_risk.toFixed(1)}<span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>/10</span></div>
+            <div style={{ fontSize: 8, fontWeight: 700, color: "rgba(15,23,42,0.08)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 2 }}>PBM Risk</div>
+            <div style={{ fontSize: 18, fontWeight: 900, color: scoreColor(selectedStateSummary.scores.pbm_risk) }}>{selectedStateSummary.scores.pbm_risk.toFixed(1)}<span style={{ fontSize: 10, color: "rgba(15,23,42,0.10)" }}>/10</span></div>
           </div>
           <div>
-            <div style={{ fontSize: 8, fontWeight: 700, color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 2 }}>Priority Tier</div>
+            <div style={{ fontSize: 8, fontWeight: 700, color: "rgba(15,23,42,0.08)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 2 }}>Priority Tier</div>
             <div style={{ fontSize: 13, fontWeight: 900, color: selectedStateSummary.priority === "PRIORITY" ? BB_CRIMSON : selectedStateSummary.priority === "HIGH" ? "#f59e0b" : "#60a5fa", marginTop: 2 }}>{selectedStateSummary.priority}</div>
           </div>
           <div>
-            <div style={{ fontSize: 8, fontWeight: 700, color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 2 }}>Spread Pricing</div>
-            <div style={{ fontSize: 18, fontWeight: 900, color: selectedStateSummary.spread_prevalence_pct >= 55 ? "#ef4444" : "#f59e0b" }}>{selectedStateSummary.spread_prevalence_pct}<span style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>%</span></div>
+            <div style={{ fontSize: 8, fontWeight: 700, color: "rgba(15,23,42,0.08)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 2 }}>Spread Pricing</div>
+            <div style={{ fontSize: 18, fontWeight: 900, color: selectedStateSummary.spread_prevalence_pct >= 55 ? "#ef4444" : "#f59e0b" }}>{selectedStateSummary.spread_prevalence_pct}<span style={{ fontSize: 10, color: "rgba(15,23,42,0.10)" }}>%</span></div>
           </div>
         </div>
       )}
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
         <div>
-          <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Client Type</div>
+          <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Client Type</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             {[["self-funded", "Self-Funded"], ["fully-insured", "Fully Insured"], ["level-funded", "Level-Funded"]].map(([val, label]) => (
               <button key={val} data-testid={`btn-clienttype-${val}`} onClick={() => setClientType(val)}
-                style={{ padding: "8px 12px", borderRadius: 7, fontSize: 11, fontWeight: 700, cursor: "pointer", textAlign: "left", background: clientType === val ? "rgba(155,28,46,0.2)" : "rgba(255,255,255,0.03)", border: clientType === val ? `1px solid rgba(155,28,46,0.45)` : "1px solid rgba(255,255,255,0.07)", color: clientType === val ? "#fff" : "rgba(255,255,255,0.4)" }}>
+                style={{ padding: "8px 12px", borderRadius: 7, fontSize: 11, fontWeight: 700, cursor: "pointer", textAlign: "left", background: clientType === val ? "rgba(155,28,46,0.2)" : "rgba(15,23,42,0.03)", border: clientType === val ? `1px solid rgba(155,28,46,0.45)` : "1px solid rgba(15,23,42,0.03)", color: clientType === val ? "#fff" : "rgba(255,255,255,0.4)" }}>
                 {label}
               </button>
             ))}
           </div>
         </div>
         <div>
-          <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Employer Size</div>
+          <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Employer Size</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             {[["small", "Small (<100)"], ["mid-market", "Mid-Market (100–999)"], ["large", "Enterprise (1,000–4,999)"], ["jumbo", "Enterprise Plus (5,000+)"]].map(([val, label]) => (
               <button key={val} data-testid={`btn-empsize-${val}`} onClick={() => setEmployerSize(val)}
-                style={{ padding: "8px 12px", borderRadius: 7, fontSize: 11, fontWeight: 700, cursor: "pointer", textAlign: "left", background: employerSize === val ? "rgba(155,28,46,0.2)" : "rgba(255,255,255,0.03)", border: employerSize === val ? `1px solid rgba(155,28,46,0.45)` : "1px solid rgba(255,255,255,0.07)", color: employerSize === val ? "#fff" : "rgba(255,255,255,0.4)" }}>
+                style={{ padding: "8px 12px", borderRadius: 7, fontSize: 11, fontWeight: 700, cursor: "pointer", textAlign: "left", background: employerSize === val ? "rgba(155,28,46,0.2)" : "rgba(15,23,42,0.03)", border: employerSize === val ? `1px solid rgba(155,28,46,0.45)` : "1px solid rgba(15,23,42,0.03)", color: employerSize === val ? "#fff" : "rgba(255,255,255,0.4)" }}>
                 {label}
               </button>
             ))}
@@ -463,7 +463,7 @@ function SalesAngleGenerator({ selectedState, statesData }: { selectedState: str
       </div>
 
       <button data-testid="btn-generate-angle" onClick={() => mutation.mutate()} disabled={mutation.isPending || !stateCode.trim()}
-        style={{ padding: "11px 0", borderRadius: 9, fontSize: 12, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase", background: mutation.isPending || !stateCode ? "rgba(155,28,46,0.15)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${mutation.isPending || !stateCode ? "rgba(155,28,46,0.15)" : BB_CRIMSON}`, color: mutation.isPending || !stateCode ? "rgba(255,255,255,0.25)" : "#fff", cursor: mutation.isPending || !stateCode ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+        style={{ padding: "11px 0", borderRadius: 9, fontSize: 12, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase", background: mutation.isPending || !stateCode ? "rgba(155,28,46,0.15)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${mutation.isPending || !stateCode ? "rgba(155,28,46,0.15)" : BB_CRIMSON}`, color: mutation.isPending || !stateCode ? "rgba(15,23,42,0.08)" : "#fff", cursor: mutation.isPending || !stateCode ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
         {mutation.isPending ? <><Loader2 size={13} style={{ animation: "spin 1s linear infinite" }} /> Generating…</> : <><Zap size={13} /> Generate Sales Angle</>}
       </button>
 
@@ -487,7 +487,7 @@ function SalesAngleGenerator({ selectedState, statesData }: { selectedState: str
           {result.email_subject && (
             <div style={{ background: "rgba(96,165,250,0.08)", border: "1px solid rgba(96,165,250,0.25)", borderRadius: 12, padding: "14px 16px" }}>
               <div style={{ fontSize: 9, fontWeight: 700, color: "#60a5fa", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 6 }}>Email Subject Line</div>
-              <div style={{ fontSize: 13, fontWeight: 800, color: "#fff", letterSpacing: "0.01em" }}>{result.email_subject}</div>
+              <div style={{ fontSize: 13, fontWeight: 800, color: "#0F172A", letterSpacing: "0.01em" }}>{result.email_subject}</div>
             </div>
           )}
 
@@ -502,13 +502,13 @@ function SalesAngleGenerator({ selectedState, statesData }: { selectedState: str
           {result.opening_hook && (
             <div style={{ background: "rgba(155,28,46,0.12)", border: "1px solid rgba(155,28,46,0.35)", borderRadius: 12, padding: "14px 16px" }}>
               <div style={{ fontSize: 9, fontWeight: 700, color: BB_CRIMSON, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 6 }}>Opening Hook</div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", lineHeight: 1.5, fontStyle: "italic" }}>"{result.opening_hook}"</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#0F172A", lineHeight: 1.5, fontStyle: "italic" }}>"{result.opening_hook}"</div>
             </div>
           )}
 
           {result.talking_points.length > 0 && (
-            <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "14px 16px" }}>
-              <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 10 }}>Key Talking Points</div>
+            <div style={{ background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 12, padding: "14px 16px" }}>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 10 }}>Key Talking Points</div>
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 {result.talking_points.map((p, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 11, color: "rgba(255,255,255,0.7)", lineHeight: 1.6 }}>
@@ -585,8 +585,8 @@ function SalesAngleGenerator({ selectedState, statesData }: { selectedState: str
             </div>
           )}
 
-          <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 10, padding: "10px 14px" }}>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em" }}>Regulatory Context — {result.state_name}</div>
+          <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 10, padding: "10px 14px" }}>
+            <div style={{ fontSize: 9, color: "rgba(15,23,42,0.08)", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em" }}>Regulatory Context — {result.state_name}</div>
             <div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", marginTop: 4 }}>
               Strictness: <strong style={{ color: scoreColor(result.regulatory_context.strictness_score) }}>{result.regulatory_context.strictness_score}/10</strong>
               {" · "}{result.regulatory_context.pbm_status}
@@ -612,8 +612,8 @@ function ComparisonTable({ states }: { states: StateSummary[] }) {
     <div style={{ overflowX: "auto" }}>
       <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 500 }}>
         <thead>
-          <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
-            <th style={{ padding: "10px 14px", textAlign: "left", fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Metric</th>
+          <tr style={{ borderBottom: "1px solid rgba(15,23,42,0.03)" }}>
+            <th style={{ padding: "10px 14px", textAlign: "left", fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Metric</th>
             {states.map(s => (
               <th key={s.code} style={{ padding: "10px 14px", textAlign: "center", fontSize: 11, fontWeight: 800, color: s.priority === "PRIORITY" ? BB_CRIMSON : "#fff" }}>
                 {s.code}
@@ -624,7 +624,7 @@ function ComparisonTable({ states }: { states: StateSummary[] }) {
         </thead>
         <tbody>
           {metrics.map(m => (
-            <tr key={m.key} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+            <tr key={m.key} style={{ borderBottom: "1px solid rgba(15,23,42,0.03)" }}>
               <td style={{ padding: "8px 14px", fontSize: 10, color: "rgba(255,255,255,0.45)", fontWeight: 600 }}>{m.label}</td>
               {states.map(s => {
                 const val = s.scores[m.key];
@@ -639,7 +639,7 @@ function ComparisonTable({ states }: { states: StateSummary[] }) {
               })}
             </tr>
           ))}
-          <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+          <tr style={{ borderBottom: "1px solid rgba(15,23,42,0.03)" }}>
             <td style={{ padding: "8px 14px", fontSize: 10, color: "rgba(255,255,255,0.45)", fontWeight: 600 }}>Spread Pricing %</td>
             {states.map(s => (
               <td key={s.code} style={{ padding: "8px 14px", textAlign: "center" }}>
@@ -762,31 +762,31 @@ Write a concise pre-call intelligence brief (3 short paragraphs): 1) What the da
   return (
     <div style={{ maxWidth: 860 }}>
       <div style={{ marginBottom: 16 }}>
-        <div style={{ fontSize: 15, fontWeight: 900, color: "#fff", marginBottom: 4 }}>Prospect Deep Dive</div>
-        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>Search 191,000+ employers from DOL Form 5500 filings — see their real plan costs, broker commissions, and how they benchmark before you call.</div>
+        <div style={{ fontSize: 15, fontWeight: 900, color: "#0F172A", marginBottom: 4 }}>Prospect Deep Dive</div>
+        <div style={{ fontSize: 11, color: "rgba(15,23,42,0.10)" }}>Search 191,000+ employers from DOL Form 5500 filings — see their real plan costs, broker commissions, and how they benchmark before you call.</div>
       </div>
 
       {/* Search */}
       <div style={{ position: "relative", marginBottom: 18 }}>
         <div style={{ position: "relative" }}>
-          <Search size={14} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.3)", pointerEvents: "none" }} />
+          <Search size={14} style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", color: "rgba(15,23,42,0.10)", pointerEvents: "none" }} />
           <input
             data-testid="input-deepdive-search"
             value={query}
             onChange={e => handleInput(e.target.value)}
             placeholder="Search by company name or EIN…"
-            style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 10, padding: "11px 12px 11px 36px", color: "#fff", fontSize: 13, fontWeight: 600, outline: "none", boxSizing: "border-box" }}
+            style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 10, padding: "11px 12px 11px 36px", color: "#0F172A", fontSize: 13, fontWeight: 600, outline: "none", boxSizing: "border-box" }}
           />
-          {searchLoading && <Loader2 size={13} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.3)", animation: "spin 1s linear infinite" }} />}
+          {searchLoading && <Loader2 size={13} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", color: "rgba(15,23,42,0.10)", animation: "spin 1s linear infinite" }} />}
         </div>
         {/* Dropdown */}
         {showResults && searchData && searchData.results.length > 0 && !selected && (
-          <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#0d1526", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 10, zIndex: 50, maxHeight: 280, overflowY: "auto", marginTop: 4 }}>
+          <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 10, zIndex: 50, maxHeight: 280, overflowY: "auto", marginTop: 4 }}>
             {searchData.results.map(emp => (
               <button key={emp.ein} data-testid={`btn-emp-${emp.ein}`}
                 onClick={() => { setSelected(emp); setQuery(emp.employer_name); setShowResults(false); }}
-                style={{ width: "100%", background: "none", border: "none", borderBottom: "1px solid rgba(255,255,255,0.05)", padding: "10px 14px", textAlign: "left", cursor: "pointer", color: "#fff" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.05)")}
+                style={{ width: "100%", background: "none", border: "none", borderBottom: "1px solid rgba(15,23,42,0.03)", padding: "10px 14px", textAlign: "left", cursor: "pointer", color: "#0F172A" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(15,23,42,0.03)")}
                 onMouseLeave={e => (e.currentTarget.style.background = "none")}>
                 <div style={{ fontWeight: 700, fontSize: 12 }}>{emp.employer_name}</div>
                 <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", marginTop: 1 }}>
@@ -797,7 +797,7 @@ Write a concise pre-call intelligence brief (3 short paragraphs): 1) What the da
           </div>
         )}
         {showResults && !searchLoading && searchData?.results.length === 0 && debouncedQ.length >= 2 && (
-          <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#0d1526", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 10, zIndex: 50, padding: "14px", marginTop: 4, fontSize: 11, color: "rgba(255,255,255,0.35)" }}>
+          <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 10, zIndex: 50, padding: "14px", marginTop: 4, fontSize: 11, color: "rgba(15,23,42,0.10)" }}>
             No employers found for "{debouncedQ}"
           </div>
         )}
@@ -810,16 +810,16 @@ Write a concise pre-call intelligence brief (3 short paragraphs): 1) What the da
           <div style={{ background: "rgba(155,28,46,0.08)", border: "1px solid rgba(155,28,46,0.25)", borderRadius: 14, padding: "16px 20px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
               <div>
-                <div style={{ fontSize: 18, fontWeight: 900, color: "#fff" }}>{selected.employer_name}</div>
+                <div style={{ fontSize: 18, fontWeight: 900, color: "#0F172A" }}>{selected.employer_name}</div>
                 <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 3 }}>
                   {selected.city}, {selected.state} · EIN {selected.ein} · Filed {selected.filing_count}x · Latest {selected.latest_year}
                 </div>
-                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>{selected.latest_plan_name}</div>
+                <div style={{ fontSize: 10, color: "rgba(15,23,42,0.10)", marginTop: 2 }}>{selected.latest_plan_name}</div>
               </div>
               <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
                 {selected.has_health && <span style={{ fontSize: 8, fontWeight: 900, padding: "2px 8px", borderRadius: 4, background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.25)", color: "#10b981", letterSpacing: "0.1em" }}>HEALTH</span>}
                 {selected.has_stop_loss && <span style={{ fontSize: 8, fontWeight: 900, padding: "2px 8px", borderRadius: 4, background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.25)", color: "#f59e0b", letterSpacing: "0.1em" }}>STOP-LOSS</span>}
-                <button onClick={() => { setSelected(null); setQuery(""); }} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "4px 8px", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 10 }}><X size={11} /></button>
+                <button onClick={() => { setSelected(null); setQuery(""); }} style={{ background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 6, padding: "4px 8px", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 10 }}><X size={11} /></button>
               </div>
             </div>
           </div>
@@ -842,14 +842,14 @@ Write a concise pre-call intelligence brief (3 short paragraphs): 1) What the da
                 ].map(m => (
                   <div key={m.label} style={{ background: `${m.color}08`, border: `1px solid ${m.color}20`, borderRadius: 10, padding: "12px 14px" }}>
                     <div style={{ fontSize: 8, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: m.color, marginBottom: 6 }}>{m.label}</div>
-                    <div style={{ fontSize: 20, fontWeight: 900, color: "#fff" }}>{m.value}</div>
+                    <div style={{ fontSize: 20, fontWeight: 900, color: "#0F172A" }}>{m.value}</div>
                   </div>
                 ))}
               </div>
 
               {/* Percentile benchmarks */}
-              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "16px 18px" }}>
-                <div style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(255,255,255,0.3)", marginBottom: 12 }}>National Percentile Rankings</div>
+              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 12, padding: "16px 18px" }}>
+                <div style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(15,23,42,0.10)", marginBottom: 12 }}>National Percentile Rankings</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                   {[
                     { label: "Admin Fees", pct: bench.percentiles.admin_fees, p50: bench.nationalBenchmark.p50_admin, p75: bench.nationalBenchmark.p75_admin, p90: bench.nationalBenchmark.p90_admin, val: bench.employer.total_admin_fees },
@@ -864,14 +864,14 @@ Write a concise pre-call intelligence brief (3 short paragraphs): 1) What the da
                           <span style={{ fontSize: 12, fontWeight: 900, color: pctColor(row.pct) }}>{fmtPct(row.pct)} percentile</span>
                         </div>
                       </div>
-                      <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden" }}>
+                      <div style={{ height: 6, background: "rgba(15,23,42,0.03)", borderRadius: 3, overflow: "hidden" }}>
                         <div style={{ width: `${Math.min(row.pct, 100)}%`, height: "100%", background: pctColor(row.pct), borderRadius: 3, transition: "width 0.6s ease" }} />
                       </div>
                       {(row.p50 || row.p75) && (
                         <div style={{ display: "flex", gap: 16, marginTop: 4 }}>
-                          {row.p50 && <span style={{ fontSize: 9, color: "rgba(255,255,255,0.25)" }}>P50: {fmt$(row.p50)}</span>}
-                          {row.p75 && <span style={{ fontSize: 9, color: "rgba(255,255,255,0.25)" }}>P75: {fmt$(row.p75)}</span>}
-                          {row.p90 && <span style={{ fontSize: 9, color: "rgba(255,255,255,0.25)" }}>P90: {fmt$(row.p90)}</span>}
+                          {row.p50 && <span style={{ fontSize: 9, color: "rgba(15,23,42,0.08)" }}>P50: {fmt$(row.p50)}</span>}
+                          {row.p75 && <span style={{ fontSize: 9, color: "rgba(15,23,42,0.08)" }}>P75: {fmt$(row.p75)}</span>}
+                          {row.p90 && <span style={{ fontSize: 9, color: "rgba(15,23,42,0.08)" }}>P90: {fmt$(row.p90)}</span>}
                         </div>
                       )}
                     </div>
@@ -911,11 +911,11 @@ Write a concise pre-call intelligence brief (3 short paragraphs): 1) What the da
               </div>
 
               {/* AI Pre-Call Brief */}
-              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "16px 18px" }}>
+              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 12, padding: "16px 18px" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: aiInsight ? 12 : 0 }}>
-                  <div style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(255,255,255,0.3)" }}>AI Pre-Call Intelligence Brief</div>
+                  <div style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(15,23,42,0.10)" }}>AI Pre-Call Intelligence Brief</div>
                   <button data-testid="btn-deepdive-ai" onClick={generateInsight} disabled={aiLoading}
-                    style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 8, background: aiLoading ? "rgba(155,28,46,0.1)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: aiLoading ? "rgba(255,255,255,0.3)" : "#fff", fontSize: 11, fontWeight: 800, cursor: aiLoading ? "not-allowed" : "pointer" }}>
+                    style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 8, background: aiLoading ? "rgba(155,28,46,0.1)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: aiLoading ? "rgba(15,23,42,0.10)" : "#fff", fontSize: 11, fontWeight: 800, cursor: aiLoading ? "not-allowed" : "pointer" }}>
                     {aiLoading ? <Loader2 size={11} style={{ animation: "spin 1s linear infinite" }} /> : <Brain size={11} />}
                     {aiLoading ? "Analyzing…" : "Generate Brief"}
                   </button>
@@ -1042,55 +1042,55 @@ Return only valid JSON, no markdown.`;
   return (
     <div style={{ maxWidth: 860 }}>
       <div style={{ marginBottom: 16 }}>
-        <div style={{ fontSize: 15, fontWeight: 900, color: "#fff", marginBottom: 4 }}>Email Sequence Builder</div>
-        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>Generate a full 5-touch outreach sequence (Day 0 → 30) tailored to state regulation, employer type, and industry — ready to copy into your CRM.</div>
+        <div style={{ fontSize: 15, fontWeight: 900, color: "#0F172A", marginBottom: 4 }}>Email Sequence Builder</div>
+        <div style={{ fontSize: 11, color: "rgba(15,23,42,0.10)" }}>Generate a full 5-touch outreach sequence (Day 0 → 30) tailored to state regulation, employer type, and industry — ready to copy into your CRM.</div>
       </div>
 
       {/* Config */}
-      <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 18, marginBottom: 16 }}>
+      <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 14, padding: 18, marginBottom: 16 }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12, marginBottom: 12 }}>
           <div>
-            <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Prospect Name (optional)</div>
+            <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Prospect Name (optional)</div>
             <input value={prospectName} onChange={e => setProspectName(e.target.value)} placeholder="e.g. Acme Manufacturing"
               data-testid="input-seq-prospect"
-              style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "9px 12px", color: "#fff", fontSize: 12, outline: "none", boxSizing: "border-box" }} />
+              style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 8, padding: "9px 12px", color: "#0F172A", fontSize: 12, outline: "none", boxSizing: "border-box" }} />
           </div>
           <div>
-            <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>State</div>
+            <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>State</div>
             <select value={stateCode} onChange={e => setStateCode(e.target.value)} data-testid="dropdown-seq-state"
-              style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "9px 12px", color: "#fff", fontSize: 12, fontWeight: 700, outline: "none", boxSizing: "border-box", cursor: "pointer" }}>
-              {ALL_STATES.map(s => <option key={s.code} value={s.code} style={{ background: "#0d1526" }}>{s.name} ({s.code})</option>)}
+              style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 8, padding: "9px 12px", color: "#0F172A", fontSize: 12, fontWeight: 700, outline: "none", boxSizing: "border-box", cursor: "pointer" }}>
+              {ALL_STATES.map(s => <option key={s.code} value={s.code} style={{ background: "#F8FAFC" }}>{s.name} ({s.code})</option>)}
             </select>
           </div>
           <div>
-            <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Industry</div>
+            <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Industry</div>
             <input value={industry} onChange={e => setIndustry(e.target.value)} placeholder="e.g. Manufacturing, Healthcare…"
               data-testid="input-seq-industry"
-              style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "9px 12px", color: "#fff", fontSize: 12, outline: "none", boxSizing: "border-box" }} />
+              style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 8, padding: "9px 12px", color: "#0F172A", fontSize: 12, outline: "none", boxSizing: "border-box" }} />
           </div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 14 }}>
           <div>
-            <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Client Type</div>
+            <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Client Type</div>
             <div style={{ display: "flex", gap: 6 }}>
               {[["self-funded","Self-Funded"],["level-funded","Level-Funded"],["fully-insured","Fully Insured"]].map(([v,l]) => (
                 <button key={v} onClick={() => setClientType(v)}
-                  style={{ flex: 1, padding: "7px 0", borderRadius: 7, fontSize: 10, fontWeight: 700, cursor: "pointer", background: clientType === v ? "rgba(155,28,46,0.2)" : "rgba(255,255,255,0.03)", border: clientType === v ? `1px solid rgba(155,28,46,0.4)` : "1px solid rgba(255,255,255,0.07)", color: clientType === v ? "#fff" : "rgba(255,255,255,0.4)" }}>{l}</button>
+                  style={{ flex: 1, padding: "7px 0", borderRadius: 7, fontSize: 10, fontWeight: 700, cursor: "pointer", background: clientType === v ? "rgba(155,28,46,0.2)" : "rgba(15,23,42,0.03)", border: clientType === v ? `1px solid rgba(155,28,46,0.4)` : "1px solid rgba(15,23,42,0.03)", color: clientType === v ? "#fff" : "rgba(255,255,255,0.4)" }}>{l}</button>
               ))}
             </div>
           </div>
           <div>
-            <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Employer Size</div>
+            <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Employer Size</div>
             <div style={{ display: "flex", gap: 6 }}>
               {[["small","<100"],["mid-market","100–999"],["large","1k–4.9k"],["jumbo","5k+"]].map(([v,l]) => (
                 <button key={v} onClick={() => setEmployerSize(v)}
-                  style={{ flex: 1, padding: "7px 0", borderRadius: 7, fontSize: 10, fontWeight: 700, cursor: "pointer", background: employerSize === v ? "rgba(155,28,46,0.2)" : "rgba(255,255,255,0.03)", border: employerSize === v ? `1px solid rgba(155,28,46,0.4)` : "1px solid rgba(255,255,255,0.07)", color: employerSize === v ? "#fff" : "rgba(255,255,255,0.4)" }}>{l}</button>
+                  style={{ flex: 1, padding: "7px 0", borderRadius: 7, fontSize: 10, fontWeight: 700, cursor: "pointer", background: employerSize === v ? "rgba(155,28,46,0.2)" : "rgba(15,23,42,0.03)", border: employerSize === v ? `1px solid rgba(155,28,46,0.4)` : "1px solid rgba(15,23,42,0.03)", color: employerSize === v ? "#fff" : "rgba(255,255,255,0.4)" }}>{l}</button>
               ))}
             </div>
           </div>
         </div>
         <button data-testid="btn-build-sequence" onClick={buildSequence} disabled={generating}
-          style={{ width: "100%", padding: "11px 0", borderRadius: 9, fontSize: 12, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase", background: generating ? "rgba(155,28,46,0.15)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${generating ? "rgba(155,28,46,0.15)" : BB_CRIMSON}`, color: generating ? "rgba(255,255,255,0.3)" : "#fff", cursor: generating ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+          style={{ width: "100%", padding: "11px 0", borderRadius: 9, fontSize: 12, fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase", background: generating ? "rgba(155,28,46,0.15)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${generating ? "rgba(155,28,46,0.15)" : BB_CRIMSON}`, color: generating ? "rgba(15,23,42,0.10)" : "#fff", cursor: generating ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
           {generating ? <><Loader2 size={13} style={{ animation: "spin 1s linear infinite" }} /> Building 5-Touch Sequence…</> : <><Zap size={13} /> Build Sequence</>}
         </button>
       </div>
@@ -1105,8 +1105,8 @@ Return only valid JSON, no markdown.`;
               const active = activeTouch === i;
               return (
                 <button key={i} onClick={() => setActiveTouch(i)}
-                  style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 100, fontSize: 10, fontWeight: 800, cursor: "pointer", background: active ? `${m.color}20` : "rgba(255,255,255,0.03)", border: `1px solid ${active ? m.color + "50" : "rgba(255,255,255,0.08)"}`, color: active ? m.color : "rgba(255,255,255,0.4)" }}>
-                  <span style={{ fontSize: 9, fontWeight: 900, background: active ? m.color : "rgba(255,255,255,0.1)", color: active ? "#000" : "rgba(255,255,255,0.4)", borderRadius: "50%", width: 16, height: 16, display: "flex", alignItems: "center", justifyContent: "center" }}>D{t.day}</span>
+                  style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 14px", borderRadius: 100, fontSize: 10, fontWeight: 800, cursor: "pointer", background: active ? `${m.color}20` : "rgba(15,23,42,0.03)", border: `1px solid ${active ? m.color + "50" : "rgba(15,23,42,0.03)"}`, color: active ? m.color : "rgba(255,255,255,0.4)" }}>
+                  <span style={{ fontSize: 9, fontWeight: 900, background: active ? m.color : "rgba(15,23,42,0.06)", color: active ? "#000" : "rgba(255,255,255,0.4)", borderRadius: "50%", width: 16, height: 16, display: "flex", alignItems: "center", justifyContent: "center" }}>D{t.day}</span>
                   {t.channel === "email" ? "Email" : t.channel === "linkedin" ? "LinkedIn" : "Call"}
                 </button>
               );
@@ -1129,20 +1129,20 @@ Return only valid JSON, no markdown.`;
                       <MIcon size={13} style={{ color: m.color }} />
                     </div>
                     <div>
-                      <div style={{ fontSize: 12, fontWeight: 800, color: "#fff" }}>{t.label}</div>
-                      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em" }}>{t.channel}</div>
+                      <div style={{ fontSize: 12, fontWeight: 800, color: "#0F172A" }}>{t.label}</div>
+                      <div style={{ fontSize: 9, color: "rgba(15,23,42,0.10)", textTransform: "uppercase", letterSpacing: "0.1em" }}>{t.channel}</div>
                     </div>
                   </div>
                   <button onClick={() => copyTouch(activeTouch)}
-                    style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 12px", borderRadius: 7, background: copied === activeTouch ? "rgba(16,185,129,0.12)" : "rgba(255,255,255,0.05)", border: `1px solid ${copied === activeTouch ? "rgba(16,185,129,0.3)" : "rgba(255,255,255,0.1)"}`, color: copied === activeTouch ? "#10b981" : "rgba(255,255,255,0.4)", fontSize: 10, fontWeight: 700, cursor: "pointer" }}>
+                    style={{ display: "flex", alignItems: "center", gap: 5, padding: "6px 12px", borderRadius: 7, background: copied === activeTouch ? "rgba(16,185,129,0.12)" : "rgba(15,23,42,0.03)", border: `1px solid ${copied === activeTouch ? "rgba(16,185,129,0.3)" : "rgba(15,23,42,0.06)"}`, color: copied === activeTouch ? "#10b981" : "rgba(255,255,255,0.4)", fontSize: 10, fontWeight: 700, cursor: "pointer" }}>
                     {copied === activeTouch ? <CheckCircle2 size={11} /> : <Copy size={11} />}
                     {copied === activeTouch ? "Copied!" : "Copy"}
                   </button>
                 </div>
                 {t.subject && (
-                  <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: "8px 12px", marginBottom: 12 }}>
-                    <div style={{ fontSize: 8, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(255,255,255,0.25)", marginBottom: 3 }}>Subject Line</div>
-                    <div style={{ fontSize: 13, fontWeight: 800, color: "#fff" }}>{t.subject}</div>
+                  <div style={{ background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 8, padding: "8px 12px", marginBottom: 12 }}>
+                    <div style={{ fontSize: 8, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(15,23,42,0.08)", marginBottom: 3 }}>Subject Line</div>
+                    <div style={{ fontSize: 13, fontWeight: 800, color: "#0F172A" }}>{t.subject}</div>
                   </div>
                 )}
                 {t.body && (
@@ -1286,14 +1286,14 @@ Write in first person as the advisor. Be specific, not generic. No bullet lists.
   return (
     <div style={{ maxWidth: 860 }}>
       <div style={{ marginBottom: 16 }}>
-        <div style={{ fontSize: 15, fontWeight: 900, color: "#fff", marginBottom: 4 }}>ROI Calculator</div>
-        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>Generate a dollar-value business case for switching to fiduciary benefits advisory — ready to present to a CFO or HR Director.</div>
+        <div style={{ fontSize: 15, fontWeight: 900, color: "#0F172A", marginBottom: 4 }}>ROI Calculator</div>
+        <div style={{ fontSize: 11, color: "rgba(15,23,42,0.10)" }}>Generate a dollar-value business case for switching to fiduciary benefits advisory — ready to present to a CFO or HR Director.</div>
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, alignItems: "start" }}>
         {/* Inputs */}
-        <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 18 }}>
-          <div style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(255,255,255,0.3)", marginBottom: 14 }}>Plan Inputs</div>
+        <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 14, padding: 18 }}>
+          <div style={{ fontSize: 10, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(15,23,42,0.10)", marginBottom: 14 }}>Plan Inputs</div>
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
               { label: "Total Employees on Plan", val: employees, set: setEmployees, placeholder: "250", testid: "input-roi-employees" },
@@ -1302,29 +1302,29 @@ Write in first person as the advisor. Be specific, not generic. No bullet lists.
               { label: "Current Broker Comp (% of premium)", val: brokerCompPct, set: setBrokerCompPct, placeholder: "5", testid: "input-roi-broker" },
             ].map(f => (
               <div key={f.label}>
-                <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 }}>{f.label}</div>
+                <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 }}>{f.label}</div>
                 <input data-testid={f.testid} value={f.val} onChange={e => f.set(e.target.value)} placeholder={f.placeholder} type="number"
-                  style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "9px 12px", color: "#fff", fontSize: 13, fontWeight: 700, outline: "none", boxSizing: "border-box" }} />
+                  style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 8, padding: "9px 12px", color: "#0F172A", fontSize: 13, fontWeight: 700, outline: "none", boxSizing: "border-box" }} />
               </div>
             ))}
             <div>
-              <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>State</div>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>State</div>
               <select value={stateCode} onChange={e => setStateCode(e.target.value)} data-testid="dropdown-roi-state"
-                style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "9px 12px", color: "#fff", fontSize: 12, fontWeight: 700, outline: "none", boxSizing: "border-box", cursor: "pointer" }}>
-                {ALL_STATES.map(s => <option key={s.code} value={s.code} style={{ background: "#0d1526" }}>{s.name} ({s.code})</option>)}
+                style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 8, padding: "9px 12px", color: "#0F172A", fontSize: 12, fontWeight: 700, outline: "none", boxSizing: "border-box", cursor: "pointer" }}>
+                {ALL_STATES.map(s => <option key={s.code} value={s.code} style={{ background: "#F8FAFC" }}>{s.name} ({s.code})</option>)}
               </select>
             </div>
             <div>
-              <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Funding Type</div>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Funding Type</div>
               <div style={{ display: "flex", gap: 6 }}>
                 {[["self-funded","Self-Funded"],["level-funded","Level-Funded"],["fully-insured","Fully Insured"]].map(([v,l]) => (
                   <button key={v} onClick={() => setFundingType(v)}
-                    style={{ flex: 1, padding: "7px 4px", borderRadius: 7, fontSize: 10, fontWeight: 700, cursor: "pointer", background: fundingType === v ? "rgba(155,28,46,0.2)" : "rgba(255,255,255,0.03)", border: fundingType === v ? `1px solid rgba(155,28,46,0.4)` : "1px solid rgba(255,255,255,0.07)", color: fundingType === v ? "#fff" : "rgba(255,255,255,0.4)" }}>{l}</button>
+                    style={{ flex: 1, padding: "7px 4px", borderRadius: 7, fontSize: 10, fontWeight: 700, cursor: "pointer", background: fundingType === v ? "rgba(155,28,46,0.2)" : "rgba(15,23,42,0.03)", border: fundingType === v ? `1px solid rgba(155,28,46,0.4)` : "1px solid rgba(15,23,42,0.03)", color: fundingType === v ? "#fff" : "rgba(255,255,255,0.4)" }}>{l}</button>
                 ))}
               </div>
             </div>
             <button data-testid="btn-roi-calculate" onClick={calculate}
-              style={{ padding: "11px 0", borderRadius: 9, fontSize: 12, fontWeight: 800, background: `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: "#fff", cursor: "pointer", letterSpacing: "0.06em", textTransform: "uppercase", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+              style={{ padding: "11px 0", borderRadius: 9, fontSize: 12, fontWeight: 800, background: `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: "#0F172A", cursor: "pointer", letterSpacing: "0.06em", textTransform: "uppercase", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
               <Calculator size={13} /> Calculate ROI
             </button>
           </div>
@@ -1333,23 +1333,23 @@ Write in first person as the advisor. Be specific, not generic. No bullet lists.
         {/* Results */}
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
           {!calculated && (
-            <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 32, textAlign: "center" }}>
-              <Calculator size={28} style={{ color: "rgba(255,255,255,0.15)", margin: "0 auto 12px" }} />
-              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.25)" }}>Fill in the plan details and click Calculate ROI</div>
+            <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 14, padding: 32, textAlign: "center" }}>
+              <Calculator size={28} style={{ color: "rgba(15,23,42,0.06)", margin: "0 auto 12px" }} />
+              <div style={{ fontSize: 12, color: "rgba(15,23,42,0.08)" }}>Fill in the plan details and click Calculate ROI</div>
             </div>
           )}
           {roiResult && (
             <>
               {/* Total savings hero */}
               <div style={{ background: `linear-gradient(135deg,rgba(155,28,46,0.15),rgba(155,28,46,0.05))`, border: "1px solid rgba(155,28,46,0.3)", borderRadius: 14, padding: "20px 22px", textAlign: "center" }}>
-                <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.14em", color: "rgba(255,255,255,0.35)", marginBottom: 6 }}>Projected Annual Savings</div>
-                <div style={{ fontSize: 38, fontWeight: 900, color: "#fff", letterSpacing: "-0.02em" }}>{fmt$(roiResult.totalSavings)}</div>
+                <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.14em", color: "rgba(15,23,42,0.10)", marginBottom: 6 }}>Projected Annual Savings</div>
+                <div style={{ fontSize: 38, fontWeight: 900, color: "#0F172A", letterSpacing: "-0.02em" }}>{fmt$(roiResult.totalSavings)}</div>
                 <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>{fmt$(roiResult.perEmployeeSavings)} per employee · {roiResult.roiMultiple.toFixed(1)}x ROI</div>
               </div>
 
               {/* Breakdown */}
-              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "14px 16px" }}>
-                <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(255,255,255,0.3)", marginBottom: 12 }}>Savings Breakdown</div>
+              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 12, padding: "14px 16px" }}>
+                <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(15,23,42,0.10)", marginBottom: 12 }}>Savings Breakdown</div>
                 {[
                   { label: "Spread Pricing Elimination", val: roiResult.spreadSavings, color: "#f59e0b", pct: roiResult.totalSavings > 0 ? (roiResult.spreadSavings / roiResult.totalSavings) * 100 : 0 },
                   { label: "Rx Rebate Recapture", val: roiResult.rebateSavings, color: "#8b5cf6", pct: roiResult.totalSavings > 0 ? (roiResult.rebateSavings / roiResult.totalSavings) * 100 : 0 },
@@ -1361,7 +1361,7 @@ Write in first person as the advisor. Be specific, not generic. No bullet lists.
                       <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>{row.label}</span>
                       <span style={{ fontSize: 12, fontWeight: 800, color: row.color }}>{fmt$(row.val)}</span>
                     </div>
-                    <div style={{ height: 4, background: "rgba(255,255,255,0.05)", borderRadius: 2 }}>
+                    <div style={{ height: 4, background: "rgba(15,23,42,0.03)", borderRadius: 2 }}>
                       <div style={{ width: `${row.pct}%`, height: "100%", background: row.color, borderRadius: 2, transition: "width 0.6s ease" }} />
                     </div>
                   </div>
@@ -1369,13 +1369,13 @@ Write in first person as the advisor. Be specific, not generic. No bullet lists.
               </div>
 
               {/* AI narrative */}
-              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "14px 16px" }}>
+              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 12, padding: "14px 16px" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: aiNarrative ? 12 : 0 }}>
-                  <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(255,255,255,0.3)" }}>CFO Business Case Narrative</div>
+                  <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(15,23,42,0.10)" }}>CFO Business Case Narrative</div>
                   <div style={{ display: "flex", gap: 6 }}>
                     {aiNarrative && <button onClick={copyROI} style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 10px", borderRadius: 7, background: "rgba(96,165,250,0.08)", border: "1px solid rgba(96,165,250,0.2)", color: "#60a5fa", fontSize: 10, fontWeight: 700, cursor: "pointer" }}><Copy size={10} /> Copy</button>}
                     <button data-testid="btn-roi-narrative" onClick={generateNarrative} disabled={aiLoading}
-                      style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 12px", borderRadius: 7, background: aiLoading ? "rgba(155,28,46,0.08)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: aiLoading ? "rgba(255,255,255,0.3)" : "#fff", fontSize: 10, fontWeight: 700, cursor: aiLoading ? "not-allowed" : "pointer" }}>
+                      style={{ display: "flex", alignItems: "center", gap: 5, padding: "5px 12px", borderRadius: 7, background: aiLoading ? "rgba(155,28,46,0.08)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: aiLoading ? "rgba(15,23,42,0.10)" : "#fff", fontSize: 10, fontWeight: 700, cursor: aiLoading ? "not-allowed" : "pointer" }}>
                       {aiLoading ? <Loader2 size={10} style={{ animation: "spin 1s linear infinite" }} /> : <Brain size={10} />}
                       {aiLoading ? "Writing…" : "Write Brief"}
                     </button>
@@ -1509,21 +1509,21 @@ Give a sharp, direct coaching suggestion for what to do next to advance this dea
 
       {/* Controls */}
       <div style={{ display: "flex", gap: 8, marginBottom: 14, alignItems: "center" }}>
-        <div style={{ display: "flex", gap: 4, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 8, padding: 3 }}>
+        <div style={{ display: "flex", gap: 4, background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 8, padding: 3 }}>
           {[["kanban","Kanban"],["list","List"]].map(([v,l]) => (
             <button key={v} onClick={() => setViewMode(v as any)}
-              style={{ padding: "5px 12px", borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: "pointer", background: viewMode === v ? "rgba(255,255,255,0.1)" : "none", border: "none", color: viewMode === v ? "#fff" : "rgba(255,255,255,0.35)" }}>{l}</button>
+              style={{ padding: "5px 12px", borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: "pointer", background: viewMode === v ? "rgba(15,23,42,0.06)" : "none", border: "none", color: viewMode === v ? "#fff" : "rgba(15,23,42,0.10)" }}>{l}</button>
           ))}
         </div>
         <button data-testid="btn-add-deal" onClick={() => { setNewDealForm({}); setAddingDeal(true); }}
-          style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, background: `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: "#fff", fontSize: 11, fontWeight: 700, cursor: "pointer" }}>
+          style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 8, background: `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: "#0F172A", fontSize: 11, fontWeight: 700, cursor: "pointer" }}>
           <Plus size={12} /> Add Deal
         </button>
       </div>
 
       {/* Add deal form */}
       {addingDeal && (
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(155,28,46,0.3)", borderRadius: 12, padding: 16, marginBottom: 14 }}>
+        <div style={{ background: "rgba(15,23,42,0.03)", border: "1px solid rgba(155,28,46,0.3)", borderRadius: 12, padding: 16, marginBottom: 14 }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10, marginBottom: 10 }}>
             {[
               { label: "Company Name", key: "name", placeholder: "Acme Corp" },
@@ -1531,34 +1531,34 @@ Give a sharp, direct coaching suggestion for what to do next to advance this dea
               { label: "Annual Value ($)", key: "value", placeholder: "25000", type: "number" },
             ].map(f => (
               <div key={f.key}>
-                <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>{f.label}</div>
+                <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>{f.label}</div>
                 <input type={f.type || "text"} placeholder={f.placeholder}
                   value={(newDealForm as any)[f.key] || ""}
                   onChange={e => setNewDealForm(p => ({ ...p, [f.key]: f.type === "number" ? parseFloat(e.target.value) || 0 : e.target.value }))}
-                  style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 10px", color: "#fff", fontSize: 12, outline: "none", boxSizing: "border-box" }} />
+                  style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 8, padding: "8px 10px", color: "#0F172A", fontSize: 12, outline: "none", boxSizing: "border-box" }} />
               </div>
             ))}
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 10 }}>
             <div>
-              <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Next Action</div>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>Next Action</div>
               <input placeholder="e.g. Send intro email" value={newDealForm.nextAction || ""}
                 onChange={e => setNewDealForm(p => ({ ...p, nextAction: e.target.value }))}
-                style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 10px", color: "#fff", fontSize: 12, outline: "none", boxSizing: "border-box" }} />
+                style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 8, padding: "8px 10px", color: "#0F172A", fontSize: 12, outline: "none", boxSizing: "border-box" }} />
             </div>
             <div>
-              <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>State</div>
+              <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 4 }}>State</div>
               <select value={newDealForm.state || "CA"} onChange={e => setNewDealForm(p => ({ ...p, state: e.target.value }))}
-                style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 10px", color: "#fff", fontSize: 12, fontWeight: 700, outline: "none", boxSizing: "border-box", cursor: "pointer" }}>
-                {ALL_STATES.map(s => <option key={s.code} value={s.code} style={{ background: "#0d1526" }}>{s.name}</option>)}
+                style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 8, padding: "8px 10px", color: "#0F172A", fontSize: 12, fontWeight: 700, outline: "none", boxSizing: "border-box", cursor: "pointer" }}>
+                {ALL_STATES.map(s => <option key={s.code} value={s.code} style={{ background: "#F8FAFC" }}>{s.name}</option>)}
               </select>
             </div>
           </div>
           <div style={{ display: "flex", gap: 8 }}>
             <button onClick={() => { if (newDealForm.name) { setDeals(p => [...p, newDeal(newDealForm)]); setAddingDeal(false); } }}
-              style={{ padding: "8px 18px", borderRadius: 8, background: `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: "#fff", fontSize: 11, fontWeight: 700, cursor: "pointer" }}>Add to Pipeline</button>
+              style={{ padding: "8px 18px", borderRadius: 8, background: `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: "#0F172A", fontSize: 11, fontWeight: 700, cursor: "pointer" }}>Add to Pipeline</button>
             <button onClick={() => setAddingDeal(false)}
-              style={{ padding: "8px 14px", borderRadius: 8, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.4)", fontSize: 11, cursor: "pointer" }}>Cancel</button>
+              style={{ padding: "8px 14px", borderRadius: 8, background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.03)", color: "rgba(255,255,255,0.4)", fontSize: 11, cursor: "pointer" }}>Cancel</button>
           </div>
         </div>
       )}
@@ -1574,20 +1574,20 @@ Give a sharp, direct coaching suggestion for what to do next to advance this dea
                 {/* Column header */}
                 <div style={{ background: `${stage.color}10`, border: `1px solid ${stage.color}25`, borderRadius: "10px 10px 0 0", padding: "8px 10px", marginBottom: 8 }}>
                   <div style={{ fontSize: 10, fontWeight: 900, color: stage.color, letterSpacing: "0.06em" }}>{stage.label}</div>
-                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", marginTop: 1 }}>{stageDeals.length} deal{stageDeals.length !== 1 ? "s" : ""} · {fmt$(stageValue)}</div>
+                  <div style={{ fontSize: 9, color: "rgba(15,23,42,0.10)", marginTop: 1 }}>{stageDeals.length} deal{stageDeals.length !== 1 ? "s" : ""} · {fmt$(stageValue)}</div>
                 </div>
                 {/* Deal cards */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
                   {stageDeals.map(deal => (
-                    <div key={deal.id} style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${stage.color}20`, borderRadius: 10, padding: "10px 10px 8px" }}>
-                      <div style={{ fontSize: 11, fontWeight: 800, color: "#fff", marginBottom: 3, lineHeight: 1.3 }}>{deal.name}</div>
-                      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.35)", marginBottom: 6 }}>{deal.state} · {deal.size}</div>
+                    <div key={deal.id} style={{ background: "rgba(15,23,42,0.03)", border: `1px solid ${stage.color}20`, borderRadius: 10, padding: "10px 10px 8px" }}>
+                      <div style={{ fontSize: 11, fontWeight: 800, color: "#0F172A", marginBottom: 3, lineHeight: 1.3 }}>{deal.name}</div>
+                      <div style={{ fontSize: 9, color: "rgba(15,23,42,0.10)", marginBottom: 6 }}>{deal.state} · {deal.size}</div>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
                         <span style={{ fontSize: 11, fontWeight: 900, color: stage.color }}>{fmt$(deal.value)}</span>
-                        <span style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)" }}>{deal.probability}%</span>
+                        <span style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)" }}>{deal.probability}%</span>
                       </div>
                       {deal.nextAction && (
-                        <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", background: "rgba(255,255,255,0.03)", borderRadius: 5, padding: "4px 6px", marginBottom: 6, lineHeight: 1.4 }}>
+                        <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", background: "rgba(15,23,42,0.03)", borderRadius: 5, padding: "4px 6px", marginBottom: 6, lineHeight: 1.4 }}>
                           → {deal.nextAction.length > 50 ? deal.nextAction.slice(0, 50) + "…" : deal.nextAction}
                         </div>
                       )}
@@ -1624,12 +1624,12 @@ Give a sharp, direct coaching suggestion for what to do next to advance this dea
 
       {/* List view */}
       {viewMode === "list" && (
-        <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, overflow: "hidden" }}>
+        <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 12, overflow: "hidden" }}>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
-              <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+              <tr style={{ borderBottom: "1px solid rgba(15,23,42,0.03)" }}>
                 {["Company","Stage","Value","Prob.","Next Action",""].map(h => (
-                  <th key={h} style={{ padding: "10px 14px", textAlign: "left", fontSize: 8, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(255,255,255,0.25)" }}>{h}</th>
+                  <th key={h} style={{ padding: "10px 14px", textAlign: "left", fontSize: 8, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(15,23,42,0.08)" }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -1637,18 +1637,18 @@ Give a sharp, direct coaching suggestion for what to do next to advance this dea
               {deals.map(deal => {
                 const stage = STAGES.find(s => s.id === deal.stage)!;
                 return (
-                  <tr key={deal.id} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                  <tr key={deal.id} style={{ borderBottom: "1px solid rgba(15,23,42,0.03)" }}>
                     <td style={{ padding: "10px 14px" }}>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>{deal.name}</div>
-                      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>{deal.state} · {deal.industry}</div>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: "#0F172A" }}>{deal.name}</div>
+                      <div style={{ fontSize: 9, color: "rgba(15,23,42,0.10)" }}>{deal.state} · {deal.industry}</div>
                     </td>
                     <td style={{ padding: "10px 14px" }}>
                       <span style={{ fontSize: 9, fontWeight: 800, padding: "3px 8px", borderRadius: 100, background: `${stage.color}15`, border: `1px solid ${stage.color}30`, color: stage.color }}>{stage.label}</span>
                     </td>
-                    <td style={{ padding: "10px 14px", fontSize: 12, fontWeight: 800, color: "#fff" }}>{fmt$(deal.value)}</td>
+                    <td style={{ padding: "10px 14px", fontSize: 12, fontWeight: 800, color: "#0F172A" }}>{fmt$(deal.value)}</td>
                     <td style={{ padding: "10px 14px" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                        <div style={{ width: 40, height: 4, background: "rgba(255,255,255,0.06)", borderRadius: 2 }}>
+                        <div style={{ width: 40, height: 4, background: "rgba(15,23,42,0.03)", borderRadius: 2 }}>
                           <div style={{ width: `${deal.probability}%`, height: "100%", background: stage.color, borderRadius: 2 }} />
                         </div>
                         <span style={{ fontSize: 10, fontWeight: 700, color: stage.color }}>{deal.probability}%</span>
@@ -1980,17 +1980,17 @@ export default function SalesIQModule() {
 
   return (
     <Layout>
-      <div style={{ minHeight: "100vh", background: "linear-gradient(160deg,#060b18 0%,#080d1e 50%,#060a16 100%)", padding: "24px 24px 80px" }}>
+      <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", padding: "24px 24px 80px", fontFamily: "var(--font-sans)" }}>
 
         {/* Header */}
-        <div style={{ marginBottom: 20, display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
+        <div className="kiq-ops-header" style={{ marginBottom: 20, display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 16, flexWrap: "wrap", padding: 20, borderRadius: 18 }}>
           <div>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(155,28,46,0.12)", border: "1px solid rgba(155,28,46,0.35)", borderRadius: 100, padding: "4px 14px", marginBottom: 12 }}>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(155,28,46,0.08)", border: "1px solid rgba(155,28,46,0.22)", borderRadius: 100, padding: "4px 14px", marginBottom: 12 }}>
               <Target size={11} color={BB_CRIMSON} />
               <span style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.18em", textTransform: "uppercase", color: BB_CRIMSON }}>Kincaid IQ · Sales IQ Intelligence Module</span>
             </div>
-            <h1 style={{ fontSize: 28, fontWeight: 900, color: "#fff", margin: "0 0 5px", letterSpacing: "-0.02em" }}>Multi-State Regulatory Intelligence</h1>
-            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", margin: 0, maxWidth: 600 }}>
+            <h1 style={{ fontSize: 28, fontWeight: 900, color: "#0F172A", margin: "0 0 5px", letterSpacing: "-0.02em" }}>Multi-State Regulatory Intelligence</h1>
+            <p style={{ fontSize: 11, color: "#3f516a", margin: 0, maxWidth: 600, fontWeight: 600 }}>
               50-state PBM regulatory framework · Transparency & risk scoring · Sales Angle Generator · California priority enforcement
             </p>
           </div>
@@ -2011,12 +2011,12 @@ export default function SalesIQModule() {
         {/* Summary stat row */}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 10, marginBottom: 20 }}>
           {[
-            { label: "States Tracked", value: "50", color: "#60a5fa", icon: <Map size={14} color="#60a5fa" /> },
+            { label: "States Tracked", value: "50", color: "#2563eb", icon: <Map size={14} color="#2563eb" /> },
             { label: "Priority State", value: "CA", color: BB_CRIMSON, icon: <Star size={14} color={BB_CRIMSON} /> },
-            { label: "High Priority States", value: statesData?.high_priority?.length?.toString() || "—", color: "#f59e0b", icon: <AlertTriangle size={14} color="#f59e0b" /> },
-            { label: "Active Alerts", value: alertsData?.alerts?.length?.toString() || "—", color: "#ef4444", icon: <AlertOctagon size={14} color="#ef4444" /> },
+            { label: "High Priority States", value: statesData?.high_priority?.length?.toString() || "—", color: "#d97706", icon: <AlertTriangle size={14} color="#d97706" /> },
+            { label: "Active Alerts", value: alertsData?.alerts?.length?.toString() || "—", color: "#dc2626", icon: <AlertOctagon size={14} color="#dc2626" /> },
           ].map(s => (
-            <div key={s.label} style={{ background: `${s.color}08`, border: `1px solid ${s.color}20`, borderRadius: 11, padding: "12px 16px" }}>
+            <div key={s.label} className="kiq-ops-card" style={{ background: "rgba(255,255,255,0.82)", border: `1px solid rgba(15,23,42,0.10)`, borderRadius: 11, padding: "12px 16px", boxShadow: "0 1px 3px rgba(0,0,0,0.02)" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
                 {s.icon}
                 <span style={{ fontSize: 9, fontWeight: 700, color: s.color, letterSpacing: "0.1em", textTransform: "uppercase" }}>{s.label}</span>
@@ -2027,13 +2027,13 @@ export default function SalesIQModule() {
         </div>
 
         {/* Tab Bar */}
-        <div style={{ display: "flex", gap: 4, marginBottom: 18, borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+        <div style={{ display: "flex", gap: 4, marginBottom: 18, borderBottom: "1px solid rgba(0,0,0,0.08)" }}>
           {TABS.map(tab => {
             const Icon = tab.icon;
             const active = activeTab === tab.id;
             return (
               <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 16px", background: "none", border: "none", borderBottom: active ? `2px solid ${BB_CRIMSON}` : "2px solid transparent", color: active ? "#fff" : "rgba(255,255,255,0.35)", fontSize: 11, fontWeight: 700, cursor: "pointer", letterSpacing: "0.04em", marginBottom: -1 }}>
+                style={{ display: "flex", alignItems: "center", gap: 7, padding: "9px 16px", background: "none", border: "none", borderBottom: active ? `2px solid ${BB_CRIMSON}` : "2px solid transparent", color: active ? "#0F172A" : "#64748B", fontSize: 11, fontWeight: 700, cursor: "pointer", letterSpacing: "0.04em", marginBottom: -1 }}>
                 <Icon size={13} />
                 {tab.label}
               </button>
@@ -2046,22 +2046,22 @@ export default function SalesIQModule() {
           <div style={{ display: "grid", gridTemplateColumns: selectedStateCode ? "1fr 380px" : "1fr", gap: 18, alignItems: "start" }}>
             {/* Map + legend */}
             <div>
-              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: 16 }}>
+              <div style={{ background: "#FFFFFF", border: "1px solid rgba(0,0,0,0.08)", borderRadius: 16, padding: 16, boxShadow: "0 4px 12px rgba(0,0,0,0.03)" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10, marginBottom: 12 }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: "#64748B", letterSpacing: "0.12em", textTransform: "uppercase" }}>
                     Click any state · or use the dropdown
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <Map size={12} color="rgba(255,255,255,0.3)" />
+                    <Map size={12} color="#64748B" />
                     <select
                       data-testid="dropdown-map-state"
                       value={selectedStateCode || ""}
                       onChange={e => setSelectedStateCode(e.target.value || null)}
-                      style={{ background: "#0d1526", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 8, padding: "6px 12px", color: selectedStateCode ? "#fff" : "rgba(255,255,255,0.35)", fontSize: 11, fontWeight: 700, outline: "none", cursor: "pointer", minWidth: 200 }}
+                      style={{ background: "#FFFFFF", border: "1px solid rgba(0,0,0,0.12)", borderRadius: 8, padding: "6px 12px", color: selectedStateCode ? "#0F172A" : "#64748B", fontSize: 11, fontWeight: 700, outline: "none", cursor: "pointer", minWidth: 200 }}
                     >
-                      <option value="" style={{ background: "#0d1526", color: "rgba(255,255,255,0.5)" }}>— Select a State —</option>
+                      <option value="" style={{ background: "#FFFFFF", color: "#64748B" }}>— Select a State —</option>
                       {ALL_STATES.map(s => (
-                        <option key={s.code} value={s.code} style={{ background: "#0d1526", color: "#fff" }}>
+                        <option key={s.code} value={s.code} style={{ background: "#FFFFFF", color: "#0F172A" }}>
                           {s.name} ({s.code})
                         </option>
                       ))}
@@ -2070,7 +2070,7 @@ export default function SalesIQModule() {
                       <button
                         data-testid="btn-clear-map-state"
                         onClick={() => setSelectedStateCode(null)}
-                        style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 6, padding: "5px 8px", color: "rgba(255,255,255,0.4)", fontSize: 10, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}
+                        style={{ background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 6, padding: "5px 8px", color: "rgba(255,255,255,0.4)", fontSize: 10, cursor: "pointer", display: "flex", alignItems: "center", gap: 4 }}
                       >
                         <X size={11} /> Clear
                       </button>
@@ -2115,10 +2115,10 @@ export default function SalesIQModule() {
               {!selectedStateCode && statesData && (
                 <div style={{ marginTop: 16 }}>
                   {/* Filter controls */}
-                  <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, padding: "14px 16px", marginBottom: 12 }}>
+                  <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 12, padding: "14px 16px", marginBottom: 12 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
                       <Target size={13} color={BB_CRIMSON} />
-                      <span style={{ fontSize: 11, fontWeight: 800, color: "#fff" }}>Prospect Filters</span>
+                      <span style={{ fontSize: 11, fontWeight: 800, color: "#0F172A" }}>Prospect Filters</span>
                       {activeFilterCount > 0 && (
                         <span style={{ fontSize: 9, fontWeight: 900, padding: "2px 8px", borderRadius: 100, background: `${BB_CRIMSON}25`, border: `1px solid ${BB_CRIMSON}50`, color: BB_CRIMSON }}>
                           {activeFilterCount} active
@@ -2136,12 +2136,12 @@ export default function SalesIQModule() {
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 12 }}>
                       {/* Funding Type */}
                       <div>
-                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>Prospect Type</div>
+                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>Prospect Type</div>
                         <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
                           {FUNDING_TYPES.map(f => (
                             <button key={f.id} data-testid={`filter-funding-${f.id}`}
                               onClick={() => setFundingType(f.id)}
-                              style={{ padding: "5px 10px", borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: "pointer", textAlign: "left", background: fundingType === f.id ? "rgba(155,28,46,0.2)" : "rgba(255,255,255,0.03)", border: fundingType === f.id ? `1px solid rgba(155,28,46,0.5)` : "1px solid rgba(255,255,255,0.06)", color: fundingType === f.id ? "#fff" : "rgba(255,255,255,0.4)" }}>
+                              style={{ padding: "5px 10px", borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: "pointer", textAlign: "left", background: fundingType === f.id ? "rgba(155,28,46,0.2)" : "rgba(15,23,42,0.03)", border: fundingType === f.id ? `1px solid rgba(155,28,46,0.5)` : "1px solid rgba(15,23,42,0.03)", color: fundingType === f.id ? "#fff" : "rgba(255,255,255,0.4)" }}>
                               {f.label}
                             </button>
                           ))}
@@ -2150,12 +2150,12 @@ export default function SalesIQModule() {
 
                       {/* Priority Tier */}
                       <div>
-                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>Priority Tier</div>
+                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>Priority Tier</div>
                         <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
                           {PRIORITY_FILTERS.map(p => (
                             <button key={p.id} data-testid={`filter-priority-${p.id}`}
                               onClick={() => setPriorityFilter(p.id)}
-                              style={{ padding: "5px 10px", borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: "pointer", textAlign: "left", background: priorityFilter === p.id ? "rgba(155,28,46,0.2)" : "rgba(255,255,255,0.03)", border: priorityFilter === p.id ? `1px solid rgba(155,28,46,0.5)` : "1px solid rgba(255,255,255,0.06)", color: priorityFilter === p.id ? "#fff" : "rgba(255,255,255,0.4)" }}>
+                              style={{ padding: "5px 10px", borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: "pointer", textAlign: "left", background: priorityFilter === p.id ? "rgba(155,28,46,0.2)" : "rgba(15,23,42,0.03)", border: priorityFilter === p.id ? `1px solid rgba(155,28,46,0.5)` : "1px solid rgba(15,23,42,0.03)", color: priorityFilter === p.id ? "#fff" : "rgba(255,255,255,0.4)" }}>
                               {p.label}
                             </button>
                           ))}
@@ -2164,12 +2164,12 @@ export default function SalesIQModule() {
 
                       {/* Region */}
                       <div>
-                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>Region</div>
+                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>Region</div>
                         <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
                           {REGION_FILTERS.map(r => (
                             <button key={r.id} data-testid={`filter-region-${r.id}`}
                               onClick={() => setRegionFilter(r.id)}
-                              style={{ padding: "5px 10px", borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: "pointer", textAlign: "left", background: regionFilter === r.id ? "rgba(155,28,46,0.2)" : "rgba(255,255,255,0.03)", border: regionFilter === r.id ? `1px solid rgba(155,28,46,0.5)` : "1px solid rgba(255,255,255,0.06)", color: regionFilter === r.id ? "#fff" : "rgba(255,255,255,0.4)" }}>
+                              style={{ padding: "5px 10px", borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: "pointer", textAlign: "left", background: regionFilter === r.id ? "rgba(155,28,46,0.2)" : "rgba(15,23,42,0.03)", border: regionFilter === r.id ? `1px solid rgba(155,28,46,0.5)` : "1px solid rgba(15,23,42,0.03)", color: regionFilter === r.id ? "#fff" : "rgba(255,255,255,0.4)" }}>
                               {r.label}
                             </button>
                           ))}
@@ -2178,12 +2178,12 @@ export default function SalesIQModule() {
 
                       {/* Sort By */}
                       <div>
-                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>Sort By</div>
+                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>Sort By</div>
                         <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
                           {SORT_OPTIONS.map(o => (
                             <button key={o.id} data-testid={`filter-sort-${o.id}`}
                               onClick={() => setSortBy(o.id)}
-                              style={{ padding: "5px 10px", borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: "pointer", textAlign: "left", background: sortBy === o.id ? "rgba(96,165,250,0.15)" : "rgba(255,255,255,0.03)", border: sortBy === o.id ? `1px solid rgba(96,165,250,0.4)` : "1px solid rgba(255,255,255,0.06)", color: sortBy === o.id ? "#60a5fa" : "rgba(255,255,255,0.4)" }}>
+                              style={{ padding: "5px 10px", borderRadius: 6, fontSize: 10, fontWeight: 700, cursor: "pointer", textAlign: "left", background: sortBy === o.id ? "rgba(96,165,250,0.15)" : "rgba(15,23,42,0.03)", border: sortBy === o.id ? `1px solid rgba(96,165,250,0.4)` : "1px solid rgba(15,23,42,0.03)", color: sortBy === o.id ? "#60a5fa" : "rgba(255,255,255,0.4)" }}>
                               {o.label}
                             </button>
                           ))}
@@ -2194,7 +2194,7 @@ export default function SalesIQModule() {
 
                   {/* Results count + grid */}
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em" }}>
+                    <span style={{ fontSize: 10, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.08em" }}>
                       {filteredStates.length} state{filteredStates.length !== 1 ? "s" : ""} match
                       {activeFilterCount > 0 ? "ing your filters" : " · click to explore"}
                     </span>
@@ -2219,25 +2219,25 @@ export default function SalesIQModule() {
                       return (
                         <button key={s.code} data-testid={`state-card-${s.code}`}
                           onClick={() => setSelectedStateCode(s.code)}
-                          style={{ background: isPriority ? "rgba(155,28,46,0.06)" : "rgba(255,255,255,0.03)", border: isPriority ? `1px solid rgba(155,28,46,0.35)` : isHigh ? "1px solid rgba(245,158,11,0.2)" : "1px solid rgba(255,255,255,0.07)", borderRadius: 10, padding: "10px 12px", cursor: "pointer", textAlign: "left" }}>
+                          style={{ background: isPriority ? "rgba(155,28,46,0.06)" : "rgba(15,23,42,0.03)", border: isPriority ? `1px solid rgba(155,28,46,0.35)` : isHigh ? "1px solid rgba(245,158,11,0.2)" : "1px solid rgba(15,23,42,0.03)", borderRadius: 10, padding: "10px 12px", cursor: "pointer", textAlign: "left" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 5 }}>
                             <span style={{ fontSize: 12, fontWeight: 900, color: isPriority ? BB_CRIMSON : isHigh ? "#f59e0b" : "#fff" }}>{s.code}</span>
                             {isPriority && <Star size={10} color={BB_CRIMSON} />}
                             {!isPriority && isHigh && <AlertTriangle size={9} color="#f59e0b" />}
                           </div>
-                          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", marginBottom: 3 }}>{primaryLabel}</div>
+                          <div style={{ fontSize: 9, color: "rgba(15,23,42,0.10)", marginBottom: 3 }}>{primaryLabel}</div>
                           <div style={{ fontSize: 15, fontWeight: 900, color: primaryColor }}>
                             {typeof primaryVal === "number" && !Number.isInteger(primaryVal) ? primaryVal.toFixed(1) : primaryVal}
                             {sortBy === "spread" ? "%" : ""}
                           </div>
-                          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", marginTop: 4 }}>
+                          <div style={{ fontSize: 9, color: "rgba(15,23,42,0.08)", marginTop: 4 }}>
                             {s.dominant_pbm_model}
                           </div>
                         </button>
                       );
                     })}
                     {filteredStates.length === 0 && (
-                      <div style={{ gridColumn: "1 / -1", padding: "24px", textAlign: "center", color: "rgba(255,255,255,0.25)", fontSize: 12 }}>
+                      <div style={{ gridColumn: "1 / -1", padding: "24px", textAlign: "center", color: "rgba(15,23,42,0.08)", fontSize: 12 }}>
                         No states match the selected filters — try broadening your criteria.
                       </div>
                     )}
@@ -2248,7 +2248,7 @@ export default function SalesIQModule() {
 
             {/* State detail panel */}
             {selectedStateCode && (
-              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: 20, maxHeight: "calc(100vh - 280px)", overflowY: "auto" }}>
+              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 16, padding: 20, maxHeight: "calc(100vh - 280px)", overflowY: "auto" }}>
                 {detailLoading ? (
                   <div style={{ display: "flex", justifyContent: "center", padding: 40 }}>
                     <Loader2 size={24} color={BB_CRIMSON} style={{ animation: "spin 1s linear infinite" }} />
@@ -2265,18 +2265,18 @@ export default function SalesIQModule() {
         {activeTab === "compare" && (
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {/* State grid picker */}
-            <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 18 }}>
+            <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 14, padding: 18 }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
                 <div>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase" }}>Select States (max 6)</div>
-                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", marginTop: 2 }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.12em", textTransform: "uppercase" }}>Select States (max 6)</div>
+                  <div style={{ fontSize: 9, color: "rgba(15,23,42,0.08)", marginTop: 2 }}>
                     <span style={{ color: BB_CRIMSON }}>■</span> Priority · <span style={{ color: "#f59e0b" }}>■</span> High · Click to toggle
                   </div>
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", fontWeight: 700 }}>{compareSet.length}/6 selected</span>
+                  <span style={{ fontSize: 10, color: "rgba(15,23,42,0.10)", fontWeight: 700 }}>{compareSet.length}/6 selected</span>
                   <button data-testid="btn-compare-run" onClick={() => compareMutation.mutate(compareSet)} disabled={compareMutation.isPending || compareSet.length < 2}
-                    style={{ padding: "8px 16px", borderRadius: 8, background: compareSet.length < 2 ? "rgba(155,28,46,0.1)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${compareSet.length < 2 ? "rgba(155,28,46,0.2)" : BB_CRIMSON}`, color: compareSet.length < 2 ? "rgba(255,255,255,0.25)" : "#fff", fontSize: 11, fontWeight: 800, cursor: compareSet.length < 2 ? "not-allowed" : "pointer", display: "flex", alignItems: "center", gap: 6 }}>
+                    style={{ padding: "8px 16px", borderRadius: 8, background: compareSet.length < 2 ? "rgba(155,28,46,0.1)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${compareSet.length < 2 ? "rgba(155,28,46,0.2)" : BB_CRIMSON}`, color: compareSet.length < 2 ? "rgba(15,23,42,0.08)" : "#fff", fontSize: 11, fontWeight: 800, cursor: compareSet.length < 2 ? "not-allowed" : "pointer", display: "flex", alignItems: "center", gap: 6 }}>
                     {compareMutation.isPending ? <Loader2 size={12} style={{ animation: "spin 1s linear infinite" }} /> : <BarChart3 size={12} />}
                     Compare
                   </button>
@@ -2292,10 +2292,10 @@ export default function SalesIQModule() {
                   const isMaxed = compareSet.length >= 6 && !isSelected;
                   let bgColor = isSelected
                     ? (isPriority ? BB_CRIMSON : isHigh ? "#c2410c" : "#1d4ed8")
-                    : (isPriority ? "rgba(155,28,46,0.18)" : isHigh ? "rgba(194,65,12,0.15)" : "rgba(255,255,255,0.04)");
+                    : (isPriority ? "rgba(155,28,46,0.18)" : isHigh ? "rgba(194,65,12,0.15)" : "rgba(15,23,42,0.03)");
                   let borderColor = isSelected
                     ? (isPriority ? BB_CRIMSON : isHigh ? "#c2410c" : "#3b82f6")
-                    : (isPriority ? "rgba(155,28,46,0.45)" : isHigh ? "rgba(245,158,11,0.4)" : "rgba(255,255,255,0.08)");
+                    : (isPriority ? "rgba(155,28,46,0.45)" : isHigh ? "rgba(245,158,11,0.4)" : "rgba(15,23,42,0.03)");
                   let textColor = isSelected ? "#fff" : (isPriority ? BB_CRIMSON : isHigh ? "#f59e0b" : "rgba(255,255,255,0.45)");
                   return (
                     <button key={code} data-testid={`chip-compare-${code}`}
@@ -2322,7 +2322,7 @@ export default function SalesIQModule() {
                 { label: "Big 4", states: ["CA", "TX", "NY", "FL"] },
               ].map(preset => (
                 <button key={preset.label} onClick={() => { setCompareSet(preset.states); compareMutation.mutate(preset.states); }}
-                  style={{ padding: "6px 12px", borderRadius: 7, fontSize: 10, fontWeight: 700, cursor: "pointer", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)" }}>
+                  style={{ padding: "6px 12px", borderRadius: 7, fontSize: 10, fontWeight: 700, cursor: "pointer", background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.03)", color: "rgba(255,255,255,0.5)" }}>
                   {preset.label}
                 </button>
               ))}
@@ -2330,16 +2330,16 @@ export default function SalesIQModule() {
 
             {/* Comparison table */}
             {compareStates.length >= 2 && (
-              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, overflow: "hidden" }}>
-                <div style={{ padding: "14px 18px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase" }}>Multi-State Intelligence Comparison</div>
+              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 14, overflow: "hidden" }}>
+                <div style={{ padding: "14px 18px", borderBottom: "1px solid rgba(15,23,42,0.03)" }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.12em", textTransform: "uppercase" }}>Multi-State Intelligence Comparison</div>
                 </div>
                 <div style={{ padding: 18 }}>
                   <ComparisonTable states={compareStates} />
                 </div>
 
                 {compareMutation.data && (
-                  <div style={{ padding: "14px 18px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div style={{ padding: "14px 18px", borderTop: "1px solid rgba(15,23,42,0.03)" }}>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
                       {[
                         { label: "Strictest Regulation", value: compareMutation.data.comparison.strictest, color: "#ef4444" },
@@ -2347,7 +2347,7 @@ export default function SalesIQModule() {
                         { label: "Best Sales Opportunity", value: compareMutation.data.comparison.best_opportunity, color: "#10b981" },
                       ].map(s => (
                         <div key={s.label} style={{ background: `${s.color}08`, border: `1px solid ${s.color}20`, borderRadius: 10, padding: "12px 14px", textAlign: "center" }}>
-                          <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6 }}>{s.label}</div>
+                          <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 6 }}>{s.label}</div>
                           <div style={{ fontSize: 22, fontWeight: 900, color: s.color }}>{s.value}</div>
                         </div>
                       ))}
@@ -2471,10 +2471,10 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
           return (
           <div>
             {/* Mode toggle */}
-            <div style={{ display: "flex", gap: 4, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 10, padding: 4, marginBottom: 18, width: "fit-content" }}>
+            <div style={{ display: "flex", gap: 4, background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 10, padding: 4, marginBottom: 18, width: "fit-content" }}>
               {([["quick","⚡ Quick Qualify"],["batch","📋 Batch Qualifier"]] as const).map(([m, l]) => (
                 <button key={m} onClick={() => setQualMode(m)}
-                  style={{ padding: "7px 18px", borderRadius: 7, fontSize: 11, fontWeight: 800, cursor: "pointer", border: "none", background: qualMode === m ? BB_CRIMSON : "none", color: qualMode === m ? "#fff" : "rgba(255,255,255,0.35)", transition: "all 0.15s" }}>
+                  style={{ padding: "7px 18px", borderRadius: 7, fontSize: 11, fontWeight: 800, cursor: "pointer", border: "none", background: qualMode === m ? BB_CRIMSON : "none", color: qualMode === m ? "#fff" : "rgba(15,23,42,0.10)", transition: "all 0.15s" }}>
                   {l}
                 </button>
               ))}
@@ -2490,17 +2490,17 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
                   {/* Prospect name + state */}
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 160px", gap: 10 }}>
                     <div>
-                      <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Prospect Name (optional)</div>
+                      <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>Prospect Name (optional)</div>
                       <input value={qqName} onChange={e => setQqName(e.target.value)} placeholder="e.g. Acme Manufacturing"
                         data-testid="input-qq-name"
-                        style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "9px 12px", color: "#fff", fontSize: 13, fontWeight: 700, outline: "none", boxSizing: "border-box" }} />
+                        style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 8, padding: "9px 12px", color: "#0F172A", fontSize: 13, fontWeight: 700, outline: "none", boxSizing: "border-box" }} />
                     </div>
                     <div>
-                      <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>State</div>
+                      <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 5 }}>State</div>
                       <select value={qqState} onChange={e => { setQqState(e.target.value); setQqAiAngle(null); }}
                         data-testid="select-qq-state"
-                        style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "9px 10px", color: "#fff", fontSize: 12, fontWeight: 700, outline: "none", cursor: "pointer" }}>
-                        {ALL_STATES.map(s => <option key={s.code} value={s.code} style={{ background: "#0d1526" }}>{s.name} ({s.code})</option>)}
+                        style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 8, padding: "9px 10px", color: "#0F172A", fontSize: 12, fontWeight: 700, outline: "none", cursor: "pointer" }}>
+                        {ALL_STATES.map(s => <option key={s.code} value={s.code} style={{ background: "#F8FAFC" }}>{s.name} ({s.code})</option>)}
                       </select>
                     </div>
                   </div>
@@ -2509,10 +2509,10 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
                   {QQ_QUESTIONS.map((q, qi) => {
                     const answered = !!qqAnswers[q.id];
                     return (
-                      <div key={q.id} style={{ background: answered ? "rgba(255,255,255,0.03)" : "rgba(255,255,255,0.015)", border: `1px solid ${answered ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.05)"}`, borderRadius: 12, padding: "14px 16px", transition: "border-color 0.2s" }}>
+                      <div key={q.id} style={{ background: answered ? "rgba(15,23,42,0.03)" : "rgba(255,255,255,0.015)", border: `1px solid ${answered ? "rgba(15,23,42,0.06)" : "rgba(15,23,42,0.03)"}`, borderRadius: 12, padding: "14px 16px", transition: "border-color 0.2s" }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-                          <span style={{ fontSize: 9, fontWeight: 900, width: 18, height: 18, borderRadius: "50%", background: answered ? BB_CRIMSON : "rgba(255,255,255,0.08)", color: answered ? "#fff" : "rgba(255,255,255,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{qi + 1}</span>
-                          <span style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>{q.label}</span>
+                          <span style={{ fontSize: 9, fontWeight: 900, width: 18, height: 18, borderRadius: "50%", background: answered ? BB_CRIMSON : "rgba(15,23,42,0.03)", color: answered ? "#fff" : "rgba(15,23,42,0.10)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>{qi + 1}</span>
+                          <span style={{ fontSize: 12, fontWeight: 700, color: "#0F172A" }}>{q.label}</span>
                         </div>
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
                           {(q.options as readonly { id: string; label: string; pts: number }[]).map(opt => {
@@ -2521,7 +2521,7 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
                               <button key={opt.id}
                                 data-testid={`btn-qq-${q.id}-${opt.id}`}
                                 onClick={() => { setQqAnswers(p => ({ ...p, [q.id]: opt.id })); setQqAiAngle(null); }}
-                                style={{ padding: "7px 14px", borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: "pointer", background: sel ? "rgba(155,28,46,0.2)" : "rgba(255,255,255,0.04)", border: sel ? `1px solid rgba(155,28,46,0.5)` : "1px solid rgba(255,255,255,0.08)", color: sel ? "#fff" : "rgba(255,255,255,0.5)", transition: "all 0.12s" }}>
+                                style={{ padding: "7px 14px", borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: "pointer", background: sel ? "rgba(155,28,46,0.2)" : "rgba(15,23,42,0.03)", border: sel ? `1px solid rgba(155,28,46,0.5)` : "1px solid rgba(15,23,42,0.03)", color: sel ? "#fff" : "rgba(255,255,255,0.5)", transition: "all 0.12s" }}>
                                 {opt.label}
                               </button>
                             );
@@ -2533,7 +2533,7 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
 
                   {/* Reset */}
                   {qqAnswered > 0 && (
-                    <button onClick={() => { setQqAnswers({}); setQqAiAngle(null); }} style={{ alignSelf: "flex-start", fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.3)", background: "none", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 7, padding: "5px 12px", cursor: "pointer" }}>
+                    <button onClick={() => { setQqAnswers({}); setQqAiAngle(null); }} style={{ alignSelf: "flex-start", fontSize: 10, fontWeight: 700, color: "rgba(15,23,42,0.10)", background: "none", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 7, padding: "5px 12px", cursor: "pointer" }}>
                       Reset answers
                     </button>
                   )}
@@ -2543,29 +2543,29 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
                 <div style={{ display: "flex", flexDirection: "column", gap: 12, position: "sticky", top: 24 }}>
 
                   {/* Score meter */}
-                  <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 20 }}>
-                    <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(255,255,255,0.3)", marginBottom: 14 }}>Qualification Score</div>
+                  <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 14, padding: 20 }}>
+                    <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(15,23,42,0.10)", marginBottom: 14 }}>Qualification Score</div>
                     {/* Big number */}
                     <div style={{ textAlign: "center", marginBottom: 14 }}>
-                      <div style={{ fontSize: 56, fontWeight: 900, color: qqAnswered > 0 ? qqVerdictColor : "rgba(255,255,255,0.12)", lineHeight: 1, transition: "color 0.3s" }}>
+                      <div style={{ fontSize: 56, fontWeight: 900, color: qqAnswered > 0 ? qqVerdictColor : "rgba(15,23,42,0.06)", lineHeight: 1, transition: "color 0.3s" }}>
                         {qqAnswered > 0 ? qqScore : "—"}
                       </div>
-                      <div style={{ fontSize: 10, color: "rgba(255,255,255,0.25)", marginTop: 4 }}>{qqAnswered > 0 ? `out of 100 · ${qqAnswered}/6 answered` : "Answer questions to score"}</div>
+                      <div style={{ fontSize: 10, color: "rgba(15,23,42,0.08)", marginTop: 4 }}>{qqAnswered > 0 ? `out of 100 · ${qqAnswered}/6 answered` : "Answer questions to score"}</div>
                     </div>
                     {/* Bar */}
-                    <div style={{ height: 8, background: "rgba(255,255,255,0.06)", borderRadius: 4, overflow: "hidden", marginBottom: 8 }}>
+                    <div style={{ height: 8, background: "rgba(15,23,42,0.03)", borderRadius: 4, overflow: "hidden", marginBottom: 8 }}>
                       <div style={{ height: "100%", width: `${qqAnswered > 0 ? qqScore : 0}%`, background: qqVerdictColor, borderRadius: 4, transition: "width 0.4s ease, background 0.3s" }} />
                     </div>
                     {/* Threshold markers */}
                     <div style={{ position: "relative", height: 12, marginBottom: 6 }}>
                       {[{ pos: 45, label: "45" }, { pos: 65, label: "65" }].map(m => (
                         <div key={m.pos} style={{ position: "absolute", left: `${m.pos}%`, top: 0, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                          <div style={{ width: 1, height: 6, background: "rgba(255,255,255,0.2)" }} />
-                          <span style={{ fontSize: 8, color: "rgba(255,255,255,0.25)", marginTop: 1 }}>{m.label}</span>
+                          <div style={{ width: 1, height: 6, background: "rgba(15,23,42,0.08)" }} />
+                          <span style={{ fontSize: 8, color: "rgba(15,23,42,0.08)", marginTop: 1 }}>{m.label}</span>
                         </div>
                       ))}
                     </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 8, color: "rgba(255,255,255,0.2)" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: 8, color: "rgba(15,23,42,0.08)" }}>
                       <span style={{ color: "#ef4444" }}>Not Qualified</span>
                       <span style={{ color: "#f59e0b" }}>Watch</span>
                       <span style={{ color: "#10b981" }}>Qualified</span>
@@ -2581,7 +2581,7 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
                         </div>
                         <div>
                           <div style={{ fontSize: 14, fontWeight: 900, color: qqVerdictColor }}>{qqVerdictLabel}</div>
-                          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", marginTop: 1 }}>{qqName || "This prospect"} · {qqState}</div>
+                          <div style={{ fontSize: 9, color: "rgba(15,23,42,0.10)", marginTop: 1 }}>{qqName || "This prospect"} · {qqState}</div>
                         </div>
                       </div>
 
@@ -2593,8 +2593,8 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
                           const strong = opt.pts >= 15;
                           return (
                             <div key={q.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                              <span style={{ fontSize: 10, color: strong ? "rgba(255,255,255,0.65)" : "rgba(255,255,255,0.35)" }}>{opt.label}</span>
-                              <span style={{ fontSize: 10, fontWeight: 800, color: strong ? qqVerdictColor : "rgba(255,255,255,0.2)" }}>+{opt.pts}</span>
+                              <span style={{ fontSize: 10, color: strong ? "rgba(255,255,255,0.65)" : "rgba(15,23,42,0.10)" }}>{opt.label}</span>
+                              <span style={{ fontSize: 10, fontWeight: 800, color: strong ? qqVerdictColor : "rgba(15,23,42,0.08)" }}>+{opt.pts}</span>
                             </div>
                           );
                         })}
@@ -2602,8 +2602,8 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
 
                       {/* State context */}
                       {qqStateData && (
-                        <div style={{ background: "rgba(255,255,255,0.04)", borderRadius: 8, padding: "8px 10px", marginBottom: 12 }}>
-                          <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(255,255,255,0.25)", marginBottom: 5 }}>{qqStateData.name} State Context</div>
+                        <div style={{ background: "rgba(15,23,42,0.03)", borderRadius: 8, padding: "8px 10px", marginBottom: 12 }}>
+                          <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(15,23,42,0.08)", marginBottom: 5 }}>{qqStateData.name} State Context</div>
                           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4 }}>
                             {[
                               { label: "Reg. Strictness", val: `${qqStateData.scores.regulatory_strictness.toFixed(1)}/10` },
@@ -2612,8 +2612,8 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
                               { label: "Active Alerts", val: String(qqStateData.alert_count) },
                             ].map(m => (
                               <div key={m.label}>
-                                <div style={{ fontSize: 8, color: "rgba(255,255,255,0.25)" }}>{m.label}</div>
-                                <div style={{ fontSize: 11, fontWeight: 800, color: "#fff" }}>{m.val}</div>
+                                <div style={{ fontSize: 8, color: "rgba(15,23,42,0.08)" }}>{m.label}</div>
+                                <div style={{ fontSize: 11, fontWeight: 800, color: "#0F172A" }}>{m.val}</div>
                               </div>
                             ))}
                           </div>
@@ -2622,7 +2622,7 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
 
                       {/* AI Opening Angle */}
                       <button data-testid="btn-qq-ai-angle" onClick={runQqAi} disabled={qqAiLoading}
-                        style={{ width: "100%", padding: "10px", borderRadius: 9, background: qqAiLoading ? "rgba(155,28,46,0.1)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: qqAiLoading ? "rgba(255,255,255,0.3)" : "#fff", fontSize: 11, fontWeight: 800, cursor: qqAiLoading ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 7, letterSpacing: "0.04em" }}>
+                        style={{ width: "100%", padding: "10px", borderRadius: 9, background: qqAiLoading ? "rgba(155,28,46,0.1)" : `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: qqAiLoading ? "rgba(15,23,42,0.10)" : "#fff", fontSize: 11, fontWeight: 800, cursor: qqAiLoading ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 7, letterSpacing: "0.04em" }}>
                         {qqAiLoading ? <><Loader2 size={12} style={{ animation: "spin 1s linear infinite" }} /> Generating angle…</> : <><Brain size={12} /> Generate Opening Angle</>}
                       </button>
 
@@ -2637,20 +2637,20 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
 
                   {/* Nudge when not complete */}
                   {!qqComplete && qqAnswered > 0 && (
-                    <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "14px 16px", textAlign: "center" }}>
-                      <div style={{ fontSize: 11, color: "rgba(255,255,255,0.3)" }}>{QQ_QUESTIONS.length - qqAnswered} question{QQ_QUESTIONS.length - qqAnswered !== 1 ? "s" : ""} remaining</div>
+                    <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 12, padding: "14px 16px", textAlign: "center" }}>
+                      <div style={{ fontSize: 11, color: "rgba(15,23,42,0.10)" }}>{QQ_QUESTIONS.length - qqAnswered} question{QQ_QUESTIONS.length - qqAnswered !== 1 ? "s" : ""} remaining</div>
                       <div style={{ display: "flex", gap: 5, justifyContent: "center", marginTop: 8 }}>
                         {QQ_QUESTIONS.map(q => (
-                          <div key={q.id} style={{ width: 6, height: 6, borderRadius: "50%", background: qqAnswers[q.id] ? BB_CRIMSON : "rgba(255,255,255,0.15)" }} />
+                          <div key={q.id} style={{ width: 6, height: 6, borderRadius: "50%", background: qqAnswers[q.id] ? BB_CRIMSON : "rgba(15,23,42,0.06)" }} />
                         ))}
                       </div>
                     </div>
                   )}
 
                   {qqAnswered === 0 && (
-                    <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "20px 16px", textAlign: "center" }}>
-                      <Target size={22} style={{ color: "rgba(255,255,255,0.12)", margin: "0 auto 10px" }} />
-                      <div style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", lineHeight: 1.6 }}>Answer the 6 questions to get a real-time qualification score and AI opening angle.</div>
+                    <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 12, padding: "20px 16px", textAlign: "center" }}>
+                      <Target size={22} style={{ color: "rgba(15,23,42,0.06)", margin: "0 auto 10px" }} />
+                      <div style={{ fontSize: 12, color: "rgba(15,23,42,0.08)", lineHeight: 1.6 }}>Answer the 6 questions to get a real-time qualification score and AI opening angle.</div>
                     </div>
                   )}
                 </div>
@@ -2665,34 +2665,34 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
 
               {/* Qualification Criteria */}
-              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 16 }}>
+              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 14, padding: 16 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 14 }}>
                   <Shield size={13} color={BB_CRIMSON} />
-                  <span style={{ fontSize: 11, fontWeight: 800, color: "#fff" }}>Qualification Criteria</span>
+                  <span style={{ fontSize: 11, fontWeight: 800, color: "#0F172A" }}>Qualification Criteria</span>
                 </div>
 
                 {/* Min Score */}
                 <div style={{ marginBottom: 14 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                    <span style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Minimum Qual Score</span>
+                    <span style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Minimum Qual Score</span>
                     <span style={{ fontSize: 13, fontWeight: 900, color: qualThreshold >= 70 ? "#10b981" : qualThreshold >= 55 ? "#f59e0b" : "#ef4444" }}>{qualThreshold}</span>
                   </div>
                   <input type="range" min={30} max={90} value={qualThreshold} onChange={e => { setQualThreshold(+e.target.value); setQualRun(false); }}
                     data-testid="slider-qual-threshold"
                     style={{ width: "100%", accentColor: BB_CRIMSON, cursor: "pointer" }} />
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9, color: "rgba(255,255,255,0.2)", marginTop: 3 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 9, color: "rgba(15,23,42,0.08)", marginTop: 3 }}>
                     <span>Lenient (30)</span><span>Strict (90)</span>
                   </div>
                 </div>
 
                 {/* Funding type preference */}
                 <div>
-                  <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>Funding Type Focus</div>
+                  <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 6 }}>Funding Type Focus</div>
                   <div style={{ display: "flex", gap: 5, flexWrap: "wrap" }}>
                     {FUNDING_TYPES.map(f => (
                       <button key={f.id} data-testid={`qual-funding-${f.id}`}
                         onClick={() => { setQualFundingFilter(f.id); setQualRun(false); }}
-                        style={{ padding: "4px 10px", borderRadius: 100, fontSize: 9, fontWeight: 800, cursor: "pointer", background: qualFundingFilter === f.id ? `${BB_CRIMSON}25` : "rgba(255,255,255,0.04)", border: qualFundingFilter === f.id ? `1px solid ${BB_CRIMSON}60` : "1px solid rgba(255,255,255,0.08)", color: qualFundingFilter === f.id ? BB_CRIMSON : "rgba(255,255,255,0.4)" }}>
+                        style={{ padding: "4px 10px", borderRadius: 100, fontSize: 9, fontWeight: 800, cursor: "pointer", background: qualFundingFilter === f.id ? `${BB_CRIMSON}25` : "rgba(15,23,42,0.03)", border: qualFundingFilter === f.id ? `1px solid ${BB_CRIMSON}60` : "1px solid rgba(15,23,42,0.03)", color: qualFundingFilter === f.id ? BB_CRIMSON : "rgba(255,255,255,0.4)" }}>
                         {f.label}
                       </button>
                     ))}
@@ -2701,11 +2701,11 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
               </div>
 
               {/* Add Account Form */}
-              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 16 }}>
+              <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 14, padding: 16 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
                     <Users size={13} color="#60a5fa" />
-                    <span style={{ fontSize: 11, fontWeight: 800, color: "#fff" }}>Add Accounts</span>
+                    <span style={{ fontSize: 11, fontWeight: 800, color: "#0F172A" }}>Add Accounts</span>
                   </div>
                   <button data-testid="btn-toggle-paste" onClick={() => setShowPaste(p => !p)}
                     style={{ fontSize: 9, fontWeight: 700, color: "#60a5fa", background: "rgba(96,165,250,0.1)", border: "1px solid rgba(96,165,250,0.2)", borderRadius: 6, padding: "3px 8px", cursor: "pointer" }}>
@@ -2721,29 +2721,29 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
                       onChange={e => setPasteText(e.target.value)}
                       placeholder={"One company name per line:\nAcme Corp\nBeta Industries\nGamma LLC"}
                       rows={6}
-                      style={{ width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "10px 12px", color: "#fff", fontSize: 11, outline: "none", boxSizing: "border-box", resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }}
+                      style={{ width: "100%", background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 8, padding: "10px 12px", color: "#0F172A", fontSize: 11, outline: "none", boxSizing: "border-box", resize: "vertical", fontFamily: "inherit", lineHeight: 1.6 }}
                     />
-                    <div style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", marginBottom: 8, marginTop: 4 }}>
+                    <div style={{ fontSize: 9, color: "rgba(15,23,42,0.08)", marginBottom: 8, marginTop: 4 }}>
                       State, funding type & size default to the form values below.
                     </div>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 10 }}>
                       <div>
-                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.08em" }}>Default State</div>
+                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.08em" }}>Default State</div>
                         <select value={qualForm.state} onChange={e => setQualForm(f => ({ ...f, state: e.target.value }))}
-                          style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 7, padding: "6px 10px", color: "#fff", fontSize: 11, outline: "none" }}>
-                          {ALL_STATES.map(s => <option key={s.code} value={s.code} style={{ background: "#0d1526" }}>{s.name} ({s.code})</option>)}
+                          style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 7, padding: "6px 10px", color: "#0F172A", fontSize: 11, outline: "none" }}>
+                          {ALL_STATES.map(s => <option key={s.code} value={s.code} style={{ background: "#F8FAFC" }}>{s.name} ({s.code})</option>)}
                         </select>
                       </div>
                       <div>
-                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.08em" }}>Funding Type</div>
+                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.08em" }}>Funding Type</div>
                         <select value={qualForm.fundingType} onChange={e => setQualForm(f => ({ ...f, fundingType: e.target.value }))}
-                          style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 7, padding: "6px 10px", color: "#fff", fontSize: 11, outline: "none" }}>
-                          {[["self-funded","Self-Funded"],["level-funded","Level-Funded"],["fully-insured","Fully Insured"]].map(([v,l]) => <option key={v} value={v} style={{ background: "#0d1526" }}>{l}</option>)}
+                          style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 7, padding: "6px 10px", color: "#0F172A", fontSize: 11, outline: "none" }}>
+                          {[["self-funded","Self-Funded"],["level-funded","Level-Funded"],["fully-insured","Fully Insured"]].map(([v,l]) => <option key={v} value={v} style={{ background: "#F8FAFC" }}>{l}</option>)}
                         </select>
                       </div>
                     </div>
                     <button data-testid="btn-parse-paste" onClick={parsePaste} disabled={!pasteText.trim()}
-                      style={{ width: "100%", padding: "9px", borderRadius: 8, background: pasteText.trim() ? "rgba(96,165,250,0.15)" : "rgba(255,255,255,0.04)", border: `1px solid ${pasteText.trim() ? "rgba(96,165,250,0.4)" : "rgba(255,255,255,0.06)"}`, color: pasteText.trim() ? "#60a5fa" : "rgba(255,255,255,0.2)", fontSize: 11, fontWeight: 800, cursor: pasteText.trim() ? "pointer" : "not-allowed" }}>
+                      style={{ width: "100%", padding: "9px", borderRadius: 8, background: pasteText.trim() ? "rgba(96,165,250,0.15)" : "rgba(15,23,42,0.03)", border: `1px solid ${pasteText.trim() ? "rgba(96,165,250,0.4)" : "rgba(15,23,42,0.03)"}`, color: pasteText.trim() ? "#60a5fa" : "rgba(15,23,42,0.08)", fontSize: 11, fontWeight: 800, cursor: pasteText.trim() ? "pointer" : "not-allowed" }}>
                       Import {pasteText.trim().split("\n").filter(Boolean).length} Account{pasteText.trim().split("\n").filter(Boolean).length !== 1 ? "s" : ""}
                     </button>
                   </div>
@@ -2755,41 +2755,41 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
                       onChange={e => setQualForm(f => ({ ...f, name: e.target.value }))}
                       onKeyDown={e => e.key === "Enter" && addAccount()}
                       placeholder="Company name…"
-                      style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, padding: "9px 12px", color: "#fff", fontSize: 12, fontWeight: 700, outline: "none", boxSizing: "border-box" }}
+                      style={{ width: "100%", background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 8, padding: "9px 12px", color: "#0F172A", fontSize: 12, fontWeight: 700, outline: "none", boxSizing: "border-box" }}
                     />
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                       <div>
-                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.08em" }}>State</div>
+                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.08em" }}>State</div>
                         <select data-testid="select-account-state" value={qualForm.state} onChange={e => setQualForm(f => ({ ...f, state: e.target.value }))}
-                          style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 7, padding: "6px 10px", color: "#fff", fontSize: 11, outline: "none" }}>
-                          {ALL_STATES.map(s => <option key={s.code} value={s.code} style={{ background: "#0d1526" }}>{s.name} ({s.code})</option>)}
+                          style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 7, padding: "6px 10px", color: "#0F172A", fontSize: 11, outline: "none" }}>
+                          {ALL_STATES.map(s => <option key={s.code} value={s.code} style={{ background: "#F8FAFC" }}>{s.name} ({s.code})</option>)}
                         </select>
                       </div>
                       <div>
-                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.08em" }}>Funding Type</div>
+                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.08em" }}>Funding Type</div>
                         <select data-testid="select-account-funding" value={qualForm.fundingType} onChange={e => setQualForm(f => ({ ...f, fundingType: e.target.value }))}
-                          style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 7, padding: "6px 10px", color: "#fff", fontSize: 11, outline: "none" }}>
-                          {[["self-funded","Self-Funded"],["level-funded","Level-Funded"],["fully-insured","Fully Insured"]].map(([v,l]) => <option key={v} value={v} style={{ background: "#0d1526" }}>{l}</option>)}
+                          style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 7, padding: "6px 10px", color: "#0F172A", fontSize: 11, outline: "none" }}>
+                          {[["self-funded","Self-Funded"],["level-funded","Level-Funded"],["fully-insured","Fully Insured"]].map(([v,l]) => <option key={v} value={v} style={{ background: "#F8FAFC" }}>{l}</option>)}
                         </select>
                       </div>
                     </div>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                       <div>
-                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.08em" }}>Employer Size</div>
+                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.08em" }}>Employer Size</div>
                         <select data-testid="select-account-size" value={qualForm.size} onChange={e => setQualForm(f => ({ ...f, size: e.target.value }))}
-                          style={{ width: "100%", background: "#0d1526", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 7, padding: "6px 10px", color: "#fff", fontSize: 11, outline: "none" }}>
-                          {[["small","Small (<100)"],["mid-market","Mid-Market (100–999)"],["large","Enterprise (1k–4.9k)"],["jumbo","Enterprise Plus (5k+)"]].map(([v,l]) => <option key={v} value={v} style={{ background: "#0d1526" }}>{l}</option>)}
+                          style={{ width: "100%", background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 7, padding: "6px 10px", color: "#0F172A", fontSize: 11, outline: "none" }}>
+                          {[["small","Small (<100)"],["mid-market","Mid-Market (100–999)"],["large","Enterprise (1k–4.9k)"],["jumbo","Enterprise Plus (5k+)"]].map(([v,l]) => <option key={v} value={v} style={{ background: "#F8FAFC" }}>{l}</option>)}
                         </select>
                       </div>
                       <div>
-                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.3)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.08em" }}>Industry</div>
+                        <div style={{ fontSize: 9, fontWeight: 700, color: "rgba(15,23,42,0.10)", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.08em" }}>Industry</div>
                         <input data-testid="input-account-industry" value={qualForm.industry} onChange={e => setQualForm(f => ({ ...f, industry: e.target.value }))}
                           placeholder="Optional…"
-                          style={{ width: "100%", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 7, padding: "6px 10px", color: "#fff", fontSize: 11, outline: "none", boxSizing: "border-box" }} />
+                          style={{ width: "100%", background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.06)", borderRadius: 7, padding: "6px 10px", color: "#0F172A", fontSize: 11, outline: "none", boxSizing: "border-box" }} />
                       </div>
                     </div>
                     <button data-testid="btn-add-account" onClick={addAccount} disabled={!qualForm.name.trim()}
-                      style={{ padding: "9px", borderRadius: 8, background: qualForm.name.trim() ? `linear-gradient(135deg,${BB_CRIMSON},#7a1525)` : "rgba(155,28,46,0.1)", border: `1px solid ${qualForm.name.trim() ? BB_CRIMSON : "rgba(155,28,46,0.2)"}`, color: qualForm.name.trim() ? "#fff" : "rgba(255,255,255,0.2)", fontSize: 11, fontWeight: 800, cursor: qualForm.name.trim() ? "pointer" : "not-allowed", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+                      style={{ padding: "9px", borderRadius: 8, background: qualForm.name.trim() ? `linear-gradient(135deg,${BB_CRIMSON},#7a1525)` : "rgba(155,28,46,0.1)", border: `1px solid ${qualForm.name.trim() ? BB_CRIMSON : "rgba(155,28,46,0.2)"}`, color: qualForm.name.trim() ? "#fff" : "rgba(15,23,42,0.08)", fontSize: 11, fontWeight: 800, cursor: qualForm.name.trim() ? "pointer" : "not-allowed", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
                       <Users size={12} /> Add Account
                     </button>
                   </div>
@@ -2798,22 +2798,22 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
 
               {/* Account list */}
               {accounts.length > 0 && (
-                <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, padding: 14 }}>
+                <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 14, padding: 14 }}>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-                    <span style={{ fontSize: 10, fontWeight: 800, color: "#fff" }}>{accounts.length} Account{accounts.length !== 1 ? "s" : ""} Added</span>
+                    <span style={{ fontSize: 10, fontWeight: 800, color: "#0F172A" }}>{accounts.length} Account{accounts.length !== 1 ? "s" : ""} Added</span>
                     <button onClick={() => { setAccounts([]); setQualRun(false); }}
-                      style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Clear all</button>
+                      style={{ fontSize: 9, color: "rgba(15,23,42,0.10)", background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Clear all</button>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 5, maxHeight: 220, overflowY: "auto" }}>
                     {accounts.map(a => (
-                      <div key={a.id} style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 8, padding: "7px 10px" }}>
+                      <div key={a.id} style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 8, padding: "7px 10px" }}>
                         <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ fontSize: 11, fontWeight: 700, color: "#fff", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.name}</div>
-                          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", marginTop: 1 }}>
+                          <div style={{ fontSize: 11, fontWeight: 700, color: "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{a.name}</div>
+                          <div style={{ fontSize: 9, color: "rgba(15,23,42,0.10)", marginTop: 1 }}>
                             {a.state} · {a.fundingType} · {a.size}
                           </div>
                         </div>
-                        <button onClick={() => removeAccount(a.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.25)", padding: 2 }}>
+                        <button onClick={() => removeAccount(a.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(15,23,42,0.08)", padding: 2 }}>
                           <X size={11} />
                         </button>
                       </div>
@@ -2822,7 +2822,7 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
 
                   <button data-testid="btn-run-qualifier"
                     onClick={() => setQualRun(true)}
-                    style={{ width: "100%", marginTop: 12, padding: "10px", borderRadius: 9, background: `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: "#fff", fontSize: 11, fontWeight: 800, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 7, letterSpacing: "0.06em" }}>
+                    style={{ width: "100%", marginTop: 12, padding: "10px", borderRadius: 9, background: `linear-gradient(135deg,${BB_CRIMSON},#7a1525)`, border: `1px solid ${BB_CRIMSON}`, color: "#0F172A", fontSize: 11, fontWeight: 800, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 7, letterSpacing: "0.06em" }}>
                     <CheckCircle2 size={13} /> Run Qualification
                   </button>
                 </div>
@@ -2832,20 +2832,20 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
             {/* Right: Results */}
             <div>
               {!qualRun && accounts.length === 0 && (
-                <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "48px 32px", textAlign: "center" }}>
-                  <Users size={32} color="rgba(255,255,255,0.15)" style={{ margin: "0 auto 16px" }} />
-                  <div style={{ fontSize: 14, fontWeight: 800, color: "rgba(255,255,255,0.35)", marginBottom: 8 }}>Add your accounts on the left</div>
-                  <p style={{ fontSize: 11, color: "rgba(255,255,255,0.2)", margin: 0, maxWidth: 380, marginLeft: "auto", marginRight: "auto", lineHeight: 1.7 }}>
+                <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 16, padding: "48px 32px", textAlign: "center" }}>
+                  <Users size={32} color="rgba(15,23,42,0.06)" style={{ margin: "0 auto 16px" }} />
+                  <div style={{ fontSize: 14, fontWeight: 800, color: "rgba(15,23,42,0.10)", marginBottom: 8 }}>Add your accounts on the left</div>
+                  <p style={{ fontSize: 11, color: "rgba(15,23,42,0.08)", margin: 0, maxWidth: 380, marginLeft: "auto", marginRight: "auto", lineHeight: 1.7 }}>
                     Enter company names one by one or paste a list, set your qualification threshold and funding focus, then click <strong style={{ color: "rgba(255,255,255,0.4)" }}>Run Qualification</strong> to score each account against live Sales IQ state intelligence.
                   </p>
                 </div>
               )}
 
               {!qualRun && accounts.length > 0 && (
-                <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: "36px 32px", textAlign: "center" }}>
+                <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 16, padding: "36px 32px", textAlign: "center" }}>
                   <CheckCircle2 size={28} color={BB_CRIMSON} style={{ margin: "0 auto 12px" }} />
-                  <div style={{ fontSize: 13, fontWeight: 800, color: "#fff", marginBottom: 6 }}>{accounts.length} account{accounts.length !== 1 ? "s" : ""} ready</div>
-                  <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", margin: 0 }}>Click <strong style={{ color: BB_CRIMSON }}>Run Qualification</strong> to score them.</p>
+                  <div style={{ fontSize: 13, fontWeight: 800, color: "#0F172A", marginBottom: 6 }}>{accounts.length} account{accounts.length !== 1 ? "s" : ""} ready</div>
+                  <p style={{ fontSize: 11, color: "rgba(15,23,42,0.10)", margin: 0 }}>Click <strong style={{ color: BB_CRIMSON }}>Run Qualification</strong> to score them.</p>
                 </div>
               )}
 
@@ -2879,25 +2879,25 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
                             <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
                               {/* Rank + score */}
                               <div style={{ textAlign: "center", minWidth: 44 }}>
-                                <div style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.3)", marginBottom: 2 }}>#{i + 1}</div>
+                                <div style={{ fontSize: 10, fontWeight: 700, color: "rgba(15,23,42,0.10)", marginBottom: 2 }}>#{i + 1}</div>
                                 <div style={{ fontSize: 22, fontWeight: 900, color: statusColor, lineHeight: 1 }}>{r.score}</div>
-                                <div style={{ fontSize: 8, color: "rgba(255,255,255,0.25)", marginTop: 1 }}>/ 100</div>
+                                <div style={{ fontSize: 8, color: "rgba(15,23,42,0.08)", marginTop: 1 }}>/ 100</div>
                               </div>
                               {/* Details */}
                               <div style={{ flex: 1, minWidth: 0 }}>
                                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4, flexWrap: "wrap" }}>
-                                  <span style={{ fontSize: 13, fontWeight: 900, color: "#fff" }}>{r.name}</span>
+                                  <span style={{ fontSize: 13, fontWeight: 900, color: "#0F172A" }}>{r.name}</span>
                                   <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 9, fontWeight: 800, padding: "2px 8px", borderRadius: 100, background: `${statusColor}18`, border: `1px solid ${statusColor}35`, color: statusColor }}>
                                     {statusIcon}{statusLabel}
                                   </span>
                                 </div>
-                                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginBottom: 8 }}>
+                                <div style={{ fontSize: 10, color: "rgba(15,23,42,0.10)", marginBottom: 8 }}>
                                   {ALL_STATES.find(s => s.code === r.state)?.name || r.state} · {r.fundingType} · {r.size}{r.industry ? ` · ${r.industry}` : ""}
                                 </div>
                                 {r.signals.length > 0 && (
                                   <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
                                     {r.signals.map((sig, si) => (
-                                      <span key={si} style={{ fontSize: 9, fontWeight: 700, padding: "2px 8px", borderRadius: 100, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.5)" }}>
+                                      <span key={si} style={{ fontSize: 9, fontWeight: 700, padding: "2px 8px", borderRadius: 100, background: "rgba(15,23,42,0.03)", border: "1px solid rgba(15,23,42,0.06)", color: "rgba(255,255,255,0.5)" }}>
                                         {sig}
                                       </span>
                                     ))}
@@ -2928,7 +2928,7 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
         {/* ── Tab: Sales Angle Generator ── */}
         {activeTab === "angle" && (
           <div style={{ maxWidth: 680 }}>
-            <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 16, padding: 24 }}>
+            <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,23,42,0.03)", borderRadius: 16, padding: 24 }}>
               <SalesAngleGenerator selectedState={selectedStateCode} statesData={statesData} />
             </div>
           </div>
@@ -2938,8 +2938,8 @@ Write a 3-sentence opening angle / first message strategy for this specific pros
         {activeTab === "alerts" && (
           <div style={{ maxWidth: 760 }}>
             <div style={{ marginBottom: 14 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 4 }}>Active Compliance Risk Alerts</div>
-              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", margin: 0 }}>California priority alerts first · Federal requirements · State-specific enforcement actions</p>
+              <div style={{ fontSize: 10, fontWeight: 700, color: "rgba(15,23,42,0.10)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 4 }}>Active Compliance Risk Alerts</div>
+              <p style={{ fontSize: 11, color: "rgba(15,23,42,0.10)", margin: 0 }}>California priority alerts first · Federal requirements · State-specific enforcement actions</p>
             </div>
             {alertsLoading ? (
               <div style={{ display: "flex", justifyContent: "center", padding: 40 }}>

@@ -82,9 +82,9 @@ export function FPSGauge({
             gap: 5,
             padding: "2px 8px",
             borderRadius: 6,
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            color: "rgba(255,255,255,0.4)",
+            background: "#ffffff",
+            border: "1px solid #e2e8f0",
+            color: "#475569",
             fontSize: 10,
             fontWeight: 700,
             letterSpacing: "0.08em",
@@ -98,7 +98,7 @@ export function FPSGauge({
     return (
       <div
         data-testid="fps-gauge-loading"
-        style={{ width: size, height: size, borderRadius: "50%", background: "rgba(255,255,255,0.04)" }}
+        style={{ width: size, height: size, borderRadius: "50%", background: "#ffffff" }}
       />
     );
   }
@@ -158,7 +158,7 @@ export function FPSGauge({
               cy={size / 2}
               r={r}
               fill="none"
-              stroke="rgba(255,255,255,0.08)"
+              stroke="#e2e8f0"
               strokeWidth={8}
             />
             <circle
@@ -189,7 +189,7 @@ export function FPSGauge({
             <div
               style={{
                 fontSize: 8,
-                color: "rgba(255,255,255,0.4)",
+                color: "#475569",
                 letterSpacing: "0.15em",
                 marginTop: 2,
               }}
@@ -204,9 +204,9 @@ export function FPSGauge({
             <div
               style={{
                 fontSize: 10,
-                fontWeight: 900,
+                fontWeight: 700,
                 letterSpacing: "0.12em",
-                color: "rgba(255,255,255,0.55)",
+                color: "var(--kiq-muted)",
                 textTransform: "uppercase",
               }}
             >
@@ -238,7 +238,7 @@ export function FPSGauge({
       <div
         style={{
           fontSize: 9,
-          color: "rgba(255,255,255,0.35)",
+          color: "var(--kiq-muted)",
           lineHeight: 1.45,
           fontFamily: "ui-sans-serif, system-ui",
         }}
@@ -266,19 +266,19 @@ function SubBar({
       <div
         style={{
           fontSize: 9,
-          color: "rgba(255,255,255,0.45)",
+          color: "var(--kiq-ink-soft)",
           flex: "0 0 110px",
           letterSpacing: "0.05em",
         }}
       >
         {label} ·{" "}
-        <span style={{ color: "rgba(255,255,255,0.30)" }}>{Math.round(weight * 100)}%</span>
+        <span style={{ color: "var(--kiq-subtle)" }}>{Math.round(weight * 100)}%</span>
       </div>
       <div
         style={{
           flex: 1,
           height: 4,
-          background: "rgba(255,255,255,0.06)",
+          background: "#f1f5f9",
           borderRadius: 2,
           overflow: "hidden",
         }}

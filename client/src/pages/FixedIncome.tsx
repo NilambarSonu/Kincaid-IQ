@@ -114,15 +114,15 @@ export default function FixedIncome() {
                     <stop offset="95%" stopColor="#00A8FF" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" vertical={false} />
                 <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} />
                 <YAxis axisLine={false} tickLine={false} tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} tickFormatter={(v) => `${v}%`} domain={[4, 5.8]} />
-                <Tooltip contentStyle={{ background: "rgba(8,10,28,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "12px" }} formatter={(v: number) => [`${v.toFixed(2)}%`, "Yield"]} />
+                <Tooltip contentStyle={{ background: "rgba(8,10,28,0.95)", border: "1px solid #e2e8f0", borderRadius: "12px" }} formatter={(v: number) => [`${v.toFixed(2)}%`, "Yield"]} />
                 <Area type="monotone" dataKey="rate" stroke="#00A8FF" strokeWidth={2.5} fill="url(#yieldGrad)" name="Yield"  isAnimationActive={false} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
-          <div className="mt-4 p-3 rounded-xl bg-white/5 flex items-center justify-between">
+          <div className="mt-4 p-3 rounded-xl bg-[var(--kiq-surface)]/5 flex items-center justify-between">
             <div>
               <p className="text-[10px] text-muted-foreground uppercase tracking-widest">2s10s Spread</p>
               <p className={`text-xl font-bold font-mono ${isInverted ? "text-destructive" : "text-[#00FF94]"}`}>
@@ -154,7 +154,7 @@ export default function FixedIncome() {
                   value={inp.value}
                   onChange={(e) => inp.setter(Number(e.target.value))}
                   min={inp.min} max={inp.max} step={inp.step}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:ring-1 focus:ring-primary/40"
+                  className="w-full bg-[var(--kiq-surface)]/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-[var(--kiq-ink)] focus:outline-none focus:ring-1 focus:ring-primary/40"
                   data-testid={inp.testId}
                 />
               </div>
@@ -169,7 +169,7 @@ export default function FixedIncome() {
               { label: "Mod. Duration",  value: `${bondMetrics.modDuration} yrs`,          color: "#00FF94" },
               { label: "DV01",           value: `$${bondMetrics.dv01.toFixed(3)}`,         color: "#A855F7" },
             ].map((m) => (
-              <div key={m.label} className="p-2.5 rounded-lg bg-white/5 border border-white/5">
+              <div key={m.label} className="p-2.5 rounded-lg bg-[var(--kiq-surface)]/5 border border-white/5">
                 <p className="text-[9px] text-muted-foreground uppercase mb-0.5 tracking-wide">{m.label}</p>
                 <p className="text-sm font-bold font-mono" style={{ color: m.color }} data-testid={m.testId}>{m.value}</p>
               </div>
@@ -196,10 +196,10 @@ export default function FixedIncome() {
                   <stop offset="95%" stopColor="#FF4D6D" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" vertical={false} />
               <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 9 }} />
               <YAxis axisLine={false} tickLine={false} tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} />
-              <Tooltip contentStyle={{ background: "rgba(8,10,28,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "12px" }} />
+              <Tooltip contentStyle={{ background: "rgba(8,10,28,0.95)", border: "1px solid #e2e8f0", borderRadius: "12px" }} />
               <Area type="monotone" dataKey="ig" name="IG OAS" stroke="#00A8FF" fill="url(#igGrad)" strokeWidth={2}  isAnimationActive={false} />
               <Area type="monotone" dataKey="hy" name="HY OAS" stroke="#FF4D6D" fill="url(#hyGrad)" strokeWidth={2}  isAnimationActive={false} />
             </AreaChart>
@@ -226,9 +226,9 @@ export default function FixedIncome() {
             </thead>
             <tbody>
               {benchmarkBonds.map((b) => (
-                <tr key={b.name} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                <tr key={b.name} className="border-b border-white/5 hover:bg-[var(--kiq-surface)]/5 transition-colors">
                   <td className="py-2.5 pr-4">
-                    <p className="font-bold text-white">{b.name}</p>
+                    <p className="font-bold text-[var(--kiq-ink)]">{b.name}</p>
                     <p className="text-[9px] text-muted-foreground">{b.maturity}</p>
                   </td>
                   <td className="py-2.5 pr-4 text-right font-mono">{b.coupon.toFixed(2)}%</td>

@@ -94,15 +94,15 @@ export function ViewSwitcher() {
     <div ref={ref} className="relative" data-testid="view-switcher">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="group flex items-center gap-2 px-3 h-9 rounded-lg transition-all"
+        className="kiq-liquid-view-trigger group flex items-center gap-2 px-3 h-9 rounded-lg transition-all"
         style={{
           background:
-            "linear-gradient(180deg, rgba(28,34,68,0.85) 0%, rgba(14,18,42,0.85) 100%)",
-          border: `1px solid ${open ? current.accent + "55" : "rgba(255,255,255,0.08)"}`,
+            "linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.68) 100%)",
+          border: `1px solid ${open ? current.accent + "55" : "#e2e8f0"}`,
           boxShadow: open
-            ? `0 0 0 1px ${current.accent}33, 0 8px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)`
-            : "0 1px 0 rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)",
-          color: "rgba(220,230,250,0.95)",
+            ? `0 0 0 1px ${current.accent}33, 0 8px 24px rgba(0,0,0,0.06), inset 0 1px 0 #f1f5f9`
+            : "0 1px 0 rgba(0,0,0,0.06), inset 0 1px 0 #f1f5f9",
+          color: "#08111f",
         }}
         data-testid="button-view-switcher"
         aria-haspopup="listbox"
@@ -140,15 +140,15 @@ export function ViewSwitcher() {
         <div
           role="listbox"
           aria-label="View mode"
-          className="absolute right-0 mt-2 w-[320px] overflow-hidden z-50"
+          className="kiq-liquid-view-menu absolute right-0 mt-2 w-[320px] overflow-hidden z-50"
           style={{
             background:
-              "linear-gradient(180deg, rgba(20,26,54,0.98) 0%, rgba(8,12,30,0.98) 100%)",
-            border: "1px solid rgba(255,255,255,0.08)",
+              "linear-gradient(180deg, rgba(255,255,255,0.90) 0%, rgba(255,255,255,0.72) 100%)",
+            border: "1px solid #e2e8f0",
             borderRadius: 12,
             backdropFilter: "blur(28px)",
             boxShadow:
-              "0 24px 64px rgba(0,0,0,0.6), 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)",
+              "0 24px 64px rgba(0,0,0,0.6), 0 4px 12px rgba(0,0,0,0.06), inset 0 1px 0 #f1f5f9",
             animation: "kiq-vs-in 140ms cubic-bezier(0.16, 1, 0.3, 1)",
           }}
           data-testid="view-switcher-menu"
@@ -163,9 +163,9 @@ export function ViewSwitcher() {
           <div
             className="px-3 py-2 flex items-center justify-between"
             style={{
-              borderBottom: "1px solid rgba(255,255,255,0.06)",
+              borderBottom: "1px solid #f1f5f9",
               background:
-                "linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%)",
+                "linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0) 100%)",
             }}
           >
             <span
@@ -205,7 +205,7 @@ export function ViewSwitcher() {
                   onMouseEnter={(e) => {
                     if (!active) {
                       (e.currentTarget as HTMLButtonElement).style.background =
-                        "rgba(255,255,255,0.03)";
+                        "#ffffff";
                     }
                   }}
                   onMouseLeave={(e) => {
@@ -232,13 +232,13 @@ export function ViewSwitcher() {
                   <span className="flex-1 min-w-0">
                     <span
                       className="block text-[12px] font-semibold tracking-tight"
-                      style={{ color: active ? "#FFFFFF" : "rgba(230,235,250,0.95)" }}
+                      style={{ color: active ? "#08111f" : "#1e2f46" }}
                     >
                       {v.label}
                     </span>
                     <span
                       className="block text-[10.5px] truncate"
-                      style={{ color: "rgba(160,180,210,0.65)" }}
+                      style={{ color: "#3f516a" }}
                     >
                       {v.hint}
                     </span>
@@ -258,7 +258,7 @@ export function ViewSwitcher() {
           <div
             className="px-3 py-2 text-[9.5px] uppercase tracking-[0.18em]"
             style={{
-              borderTop: "1px solid rgba(255,255,255,0.06)",
+              borderTop: "1px solid #f1f5f9",
               color: "rgba(120,140,170,0.55)",
               background: "rgba(0,0,0,0.2)",
             }}

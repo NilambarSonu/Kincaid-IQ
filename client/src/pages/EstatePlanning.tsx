@@ -58,15 +58,15 @@ export default function EstatePlanning() {
           <p className="text-xs text-muted-foreground mb-4">Click a bar to see strategy detail</p>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={chartData} margin={{ top: 5, right: 5, left: 0, bottom: 20 }} onClick={(d) => { if (d.activePayload) { const idx = d.activePayload[0].payload; const s = estateScenarios.find((es) => es.color === idx.color); if (s) setSelected(s.id); } }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
               <XAxis dataKey="name" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 9 }} axisLine={false} tickLine={false} angle={-15} textAnchor="end" />
               <YAxis tick={{ fill: "rgba(130,150,200,0.4)", fontSize: 9 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1e9).toFixed(1)}B`} width={36} />
               <Tooltip
                 content={({ active, payload, label }) =>
                   active && payload?.length ? (
                     <div className="rounded-xl p-3 text-xs" style={{ background: "rgba(8,10,40,0.95)", border: "1px solid rgba(0,140,255,0.2)" }}>
-                      <p className="font-bold text-white mb-1">{label}</p>
-                      <div className="flex justify-between gap-4"><span style={{ color: "#00FF94" }}>Net to Heirs</span><span className="text-white font-bold">{formatCurrency(payload[0].value as number)}</span></div>
+                      <p className="font-bold text-[var(--kiq-ink)] mb-1">{label}</p>
+                      <div className="flex justify-between gap-4"><span style={{ color: "#00FF94" }}>Net to Heirs</span><span className="text-[var(--kiq-ink)] font-bold">{formatCurrency(payload[0].value as number)}</span></div>
                     </div>
                   ) : null
                 }
@@ -94,7 +94,7 @@ export default function EstatePlanning() {
                 <div className="flex items-center gap-3">
                   <Shield size={13} style={{ color: s.color }} />
                   <div>
-                    <p className="text-sm font-semibold text-white">{s.strategy}</p>
+                    <p className="text-sm font-semibold text-[var(--kiq-ink)]">{s.strategy}</p>
                     <div className="flex items-center gap-2 mt-0.5">
                       <span className="text-[10px]" style={{ color: COMPLEXITY_COLORS[s.complexity] }}>
                         {s.complexity} complexity
@@ -120,7 +120,7 @@ export default function EstatePlanning() {
           <div className="flex items-center gap-3 mb-4">
             <Shield size={18} style={{ color: current.color }} />
             <div>
-              <p className="font-bold text-lg text-white" style={{ fontFamily: "var(--font-display)" }}>{current.strategy}</p>
+              <p className="font-bold text-lg text-[var(--kiq-ink)]" style={{ fontFamily: "var(--font-display)" }}>{current.strategy}</p>
               <p className="text-xs text-muted-foreground">Complexity: {current.complexity} · Timeline: {current.timeline}</p>
             </div>
           </div>

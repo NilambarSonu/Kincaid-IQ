@@ -85,7 +85,7 @@ export default function ShareLinks() {
             <Share2 style={{ width: 20, height: 20, color: "#BF5FFF" }} />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">Shared Links</h1>
+            <h1 className="text-2xl font-bold text-[var(--kiq-ink)] tracking-tight">Shared Links</h1>
             <p className="text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>
               Review the share links you've created and revoke any that should no longer be open.
             </p>
@@ -94,14 +94,14 @@ export default function ShareLinks() {
 
         <div className="mt-6">
           {isLoading ? (
-            <div className="flex items-center gap-3 py-16 justify-center" style={{ color: "rgba(255,255,255,0.5)" }}>
+            <div className="flex items-center gap-3 py-16 justify-center" style={{ color: "#334155" }}>
               <Loader2 className="w-5 h-5 animate-spin" />
               <span className="text-sm">Loading your share links…</span>
             </div>
           ) : isError ? (
             <div
               className="flex flex-col items-center text-center gap-3 py-16 rounded-2xl"
-              style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}
+              style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}
             >
               <AlertTriangle className="w-8 h-8" style={{ color: "#FFB800" }} />
               <p className="text-sm" style={{ color: "rgba(255,255,255,0.55)" }}>
@@ -112,7 +112,7 @@ export default function ShareLinks() {
             <div
               data-testid="empty-share-links"
               className="flex flex-col items-center text-center gap-3 py-16 rounded-2xl"
-              style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}
+              style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}
             >
               <div
                 style={{
@@ -122,20 +122,20 @@ export default function ShareLinks() {
               >
                 <Link2 className="w-6 h-6" style={{ color: "#BF5FFF" }} />
               </div>
-              <h2 className="text-base font-bold text-white">No share links yet</h2>
+              <h2 className="text-base font-bold text-[var(--kiq-ink)]">No share links yet</h2>
               <p className="text-sm max-w-md" style={{ color: "rgba(255,255,255,0.45)" }}>
-                Use the Share button on War Room, Benefits Benchmarking, Rx Defense, or the Broker Console to
+                Use the Share button on War Room, Benefits Benchmarking, PBM Contract Clarity 360, or the Broker Console to
                 create a branded link. They'll show up here so you can manage and revoke them.
               </p>
             </div>
           ) : (
             <div
               className="rounded-2xl overflow-hidden"
-              style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)" }}
+              style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}
             >
               <div
                 className="hidden md:grid items-center px-5 py-3 text-[10px] font-bold uppercase tracking-wider"
-                style={{ gridTemplateColumns: "1fr 160px 130px 130px 150px", color: "rgba(255,255,255,0.4)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+                style={{ gridTemplateColumns: "1fr 160px 130px 130px 150px", color: "#475569", borderBottom: "1px solid #f1f5f9" }}
               >
                 <span>View</span>
                 <span>Page</span>
@@ -153,20 +153,20 @@ export default function ShareLinks() {
                     className="grid items-center px-5 py-4 gap-y-2"
                     style={{
                       gridTemplateColumns: "1fr 160px 130px 130px 150px",
-                      borderBottom: "1px solid rgba(255,255,255,0.04)",
+                      borderBottom: "1px solid #ffffff",
                       opacity: link.expired ? 0.6 : 1,
                     }}
                   >
                     <div className="min-w-0 pr-4">
-                      <div className="text-sm font-semibold text-white truncate" data-testid={`text-title-${link.short_id}`}>
+                      <div className="text-sm font-semibold text-[var(--kiq-ink)] truncate" data-testid={`text-title-${link.short_id}`}>
                         {link.title || link.page_label}
                       </div>
-                      <div className="text-[11px] truncate" style={{ color: "rgba(255,255,255,0.35)" }}>
+                      <div className="text-[11px] truncate" style={{ color: "#64748b" }}>
                         /s/{link.short_id}
                       </div>
                     </div>
 
-                    <div className="text-xs" style={{ color: "rgba(255,255,255,0.6)" }} data-testid={`text-page-${link.short_id}`}>
+                    <div className="text-xs" style={{ color: "#1e293b" }} data-testid={`text-page-${link.short_id}`}>
                       {link.page_label}
                     </div>
 
@@ -182,7 +182,7 @@ export default function ShareLinks() {
                       ) : link.expires_at ? (
                         <span style={{ color: "rgba(255,255,255,0.55)" }}>{fmtDate(link.expires_at)}</span>
                       ) : (
-                        <span style={{ color: "rgba(255,255,255,0.35)" }}>Never</span>
+                        <span style={{ color: "#64748b" }}>Never</span>
                       )}
                     </div>
 

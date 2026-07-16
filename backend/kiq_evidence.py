@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Evidence Builder v10.0
+Kincaid Health — Evidence Builder v10.0
 Every number has a receipt. Every receipt has a SHA-256 hash.
 Every hash has a lineage chain.
 

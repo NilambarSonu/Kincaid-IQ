@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Agent 2: Intelligence Extraction Agent
+Kincaid Health — Agent 2: Intelligence Extraction Agent
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Extracts structured intelligence from normalized document objects produced by Agent 1.
 
@@ -29,7 +29,7 @@ Returns:
 import json
 from .base import BaseAgent, run_agent
 
-SYSTEM = """You are the Kincaid IQ Intelligence Extraction Agent — Layer 2 of a 5-agent fiduciary intelligence pipeline.
+SYSTEM = """You are the Kincaid Health Intelligence Extraction Agent — Layer 2 of a 5-agent fiduciary intelligence pipeline.
 
 ROLE: Extract structured meaning, risk signals, cost drivers, and compliance gaps from normalized document objects.
 

@@ -8,10 +8,10 @@ import {
 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
-const BG    = "#07091c";
+const BG    = "#F8FAFC";
 const CARD  = "#0d1033";
 const CARD2 = "#111540";
-const BORDER= "rgba(255,255,255,0.08)";
+const BORDER= "#e2e8f0";
 const TEXT1 = "#f0f4ff";
 const TEXT2 = "#8b9dd4";
 const ACCENT= "#4f7dff";
@@ -119,7 +119,7 @@ function RxNormTab() {
           onClick={() => query.trim() && setSearch(query.trim())}
           disabled={isFetching}
           style={{ height: 40, padding: "0 20px", background: ROSE, border: "none", borderRadius: 8,
-            color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+            color: "#0F172A", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
           {isFetching ? "…" : "Lookup"}
         </button>
       </div>
@@ -532,7 +532,7 @@ function NpiTab() {
           onClick={() => query.trim() && setSearch(query.trim())}
           disabled={npiLoading || pecosLoading}
           style={{ height: 40, padding: "0 20px", background: PURPLE, border: "none", borderRadius: 8,
-            color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+            color: "#0F172A", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
           {(npiLoading || pecosLoading) ? "…" : "Search"}
         </button>
       </div>
@@ -778,7 +778,7 @@ function PaIqTab() {
             fontSize: 9, fontWeight: 800, letterSpacing: 0.5 }}>CLAUDE AI</span>
         </div>
         <p style={{ color: TEXT2, fontSize: 11, margin: 0 }}>
-          Powered by the Kincaid IQ fiduciary intelligence engine. Transforms PA denial scenarios into
+          Powered by the Kincaid Health fiduciary intelligence engine. Transforms PA denial scenarios into
           structured economic impact analysis, root cause mapping, and ERISA-grounded appeal strategy.
           Not a chatbot — a deterministic fiduciary decision layer.
         </p>
@@ -840,13 +840,13 @@ function PaIqTab() {
           disabled={mutation.isPending || !form.drug_name || !form.diagnosis}
           style={{
             width: "100%", height: 44, background: mutation.isPending ? `${ROSE}60` : ROSE,
-            border: "none", borderRadius: 10, color: "#fff", fontSize: 13, fontWeight: 800,
+            border: "none", borderRadius: 10, color: "#0F172A", fontSize: 13, fontWeight: 800,
             cursor: mutation.isPending || !form.drug_name ? "not-allowed" : "pointer",
             display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
             letterSpacing: 0.3,
           }}>
           <Brain size={17}/>
-          {mutation.isPending ? "Kincaid IQ Analyzing…" : "Run PA IQ™ Analysis"}
+          {mutation.isPending ? "Kincaid Health Analyzing…" : "Run PA IQ™ Analysis"}
         </button>
       </div>
 
@@ -1023,7 +1023,7 @@ function PaIqTab() {
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
                   <div style={{ width: 28, height: 28, borderRadius: "50%", background: ROSE,
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "#fff", fontSize: 13, fontWeight: 900, flexShrink: 0 }}>
+                    color: "#0F172A", fontSize: 13, fontWeight: 900, flexShrink: 0 }}>
                     {d.rank}
                   </div>
                   <span style={{ color: TEXT1, fontWeight: 700, fontSize: 13, flex: 1 }}>{d.action}</span>

@@ -39,7 +39,7 @@ _REASONING_PREFIXES = ("gpt-5", "o1", "o3", "o4")
 _MIN_REASONING_COMPLETION = 2048
 
 # GPT-5 defaults to "medium" reasoning effort, which for large JSON responses (e.g.
-# the Rx Defense forensic analysis) spends so long thinking that requests exceed
+# the PBM Contract Clarity 360 forensic analysis) spends so long thinking that requests exceed
 # multi-minute timeouts and/or exhaust the token budget before emitting an answer —
 # making features silently fall back to demo output. Pin a fast-but-capable default
 # ("low"); override globally with GPT5_REASONING_EFFORT, or per-call via the

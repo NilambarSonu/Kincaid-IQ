@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Agent 4: Decision Prioritization Agent
+Kincaid Health — Agent 4: Decision Prioritization Agent
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Ranks all available actions by financial impact, urgency, reversibility, and fiduciary exposure.
 Produces the definitive action hierarchy.
@@ -61,7 +61,7 @@ def _parse_dollars(value) -> int:
     except (ValueError, TypeError):
         return 0
 
-SYSTEM = """You are the Kincaid IQ Decision Prioritization Agent — Layer 4 of a 5-agent fiduciary intelligence pipeline.
+SYSTEM = """You are the Kincaid Health Decision Prioritization Agent — Layer 4 of a 5-agent fiduciary intelligence pipeline.
 
 ROLE: Rank all available actions by financial impact, urgency, reversibility, and fiduciary exposure. Produce the definitive action hierarchy.
 

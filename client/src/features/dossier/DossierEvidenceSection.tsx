@@ -28,12 +28,12 @@ export function DossierEvidenceSection({ evidence, className }: DossierEvidenceS
 
   return (
     <div
-      className={cn("rounded-xl border border-zinc-800 bg-zinc-900/60 overflow-hidden", className)}
+      className={cn("rounded-xl border border-slate-200 bg-slate-50/60 overflow-hidden", className)}
       data-testid="dossier-evidence-section"
     >
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-800">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-200">
         <Database className="w-3.5 h-3.5 text-[#00A8FF]" />
-        <span className="text-xs font-semibold text-zinc-200">Evidence Artifacts</span>
+        <span className="text-xs font-semibold text-slate-700">Evidence Artifacts</span>
         <span className="ml-auto text-[9px] font-mono text-zinc-600">{evidence.length}</span>
       </div>
 
@@ -50,7 +50,7 @@ export function DossierEvidenceSection({ evidence, className }: DossierEvidenceS
                 >
                   {ev.sourceType ?? "?"}
                 </span>
-                <span className="text-[10px] font-mono font-bold text-zinc-300">{ev.evidenceId}</span>
+                <span className="text-[10px] font-mono font-bold text-slate-500">{ev.evidenceId}</span>
                 {ev.description && (
                   <span className="text-[10px] text-zinc-500 truncate flex-1">{ev.description}</span>
                 )}

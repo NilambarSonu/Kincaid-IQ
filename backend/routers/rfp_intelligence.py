@@ -388,7 +388,7 @@ async def quick_draft(
     user: models.User = Depends(get_current_user),
 ):
     """
-    Generate a competitive response draft directly from an Rx Defense contract
+    Generate a competitive response draft directly from a PBM Contract Clarity 360 contract
     (no pipeline opportunity required). Enables the inline Analyzer tab flow.
     """
     rx_contract_id = body.get("rx_contract_id")
@@ -402,7 +402,7 @@ async def quick_draft(
         ).first()
         if rx_contract and rx_contract.status == "complete":
             findings = json.loads(rx_contract.key_findings or "[]")[:5]
-            rx_context = f"\nRx Defense Analysis (Score: {rx_contract.overall_score}/100):\n"
+            rx_context = f"\nPBM Contract Clarity 360 Analysis (Score: {rx_contract.overall_score}/100):\n"
             for f in findings:
                 rx_context += f"  - [{f.get('severity','').upper()}] {f.get('text','')}\n"
 
@@ -411,8 +411,8 @@ async def quick_draft(
 Prospect: {employer_name}
 {rx_context}
 Write a 3-paragraph letter:
-1. Open with a compelling insight about their PBM contract situation (reference the Rx Defense findings above)
-2. Explain your value proposition (fiduciary-grade analysis, benchmarking, Rx Defense scoring)
+1. Open with a compelling insight about their PBM contract situation (reference the PBM Contract Clarity 360 findings above)
+2. Explain your value proposition (fiduciary-grade analysis, benchmarking, PBM Contract Clarity 360 scoring)
 3. Close with a clear call-to-action for a 30-minute discovery call
 
 Tone: McKinsey-grade, direct, board-room ready. Every claim backed by the evidence above."""
@@ -426,17 +426,17 @@ Tone: McKinsey-grade, direct, board-room ready. Every claim backed by the eviden
         draft = resp.choices[0].message.content.strip()
     except Exception as exc:
         logger.warning(f"[RFP] Quick-draft AI failed: {exc}")
-        findings_summary = rx_context or "No Rx Defense analysis available."
+        findings_summary = rx_context or "No PBM Contract Clarity 360 analysis available."
         draft = f"""Dear {employer_name} Leadership Team,
 
 Your PBM contract analysis reveals critical fiduciary issues that warrant immediate review. {findings_summary.strip() or "Our preliminary assessment identifies spread pricing and hidden rebate mechanisms that are likely costing your plan significantly above market."}
 
-Kincaid RMC brings three capabilities your current arrangement almost certainly lacks: (1) a fiduciary-grade Rx Defense analysis scoring your PBM contract across 65 contract provisions, (2) real-time benchmarking against 191,887 employer plans in the DOL EFAST2 database, and (3) a Shady Broker Index™ report documenting your current broker's compensation as a percentage of plan income.
+Kincaid Health brings three capabilities your current arrangement almost certainly lacks: (1) a fiduciary-grade PBM Contract Clarity 360 analysis scoring your PBM contract across 65 contract provisions, (2) real-time benchmarking against 191,887 employer plans in the DOL EFAST2 database, and (3) a Broker Compensation Index™ report documenting your current broker's compensation as a percentage of plan income.
 
 I'd like to schedule a 30-minute discovery call to walk through your specific findings and show you what a fiduciary-aligned engagement looks like in practice. Please reply at your convenience.
 
 Regards,
-Your Kincaid RMC Advisor"""
+Your Kincaid Health Advisor"""
 
     return {"draft": draft, "employer_name": employer_name}
 
@@ -463,7 +463,7 @@ async def draft_competitive_response(
         ).first()
         if rx_contract and rx_contract.status == "complete":
             findings = json.loads(rx_contract.key_findings or "[]")[:5]
-            rx_context = f"\nRx Defense Analysis (Score: {rx_contract.overall_score}/100):\n"
+            rx_context = f"\nPBM Contract Clarity 360 Analysis (Score: {rx_contract.overall_score}/100):\n"
             for f in findings:
                 rx_context += f"  - [{f.get('severity','').upper()}] {f.get('text','')}\n"
 
@@ -485,7 +485,7 @@ Notes: {opp.notes or 'None provided'}
 
 Write a 3-paragraph competitive response/cover letter that:
 1. Opens with a compelling insight about their specific situation (reference the data)
-2. Explains your unique value proposition (fiduciary-grade analysis, benchmarking, Rx Defense)
+2. Explains your unique value proposition (fiduciary-grade analysis, benchmarking, PBM Contract Clarity 360)
 3. Closes with a clear call-to-action for a discovery call
 
 Tone: McKinsey-grade, direct, board-room ready. No marketing fluff. Every claim backed by evidence."""
@@ -727,7 +727,7 @@ def _demo_talking_points_for_ein(bench: dict, sbi: dict) -> list:
          "angle":     "We benchmark vs. 191K national peers and show exactly where you stand before the DOL does."},
         {"headline": "Broker commissions above DOL benchmark",
          "evidence":  f"{bpct:.1f}% of plan income (national median: 1.4%)",
-         "angle":     "Our Shady Broker Index™ documents this for your fiduciary file — regardless of whether you change brokers."},
+         "angle":     "Our Broker Compensation Index™ documents this for your fiduciary file — regardless of whether you change brokers."},
         {"headline": f"Stop-loss status: {'Not detected — catastrophic risk' if not bench.get('has_stop_loss') else 'Present — verify attachment point'}",
          "evidence":  "DOL Form 5500 Schedule A filing",
          "angle":     "A single $1M+ claim without adequate stop-loss can bankrupt a self-funded plan."},
@@ -752,13 +752,13 @@ def _demo_talking_points(opp, bench, sbi) -> list:
          "angle": "We benchmark admin fees against 191K national peers and can show exactly where you stand before the DOL does."},
         {"headline": "Broker commissions above national median",
          "evidence": f"{bpct:.1f}% of plan income vs. national median of 1.4%",
-         "angle": "Our Shady Broker Index™ identifies over-compensated arrangements — we document it for your fiduciary file."},
+         "angle": "Our Broker Compensation Index™ identifies over-compensated arrangements — we document it for your fiduciary file."},
         {"headline": "Stop-loss gap creating catastrophic risk",
          "evidence": f"No stop-loss detected in most recent 5500 filing for {name}",
          "angle": "A single catastrophic claim without stop-loss coverage can bankrupt a self-funded plan. We model your true exposure."},
         {"headline": "PBM contract likely has spread pricing",
          "evidence": "Industry average: 73% of PBM contracts contain hidden spread pricing provisions",
-         "angle": "Our Rx Defense IQ™ scores PBM contracts across 65 fiduciary issues — most plans recover $200K+ annually."},
+         "angle": "Our PBM Contract Clarity 360™ scores PBM contracts across 65 fiduciary issues — most plans recover $200K+ annually."},
         {"headline": f"{parts:,} members generating under-leveraged buying power",
          "evidence": f"{parts:,} covered participants = significant negotiating leverage not yet utilized",
          "angle": "We use your participant count to benchmark against plans with similar demographics and negotiate better rates."},
@@ -774,12 +774,12 @@ def _demo_draft(opp) -> str:
 
 Your DOL Form 5500 data reveals a pattern we see in {opp.industry or 'your industry'} routinely: plan costs are rising faster than your peer benchmark while your current broker's compensation structure creates a misaligned incentive to maintain the status quo. Our preliminary analysis suggests your plan is operating in the 68th–74th percentile for combined admin and broker fees nationally — a gap we can quantify to the dollar before our first conversation.
 
-Kincaid RMC brings three capabilities your current arrangement almost certainly lacks: (1) a fiduciary-grade Rx Defense analysis that scores your PBM contract across 65 contract provisions and identifies hidden spread pricing and rebate extraction mechanisms, (2) real-time benchmarking against 191,887 employer plans in the DOL EFAST2 database to validate whether your fees are defensible, and (3) a Shady Broker Index™ report that documents your current broker's compensation as a percentage of plan income — data your fiduciary committee should have on file regardless of whether you change brokers.
+Kincaid Health brings three capabilities your current arrangement almost certainly lacks: (1) a fiduciary-grade PBM Contract Clarity 360 analysis that scores your PBM contract across 65 contract provisions and identifies hidden spread pricing and rebate extraction mechanisms, (2) real-time benchmarking against 191,887 employer plans in the DOL EFAST2 database to validate whether your fees are defensible, and (3) a Broker Compensation Index™ report that documents your current broker's compensation as a percentage of plan income — data your fiduciary committee should have on file regardless of whether you change brokers.
 
 I'd like to schedule a 30-minute discovery call this week to walk through your specific DOL data and show you what a fiduciary-aligned broker engagement looks like in practice. No obligation — just evidence. Please reply or call directly at your convenience.
 
 Regards,
-{opp.owner or 'Your Kincaid RMC Advisor'}"""
+{opp.owner or 'Your Kincaid Health Advisor'}"""
 
 
 # ── Win/Loss Intelligence ───────────────────────────────────────────────────────

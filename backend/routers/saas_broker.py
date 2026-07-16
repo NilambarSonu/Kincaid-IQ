@@ -1,4 +1,4 @@
-"""Broker Console — Kincaid IQ premium broker command center."""
+"""Broker Console — Kincaid Health premium broker command center."""
 import datetime
 import math
 import re
@@ -30,7 +30,7 @@ def _timeline_stages(days_to_renewal: int):
     stages = [
         {"id": 1, "label": "Strategy Preparation",        "trigger": 180, "owner": "Broker",  "description": "Define renewal strategy, identify goals, review prior year claims experience."},
         {"id": 2, "label": "Document Request",            "trigger": 150, "owner": "Client",  "description": "Request current Rx contract, stop-loss policy, TPA agreement, and census data."},
-        {"id": 3, "label": "Document Ingestion",          "trigger": 120, "owner": "Kincaid", "description": "Upload and scan all contracts. Run Rx Defense IQ™ and Stop-Loss IQ™ analyses."},
+        {"id": 3, "label": "Document Ingestion",          "trigger": 120, "owner": "Kincaid", "description": "Upload and scan all contracts. Run PBM Contract Clarity 360™ and Stop-Loss IQ™ analyses."},
         {"id": 4, "label": "Market Analysis & Rx Review", "trigger": 90,  "owner": "Kincaid", "description": "Complete fiduciary scoring. Identify spread pricing, rebate gaps, laser risks, and exclusion issues."},
         {"id": 5, "label": "Stop-Loss Strategy",          "trigger": 60,  "owner": "Broker",  "description": "Develop stop-loss negotiation position. Request carrier alternatives. Evaluate aggregate exposure."},
         {"id": 6, "label": "Recommendation Package",      "trigger": 45,  "owner": "Broker",  "description": "Prepare executive recommendation. Quantify savings, risk mitigation, and negotiation roadmap."},
@@ -143,7 +143,7 @@ DEMO_CLIENTS = [
         "open_actions": 3,
         "docs_uploaded": 5,
         "docs_required": 6,
-        "notes": "Rx Defense score improving but spread pricing still present. Stop-loss corridor confirmed at 125%.",
+        "notes": "PBM Contract Clarity 360 score improving but spread pricing still present. Stop-loss corridor confirmed at 125%.",
         "contact_name": "Patricia Nguyen",
         "contact_title": "Director of HR",
         "contact_email": "pnguyen@sunvalleysd.edu",
@@ -239,7 +239,7 @@ DEMO_CLIENTS = [
         "open_actions": 1,
         "docs_uploaded": 1,
         "docs_required": 3,
-        "notes": "Moving to self-funded at renewal — strategy memo drafted. Strong candidate for Kincaid IQ upgrade.",
+        "notes": "Moving to self-funded at renewal — strategy memo drafted. Strong candidate for Kincaid Health upgrade.",
         "contact_name": "Robert Chen",
         "contact_title": "President",
         "contact_email": "rchen@lakesidemanufacturing.com",
@@ -413,11 +413,11 @@ DEMO_DOCUMENTS = {
 }
 
 ACTIVITY_FEED = [
-    {"time": "2h ago",  "type": "analysis",  "client": "Midwest Regional Hospital",   "msg": "Rx Defense IQ™ analysis complete — score 38/100"},
+    {"time": "2h ago",  "type": "analysis",  "client": "Midwest Regional Hospital",   "msg": "PBM Contract Clarity 360™ analysis complete — score 38/100"},
     {"time": "4h ago",  "type": "upload",    "client": "Summit Hospitality Group",     "msg": "Rx contract uploaded and queued for analysis"},
     {"time": "6h ago",  "type": "alert",     "client": "Heritage Credit Union",        "msg": "Renewal in 46 days — stop-loss contract not yet uploaded"},
     {"time": "1d ago",  "type": "milestone", "client": "Sun Valley School District",   "msg": "Stage 5 complete: Stop-Loss Strategy finalized"},
-    {"time": "1d ago",  "type": "analysis",  "client": "Heritage Credit Union",        "msg": "Rx Defense IQ™ score 31/100 — 3 critical provisions missing"},
+    {"time": "1d ago",  "type": "analysis",  "client": "Heritage Credit Union",        "msg": "PBM Contract Clarity 360™ score 31/100 — 3 critical provisions missing"},
     {"time": "2d ago",  "type": "upload",    "client": "Cornerstone Law Group",        "msg": "Stop-loss policy uploaded — analysis complete"},
     {"time": "2d ago",  "type": "milestone", "client": "Midwest Regional Hospital",    "msg": "Decision Support meeting scheduled for March 28"},
     {"time": "3d ago",  "type": "alert",     "client": "Pinnacle Retail Group",        "msg": "Rebate pass-through gap identified — negotiation memo issued"},
@@ -442,7 +442,7 @@ def broker_dashboard(db: Session = Depends(get_db), user: models.User = Depends(
     return {
         "broker": {
             "name": "Jeremiah Shrack",
-            "firm": "Kincaid RMC",
+            "firm": "Kincaid Health",
             "title": "Senior Benefits Consultant",
             "account": "SHRACK-7742",
         },
@@ -876,7 +876,7 @@ def _opening_angle(
     if welfare_codes and ("4Q" in welfare_codes or "4D" in welfare_codes):
         return (
             "Open with Rx fiduciary review — prescription drug benefit code present but no separate Rx contract "
-            "filed. Spread pricing and rebate pass-through gaps are likely unexamined. Position Rx Defense IQ™ "
+            "filed. Spread pricing and rebate pass-through gaps are likely unexamined. Position PBM Contract Clarity 360™ "
             "as a complimentary compliance audit."
         )
     if form_year == 2022:
@@ -938,7 +938,7 @@ def _why_this_account(
     if welfare_codes and ("4Q" in welfare_codes or "4A" in welfare_codes):
         reasons.append(
             "Rx Opportunity Signal: health/prescription benefit codes present — "
-            "Rx Defense IQ™ PBM audit likely to identify spread pricing and rebate gaps."
+            "PBM Contract Clarity 360™ PBM audit likely to identify spread pricing and rebate gaps."
         )
 
     # Large carrier disruption

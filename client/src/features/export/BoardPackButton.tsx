@@ -61,7 +61,7 @@ function PackResultBadge({ result }: { result: BoardPackResult }) {
       </button>
 
       {expanded && (
-        <div className="border-t border-zinc-800 px-4 py-4 space-y-3">
+        <div className="border-t border-slate-200 px-4 py-4 space-y-3">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
             {[
               { label: "Pack ID",      value: result.packId,          color: "#FFB800" },
@@ -69,7 +69,7 @@ function PackResultBadge({ result }: { result: BoardPackResult }) {
               { label: "Blocked",      value: result.claimsBlocked,   color: result.claimsBlocked > 0 ? "#FF4D6D" : "#52525b" },
               { label: "Discovered",   value: result.claimsDiscovered, color: "#94a3b8" },
             ].map(({ label, value, color }) => (
-              <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-900/50 px-3 py-2 text-center">
+              <div key={label} className="rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-2 text-center">
                 <p className="text-base font-bold font-mono tabular-nums" style={{ color }}>{value}</p>
                 <p className="text-[8px] font-mono text-zinc-600 uppercase tracking-wider mt-0.5">{label}</p>
               </div>
@@ -193,7 +193,7 @@ export function BoardPackButton({
           <button
             onClick={() => generatePack()}
             data-testid="button-retry-board-pack"
-            className="ml-auto shrink-0 text-zinc-600 hover:text-zinc-300"
+            className="ml-auto shrink-0 text-zinc-600 hover:text-slate-500"
           >
             <RefreshCw className="w-3 h-3" />
           </button>

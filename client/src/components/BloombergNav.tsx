@@ -40,7 +40,7 @@ export function BloombergNav({ ticker, active }: BloombergNavProps) {
   return (
     <div
       className="mb-5 flex items-center gap-1 overflow-x-auto pb-1 no-scrollbar"
-      style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+      style={{ borderBottom: "1px solid #f1f5f9" }}
     >
       {ticker && (
         <div
@@ -72,7 +72,7 @@ export function BloombergNav({ ticker, active }: BloombergNavProps) {
             }
             onMouseEnter={(e) => {
               if (!isActive) {
-                (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)";
+                (e.currentTarget as HTMLElement).style.background = "#f1f5f9";
                 (e.currentTarget as HTMLElement).style.color = "rgba(200,220,255,0.8)";
               }
             }}

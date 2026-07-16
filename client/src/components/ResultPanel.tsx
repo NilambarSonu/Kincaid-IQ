@@ -13,7 +13,7 @@ export function ResultPanel({ provider, content, isPending }: ResultPanelProps) 
   const isKincaid = provider === "anthropic-kincaid";
 
   const config = isKincaid
-    ? { title: "Kincaid IQ Engine", icon: <Bot size={16} />, accent: "#00A8FF", bg: "rgba(0,140,255,0.07)", border: "rgba(0,140,255,0.18)" }
+    ? { title: "Kincaid Health Engine", icon: <Bot size={16} />, accent: "#00A8FF", bg: "rgba(0,140,255,0.07)", border: "rgba(0,140,255,0.18)" }
     : isOpenAI
     ? { title: "OpenAI (ChatGPT)", icon: <Sparkles size={16} />, accent: "#00FF94", bg: "rgba(0,255,148,0.06)", border: "rgba(0,255,148,0.18)" }
     : { title: "Anthropic (Claude)", icon: <Bot size={16} />, accent: "#FFB800", bg: "rgba(255,184,0,0.06)", border: "rgba(255,184,0,0.18)" };
@@ -28,7 +28,7 @@ export function ResultPanel({ provider, content, isPending }: ResultPanelProps) 
         background: "rgba(5, 8, 40, 0.78)",
         backdropFilter: "blur(24px)",
         border: `1px solid ${config.border}`,
-        boxShadow: `0 8px 32px rgba(0,0,0,0.5), 0 0 24px ${config.accent}12`,
+        boxShadow: `0 8px 32px rgba(0,0,0,0.08), 0 0 24px ${config.accent}12`,
       }}
     >
       {/* Header */}
@@ -43,7 +43,7 @@ export function ResultPanel({ provider, content, isPending }: ResultPanelProps) 
           >
             {config.icon}
           </div>
-          <h3 className="font-bold text-white text-sm" style={{ fontFamily: "var(--font-display)" }}>
+          <h3 className="font-bold text-slate-900 text-sm" style={{ fontFamily: "var(--font-display)" }}>
             {config.title}
           </h3>
         </div>
@@ -62,7 +62,7 @@ export function ResultPanel({ provider, content, isPending }: ResultPanelProps) 
         ) : content ? (
           <div
             className="text-xs font-medium px-2.5 py-1 rounded-full"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(130,160,200,0.55)" }}
+            style={{ background: "#ffffff", border: "1px solid #e2e8f0", color: "rgba(130,160,200,0.55)" }}
           >
             Complete
           </div>

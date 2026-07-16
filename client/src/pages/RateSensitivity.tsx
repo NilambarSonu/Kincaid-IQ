@@ -75,8 +75,8 @@ export default function RateSensitivity() {
           <button key={s.key} onClick={() => setSelectedShock(s.key)}
             className="text-xs px-3 py-1.5 rounded-lg font-semibold transition-all"
             style={{
-              background: selectedShock === s.key ? `${s.color}12` : "rgba(255,255,255,0.03)",
-              border: `1px solid ${selectedShock === s.key ? `${s.color}40` : "rgba(255,255,255,0.06)"}`,
+              background: selectedShock === s.key ? `${s.color}12` : "#ffffff",
+              border: `1px solid ${selectedShock === s.key ? `${s.color}40` : "#f1f5f9"}`,
               color: selectedShock === s.key ? s.color : "rgba(150,170,210,0.5)",
             }}
             data-testid={`shock-${s.key}`}
@@ -90,7 +90,7 @@ export default function RateSensitivity() {
           <p className="text-xs text-muted-foreground mb-4">Mark-to-market impact per position at {currentShock.label} rate shock</p>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={chartData} layout="vertical" margin={{ top: 0, right: 30, bottom: 0, left: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
               <XAxis type="number" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 9 }} axisLine={false} tickLine={false}
                 tickFormatter={(v) => `$${(v / 1e6).toFixed(1)}M`} />
               <YAxis type="category" dataKey="name" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 9 }} axisLine={false} tickLine={false} width={80} />
@@ -98,7 +98,7 @@ export default function RateSensitivity() {
                 content={({ active, payload, label }) =>
                   active && payload?.length ? (
                     <div className="rounded-xl p-3 text-xs" style={{ background: "rgba(8,10,40,0.95)", border: "1px solid rgba(0,140,255,0.2)" }}>
-                      <p className="font-bold text-white mb-1">{label}</p>
+                      <p className="font-bold text-[var(--kiq-ink)] mb-1">{label}</p>
                       <p style={{ color: (payload[0].value as number) > 0 ? "#00FF94" : "#FF4D6D" }}>
                         P&L: {(payload[0].value as number) > 0 ? "+" : ""}{formatCurrency(payload[0].value as number)}
                       </p>
@@ -106,7 +106,7 @@ export default function RateSensitivity() {
                   ) : null
                 }
               />
-              <ReferenceLine x={0} stroke="rgba(255,255,255,0.15)" />
+              <ReferenceLine x={0} stroke="#cbd5e1" />
               <Bar dataKey="pnl" radius={[0, 4, 4, 0]} isAnimationActive={false} >
                 {chartData.map((d, i) => <Cell key={i} fill={d.pnl > 0 ? "#00FF94" : "#FF4D6D"} />)}
               </Bar>
@@ -130,7 +130,7 @@ export default function RateSensitivity() {
                       {isGain ? "+" : ""}{formatCurrency(total)}
                     </span>
                   </div>
-                  <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
+                  <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: "#f8fafc" }}>
                     <div className="h-full rounded-full" style={{ width: `${barPct}%`, background: isGain ? "#00FF94" : "#FF4D6D", opacity: 0.7 }} />
                   </div>
                 </div>
@@ -145,7 +145,7 @@ export default function RateSensitivity() {
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
                 {["Position", "Asset Class", "Value", "Duration", "DV01", "−100bps", "−50bps", "+50bps", "+100bps", "+200bps"].map((h) => (
                   <th key={h} className="text-left px-3 py-2 text-muted-foreground font-medium whitespace-nowrap">{h}</th>
                 ))}
@@ -155,16 +155,16 @@ export default function RateSensitivity() {
               {rateSensitivity.map((r) => {
                 const color = ASSET_COLORS[r.assetClass] || "#00A8FF";
                 return (
-                  <tr key={r.name} className="hover:bg-white/5 cursor-pointer transition-colors"
-                    style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
+                  <tr key={r.name} className="hover:bg-[var(--kiq-surface)]/5 cursor-pointer transition-colors"
+                    style={{ borderBottom: "1px solid #ffffff" }}
                     onClick={() => open("volatility")}
                     data-testid={`row-rate-${r.name.toLowerCase().replace(/\s+/g, "-").slice(0,20)}`}
                   >
-                    <td className="px-3 py-2.5 font-semibold text-white max-w-36 truncate">{r.name}</td>
+                    <td className="px-3 py-2.5 font-semibold text-[var(--kiq-ink)] max-w-36 truncate">{r.name}</td>
                     <td className="px-3 py-2.5">
                       <span className="text-[10px] px-1.5 py-0.5 rounded font-semibold" style={{ background: `${color}15`, color, border: `1px solid ${color}25` }}>{r.assetClass}</span>
                     </td>
-                    <td className="px-3 py-2.5 text-white">{formatCurrency(r.value)}</td>
+                    <td className="px-3 py-2.5 text-[var(--kiq-ink)]">{formatCurrency(r.value)}</td>
                     <td className="px-3 py-2.5 text-muted-foreground">{r.duration.toFixed(1)}yr</td>
                     <td className="px-3 py-2.5" style={{ color: "#FFB800" }}>${r.dv01.toLocaleString()}</td>
                     {([r.pnlMinus100, r.pnlMinus50, r.pnlPlus50, r.pnlPlus100, r.pnlPlus200] as number[]).map((v, ci) => (

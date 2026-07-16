@@ -39,20 +39,20 @@ function DimensionBar({ dim }: { dim: any }) {
   const col = scoreColor(dim.score);
   const statusIcon = dim.status === "good" ? <CheckCircle size={13} className="text-green-400" /> : dim.status === "fair" ? <AlertTriangle size={13} className="text-amber-400" /> : <AlertTriangle size={13} className="text-red-400" />;
   return (
-    <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.07] hover:border-white/[0.12] transition-colors" data-testid={`dim-${dim.name.toLowerCase().replace(/\s+/g,"-")}`}>
+    <div className="p-4 rounded-xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.07] hover:border-white/[0.12] transition-colors" data-testid={`dim-${dim.name.toLowerCase().replace(/\s+/g,"-")}`}>
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
           {statusIcon}
-          <span className="text-white/80 text-sm font-medium">{dim.name}</span>
-          <span className="text-xs text-white/30">({dim.weight}%)</span>
+          <span className="text-[var(--kiq-ink)]/80 text-sm font-medium">{dim.name}</span>
+          <span className="text-xs text-[var(--kiq-ink)]/30">({dim.weight}%)</span>
         </div>
         <span className="font-bold text-sm" style={{ color: col }}>{dim.score} / 100</span>
       </div>
-      <div className="w-full h-1.5 rounded-full bg-white/[0.06] mb-2">
+      <div className="w-full h-1.5 rounded-full bg-[var(--kiq-surface)]/[0.06] mb-2">
         <div className="h-full rounded-full transition-all" style={{ width: `${dim.score}%`, background: col }} />
       </div>
-      <p className="text-xs text-white/40 leading-relaxed">{dim.insight}</p>
-      <p className="text-xs text-white/25 mt-1">Benchmark: {dim.benchmark}/100</p>
+      <p className="text-xs text-[var(--kiq-ink)]/40 leading-relaxed">{dim.insight}</p>
+      <p className="text-xs text-[var(--kiq-ink)]/25 mt-1">Benchmark: {dim.benchmark}/100</p>
     </div>
   );
 }
@@ -63,26 +63,26 @@ function ScoreResults({ data, onReset }: { data: any; onReset: () => void }) {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-white text-lg font-bold">{data.company_name}</h2>
-          <p className="text-white/40 text-xs">{data.industry} · {data.employee_count} employees · {data.state}</p>
+          <h2 className="text-[var(--kiq-ink)] text-lg font-bold">{data.company_name}</h2>
+          <p className="text-[var(--kiq-ink)]/40 text-xs">{data.industry} · {data.employee_count} employees · {data.state}</p>
         </div>
-        <button onClick={onReset} data-testid="score-reset" className="text-xs text-white/40 border border-white/15 rounded-lg px-3 py-1.5 hover:border-white/25 transition-colors">
+        <button onClick={onReset} data-testid="score-reset" className="text-xs text-[var(--kiq-ink)]/40 border border-white/15 rounded-lg px-3 py-1.5 hover:border-white/25 transition-colors">
           Score Another
         </button>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-6 flex flex-col items-center gap-2">
-          <p className="text-white/40 text-xs font-medium uppercase tracking-wider">Overall Health Score</p>
+        <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.08] p-6 flex flex-col items-center gap-2">
+          <p className="text-[var(--kiq-ink)]/40 text-xs font-medium uppercase tracking-wider">Overall Health Score</p>
           <ScoreGauge score={data.overall_score} size={160} />
           <div className="text-center mt-2">
-            <p className="text-xs text-white/30">Annual spend est.</p>
-            <p className="text-lg font-bold text-white">${(data.annual_spend_estimate/1000000).toFixed(1)}M</p>
+            <p className="text-xs text-[var(--kiq-ink)]/30">Annual spend est.</p>
+            <p className="text-lg font-bold text-[var(--kiq-ink)]">${(data.annual_spend_estimate/1000000).toFixed(1)}M</p>
           </div>
           <div className="w-full p-3 rounded-xl mt-1" style={{ background: "rgba(0,255,148,0.06)", border: "1px solid rgba(0,255,148,0.15)" }}>
-            <p className="text-xs text-white/50 text-center">Savings Opportunity</p>
+            <p className="text-xs text-[var(--kiq-ink)]/50 text-center">Savings Opportunity</p>
             <p className="text-xl font-bold text-center" style={{ color: NEON.green }}>${data.savings_opportunity.toLocaleString()}</p>
-            <p className="text-xs text-white/30 text-center">annually with expert intervention</p>
+            <p className="text-xs text-[var(--kiq-ink)]/30 text-center">annually with expert intervention</p>
           </div>
         </div>
 
@@ -92,13 +92,13 @@ function ScoreResults({ data, onReset }: { data: any; onReset: () => void }) {
       </div>
 
       {data.top_risks.length > 0 && (
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
-          <h3 className="text-white font-semibold mb-3 flex items-center gap-2"><AlertTriangle size={14} className="text-red-400" />Top Risk Flags</h3>
+        <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.08] p-5">
+          <h3 className="text-[var(--kiq-ink)] font-semibold mb-3 flex items-center gap-2"><AlertTriangle size={14} className="text-red-400" />Top Risk Flags</h3>
           <div className="space-y-2">
             {data.top_risks.map((r: string, i: number) => (
               <div key={i} className="flex items-start gap-2 p-3 rounded-lg border border-red-500/20 bg-red-500/[0.04]" data-testid={`risk-${i}`}>
                 <AlertTriangle size={12} className="text-red-400 flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-white/70">{r}</p>
+                <p className="text-sm text-[var(--kiq-ink)]/70">{r}</p>
               </div>
             ))}
           </div>
@@ -106,20 +106,20 @@ function ScoreResults({ data, onReset }: { data: any; onReset: () => void }) {
       )}
 
       <div className="rounded-2xl p-5" style={{ background: "linear-gradient(135deg,rgba(99,102,241,0.12),rgba(99,102,241,0.06))", border: "1px solid rgba(99,102,241,0.25)" }}>
-        <h3 className="text-white font-semibold mb-3 flex items-center gap-2"><Phone size={14} style={{ color: NEON.indigo }} />Next Steps with Kincaid RMC</h3>
+        <h3 className="text-[var(--kiq-ink)] font-semibold mb-3 flex items-center gap-2"><Phone size={14} style={{ color: NEON.indigo }} />Next Steps with Kincaid Health</h3>
         <div className="grid md:grid-cols-2 gap-3">
           {data.next_steps.map((s: string, i: number) => (
-            <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.04] border border-white/[0.07]">
+            <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-[var(--kiq-surface)]/[0.04] border border-white/[0.07]">
               <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold" style={{ background: NEON.indigo + "25", color: NEON.indigo, border: `1px solid ${NEON.indigo}35` }}>{i+1}</div>
-              <p className="text-sm text-white/70">{s}</p>
+              <p className="text-sm text-[var(--kiq-ink)]/70">{s}</p>
             </div>
           ))}
         </div>
         <div className="flex gap-3 mt-4">
-          <button data-testid="schedule-meeting" className="flex-1 py-2.5 rounded-lg text-sm font-bold text-white transition-all hover:opacity-90" style={{ background: `linear-gradient(135deg,${NEON.indigo},#4f46e5)` }}>
+          <button data-testid="schedule-meeting" className="flex-1 py-2.5 rounded-lg text-sm font-bold text-[var(--kiq-ink)] transition-all hover:opacity-90" style={{ background: `linear-gradient(135deg,${NEON.indigo},#4f46e5)` }}>
             Schedule Benefits Diagnostic →
           </button>
-          <button data-testid="share-score" className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm border border-white/15 text-white/60 hover:border-white/25 transition-all">
+          <button data-testid="share-score" className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm border border-white/15 text-[var(--kiq-ink)]/60 hover:border-white/25 transition-all">
             <Share2 size={13} /> Share Report
           </button>
         </div>
@@ -163,11 +163,11 @@ function ScoreForm({ onScore }: { onScore: (data: any) => void }) {
 
   const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
     <div>
-      <label className="block text-xs text-white/45 mb-1.5 font-medium">{label}</label>
+      <label className="block text-xs text-[var(--kiq-ink)]/45 mb-1.5 font-medium">{label}</label>
       {children}
     </div>
   );
-  const inputCls = "w-full bg-white/[0.06] border border-white/15 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-indigo-500/50 placeholder:text-white/25";
+  const inputCls = "w-full bg-[var(--kiq-surface)]/[0.06] border border-white/15 rounded-lg px-3 py-2 text-[var(--kiq-ink)] text-sm focus:outline-none focus:border-indigo-500/50 placeholder:text-[var(--kiq-ink)]/25";
   const selectCls = inputCls;
 
   return (
@@ -180,20 +180,20 @@ function ScoreForm({ onScore }: { onScore: (data: any) => void }) {
         hint="Attach an employee census (XLSX/CSV) or claims extract to auto-enrich scoring inputs"
         accept=".csv,.xlsx,.txt,.pdf"
       />
-      <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-6">
-        <h3 className="text-white font-semibold mb-4 flex items-center gap-2"><Building size={14} style={{ color: NEON.indigo }} />Company Information</h3>
+      <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.08] p-6">
+        <h3 className="text-[var(--kiq-ink)] font-semibold mb-4 flex items-center gap-2"><Building size={14} style={{ color: NEON.indigo }} />Company Information</h3>
         <div className="grid md:grid-cols-2 gap-4">
           <Field label="Company Name *"><input required placeholder="Acme Manufacturing Co." className={inputCls} value={form.company_name} onChange={e => set("company_name", e.target.value)} data-testid="input-company-name" /></Field>
-          <Field label="Industry *"><select className={selectCls} value={form.industry} onChange={e => set("industry", e.target.value)} data-testid="select-industry">{INDUSTRIES.map(i => <option key={i} value={i} style={{ background: "#0a0f1e" }}>{i}</option>)}</select></Field>
+          <Field label="Industry *"><select className={selectCls} value={form.industry} onChange={e => set("industry", e.target.value)} data-testid="select-industry">{INDUSTRIES.map(i => <option key={i} value={i} style={{ background: "#F8FAFC" }}>{i}</option>)}</select></Field>
           <Field label="Employee Count *"><input required type="number" placeholder="250" className={inputCls} value={form.employee_count} onChange={e => set("employee_count", e.target.value)} data-testid="input-employee-count" /></Field>
-          <Field label="State"><select className={selectCls} value={form.state} onChange={e => set("state", e.target.value)} data-testid="select-state">{STATES.map(s => <option key={s} value={s} style={{ background: "#0a0f1e" }}>{s}</option>)}</select></Field>
-          <Field label="Plan Type"><select className={selectCls} value={form.plan_type} onChange={e => set("plan_type", e.target.value)} data-testid="select-plan-type">{PLAN_TYPES.map(p => <option key={p} value={p} style={{ background: "#0a0f1e" }}>{p}</option>)}</select></Field>
+          <Field label="State"><select className={selectCls} value={form.state} onChange={e => set("state", e.target.value)} data-testid="select-state">{STATES.map(s => <option key={s} value={s} style={{ background: "#F8FAFC" }}>{s}</option>)}</select></Field>
+          <Field label="Plan Type"><select className={selectCls} value={form.plan_type} onChange={e => set("plan_type", e.target.value)} data-testid="select-plan-type">{PLAN_TYPES.map(p => <option key={p} value={p} style={{ background: "#F8FAFC" }}>{p}</option>)}</select></Field>
         </div>
       </div>
 
-      <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-6">
-        <h3 className="text-white font-semibold mb-1 flex items-center gap-2"><BarChart3 size={14} style={{ color: NEON.gold }} />Plan Data <span className="text-xs text-white/30 font-normal">(optional — improves accuracy)</span></h3>
-        <p className="text-white/30 text-xs mb-4">Leave blank to use Indiana market averages for your employee count and industry.</p>
+      <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.08] p-6">
+        <h3 className="text-[var(--kiq-ink)] font-semibold mb-1 flex items-center gap-2"><BarChart3 size={14} style={{ color: NEON.gold }} />Plan Data <span className="text-xs text-[var(--kiq-ink)]/30 font-normal">(optional — improves accuracy)</span></h3>
+        <p className="text-[var(--kiq-ink)]/30 text-xs mb-4">Leave blank to use Indiana market averages for your employee count and industry.</p>
         <div className="grid md:grid-cols-3 gap-4">
           <Field label="Monthly PMPM Cost ($)"><input type="number" placeholder="862" className={inputCls} value={form.pmpm} onChange={e => set("pmpm", e.target.value)} data-testid="input-pmpm" /></Field>
           <Field label="Generic Dispense Rate (%)"><input type="number" placeholder="90" className={inputCls} value={form.generic_dispense_rate} onChange={e => set("generic_dispense_rate", e.target.value)} data-testid="input-generic-rate" /></Field>
@@ -201,8 +201,8 @@ function ScoreForm({ onScore }: { onScore: (data: any) => void }) {
         </div>
       </div>
 
-      <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-6">
-        <h3 className="text-white font-semibold mb-4 flex items-center gap-2"><Zap size={14} className="text-amber-400" />Quick Diagnostic Questions</h3>
+      <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.08] p-6">
+        <h3 className="text-[var(--kiq-ink)] font-semibold mb-4 flex items-center gap-2"><Zap size={14} className="text-amber-400" />Quick Diagnostic Questions</h3>
         <div className="grid md:grid-cols-2 gap-4">
           {[
             { key: "has_stop_loss",          label: "Does the plan have stop-loss coverage?" },
@@ -211,9 +211,9 @@ function ScoreForm({ onScore }: { onScore: (data: any) => void }) {
           ].map(q => (
             <Field key={q.key} label={q.label}>
               <select className={selectCls} value={(form as any)[q.key]} onChange={e => set(q.key, e.target.value)} data-testid={`select-${q.key}`}>
-                <option value="" style={{ background: "#0a0f1e" }}>— Select —</option>
-                <option value="yes" style={{ background: "#0a0f1e" }}>Yes</option>
-                <option value="no" style={{ background: "#0a0f1e" }}>No</option>
+                <option value="" style={{ background: "#F8FAFC" }}>— Select —</option>
+                <option value="yes" style={{ background: "#F8FAFC" }}>Yes</option>
+                <option value="no" style={{ background: "#F8FAFC" }}>No</option>
               </select>
             </Field>
           ))}
@@ -223,8 +223,8 @@ function ScoreForm({ onScore }: { onScore: (data: any) => void }) {
           ].map(q => (
             <Field key={q.key} label={q.label}>
               <select className={selectCls} value={(form as any)[q.key]} onChange={e => set(q.key, e.target.value)} data-testid={`select-${q.key}`}>
-                <option value="" style={{ background: "#0a0f1e" }}>— Select —</option>
-                {q.opts.map(o => <option key={o} value={o} style={{ background: "#0a0f1e" }}>{o}</option>)}
+                <option value="" style={{ background: "#F8FAFC" }}>— Select —</option>
+                {q.opts.map(o => <option key={o} value={o} style={{ background: "#F8FAFC" }}>{o}</option>)}
               </select>
             </Field>
           ))}
@@ -233,13 +233,13 @@ function ScoreForm({ onScore }: { onScore: (data: any) => void }) {
 
       <div className="flex gap-3">
         <button type="submit" disabled={scoreMutation.isPending} data-testid="btn-score"
-          className="flex-1 py-3 rounded-xl text-base font-bold text-white transition-all hover:opacity-90"
+          className="flex-1 py-3 rounded-xl text-base font-bold text-[var(--kiq-ink)] transition-all hover:opacity-90"
           style={{ background: `linear-gradient(135deg,${NEON.indigo},#4f46e5)`, opacity: scoreMutation.isPending ? 0.6 : 1 }}>
           {scoreMutation.isPending ? "Calculating Score…" : "Generate Employer Health Score →"}
         </button>
         <button type="button" data-testid="btn-demo"
           onClick={() => sampleQuery.refetch().then(r => r.data && onScore(r.data))}
-          className="px-5 py-3 rounded-xl text-sm border border-white/15 text-white/50 hover:border-white/25 transition-all">
+          className="px-5 py-3 rounded-xl text-sm border border-white/15 text-[var(--kiq-ink)]/50 hover:border-white/25 transition-all">
           Load Demo
         </button>
       </div>
@@ -260,13 +260,13 @@ export default function EmployerHealthScore() {
   } : {};
   return (
     <Layout>
-      <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#060b18 0%,#080d1e 50%,#060a16 100%)" }}>
+      <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#F8FAFC 0%,#FFFFFF 50%,#F8FAFC 100%)" }}>
         <div style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(6,10,22,0.90)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(16,185,129,0.14)", boxShadow: "0 1px 24px rgba(16,185,129,0.06)", padding: "12px 24px 10px" }}>
           <div className="flex items-center gap-3">
             <Activity size={18} style={{ color: "#10B981" }} />
             <div>
-              <h1 className="text-base font-bold text-white">Employer Health Score™</h1>
-              <p className="text-white/35 text-xs">Benefits diagnostic scoring · Prospect outreach · Sales intelligence</p>
+              <h1 className="text-base font-bold text-[var(--kiq-ink)]">Employer Health Score™</h1>
+              <p className="text-[var(--kiq-ink)]/35 text-xs">Benefits diagnostic scoring · Prospect outreach · Sales intelligence</p>
             </div>
             <div className="ml-auto flex items-center gap-2">
               {result && (
@@ -285,7 +285,7 @@ export default function EmployerHealthScore() {
               )}
               {result && (
                 <div className="flex items-center gap-2 px-3 py-1 rounded-lg" style={{ background: "rgba(16,185,129,0.1)", border: "1px solid rgba(16,185,129,0.25)" }}>
-                  <span className="text-xs text-white/50">Score:</span>
+                  <span className="text-xs text-[var(--kiq-ink)]/50">Score:</span>
                   <span className="font-bold text-lg" style={{ color: scoreColor(result.overall_score) }}>{result.overall_score}</span>
                   <span className="text-xs font-bold" style={{ color: scoreColor(result.overall_score) }}>{result.grade}</span>
                 </div>

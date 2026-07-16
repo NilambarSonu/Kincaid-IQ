@@ -36,7 +36,7 @@ export function ExecutiveIntelligence({ className }: { className?: string }) {
     return (
       <div className={cn("space-y-4 animate-pulse", className)}>
         {[1, 2, 3].map(i => (
-          <div key={i} className="h-16 rounded-lg bg-slate-800/60" />
+          <div key={i} className="h-16 rounded-lg bg-white/60" />
         ))}
       </div>
     );
@@ -55,33 +55,33 @@ export function ExecutiveIntelligence({ className }: { className?: string }) {
           { label: "Requires Attention", value: flags?.requires_attention ?? 0, icon: AlertTriangle,
             color: (flags?.requires_attention ?? 0) > 0 ? "#FFB800" : "#00FF94" },
         ].map(({ label, value, icon: Icon, color }) => (
-          <div key={label} className="rounded-lg border border-slate-800 bg-[#0B1117] p-3">
+          <div key={label} className="rounded-lg border border-slate-200 bg-[#0B1117] p-3">
             <div className="flex items-center gap-2 mb-1">
               <Icon className="w-3.5 h-3.5" style={{ color }} />
               <span className="text-[10px] text-slate-500 font-mono uppercase tracking-wider">{label}</span>
             </div>
-            <p className="text-xl font-bold text-white" style={{ color }}>{value}</p>
+            <p className="text-xl font-bold text-slate-900" style={{ color }}>{value}</p>
           </div>
         ))}
       </div>
 
       {/* Board-grade claim table */}
-      <div className="rounded-lg border border-slate-800 bg-[#0B1117] overflow-hidden">
-        <div className="px-4 py-3 border-b border-slate-800 flex items-center gap-2">
+      <div className="rounded-lg border border-slate-200 bg-[#0B1117] overflow-hidden">
+        <div className="px-4 py-3 border-b border-slate-200 flex items-center gap-2">
           <FileCheck className="w-4 h-4 text-[#A855F7]" />
-          <span className="text-sm font-semibold text-white">Board-Grade Claims</span>
+          <span className="text-sm font-semibold text-slate-900">Board-Grade Claims</span>
           <span className="ml-auto text-[10px] font-mono text-[#A855F7] border border-[#A855F7]/30 bg-[#A855F7]/10 rounded px-1.5 py-0.5">
             {claims.length} CLAIMS
           </span>
         </div>
-        <div className="divide-y divide-slate-800/60">
+        <div className="divide-y divide-slate-200/60">
           {claims.slice(0, 8).map(c => (
             <div key={c.claim_id}
               className="grid grid-cols-[1fr_auto_auto_auto] gap-3 items-center px-4 py-2.5 hover:bg-white/[0.015]"
               data-testid={`executive-claim-${c.claim_id}`}
             >
               <div>
-                <p className="text-xs font-medium text-white/90">{c.title}</p>
+                <p className="text-xs font-medium text-slate-900/90">{c.title}</p>
                 <p className="text-[10px] text-slate-500 font-mono">{c.claim_id} · {c.layer}</p>
               </div>
               <p className="text-sm font-bold text-[#00A8FF] font-mono whitespace-nowrap">

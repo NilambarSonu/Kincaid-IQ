@@ -348,7 +348,7 @@ function PercentileGauge({
       )}
       {divergence?.kind === "rank-worsened-flat-dollars" && (
         <div
-          className="mt-2 flex items-start gap-1.5 text-[10px] font-semibold px-2 py-1 rounded border bg-zinc-700/40 text-zinc-300 border-zinc-600/60"
+          className="mt-2 flex items-start gap-1.5 text-[10px] font-semibold px-2 py-1 rounded border bg-zinc-700/40 text-[var(--kiq-muted)] border-zinc-600/60"
           data-testid={`divergence-rank-worsened-${testKey}`}
           title={`Percentile worsened (${divergence.pctDelta >= 0 ? "+" : ""}${divergence.pctDelta.toFixed(1)} pts) but your dollars were ${divergenceDollarStr} (${divergencePctStr}). Peers got cheaper, not you got worse.`}
         >
@@ -361,7 +361,7 @@ function PercentileGauge({
           </div>
         </div>
       )}
-      <div className="mt-2 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+      <div className="mt-2 h-1.5 bg-[var(--kiq-surface)] rounded-full overflow-hidden">
         <div
           className={`h-full rounded-full ${value <= 33 ? "bg-emerald-400" : value <= 60 ? "bg-amber-400" : value <= 80 ? "bg-orange-400" : "bg-red-400"}`}
           style={{ width: `${value}%` }}
@@ -375,11 +375,11 @@ function PercentileGauge({
               {view === "percentile" ? "Percentile trend" : `${dollarLabel ?? "Dollar"} trend`}
             </div>
             {hasPctHistory && hasDollarHistory && (
-              <div className="inline-flex rounded border border-zinc-700 overflow-hidden text-[10px] font-semibold">
+              <div className="inline-flex rounded border border-[var(--kiq-hairline)] overflow-hidden text-[10px] font-semibold">
                 <button
                   type="button"
                   onClick={() => setView("percentile")}
-                  className={`px-1.5 py-0.5 transition-colors ${view === "percentile" ? "bg-zinc-700 text-zinc-100" : "text-zinc-400 hover:text-zinc-200"}`}
+                  className={`px-1.5 py-0.5 transition-colors ${view === "percentile" ? "bg-zinc-700 text-[var(--kiq-ink)]" : "text-zinc-400 hover:text-[var(--kiq-ink-soft)]"}`}
                   data-testid={`toggle-percentile-${testKey}`}
                 >
                   %ile
@@ -387,7 +387,7 @@ function PercentileGauge({
                 <button
                   type="button"
                   onClick={() => setView("dollar")}
-                  className={`px-1.5 py-0.5 transition-colors ${view === "dollar" ? "bg-zinc-700 text-zinc-100" : "text-zinc-400 hover:text-zinc-200"}`}
+                  className={`px-1.5 py-0.5 transition-colors ${view === "dollar" ? "bg-zinc-700 text-[var(--kiq-ink)]" : "text-zinc-400 hover:text-[var(--kiq-ink-soft)]"}`}
                   data-testid={`toggle-dollar-${testKey}`}
                 >
                   $
@@ -428,24 +428,24 @@ function DivergenceSettings({
           type="button"
           data-testid="button-divergence-settings"
           title="Tune the 'fees rising at rank' detection thresholds"
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold transition-colors text-zinc-400 hover:text-zinc-100 border border-zinc-700 hover:border-zinc-500 bg-zinc-900/60"
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold transition-colors text-zinc-400 hover:text-[var(--kiq-ink)] border border-[var(--kiq-hairline)] hover:border-zinc-500 bg-[var(--kiq-canvas-soft)]/60"
         >
           <Settings2 className="w-3.5 h-3.5" />
           Thresholds
           {!isDefault && <span className="ml-0.5 w-1.5 h-1.5 rounded-full bg-amber-400" data-testid="indicator-thresholds-custom" />}
         </button>
       </PopoverTrigger>
-      <PopoverContent align="end" className="w-80 bg-zinc-900 border-zinc-700 text-zinc-200">
+      <PopoverContent align="end" className="w-80 bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink-soft)]">
         <div className="space-y-4">
           <div>
-            <div className="text-sm font-bold text-zinc-100">Divergence sensitivity</div>
+            <div className="text-sm font-bold text-[var(--kiq-ink)]">Divergence sensitivity</div>
             <p className="text-[11px] text-zinc-400 mt-0.5 leading-snug">
               Controls when a gauge flags "fees rising at rank" — dollars climbing while percentile rank stays flat.
             </p>
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="thr-flat-pts" className="text-[11px] font-semibold text-zinc-300">
+            <Label htmlFor="thr-flat-pts" className="text-[11px] font-semibold text-[var(--kiq-muted)]">
               Flat-rank tolerance (percentile pts)
             </Label>
             <Input
@@ -456,13 +456,13 @@ function DivergenceSettings({
               step={0.5}
               value={thresholds.percentileFlatPts}
               onChange={(e) => setField("percentileFlatPts", e.target.value, DEFAULT_DIVERGENCE_THRESHOLDS.percentileFlatPts)}
-              className="bg-zinc-950 border-zinc-700 text-zinc-100 h-8 text-sm"
+              className="bg-[var(--kiq-surface)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)] h-8 text-sm"
             />
             <p className="text-[10px] text-zinc-500">|Δ percentile| ≤ this counts as flat. Default {DEFAULT_DIVERGENCE_THRESHOLDS.percentileFlatPts}.</p>
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="thr-dollar-pct" className="text-[11px] font-semibold text-zinc-300">
+            <Label htmlFor="thr-dollar-pct" className="text-[11px] font-semibold text-[var(--kiq-muted)]">
               Material dollar move (%)
             </Label>
             <Input
@@ -476,13 +476,13 @@ function DivergenceSettings({
                 const n = parseFloat(e.target.value);
                 onChange({ ...thresholds, dollarMaterialPct: Number.isFinite(n) ? n / 100 : DEFAULT_DIVERGENCE_THRESHOLDS.dollarMaterialPct });
               }}
-              className="bg-zinc-950 border-zinc-700 text-zinc-100 h-8 text-sm"
+              className="bg-[var(--kiq-surface)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)] h-8 text-sm"
             />
             <p className="text-[10px] text-zinc-500">≥ this % move counts as material. Default {(DEFAULT_DIVERGENCE_THRESHOLDS.dollarMaterialPct * 100).toFixed(0)}%.</p>
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="thr-dollar-abs" className="text-[11px] font-semibold text-zinc-300">
+            <Label htmlFor="thr-dollar-abs" className="text-[11px] font-semibold text-[var(--kiq-muted)]">
               Material dollar move (absolute $)
             </Label>
             <Input
@@ -493,7 +493,7 @@ function DivergenceSettings({
               step={1000}
               value={thresholds.dollarMaterialAbs}
               onChange={(e) => setField("dollarMaterialAbs", e.target.value, DEFAULT_DIVERGENCE_THRESHOLDS.dollarMaterialAbs)}
-              className="bg-zinc-950 border-zinc-700 text-zinc-100 h-8 text-sm"
+              className="bg-[var(--kiq-surface)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)] h-8 text-sm"
             />
             <p className="text-[10px] text-zinc-500">OR ≥ this absolute $ move counts as material. Default ${DEFAULT_DIVERGENCE_THRESHOLDS.dollarMaterialAbs.toLocaleString()}.</p>
           </div>
@@ -503,7 +503,7 @@ function DivergenceSettings({
             data-testid="button-reset-thresholds"
             onClick={onReset}
             disabled={isDefault}
-            className="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-[11px] font-bold transition-colors border border-zinc-700 text-zinc-300 hover:text-zinc-100 hover:border-zinc-500 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-md text-[11px] font-bold transition-colors border border-[var(--kiq-hairline)] text-[var(--kiq-muted)] hover:text-[var(--kiq-ink)] hover:border-zinc-500 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <RotateCcw className="w-3 h-3" />
             Reset to defaults
@@ -540,8 +540,8 @@ function BenchmarkRow({
     latestPct <= 80 ? "#fb923c" : "#f87171";
 
   return (
-    <tr className="border-b border-zinc-800 hover:bg-zinc-800/40 transition-colors">
-      <td className="py-3 pr-4 text-sm font-medium text-zinc-200 align-top">{label}</td>
+    <tr className="border-b border-[var(--kiq-hairline)] hover:bg-[var(--kiq-surface)]/40 transition-colors">
+      <td className="py-3 pr-4 text-sm font-medium text-[var(--kiq-ink-soft)] align-top">{label}</td>
       <td className="py-3 pr-4 text-sm font-mono text-blue-300 font-bold align-top">
         <div>{fmt(employer)}</div>
         {hasHistory && (
@@ -852,7 +852,7 @@ export default function BenefitsBenchmarking() {
   );
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans">
+    <div className="min-h-screen bg-[var(--kiq-surface)] text-[var(--kiq-ink)] font-sans">
       {selectedEin && (
         <AIHistoryPanel
           tool="benchmarking"
@@ -872,11 +872,11 @@ export default function BenefitsBenchmarking() {
         />
       </div>
       {/* ── Terminal header ─────────────────────────────────────────────── */}
-      <div className="bg-zinc-900 border-b border-zinc-800 px-6 py-4">
+      <div className="bg-[var(--kiq-canvas-soft)] border-b border-[var(--kiq-hairline)] px-6 py-4">
         <div className="max-w-screen-2xl mx-auto flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center">
-              <BarChart2 className="w-5 h-5 text-white" />
+              <BarChart2 className="w-5 h-5 text-[var(--kiq-ink)]" />
             </div>
             <div>
               <h1 className="text-lg font-black tracking-tight leading-none">Benefits Benchmarking</h1>
@@ -890,7 +890,7 @@ export default function BenefitsBenchmarking() {
             <Input
               data-testid="input-employer-search"
               placeholder="Search employer name or EIN…"
-              className="pl-9 pr-9 bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-500 focus:ring-blue-500"
+              className="pl-9 pr-9 bg-[var(--kiq-surface)] border-[var(--kiq-hairline)] text-[var(--kiq-ink)] placeholder:text-zinc-500 focus:ring-blue-500"
               value={searchInput}
               onChange={e => {
                 setSearchInput(e.target.value);
@@ -903,7 +903,7 @@ export default function BenefitsBenchmarking() {
               <button
                 data-testid="button-clear-search"
                 onClick={handleClear}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-[var(--kiq-muted)]"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -911,7 +911,7 @@ export default function BenefitsBenchmarking() {
 
             {/* Dropdown */}
             {showDropdown && !selectedEin && debouncedSearch.length >= 2 && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-zinc-800 border border-zinc-700 rounded-lg shadow-2xl z-50 max-h-80 overflow-y-auto">
+              <div className="absolute top-full left-0 right-0 mt-1 bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg shadow-2xl z-50 max-h-80 overflow-y-auto">
                 {lookupQuery.isLoading && (
                   <div className="p-4 text-sm text-zinc-400 text-center">Searching…</div>
                 )}
@@ -925,10 +925,10 @@ export default function BenefitsBenchmarking() {
                     key={emp.ein}
                     data-testid={`result-employer-${emp.ein}`}
                     onClick={() => handleSelect(emp)}
-                    className="w-full text-left px-4 py-3 hover:bg-zinc-700 transition-colors border-b border-zinc-700 last:border-0"
+                    className="w-full text-left px-4 py-3 hover:bg-zinc-700 transition-colors border-b border-[var(--kiq-hairline)] last:border-0"
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <div className="font-semibold text-sm text-zinc-100">{emp.name}</div>
+                      <div className="font-semibold text-sm text-[var(--kiq-ink)]">{emp.name}</div>
                       {hits.length > 0 && (
                         <span
                           role="button"
@@ -956,7 +956,7 @@ export default function BenefitsBenchmarking() {
 
           <div className="flex items-center gap-2">
             <Select value={String(selectedYear)} onValueChange={v => setSelectedYear(Number(v))}>
-              <SelectTrigger data-testid="select-year" className="w-28 bg-zinc-800 border-zinc-700">
+              <SelectTrigger data-testid="select-year" className="w-28 bg-[var(--kiq-surface)] border-[var(--kiq-hairline)]">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -977,7 +977,7 @@ export default function BenefitsBenchmarking() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* National trends card */}
             <div className="lg:col-span-2">
-              <Card className="bg-zinc-900 border-zinc-800">
+              <Card className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)]">
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-sm font-bold flex items-center gap-2">
@@ -990,7 +990,7 @@ export default function BenefitsBenchmarking() {
                           key={m}
                           data-testid={`btn-trend-${m}`}
                           onClick={() => setTrendMetric(m)}
-                          className={`text-xs px-2 py-1 rounded transition-colors ${trendMetric === m ? "bg-blue-600 text-white" : "bg-zinc-800 text-zinc-400 hover:text-zinc-200"}`}
+                          className={`text-xs px-2 py-1 rounded transition-colors ${trendMetric === m ? "bg-blue-600 text-white" : "bg-[var(--kiq-surface)] text-zinc-400 hover:text-[var(--kiq-ink-soft)]"}`}
                         >
                           {m === "avgPremiums" ? "Premiums" : m === "avgCommissions" ? "Commissions" : "Admin Fees"}
                         </button>
@@ -1042,11 +1042,11 @@ export default function BenefitsBenchmarking() {
                     { label: "Avg Plan Premiums", value: fmt(trends[trends.length - 1]?.avgPremiums ?? 0), icon: <DollarSign className="w-4 h-4 text-emerald-400" />, sub: "Per plan, latest year" },
                     { label: "Avg Broker Commissions", value: fmt(trends[trends.length - 1]?.avgCommissions ?? 0), icon: <Award className="w-4 h-4 text-amber-400" />, sub: "Per plan, latest year" },
                   ].map(stat => (
-                    <div key={stat.label} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-zinc-800 flex items-center justify-center shrink-0">{stat.icon}</div>
+                    <div key={stat.label} className="bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl p-4 flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-[var(--kiq-surface)] flex items-center justify-center shrink-0">{stat.icon}</div>
                       <div>
                         <div className="text-xs text-zinc-500">{stat.label}</div>
-                        <div className="text-xl font-black text-zinc-100">{stat.value}</div>
+                        <div className="text-xl font-black text-[var(--kiq-ink)]">{stat.value}</div>
                         <div className="text-xs text-zinc-600">{stat.sub}</div>
                       </div>
                     </div>
@@ -1068,12 +1068,12 @@ export default function BenefitsBenchmarking() {
         {profile && (
           <>
             {/* Employer header */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col md:flex-row md:items-center gap-4">
+            <div className="bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl p-5 flex flex-col md:flex-row md:items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-blue-600/20 border border-blue-600/30 flex items-center justify-center shrink-0">
                 <Building2 className="w-6 h-6 text-blue-400" />
               </div>
               <div className="flex-1">
-                <h2 className="text-xl font-black text-zinc-100" data-testid="text-employer-name">{profile.employer.name}</h2>
+                <h2 className="text-xl font-black text-[var(--kiq-ink)]" data-testid="text-employer-name">{profile.employer.name}</h2>
                 <div className="text-sm text-zinc-400">{profile.employer.planName}</div>
                 <div className="flex flex-wrap gap-3 mt-2 text-xs text-zinc-500">
                   <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{profile.employer.city}, {profile.employer.state}</span>
@@ -1121,7 +1121,7 @@ export default function BenefitsBenchmarking() {
                     onClick={() => sendTo("rx-defense", profile.employer.ein, profile.employer.name)}
                     className="flex items-center gap-1 px-3 py-1 rounded-md text-[10px] font-bold"
                     style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.25)", color: "#10b981", cursor: "pointer" }}>
-                    💊 Rx Defense
+                    💊 PBM Contract Clarity 360
                   </button>
                   <button
                     data-testid="bb-history-btn"
@@ -1160,11 +1160,11 @@ export default function BenefitsBenchmarking() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { label: "Your PMPM", value: profile.employerPmpm ? `$${profile.employerPmpm}` : "N/A", sub: "Per member per month", color: "text-blue-300" },
-                  { label: "Industry Avg PMPM", value: profile.natPmpm ? `$${profile.natPmpm}` : "N/A", sub: "National peer average", color: "text-zinc-300" },
+                  { label: "Industry Avg PMPM", value: profile.natPmpm ? `$${profile.natPmpm}` : "N/A", sub: "National peer average", color: "text-[var(--kiq-muted)]" },
                   { label: "Total Welfare Premiums", value: fmt(profile.employer.totalWelfarePremiums), sub: "All years combined", color: "text-emerald-300" },
                   { label: "Total Broker Commissions", value: fmt(profile.employer.totalBrokerCommissions), sub: "All years combined", color: "text-amber-300" },
                 ].map(kpi => (
-                  <div key={kpi.label} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+                  <div key={kpi.label} className="bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl p-4">
                     <div className="text-xs text-zinc-500 mb-1">{kpi.label}</div>
                     <div className={`text-2xl font-black ${kpi.color}`} data-testid={`kpi-${kpi.label.replace(/\s/g,"-").toLowerCase()}`}>{kpi.value}</div>
                     <div className="text-xs text-zinc-600 mt-1">{kpi.sub}</div>
@@ -1177,12 +1177,12 @@ export default function BenefitsBenchmarking() {
             {profile.nationalBenchmark && (
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
                 {/* National */}
-                <Card className="bg-zinc-900 border-zinc-800">
+                <Card className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)]">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-bold flex items-center gap-2">
                       <BarChart2 className="w-4 h-4 text-blue-400" />
                       National Industry Benchmark
-                      <Badge className="text-xs bg-zinc-800 text-zinc-300 border-zinc-700">{profile.nationalBenchmark.planCount.toLocaleString()} peer plans</Badge>
+                      <Badge className="text-xs bg-[var(--kiq-surface)] text-[var(--kiq-muted)] border-[var(--kiq-hairline)]">{profile.nationalBenchmark.planCount.toLocaleString()} peer plans</Badge>
                     </CardTitle>
                     <p className="text-xs text-zinc-500">{profile.employer.industryLabel} — {selectedYear}</p>
                   </CardHeader>
@@ -1190,7 +1190,7 @@ export default function BenefitsBenchmarking() {
                     <div className="overflow-x-auto">
                       <table className="w-full text-left">
                         <thead>
-                          <tr className="border-b border-zinc-700">
+                          <tr className="border-b border-[var(--kiq-hairline)]">
                             {["Metric", "Yours", "P50", "P75", "P90", "Position"].map(h => (
                               <th key={h} className="pb-2 pr-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">{h}</th>
                             ))}
@@ -1229,12 +1229,12 @@ export default function BenefitsBenchmarking() {
 
                 {/* State */}
                 {profile.stateBenchmark ? (
-                  <Card className="bg-zinc-900 border-zinc-800">
+                  <Card className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)]">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-sm font-bold flex items-center gap-2">
                         <MapPin className="w-4 h-4 text-violet-400" />
                         {profile.employer.state} State Benchmark
-                        <Badge className="text-xs bg-zinc-800 text-zinc-300 border-zinc-700">{profile.stateBenchmark.planCount.toLocaleString()} peers</Badge>
+                        <Badge className="text-xs bg-[var(--kiq-surface)] text-[var(--kiq-muted)] border-[var(--kiq-hairline)]">{profile.stateBenchmark.planCount.toLocaleString()} peers</Badge>
                       </CardTitle>
                       <p className="text-xs text-zinc-500">{profile.employer.industryLabel} in {profile.employer.state} — {selectedYear}</p>
                     </CardHeader>
@@ -1242,7 +1242,7 @@ export default function BenefitsBenchmarking() {
                       <div className="overflow-x-auto">
                         <table className="w-full text-left">
                           <thead>
-                            <tr className="border-b border-zinc-700">
+                            <tr className="border-b border-[var(--kiq-hairline)]">
                               {["Metric", "Yours", "P50", "P75", "P90", "Position"].map(h => (
                                 <th key={h} className="pb-2 pr-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider">{h}</th>
                               ))}
@@ -1285,7 +1285,7 @@ export default function BenefitsBenchmarking() {
                     </CardContent>
                   </Card>
                 ) : (
-                  <Card className="bg-zinc-900 border-zinc-800 flex items-center justify-center h-48">
+                  <Card className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] flex items-center justify-center h-48">
                     <p className="text-sm text-zinc-500">No state-level data available for {profile.employer.state}/{profile.employer.industryLabel}</p>
                   </Card>
                 )}
@@ -1295,7 +1295,7 @@ export default function BenefitsBenchmarking() {
             {/* Year trends + Carrier rankings */}
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
               {/* Employer trend vs national */}
-              <Card className="bg-zinc-900 border-zinc-800">
+              <Card className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)]">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm font-bold flex items-center gap-2">
                     <TrendingUp className="w-4 h-4 text-blue-400" />
@@ -1322,7 +1322,7 @@ export default function BenefitsBenchmarking() {
               </Card>
 
               {/* Top carriers in state */}
-              <Card className="bg-zinc-900 border-zinc-800">
+              <Card className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)]">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm font-bold flex items-center gap-2">
                     <Star className="w-4 h-4 text-amber-400" />
@@ -1333,11 +1333,11 @@ export default function BenefitsBenchmarking() {
                 <CardContent>
                   <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
                     {profile.topCarriers.slice(0, 10).map((c, i) => (
-                      <div key={c.name} className="flex items-center gap-3 py-1.5 border-b border-zinc-800 last:border-0"
+                      <div key={c.name} className="flex items-center gap-3 py-1.5 border-b border-[var(--kiq-hairline)] last:border-0"
                         data-testid={`row-carrier-${i}`}>
-                        <div className="w-6 h-6 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-zinc-400 shrink-0">{i + 1}</div>
+                        <div className="w-6 h-6 rounded-full bg-[var(--kiq-surface)] flex items-center justify-center text-xs font-bold text-zinc-400 shrink-0">{i + 1}</div>
                         <div className="flex-1 min-w-0">
-                          <div className="text-sm font-medium text-zinc-200 truncate">{c.name}</div>
+                          <div className="text-sm font-medium text-[var(--kiq-ink-soft)] truncate">{c.name}</div>
                           <div className="text-xs text-zinc-500">{c.planCount.toLocaleString()} plans · avg {fmt(c.avgCommissionsPerPlan)}/plan</div>
                         </div>
                         <div className="text-right shrink-0">
@@ -1358,7 +1358,7 @@ export default function BenefitsBenchmarking() {
 
         {/* ── National carriers (when no employer selected) ──────────────── */}
         {!selectedEin && (
-          <Card className="bg-zinc-900 border-zinc-800">
+          <Card className="bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)]">
             <CardHeader className="pb-2">
               <CardTitle className="text-sm font-bold flex items-center gap-2">
                 <Award className="w-4 h-4 text-amber-400" />
@@ -1372,11 +1372,11 @@ export default function BenefitsBenchmarking() {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                   {nationalCarriers.slice(0, 15).map((c, i) => (
-                    <div key={c.name} className="flex items-center gap-3 bg-zinc-800/50 rounded-lg p-3"
+                    <div key={c.name} className="flex items-center gap-3 bg-[var(--kiq-surface)]/50 rounded-lg p-3"
                       data-testid={`card-carrier-${i}`}>
                       <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${i < 3 ? "bg-amber-400/20 text-amber-400" : "bg-zinc-700 text-zinc-400"}`}>{i + 1}</div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-semibold text-zinc-200 truncate">{c.name}</div>
+                        <div className="text-sm font-semibold text-[var(--kiq-ink-soft)] truncate">{c.name}</div>
                         <div className="text-xs text-zinc-500">{c.planCount.toLocaleString()} plans</div>
                       </div>
                       <div className="text-right shrink-0">
@@ -1400,7 +1400,7 @@ export default function BenefitsBenchmarking() {
               <h3 className="font-bold text-blue-200 text-sm">Search any employer to benchmark their plan</h3>
               <p className="text-xs text-blue-400/70 mt-1 leading-relaxed">
                 Type a company name or EIN above to pull their Form 5500 data from the DOL EFAST2 database.
-                Kincaid IQ will instantly show their admin fees, broker commissions, and plan income compared to
+                Kincaid Health will instantly show their admin fees, broker commissions, and plan income compared to
                 national and state-level percentiles for their industry. Over 191,000 employers available.
               </p>
             </div>

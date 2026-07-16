@@ -153,7 +153,7 @@ export default function BloombergHub() {
                     <Icon size={22} style={{ color: item.color }} />
                   </div>
                   <div>
-                    <p className="font-bold text-sm leading-tight text-white mb-1">{item.label}</p>
+                    <p className="font-bold text-sm leading-tight text-[var(--kiq-ink)] mb-1">{item.label}</p>
                     <p className="text-[11px] leading-snug" style={{ color: "rgba(180,200,230,0.55)" }}>{item.desc}</p>
                   </div>
                   <ArrowRight
@@ -191,19 +191,19 @@ export default function BloombergHub() {
                     onClick={() => navigate(item.path)}
                     className="group text-left rounded-xl p-4 transition-all duration-200 hover:scale-[1.02] active:scale-[0.99] cursor-pointer"
                     style={{
-                      background: `linear-gradient(135deg, ${group.color}0a 0%, rgba(255,255,255,0.02) 100%)`,
+                      background: `linear-gradient(135deg, ${group.color}0a 0%, #ffffff 100%)`,
                       border: `1px solid ${group.color}28`,
                       backdropFilter: "blur(12px)",
                       boxShadow: "none",
                     }}
                     onMouseEnter={(e) => {
                       (e.currentTarget as HTMLElement).style.border = `1px solid ${group.color}66`;
-                      (e.currentTarget as HTMLElement).style.background = `linear-gradient(135deg, ${group.color}18 0%, rgba(255,255,255,0.04) 100%)`;
+                      (e.currentTarget as HTMLElement).style.background = `linear-gradient(135deg, ${group.color}18 0%, #ffffff 100%)`;
                       (e.currentTarget as HTMLElement).style.boxShadow = `0 0 20px ${group.color}18`;
                     }}
                     onMouseLeave={(e) => {
                       (e.currentTarget as HTMLElement).style.border = `1px solid ${group.color}28`;
-                      (e.currentTarget as HTMLElement).style.background = `linear-gradient(135deg, ${group.color}0a 0%, rgba(255,255,255,0.02) 100%)`;
+                      (e.currentTarget as HTMLElement).style.background = `linear-gradient(135deg, ${group.color}0a 0%, #ffffff 100%)`;
                       (e.currentTarget as HTMLElement).style.boxShadow = "none";
                     }}
                   >
@@ -240,10 +240,10 @@ export default function BloombergHub() {
 
         <div
           className="rounded-xl p-4 text-center"
-          style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}
+          style={{ background: "#ffffff", border: "1px solid #f8fafc" }}
         >
           <p className="text-xs" style={{ color: "rgba(140,170,220,0.4)" }}>
-            Bloomberg Terminal subscription: $24,000/yr per seat &nbsp;·&nbsp; Kincaid IQ: included with your Kincaid RMC Platinum account
+            Bloomberg Terminal subscription: $24,000/yr per seat &nbsp;·&nbsp; Kincaid Health: included with your Kincaid Health Platinum account
           </p>
         </div>
 

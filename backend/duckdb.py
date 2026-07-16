@@ -1,5 +1,5 @@
 """
-Kincaid IQ — DuckDB Connection Manager
+Kincaid Health — DuckDB Connection Manager
 Wraps the DOL EFAST2 analytics database.
 Thread-local connections for FastAPI compatibility.
 """

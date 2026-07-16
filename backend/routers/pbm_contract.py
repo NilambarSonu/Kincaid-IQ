@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Contract X-Ray™
+Kincaid Health — Contract X-Ray™
 AI-powered PBM contract analysis against 50 fiduciary-aligned issues across 10 provisions.
 Includes full side-by-side Fiduciary Comparison Report for before/after negotiation analysis.
 """

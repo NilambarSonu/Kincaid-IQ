@@ -220,23 +220,23 @@ export default function CrmSync() {
   }
 
   const StatusBadge = ({ configured, detail }: { configured: boolean; detail: string }) => (
-    <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 14px", borderRadius: 10, background: configured ? "rgba(16,185,129,0.08)" : "rgba(255,255,255,0.04)", border: `1px solid ${configured ? "rgba(16,185,129,0.25)" : "rgba(255,255,255,0.1)"}` }}>
-      {configured ? <CheckCircle2 size={14} color="#10b981" /> : <XCircle size={14} color="rgba(255,255,255,0.3)" />}
-      <span style={{ fontSize: 11, color: configured ? "#10b981" : "rgba(255,255,255,0.35)", fontWeight: 600 }}>{detail}</span>
+    <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 14px", borderRadius: 10, background: configured ? "rgba(16,185,129,0.08)" : "#ffffff", border: `1px solid ${configured ? "rgba(16,185,129,0.25)" : "#e2e8f0"}` }}>
+      {configured ? <CheckCircle2 size={14} color="#10b981" /> : <XCircle size={14} color="#64748b" />}
+      <span style={{ fontSize: 11, color: configured ? "#10b981" : "#64748b", fontWeight: 600 }}>{detail}</span>
     </div>
   );
 
   return (
     <Layout>
-      <div style={{ minHeight: "100vh", background: "linear-gradient(160deg,#060b18 0%,#080d1e 50%,#060a16 100%)", padding: "32px 32px 80px" }}>
+      <div style={{ minHeight: "100vh", background: "linear-gradient(160deg,#F8FAFC 0%,#FFFFFF 50%,#F8FAFC 100%)", padding: "32px 32px 80px" }}>
 
         {/* Header */}
         <div style={{ marginBottom: 28 }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(155,28,46,0.12)", border: "1px solid rgba(155,28,46,0.35)", borderRadius: 100, padding: "5px 16px", marginBottom: 16 }}>
             <Link2 size={12} color={BB_CRIMSON} />
-            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.18em", textTransform: "uppercase", color: BB_CRIMSON }}>Kincaid IQ · CRM Sync</span>
+            <span style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.18em", textTransform: "uppercase", color: BB_CRIMSON }}>Kincaid Health · CRM Sync</span>
           </div>
-          <h1 style={{ fontSize: 32, fontWeight: 900, color: "#fff", margin: "0 0 8px", letterSpacing: "-0.02em" }}>
+          <h1 style={{ fontSize: 32, fontWeight: 900, color: "#0F172A", margin: "0 0 8px", letterSpacing: "-0.02em" }}>
             CRM Integration Hub
           </h1>
           <p style={{ fontSize: 14, color: "rgba(255,255,255,0.40)", margin: 0 }}>
@@ -253,10 +253,10 @@ export default function CrmSync() {
                 <span style={{ fontSize: 18, fontWeight: 900, color: HS_ORANGE }}>HS</span>
               </div>
               <div>
-                <div style={{ fontSize: 16, fontWeight: 800, color: "#fff" }}>HubSpot CRM</div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>OAuth via Replit Connectors</div>
+                <div style={{ fontSize: 16, fontWeight: 800, color: "#0F172A" }}>HubSpot CRM</div>
+                <div style={{ fontSize: 11, color: "#475569" }}>OAuth via Replit Connectors</div>
               </div>
-              {statusLoading ? <Loader2 size={14} color="rgba(255,255,255,0.3)" style={{ marginLeft: "auto", animation: "spin 1s linear infinite" }} /> :
+              {statusLoading ? <Loader2 size={14} color="#64748b" style={{ marginLeft: "auto", animation: "spin 1s linear infinite" }} /> :
                 status && <div style={{ marginLeft: "auto" }}><StatusBadge configured={status.hubspot.configured} detail={status.hubspot.detail} /></div>}
             </div>
             <div style={{ display: "flex", gap: 8 }}>
@@ -288,10 +288,10 @@ export default function CrmSync() {
                 <span style={{ fontSize: 18, fontWeight: 900, color: SF_BLUE }}>SF</span>
               </div>
               <div>
-                <div style={{ fontSize: 16, fontWeight: 800, color: "#fff" }}>Salesforce</div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>Username + Password + Security Token</div>
+                <div style={{ fontSize: 16, fontWeight: 800, color: "#0F172A" }}>Salesforce</div>
+                <div style={{ fontSize: 11, color: "#475569" }}>Username + Password + Security Token</div>
               </div>
-              {statusLoading ? <Loader2 size={14} color="rgba(255,255,255,0.3)" style={{ marginLeft: "auto", animation: "spin 1s linear infinite" }} /> :
+              {statusLoading ? <Loader2 size={14} color="#64748b" style={{ marginLeft: "auto", animation: "spin 1s linear infinite" }} /> :
                 status && <div style={{ marginLeft: "auto" }}><StatusBadge configured={status.salesforce.configured} detail={status.salesforce.detail} /></div>}
             </div>
             {status && !status.salesforce.configured ? (
@@ -299,7 +299,7 @@ export default function CrmSync() {
                 To connect Salesforce, add these secrets in your project settings:
                 <br /><code style={{ color: SF_BLUE }}>SALESFORCE_USERNAME</code>, <code style={{ color: SF_BLUE }}>SALESFORCE_PASSWORD</code>,{" "}
                 <code style={{ color: SF_BLUE }}>SALESFORCE_SECURITY_TOKEN</code>
-                <br /><span style={{ color: "rgba(255,255,255,0.3)", fontSize: 10 }}>Optional: SALESFORCE_DOMAIN (default: login)</span>
+                <br /><span style={{ color: "#64748b", fontSize: 10 }}>Optional: SALESFORCE_DOMAIN (default: login)</span>
               </div>
             ) : (
               <div style={{ display: "flex", gap: 8 }}>
@@ -320,40 +320,40 @@ export default function CrmSync() {
             <div style={{ fontSize: 13, fontWeight: 800, color: HS_ORANGE, marginBottom: 14 }}>Create HubSpot Deal</div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 160px 200px 120px", gap: 10, alignItems: "flex-end" }}>
               <div>
-                <label style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 5 }}>Deal Name *</label>
+                <label style={{ fontSize: 10, color: "#475569", display: "block", marginBottom: 5 }}>Deal Name *</label>
                 <input
                   value={dealForm.deal_name}
                   onChange={e => setDealForm(f => ({ ...f, deal_name: e.target.value }))}
                   placeholder="e.g. Horizon Bancorp — Benefits Audit"
-                  style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, padding: "8px 12px", color: "#fff", fontSize: 12, outline: "none", boxSizing: "border-box" }}
+                  style={{ width: "100%", background: "#f8fafc", border: "1px solid #cbd5e1", borderRadius: 8, padding: "8px 12px", color: "#0F172A", fontSize: 12, outline: "none", boxSizing: "border-box" }}
                 />
               </div>
               <div>
-                <label style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 5 }}>Amount ($)</label>
+                <label style={{ fontSize: 10, color: "#475569", display: "block", marginBottom: 5 }}>Amount ($)</label>
                 <input
                   value={dealForm.amount}
                   onChange={e => setDealForm(f => ({ ...f, amount: e.target.value }))}
                   placeholder="e.g. 145000"
                   type="number"
-                  style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, padding: "8px 12px", color: "#fff", fontSize: 12, outline: "none", boxSizing: "border-box" }}
+                  style={{ width: "100%", background: "#f8fafc", border: "1px solid #cbd5e1", borderRadius: 8, padding: "8px 12px", color: "#0F172A", fontSize: 12, outline: "none", boxSizing: "border-box" }}
                 />
               </div>
               <div>
-                <label style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", display: "block", marginBottom: 5 }}>Deal Stage</label>
+                <label style={{ fontSize: 10, color: "#475569", display: "block", marginBottom: 5 }}>Deal Stage</label>
                 <select
                   value={dealForm.stage}
                   onChange={e => setDealForm(f => ({ ...f, stage: e.target.value }))}
-                  style={{ width: "100%", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, padding: "8px 12px", color: "#fff", fontSize: 12, outline: "none", boxSizing: "border-box" }}
+                  style={{ width: "100%", background: "#f8fafc", border: "1px solid #cbd5e1", borderRadius: 8, padding: "8px 12px", color: "#0F172A", fontSize: 12, outline: "none", boxSizing: "border-box" }}
                 >
                   {Object.entries(STAGE_LABELS).map(([v, l]) => (
-                    <option key={v} value={v} style={{ background: "#0a0a14" }}>{l}</option>
+                    <option key={v} value={v} style={{ background: "#F8FAFC" }}>{l}</option>
                   ))}
                 </select>
               </div>
               <button
                 onClick={createDeal}
                 disabled={creatingDeal || !dealForm.deal_name.trim()}
-                style={{ padding: "9px 0", borderRadius: 8, background: `linear-gradient(135deg, ${HS_ORANGE}, #cc5a3a)`, border: "none", color: "#fff", fontSize: 12, fontWeight: 700, cursor: creatingDeal ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, opacity: (!dealForm.deal_name.trim() || creatingDeal) ? 0.6 : 1 }}
+                style={{ padding: "9px 0", borderRadius: 8, background: `linear-gradient(135deg, ${HS_ORANGE}, #cc5a3a)`, border: "none", color: "#0F172A", fontSize: 12, fontWeight: 700, cursor: creatingDeal ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, opacity: (!dealForm.deal_name.trim() || creatingDeal) ? 0.6 : 1 }}
               >
                 {creatingDeal ? <Loader2 size={12} style={{ animation: "spin 1s linear infinite" }} /> : <Plus size={12} />} Create
               </button>
@@ -362,30 +362,30 @@ export default function CrmSync() {
         )}
 
         {/* Push contacts from database */}
-        <div style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, padding: 24, marginBottom: 24 }}>
+        <div style={{ background: "rgba(255,255,255,0.025)", border: "1px solid #e2e8f0", borderRadius: 16, padding: 24, marginBottom: 24 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
             <div>
-              <div style={{ fontSize: 15, fontWeight: 800, color: "#fff", marginBottom: 4 }}>
+              <div style={{ fontSize: 15, fontWeight: 800, color: "#0F172A", marginBottom: 4 }}>
                 <UserCheck size={15} style={{ display: "inline", marginRight: 8, color: "#a78bfa" }} />
                 Push Contacts to CRM
               </div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>
+              <div style={{ fontSize: 11, color: "#64748b" }}>
                 Contacts from Contact Intelligence™ — push individual records to HubSpot or Salesforce
               </div>
             </div>
-            <button onClick={loadDiscovered} style={{ padding: "7px 14px", borderRadius: 8, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.5)", fontSize: 11, cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
+            <button onClick={loadDiscovered} style={{ padding: "7px 14px", borderRadius: 8, background: "#ffffff", border: "1px solid #e2e8f0", color: "#334155", fontSize: 11, cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
               <RefreshCw size={11} /> Refresh
             </button>
           </div>
 
           {discLoading && (
             <div style={{ display: "flex", justifyContent: "center", padding: 40 }}>
-              <Loader2 size={24} color="rgba(255,255,255,0.2)" style={{ animation: "spin 1s linear infinite" }} />
+              <Loader2 size={24} color="#94a3b8" style={{ animation: "spin 1s linear infinite" }} />
             </div>
           )}
 
           {!discLoading && discoveredContacts.length === 0 && (
-            <div style={{ textAlign: "center", padding: "40px 20px", color: "rgba(255,255,255,0.25)", fontSize: 12 }}>
+            <div style={{ textAlign: "center", padding: "40px 20px", color: "rgba(15,23,42,0.08)", fontSize: 12 }}>
               No discovered contacts yet. Run a discovery on the Contact Intelligence™ page first.
             </div>
           )}
@@ -393,25 +393,25 @@ export default function CrmSync() {
           {!discLoading && discoveredContacts.length > 0 && (
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               {/* Column header */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 180px 100px 80px 200px", gap: 12, padding: "0 8px 8px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 180px 100px 80px 200px", gap: 12, padding: "0 8px 8px", borderBottom: "1px solid #f1f5f9" }}>
                 {["Contact", "Company", "Lives", "Status", "Push to CRM"].map(h => (
-                  <div key={h} style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>{h}</div>
+                  <div key={h} style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(15,23,42,0.08)" }}>{h}</div>
                 ))}
               </div>
               {discoveredContacts.map(c => {
                 const pushing = pushingContactId === c.id;
                 return (
-                  <div key={c.id} style={{ display: "grid", gridTemplateColumns: "1fr 180px 100px 80px 200px", gap: 12, alignItems: "center", padding: "10px 8px", borderRadius: 10, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
+                  <div key={c.id} style={{ display: "grid", gridTemplateColumns: "1fr 180px 100px 80px 200px", gap: 12, alignItems: "center", padding: "10px 8px", borderRadius: 10, background: "#ffffff", border: "1px solid #f8fafc" }}>
                     <div>
-                      <div style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: "#0F172A" }}>
                         {[c.first_name, c.last_name].filter(Boolean).join(" ") || "—"}
                       </div>
                       <div style={{ fontSize: 10, color: "#60a5fa" }}>{c.email}</div>
                     </div>
-                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.employer_name}</div>
-                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)" }}>{c.participants ? c.participants.toLocaleString() : "—"}</div>
+                    <div style={{ fontSize: 11, color: "#334155", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.employer_name}</div>
+                    <div style={{ fontSize: 11, color: "#475569" }}>{c.participants ? c.participants.toLocaleString() : "—"}</div>
                     <div>
-                      <span style={{ fontSize: 9, fontWeight: 800, padding: "3px 8px", borderRadius: 99, background: c.status === "contacted" ? "rgba(16,185,129,0.12)" : "rgba(255,255,255,0.06)", color: c.status === "contacted" ? "#10b981" : "rgba(255,255,255,0.35)", border: `1px solid ${c.status === "contacted" ? "rgba(16,185,129,0.25)" : "rgba(255,255,255,0.1)"}` }}>
+                      <span style={{ fontSize: 9, fontWeight: 800, padding: "3px 8px", borderRadius: 99, background: c.status === "contacted" ? "rgba(16,185,129,0.12)" : "#f1f5f9", color: c.status === "contacted" ? "#10b981" : "#64748b", border: `1px solid ${c.status === "contacted" ? "rgba(16,185,129,0.25)" : "#e2e8f0"}` }}>
                         {c.status}
                       </span>
                     </div>
@@ -430,7 +430,7 @@ export default function CrmSync() {
                         onClick={() => pushToSalesforce(c)}
                         disabled={pushing || (status !== null && !status.salesforce.configured)}
                         title={status && !status.salesforce.configured ? "Salesforce not configured" : "Push to Salesforce"}
-                        style={{ flex: 1, padding: "6px 8px", borderRadius: 8, background: "rgba(0,161,224,0.08)", border: "1px solid rgba(0,161,224,0.2)", color: status && !status.salesforce.configured ? "rgba(255,255,255,0.2)" : SF_BLUE, fontSize: 10, fontWeight: 700, cursor: (pushing || (status !== null && !status.salesforce.configured)) ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 4, opacity: (status !== null && !status.salesforce.configured) ? 0.45 : 1 }}
+                        style={{ flex: 1, padding: "6px 8px", borderRadius: 8, background: "rgba(0,161,224,0.08)", border: "1px solid rgba(0,161,224,0.2)", color: status && !status.salesforce.configured ? "#94a3b8" : SF_BLUE, fontSize: 10, fontWeight: 700, cursor: (pushing || (status !== null && !status.salesforce.configured)) ? "not-allowed" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 4, opacity: (status !== null && !status.salesforce.configured) ? 0.45 : 1 }}
                       >
                         {pushing ? <Loader2 size={10} style={{ animation: "spin 1s linear infinite" }} /> : <Send size={10} />} Salesforce
                       </button>
@@ -443,9 +443,9 @@ export default function CrmSync() {
         </div>
 
         {/* CRM data tabs */}
-        <div style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 16, overflow: "hidden" }}>
+        <div style={{ background: "rgba(255,255,255,0.025)", border: "1px solid #e2e8f0", borderRadius: 16, overflow: "hidden" }}>
           {/* Tab bar */}
-          <div style={{ display: "flex", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+          <div style={{ display: "flex", borderBottom: "1px solid #e2e8f0" }}>
             {[
               { key: "hubspot", label: "HubSpot", color: HS_ORANGE },
               { key: "salesforce", label: "Salesforce", color: SF_BLUE },
@@ -453,7 +453,7 @@ export default function CrmSync() {
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key as any)}
-                style={{ padding: "14px 24px", fontSize: 12, fontWeight: 700, background: "transparent", border: "none", cursor: "pointer", borderBottom: activeTab === tab.key ? `2px solid ${tab.color}` : "2px solid transparent", color: activeTab === tab.key ? tab.color : "rgba(255,255,255,0.35)", marginBottom: -1 }}
+                style={{ padding: "14px 24px", fontSize: 12, fontWeight: 700, background: "transparent", border: "none", cursor: "pointer", borderBottom: activeTab === tab.key ? `2px solid ${tab.color}` : "2px solid transparent", color: activeTab === tab.key ? tab.color : "#64748b", marginBottom: -1 }}
               >
                 {tab.label}
               </button>
@@ -475,15 +475,15 @@ export default function CrmSync() {
                     </button>
                   </div>
                   {hsContacts.length === 0 && !hsContactsLoading && (
-                    <div style={{ textAlign: "center", padding: "30px 0", color: "rgba(255,255,255,0.2)", fontSize: 11 }}>Click "Load" to fetch HubSpot contacts</div>
+                    <div style={{ textAlign: "center", padding: "30px 0", color: "#94a3b8", fontSize: 11 }}>Click "Load" to fetch HubSpot contacts</div>
                   )}
                   {hsContactsLoading && <div style={{ textAlign: "center", padding: 30 }}><Loader2 size={20} color={HS_ORANGE} style={{ animation: "spin 1s linear infinite" }} /></div>}
                   <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                     {hsContacts.map(c => (
                       <div key={c.id} style={{ padding: "10px 12px", background: "rgba(255,122,89,0.04)", border: "1px solid rgba(255,122,89,0.12)", borderRadius: 10 }}>
-                        <div style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>{[c.first_name, c.last_name].filter(Boolean).join(" ") || "—"}</div>
+                        <div style={{ fontSize: 12, fontWeight: 700, color: "#0F172A" }}>{[c.first_name, c.last_name].filter(Boolean).join(" ") || "—"}</div>
                         <div style={{ fontSize: 10, color: HS_ORANGE }}>{c.email}</div>
-                        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>{c.company} {c.state && `· ${c.state}`}</div>
+                        <div style={{ fontSize: 10, color: "#64748b", marginTop: 2 }}>{c.company} {c.state && `· ${c.state}`}</div>
                       </div>
                     ))}
                   </div>
@@ -500,15 +500,15 @@ export default function CrmSync() {
                     </button>
                   </div>
                   {hsDeals.length === 0 && !hsDealsLoading && (
-                    <div style={{ textAlign: "center", padding: "30px 0", color: "rgba(255,255,255,0.2)", fontSize: 11 }}>Click "Load" to fetch HubSpot deals</div>
+                    <div style={{ textAlign: "center", padding: "30px 0", color: "#94a3b8", fontSize: 11 }}>Click "Load" to fetch HubSpot deals</div>
                   )}
                   {hsDealsLoading && <div style={{ textAlign: "center", padding: 30 }}><Loader2 size={20} color={HS_ORANGE} style={{ animation: "spin 1s linear infinite" }} /></div>}
                   <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                     {hsDeals.map(d => (
                       <div key={d.id} style={{ padding: "10px 12px", background: "rgba(255,122,89,0.04)", border: "1px solid rgba(255,122,89,0.12)", borderRadius: 10 }}>
-                        <div style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>{d.name}</div>
+                        <div style={{ fontSize: 12, fontWeight: 700, color: "#0F172A" }}>{d.name}</div>
                         <div style={{ fontSize: 10, color: HS_ORANGE }}>{STAGE_LABELS[d.stage] || d.stage}</div>
-                        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>
+                        <div style={{ fontSize: 10, color: "#64748b", marginTop: 2 }}>
                           {d.amount ? `$${parseFloat(d.amount).toLocaleString()}` : "No amount"}
                         </div>
                       </div>
@@ -525,8 +525,8 @@ export default function CrmSync() {
               {status && !status.salesforce.configured ? (
                 <div style={{ textAlign: "center", padding: "50px 20px" }}>
                   <AlertCircle size={40} color="rgba(0,161,224,0.3)" style={{ margin: "0 auto 16px" }} />
-                  <div style={{ fontSize: 15, fontWeight: 700, color: "rgba(255,255,255,0.4)", marginBottom: 8 }}>Salesforce Not Connected</div>
-                  <div style={{ fontSize: 12, color: "rgba(255,255,255,0.25)", maxWidth: 420, margin: "0 auto", lineHeight: 1.7 }}>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: "#475569", marginBottom: 8 }}>Salesforce Not Connected</div>
+                  <div style={{ fontSize: 12, color: "rgba(15,23,42,0.08)", maxWidth: 420, margin: "0 auto", lineHeight: 1.7 }}>
                     Add these secrets in your Replit project settings to connect Salesforce:<br />
                     <code style={{ color: SF_BLUE, background: "rgba(0,161,224,0.08)", padding: "2px 6px", borderRadius: 4 }}>SALESFORCE_USERNAME</code>{" · "}
                     <code style={{ color: SF_BLUE, background: "rgba(0,161,224,0.08)", padding: "2px 6px", borderRadius: 4 }}>SALESFORCE_PASSWORD</code>{" · "}
@@ -544,16 +544,16 @@ export default function CrmSync() {
                     </button>
                   </div>
                   {sfLeads.length === 0 && !sfLeadsLoading && (
-                    <div style={{ textAlign: "center", padding: "30px 0", color: "rgba(255,255,255,0.2)", fontSize: 11 }}>Click "Load" to fetch Salesforce leads</div>
+                    <div style={{ textAlign: "center", padding: "30px 0", color: "#94a3b8", fontSize: 11 }}>Click "Load" to fetch Salesforce leads</div>
                   )}
                   {sfLeadsLoading && <div style={{ textAlign: "center", padding: 30 }}><Loader2 size={20} color={SF_BLUE} style={{ animation: "spin 1s linear infinite" }} /></div>}
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                     {sfLeads.map(l => (
                       <div key={l.id} style={{ padding: "10px 12px", background: "rgba(0,161,224,0.04)", border: "1px solid rgba(0,161,224,0.12)", borderRadius: 10 }}>
-                        <div style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>{[l.first_name, l.last_name].filter(Boolean).join(" ") || "—"}</div>
+                        <div style={{ fontSize: 12, fontWeight: 700, color: "#0F172A" }}>{[l.first_name, l.last_name].filter(Boolean).join(" ") || "—"}</div>
                         <div style={{ fontSize: 10, color: SF_BLUE }}>{l.email}</div>
-                        <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>{l.company} {l.employees ? `· ${l.employees.toLocaleString()} emp` : ""}</div>
-                        <div style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", marginTop: 2 }}>{l.status}</div>
+                        <div style={{ fontSize: 10, color: "#64748b", marginTop: 2 }}>{l.company} {l.employees ? `· ${l.employees.toLocaleString()} emp` : ""}</div>
+                        <div style={{ fontSize: 9, color: "rgba(15,23,42,0.08)", marginTop: 2 }}>{l.status}</div>
                       </div>
                     ))}
                   </div>

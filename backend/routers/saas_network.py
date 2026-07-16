@@ -168,7 +168,7 @@ def network_dashboard(db: Session = Depends(get_db), user: models.User = Depends
                 "title": "Expand Mental Health Network to Meet MHPAEA",
                 "priority": "Critical", "category": "Adequacy",
                 "description": "Add 17 behavioral health providers across Owen, Morgan, and Putnam counties. Current 0.39x ratio is below medical 0.75x — active NQTL violation.",
-                "owner": "Kincaid RMC + Carrier", "timeline": "90 days", "savings_impact": 61_200,
+                "owner": "Kincaid Health + Carrier", "timeline": "90 days", "savings_impact": 61_200,
             },
             {
                 "title": "Resolve Lakeside Behavioral Health Contract Risk",
@@ -186,7 +186,7 @@ def network_dashboard(db: Session = Depends(get_db), user: models.User = Depends
                 "title": "Contract Cleveland Clinic for Cardiology (SCA)",
                 "priority": "High", "category": "Leakage",
                 "description": "87 OON claims totaling $124.8K. Negotiate single-case agreement to redirect to INN — estimated $42.2K annual recovery.",
-                "owner": "Kincaid RMC", "timeline": "60 days", "savings_impact": 42_200,
+                "owner": "Kincaid Health", "timeline": "60 days", "savings_impact": 42_200,
             },
             {
                 "title": "Add Endocrinology Group Practice to Network",
@@ -204,7 +204,7 @@ def network_dashboard(db: Session = Depends(get_db), user: models.User = Depends
                 "title": "Launch Member Steerage Campaign (Orthopedics)",
                 "priority": "Medium", "category": "Leakage",
                 "description": "Patient preference driving $22.7K leakage to OON orthopedics. Direct mail + navigator outreach to steer to INN equivalents.",
-                "owner": "Employer HR + Kincaid RMC", "timeline": "90 days", "savings_impact": 22_700,
+                "owner": "Employer HR + Kincaid Health", "timeline": "90 days", "savings_impact": 22_700,
             },
             {
                 "title": "Reconcile 12 Outdated Provider Directory Records",

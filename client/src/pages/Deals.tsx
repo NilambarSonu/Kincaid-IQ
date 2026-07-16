@@ -20,7 +20,7 @@ export default function Deals() {
   const { open } = useDrillDown();
   return (
     <Layout>
-      <div className="mb-8">
+      <div className="kiq-command-hero mb-8 px-6 py-5">
         <p className="section-label mb-1">Opportunity Engine</p>
         <h1 className="text-3xl font-bold" style={{ fontFamily: "var(--font-display)", color: "hsl(var(--primary))" }}>
           Deal Intelligence
@@ -61,7 +61,7 @@ export default function Deals() {
         {dealPipeline.map((deal) => (
           <div
             key={deal.id}
-            className="metric-card hover:shadow-md transition-shadow cursor-pointer"
+            className="metric-card hover:shadow-md transition-all duration-200 cursor-pointer hover:-translate-y-0.5"
             data-testid={`card-deal-${deal.id}`}
             onClick={() => open("deal-helios")}
           >
@@ -93,7 +93,7 @@ export default function Deals() {
 
             <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{deal.summary}</p>
 
-            <div className="grid grid-cols-3 gap-3 p-3 rounded-xl bg-muted/40">
+            <div className="grid grid-cols-3 gap-3 p-3 rounded-xl bg-[var(--kiq-surface)]/58 border border-[var(--kiq-hairline)]/70">
               <div className="text-center">
                 <p className="text-xs text-muted-foreground mb-0.5">Ask Size</p>
                 <p className="text-sm font-bold">{formatCurrency(deal.askSize)}</p>

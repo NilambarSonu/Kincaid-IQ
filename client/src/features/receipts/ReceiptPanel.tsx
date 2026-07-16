@@ -167,10 +167,10 @@ function TransformSection({ transforms }: { transforms: Transform[] }) {
           data-testid={`tx-${tx.transformId}`}>
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-[10px] font-mono font-bold text-[#A855F7]">{tx.transformId}</span>
-            {tx.name && <span className="text-[10px] text-zinc-300">{tx.name}</span>}
+            {tx.name && <span className="text-[10px] text-slate-500">{tx.name}</span>}
           </div>
           {tx.formula && (
-            <div className="rounded bg-zinc-950/60 border border-zinc-800 px-2 py-1">
+            <div className="rounded bg-white/60 border border-slate-200 px-2 py-1">
               <code className="text-[10px] font-mono text-[#FFB800]">{tx.formula}</code>
             </div>
           )}
@@ -238,20 +238,20 @@ function PolicySection({ policy }: { policy: ClaimReceiptResponse["policyState"]
               S{s.stage}
             </div>
             <div>
-              <p className="text-[10px] font-mono font-semibold text-zinc-300">{s.name}</p>
+              <p className="text-[10px] font-mono font-semibold text-slate-500">{s.name}</p>
               <p className="text-[9px] text-zinc-600">{s.note}</p>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-2 pt-2 border-t border-zinc-800/50">
+      <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-200/50">
         {[
           { label: "Board Grade",    val: policy.boardGrade,        col: "#FFB800" },
           { label: "Export",         val: policy.exportAdmissible,  col: "#00A8FF" },
           { label: "Narrative",      val: policy.narrativeAllowed,  col: "#00FF94" },
         ].map(({ label, val, col }) => (
-          <div key={label} className="rounded border border-zinc-800 bg-zinc-900/50 px-2 py-1.5 text-center">
+          <div key={label} className="rounded border border-slate-200 bg-slate-50/50 px-2 py-1.5 text-center">
             <div className="flex items-center justify-center gap-1 mb-0.5">
               {val
                 ? <CheckCircle2 className="w-2.5 h-2.5" style={{ color: col }} />
@@ -300,7 +300,7 @@ function HashSection({ receipt }: { receipt: ClaimReceiptResponse }) {
   return (
     <div className="space-y-1">
       {rows.map(({ label, value, color }) => (
-        <div key={label} className="flex items-baseline gap-3 py-1.5 border-b border-zinc-800/40 last:border-0">
+        <div key={label} className="flex items-baseline gap-3 py-1.5 border-b border-slate-200/40 last:border-0">
           <span className="text-[9px] font-mono text-zinc-600 uppercase tracking-wider w-40 shrink-0">{label}</span>
           <span className="text-[10px] font-mono break-all" style={{ color: color ?? "#6b7280" }}>{value}</span>
         </div>
@@ -327,7 +327,7 @@ function TimingSection({ receipt }: { receipt: ClaimReceiptResponse }) {
   return (
     <div className="space-y-1">
       {rows.map(({ label, value }) => (
-        <div key={label} className="flex items-baseline gap-3 py-1.5 border-b border-zinc-800/40 last:border-0">
+        <div key={label} className="flex items-baseline gap-3 py-1.5 border-b border-slate-200/40 last:border-0">
           <span className="text-[9px] font-mono text-zinc-600 uppercase tracking-wider w-40 shrink-0">{label}</span>
           <span className="text-[10px] font-mono text-zinc-400">{value}</span>
         </div>
@@ -379,14 +379,14 @@ export function ReceiptPanel({ claimId, className }: ReceiptPanelProps) {
   return (
     <div className={cn("space-y-5", className)} data-testid={`receipt-panel-${claimId}`}>
       {/* Claim header */}
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3">
+      <div className="rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3">
         <div className="flex items-start justify-between gap-2 flex-wrap">
           <div>
-            <p className="text-xs font-semibold text-zinc-100">{data.claim.title}</p>
+            <p className="text-xs font-semibold text-slate-900">{data.claim.title}</p>
             <p className="text-[10px] font-mono text-zinc-600">{data.claim.claimId} · {data.claim.kpiKey}</p>
           </div>
           <div className="text-right">
-            <p className="text-sm font-bold font-mono text-zinc-100 tabular-nums">
+            <p className="text-sm font-bold font-mono text-slate-900 tabular-nums">
               {data.claim.value}{data.claim.unit ? <span className="text-xs text-zinc-500 ml-1">{data.claim.unit}</span> : null}
             </p>
             {data.claim.period && <p className="text-[9px] font-mono text-zinc-600">{data.claim.period}</p>}
@@ -424,7 +424,7 @@ export function ReceiptPanel({ claimId, className }: ReceiptPanelProps) {
 
       {/* Sections */}
       {SECTIONS.map(({ id, icon, label, color }) => (
-        <div key={id} className="rounded-xl border border-zinc-800 bg-zinc-900/40 px-4 py-4"
+        <div key={id} className="rounded-xl border border-slate-200 bg-slate-50/40 px-4 py-4"
           data-testid={`receipt-section-${id}`}>
           <SectionHead icon={icon} label={label} color={color} />
           {id === "evidence" && <EvidenceSection evidence={data.evidence} />}

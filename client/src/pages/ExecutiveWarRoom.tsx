@@ -37,14 +37,14 @@ const CSS = `
 `;
 
 /* ─── PALETTE — matching kincaidrmc.com dark SaaS style ────────────────────── */
-const BG      = "#07091c";
-const CARD_BG = "rgba(255,255,255,0.03)";
-const BORDER  = "rgba(255,255,255,0.08)";
-const BORDER2 = "rgba(255,255,255,0.04)";
-const TEXT1   = "#f0f4ff";
-const TEXT2   = "rgba(200,210,240,0.55)";
-const TEXT3   = "rgba(180,195,235,0.32)";
-const ACCENT  = "#4f7dff";   // brand blue
+const BG      = "#F8FAFC";
+const CARD_BG = "#ffffff";
+const BORDER  = "rgba(0,0,0,0.08)";
+const BORDER2 = "rgba(0,0,0,0.04)";
+const TEXT1   = "#0F172A";
+const TEXT2   = "#475569";
+const TEXT3   = "#94A3B8";
+const ACCENT  = "#2563eb";   // brand blue
 const GREEN   = "#22c55e";
 const AMBER   = "#f59e0b";
 const RED     = "#ef4444";
@@ -102,10 +102,10 @@ const SIGNALS=[
 
 function Ticker(){
   return(
-    <div style={{background:"#060817",borderBottom:`1px solid ${BORDER}`,height:34,display:"flex",alignItems:"center",overflow:"hidden"}}>
-      <div style={{flexShrink:0,display:"flex",alignItems:"center",gap:6,padding:"0 14px",borderRight:`1px solid ${BORDER}`,height:"100%",background:"rgba(79,125,255,0.07)"}}>
+    <div style={{background:BG,borderBottom:`1px solid ${BORDER}`,height:34,display:"flex",alignItems:"center",overflow:"hidden"}}>
+      <div style={{flexShrink:0,display:"flex",alignItems:"center",gap:6,padding:"0 14px",borderRight:`1px solid ${BORDER}`,height:"100%",background:"rgba(37,99,235,0.05)"}}>
         <Radio size={8} color={ACCENT}/>
-        <span style={{fontSize:8,fontWeight:800,letterSpacing:"0.14em",color:ACCENT,whiteSpace:"nowrap"}}>KINCAID IQ SIGNALS</span>
+        <span style={{fontSize:8,fontWeight:800,letterSpacing:"0.14em",color:ACCENT,whiteSpace:"nowrap"}}>KINCAID HEALTH SIGNALS</span>
       </div>
       <div style={{overflow:"hidden",flex:1}}>
         <div className="ticker-wrap">
@@ -192,7 +192,7 @@ const TILES: TileDef[] = [
 ];
 
 
-/* ─── KINCAID IQ VERIFY™ TYPES ──────────────────────────────────────────────── */
+/* ─── KINCAID HEALTH VERIFY™ TYPES ──────────────────────────────────────────────── */
 type VerifiedStatus = "VERIFIED"|"UNVERIFIED"|"DISPUTED";
 type FreshnessStatus = "GREEN"|"YELLOW"|"RED";
 interface EvidenceRef {
@@ -217,7 +217,7 @@ interface VerifyTile {
   id: string; title: string; primary: VerifyKpi; supporting: VerifyKpi[];
 }
 
-/* ─── KINCAID IQ VERIFY™ TILE COLORS ───────────────────────────────────────── */
+/* ─── KINCAID HEALTH VERIFY™ TILE COLORS ───────────────────────────────────────── */
 const VERIFY_COLORS: Record<string,{accent:string;glow:string}> = {
   population:  { accent:"#06b6d4", glow:"rgba(6,182,212,0.08)"  },
   drag:        { accent:"#ef4444", glow:"rgba(239,68,68,0.08)"   },
@@ -361,7 +361,7 @@ function ConfBar({v,w=44}:{v:number;w?:number}){
   const c=v>=.88?GREEN:v>=.80?AMBER:RED;
   return(
     <div style={{display:"flex",alignItems:"center",gap:5}}>
-      <div style={{width:w,height:3,borderRadius:2,background:"rgba(255,255,255,0.08)",overflow:"hidden"}}>
+      <div style={{width:w,height:3,borderRadius:2,background:"rgba(15,23,42,0.03)",overflow:"hidden"}}>
         <div style={{width:`${v*100}%`,height:"100%",background:c,borderRadius:2}}/>
       </div>
       <span style={{fontSize:8,color:c,fontWeight:700}}>{(v*100).toFixed(0)}%</span>
@@ -369,13 +369,13 @@ function ConfBar({v,w=44}:{v:number;w?:number}){
   );
 }
 function PBadge({p}:{p:Priority}){
-  const s={high:{c:RED,bg:"rgba(239,68,68,0.12)"},med:{c:AMBER,bg:"rgba(245,158,11,0.12)"},low:{c:TEXT3,bg:"rgba(255,255,255,0.05)"}}[p];
+  const s={high:{c:RED,bg:"rgba(239,68,68,0.12)"},med:{c:AMBER,bg:"rgba(245,158,11,0.12)"},low:{c:TEXT3,bg:"rgba(15,23,42,0.03)"}}[p];
   return<span style={{fontSize:7,fontWeight:800,letterSpacing:"0.09em",padding:"2px 7px",borderRadius:3,background:s.bg,color:s.c,textTransform:"uppercase"}}>{p}</span>;
 }
 function PercBar({v,color}:{v:number;color:string}){
   return(
     <div style={{display:"flex",alignItems:"center",gap:5}}>
-      <div style={{width:56,height:3,borderRadius:2,background:"rgba(255,255,255,0.07)",overflow:"hidden"}}>
+      <div style={{width:56,height:3,borderRadius:2,background:"rgba(15,23,42,0.03)",overflow:"hidden"}}>
         <div style={{width:`${v}%`,height:"100%",background:color,borderRadius:2}}/>
       </div>
       <span style={{fontSize:9,color,fontWeight:600}}>{v}th percentile</span>
@@ -708,7 +708,7 @@ function DrillPanel({tile,onClose}:{tile:TileDef;onClose:()=>void}){
           <SecHd label="4 Hero KPIs"/>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8,marginBottom:18}}>
             {tile.kpis.map(k=>(
-              <div key={k.key} style={{padding:"12px 14px",background:"rgba(255,255,255,0.03)",border:`1px solid ${BORDER}`,borderRadius:10}}>
+              <div key={k.key} style={{padding:"12px 14px",background:"rgba(15,23,42,0.03)",border:`1px solid ${BORDER}`,borderRadius:10}}>
                 <div style={{fontSize:8,color:TEXT3,letterSpacing:"0.07em",textTransform:"uppercase",marginBottom:3}}>{k.label}</div>
                 <div style={{fontSize:20,fontWeight:800,color:TEXT1}}>{k.value}</div>
                 <ConfBar v={k.confidence} w={36}/>
@@ -772,7 +772,7 @@ function DrillPanel({tile,onClose}:{tile:TileDef;onClose:()=>void}){
                   <span style={{fontSize:9,color:r.trend.includes("Avoidable")||r.trend.includes("watch")?RED:TEXT3}}>{r.trend}</span>
                 </div>
               </div>
-              <div style={{height:4,borderRadius:2,background:"rgba(255,255,255,0.06)",overflow:"hidden"}}>
+              <div style={{height:4,borderRadius:2,background:"rgba(15,23,42,0.03)",overflow:"hidden"}}>
                 <div style={{width:`${r.pct}%`,height:"100%",background:r.pct>30?RED:r.pct>15?AMBER:GREEN,borderRadius:2}}/>
               </div>
               <div style={{fontSize:8,color:TEXT3,marginTop:2}}>{r.pct}% of total plan spend</div>
@@ -899,7 +899,7 @@ function DrillPanel({tile,onClose}:{tile:TileDef;onClose:()=>void}){
                 <div><div style={{fontSize:8,color:TEXT3,marginBottom:2}}>YOUR VALUE</div><div style={{fontSize:14,fontWeight:800,color:TEXT1}}>{b.yours}</div></div>
                 <div><div style={{fontSize:8,color:TEXT3,marginBottom:2}}>PEER MEDIAN</div><div style={{fontSize:14,fontWeight:800,color:GREEN}}>{b.peer}</div></div>
               </div>
-              <div style={{height:4,borderRadius:2,background:"rgba(255,255,255,0.06)",overflow:"hidden"}}>
+              <div style={{height:4,borderRadius:2,background:"rgba(15,23,42,0.03)",overflow:"hidden"}}>
                 <div style={{width:`${b.pct}%`,height:"100%",background:b.pct>=75?RED:AMBER,borderRadius:2}}/>
               </div>
               <div style={{fontSize:8,color:TEXT3,marginTop:2}}>{b.pct}th percentile among peer set</div>
@@ -920,7 +920,7 @@ function DrillPanel({tile,onClose}:{tile:TileDef;onClose:()=>void}){
               <span style={{fontSize:14,fontWeight:800,color:r.color}}>{r.value}</span>
             </div>
           ))}
-          <div style={{marginTop:14,padding:"12px 14px",background:"rgba(0,0,0,0.3)",border:`1px solid ${BORDER}`,borderRadius:9}}>
+          <div style={{marginTop:14,padding:"12px 14px",background:"rgba(0,0,0,0.05)",border:`1px solid ${BORDER}`,borderRadius:9}}>
             <div style={{fontSize:9,color:TEXT3,lineHeight:1.7}}>Model assumptions: 1,200 member plan, 2024 claims basis, lever timelines as stated, 5% annual cost growth baseline, 6% discount rate for NPV calculations. All inputs are evidence-backed.</div>
           </div>
         </>
@@ -938,12 +938,12 @@ function DrillPanel({tile,onClose}:{tile:TileDef;onClose:()=>void}){
             {label:"Policy Gate Record",   val:sha(tile.id+":gate:v2.1"),       color:GREEN},
             {label:"Claim Object Hash",    val:sha(tile.id+":claim:board"),     color:GOLD},
           ].map(e=>(
-            <div key={e.label} style={{padding:"8px 12px",background:"rgba(0,0,0,0.3)",border:`1px solid ${BORDER}`,borderRadius:7,marginBottom:5}}>
+            <div key={e.label} style={{padding:"8px 12px",background:"rgba(0,0,0,0.05)",border:`1px solid ${BORDER}`,borderRadius:7,marginBottom:5}}>
               <div style={{fontSize:8,color:TEXT3,marginBottom:2}}>{e.label}</div>
               <code style={{fontSize:9,color:e.color,fontFamily:"monospace",wordBreak:"break-all"}}>{e.val}</code>
             </div>
           ))}
-          <div style={{padding:"8px 12px",background:"rgba(0,0,0,0.3)",border:`1px solid ${BORDER}`,borderRadius:7,marginBottom:14}}>
+          <div style={{padding:"8px 12px",background:"rgba(0,0,0,0.05)",border:`1px solid ${BORDER}`,borderRadius:7,marginBottom:14}}>
             <div style={{fontSize:8,color:TEXT3,marginBottom:5}}>LINEAGE</div>
             {["Claims Feed → ClaimsNormalizer v3.2","KPIComposer v3.0 → PolicyGate v2.1","DeterministicValidator v1.4 → Claim Object → Board Tile"].map((l,i)=>(
               <div key={i} style={{display:"flex",gap:5,marginBottom:3}}><ArrowRight size={8} color={CYAN} style={{flexShrink:0,marginTop:2}}/><code style={{fontSize:9,color:TEXT3,fontFamily:"monospace"}}>{l}</code></div>
@@ -966,13 +966,13 @@ function DrillPanel({tile,onClose}:{tile:TileDef;onClose:()=>void}){
   };
 
   return(
-    <div className="slide-right" style={{position:"fixed",top:0,right:0,width:520,height:"100vh",zIndex:300,background:"#07091c",borderLeft:`1px solid ${BORDER}`,display:"flex",flexDirection:"column"}}>
+    <div className="slide-right" style={{position:"fixed",top:0,right:0,width:520,height:"100vh",zIndex:300,background:"#ffffff",borderLeft:`1px solid ${BORDER}`,display:"flex",flexDirection:"column",boxShadow:"-10px 0 30px rgba(0,0,0,0.05)"}}>
 
       {/* ── Sticky header ── */}
-      <div style={{padding:"16px 20px 12px",borderBottom:`1px solid ${BORDER2}`,flexShrink:0,background:"#07091c"}}>
+      <div style={{padding:"16px 20px 12px",borderBottom:`1px solid ${BORDER2}`,flexShrink:0,background:"#ffffff"}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
           <div style={{display:"flex",gap:5,alignItems:"center"}}>
-            <span style={{fontSize:8,fontWeight:800,letterSpacing:"0.13em",color:TEXT3}}>KINCAID IQ · {tile.id.toUpperCase().replace(/-/g," ")}</span>
+            <span style={{fontSize:8,fontWeight:800,letterSpacing:"0.13em",color:TEXT3}}>KINCAID HEALTH · {tile.id.toUpperCase().replace(/-/g," ")}</span>
             <span style={{fontSize:7,padding:"1px 5px",borderRadius:3,background:`${GOLD}18`,color:GOLD,fontWeight:700,border:`1px solid ${GOLD}40`}}>DEMO</span>
           </div>
           <button onClick={onClose} data-testid="btn-close-drill" style={{background:"none",border:"none",cursor:"pointer",color:TEXT3,padding:2,display:"flex"}}><X size={13}/></button>
@@ -1002,7 +1002,7 @@ function DrillPanel({tile,onClose}:{tile:TileDef;onClose:()=>void}){
         {/* Progress dots */}
         <div style={{display:"flex",gap:3,alignItems:"center"}}>
           {Array.from({length:TOTAL},(_,i)=>(
-            <button key={i} onClick={()=>setStep(i)} data-testid={`drill-step-dot-${i+1}`} title={STEP_LABELS[i]} style={{width:i===step?20:6,height:6,borderRadius:3,border:"none",cursor:"pointer",transition:"all .2s",background:i<step?`${accent}50`:i===step?accent:"rgba(255,255,255,0.12)",padding:0}}/>
+            <button key={i} onClick={()=>setStep(i)} data-testid={`drill-step-dot-${i+1}`} title={STEP_LABELS[i]} style={{width:i===step?20:6,height:6,borderRadius:3,border:"none",cursor:"pointer",transition:"all .2s",background:i<step?`${accent}50`:i===step?accent:"rgba(0,0,0,0.12)",padding:0}}/>
           ))}
         </div>
       </div>
@@ -1013,8 +1013,8 @@ function DrillPanel({tile,onClose}:{tile:TileDef;onClose:()=>void}){
       </div>
 
       {/* ── Footer nav ── */}
-      <div style={{padding:"12px 20px",borderTop:`1px solid ${BORDER2}`,flexShrink:0,display:"flex",gap:8,alignItems:"center",background:"#07091c"}}>
-        <button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0} data-testid="btn-drill-prev" style={{padding:"8px 16px",borderRadius:8,border:`1px solid ${BORDER}`,background:"rgba(255,255,255,0.04)",color:step===0?TEXT3:TEXT1,cursor:step===0?"not-allowed":"pointer",fontSize:11,fontWeight:600,display:"flex",alignItems:"center",gap:4}}>
+      <div style={{padding:"12px 20px",borderTop:`1px solid ${BORDER2}`,flexShrink:0,display:"flex",gap:8,alignItems:"center",background:"#ffffff"}}>
+        <button onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0} data-testid="btn-drill-prev" style={{padding:"8px 16px",borderRadius:8,border:`1px solid ${BORDER}`,background:"rgba(0,0,0,0.02)",color:step===0?TEXT3:TEXT1,cursor:step===0?"not-allowed":"pointer",fontSize:11,fontWeight:600,display:"flex",alignItems:"center",gap:4}}>
           ← Prev
         </button>
         <div style={{flex:1,display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
@@ -1160,7 +1160,7 @@ function GateBadgePanel({kpi}:{kpi:VerifyKpi}){
               </button>
               {isOpen&&(
                 <div className="fade-up" style={{
-                  padding:"10px 12px",background:"rgba(0,0,0,0.3)",
+                  padding:"10px 12px",background:"rgba(0,0,0,0.05)",
                   border:`1px solid ${passBorder}`,borderTop:"none",borderRadius:"0 0 8px 8px",
                 }}>
                   <div style={{fontSize:10,color:TEXT2,lineHeight:1.7}}>{g.detail}</div>
@@ -1200,12 +1200,12 @@ function ReceiptTrailPanel({kpi,onClose}:{kpi:VerifyKpi;onClose:()=>void}){
       {/* backdrop */}
       <div style={{flex:1,background:"rgba(0,0,0,0.55)",backdropFilter:"blur(3px)"}} onClick={onClose}/>
       {/* panel */}
-      <div className="slide-right" style={{width:560,height:"100vh",background:"#05071a",borderLeft:`1px solid ${BORDER}`,display:"flex",flexDirection:"column",overflowY:"auto"}}>
+      <div className="slide-right" style={{width:560,height:"100vh",background:"#ffffff",borderLeft:`1px solid ${BORDER}`,display:"flex",flexDirection:"column",overflowY:"auto"}}>
         {/* Header */}
         <div style={{padding:"20px 24px 16px",borderBottom:`1px solid ${BORDER}`,flexShrink:0}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:4}}>
             <div>
-              <div style={{fontSize:8,fontWeight:800,letterSpacing:"0.2em",color:TEXT3,marginBottom:8}}>KPI RECEIPT TRAIL · KINCAID IQ VERIFY™</div>
+              <div style={{fontSize:8,fontWeight:800,letterSpacing:"0.2em",color:TEXT3,marginBottom:8}}>KPI RECEIPT TRAIL · KINCAID HEALTH VERIFY™</div>
               <div style={{fontSize:20,fontWeight:700,color:TEXT1}}>{kpi.title}</div>
               <div style={{fontSize:10,color:TEXT3,marginTop:2,fontFamily:"monospace"}}>{kpi.kpi_key}</div>
             </div>
@@ -1260,7 +1260,7 @@ function ReceiptTrailPanel({kpi,onClose}:{kpi:VerifyKpi;onClose:()=>void}){
             </div>
             <div style={{display:"flex",flexDirection:"column",gap:8}}>
               {kpi.evidence.map(ev=>(
-                <div key={ev.evidence_id} style={{padding:"10px 12px",background:"rgba(0,0,0,0.3)",border:`1px solid ${BORDER}`,borderRadius:10}}>
+                <div key={ev.evidence_id} style={{padding:"10px 12px",background:"rgba(0,0,0,0.05)",border:`1px solid ${BORDER}`,borderRadius:10}}>
                   <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
                     <span style={{fontSize:11,fontWeight:600,color:TEXT1}}>{ev.source_name}</span>
                     <span style={{fontSize:9,color:TEXT3,fontFamily:"monospace"}}>{ev.evidence_id}</span>
@@ -1313,7 +1313,7 @@ function ReceiptTrailPanel({kpi,onClose}:{kpi:VerifyKpi;onClose:()=>void}){
               onChange={e=>setAiQuery(e.target.value)}
               placeholder={`Ask about ${kpi.title}… (e.g. "What is the fastest recovery path for this drag?")`}
               style={{
-                width:"100%", minHeight:60, background:"rgba(0,0,0,0.3)",
+                width:"100%", minHeight:60, background:"rgba(0,0,0,0.05)",
                 border:`1px solid ${BORDER}`, borderRadius:8, color:TEXT1, fontSize:11,
                 padding:"8px 10px", boxSizing:"border-box", resize:"vertical", outline:"none",
                 fontFamily:"inherit", lineHeight:1.5,
@@ -1326,14 +1326,14 @@ function ReceiptTrailPanel({kpi,onClose}:{kpi:VerifyKpi;onClose:()=>void}){
               disabled={aiLoading||!aiQuery.trim()}
               style={{
                 marginTop:8, padding:"6px 16px", borderRadius:8, cursor:"pointer",
-                background: aiLoading||!aiQuery.trim() ? "rgba(255,255,255,0.04)" : ACCENT,
+                background: aiLoading||!aiQuery.trim() ? "rgba(15,23,42,0.03)" : ACCENT,
                 border:`1px solid ${aiLoading||!aiQuery.trim()?BORDER:ACCENT}`,
                 color: aiLoading||!aiQuery.trim() ? TEXT3 : "#fff",
                 fontSize:11, fontWeight:600, display:"flex", alignItems:"center", gap:6,
                 transition:"all .2s",
               }}
             >
-              {aiLoading ? <><RefreshCw size={11} className="spin"/>&nbsp;Analyzing…</> : "Ask Kincaid IQ AI"}
+              {aiLoading ? <><RefreshCw size={11} className="spin"/>&nbsp;Analyzing…</> : "Ask Kincaid Health AI"}
             </button>
             {aiResp&&(
               <div className="fade-up" style={{marginTop:12,padding:"12px",background:"rgba(79,125,255,0.06)",border:`1px solid rgba(79,125,255,0.2)`,borderRadius:8}}>
@@ -1349,7 +1349,7 @@ function ReceiptTrailPanel({kpi,onClose}:{kpi:VerifyKpi;onClose:()=>void}){
             <div style={{display:"flex",flexWrap:"wrap",alignItems:"center",gap:6}}>
               {["Source Artifact","Evidence","Transform","Policy"].map((step,i)=>(
                 <span key={i} style={{display:"inline-flex",alignItems:"center",gap:6}}>
-                  <span style={{padding:"3px 10px",borderRadius:20,background:"rgba(0,0,0,0.3)",border:`1px solid ${BORDER}`,fontSize:10,color:TEXT2}}>{step}</span>
+                  <span style={{padding:"3px 10px",borderRadius:20,background:"rgba(0,0,0,0.05)",border:`1px solid ${BORDER}`,fontSize:10,color:TEXT2}}>{step}</span>
                   <ChevronRight size={10} color={TEXT3}/>
                 </span>
               ))}
@@ -1390,7 +1390,7 @@ function AppleTileCard({
         overflow:"hidden",
         cursor:"pointer",
         transition:"transform .2s ease, background .2s ease",
-        border:"1px solid rgba(255,255,255,0.06)",
+        border:"1px solid rgba(15,23,42,0.03)",
       }}
       onClick={()=>onOpen(p)}
       onMouseEnter={e=>{
@@ -1438,7 +1438,7 @@ function AppleTileCard({
       </div>
 
       {/* Supporting KPIs — bottom strip, no boxes */}
-      <div style={{borderTop:"1px solid rgba(255,255,255,0.06)",paddingTop:14,display:"flex",gap:size==="large"?32:16}}>
+      <div style={{borderTop:"1px solid rgba(15,23,42,0.03)",paddingTop:14,display:"flex",gap:size==="large"?32:16}}>
         {tile.supporting.map(k=>(
           <button
             key={k.kpi_key}
@@ -1514,7 +1514,7 @@ function WarRoomView({onKpiOpen}:{onKpiOpen:(k:VerifyKpi)=>void}){
         <div style={{display:"flex",alignItems:"center",gap:12}}>
           <div style={{display:"flex",alignItems:"center",gap:5}}>
             <div className="live-dot" style={{width:5,height:5,borderRadius:"50%",background:GREEN}}/>
-            <span style={{fontSize:10,color:TEXT2,fontWeight:500,letterSpacing:"0.01em"}}>Kincaid IQ VERIFY™</span>
+            <span style={{fontSize:10,color:TEXT2,fontWeight:500,letterSpacing:"0.01em"}}>Kincaid Health VERIFY™</span>
           </div>
           <span style={{fontSize:10,color:TEXT3}}>·</span>
           <span style={{fontSize:10,color:TEXT3}}>Demo Employer · Plan Year 2024</span>
@@ -1545,7 +1545,7 @@ function WarRoomView({onKpiOpen}:{onKpiOpen:(k:VerifyKpi)=>void}){
       <div style={{flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",padding:"6px 0",gap:6}}>
         <Sparkles size={8} color={GOLD}/>
         <span style={{fontSize:9,color:TEXT3,fontStyle:"italic",letterSpacing:"0.01em"}}>
-          Dashboards show numbers. Kincaid IQ shows receipts.
+          Dashboards show numbers. Kincaid Health shows receipts.
         </span>
       </div>
     </div>
@@ -1606,7 +1606,7 @@ function BoardExportButton(){
         data-testid="btn-board-export"
         onClick={handleClick}
         style={{
-          background: allowed ? "rgba(255,255,255,0.06)" : "rgba(239,68,68,0.08)",
+          background: allowed ? "rgba(15,23,42,0.03)" : "rgba(239,68,68,0.08)",
           border: `1px solid ${allowed ? BORDER : RED}`,
           borderRadius:10,
           padding:"8px 16px",
@@ -1616,8 +1616,8 @@ function BoardExportButton(){
           gap:8,
           transition:"background .2s",
         }}
-        onMouseEnter={e=>(e.currentTarget.style.background=allowed?"rgba(255,255,255,0.1)":"rgba(239,68,68,0.15)")}
-        onMouseLeave={e=>(e.currentTarget.style.background=allowed?"rgba(255,255,255,0.06)":"rgba(239,68,68,0.08)")}
+        onMouseEnter={e=>(e.currentTarget.style.background=allowed?"rgba(15,23,42,0.06)":"rgba(239,68,68,0.15)")}
+        onMouseLeave={e=>(e.currentTarget.style.background=allowed?"rgba(15,23,42,0.03)":"rgba(239,68,68,0.08)")}
       >
         <FileText size={12} color={allowed?TEXT1:RED}/>
         <span style={{fontSize:11,fontWeight:600,color:allowed?TEXT1:RED,letterSpacing:"0.02em"}}>
@@ -1904,7 +1904,7 @@ function Dol5500View({tiles,loading,status}:{tiles:any;loading:boolean;status:an
             ))}
           </div>
           {claimData.evidence && (
-            <div style={{background:"rgba(0,0,0,0.3)",border:`1px solid ${BORDER2}`,borderRadius:10,padding:"10px 14px",fontFamily:"monospace",fontSize:10,color:TEXT3}}>
+            <div style={{background:"rgba(0,0,0,0.05)",border:`1px solid ${BORDER2}`,borderRadius:10,padding:"10px 14px",fontFamily:"monospace",fontSize:10,color:TEXT3}}>
               <span style={{color:GREEN,fontWeight:700}}>SHA-256:</span> {claimData.evidence.sha256} &nbsp;·&nbsp;
               <span style={{color:CYAN}}>Lineage:</span> {claimData.evidence.lineage_chain} &nbsp;·&nbsp;
               <span style={{color:GREEN,fontWeight:700}}>LINEAGE_COMPLETE: {claimData.lineage_complete?"✓":"✗"}</span>
@@ -1997,10 +1997,10 @@ export default function ExecutiveWarRoom(){
   return(
     <Layout fullBleed>
       <style>{CSS}</style>
-      <div style={{height:"100vh",display:"flex",flexDirection:"column",overflow:"hidden",background:`linear-gradient(160deg,#07091c 0%,#0a0e24 60%,#060819 100%)`}}>
+      <div style={{height:"100vh",display:"flex",flexDirection:"column",overflow:"hidden",background:BG}}>
 
         {/* ── Top nav bar ────────────────────────────────────────────────── */}
-        <div style={{position:"sticky",top:0,zIndex:100,background:"rgba(7,9,28,0.96)",backdropFilter:"blur(20px)",borderBottom:`1px solid ${BORDER}`}}>
+        <div style={{position:"sticky",top:0,zIndex:100,background:"rgba(255,255,255,0.96)",backdropFilter:"blur(20px)",borderBottom:`1px solid ${BORDER}`}}>
           {/* Brand + controls */}
           <div style={{padding:"8px 20px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
             <div style={{display:"flex",alignItems:"center",gap:9}}>
@@ -2008,8 +2008,8 @@ export default function ExecutiveWarRoom(){
                 <Zap size={13} color="#fff"/>
               </div>
               <div>
-                <div style={{fontSize:13,fontWeight:800,color:TEXT1,letterSpacing:"-0.01em"}}>Kincaid IQ <span style={{fontSize:10,color:TEXT3,fontWeight:400}}>Benefits Intelligence Platform</span></div>
-                <div style={{fontSize:8,color:TEXT3,letterSpacing:"0.1em"}}>KINCAID RMC · ACCOUNT SHRACK-7742 · FIDUCIARY GRADE</div>
+                <div style={{fontSize:13,fontWeight:800,color:TEXT1,letterSpacing:"-0.01em"}}>Kincaid Health <span style={{fontSize:10,color:TEXT3,fontWeight:400}}>Benefits Intelligence Platform</span></div>
+                <div style={{fontSize:8,color:TEXT3,letterSpacing:"0.1em"}}>KINCAID HEALTH · ACCOUNT SHRACK-7742 · FIDUCIARY GRADE</div>
               </div>
             </div>
             <div style={{display:"flex",alignItems:"center",gap:6}}>
@@ -2047,7 +2047,7 @@ export default function ExecutiveWarRoom(){
                   }}>
                   <span style={{
                     display:"flex",alignItems:"center",
-                    color: active ? t.color : "rgba(255,255,255,0.22)",
+                    color: active ? t.color : "rgba(15,23,42,0.08)",
                     filter: active ? `drop-shadow(0 0 4px ${t.color})` : "none",
                   }}>{t.icon}</span>
                   {t.label}
@@ -2080,7 +2080,7 @@ export default function ExecutiveWarRoom(){
             </div>
             <div style={{marginLeft:"auto",padding:"4px 16px",flexShrink:0,display:"flex",alignItems:"center",gap:5}}>
               <Sparkles size={8} color={GOLD}/>
-              <span style={{fontSize:9,color:TEXT3,fontStyle:"italic"}}>Dashboards show numbers. Kincaid IQ shows receipts.</span>
+              <span style={{fontSize:9,color:TEXT3,fontStyle:"italic"}}>Dashboards show numbers. Kincaid Health shows receipts.</span>
             </div>
           </div>
         </div>

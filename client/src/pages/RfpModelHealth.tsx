@@ -44,8 +44,9 @@ function Section({ title, icon: Icon, color, desc, children, action }: {
 }) {
   return (
     <div style={{
-      background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)",
-      borderRadius: 14, padding: 20, marginBottom: 18,
+      background: "linear-gradient(135deg, rgba(255,255,255,0.92), rgba(248,250,252,0.72))", border: "1px solid rgba(15,23,42,0.08)",
+      borderRadius: 18, padding: 20, marginBottom: 18,
+      boxShadow: "0 18px 46px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.88)",
     }}>
       <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 14 }}>
         <div style={{
@@ -55,8 +56,8 @@ function Section({ title, icon: Icon, color, desc, children, action }: {
           <Icon size={18} />
         </div>
         <div style={{ flex: 1 }}>
-          <h3 style={{ fontSize: 15, fontWeight: 700, color: "#f5f5f7", margin: 0 }}>{title}</h3>
-          <p style={{ fontSize: 12, color: "#8a8a92", margin: "3px 0 0" }}>{desc}</p>
+          <h3 style={{ fontSize: 15, fontWeight: 850, color: "#0f172a", margin: 0 }}>{title}</h3>
+          <p style={{ fontSize: 12, color: "#475569", margin: "3px 0 0", fontWeight: 600 }}>{desc}</p>
         </div>
         {action}
       </div>
@@ -68,12 +69,12 @@ function Section({ title, icon: Icon, color, desc, children, action }: {
 function Stat({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
     <div style={{
-      background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)",
+      background: "rgba(255,255,255,0.76)", border: "1px solid rgba(15,23,42,0.08)",
       borderRadius: 10, padding: "12px 14px", flex: 1, minWidth: 120,
     }}>
-      <div style={{ fontSize: 10, color: "#8a8a92", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700 }}>{label}</div>
-      <div style={{ fontSize: 22, fontWeight: 800, color: "#f5f5f7", marginTop: 4 }}>{value}</div>
-      {sub && <div style={{ fontSize: 11, color: "#8a8a92", marginTop: 2 }}>{sub}</div>}
+      <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 800 }}>{label}</div>
+      <div style={{ fontSize: 22, fontWeight: 900, color: "#0f172a", marginTop: 4 }}>{value}</div>
+      {sub && <div style={{ fontSize: 11, color: "#475569", marginTop: 2, fontWeight: 600 }}>{sub}</div>}
     </div>
   );
 }
@@ -106,7 +107,7 @@ function ScoringValidationCard() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(110px,1fr))", gap: 8 }}>
             {data.calibration.map((b) => (
               <div key={b.range} data-testid={`calib-${b.range}`} style={{
-                background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)",
+                background: "rgba(255,255,255,0.025)", border: "1px solid #e2e8f0",
                 borderRadius: 8, padding: "8px 10px", opacity: b.count ? 1 : 0.4,
               }}>
                 <div style={{ fontSize: 11, fontWeight: 700, color: "#cfcfd4" }}>{b.range}</div>
@@ -149,7 +150,7 @@ function BidElasticityCard() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(120px,1fr))", gap: 8 }}>
             {data.buckets.map((b) => (
               <div key={b.label} style={{
-                background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)",
+                background: "rgba(255,255,255,0.025)", border: "1px solid #e2e8f0",
                 borderRadius: 8, padding: "8px 10px", opacity: b.count ? 1 : 0.4,
               }}>
                 <div style={{ fontSize: 11, fontWeight: 700, color: "#cfcfd4" }}>{b.label}</div>
@@ -191,7 +192,7 @@ function StalePipelineCard() {
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {data?.items.map((it) => (
           <div key={it.id} data-testid={`row-stale-${it.id}`} style={{
-            background: "rgba(255,255,255,0.025)", border: `1px solid ${it.severity >= 4 ? "#f8717155" : "rgba(255,255,255,0.07)"}`,
+            background: "rgba(255,255,255,0.025)", border: `1px solid ${it.severity >= 4 ? "#f8717155" : "#e2e8f0"}`,
             borderRadius: 10, padding: "12px 14px", display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap",
           }}>
             <div style={{ flex: 1, minWidth: 200 }}>
@@ -275,7 +276,7 @@ function PromoteCard() {
     onError: (e: any) => toast({ title: "Promote failed", description: String(e.message || e), variant: "destructive" }),
   });
   const inputStyle: React.CSSProperties = {
-    background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.12)",
+    background: "#ffffff", border: "1px solid #cbd5e1",
     borderRadius: 8, padding: "8px 10px", color: "#f5f5f7", fontSize: 13, flex: 1, minWidth: 130,
   };
   return (
@@ -352,16 +353,16 @@ function CorrelationForecastCard() {
 
 export default function RfpModelHealth() {
   return (
-    <div style={{ maxWidth: 1100, margin: "0 auto", padding: "28px 24px 60px" }} data-testid="page-rfp-model-health">
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", padding: "28px 24px 60px" }} data-testid="page-rfp-model-health">
+      <div className="kiq-ops-header" style={{ maxWidth: 1100, margin: "0 auto 18px", display: "flex", alignItems: "center", gap: 12, padding: 20, borderRadius: 24, flexWrap: "wrap" }}>
         <Activity size={24} color={GREEN} />
-        <h1 style={{ fontSize: 26, fontWeight: 800, color: "#f5f5f7", margin: 0 }}>RFP Model Health</h1>
+        <h1 style={{ fontSize: 26, fontWeight: 900, color: "#0f172a", margin: 0 }}>RFP Model Health</h1>
         <span style={{
           fontSize: 8, fontWeight: 900, letterSpacing: "0.12em", textTransform: "uppercase", color: GREEN,
           background: "rgba(52,211,153,0.15)", border: "1px solid rgba(52,211,153,0.30)", borderRadius: 3, padding: "2px 6px",
         }}>NEW</span>
       </div>
-      <p style={{ fontSize: 13, color: "#8a8a92", marginBottom: 22 }}>
+      <p style={{ maxWidth: 1100, fontSize: 13, color: "#475569", margin: "0 auto 22px", fontWeight: 600 }}>
         Diagnostics and hygiene for the RFP Intelligence OS — validate the scoring model against real outcomes,
         keep the pipeline clean, and push deals into your CRM.
       </p>

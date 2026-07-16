@@ -30,7 +30,7 @@ export function ClaimBadge({ claimId, boardGrade, verificationState, size = "sm"
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded border font-mono font-bold tracking-widest",
+        "inline-flex items-center gap-1.5 rounded-full border font-mono font-bold tracking-widest shadow-sm backdrop-blur-sm",
         size === "sm" ? "px-1.5 py-0.5 text-[8px]" : "px-2 py-1 text-[10px]",
         cfg.classes, className,
       )}

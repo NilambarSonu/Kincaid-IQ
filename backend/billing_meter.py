@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Usage Billing Meter
+Kincaid Health — Usage Billing Meter
 Implements the guide's calculateBill() formula:
 
     contracts  × $120.00   (per contract run through KIQ Engine)

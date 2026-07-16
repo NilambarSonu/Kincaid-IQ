@@ -79,7 +79,7 @@ export function AuditEntry({ r }: { r: AuditReceipt }) {
           style={{ borderColor: `${ac}50`, background: `${ac}10` }}>
           <FileCheck className="w-3 h-3" style={{ color: ac }} />
         </div>
-        <div className="w-px flex-1 bg-zinc-800 mt-1" />
+        <div className="w-px flex-1 bg-white mt-1" />
       </div>
 
       <div className="flex-1 pb-4 min-w-0">
@@ -99,7 +99,7 @@ export function AuditEntry({ r }: { r: AuditReceipt }) {
                 ? <ShieldCheck className="w-3 h-3 text-[#00FF94]" />
                 : <ShieldX     className="w-3 h-3 text-[#FF4D6D]" />}
             </div>
-            <p className="text-xs font-mono text-zinc-300">{r.receipt_id}</p>
+            <p className="text-xs font-mono text-slate-500">{r.receipt_id}</p>
           </div>
           <span className="text-[9px] font-mono text-zinc-600 shrink-0">{fmtTime(r.generated_at)}</span>
         </div>
@@ -134,10 +134,10 @@ export function AuditEntry({ r }: { r: AuditReceipt }) {
         </button>
 
         {open && (
-          <div className="mt-2 rounded-xl border border-zinc-800 bg-zinc-900/50 p-3 space-y-3">
+          <div className="mt-2 rounded-xl border border-slate-200 bg-slate-50/50 p-3 space-y-3">
             <div>
               <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-wider mb-1">Rationale</p>
-              <p className="text-[10px] font-mono text-zinc-300 leading-relaxed">{r.rationale}</p>
+              <p className="text-[10px] font-mono text-slate-500 leading-relaxed">{r.rationale}</p>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[9px] font-mono">
@@ -151,9 +151,9 @@ export function AuditEntry({ r }: { r: AuditReceipt }) {
                   color: r.board_grade ? "#FFB800" : "#94a3b8" },
                 { label: "Confidence",     value: r.confidence != null ? `${Math.round(r.confidence * 100)}%` : "—" },
               ].map(({ label, value, color }) => (
-                <div key={label} className="rounded border border-zinc-800 bg-zinc-950/40 px-2 py-1.5">
+                <div key={label} className="rounded border border-slate-200 bg-white/40 px-2 py-1.5">
                   <p className="text-zinc-600 uppercase tracking-wider mb-0.5">{label}</p>
-                  <span style={{ color: color ?? undefined }} className={cn(color ? "" : "text-zinc-300")}>
+                  <span style={{ color: color ?? undefined }} className={cn(color ? "" : "text-slate-500")}>
                     {value}
                   </span>
                 </div>
@@ -220,7 +220,7 @@ export function AuditLogPanel({
             data-testid="select-action-filter"
             value={filterAction}
             onChange={e => setFilterAction(e.target.value)}
-            className="bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-[10px] font-mono text-zinc-300 focus:outline-none focus:border-[#00A8FF]/40"
+            className="bg-white border border-slate-200 rounded-lg px-3 py-2 text-[10px] font-mono text-slate-500 focus:outline-none focus:border-[#00A8FF]/40"
           >
             <option value="ALL">All Actions ({receipts.length})</option>
             {uniqueActions.map(a => (

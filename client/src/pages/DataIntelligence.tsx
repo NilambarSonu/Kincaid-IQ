@@ -118,9 +118,9 @@ function ResultTable({ data, cols }: { data: any[]; cols: { key: string; label: 
         </thead>
         <tbody>
           {data.map((row, i) => (
-            <tr key={i} className="border-b border-white/5 hover:bg-white/[0.02]">
+            <tr key={i} className="border-b border-white/5 hover:bg-[var(--kiq-surface)]/[0.02]">
               {cols.map(c => (
-                <td key={c.key} className="py-2 pr-4 text-white/80 font-mono max-w-[200px] truncate">
+                <td key={c.key} className="py-2 pr-4 text-[var(--kiq-ink)]/80 font-mono max-w-[200px] truncate">
                   {c.key === "url" || c.key === "edgar_url" ? (
                     <a href={row[c.key]} target="_blank" rel="noopener noreferrer"
                       className="flex items-center gap-1 hover:text-blue-400 transition-colors">
@@ -154,7 +154,7 @@ function SECPanel() {
     <div className="space-y-3">
       <form className="flex gap-2" onSubmit={e => { e.preventDefault(); setQ(input); }}>
         <input value={input} onChange={e => setInput(e.target.value)}
-          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00A8FF]/30"
+          className="flex-1 bg-[var(--kiq-surface)]/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00A8FF]/30"
           placeholder="Company name or keyword…" data-testid="sec-search-input" />
         <button type="submit" data-testid="sec-search-btn"
           className="px-4 py-2 rounded-lg text-sm font-semibold transition-all"
@@ -211,7 +211,7 @@ function NADACPanel() {
     <div className="space-y-3">
       <form className="flex gap-2" onSubmit={e => { e.preventDefault(); setDrug(input); }}>
         <input value={input} onChange={e => setInput(e.target.value)}
-          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00FF94]/30"
+          className="flex-1 bg-[var(--kiq-surface)]/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00FF94]/30"
           placeholder="Drug name (e.g. metformin, atorvastatin)…" data-testid="nadac-search-input" />
         <button type="submit" data-testid="nadac-search-btn"
           className="px-4 py-2 rounded-lg text-sm font-semibold"
@@ -256,7 +256,7 @@ function CMSPanel() {
     <div className="space-y-3">
       <form className="flex gap-2" onSubmit={e => { e.preventDefault(); setKw(input); }}>
         <input value={input} onChange={e => setInput(e.target.value)}
-          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#A855F7]/30"
+          className="flex-1 bg-[var(--kiq-surface)]/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#A855F7]/30"
           placeholder="Dataset keyword (e.g. Part D, provider)…" data-testid="cms-search-input" />
         <button type="submit" data-testid="cms-search-btn"
           className="px-4 py-2 rounded-lg text-sm font-semibold"
@@ -295,7 +295,7 @@ function AB2DPanel() {
   if (!data) return <p className="text-xs text-muted-foreground animate-pulse">Loading…</p>;
   return (
     <div className="space-y-4">
-      <p className="text-sm text-white/80 leading-relaxed">{data.description}</p>
+      <p className="text-sm text-[var(--kiq-ink)]/80 leading-relaxed">{data.description}</p>
       <div className="grid grid-cols-2 gap-3">
         {[
           { label: "Eligibility", value: data.eligibility },
@@ -303,9 +303,9 @@ function AB2DPanel() {
           { label: "Data Format", value: data.data_format },
           { label: "Documentation", value: data.documentation },
         ].map(item => (
-          <div key={item.label} className="p-3 rounded-lg" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}>
+          <div key={item.label} className="p-3 rounded-lg" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
             <p className="text-[9px] uppercase font-bold text-muted-foreground mb-1">{item.label}</p>
-            <p className="text-xs text-white/80">{item.value}</p>
+            <p className="text-xs text-[var(--kiq-ink)]/80">{item.value}</p>
           </div>
         ))}
       </div>
@@ -313,7 +313,7 @@ function AB2DPanel() {
         <p className="text-[10px] uppercase font-bold text-muted-foreground mb-2">Use Cases</p>
         <ul className="space-y-1">
           {data.use_cases?.map((u: string) => (
-            <li key={u} className="flex items-center gap-2 text-xs text-white/70">
+            <li key={u} className="flex items-center gap-2 text-xs text-[var(--kiq-ink)]/70">
               <ChevronRight size={12} style={{ color: "#FFB800" }} />{u}
             </li>
           ))}
@@ -343,12 +343,12 @@ function PBMPanel() {
   if (!data) return <p className="text-xs text-muted-foreground animate-pulse">Loading…</p>;
   return (
     <div className="space-y-4">
-      <p className="text-xs font-bold text-muted-foreground">Regulatory Basis: <span className="text-white">{data.regulatory_basis}</span></p>
+      <p className="text-xs font-bold text-muted-foreground">Regulatory Basis: <span className="text-[var(--kiq-ink)]">{data.regulatory_basis}</span></p>
       <div className="space-y-3">
         {data.reporting_requirements?.map((r: any) => (
           <div key={r.item} className="p-3 rounded-xl" style={{ background: "rgba(255,77,109,0.06)", border: "1px solid rgba(255,77,109,0.15)" }}>
-            <p className="text-sm font-bold text-white mb-1">{r.item}</p>
-            <p className="text-xs text-white/60 mb-1">{r.definition}</p>
+            <p className="text-sm font-bold text-[var(--kiq-ink)] mb-1">{r.item}</p>
+            <p className="text-xs text-[var(--kiq-ink)]/60 mb-1">{r.definition}</p>
             <p className="text-[11px] font-semibold" style={{ color: "#FF4D6D" }}>CMS: {r.cms_requirement}</p>
           </div>
         ))}
@@ -357,7 +357,7 @@ function PBMPanel() {
         <p className="text-[10px] uppercase font-bold text-muted-foreground mb-2">Key Rules</p>
         <ul className="space-y-1">
           {data.key_rules?.map((r: string) => (
-            <li key={r} className="flex items-start gap-2 text-xs text-white/70">
+            <li key={r} className="flex items-start gap-2 text-xs text-[var(--kiq-ink)]/70">
               <ChevronRight size={12} className="mt-0.5 flex-shrink-0" style={{ color: "#FF4D6D" }} />{r}
             </li>
           ))}
@@ -382,7 +382,7 @@ function USASpendingPanel() {
     <div className="space-y-3">
       <form className="flex gap-2" onSubmit={e => { e.preventDefault(); setKw(input); }}>
         <input value={input} onChange={e => setInput(e.target.value)}
-          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00A8FF]/30"
+          className="flex-1 bg-[var(--kiq-surface)]/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00A8FF]/30"
           placeholder="Keyword (e.g. pharmaceutical, healthcare IT)…" data-testid="usaspending-search-input" />
         <button type="submit" data-testid="usaspending-search-btn"
           className="px-4 py-2 rounded-lg text-sm font-semibold"
@@ -429,7 +429,7 @@ function SAMPanel() {
     <div className="space-y-3">
       <form className="flex gap-2" onSubmit={e => { e.preventDefault(); setKw(input); }}>
         <input value={input} onChange={e => setInput(e.target.value)}
-          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00FF94]/30"
+          className="flex-1 bg-[var(--kiq-surface)]/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#00FF94]/30"
           placeholder="Contract keyword (e.g. healthcare IT, consulting)…" data-testid="sam-search-input" />
         <button type="submit" data-testid="sam-search-btn"
           className="px-4 py-2 rounded-lg text-sm font-semibold"
@@ -485,7 +485,7 @@ function GSAPanel() {
     <div className="space-y-3">
       <form className="flex gap-2" onSubmit={e => { e.preventDefault(); setQ(input); }}>
         <input value={input} onChange={e => setInput(e.target.value)}
-          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#A855F7]/30"
+          className="flex-1 bg-[var(--kiq-surface)]/5 border border-white/10 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#A855F7]/30"
           placeholder="Labor category (e.g. data analyst, program manager)…" data-testid="gsa-search-input" />
         <button type="submit" data-testid="gsa-search-btn"
           className="px-4 py-2 rounded-lg text-sm font-semibold"
@@ -542,7 +542,7 @@ export default function DataIntelligence() {
             <Database size={20} style={{ color: "#00A8FF" }} />
           </div>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-white" style={{ fontFamily: "var(--font-display)" }}>
+            <h1 className="text-2xl font-bold tracking-tight text-[var(--kiq-ink)]" style={{ fontFamily: "var(--font-display)" }}>
               Data Intelligence Hub
             </h1>
             <p className="text-sm" style={{ color: "rgba(140,170,220,0.6)" }}>
@@ -563,8 +563,8 @@ export default function DataIntelligence() {
                 onClick={() => setActive(feed.id)}
                 className="text-left p-3 rounded-xl transition-all duration-150 hover:scale-[1.02]"
                 style={{
-                  background: isActive ? `${feed.color}14` : "rgba(255,255,255,0.03)",
-                  border: isActive ? `1px solid ${feed.color}50` : "1px solid rgba(255,255,255,0.07)",
+                  background: isActive ? `${feed.color}14` : "#ffffff",
+                  border: isActive ? `1px solid ${feed.color}50` : "1px solid #e2e8f0",
                   boxShadow: isActive ? `0 0 16px ${feed.color}18` : "none",
                 }}
               >
@@ -575,7 +575,7 @@ export default function DataIntelligence() {
                   </div>
                   <TagBadge text={feed.tag} color={feed.color} />
                 </div>
-                <p className="text-xs font-bold text-white mb-0.5">{feed.label}</p>
+                <p className="text-xs font-bold text-[var(--kiq-ink)] mb-0.5">{feed.label}</p>
                 <AuthBadge text={feed.auth} />
               </button>
             );
@@ -584,12 +584,12 @@ export default function DataIntelligence() {
 
         {/* Active panel */}
         <div className="rounded-2xl p-5"
-          style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${activeFeed.color}22`, backdropFilter: "blur(12px)" }}>
+          style={{ background: "#ffffff", border: `1px solid ${activeFeed.color}22`, backdropFilter: "blur(12px)" }}>
           <div className="flex items-start justify-between gap-3 mb-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <activeFeed.icon size={16} style={{ color: activeFeed.color }} />
-                <h2 className="text-base font-bold text-white">{activeFeed.label}</h2>
+                <h2 className="text-base font-bold text-[var(--kiq-ink)]">{activeFeed.label}</h2>
                 <TagBadge text={activeFeed.tag} color={activeFeed.color} />
               </div>
               <p className="text-xs text-muted-foreground">{activeFeed.description}</p>

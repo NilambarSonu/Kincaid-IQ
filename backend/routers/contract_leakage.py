@@ -1,5 +1,5 @@
 """
-Kincaid IQ · Contract Leakage Pipeline (DRAP reconciliation)
+Kincaid Health · Contract Leakage Pipeline (DRAP reconciliation)
 ============================================================
 The core sentence in code: DRAP = Sum(Paid - Allowable) across all claims,
 computed per claim against an ingested contract fee schedule, rolled up by

@@ -8,11 +8,11 @@ import {
 import { computeModel, monteCarlo } from "@/lib/enterpriseModel";
 
 /* ── design tokens (matches platform Bloomberg-terminal aesthetic) ───────── */
-const BG = "#07091c";
-const T1 = "#f0f4ff";
-const BORDER = "rgba(255,255,255,0.08)";
-const MUTED = "rgba(255,255,255,0.45)";
-const FAINT = "rgba(255,255,255,0.3)";
+const BG = "transparent";
+const T1 = "#0F172A";
+const BORDER = "rgba(13,37,61,0.08)";
+const MUTED = "#64748B";
+const FAINT = "#64748b";
 const GREEN = "#22c55e";
 const RED = "#ef4444";
 const AMBER = "#f59e0b";
@@ -120,7 +120,7 @@ const AGENTS = [
     gov: "KIQ Narrative Engine voice contract" },
   { name: "Competitive Intelligence Agent", icon: Network, status: "MODELED",
     mission: "Map incumbent brokers + displacement angles.",
-    inputs: "Shady Broker Index, market intel, commissions",
+    inputs: "Broker Compensation Index, market intel, commissions",
     outputs: "Incumbent risk score, switch thesis",
     gov: "Public-record sourced; no speculation" },
   { name: "Board Presentation Agent", icon: Building2, status: "LIVE",
@@ -228,11 +228,11 @@ export default function EnterpriseCommandCenter() {
 
   return (
     <Layout fullBleed>
-      <div style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-body)", padding: "24px 28px" }}>
+      <div className="kiq-ops-shell" style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-body)", padding: "24px 28px" }}>
         {/* Header */}
-        <div style={{ marginBottom: 22 }}>
+        <div className="kiq-ops-header" style={{ marginBottom: 22, borderRadius: 24, padding: "20px 22px" }}>
           <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.22em", color: ACCENT, marginBottom: 6 }}>
-            ◈ KINCAID IQ · ENTERPRISE SALES INTELLIGENCE OPERATING SYSTEM · NATIONAL SCALE DEPLOYMENT · 10,000+ REP READINESS
+            ◈ KINCAID HEALTH · ENTERPRISE SALES INTELLIGENCE OPERATING SYSTEM · NATIONAL SCALE DEPLOYMENT · 10,000+ REP READINESS
           </div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -252,9 +252,9 @@ export default function EnterpriseCommandCenter() {
                   <button key={v.id} onClick={() => setView(v.id)} data-testid={`ecc-view-${v.id}`}
                     style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 10,
                       fontSize: 11, fontWeight: 900, cursor: "pointer",
-                      background: active ? `${v.color}20` : "rgba(255,255,255,0.04)",
+                      background: active ? `${v.color}20` : "#ffffff",
                       border: `1px solid ${active ? v.color : BORDER}`,
-                      color: active ? v.color : MUTED }}>
+                    color: active ? v.color : MUTED, boxShadow: active ? `0 12px 28px ${v.color}18` : "0 8px 22px rgba(15,23,42,0.04)" }}>
                     <Icon size={13} /> {v.label}
                   </button>
                 );
@@ -266,8 +266,7 @@ export default function EnterpriseCommandCenter() {
         {/* ── READINESS ───────────────────────────────────────────────────── */}
         {view === "readiness" && (
           <>
-            <div style={{ marginBottom: 20, padding: "16px 20px", background: `${compColor}08`,
-              border: `1px solid ${compColor}30`, borderRadius: 14, display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
+            <div className="kiq-ops-card" style={{ marginBottom: 20, padding: "16px 20px", borderColor: `${compColor}30`, display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
               <div style={{ textAlign: "center", minWidth: 90 }}>
                 <div style={{ fontSize: 40, fontWeight: 900, color: compColor }} data-testid="text-readiness-composite">{composite}</div>
                 <div style={{ fontSize: 8, color: FAINT, letterSpacing: "0.12em" }}>F500 READINESS</div>
@@ -277,11 +276,11 @@ export default function EnterpriseCommandCenter() {
                   <span style={{ fontSize: 11, color: MUTED }}>Weighted composite across 9 categories (target: 80+)</span>
                   <span style={{ fontSize: 11, fontWeight: 900, color: compColor }}>{80 - composite > 0 ? `${80 - composite} pts to gate` : "Gate cleared"}</span>
                 </div>
-                <div style={{ height: 10, background: "rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
+                <div style={{ height: 10, background: "#f1f5f9", borderRadius: 5, overflow: "hidden" }}>
                   <div style={{ height: "100%", width: `${composite}%`, background: `linear-gradient(90deg, ${AMBER}, ${GREEN})`, borderRadius: 5 }} />
                 </div>
                 <div style={{ fontSize: 9, color: FAINT, marginTop: 8 }}>
-                  3 P0 blockers · 3 P1 priorities · sealed under KINCAID IQ VERIFY™ V10.0 evidence doctrine
+                  3 P0 blockers · 3 P1 priorities · sealed under KINCAID HEALTH VERIFY™ V10.0 evidence doctrine
                 </div>
               </div>
             </div>
@@ -292,7 +291,7 @@ export default function EnterpriseCommandCenter() {
                 const open = openCat === r.cat;
                 return (
                   <div key={r.cat} onClick={() => setOpenCat(open ? null : r.cat)} data-testid={`ecc-readiness-${r.cat}`}
-                    style={{ background: open ? `${c}08` : "rgba(255,255,255,0.02)",
+                    style={{ background: open ? `${c}08` : "#ffffff",
                       border: `1px solid ${open ? `${c}40` : BORDER}`, borderRadius: 14, padding: "16px 18px", cursor: "pointer", transition: "all 0.15s" }}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
                       <div style={{ fontSize: 13, fontWeight: 700, color: T1 }}>{r.cat}</div>
@@ -304,7 +303,7 @@ export default function EnterpriseCommandCenter() {
                       <span style={{ fontSize: 28, fontWeight: 900, color: c }}>{r.score}</span>
                       <span style={{ fontSize: 11, color: FAINT }}>/ 100</span>
                     </div>
-                    <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden" }}>
+                    <div style={{ height: 6, background: "#f1f5f9", borderRadius: 3, overflow: "hidden" }}>
                       <div style={{ height: "100%", width: `${r.score}%`, background: c, borderRadius: 3 }} />
                     </div>
                     {open && (
@@ -327,12 +326,12 @@ export default function EnterpriseCommandCenter() {
                 { label: "180-Day Plan", color: GOLD, items: ROLLOUT.d180 },
                 { label: "365-Day Plan", color: GREEN, items: ROLLOUT.d365 },
               ].map((p) => (
-                <div key={p.label} style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${p.color}30`, borderRadius: 14, padding: 18 }}>
+                <div key={p.label} style={{ background: "#ffffff", border: `1px solid ${p.color}30`, borderRadius: 14, padding: 18 }}>
                   <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.14em", color: p.color, marginBottom: 12 }}>{p.label.toUpperCase()}</div>
                   {p.items.map((it, i) => (
                     <div key={i} style={{ display: "flex", gap: 10, marginBottom: 10 }}>
                       <CheckCircle2 size={13} color={p.color} style={{ marginTop: 2, flexShrink: 0 }} />
-                      <span style={{ fontSize: 12, color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>{it}</span>
+                      <span style={{ fontSize: 12, color: "#1e293b", lineHeight: 1.6 }}>{it}</span>
                     </div>
                   ))}
                 </div>
@@ -345,13 +344,13 @@ export default function EnterpriseCommandCenter() {
         {view === "revenue" && (
           <>
             {/* controls */}
-            <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`, borderRadius: 14, padding: "16px 20px", marginBottom: 18 }}>
+            <div style={{ background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 14, padding: "16px 20px", marginBottom: 18 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 16 }}>
                 <span style={{ fontSize: 11, fontWeight: 900, color: MUTED, letterSpacing: "0.1em" }}>SALES FORCE SIZE</span>
                 {REP_PRESETS.map((p) => (
                   <button key={p} onClick={() => setReps(p)} data-testid={`ecc-reps-${p}`}
                     style={{ padding: "6px 14px", borderRadius: 8, fontSize: 11, fontWeight: 900, cursor: "pointer",
-                      background: reps === p ? `${GREEN}20` : "rgba(255,255,255,0.04)",
+                      background: reps === p ? `${GREEN}20` : "#ffffff",
                       border: `1px solid ${reps === p ? GREEN : BORDER}`, color: reps === p ? GREEN : MUTED }}>
                     {fmtN(p)} reps
                   </button>
@@ -400,7 +399,7 @@ export default function EnterpriseCommandCenter() {
                 { label: "LTV / CAC", value: `${model.ltvCac.toFixed(1)}x`, color: model.ltvCac >= 3 ? GREEN : AMBER, testid: "kpi-ltvcac" },
                 { label: "Enterprise Value", value: fmtUSD(model.enterpriseValue), color: ACCENT, testid: "kpi-ev" },
               ].map((k) => (
-                <div key={k.label} style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${k.color}25`, borderRadius: 12, padding: "14px 16px" }}>
+                <div key={k.label} style={{ background: "#ffffff", border: `1px solid ${k.color}25`, borderRadius: 12, padding: "14px 16px" }}>
                   <div style={{ fontSize: 9, color: FAINT, letterSpacing: "0.1em", marginBottom: 6 }}>{k.label.toUpperCase()}</div>
                   <div style={{ fontSize: 22, fontWeight: 900, color: k.color }} data-testid={`text-${k.testid}`}>{k.value}</div>
                 </div>
@@ -409,7 +408,7 @@ export default function EnterpriseCommandCenter() {
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 14 }}>
               {/* funnel */}
-              <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`, borderRadius: 14, padding: 18 }}>
+              <div style={{ background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 14, padding: 18 }}>
                 <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.14em", color: MUTED, marginBottom: 14 }}>NATIONAL SALES FUNNEL · ANNUAL</div>
                 {funnel.map((f) => (
                   <div key={f.label} style={{ marginBottom: 12 }}>
@@ -417,7 +416,7 @@ export default function EnterpriseCommandCenter() {
                       <span style={{ fontSize: 11, color: MUTED }}>{f.label}</span>
                       <span style={{ fontSize: 12, fontWeight: 900, color: f.color }}>{fmtN(f.value)}</span>
                     </div>
-                    <div style={{ height: 8, background: "rgba(255,255,255,0.05)", borderRadius: 4, overflow: "hidden" }}>
+                    <div style={{ height: 8, background: "#f8fafc", borderRadius: 4, overflow: "hidden" }}>
                       <div style={{ height: "100%", width: `${Math.max(2, (f.value / funnelMax) * 100)}%`, background: f.color, borderRadius: 4 }} />
                     </div>
                   </div>
@@ -425,7 +424,7 @@ export default function EnterpriseCommandCenter() {
               </div>
 
               {/* monte carlo */}
-              <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${PURPLE}30`, borderRadius: 14, padding: 18 }}>
+              <div style={{ background: "#ffffff", border: `1px solid ${PURPLE}30`, borderRadius: 14, padding: 18 }}>
                 <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.14em", color: PURPLE, marginBottom: 6 }}>MONTE CARLO · 1,500 RUNS</div>
                 <div style={{ fontSize: 10, color: FAINT, marginBottom: 16 }}>Stochastic close rate (σ18%), ACV (σ15%), ramp (82–100%)</div>
                 {[
@@ -448,7 +447,7 @@ export default function EnterpriseCommandCenter() {
             </div>
 
             {/* network effect compounding (Phase 10) */}
-            <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${GOLD}25`, borderRadius: 14, padding: 18, marginTop: 14 }}>
+            <div style={{ background: "#ffffff", border: `1px solid ${GOLD}25`, borderRadius: 14, padding: 18, marginTop: 14 }}>
               <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.14em", color: GOLD, marginBottom: 4 }}>NETWORK-EFFECT COMPOUNDING · DATA MOAT</div>
               <div style={{ fontSize: 10, color: FAINT, marginBottom: 16 }}>Every employer, 5500, PBM contract, claim & transaction raises intelligence quality — defensibility compounds non-linearly.</div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 10 }}>
@@ -458,7 +457,7 @@ export default function EnterpriseCommandCenter() {
                   { yr: "Year 5", quality: 240, moat: "+ Economic" },
                   { yr: "Year 10", quality: 380, moat: "+ Network + AI" },
                 ].map((n) => (
-                  <div key={n.yr} style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`, borderRadius: 10, padding: 14, textAlign: "center" }}>
+                  <div key={n.yr} style={{ background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 10, padding: 14, textAlign: "center" }}>
                     <div style={{ fontSize: 9, color: FAINT, letterSpacing: "0.1em" }}>{n.yr.toUpperCase()}</div>
                     <div style={{ fontSize: 22, fontWeight: 900, color: GOLD, margin: "4px 0" }}>{n.quality}</div>
                     <div style={{ fontSize: 8, color: FAINT }}>quality index</div>
@@ -492,7 +491,7 @@ export default function EnterpriseCommandCenter() {
                 const sc = a.status === "LIVE" ? GREEN : AMBER;
                 return (
                   <div key={a.name} onClick={() => setOpenAgent(open ? null : a.name)} data-testid={`ecc-agent-${a.name.replace(/\s+/g, "-")}`}
-                    style={{ background: open ? "rgba(168,85,247,0.06)" : "rgba(255,255,255,0.02)",
+                    style={{ background: open ? "rgba(168,85,247,0.06)" : "#ffffff",
                       border: `1px solid ${open ? `${PURPLE}40` : BORDER}`, borderRadius: 14, padding: "16px 18px", cursor: "pointer", transition: "all 0.15s" }}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -511,7 +510,7 @@ export default function EnterpriseCommandCenter() {
                         {[["Inputs", a.inputs], ["Outputs", a.outputs], ["Governance", a.gov]].map(([k, v]) => (
                           <div key={k}>
                             <div style={{ fontSize: 9, color: FAINT, letterSpacing: "0.1em", marginBottom: 2 }}>{k.toUpperCase()}</div>
-                            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>{v}</div>
+                            <div style={{ fontSize: 11, color: "#1e293b", lineHeight: 1.5 }}>{v}</div>
                           </div>
                         ))}
                       </div>
@@ -529,7 +528,7 @@ export default function EnterpriseCommandCenter() {
             <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.14em", color: GOLD, marginBottom: 12 }}>NATIONAL SALES PIPELINE · 10 STAGES</div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 10, marginBottom: 24 }}>
               {PIPELINE.map((p, i) => (
-                <div key={p.stage} style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`, borderRadius: 12, padding: 14 }}>
+                <div key={p.stage} style={{ background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 12, padding: 14 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
                     <div style={{ width: 22, height: 22, borderRadius: 6, background: `${GOLD}18`, border: `1px solid ${GOLD}30`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 900, color: GOLD }}>{i + 1}</div>
                     <div style={{ fontSize: 12, fontWeight: 700, color: T1 }}>{p.stage}</div>
@@ -549,7 +548,7 @@ export default function EnterpriseCommandCenter() {
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 14 }}>
               {/* governance */}
-              <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${ACCENT}25`, borderRadius: 14, padding: 18 }}>
+              <div style={{ background: "#ffffff", border: `1px solid ${ACCENT}25`, borderRadius: 14, padding: 18 }}>
                 <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.14em", color: ACCENT, marginBottom: 14 }}>ENTERPRISE GOVERNANCE · DECISION RIGHTS</div>
                 {GOV_BOARDS.map((g) => (
                   <div key={g.board} style={{ paddingBottom: 10, marginBottom: 10, borderBottom: `1px solid ${BORDER}` }}>
@@ -561,20 +560,20 @@ export default function EnterpriseCommandCenter() {
               </div>
 
               {/* adoption */}
-              <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${GREEN}25`, borderRadius: 14, padding: 18 }}>
+              <div style={{ background: "#ffffff", border: `1px solid ${GREEN}25`, borderRadius: 14, padding: 18 }}>
                 <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.14em", color: GREEN, marginBottom: 14 }}>ADOPTION SCIENCE · BJ FOGG + DIFFUSION</div>
                 <div style={{ fontSize: 10, fontWeight: 900, color: GREEN, marginBottom: 8 }}>WHAT DRIVES ADOPTION</div>
                 {ADOPTION.drivers.map((d, i) => (
                   <div key={i} style={{ display: "flex", gap: 8, marginBottom: 7 }}>
                     <CheckCircle2 size={12} color={GREEN} style={{ flexShrink: 0, marginTop: 1 }} />
-                    <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>{d}</span>
+                    <span style={{ fontSize: 11, color: "#1e293b", lineHeight: 1.5 }}>{d}</span>
                   </div>
                 ))}
                 <div style={{ fontSize: 10, fontWeight: 900, color: RED, margin: "12px 0 8px" }}>WHAT KILLS ADOPTION</div>
                 {ADOPTION.killers.map((d, i) => (
                   <div key={i} style={{ display: "flex", gap: 8, marginBottom: 7 }}>
                     <AlertTriangle size={12} color={RED} style={{ flexShrink: 0, marginTop: 1 }} />
-                    <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>{d}</span>
+                    <span style={{ fontSize: 11, color: "#1e293b", lineHeight: 1.5 }}>{d}</span>
                   </div>
                 ))}
               </div>
@@ -583,8 +582,8 @@ export default function EnterpriseCommandCenter() {
         )}
 
         {/* doctrine footer */}
-        <div style={{ marginTop: 24, padding: "10px 14px", background: "rgba(0,0,0,0.3)", borderRadius: 10, fontFamily: "monospace", fontSize: 9, color: ACCENT }}>
-          ECC:SHA256:STANFORD-GSB-CS · ENTERPRISE SALES INTELLIGENCE OS v1.0 · NATIONAL SCALE · SEALED UNDER KINCAID IQ VERIFY™ V10.0 · {new Date().toISOString().slice(0, 10)}
+        <div style={{ marginTop: 24, padding: "10px 14px", background: "rgba(0,0,0,0.05)", borderRadius: 10, fontFamily: "monospace", fontSize: 9, color: ACCENT }}>
+          ECC:SHA256:STANFORD-GSB-CS · ENTERPRISE SALES INTELLIGENCE OS v1.0 · NATIONAL SCALE · SEALED UNDER KINCAID HEALTH VERIFY™ V10.0 · {new Date().toISOString().slice(0, 10)}
         </div>
       </div>
     </Layout>

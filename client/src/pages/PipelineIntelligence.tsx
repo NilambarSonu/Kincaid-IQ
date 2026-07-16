@@ -107,7 +107,7 @@ function shortHash(h: string | null) {
 
 function PipelineFlowHero({ stats }: { stats: PipelineStats }) {
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 backdrop-blur-sm p-6 mb-6">
+    <div className="rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60 backdrop-blur-sm p-6 mb-6">
       <p className="text-[10px] font-mono font-semibold text-zinc-500 uppercase tracking-widest mb-5">
         5-Stage Governed Data Pipeline
       </p>
@@ -132,7 +132,7 @@ function PipelineFlowHero({ stats }: { stats: PipelineStats }) {
                     style={{ color: s.color }}>Stage {s.stage}</span>
                 </div>
                 <div>
-                  <p className="text-xs font-semibold text-white leading-tight">{s.label}</p>
+                  <p className="text-xs font-semibold text-[var(--kiq-ink)] leading-tight">{s.label}</p>
                   <p className="text-[9px] text-zinc-500 mt-0.5 leading-tight">{s.description}</p>
                 </div>
                 <div className="flex items-baseline gap-1 mt-auto pt-1 border-t"
@@ -164,7 +164,7 @@ function PipelineFlowHero({ stats }: { stats: PipelineStats }) {
               >
                 <Icon className="w-4 h-4 shrink-0" style={{ color: s.color }} />
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-semibold text-white">{s.label}</p>
+                  <p className="text-xs font-semibold text-[var(--kiq-ink)]">{s.label}</p>
                   <p className="text-[9px] text-zinc-500">{s.description}</p>
                 </div>
                 <span className="text-lg font-bold font-mono tabular-nums shrink-0"
@@ -197,7 +197,7 @@ function OverviewTab({ stats, tiles }: { stats: PipelineStats; tiles: ExecutiveT
   return (
     <div className="space-y-6">
       {/* Summary bars */}
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-5">
+      <div className="rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60 p-5">
         <p className="text-[10px] font-mono font-semibold text-zinc-500 uppercase tracking-widest mb-4">
           Executive Surface Distribution ({tiles.length} tiles)
         </p>
@@ -213,7 +213,7 @@ function OverviewTab({ stats, tiles }: { stats: PipelineStats; tiles: ExecutiveT
                 <span className="text-zinc-400">{row.label}</span>
                 <span className="font-mono font-bold" style={{ color: row.color }}>{row.count}</span>
               </div>
-              <div className="h-1.5 rounded-full bg-zinc-800/80">
+              <div className="h-1.5 rounded-full bg-[var(--kiq-surface)]/80">
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{ width: `${(row.count / total) * 100}%`, background: row.color }}
@@ -240,7 +240,7 @@ function OverviewTab({ stats, tiles }: { stats: PipelineStats; tiles: ExecutiveT
 
       {/* Recent tiles */}
       {tiles.length > 0 && (
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-5">
+        <div className="rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60 p-5">
           <p className="text-[10px] font-mono font-semibold text-zinc-500 uppercase tracking-widest mb-4">
             Latest Executive Tiles
           </p>
@@ -251,15 +251,15 @@ function OverviewTab({ stats, tiles }: { stats: PipelineStats; tiles: ExecutiveT
               const RIcon = rc.icon;
               return (
                 <div key={tile.tileId}
-                  className="flex items-center gap-3 rounded-lg border border-zinc-800/60 bg-zinc-950/40 px-3.5 py-2.5"
+                  className="flex items-center gap-3 rounded-lg border border-[var(--kiq-hairline)]/60 bg-[var(--kiq-surface)]/40 px-3.5 py-2.5"
                   data-testid={`tile-row-${tile.tileId}`}>
                   <RIcon className="w-3.5 h-3.5 shrink-0" style={{ color: rc.color }} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-white truncate">{tile.title}</p>
+                    <p className="text-xs font-semibold text-[var(--kiq-ink)] truncate">{tile.title}</p>
                     <p className="text-[9px] font-mono text-zinc-500">{tile.kpiKey} · {tile.period ?? "—"}</p>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="text-xs font-mono font-bold text-white">{tile.value}{tile.unit ? ` ${tile.unit}` : ""}</p>
+                    <p className="text-xs font-mono font-bold text-[var(--kiq-ink)]">{tile.value}{tile.unit ? ` ${tile.unit}` : ""}</p>
                   </div>
                   <span className={cn("text-[8px] font-mono font-bold rounded border px-1.5 py-0.5", tc.bg)}
                     style={{ color: tc.color }}>{tile.trustPosture}</span>
@@ -302,7 +302,7 @@ function TraceStageCard({
             <p className="text-[9px] font-mono font-bold uppercase tracking-widest" style={{ color }}>
               Stage {stageNum}
             </p>
-            <p className="text-sm font-semibold text-white">{label}</p>
+            <p className="text-sm font-semibold text-[var(--kiq-ink)]">{label}</p>
           </div>
           {count !== undefined && (
             <span className="ml-auto text-xs font-mono font-bold" style={{ color }}>
@@ -321,9 +321,9 @@ function TraceStageCard({
 
 function KV({ label, value, mono = false }: { label: string; value: string | null; mono?: boolean }) {
   return (
-    <div className="flex items-baseline gap-2 py-1 border-b border-zinc-800/40 last:border-0">
+    <div className="flex items-baseline gap-2 py-1 border-b border-[var(--kiq-hairline)]/40 last:border-0">
       <span className="text-[9px] font-mono text-zinc-600 uppercase tracking-wider w-28 shrink-0">{label}</span>
-      <span className={cn("text-xs text-zinc-300 break-all", mono && "font-mono")}>{value ?? "—"}</span>
+      <span className={cn("text-xs text-[var(--kiq-muted)] break-all", mono && "font-mono")}>{value ?? "—"}</span>
     </div>
   );
 }
@@ -356,14 +356,14 @@ function TraceTab() {
     <div className="space-y-4">
       {/* Search */}
       <div className="flex gap-2">
-        <div className="flex items-center gap-2 flex-1 rounded-lg border border-zinc-700 bg-zinc-900/80 px-4 py-2.5">
+        <div className="flex items-center gap-2 flex-1 rounded-lg border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/80 px-4 py-2.5">
           <Search className="w-4 h-4 text-zinc-500 shrink-0" />
           <input
             value={claimId}
             onChange={e => setClaimId(e.target.value)}
             onKeyDown={e => e.key === "Enter" && handleSearch()}
             placeholder="Enter Claim ID to trace (e.g. CLM-2026-0001)"
-            className="flex-1 bg-transparent text-sm text-white placeholder-zinc-600 focus:outline-none"
+            className="flex-1 bg-transparent text-sm text-[var(--kiq-ink)] placeholder-zinc-600 focus:outline-none"
             data-testid="input-trace-claim-id"
           />
         </div>
@@ -409,7 +409,7 @@ function TraceTab() {
                         <LinkIcon className="w-2.5 h-2.5" />{ev.evidenceId}
                       </span>
                       {ev.sourceType && (
-                        <span className="text-[9px] font-mono text-zinc-500 border border-zinc-700 rounded px-1.5 py-0.5 uppercase">
+                        <span className="text-[9px] font-mono text-zinc-500 border border-[var(--kiq-hairline)] rounded px-1.5 py-0.5 uppercase">
                           {ev.sourceType}
                         </span>
                       )}
@@ -417,7 +417,7 @@ function TraceTab() {
                         <span className="text-[9px] font-mono text-zinc-600 ml-auto">{fmt(ev.receivedAt)}</span>
                       )}
                     </div>
-                    {ev.description && <p className="text-xs text-zinc-300 mb-1">{ev.description}</p>}
+                    {ev.description && <p className="text-xs text-[var(--kiq-muted)] mb-1">{ev.description}</p>}
                     {ev.sourceUri && (
                       <p className="text-[9px] font-mono text-zinc-500 truncate">URI: {ev.sourceUri}</p>
                     )}
@@ -459,9 +459,9 @@ function TraceTab() {
                         <span className="text-[9px] font-mono text-zinc-400">→ {tx.outputKpiKey}</span>
                       )}
                     </div>
-                    {tx.name && <p className="text-xs font-semibold text-zinc-200 mb-1">{tx.name}</p>}
+                    {tx.name && <p className="text-xs font-semibold text-[var(--kiq-ink-soft)] mb-1">{tx.name}</p>}
                     {tx.formula && (
-                      <code className="block text-[9px] font-mono text-[#FFB800] bg-zinc-950/60 border border-zinc-800 rounded px-2 py-1 mb-1">
+                      <code className="block text-[9px] font-mono text-[#FFB800] bg-[var(--kiq-surface)]/60 border border-[var(--kiq-hairline)] rounded px-2 py-1 mb-1">
                         {tx.formula}
                       </code>
                     )}
@@ -482,14 +482,14 @@ function TraceTab() {
           <TraceStageCard stageNum={3} label="Derived Metric" color="#FFB800" icon={BarChart3}>
             <div className="rounded-lg border border-[#FFB800]/15 bg-[#FFB800]/5 p-4">
               <div className="flex items-baseline gap-3 mb-3">
-                <span className="text-3xl font-bold font-mono tabular-nums text-white">
+                <span className="text-3xl font-bold font-mono tabular-nums text-[var(--kiq-ink)]">
                   {s.derivedMetric.value}
                 </span>
                 {s.derivedMetric.unit && (
                   <span className="text-sm font-mono text-zinc-500">{s.derivedMetric.unit}</span>
                 )}
                 {s.derivedMetric.period && (
-                  <span className="ml-auto text-xs font-mono text-zinc-500 border border-zinc-700 rounded px-2 py-0.5">
+                  <span className="ml-auto text-xs font-mono text-zinc-500 border border-[var(--kiq-hairline)] rounded px-2 py-0.5">
                     {s.derivedMetric.period}
                   </span>
                 )}
@@ -503,7 +503,7 @@ function TraceTab() {
           {/* Stage 4: Claim */}
           <TraceStageCard stageNum={4} label="Claim" color="#00FF94" icon={FileCheck}>
             <div className="rounded-lg border border-[#00FF94]/15 bg-[#00FF94]/5 p-4">
-              <p className="text-sm font-semibold text-white mb-3">{s.claim.title}</p>
+              <p className="text-sm font-semibold text-[var(--kiq-ink)] mb-3">{s.claim.title}</p>
               <div className="grid grid-cols-2 gap-x-6">
                 <KV label="Claim ID"   value={s.claim.claimId}       mono />
                 <KV label="Verified"   value={s.claim.verifiedStatus} mono />
@@ -520,7 +520,7 @@ function TraceTab() {
                       {(s.claim.confidenceScore * 100).toFixed(1)}%
                     </span>
                   </div>
-                  <div className="h-1.5 rounded-full bg-zinc-800">
+                  <div className="h-1.5 rounded-full bg-[var(--kiq-surface)]">
                     <div className="h-full rounded-full transition-all"
                       style={{
                         width: `${s.claim.confidenceScore * 100}%`,
@@ -545,7 +545,7 @@ function TraceTab() {
               </div>
               <div>
                 <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-[#FF4D6D]">Stage 5</p>
-                <p className="text-sm font-semibold text-white">Executive Surface</p>
+                <p className="text-sm font-semibold text-[var(--kiq-ink)]">Executive Surface</p>
               </div>
             </div>
 
@@ -583,7 +583,7 @@ function TraceTab() {
                       { label: "Board",     val: es.boardGrade,        yes: "#FFB800", no: "#94a3b8" },
                     ].map(flag => (
                       <div key={flag.label}
-                        className="rounded-lg border border-zinc-800 bg-zinc-950/40 py-2.5 px-2">
+                        className="rounded-lg border border-[var(--kiq-hairline)] bg-[var(--kiq-surface)]/40 py-2.5 px-2">
                         <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-wider mb-1">{flag.label}</p>
                         <div className="flex justify-center">
                           {flag.val
@@ -598,7 +598,7 @@ function TraceTab() {
                       <span className="text-zinc-600">Policy Stages Passed</span>
                       <span className="text-zinc-400">{es.stagesPassed} / {es.stagesTotal}</span>
                     </div>
-                    <div className="h-1.5 rounded-full bg-zinc-800">
+                    <div className="h-1.5 rounded-full bg-[var(--kiq-surface)]">
                       <div className="h-full rounded-full bg-[#00FF94] transition-all"
                         style={{ width: `${(es.stagesPassed / (es.stagesTotal || 1)) * 100}%` }} />
                     </div>
@@ -675,7 +675,7 @@ function RunPipelineTab() {
   return (
     <div className="space-y-5">
       {/* Controls */}
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-5 space-y-4">
+      <div className="rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60 p-5 space-y-4">
         <p className="text-[10px] font-mono font-semibold text-zinc-500 uppercase tracking-widest">
           Pipeline Configuration
         </p>
@@ -689,7 +689,7 @@ function RunPipelineTab() {
                     "px-3 py-1.5 rounded-lg text-[10px] font-mono font-semibold border transition-all",
                     audience === a
                       ? "border-[#00A8FF]/50 bg-[#00A8FF]/15 text-[#00A8FF]"
-                      : "border-zinc-700 text-zinc-500 hover:border-zinc-600",
+                      : "border-[var(--kiq-hairline)] text-zinc-500 hover:border-zinc-600",
                   )}
                   data-testid={`btn-audience-${a}`}>
                   {a.toUpperCase()}
@@ -704,7 +704,7 @@ function RunPipelineTab() {
                 "px-3 py-1.5 rounded-lg text-[10px] font-mono font-semibold border transition-all",
                 saveToDb
                   ? "border-[#00FF94]/50 bg-[#00FF94]/15 text-[#00FF94]"
-                  : "border-zinc-700 text-zinc-500 hover:border-zinc-600",
+                  : "border-[var(--kiq-hairline)] text-zinc-500 hover:border-zinc-600",
               )}
               data-testid="btn-toggle-save">
               {saveToDb ? "SAVE ON" : "DRY RUN"}
@@ -714,8 +714,8 @@ function RunPipelineTab() {
       </div>
 
       {/* JSON input */}
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 overflow-hidden">
-        <div className="flex items-center justify-between px-5 py-3 border-b border-zinc-800">
+      <div className="rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60 overflow-hidden">
+        <div className="flex items-center justify-between px-5 py-3 border-b border-[var(--kiq-hairline)]">
           <p className="text-[10px] font-mono font-semibold text-zinc-500 uppercase tracking-widest">
             Raw Claim Records (JSON)
           </p>
@@ -729,7 +729,7 @@ function RunPipelineTab() {
         <textarea
           value={jsonInput}
           onChange={e => setJsonInput(e.target.value)}
-          className="w-full bg-transparent text-[11px] font-mono text-zinc-300 p-4 focus:outline-none resize-none"
+          className="w-full bg-transparent text-[11px] font-mono text-[var(--kiq-muted)] p-4 focus:outline-none resize-none"
           rows={16}
           spellCheck={false}
           data-testid="input-pipeline-json"
@@ -756,7 +756,7 @@ function RunPipelineTab() {
         <div className="rounded-xl border border-[#00FF94]/25 bg-[#00FF94]/5 p-5 space-y-4">
           <div className="flex items-center gap-2">
             <CheckCircle className="w-4 h-4 text-[#00FF94]" />
-            <p className="text-sm font-semibold text-white">Pipeline Complete</p>
+            <p className="text-sm font-semibold text-[var(--kiq-ink)]">Pipeline Complete</p>
             <span className="ml-auto text-[9px] font-mono text-zinc-600">
               {result.pipelineRanAt}
             </span>
@@ -765,7 +765,7 @@ function RunPipelineTab() {
           {/* Stage timing */}
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {Object.entries(result.stageDurationsMs ?? {}).map(([k, v]) => (
-              <div key={k} className="rounded-lg border border-zinc-800 bg-zinc-950/40 px-3 py-2 text-center">
+              <div key={k} className="rounded-lg border border-[var(--kiq-hairline)] bg-[var(--kiq-surface)]/40 px-3 py-2 text-center">
                 <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-wider mb-1">
                   {k.replace("_", " ")}
                 </p>
@@ -800,15 +800,15 @@ function RunPipelineTab() {
                 const RIcon = rc.icon;
                 return (
                   <div key={tile.tileId}
-                    className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-950/40 px-3.5 py-2.5"
+                    className="flex items-center gap-3 rounded-lg border border-[var(--kiq-hairline)] bg-[var(--kiq-surface)]/40 px-3.5 py-2.5"
                     data-testid={`result-tile-${tile.tileId}`}>
                     <RIcon className="w-3.5 h-3.5 shrink-0" style={{ color: rc.color }} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-semibold text-white truncate">{tile.title}</p>
+                      <p className="text-xs font-semibold text-[var(--kiq-ink)] truncate">{tile.title}</p>
                       <p className="text-[9px] font-mono text-zinc-500">{tile.kpiKey}</p>
                     </div>
-                    <p className="text-sm font-mono font-bold text-white">{tile.value}{tile.unit ? ` ${tile.unit}` : ""}</p>
-                    <span className="text-[8px] font-mono text-zinc-600 border border-zinc-700 rounded px-1.5 py-0.5">
+                    <p className="text-sm font-mono font-bold text-[var(--kiq-ink)]">{tile.value}{tile.unit ? ` ${tile.unit}` : ""}</p>
+                    <span className="text-[8px] font-mono text-zinc-600 border border-[var(--kiq-hairline)] rounded px-1.5 py-0.5">
                       {tile.renderPolicy}
                     </span>
                   </div>
@@ -852,7 +852,7 @@ export default function PipelineIntelligence() {
         {/* Header */}
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">Pipeline Intelligence</h1>
+            <h1 className="text-2xl font-bold text-[var(--kiq-ink)] tracking-tight">Pipeline Intelligence</h1>
             <p className="text-sm text-zinc-500 mt-1">
               End-to-end governed data lineage — Evidence Artifact → Executive Surface
             </p>
@@ -865,7 +865,7 @@ export default function PipelineIntelligence() {
 
         {/* 5-Stage Flow Hero */}
         {statsLoading ? (
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6 flex items-center gap-2 text-zinc-500">
+          <div className="rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60 p-6 flex items-center gap-2 text-zinc-500">
             <Loader2 className="w-4 h-4 animate-spin" />
             <span className="text-sm">Loading pipeline stats…</span>
           </div>
@@ -874,14 +874,14 @@ export default function PipelineIntelligence() {
         ) : null}
 
         {/* Tabs */}
-        <div className="flex gap-1 rounded-lg border border-zinc-800 bg-zinc-900/60 p-1 w-fit">
+        <div className="flex gap-1 rounded-lg border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60 p-1 w-fit">
           {(["overview", "trace", "run"] as Tab[]).map(t => (
             <button key={t} onClick={() => setTab(t)}
               className={cn(
                 "px-5 py-1.5 rounded-md text-xs font-semibold transition-all",
                 tab === t
-                  ? "bg-zinc-800 text-white"
-                  : "text-zinc-500 hover:text-zinc-300",
+                  ? "bg-[var(--kiq-surface)] text-[var(--kiq-ink)]"
+                  : "text-zinc-500 hover:text-[var(--kiq-muted)]",
               )}
               data-testid={`tab-${t}`}>
               {t === "overview" ? "Overview" : t === "trace" ? "Claim Trace" : "Run Pipeline"}

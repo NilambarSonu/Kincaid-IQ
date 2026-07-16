@@ -28,7 +28,7 @@ function NodeCard({ node }: { node: LineageNode }) {
       >
         <p className="text-[9px] font-mono font-bold uppercase tracking-widest mb-1"
           style={{ color }}>{node.nodeType}</p>
-        <p className="text-xs text-white/90 font-medium truncate">{node.label}</p>
+        <p className="text-xs text-slate-900/90 font-medium truncate">{node.label}</p>
         <p className="text-[9px] font-mono text-slate-500 mt-1">{shortHash(node.hash)}</p>
       </div>
     </div>
@@ -55,13 +55,13 @@ export function LineageExplorer({ claimId, className }: LineageExplorerProps) {
     <div className={cn("space-y-6", className)} data-testid="lineage-explorer">
       {/* Claim ID input */}
       <div className="flex gap-3">
-        <div className="flex items-center gap-2 flex-1 rounded-lg border border-slate-800 bg-[#0B1117] px-4 py-2.5">
+        <div className="flex items-center gap-2 flex-1 rounded-lg border border-slate-200 bg-[#0B1117] px-4 py-2.5">
           <GitBranch className="w-4 h-4 text-slate-500 shrink-0" />
           <input
             value={selectedId}
             onChange={e => setSelectedId(e.target.value)}
             placeholder="Enter Claim ID (e.g. CLM-2026-0001)"
-            className="flex-1 bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none"
+            className="flex-1 bg-transparent text-sm text-slate-900 placeholder-slate-500 focus:outline-none"
             data-testid="input-lineage-claim-id"
           />
         </div>
@@ -92,7 +92,7 @@ export function LineageExplorer({ claimId, className }: LineageExplorerProps) {
                 ? <CheckCircle className="w-5 h-5 text-[#00FF94]" />
                 : <XCircle className="w-5 h-5 text-[#FFB800]" />}
               <div>
-                <p className="text-sm font-semibold text-white">
+                <p className="text-sm font-semibold text-slate-900">
                   {full ? "Full Evidence Chain Verified" : "Partial Lineage Chain"}
                 </p>
                 <p className="text-xs text-slate-400">
@@ -112,7 +112,7 @@ export function LineageExplorer({ claimId, className }: LineageExplorerProps) {
           </div>
 
           {/* Node graph */}
-          <div className="rounded-lg border border-slate-800 bg-[#0B1117] p-6">
+          <div className="rounded-lg border border-slate-200 bg-[#0B1117] p-6">
             <p className="text-[10px] font-mono font-semibold text-slate-400 uppercase tracking-wider mb-6">
               Evidence Chain — {chain.claimId}
             </p>
@@ -129,14 +129,14 @@ export function LineageExplorer({ claimId, className }: LineageExplorerProps) {
           </div>
 
           {/* Artifacts */}
-          <div className="rounded-lg border border-slate-800 bg-[#0B1117] p-4 space-y-3">
+          <div className="rounded-lg border border-slate-200 bg-[#0B1117] p-4 space-y-3">
             <p className="text-xs font-mono font-semibold text-slate-400 uppercase tracking-wider">
               Evidence Artifacts ({chain.artifacts.length})
             </p>
             <div className="space-y-2">
               {chain.artifacts.map(a => (
                 <div key={a.evidenceId}
-                  className="flex items-center justify-between p-2.5 rounded bg-slate-900/60 border border-slate-800"
+                  className="flex items-center justify-between p-2.5 rounded bg-slate-50/60 border border-slate-200"
                   data-testid={`artifact-${a.evidenceId}`}
                 >
                   <div className="flex items-center gap-2">

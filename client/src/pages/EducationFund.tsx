@@ -47,7 +47,7 @@ export default function EducationFund() {
                   {child.avatar}
                 </div>
                 <div>
-                  <p className="font-bold text-white">{child.name}</p>
+                  <p className="font-bold text-[var(--kiq-ink)]">{child.name}</p>
                   <p className="text-xs text-muted-foreground">{child.school} · {child.major}</p>
                   <p className="text-[10px] text-muted-foreground">Age {child.age} · Class of {child.gradYear} · {child.yearsRemaining} yr{child.yearsRemaining !== 1 ? "s" : ""} remaining</p>
                 </div>
@@ -59,7 +59,7 @@ export default function EducationFund() {
                   <p className="text-lg font-bold" style={{ color: child.color, fontFamily: "var(--font-display)" }}>{formatCurrency(child.plan529.balance)}</p>
                   <p className="text-[10px] text-muted-foreground">{child.plan529.institution}</p>
                 </div>
-                <div className="p-3 rounded-xl" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                <div className="p-3 rounded-xl" style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
                   <p className="text-[10px] text-muted-foreground mb-0.5">Investment Growth</p>
                   <p className="text-lg font-bold" style={{ color: "#00FF94", fontFamily: "var(--font-display)" }}>+{formatCurrency(growthGain)}</p>
                   <p className="text-[10px] text-muted-foreground">YTD: +{child.plan529.ytdGrowth}%</p>
@@ -71,11 +71,11 @@ export default function EducationFund() {
                 {Object.entries(child.annualCost).filter(([k]) => k !== "total").map(([k, v]) => (
                   <div key={k} className="flex justify-between text-xs">
                     <span className="text-muted-foreground capitalize">{k.replace(/([A-Z])/g, " $1").trim()}</span>
-                    <span className="font-semibold text-white">{formatCurrency(v as number)}</span>
+                    <span className="font-semibold text-[var(--kiq-ink)]">{formatCurrency(v as number)}</span>
                   </div>
                 ))}
-                <div className="flex justify-between text-sm font-bold pt-1.5" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                  <span className="text-white">Annual Total</span>
+                <div className="flex justify-between text-sm font-bold pt-1.5" style={{ borderTop: "1px solid #f1f5f9" }}>
+                  <span className="text-[var(--kiq-ink)]">Annual Total</span>
                   <span style={{ color: child.color }}>{formatCurrency(child.annualCost.total)}</span>
                 </div>
               </div>
@@ -107,7 +107,7 @@ export default function EducationFund() {
           <p className="section-label mb-4">Annual 529 Contributions History</p>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={educationData.historicalContributions} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
               <XAxis dataKey="year" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 9 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fill: "rgba(130,150,200,0.4)", fontSize: 9 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v/1000).toFixed(0)}K`} width={34} />
               <Tooltip formatter={(v: number) => [formatCurrency(v), ""]} contentStyle={{ borderRadius: 12, border: "1px solid rgba(0,140,255,0.2)", background: "rgba(8,10,40,0.95)", fontSize: 12 }} />
@@ -125,7 +125,7 @@ export default function EducationFund() {
           <div className="space-y-3">
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Annual Gift Exclusion (per child)</span>
-              <span className="font-bold text-white">{formatCurrency(educationData.giftingStrategy.annualExclusion)}</span>
+              <span className="font-bold text-[var(--kiq-ink)]">{formatCurrency(educationData.giftingStrategy.annualExclusion)}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">YTD 2026 Gifts</span>
@@ -133,7 +133,7 @@ export default function EducationFund() {
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Total Gifted (All Time)</span>
-              <span className="font-bold text-white">{formatCurrency(educationData.giftingStrategy.totalGiftedToDate)}</span>
+              <span className="font-bold text-[var(--kiq-ink)]">{formatCurrency(educationData.giftingStrategy.totalGiftedToDate)}</span>
             </div>
             {educationData.giftingStrategy.superfunding.available && (
               <div className="mt-3 p-3 rounded-xl" style={{ background: "rgba(0,255,148,0.05)", border: "1px solid rgba(0,255,148,0.15)" }}>

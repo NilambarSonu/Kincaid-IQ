@@ -41,13 +41,13 @@ function TileCard({ tile }: { tile: ExecutiveTile }) {
   return (
     <div
       className={cn(
-        "rounded-xl border bg-zinc-900/60 p-4 flex flex-col gap-3",
-        "hover:bg-zinc-900/90 hover:border-zinc-600 transition-all duration-150",
+        "kiq-command-card p-4 flex flex-col gap-3",
+        "transition-all duration-150",
         tile.renderPolicy === "ALLOWED"  && "border-[#00FF94]/20",
         tile.renderPolicy === "CAUTION"  && "border-[#FFB800]/20",
         tile.renderPolicy === "BLOCKED"  && "border-[#FF4D6D]/20",
         tile.renderPolicy === "REDACTED" && "border-[#A855F7]/20",
-        !["ALLOWED","CAUTION","BLOCKED","REDACTED"].includes(tile.renderPolicy) && "border-zinc-800",
+        !["ALLOWED","CAUTION","BLOCKED","REDACTED"].includes(tile.renderPolicy) && "border-slate-200",
       )}
       data-testid={`tile-${tile.tileId}`}
     >
@@ -55,7 +55,7 @@ function TileCard({ tile }: { tile: ExecutiveTile }) {
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
           <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-wider mb-0.5">{tile.kpiKey}</p>
-          <p className="text-xs font-semibold text-zinc-200 leading-tight">{tile.title}</p>
+          <p className="text-xs font-semibold text-slate-700 leading-tight">{tile.title}</p>
         </div>
         <div className="flex items-center gap-1 shrink-0">
           {tile.boardGrade && <Zap className="w-3 h-3 text-[#FFB800]" />}
@@ -70,7 +70,7 @@ function TileCard({ tile }: { tile: ExecutiveTile }) {
 
       {/* Value */}
       <div>
-        <p className="text-2xl font-bold font-mono tabular-nums text-zinc-100 leading-none">
+        <p className="text-2xl font-bold font-mono tabular-nums text-slate-900 leading-none">
           {tile.value}
           {tile.unit && <span className="text-sm text-zinc-500 ml-1.5 font-normal">{tile.unit}</span>}
         </p>
@@ -103,7 +103,7 @@ function TileCard({ tile }: { tile: ExecutiveTile }) {
 
       {/* Confidence bar */}
       {pct !== null && (
-        <div className="h-0.5 rounded-full bg-zinc-800">
+        <div className="h-0.5 rounded-full bg-slate-200/70">
           <div className="h-0.5 rounded-full transition-all" style={{ width: `${pct}%`, background: confColor }} />
         </div>
       )}
@@ -117,7 +117,7 @@ function TileCard({ tile }: { tile: ExecutiveTile }) {
       )}
 
       {/* Footer: open receipt drawer */}
-      <div className="pt-1 border-t border-zinc-800/50 flex items-center justify-between">
+      <div className="pt-1 border-t border-slate-200/50 flex items-center justify-between">
         <button
           data-testid={`button-open-receipt-${tile.claimId}`}
           onClick={() => openReceipt(tile.claimId)}
@@ -161,7 +161,7 @@ export function ExecutiveDashboard({
           data-testid="select-dashboard-audience"
           value={audience}
           onChange={e => setAudience(e.target.value as typeof defaultAudience)}
-          className="bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-[10px] font-mono text-zinc-200 focus:outline-none focus:border-[#00A8FF]/50"
+          className="kiq-command-control px-3 py-2 text-[10px] font-mono text-slate-700 focus:outline-none focus:border-[#00A8FF]/50"
         >
           <option value="board">Board</option>
           <option value="executive">Executive</option>
@@ -172,7 +172,7 @@ export function ExecutiveDashboard({
           data-testid="select-policy-filter"
           value={policyFilter}
           onChange={e => setPolicyFilter(e.target.value)}
-          className="bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-[10px] font-mono text-zinc-200 focus:outline-none focus:border-[#00A8FF]/50"
+          className="kiq-command-control px-3 py-2 text-[10px] font-mono text-slate-700 focus:outline-none focus:border-[#00A8FF]/50"
         >
           <option value="ALL">All Policies</option>
           {["ALLOWED","CAUTION","BLOCKED","REDACTED","PENDING"].map(p => (
@@ -183,7 +183,7 @@ export function ExecutiveDashboard({
         <button
           onClick={() => refetch()}
           data-testid="button-refresh-tiles"
-          className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-zinc-700 text-[10px] font-mono text-zinc-400 hover:border-zinc-600 hover:text-zinc-200 transition-colors"
+          className="kiq-command-control flex items-center gap-1.5 px-3 py-2 text-[10px] font-mono text-zinc-500 hover:text-slate-700 transition-colors"
         >
           <RefreshCw className="w-3 h-3" />Refresh
         </button>
@@ -208,7 +208,7 @@ export function ExecutiveDashboard({
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="h-48 rounded-xl bg-zinc-900/40 border border-zinc-800 animate-pulse" />
+            <div key={i} className="kiq-command-card h-48 animate-pulse" />
           ))}
         </div>
       ) : (

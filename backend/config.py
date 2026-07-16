@@ -5,8 +5,22 @@ import json
 import copy
 import logging
 import warnings
+from dotenv import load_dotenv
 
 logger = logging.getLogger("kincaid.config")
+
+# Load the project .env before any module-level settings are derived. Pydantic
+# also reads .env later, but several helpers below intentionally consult
+# os.environ during import.
+load_dotenv(override=False)
+
+# Backward-compatible aliases for the existing local .env. boto3 and botocore
+# read the standard AWS_* variables, while this project historically used the
+# shorter ACCESS_KEY / SECRET_ACCESS_KEY names.
+if os.environ.get("ACCESS_KEY") and not os.environ.get("AWS_ACCESS_KEY_ID"):
+    os.environ["AWS_ACCESS_KEY_ID"] = os.environ["ACCESS_KEY"]
+if os.environ.get("SECRET_ACCESS_KEY") and not os.environ.get("AWS_SECRET_ACCESS_KEY"):
+    os.environ["AWS_SECRET_ACCESS_KEY"] = os.environ["SECRET_ACCESS_KEY"]
 
 
 def _is_production() -> bool:
@@ -78,7 +92,7 @@ if _SECRET_KEY == _FALLBACK_SECRET:
         )
     else:
         warnings.warn(
-            "[Kincaid IQ] SESSION_SECRET not set — using insecure fallback key. "
+            "[Kincaid Health] SESSION_SECRET not set — using insecure fallback key. "
             "This is only acceptable in development.",
             stacklevel=1,
         )
@@ -409,7 +423,7 @@ def _read_db_override_raw() -> str:
             if row and isinstance(row.config, dict) and row.config:
                 return json.dumps(row.config)
     except Exception as e:
-        logger.warning("[Kincaid IQ] Could not read RFP override from DB: %s", e)
+        logger.warning("[Kincaid Health] Could not read RFP override from DB: %s", e)
     return ""
 
 
@@ -444,7 +458,7 @@ def _delete_db_override() -> None:
             ).delete()
             db.commit()
     except Exception as e:
-        logger.warning("[Kincaid IQ] Could not delete RFP override from DB: %s", e)
+        logger.warning("[Kincaid Health] Could not delete RFP override from DB: %s", e)
 
 
 def _resolve_override_raw() -> tuple[str, str]:
@@ -460,7 +474,7 @@ def _resolve_override_raw() -> tuple[str, str]:
             with open(path, "r", encoding="utf-8") as fh:
                 return fh.read().strip(), f"RFP_SCORING_CONFIG_FILE ({path})"
         except Exception as e:
-            logger.warning("[Kincaid IQ] Could not read RFP_SCORING_CONFIG_FILE %s: %s", path, e)
+            logger.warning("[Kincaid Health] Could not read RFP_SCORING_CONFIG_FILE %s: %s", path, e)
 
     db_raw = _read_db_override_raw()
     if db_raw:
@@ -471,7 +485,7 @@ def _resolve_override_raw() -> tuple[str, str]:
             with open(RFP_SCORING_OVERRIDE_PATH, "r", encoding="utf-8") as fh:
                 return fh.read().strip(), f"admin override ({RFP_SCORING_OVERRIDE_PATH})"
     except Exception as e:
-        logger.warning("[Kincaid IQ] Could not read admin RFP override %s: %s", RFP_SCORING_OVERRIDE_PATH, e)
+        logger.warning("[Kincaid Health] Could not read admin RFP override %s: %s", RFP_SCORING_OVERRIDE_PATH, e)
 
     return "", "defaults"
 
@@ -521,12 +535,12 @@ def _load_rfp_scoring() -> dict:
                 problems = _validate_rfp_scoring(cfg)
                 if problems:
                     logger.error(
-                        "[Kincaid IQ] RFP scoring override from %s is invalid; "
+                        "[Kincaid Health] RFP scoring override from %s is invalid; "
                         "falling back to defaults. %d problem(s):",
                         source, len(problems),
                     )
                     for p in problems:
-                        logger.error("[Kincaid IQ]   - %s", p)
+                        logger.error("[Kincaid Health]   - %s", p)
                     health.update({
                         "status": "invalid",
                         "problems": problems,
@@ -539,7 +553,7 @@ def _load_rfp_scoring() -> dict:
                     RFP_SCORING_HEALTH.update(health)
                     return copy.deepcopy(RFP_SCORING_DEFAULTS)
                 logger.info(
-                    "[Kincaid IQ] Applied RFP scoring override from %s (%d top-level keys).",
+                    "[Kincaid Health] Applied RFP scoring override from %s (%d top-level keys).",
                     source, len(override),
                 )
                 health.update({
@@ -550,13 +564,13 @@ def _load_rfp_scoring() -> dict:
                     ),
                 })
             else:
-                logger.warning("[Kincaid IQ] RFP scoring override (%s) must be a JSON object; ignoring.", source)
+                logger.warning("[Kincaid Health] RFP scoring override (%s) must be a JSON object; ignoring.", source)
                 health.update({
                     "status": "error",
                     "message": f"{source} must be a JSON object; ignored — using defaults.",
                 })
         except Exception as e:
-            logger.warning("[Kincaid IQ] Invalid RFP scoring override JSON from %s; using defaults. (%s)", source, e)
+            logger.warning("[Kincaid Health] Invalid RFP scoring override JSON from %s; using defaults. (%s)", source, e)
             health.update({
                 "status": "error",
                 "message": f"Invalid JSON in {source}: {e}; using defaults.",
@@ -587,7 +601,7 @@ def register_rfp_scoring_listener(fn) -> None:
     try:
         fn(RFP_SCORING)
     except Exception:
-        logger.exception("[Kincaid IQ] RFP scoring listener failed on register")
+        logger.exception("[Kincaid Health] RFP scoring listener failed on register")
 
 
 def _notify_rfp_scoring_listeners() -> None:
@@ -595,7 +609,7 @@ def _notify_rfp_scoring_listeners() -> None:
         try:
             fn(RFP_SCORING)
         except Exception:
-            logger.exception("[Kincaid IQ] RFP scoring reload listener failed")
+            logger.exception("[Kincaid Health] RFP scoring reload listener failed")
 
 
 def _apply_in_place(merged: dict) -> None:
@@ -614,14 +628,14 @@ def get_rfp_scoring_override() -> Optional[dict]:
             data = json.loads(db_raw)
             return data if isinstance(data, dict) else None
         except Exception as e:
-            logger.warning("[Kincaid IQ] Could not parse RFP override from DB: %s", e)
+            logger.warning("[Kincaid Health] Could not parse RFP override from DB: %s", e)
     try:
         if os.path.exists(RFP_SCORING_OVERRIDE_PATH):
             with open(RFP_SCORING_OVERRIDE_PATH, "r", encoding="utf-8") as fh:
                 data = json.loads(fh.read() or "{}")
                 return data if isinstance(data, dict) else None
     except Exception as e:
-        logger.warning("[Kincaid IQ] Could not read admin RFP override %s: %s", RFP_SCORING_OVERRIDE_PATH, e)
+        logger.warning("[Kincaid Health] Could not read admin RFP override %s: %s", RFP_SCORING_OVERRIDE_PATH, e)
     return None
 
 
@@ -649,7 +663,7 @@ def save_rfp_scoring(override: dict, persist: bool = True, updated_by: Optional[
             _write_db_override(override, updated_by=updated_by)
             db_ok = True
         except Exception as e:
-            logger.warning("[Kincaid IQ] Could not persist RFP override to DB: %s", e)
+            logger.warning("[Kincaid Health] Could not persist RFP override to DB: %s", e)
         try:
             os.makedirs(os.path.dirname(RFP_SCORING_OVERRIDE_PATH), exist_ok=True)
             with open(RFP_SCORING_OVERRIDE_PATH, "w", encoding="utf-8") as fh:
@@ -657,10 +671,10 @@ def save_rfp_scoring(override: dict, persist: bool = True, updated_by: Optional[
         except Exception as e:
             if not db_ok:
                 return [f"could not persist override (DB and file both failed): {e}"]
-            logger.warning("[Kincaid IQ] Persisted RFP override to DB but not to file: %s", e)
+            logger.warning("[Kincaid Health] Persisted RFP override to DB but not to file: %s", e)
 
     _apply_in_place(merged)
-    logger.info("[Kincaid IQ] RFP scoring config updated via admin editor and reloaded live.")
+    logger.info("[Kincaid Health] RFP scoring config updated via admin editor and reloaded live.")
     return []
 
 
@@ -672,6 +686,6 @@ def reset_rfp_scoring() -> None:
         if os.path.exists(RFP_SCORING_OVERRIDE_PATH):
             os.remove(RFP_SCORING_OVERRIDE_PATH)
     except Exception as e:
-        logger.warning("[Kincaid IQ] Could not remove admin RFP override %s: %s", RFP_SCORING_OVERRIDE_PATH, e)
+        logger.warning("[Kincaid Health] Could not remove admin RFP override %s: %s", RFP_SCORING_OVERRIDE_PATH, e)
     _apply_in_place(_load_rfp_scoring())
-    logger.info("[Kincaid IQ] RFP scoring config reset to env/defaults and reloaded live.")
+    logger.info("[Kincaid Health] RFP scoring config reset to env/defaults and reloaded live.")

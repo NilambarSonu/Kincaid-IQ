@@ -83,7 +83,7 @@ async function verifyZipInBrowser(file: File): Promise<VerifyResult> {
   if (!manifestName) {
     return {
       ok: false, manifest_found: false, manifest: null, files: [], summary: empty,
-      error: "manifest.json not found — this ZIP is not a Kincaid IQ evidence package.",
+      error: "manifest.json not found — this ZIP is not a Kincaid Health evidence package.",
     };
   }
 
@@ -479,7 +479,7 @@ export default function VerifyPackagePublic() {
       const text = await f.text();
       const manifest: Manifest = JSON.parse(text);
       if (!manifest || !Array.isArray(manifest.components)) {
-        setLookupSourceError("That file does not look like a Kincaid IQ manifest.json (no components array).");
+        setLookupSourceError("That file does not look like a Kincaid Health manifest.json (no components array).");
         return;
       }
       ingestManifest("manifest", f.name, manifest);
@@ -661,8 +661,8 @@ export default function VerifyPackagePublic() {
 
   return (
     <div
-      className="min-h-screen text-zinc-200"
-      style={{ background: "#06070A" }}
+      className="min-h-screen text-[var(--kiq-ink-soft)]"
+      style={{ background: "#F8FAFC" }}
       data-testid="verify-public-page"
     >
       <div className="max-w-4xl mx-auto px-6 py-12">
@@ -676,19 +676,19 @@ export default function VerifyPackagePublic() {
           </div>
           <div>
             <div className="text-[9px] font-mono uppercase tracking-[0.18em] text-zinc-500">
-              Kincaid IQ™ · Public verifier
+              Kincaid Health™ · Public verifier
             </div>
-            <h1 className="text-xl font-bold text-white leading-tight">
-              Verify a Kincaid IQ evidence package
+            <h1 className="text-xl font-bold text-[var(--kiq-ink)] leading-tight">
+              Verify a Kincaid Health evidence package
             </h1>
           </div>
         </div>
 
         <p className="text-[12px] text-zinc-400 max-w-2xl mb-2">
-          Drop a <code className="font-mono text-zinc-300">kiq_package_*.zip</code> below.
+          Drop a <code className="font-mono text-[var(--kiq-muted)]">kiq_package_*.zip</code> below.
           Every file is hashed in your browser with SHA-256 and compared against the embedded{" "}
-          <code className="font-mono text-zinc-300">manifest.json</code>. Nothing is uploaded
-          to Kincaid IQ — verification runs entirely on this device. No account required.
+          <code className="font-mono text-[var(--kiq-muted)]">manifest.json</code>. Nothing is uploaded
+          to Kincaid Health — verification runs entirely on this device. No account required.
         </p>
         <div className="text-[10px] font-mono uppercase tracking-[0.14em] text-zinc-600 mb-8">
           Hard Rule #03 — every export carries a SHA-256 evidence manifest.
@@ -703,8 +703,8 @@ export default function VerifyPackagePublic() {
           onClick={() => inputRef.current?.click()}
           className="rounded-2xl border-2 border-dashed cursor-pointer transition-colors p-8 text-center"
           style={{
-            background:  dragOver ? `${BLUE}10` : "rgba(255,255,255,0.02)",
-            borderColor: dragOver ? `${BLUE}80` : "rgba(255,255,255,0.10)",
+            background:  dragOver ? `${BLUE}10` : "#ffffff",
+            borderColor: dragOver ? `${BLUE}80` : "rgba(15,23,42,0.06)",
           }}
         >
           <input
@@ -724,7 +724,7 @@ export default function VerifyPackagePublic() {
             ) : (
               <Upload className="w-6 h-6" style={{ color: dragOver ? BLUE : "#71717A" }} />
             )}
-            <span className="text-[13px] text-zinc-200">
+            <span className="text-[13px] text-[var(--kiq-ink-soft)]">
               {loading
                 ? "Hashing files in your browser…"
                 : file
@@ -756,7 +756,7 @@ export default function VerifyPackagePublic() {
             data-testid="verify-public-error"
           >
             <AlertTriangle className="w-4 h-4 mt-0.5" style={{ color: RED }} />
-            <span className="text-[12px] text-zinc-200">{error}</span>
+            <span className="text-[12px] text-[var(--kiq-ink-soft)]">{error}</span>
           </div>
         )}
 
@@ -783,7 +783,7 @@ export default function VerifyPackagePublic() {
                         {ok ? "PASS — every hash matches" : "FAIL — package integrity broken"}
                       </span>
                     </div>
-                    <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-zinc-300">
+                    <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-[var(--kiq-muted)]">
                       <span data-testid="verify-public-summary-matched">
                         <span style={{ color: GREEN }}>✓</span> {result.summary.matched} matched
                       </span>
@@ -816,7 +816,7 @@ export default function VerifyPackagePublic() {
                   <button
                     type="button"
                     onClick={clearAll}
-                    className="text-zinc-500 hover:text-zinc-200 transition-colors"
+                    className="text-zinc-500 hover:text-[var(--kiq-ink-soft)] transition-colors"
                     data-testid="verify-public-clear"
                     aria-label="Clear verification result"
                   >
@@ -829,7 +829,7 @@ export default function VerifyPackagePublic() {
             {result.files.length > 0 && (
               <div
                 className="rounded-xl border border-zinc-900 overflow-hidden"
-                style={{ background: "#0A0D14" }}
+                style={{ background: "#F8FAFC" }}
                 data-testid="verify-public-files-table"
               >
                 <div className="grid grid-cols-[1fr_auto_auto] gap-3 px-4 py-2 border-b border-zinc-900 text-[9px] font-mono font-bold uppercase tracking-[0.14em] text-zinc-600">
@@ -853,7 +853,7 @@ export default function VerifyPackagePublic() {
                       className={`grid grid-cols-[1fr_auto_auto] gap-3 px-4 py-2.5 items-start ${i > 0 ? "border-t border-zinc-900" : ""}`}
                     >
                       <div className="min-w-0">
-                        <div className="text-[11px] font-bold text-zinc-200 truncate">{f.filename}</div>
+                        <div className="text-[11px] font-bold text-[var(--kiq-ink-soft)] truncate">{f.filename}</div>
                         {f.label && f.label !== f.filename && (
                           <div className="text-[9px] text-zinc-600">{f.label}</div>
                         )}
@@ -925,7 +925,7 @@ export default function VerifyPackagePublic() {
               <div className="text-[9px] font-mono uppercase tracking-[0.18em] text-zinc-500">
                 Alternate mode · No ZIP required
               </div>
-              <h2 className="text-[14px] font-bold text-white leading-tight">
+              <h2 className="text-[14px] font-bold text-[var(--kiq-ink)] leading-tight">
                 Verify a single SHA-256 against a manifest
               </h2>
             </div>
@@ -933,9 +933,9 @@ export default function VerifyPackagePublic() {
           <p className="text-[11px] text-zinc-400 max-w-2xl mb-4">
             Paste a SHA-256 hash printed on a cover sheet, board deck, or email
             footer — or scan the QR code next to that hash with your phone camera.
-            We check it against the <code className="font-mono text-zinc-300">manifest.json</code>{" "}
-            of a Kincaid IQ package — either the one you just verified above, or
-            a standalone <code className="font-mono text-zinc-300">manifest.json</code> you upload here.
+            We check it against the <code className="font-mono text-[var(--kiq-muted)]">manifest.json</code>{" "}
+            of a Kincaid Health package — either the one you just verified above, or
+            a standalone <code className="font-mono text-[var(--kiq-muted)]">manifest.json</code> you upload here.
           </p>
 
           {deepLinkNotice && (
@@ -949,12 +949,12 @@ export default function VerifyPackagePublic() {
                 <div className="text-[10px] font-mono uppercase tracking-[0.14em]" style={{ color: BLUE }}>
                   Scan-to-verify deep link
                 </div>
-                <div className="mt-0.5 text-[11px] text-zinc-200">{deepLinkNotice}</div>
+                <div className="mt-0.5 text-[11px] text-[var(--kiq-ink-soft)]">{deepLinkNotice}</div>
               </div>
               <button
                 type="button"
                 onClick={() => setDeepLinkNotice(null)}
-                className="text-zinc-500 hover:text-zinc-200 transition-colors flex-shrink-0"
+                className="text-zinc-500 hover:text-[var(--kiq-ink-soft)] transition-colors flex-shrink-0"
                 aria-label="Dismiss deep-link notice"
                 data-testid="verify-public-deep-link-dismiss"
               >
@@ -966,7 +966,7 @@ export default function VerifyPackagePublic() {
           {/* Manifest source row */}
           <div
             className="rounded-xl border p-4 mb-3"
-            style={{ background: "rgba(255,255,255,0.02)", borderColor: "rgba(255,255,255,0.08)" }}
+            style={{ background: "#ffffff", borderColor: "#e2e8f0" }}
             data-testid="verify-public-lookup-source"
           >
             {lookupSource ? (
@@ -992,8 +992,8 @@ export default function VerifyPackagePublic() {
                                   color:      "#F59E0B",
                                 }
                               : {
-                                  background: "rgba(255,255,255,0.04)",
-                                  border:     "1px solid rgba(255,255,255,0.10)",
+                                  background: "#ffffff",
+                                  border:     "1px solid rgba(15,23,42,0.06)",
                                   color:      "#A1A1AA",
                                 }
                           }
@@ -1010,7 +1010,7 @@ export default function VerifyPackagePublic() {
                       );
                     })()}
                   </div>
-                  <div className="mt-1 text-[11px] text-zinc-300 truncate">
+                  <div className="mt-1 text-[11px] text-[var(--kiq-muted)] truncate">
                     {lookupSource.filename}
                   </div>
                   <div className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-[10px] font-mono text-zinc-500">
@@ -1033,10 +1033,10 @@ export default function VerifyPackagePublic() {
                       <button
                         type="button"
                         onClick={() => setHistoryOpen((v) => !v)}
-                        className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-mono uppercase tracking-[0.12em] text-zinc-300 hover:text-white transition-colors"
+                        className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-mono uppercase tracking-[0.12em] text-[var(--kiq-muted)] hover:text-[var(--kiq-ink)] transition-colors"
                         style={{
-                          background: "rgba(255,255,255,0.04)",
-                          border: "1px solid rgba(255,255,255,0.10)",
+                          background: "#ffffff",
+                          border: "1px solid rgba(15,23,42,0.06)",
                         }}
                         data-testid="verify-public-lookup-history-toggle"
                         aria-haspopup="menu"
@@ -1051,13 +1051,13 @@ export default function VerifyPackagePublic() {
                         <div
                           className="absolute right-0 mt-1 w-80 rounded-lg shadow-2xl z-20 overflow-hidden"
                           style={{
-                            background: "#0B0D12",
-                            border: "1px solid rgba(255,255,255,0.12)",
+                            background: "#F8FAFC",
+                            border: "1px solid #cbd5e1",
                           }}
                           role="menu"
                           data-testid="verify-public-lookup-history-menu"
                         >
-                          <div className="px-3 py-2 text-[9px] font-mono uppercase tracking-[0.14em] text-zinc-500 border-b border-zinc-800">
+                          <div className="px-3 py-2 text-[9px] font-mono uppercase tracking-[0.14em] text-zinc-500 border-b border-[var(--kiq-hairline)]">
                             Recent manifests · last {LOOKUP_HISTORY_MAX}
                           </div>
                           <ul className="max-h-72 overflow-y-auto">
@@ -1067,7 +1067,7 @@ export default function VerifyPackagePublic() {
                               return (
                                 <li
                                   key={key}
-                                  className="flex items-start gap-2 px-3 py-2 hover:bg-white/5 border-b border-zinc-900 last:border-b-0"
+                                  className="flex items-start gap-2 px-3 py-2 hover:bg-[var(--kiq-surface)]/5 border-b border-zinc-900 last:border-b-0"
                                   data-testid={`verify-public-lookup-history-item-${key}`}
                                   data-active={isActive ? "true" : "false"}
                                 >
@@ -1081,7 +1081,7 @@ export default function VerifyPackagePublic() {
                                       {isActive && (
                                         <CheckCircle2 className="w-3 h-3 flex-shrink-0" style={{ color: GREEN }} />
                                       )}
-                                      <span className="text-[11px] text-zinc-100 truncate">
+                                      <span className="text-[11px] text-[var(--kiq-ink)] truncate">
                                         {entry.filename}
                                       </span>
                                     </div>
@@ -1114,7 +1114,7 @@ export default function VerifyPackagePublic() {
                                   <button
                                     type="button"
                                     onClick={(e) => { e.stopPropagation(); removeFromHistory(entry); }}
-                                    className="text-zinc-600 hover:text-zinc-200 transition-colors flex-shrink-0 mt-0.5"
+                                    className="text-zinc-600 hover:text-[var(--kiq-ink-soft)] transition-colors flex-shrink-0 mt-0.5"
                                     aria-label={`Remove ${entry.filename} from recent manifests`}
                                     title="Remove from recent manifests"
                                     data-testid="verify-public-lookup-history-remove"
@@ -1132,7 +1132,7 @@ export default function VerifyPackagePublic() {
                   <button
                     type="button"
                     onClick={clearLookupSource}
-                    className="text-zinc-500 hover:text-zinc-200 transition-colors"
+                    className="text-zinc-500 hover:text-[var(--kiq-ink-soft)] transition-colors"
                     data-testid="verify-public-lookup-clear-source"
                     aria-label="Clear loaded manifest"
                     title="Clear loaded manifest (kept on this device until you clear it)"
@@ -1145,7 +1145,7 @@ export default function VerifyPackagePublic() {
               <div className="flex items-center justify-between gap-3 flex-wrap">
                 <div className="text-[11px] text-zinc-400">
                   No manifest loaded yet. Verify a ZIP above, or upload a{" "}
-                  <code className="font-mono text-zinc-300">manifest.json</code> on its own.
+                  <code className="font-mono text-[var(--kiq-muted)]">manifest.json</code> on its own.
                 </div>
                 <button
                   type="button"
@@ -1181,7 +1181,7 @@ export default function VerifyPackagePublic() {
                 data-testid="verify-public-lookup-source-error"
               >
                 <AlertTriangle className="w-3.5 h-3.5 mt-0.5" style={{ color: RED }} />
-                <span className="text-[11px] text-zinc-200">{lookupSourceError}</span>
+                <span className="text-[11px] text-[var(--kiq-ink-soft)]">{lookupSourceError}</span>
               </div>
             )}
           </div>
@@ -1189,7 +1189,7 @@ export default function VerifyPackagePublic() {
           {/* Hash + filename inputs */}
           <div
             className="rounded-xl border p-4 space-y-3"
-            style={{ background: "rgba(255,255,255,0.02)", borderColor: "rgba(255,255,255,0.08)" }}
+            style={{ background: "#ffffff", borderColor: "#e2e8f0" }}
           >
             <div>
               <label
@@ -1205,10 +1205,10 @@ export default function VerifyPackagePublic() {
                 onChange={(e) => { setHashInput(e.target.value); setLookupOutcome(null); }}
                 placeholder="e.g. 9f4c3a8b6d2e1f0a7c5b4e3d2a1f0e9d8c7b6a5f4e3d2c1b0a9f8e7d6c5b4a3f"
                 rows={2}
-                className="w-full px-3 py-2 rounded-lg font-mono text-[11px] text-zinc-100 placeholder:text-zinc-700 focus:outline-none focus:ring-1 break-all resize-none"
+                className="w-full px-3 py-2 rounded-lg font-mono text-[11px] text-[var(--kiq-ink)] placeholder:text-zinc-700 focus:outline-none focus:ring-1 break-all resize-none"
                 style={{
-                  background:  "#06070A",
-                  border:      `1px solid ${hashInput && !hashValid ? RED + "60" : "rgba(255,255,255,0.10)"}`,
+                  background:  "#F8FAFC",
+                  border:      `1px solid ${hashInput && !hashValid ? RED + "60" : "rgba(15,23,42,0.06)"}`,
                 }}
               />
               <div className="mt-1 flex items-center justify-between gap-2 text-[9px] font-mono text-zinc-600">
@@ -1236,10 +1236,10 @@ export default function VerifyPackagePublic() {
                 value={filenameHint}
                 onChange={(e) => { setFilenameHint(e.target.value); setLookupOutcome(null); }}
                 placeholder="cover_sheet.html"
-                className="w-full px-3 py-2 rounded-lg font-mono text-[11px] text-zinc-100 placeholder:text-zinc-700 focus:outline-none"
+                className="w-full px-3 py-2 rounded-lg font-mono text-[11px] text-[var(--kiq-ink)] placeholder:text-zinc-700 focus:outline-none"
                 style={{
-                  background:  "#06070A",
-                  border:      "1px solid rgba(255,255,255,0.10)",
+                  background:  "#F8FAFC",
+                  border:      "1px solid rgba(15,23,42,0.06)",
                 }}
               />
             </div>
@@ -1264,7 +1264,7 @@ export default function VerifyPackagePublic() {
                 <button
                   type="button"
                   onClick={() => { setHashInput(""); setFilenameHint(""); setLookupOutcome(null); }}
-                  className="text-[10px] font-mono uppercase tracking-[0.12em] text-zinc-500 hover:text-zinc-300"
+                  className="text-[10px] font-mono uppercase tracking-[0.12em] text-zinc-500 hover:text-[var(--kiq-muted)]"
                   data-testid="verify-public-hash-reset"
                 >
                   Clear
@@ -1296,7 +1296,7 @@ export default function VerifyPackagePublic() {
                     </span>
                   </div>
                   {lookupOutcome.status === "pass" ? (
-                    <div className="mt-2 text-[11px] text-zinc-200 space-y-0.5">
+                    <div className="mt-2 text-[11px] text-[var(--kiq-ink-soft)] space-y-0.5">
                       <div>
                         <span className="text-zinc-500 font-mono uppercase tracking-[0.12em] text-[9px]">Component&nbsp;&nbsp;</span>
                         <span className="font-bold" data-testid="verify-public-hash-match-filename">
@@ -1316,19 +1316,19 @@ export default function VerifyPackagePublic() {
                       )}
                       {!lookupOutcome.filenameMatches && lookupOutcome.expectedFilename && (
                         <div className="mt-1 text-[10px] text-zinc-400">
-                          You typed <code className="font-mono text-zinc-300">{filenameHint}</code>, but
+                          You typed <code className="font-mono text-[var(--kiq-muted)]">{filenameHint}</code>, but
                           this hash actually belongs to{" "}
-                          <code className="font-mono text-zinc-300">{lookupOutcome.expectedFilename}</code>.
+                          <code className="font-mono text-[var(--kiq-muted)]">{lookupOutcome.expectedFilename}</code>.
                           The hash is authentic, but confirm you're looking at the right document.
                         </div>
                       )}
                     </div>
                   ) : (
-                    <div className="mt-2 text-[11px] text-zinc-300">
+                    <div className="mt-2 text-[11px] text-[var(--kiq-muted)]">
                       {lookupOutcome.reason}
                       {lookupOutcome.suggestedComponent && (
                         <div className="mt-2 p-2 rounded border text-[10px] font-mono break-all"
-                             style={{ background: "#06070A", borderColor: "rgba(255,255,255,0.08)" }}>
+                             style={{ background: "#F8FAFC", borderColor: "#e2e8f0" }}>
                           <div className="text-zinc-500 uppercase tracking-[0.12em] text-[9px] mb-1">
                             Expected hash for {lookupOutcome.suggestedComponent.filename}
                           </div>
@@ -1356,11 +1356,11 @@ export default function VerifyPackagePublic() {
           </div>
           <a
             href="/landing"
-            className="mt-4 inline-flex items-center gap-1 text-[10px] font-mono uppercase tracking-[0.14em] text-zinc-500 hover:text-zinc-300"
+            className="mt-4 inline-flex items-center gap-1 text-[10px] font-mono uppercase tracking-[0.14em] text-zinc-500 hover:text-[var(--kiq-muted)]"
             data-testid="link-public-landing"
           >
             <ArrowLeft className="w-3 h-3" />
-            About Kincaid IQ
+            About Kincaid Health
           </a>
         </div>
       </div>

@@ -1,5 +1,5 @@
 """
-Federal Intelligence Layer — Kincaid IQ  v2.0
+Federal Intelligence Layer — Kincaid Health  v2.0
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 8 federal databases, all free/public. Parallel async queries.
 
@@ -581,7 +581,7 @@ async def federal_scan(name: str, ein: Optional[str] = None):
         "legal_note": (
             "Federal database results are provided for informational purposes only under 5 U.S.C. § 552 "
             "(Freedom of Information Act) and applicable federal open-data mandates. Results do not constitute "
-            "legal advice. Kincaid RMC disclaims all liability for reliance on automated federal database queries "
+            "legal advice. Kincaid Health disclaims all liability for reliance on automated federal database queries "
             "without independent verification by qualified legal counsel. OFAC screening results must be "
             "independently verified before any compliance determination is made."
         ),

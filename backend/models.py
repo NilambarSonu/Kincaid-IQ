@@ -382,7 +382,7 @@ class ModuleSubscription(Base):
 
 
 class RxDefenseCredit(Base):
-    """A pre-paid Rx Defense IQ™ analysis credit — $999 per report."""
+    """A pre-paid PBM Contract Clarity 360™ analysis credit — $999 per report."""
     __tablename__ = "rx_defense_credits"
 
     id                = Column(Integer, primary_key=True, index=True)
@@ -720,7 +720,7 @@ class RecoveryAction(Base):
     """
     Recovery Operator — tracks pursuit of a Claims Recovery finding from
     Identified → Demand Sent → Response Received → Settled → Distributed.
-    Each row is a billable contingency event for Kincaid RMC.
+    Each row is a billable contingency event for Kincaid Health.
     """
     __tablename__ = "recovery_actions"
 
@@ -1138,7 +1138,7 @@ class FilingWatch(Base):
 # ═══════════════════════════════════════════════════════════════════════════════
 # Rebel IQ Intelligence API (v1)
 # Machine-to-machine API: Rebel IQ pushes plan config + de-identified claims/member
-# data; Kincaid IQ returns structured intelligence. See the API Design Document.
+# data; Kincaid Health returns structured intelligence. See the API Design Document.
 # ═══════════════════════════════════════════════════════════════════════════════
 
 class RebelTenant(Base):
@@ -1490,7 +1490,7 @@ class SalesPipeline(Base):
     updated_at          = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
 
-# ─── Kincaid IQ Verify (ported BFF: ledger + keyed metrics) ────────────────────
+# ─── Kincaid Health Verify (ported BFF: ledger + keyed metrics) ────────────────────
 
 class KiqMetric(Base):
     """Keyed metric carrying one of exactly three confidence tiers."""

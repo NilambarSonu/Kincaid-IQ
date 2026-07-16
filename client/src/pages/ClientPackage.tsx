@@ -39,13 +39,13 @@ interface Component {
 // id strings from the audit log row.
 const COMPONENT_META: Record<string, { label: string; desc: string; icon: React.ElementType; color: string }> = {
   rx_redline: {
-    label: "Rx Defense — Redline (.docx)",
+    label: "PBM Contract Clarity 360 — Redline (.docx)",
     desc:  "Word doc with model contract language for all weak provisions",
     icon:  Pill,
     color: GREEN,
   },
   rx_scorecard: {
-    label: "Rx Defense — Scorecard (JSON)",
+    label: "PBM Contract Clarity 360 — Scorecard (JSON)",
     desc:  "Machine-readable provision scores, findings, and risk flags",
     icon:  FileText,
     color: PURPLE,
@@ -108,8 +108,8 @@ function ComponentCard({
       } : undefined}
       className="w-full text-left rounded-2xl p-4 transition-all relative"
       style={{
-        background: checked ? `${comp.color}12` : "rgba(255,255,255,0.02)",
-        border: `1px solid ${checked ? comp.color + "50" : "rgba(255,255,255,0.07)"}`,
+        background: checked ? `${comp.color}12` : "#ffffff",
+        border: `1px solid ${checked ? comp.color + "50" : "#e2e8f0"}`,
         opacity: enabled ? 1 : 0.45,
         cursor: enabled ? "pointer" : "not-allowed",
       }}>
@@ -120,7 +120,7 @@ function ComponentCard({
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-            <span className="text-[12px] font-bold text-white/90">{comp.label}</span>
+            <span className="text-[12px] font-bold text-[var(--kiq-ink)]/90">{comp.label}</span>
             <StatusBadge status={comp.status} />
           </div>
           <p className="text-[10px] text-zinc-500 leading-relaxed">{comp.tooltip ?? comp.desc}</p>
@@ -132,7 +132,7 @@ function ComponentCard({
               {comp.previewLoading ? (
                 <span
                   className="inline-block h-2 rounded animate-pulse"
-                  style={{ background: "rgba(255,255,255,0.06)", width: 140 }}
+                  style={{ background: "#f1f5f9", width: 140 }}
                 />
               ) : comp.preview ? (
                 <span
@@ -191,10 +191,13 @@ type PreviewPayload = {
   sha256?: string;
 };
 
-// Stored deliveries record component *labels* (e.g. "Rx Defense Redline
+// Stored deliveries record component *labels* (e.g. "PBM Contract Clarity 360 Redline
 // (.docx)"); the preview / snapshot endpoints and COMPONENT_META are keyed by
 // component *ids* (e.g. "rx_redline"). Normalize so both work.
 const _COMPONENT_LABEL_TO_ID: Record<string, string> = {
+  "PBM Contract Clarity 360 Redline (.docx)":           "rx_redline",
+  "PBM Contract Clarity 360 Scorecard (JSON)":          "rx_scorecard",
+  // Legacy labels persisted before the "Rx Defense" to "PBM Contract Clarity 360" rename.
   "Rx Defense Redline (.docx)":           "rx_redline",
   "Rx Defense Scorecard (JSON)":          "rx_scorecard",
   "Benchmarking Employer Report (JSON)":  "benchmarking_employer",
@@ -276,16 +279,16 @@ function FullScreenPreview({
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
           className="fixed inset-0 z-[80] flex flex-col"
-          style={{ background: "#0A0D14" }}
+          style={{ background: "#F8FAFC" }}
           data-testid="fullscreen-preview"
         >
           <header
             className="flex items-center gap-3 px-5 py-3 border-b flex-shrink-0"
-            style={{ borderColor: "rgba(255,255,255,0.08)" }}
+            style={{ borderColor: "#e2e8f0" }}
           >
             <FileText className="w-4 h-4 flex-shrink-0" style={{ color: BLUE }} />
             <div className="flex-1 min-w-0">
-              <div className="text-[12px] font-bold text-white truncate">{title}</div>
+              <div className="text-[12px] font-bold text-[var(--kiq-ink)] truncate">{title}</div>
               <div className="text-[10px] font-mono text-zinc-500 truncate">
                 {payload.filename || ""}
                 {payload.kind ? ` · ${payload.kind.toUpperCase()} · full screen` : ""}
@@ -308,8 +311,8 @@ function FullScreenPreview({
               onClick={onClose}
               data-testid="btn-fullscreen-close"
               title="Exit full screen (Esc)"
-              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-mono font-bold uppercase tracking-[0.14em] hover:bg-white/5 transition-colors"
-              style={{ color: "#9CA3AF", border: "1px solid rgba(255,255,255,0.12)" }}
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-mono font-bold uppercase tracking-[0.14em] hover:bg-[var(--kiq-surface)]/5 transition-colors"
+              style={{ color: "#9CA3AF", border: "1px solid #cbd5e1" }}
             >
               <X className="w-3.5 h-3.5" />
               Close
@@ -559,22 +562,22 @@ function ComponentPreviewDrawer({
             className="fixed top-0 right-0 bottom-0 z-[61] flex flex-col"
             style={{
               width: "min(720px, 96vw)",
-              background: "#0A0D14",
-              borderLeft: "1px solid rgba(255,255,255,0.08)",
+              background: "#F8FAFC",
+              borderLeft: "1px solid #e2e8f0",
               boxShadow: "-20px 0 60px rgba(0,0,0,0.55)",
             }}
             data-testid="component-preview-drawer"
           >
             <header
               className="flex items-start gap-3 px-5 py-4 border-b"
-              style={{ borderColor: "rgba(255,255,255,0.06)" }}
+              style={{ borderColor: "#f1f5f9" }}
             >
               <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
                 style={{ background: `${comp.color}14`, border: `1px solid ${comp.color}28` }}>
                 <comp.icon className="w-4.5 h-4.5" style={{ color: comp.color }} />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-[12px] font-bold text-white">{comp.label}</div>
+                <div className="text-[12px] font-bold text-[var(--kiq-ink)]">{comp.label}</div>
                 <div className="text-[10px] font-mono text-zinc-500 truncate">
                   {payload?.filename || comp.id}
                   {payload?.kind ? ` · ${payload.kind.toUpperCase()} preview` : ""}
@@ -623,7 +626,7 @@ function ComponentPreviewDrawer({
                 onClick={onClose}
                 data-testid="btn-preview-close"
                 title="Close preview"
-                className="p-1.5 rounded-md hover:bg-white/5 transition-colors flex-shrink-0"
+                className="p-1.5 rounded-md hover:bg-[var(--kiq-surface)]/5 transition-colors flex-shrink-0"
               >
                 <X className="w-4 h-4 text-zinc-400" />
               </button>
@@ -651,7 +654,7 @@ function ComponentPreviewDrawer({
                   data-testid="preview-pdf-canvas"
                   style={{
                     background: "#525659",
-                    border: "1px solid rgba(255,255,255,0.06)",
+                    border: "1px solid #f1f5f9",
                     minHeight: "calc(100vh - 220px)",
                     maxHeight: "calc(100vh - 160px)",
                     overflow: "auto",
@@ -669,7 +672,7 @@ function ComponentPreviewDrawer({
                       background: "white",
                       border: "none",
                       borderRadius: "2px",
-                      boxShadow: "0 6px 24px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.4)",
+                      boxShadow: "0 6px 24px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06)",
                     }}
                   />
                 </div>
@@ -696,17 +699,17 @@ function ComponentPreviewDrawer({
                       style={{
                         color: "#E4E4E7",
                         background: "rgba(255,255,255,0.025)",
-                        border: "1px solid rgba(255,255,255,0.06)",
+                        border: "1px solid #f1f5f9",
                       }}
                     >
                       {payload.body}
                     </pre>
                   ) : (
-                    <div className="rounded-lg overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.06)" }}>
+                    <div className="rounded-lg overflow-hidden" style={{ border: "1px solid #f1f5f9" }}>
                       {docxRendered && docxPageCount > 0 && (
                         <div
                           className="flex items-center justify-between px-2.5 py-1.5"
-                          style={{ background: "#1A1D24", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+                          style={{ background: "#1A1D24", borderBottom: "1px solid #f1f5f9" }}
                           data-testid="docx-toolbar"
                         >
                           <div className="flex items-center gap-1">
@@ -716,12 +719,12 @@ function ComponentPreviewDrawer({
                               disabled={docxCurrentPage <= 1}
                               data-testid="btn-docx-prev-page"
                               title="Previous page"
-                              className="p-1 rounded-md hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                              className="p-1 rounded-md hover:bg-[var(--kiq-surface)]/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
                             >
-                              <ChevronLeft className="w-3.5 h-3.5 text-zinc-300" />
+                              <ChevronLeft className="w-3.5 h-3.5 text-[var(--kiq-muted)]" />
                             </button>
                             <span
-                              className="text-[10px] font-mono tabular-nums text-zinc-300 px-1 select-none"
+                              className="text-[10px] font-mono tabular-nums text-[var(--kiq-muted)] px-1 select-none"
                               data-testid="text-docx-page"
                             >
                               {docxCurrentPage} / {docxPageCount}
@@ -732,9 +735,9 @@ function ComponentPreviewDrawer({
                               disabled={docxCurrentPage >= docxPageCount}
                               data-testid="btn-docx-next-page"
                               title="Next page"
-                              className="p-1 rounded-md hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                              className="p-1 rounded-md hover:bg-[var(--kiq-surface)]/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
                             >
-                              <ChevronRight className="w-3.5 h-3.5 text-zinc-300" />
+                              <ChevronRight className="w-3.5 h-3.5 text-[var(--kiq-muted)]" />
                             </button>
                           </div>
                           <div className="flex items-center gap-1">
@@ -744,18 +747,18 @@ function ComponentPreviewDrawer({
                               disabled={docxZoom <= 0.3}
                               data-testid="btn-docx-zoom-out"
                               title="Zoom out"
-                              className="p-1 rounded-md hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                              className="p-1 rounded-md hover:bg-[var(--kiq-surface)]/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
                             >
-                              <ZoomOut className="w-3.5 h-3.5 text-zinc-300" />
+                              <ZoomOut className="w-3.5 h-3.5 text-[var(--kiq-muted)]" />
                             </button>
                             <button
                               type="button"
                               onClick={zoomReset}
                               data-testid="btn-docx-zoom-reset"
                               title="Reset zoom (fit width)"
-                              className="flex items-center gap-1 px-1.5 py-0.5 rounded-md hover:bg-white/10 transition-colors"
+                              className="flex items-center gap-1 px-1.5 py-0.5 rounded-md hover:bg-[var(--kiq-surface)]/10 transition-colors"
                             >
-                              <span className="text-[10px] font-mono tabular-nums text-zinc-300 select-none" data-testid="text-docx-zoom">
+                              <span className="text-[10px] font-mono tabular-nums text-[var(--kiq-muted)] select-none" data-testid="text-docx-zoom">
                                 {Math.round(docxFitScale * docxZoom * 100)}%
                               </span>
                               <RotateCcw className="w-3 h-3 text-zinc-400" />
@@ -766,9 +769,9 @@ function ComponentPreviewDrawer({
                               disabled={docxZoom >= 3}
                               data-testid="btn-docx-zoom-in"
                               title="Zoom in"
-                              className="p-1 rounded-md hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
+                              className="p-1 rounded-md hover:bg-[var(--kiq-surface)]/10 disabled:opacity-30 disabled:hover:bg-transparent transition-colors"
                             >
-                              <ZoomIn className="w-3.5 h-3.5 text-zinc-300" />
+                              <ZoomIn className="w-3.5 h-3.5 text-[var(--kiq-muted)]" />
                             </button>
                           </div>
                         </div>
@@ -796,7 +799,7 @@ function ComponentPreviewDrawer({
                   style={{
                     color: "#E4E4E7",
                     background: "rgba(255,255,255,0.025)",
-                    border: "1px solid rgba(255,255,255,0.06)",
+                    border: "1px solid #f1f5f9",
                   }}
                   data-testid={`preview-${payload.kind}`}
                 >
@@ -807,7 +810,7 @@ function ComponentPreviewDrawer({
 
             <footer
               className="px-5 py-3 border-t text-[9px] font-mono text-zinc-600 flex items-center gap-2"
-              style={{ borderColor: "rgba(255,255,255,0.06)" }}
+              style={{ borderColor: "#f1f5f9" }}
             >
               <FileText className="w-3 h-3" />
               <span>
@@ -968,22 +971,22 @@ function DeliveryPreviewDrawer({
             className="fixed top-0 right-0 bottom-0 z-[61] flex flex-col"
             style={{
               width: "min(880px, 98vw)",
-              background: "#0A0D14",
-              borderLeft: "1px solid rgba(255,255,255,0.08)",
+              background: "#F8FAFC",
+              borderLeft: "1px solid #e2e8f0",
               boxShadow: "-20px 0 60px rgba(0,0,0,0.55)",
             }}
             data-testid="delivery-preview-drawer"
           >
             <header
               className="flex items-start gap-3 px-5 py-4 border-b"
-              style={{ borderColor: "rgba(255,255,255,0.06)" }}
+              style={{ borderColor: "#f1f5f9" }}
             >
               <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
                 style={{ background: `${GOLD}14`, border: `1px solid ${GOLD}28` }}>
                 <Archive className="w-4.5 h-4.5" style={{ color: GOLD }} />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-[12px] font-bold text-white truncate" data-testid="delivery-preview-title">
+                <div className="text-[12px] font-bold text-[var(--kiq-ink)] truncate" data-testid="delivery-preview-title">
                   Delivery #{delivery.id} · {toLabel}
                 </div>
                 <div className="text-[10px] font-mono text-zinc-500 truncate">
@@ -1001,7 +1004,7 @@ function DeliveryPreviewDrawer({
                 onClick={onClose}
                 data-testid="btn-delivery-preview-close"
                 title="Close preview"
-                className="p-1.5 rounded-md hover:bg-white/5 transition-colors flex-shrink-0"
+                className="p-1.5 rounded-md hover:bg-[var(--kiq-surface)]/5 transition-colors flex-shrink-0"
               >
                 <X className="w-4 h-4 text-zinc-400" />
               </button>
@@ -1011,7 +1014,7 @@ function DeliveryPreviewDrawer({
               {/* Components list */}
               <div
                 className="w-[260px] flex-shrink-0 overflow-y-auto border-r py-2"
-                style={{ borderColor: "rgba(255,255,255,0.06)" }}
+                style={{ borderColor: "#f1f5f9" }}
                 data-testid="delivery-preview-components"
               >
                 <div className="px-3 pb-2 text-[9px] font-mono font-bold uppercase tracking-[0.14em] text-zinc-600">
@@ -1037,7 +1040,7 @@ function DeliveryPreviewDrawer({
                     >
                       <Icon className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" style={{ color }} />
                       <div className="flex-1 min-w-0">
-                        <div className="text-[10px] font-bold text-zinc-200 leading-tight flex items-center gap-1.5">
+                        <div className="text-[10px] font-bold text-[var(--kiq-ink-soft)] leading-tight flex items-center gap-1.5">
                           <span className="truncate">{meta?.label || cid}</span>
                           {hasSnapshot && (
                             <Archive
@@ -1066,8 +1069,8 @@ function DeliveryPreviewDrawer({
               {/* Preview pane */}
               <div className="flex-1 overflow-y-auto px-5 py-4 min-w-0" data-testid="delivery-preview-body">
                 {activeMeta && (
-                  <div className="flex items-center gap-2 mb-3 pb-3 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-                    <div className="text-[11px] font-bold text-white">{activeMeta.label}</div>
+                  <div className="flex items-center gap-2 mb-3 pb-3 border-b" style={{ borderColor: "#f1f5f9" }}>
+                    <div className="text-[11px] font-bold text-[var(--kiq-ink)]">{activeMeta.label}</div>
                     {payload?.ok && (
                       payload.snapshot ? (
                         <span
@@ -1083,7 +1086,7 @@ function DeliveryPreviewDrawer({
                         <span
                           data-testid="delivery-preview-live-badge"
                           className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-mono font-bold uppercase tracking-[0.12em] text-[9px]"
-                          style={{ color: "#9CA3AF", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.12)" }}
+                          style={{ color: "#9CA3AF", background: "#ffffff", border: "1px solid #cbd5e1" }}
                           title="Rebuilt from current data — no snapshot stored for this component"
                         >
                           Live rebuild
@@ -1135,7 +1138,7 @@ function DeliveryPreviewDrawer({
                     style={{
                       height: "calc(100vh - 240px)",
                       background: "white",
-                      border: "1px solid rgba(255,255,255,0.06)",
+                      border: "1px solid #f1f5f9",
                     }}
                   />
                 )}
@@ -1145,7 +1148,7 @@ function DeliveryPreviewDrawer({
                     style={{
                       color: "#E4E4E7",
                       background: "rgba(255,255,255,0.025)",
-                      border: "1px solid rgba(255,255,255,0.06)",
+                      border: "1px solid #f1f5f9",
                     }}
                     data-testid={`delivery-preview-${payload.kind}`}
                   >
@@ -1162,7 +1165,7 @@ function DeliveryPreviewDrawer({
 
             <footer
               className="px-5 py-3 border-t text-[9px] font-mono text-zinc-600 flex items-center gap-2"
-              style={{ borderColor: "rgba(255,255,255,0.06)" }}
+              style={{ borderColor: "#f1f5f9" }}
             >
               <FileText className="w-3 h-3" />
               <span>
@@ -1304,7 +1307,7 @@ export default function ClientPackage() {
     if (verifyInputRef.current) verifyInputRef.current.value = "";
   }
 
-  const defaultEmailSubject = `Kincaid IQ Client Package — ${clientName || einName || "Client"}`;
+  const defaultEmailSubject = `Kincaid Health Client Package — ${clientName || einName || "Client"}`;
   useEffect(() => {
     setEmailSubject(defaultEmailSubject);
   }, [clientName, einName, contractId]);
@@ -1779,7 +1782,7 @@ export default function ClientPackage() {
     }
   }
 
-  // ── Contract picker: list all of the user's Rx Defense contracts ──────────
+  // ── Contract picker: list all of the user's PBM Contract Clarity 360 contracts ──────────
   const { data: contractList, isLoading: contractListLoading } = useQuery<any[]>({
     queryKey: ["/api/rx-defense/contracts"],
     retry: false,
@@ -1962,7 +1965,7 @@ export default function ClientPackage() {
   const components: Component[] = [
     {
       id:     "rx_redline",
-      label:  "Rx Defense — Redline (.docx)",
+      label:  "PBM Contract Clarity 360 — Redline (.docx)",
       desc:   "Word doc with model contract language for all weak provisions",
       icon:   Pill,
       color:  GREEN,
@@ -1975,12 +1978,12 @@ export default function ClientPackage() {
           ? `${contract?.pbm_name || contractId} — Score ${Math.round(contract?.overall_score ?? 0)}/100`
           : contractLoading
           ? "Checking contract status…"
-          : "Contract analysis not complete — run Rx Defense first"
-        : "No Rx Defense contract selected — open Rx Defense and analyze a contract first",
+          : "Contract analysis not complete — run PBM Contract Clarity 360 first"
+        : "No PBM Contract Clarity 360 contract selected — open PBM Contract Clarity 360 and analyze a contract first",
     },
     {
       id:     "rx_scorecard",
-      label:  "Rx Defense — Scorecard (JSON)",
+      label:  "PBM Contract Clarity 360 — Scorecard (JSON)",
       desc:   "Machine-readable provision scores, findings, and risk flags",
       icon:   FileText,
       color:  PURPLE,
@@ -1992,7 +1995,7 @@ export default function ClientPackage() {
         ? contractReady
           ? `13 provisions · ${contract?.key_findings?.length ?? 0} key findings`
           : "Contract analysis not complete"
-        : "No Rx Defense contract selected",
+        : "No PBM Contract Clarity 360 contract selected",
     },
     {
       id:     "benchmarking_employer",
@@ -2161,7 +2164,7 @@ export default function ClientPackage() {
   }
 
   return (
-    <div className="min-h-screen" style={{ background: "#030508" }}>
+    <div className="min-h-screen" style={{ background: "#F8FAFC" }}>
       <div className="max-w-2xl mx-auto px-6 py-10">
 
         {/* Header */}
@@ -2175,37 +2178,37 @@ export default function ClientPackage() {
               <Archive className="w-5 h-5" style={{ color: GOLD }} />
             </div>
             <div>
-              <h1 className="text-xl font-black text-white">Client Package Builder</h1>
+              <h1 className="text-xl font-black text-[var(--kiq-ink)]">Client Package Builder</h1>
               <p className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
                 Unified deliverable · multi-tool export
               </p>
             </div>
           </div>
           <p className="text-xs text-zinc-500 leading-relaxed mt-3">
-            Assemble a single ZIP from Rx Defense, Benefits Benchmarking, and War Room data.
+            Assemble a single ZIP from PBM Contract Clarity 360, Benefits Benchmarking, and War Room data.
             Select which components to include and download them as one package.
           </p>
         </div>
 
         {/* Data source pickers — contract + company, no need to leave the builder */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
-          {/* Rx Defense contract picker */}
+          {/* PBM Contract Clarity 360 contract picker */}
           <div ref={contractPickerRef} className="relative">
             <label className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-zinc-600 mb-1.5 block">
-              Rx Defense Contract
+              PBM Contract Clarity 360 Contract
             </label>
             <button
               data-testid="btn-pick-contract"
               type="button"
               onClick={() => setContractPickerOpen(o => !o)}
               className="w-full flex items-center gap-2 rounded-xl px-3 py-2.5 text-left outline-none"
-              style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${contractId ? GREEN + "40" : "rgba(255,255,255,0.09)"}` }}
+              style={{ background: "#ffffff", border: `1px solid ${contractId ? GREEN + "40" : "rgba(15,23,42,0.03)"}` }}
             >
-              <Pill className="w-3.5 h-3.5 flex-shrink-0" style={{ color: contractId ? GREEN : "rgba(255,255,255,0.35)" }} />
+              <Pill className="w-3.5 h-3.5 flex-shrink-0" style={{ color: contractId ? GREEN : "#64748b" }} />
               <div className="flex-1 min-w-0">
                 {contractId ? (
                   <>
-                    <div className="text-xs font-semibold text-white truncate">
+                    <div className="text-xs font-semibold text-[var(--kiq-ink)] truncate">
                       {contract?.pbm_name || contract?.contract_filename || contractId}
                     </div>
                     <div className="text-[9px] font-mono text-zinc-500 truncate">
@@ -2222,7 +2225,7 @@ export default function ClientPackage() {
                 <button
                   data-testid="btn-clear-contract"
                   onClick={(e) => { e.stopPropagation(); clearContract(); }}
-                  className="p-1 rounded-full hover:bg-white/10 flex-shrink-0">
+                  className="p-1 rounded-full hover:bg-[var(--kiq-surface)]/10 flex-shrink-0">
                   <X className="w-3 h-3 text-zinc-500" />
                 </button>
               )}
@@ -2234,7 +2237,7 @@ export default function ClientPackage() {
                 <motion.div
                   initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}
                   className="absolute top-full left-0 right-0 mt-1 rounded-xl z-50 overflow-hidden"
-                  style={{ background: "#0d1033", border: "1px solid rgba(255,255,255,0.1)", maxHeight: 320, overflowY: "auto" }}
+                  style={{ background: "#F8FAFC", border: "1px solid #e2e8f0", maxHeight: 320, overflowY: "auto" }}
                 >
                   {contractListLoading ? (
                     <div className="px-4 py-3 text-[11px] text-zinc-500 flex items-center gap-2">
@@ -2242,7 +2245,7 @@ export default function ClientPackage() {
                     </div>
                   ) : !contractList || contractList.length === 0 ? (
                     <div className="px-4 py-3 text-[11px] text-zinc-500">
-                      No Rx Defense contracts yet — <a href="/rx-defense" className="underline hover:text-zinc-300">analyze one</a> first.
+                      No PBM Contract Clarity 360 contracts yet — <a href="/rx-defense" className="underline hover:text-[var(--kiq-muted)]">analyze one</a> first.
                     </div>
                   ) : (
                     contractList.map((c: any) => {
@@ -2253,12 +2256,12 @@ export default function ClientPackage() {
                           key={c.id}
                           data-testid={`btn-contract-option-${c.id}`}
                           onClick={() => pickContract(c.id)}
-                          className="w-full text-left px-4 py-2.5 text-xs hover:bg-white/5 transition-colors border-b border-white/5 flex items-center gap-2"
+                          className="w-full text-left px-4 py-2.5 text-xs hover:bg-[var(--kiq-surface)]/5 transition-colors border-b border-white/5 flex items-center gap-2"
                           style={{ background: active ? "rgba(16,185,129,0.06)" : "transparent" }}
                         >
                           <Pill className="w-3 h-3 flex-shrink-0" style={{ color: ready ? GREEN : GOLD }} />
                           <div className="flex-1 min-w-0">
-                            <div className="text-white truncate font-semibold">
+                            <div className="text-[var(--kiq-ink)] truncate font-semibold">
                               {c.pbm_name || c.contract_filename || c.id}
                             </div>
                             <div className="text-[9px] font-mono text-zinc-500 truncate">
@@ -2286,16 +2289,16 @@ export default function ClientPackage() {
             </label>
             {ein && !companySearch ? (
               <div className="flex items-center gap-2 rounded-xl px-3 py-2.5"
-                style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${BLUE}40` }}>
+                style={{ background: "#ffffff", border: `1px solid ${BLUE}40` }}>
                 <Building2 className="w-3.5 h-3.5 flex-shrink-0" style={{ color: BLUE }} />
                 <div className="flex-1 min-w-0">
-                  <div className="text-xs font-semibold text-white truncate">{einName || ein}</div>
+                  <div className="text-xs font-semibold text-[var(--kiq-ink)] truncate">{einName || ein}</div>
                   <div className="text-[9px] font-mono text-zinc-500">EIN {ein}</div>
                 </div>
                 <button
                   data-testid="btn-clear-company"
                   onClick={clearCompany}
-                  className="p-1 rounded-full hover:bg-white/10 flex-shrink-0">
+                  className="p-1 rounded-full hover:bg-[var(--kiq-surface)]/10 flex-shrink-0">
                   <X className="w-3 h-3 text-zinc-500" />
                 </button>
               </div>
@@ -2308,8 +2311,8 @@ export default function ClientPackage() {
                   onChange={e => handleCompanyInput(e.target.value)}
                   onFocus={() => setCompanyOpen(true)}
                   placeholder="Search company by name or EIN…"
-                  className="w-full text-xs text-white placeholder:text-zinc-700 rounded-xl pl-9 pr-9 py-2.5 outline-none"
-                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)" }}
+                  className="w-full text-xs text-[var(--kiq-ink)] placeholder:text-zinc-700 rounded-xl pl-9 pr-9 py-2.5 outline-none"
+                  style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)" }}
                 />
                 {companySearching && (
                   <RefreshCw className="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 animate-spin text-zinc-600" />
@@ -2322,16 +2325,16 @@ export default function ClientPackage() {
                 <motion.div
                   initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}
                   className="absolute top-full left-0 right-0 mt-1 rounded-xl z-50 overflow-hidden"
-                  style={{ background: "#0d1033", border: "1px solid rgba(255,255,255,0.1)", maxHeight: 320, overflowY: "auto" }}
+                  style={{ background: "#F8FAFC", border: "1px solid #e2e8f0", maxHeight: 320, overflowY: "auto" }}
                 >
                   {companyResults!.results.map((r: any) => (
                     <button
                       key={r.ein}
                       data-testid={`btn-company-option-${r.ein}`}
                       onClick={() => pickCompany(r.ein, r.name)}
-                      className="w-full text-left px-4 py-2.5 text-xs hover:bg-white/5 transition-colors border-b border-white/5"
+                      className="w-full text-left px-4 py-2.5 text-xs hover:bg-[var(--kiq-surface)]/5 transition-colors border-b border-white/5"
                     >
-                      <div className="text-white font-semibold truncate">{r.name}</div>
+                      <div className="text-[var(--kiq-ink)] font-semibold truncate">{r.name}</div>
                       <div className="text-[9px] font-mono text-zinc-500 truncate">
                         {[r.sector, [r.city, r.state].filter(Boolean).join(", "), `EIN ${r.ein}`].filter(Boolean).join(" · ")}
                       </div>
@@ -2343,7 +2346,7 @@ export default function ClientPackage() {
                 <motion.div
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                   className="absolute top-full left-0 right-0 mt-1 rounded-xl z-50 px-4 py-3 text-[11px] text-zinc-500"
-                  style={{ background: "#0d1033", border: "1px solid rgba(255,255,255,0.1)" }}
+                  style={{ background: "#F8FAFC", border: "1px solid #e2e8f0" }}
                 >
                   No matches for “{companyDeferred}”.
                 </motion.div>
@@ -2362,8 +2365,8 @@ export default function ClientPackage() {
             value={clientName}
             onChange={e => setClientName(e.target.value)}
             placeholder={einName || "e.g. Acme Corp, Attention: Benefits Team"}
-            className="w-full text-xs text-white placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)" }}
+            className="w-full text-xs text-[var(--kiq-ink)] placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none"
+            style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)" }}
           />
         </div>
 
@@ -2374,7 +2377,7 @@ export default function ClientPackage() {
           </div>
           {readyCount > 0 && (
             <button data-testid="btn-toggle-all" onClick={toggleAll}
-              className="text-[9px] font-mono text-zinc-500 hover:text-zinc-300 transition-colors">
+              className="text-[9px] font-mono text-zinc-500 hover:text-[var(--kiq-muted)] transition-colors">
               {components.filter(c => c.status === "ready").every(c => checked[c.id]) ? "Deselect all" : "Select all"}
             </button>
           )}
@@ -2399,10 +2402,10 @@ export default function ClientPackage() {
             <div className="flex items-start gap-2.5">
               <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: GOLD }} />
               <div>
-                <div className="text-[11px] font-bold text-white/80 mb-1">No data sources selected</div>
+                <div className="text-[11px] font-bold text-[var(--kiq-ink)]/80 mb-1">No data sources selected</div>
                 <p className="text-[10px] text-zinc-500 leading-relaxed">
-                  Pick an Rx Defense contract or search a company above. New contract?
-                  Analyze one in <a href="/rx-defense" className="underline hover:text-zinc-300">Rx Defense</a>.
+                  Pick a PBM Contract Clarity 360 contract or search a company above. New contract?
+                  Analyze one in <a href="/rx-defense" className="underline hover:text-[var(--kiq-muted)]">PBM Contract Clarity 360</a>.
                 </p>
               </div>
             </div>
@@ -2449,9 +2452,9 @@ export default function ClientPackage() {
             disabled={!canDownload}
             className="w-full flex items-center justify-center gap-2.5 rounded-2xl py-3.5 font-bold text-sm transition-all"
             style={{
-              background: canDownload ? `linear-gradient(135deg, ${GOLD}18, ${GOLD}08)` : "rgba(255,255,255,0.03)",
-              border: canDownload ? `1px solid ${GOLD}50` : "1px solid rgba(255,255,255,0.07)",
-              color: canDownload ? GOLD : "rgba(255,255,255,0.2)",
+              background: canDownload ? `linear-gradient(135deg, ${GOLD}18, ${GOLD}08)` : "#ffffff",
+              border: canDownload ? `1px solid ${GOLD}50` : "1px solid #e2e8f0",
+              color: canDownload ? GOLD : "#94a3b8",
               cursor: canDownload ? "pointer" : "not-allowed",
               boxShadow: canDownload ? `0 0 32px ${GOLD}18` : "none",
             }}>
@@ -2468,10 +2471,10 @@ export default function ClientPackage() {
             className="flex items-center justify-center gap-2 rounded-2xl px-5 py-3.5 font-bold text-sm transition-all"
             style={{
               background: checkedIds.length > 0
-                ? (emailOpen ? `${BLUE}18` : "rgba(255,255,255,0.04)")
-                : "rgba(255,255,255,0.03)",
-              border: `1px solid ${checkedIds.length > 0 ? BLUE + "50" : "rgba(255,255,255,0.07)"}`,
-              color: checkedIds.length > 0 ? BLUE : "rgba(255,255,255,0.2)",
+                ? (emailOpen ? `${BLUE}18` : "#ffffff")
+                : "#ffffff",
+              border: `1px solid ${checkedIds.length > 0 ? BLUE + "50" : "#e2e8f0"}`,
+              color: checkedIds.length > 0 ? BLUE : "#94a3b8",
               cursor: checkedIds.length > 0 ? "pointer" : "not-allowed",
             }}>
             <Mail className="w-4 h-4" /> Send via Email
@@ -2528,10 +2531,10 @@ export default function ClientPackage() {
                           value={addr}
                           onChange={e => setEmailTo(arr => arr.map((v, j) => j === i ? e.target.value : v))}
                           placeholder="recipient@company.com"
-                          className="flex-1 text-xs text-white placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none"
+                          className="flex-1 text-xs text-[var(--kiq-ink)] placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none"
                           style={{
-                            background: "rgba(255,255,255,0.04)",
-                            border: `1px solid ${invalid ? RED + "55" : "rgba(255,255,255,0.09)"}`,
+                            background: "#ffffff",
+                            border: `1px solid ${invalid ? RED + "55" : "rgba(15,23,42,0.03)"}`,
                           }}
                         />
                         {emailTo.length > 1 && (
@@ -2560,7 +2563,7 @@ export default function ClientPackage() {
                     data-testid="btn-add-cc"
                     onClick={() => setEmailCc(arr => [...arr, ""])}
                     className="flex items-center gap-1 text-[9px] font-bold rounded-md px-2 py-0.5 text-zinc-500"
-                    style={{ border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)" }}
+                    style={{ border: "1px solid #cbd5e1", background: "#ffffff" }}
                   >
                     <Plus className="w-2.5 h-2.5" /> Add CC
                   </button>
@@ -2577,10 +2580,10 @@ export default function ClientPackage() {
                             value={addr}
                             onChange={e => setEmailCc(arr => arr.map((v, j) => j === i ? e.target.value : v))}
                             placeholder="cc@company.com"
-                            className="flex-1 text-xs text-white placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none"
+                            className="flex-1 text-xs text-[var(--kiq-ink)] placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none"
                             style={{
-                              background: "rgba(255,255,255,0.03)",
-                              border: `1px solid ${invalid ? RED + "55" : "rgba(255,255,255,0.08)"}`,
+                              background: "#ffffff",
+                              border: `1px solid ${invalid ? RED + "55" : "#e2e8f0"}`,
                             }}
                           />
                           <button
@@ -2608,7 +2611,7 @@ export default function ClientPackage() {
                     data-testid="btn-add-bcc"
                     onClick={() => setEmailBcc(arr => [...arr, ""])}
                     className="flex items-center gap-1 text-[9px] font-bold rounded-md px-2 py-0.5 text-zinc-500"
-                    style={{ border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)" }}
+                    style={{ border: "1px solid #cbd5e1", background: "#ffffff" }}
                   >
                     <Plus className="w-2.5 h-2.5" /> Add BCC
                   </button>
@@ -2625,10 +2628,10 @@ export default function ClientPackage() {
                             value={addr}
                             onChange={e => setEmailBcc(arr => arr.map((v, j) => j === i ? e.target.value : v))}
                             placeholder="bcc@company.com"
-                            className="flex-1 text-xs text-white placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none"
+                            className="flex-1 text-xs text-[var(--kiq-ink)] placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none"
                             style={{
-                              background: "rgba(255,255,255,0.03)",
-                              border: `1px solid ${invalid ? RED + "55" : "rgba(255,255,255,0.08)"}`,
+                              background: "#ffffff",
+                              border: `1px solid ${invalid ? RED + "55" : "#e2e8f0"}`,
                             }}
                           />
                           <button
@@ -2655,8 +2658,8 @@ export default function ClientPackage() {
                   value={emailSubject}
                   onChange={e => setEmailSubject(e.target.value)}
                   placeholder={defaultEmailSubject}
-                  className="w-full text-xs text-white placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none mb-3 font-sans"
-                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)" }}
+                  className="w-full text-xs text-[var(--kiq-ink)] placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none mb-3 font-sans"
+                  style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)" }}
                 />
 
                 <label className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-zinc-600 mb-1.5 block">
@@ -2668,8 +2671,8 @@ export default function ClientPackage() {
                   onChange={e => setEmailMessage(e.target.value)}
                   rows={4}
                   placeholder="Add a short note for the recipient…"
-                  className="w-full text-xs text-white placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none mb-3 resize-y font-sans"
-                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", lineHeight: 1.6 }}
+                  className="w-full text-xs text-[var(--kiq-ink)] placeholder:text-zinc-700 rounded-xl px-4 py-2.5 outline-none mb-3 resize-y font-sans"
+                  style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", lineHeight: 1.6 }}
                 />
 
                 <button
@@ -2679,10 +2682,10 @@ export default function ClientPackage() {
                   className="w-full flex items-center justify-center gap-2 rounded-xl py-3 font-bold text-sm transition-all"
                   style={{
                     background: (emailSending || !canSendEmail)
-                      ? "rgba(255,255,255,0.04)"
+                      ? "#ffffff"
                       : `linear-gradient(135deg, ${BLUE}28, ${BLUE}10)`,
                     border: `1px solid ${BLUE}55`,
-                    color: (emailSending || !canSendEmail) ? "rgba(255,255,255,0.4)" : BLUE,
+                    color: (emailSending || !canSendEmail) ? "#475569" : BLUE,
                     cursor: (emailSending || !canSendEmail) ? "not-allowed" : "pointer",
                   }}>
                   {emailSending
@@ -2723,18 +2726,18 @@ export default function ClientPackage() {
                             data-testid="email-recipients-summary"
                             className="text-[10px] text-zinc-400 mt-1.5 leading-relaxed"
                           >
-                            <span className="font-bold text-zinc-300">To:</span> {emailResult.recipients.join(", ")}
+                            <span className="font-bold text-[var(--kiq-muted)]">To:</span> {emailResult.recipients.join(", ")}
                             {emailResult.cc && emailResult.cc.length > 0 && (
                               <>
                                 {" · "}
-                                <span className="font-bold text-zinc-300">CC:</span> {emailResult.cc.join(", ")}
+                                <span className="font-bold text-[var(--kiq-muted)]">CC:</span> {emailResult.cc.join(", ")}
                               </>
                             )}
                             {typeof emailResult.bcc_count === "number" && emailResult.bcc_count > 0 && (
                               <>
                                 {" · "}
                                 <span
-                                  className="font-bold text-zinc-300"
+                                  className="font-bold text-[var(--kiq-muted)]"
                                   data-testid="email-bcc-count"
                                 >
                                   BCC:
@@ -2810,7 +2813,7 @@ export default function ClientPackage() {
                 {([
                   { key: "all",      label: "All",          enabled: true,         title: "Show all recent deliveries" },
                   { key: "company",  label: ein ? `EIN ${ein}` : "This company",  enabled: !!ein,        title: ein ? `Filter to deliveries for EIN ${ein}` : "Select a company above to filter" },
-                  { key: "contract", label: "This contract", enabled: !!contractId, title: contractId ? `Filter to deliveries for contract ${contractId}` : "Select an Rx Defense contract above to filter" },
+                  { key: "contract", label: "This contract", enabled: !!contractId, title: contractId ? `Filter to deliveries for contract ${contractId}` : "Select a PBM Contract Clarity 360 contract above to filter" },
                 ] as const).map(opt => {
                   const active = historyScope === opt.key;
                   return (
@@ -2824,8 +2827,8 @@ export default function ClientPackage() {
                       className="text-[9px] font-mono font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
                       style={{
                         color:      active ? GOLD              : "rgba(255,255,255,0.55)",
-                        background: active ? `${GOLD}14`       : "rgba(255,255,255,0.04)",
-                        border:     `1px solid ${active ? `${GOLD}40` : "rgba(255,255,255,0.09)"}`,
+                        background: active ? `${GOLD}14`       : "#ffffff",
+                        border:     `1px solid ${active ? `${GOLD}40` : "rgba(15,23,42,0.03)"}`,
                       }}
                     >
                       {opt.label}
@@ -2859,8 +2862,8 @@ export default function ClientPackage() {
                     className="text-[9px] font-mono font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded transition-colors"
                     style={{
                       color:      active ? GOLD              : "rgba(255,255,255,0.55)",
-                      background: active ? `${GOLD}14`       : "rgba(255,255,255,0.04)",
-                      border:     `1px solid ${active ? `${GOLD}40` : "rgba(255,255,255,0.09)"}`,
+                      background: active ? `${GOLD}14`       : "#ffffff",
+                      border:     `1px solid ${active ? `${GOLD}40` : "rgba(15,23,42,0.03)"}`,
                     }}
                   >
                     {opt.label}
@@ -2894,8 +2897,8 @@ export default function ClientPackage() {
                       className="text-[9px] font-mono font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded transition-colors"
                       style={{
                         color:      active ? GOLD              : "rgba(255,255,255,0.55)",
-                        background: active ? `${GOLD}14`       : "rgba(255,255,255,0.04)",
-                        border:     `1px solid ${active ? `${GOLD}40` : "rgba(255,255,255,0.09)"}`,
+                        background: active ? `${GOLD}14`       : "#ffffff",
+                        border:     `1px solid ${active ? `${GOLD}40` : "rgba(15,23,42,0.03)"}`,
                       }}
                     >
                       {opt.label}
@@ -2914,8 +2917,8 @@ export default function ClientPackage() {
                 data-testid="input-delivery-search"
                 className="w-full text-[11px] font-mono pl-7 pr-7 py-1.5 rounded-md outline-none transition-colors"
                 style={{
-                  background: "#0A0D14",
-                  border: `1px solid ${historySearch ? `${GOLD}40` : "rgba(255,255,255,0.09)"}`,
+                  background: "#F8FAFC",
+                  border: `1px solid ${historySearch ? `${GOLD}40` : "rgba(15,23,42,0.03)"}`,
                   color: "rgba(255,255,255,0.85)",
                 }}
               />
@@ -2925,7 +2928,7 @@ export default function ClientPackage() {
                   onClick={() => setHistorySearch("")}
                   data-testid="button-delivery-search-clear"
                   title="Clear search"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-200 text-[10px] font-mono"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-[var(--kiq-ink-soft)] text-[10px] font-mono"
                 >
                   ✕
                 </button>
@@ -2935,7 +2938,7 @@ export default function ClientPackage() {
             {/* Recurring compliance auto-email of the delivery log CSV */}
             <div
               className="mb-3 rounded-xl overflow-hidden"
-              style={{ background: "#0A0D14", border: `1px solid ${schedule?.enabled ? `${GREEN}40` : "rgba(255,255,255,0.09)"}` }}
+              style={{ background: "#F8FAFC", border: `1px solid ${schedule?.enabled ? `${GREEN}40` : "rgba(15,23,42,0.03)"}` }}
               data-testid="schedule-card"
             >
               <button
@@ -2950,7 +2953,7 @@ export default function ClientPackage() {
                 />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[11px] font-bold text-zinc-200 uppercase tracking-[0.12em]">
+                    <span className="text-[11px] font-bold text-[var(--kiq-ink-soft)] uppercase tracking-[0.12em]">
                       Auto-email log to compliance
                     </span>
                     {schedule?.enabled ? (
@@ -2964,7 +2967,7 @@ export default function ClientPackage() {
                     ) : (
                       <span
                         className="text-[8px] font-mono font-bold uppercase tracking-[0.14em] px-1.5 py-0.5 rounded"
-                        style={{ color: "rgba(255,255,255,0.55)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.12)" }}
+                        style={{ color: "rgba(255,255,255,0.55)", background: "#ffffff", border: "1px solid #cbd5e1" }}
                         data-testid="schedule-status-off"
                       >
                         Off
@@ -3002,8 +3005,8 @@ export default function ClientPackage() {
                             className="text-[10px] font-mono font-bold uppercase tracking-[0.14em] px-2 py-1 rounded transition-colors"
                             style={{
                               color:      schedDraftFrequency === f ? GOLD              : "rgba(255,255,255,0.55)",
-                              background: schedDraftFrequency === f ? `${GOLD}14`       : "rgba(255,255,255,0.04)",
-                              border:     `1px solid ${schedDraftFrequency === f ? `${GOLD}40` : "rgba(255,255,255,0.09)"}`,
+                              background: schedDraftFrequency === f ? `${GOLD}14`       : "#ffffff",
+                              border:     `1px solid ${schedDraftFrequency === f ? `${GOLD}40` : "rgba(15,23,42,0.03)"}`,
                             }}
                           >
                             {f}
@@ -3028,8 +3031,8 @@ export default function ClientPackage() {
                               className="text-[10px] font-mono font-bold uppercase tracking-[0.12em] px-2 py-1 rounded transition-colors"
                               style={{
                                 color:      schedDraftDow === i ? GOLD              : "rgba(255,255,255,0.55)",
-                                background: schedDraftDow === i ? `${GOLD}14`       : "rgba(255,255,255,0.04)",
-                                border:     `1px solid ${schedDraftDow === i ? `${GOLD}40` : "rgba(255,255,255,0.09)"}`,
+                                background: schedDraftDow === i ? `${GOLD}14`       : "#ffffff",
+                                border:     `1px solid ${schedDraftDow === i ? `${GOLD}40` : "rgba(15,23,42,0.03)"}`,
                               }}
                             >
                               {d}
@@ -3042,7 +3045,7 @@ export default function ClientPackage() {
                           onChange={e => setSchedDraftDom(parseInt(e.target.value, 10))}
                           data-testid="schedule-dom"
                           className="text-[11px] font-mono px-2 py-1 rounded outline-none"
-                          style={{ background: "#0A0D14", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.85)" }}
+                          style={{ background: "#F8FAFC", border: "1px solid #cbd5e1", color: "rgba(255,255,255,0.85)" }}
                         >
                           {Array.from({ length: 28 }, (_, i) => i + 1).map(d => (
                             <option key={d} value={d}>Day {d}</option>
@@ -3061,7 +3064,7 @@ export default function ClientPackage() {
                         onChange={e => setSchedDraftHour(parseInt(e.target.value, 10))}
                         data-testid="schedule-hour"
                         className="text-[11px] font-mono px-2 py-1 rounded outline-none w-full"
-                        style={{ background: "#0A0D14", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.85)" }}
+                        style={{ background: "#F8FAFC", border: "1px solid #cbd5e1", color: "rgba(255,255,255,0.85)" }}
                       >
                         {Array.from({ length: 24 }, (_, h) => h).map(h => (
                           <option key={h} value={h}>{String(h).padStart(2, "0")}:00</option>
@@ -3079,7 +3082,7 @@ export default function ClientPackage() {
                         onChange={e => setSchedDraftTz(e.target.value)}
                         data-testid="schedule-timezone"
                         className="text-[11px] font-mono px-2 py-1 rounded outline-none w-full"
-                        style={{ background: "#0A0D14", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.85)" }}
+                        style={{ background: "#F8FAFC", border: "1px solid #cbd5e1", color: "rgba(255,255,255,0.85)" }}
                       >
                         {TZ_OPTIONS.map(tz => (
                           <option key={tz} value={tz}>
@@ -3101,7 +3104,7 @@ export default function ClientPackage() {
                         placeholder="Auto-generated if left blank"
                         data-testid="schedule-subject"
                         className="w-full text-[11px] font-mono px-2 py-1 rounded outline-none"
-                        style={{ background: "#0A0D14", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.85)" }}
+                        style={{ background: "#F8FAFC", border: "1px solid #cbd5e1", color: "rgba(255,255,255,0.85)" }}
                       />
                     </div>
 
@@ -3117,7 +3120,7 @@ export default function ClientPackage() {
                         placeholder="compliance@firm.com, audit@firm.com"
                         data-testid="schedule-recipients"
                         className="w-full text-[11px] font-mono px-2 py-1.5 rounded outline-none"
-                        style={{ background: "#0A0D14", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.85)" }}
+                        style={{ background: "#F8FAFC", border: "1px solid #cbd5e1", color: "rgba(255,255,255,0.85)" }}
                       />
                     </div>
 
@@ -3133,7 +3136,7 @@ export default function ClientPackage() {
                         placeholder="cc@firm.com"
                         data-testid="schedule-cc"
                         className="w-full text-[11px] font-mono px-2 py-1.5 rounded outline-none"
-                        style={{ background: "#0A0D14", border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.85)" }}
+                        style={{ background: "#F8FAFC", border: "1px solid #cbd5e1", color: "rgba(255,255,255,0.85)" }}
                       />
                     </div>
                   </div>
@@ -3217,7 +3220,7 @@ export default function ClientPackage() {
               <div
                 data-testid="delivery-empty"
                 className="rounded-xl border border-dashed border-zinc-900 px-4 py-6 text-center text-[10px] font-mono text-zinc-600"
-                style={{ background: "#0A0D14" }}
+                style={{ background: "#F8FAFC" }}
               >
                 {historySearchDebounced
                   ? <>No deliveries match <span className="text-zinc-400">“{historySearchDebounced}”</span>.</>
@@ -3225,7 +3228,7 @@ export default function ClientPackage() {
               </div>
             )}
             {deliveries.length > 0 && (
-            <div className="rounded-xl border border-zinc-900" style={{ background: "#0A0D14" }}>
+            <div className="rounded-xl border border-zinc-900" style={{ background: "#F8FAFC" }}>
               {deliveryGroups.map((group, gi) => {
                 const collapsed = collapsedGroups.has(group.key);
                 return (
@@ -3236,7 +3239,7 @@ export default function ClientPackage() {
                     onClick={() => toggleGroupCollapsed(group.key)}
                     aria-expanded={!collapsed}
                     title={collapsed ? `Expand ${group.label}` : `Collapse ${group.label}`}
-                    className={`w-full sticky top-0 z-10 px-4 py-1.5 flex items-center gap-2 text-left transition-colors hover:bg-white/[0.03] ${gi > 0 ? "border-t border-zinc-900" : "rounded-t-xl"}`}
+                    className={`w-full sticky top-0 z-10 px-4 py-1.5 flex items-center gap-2 text-left transition-colors hover:bg-[var(--kiq-surface)]/[0.03] ${gi > 0 ? "border-t border-zinc-900" : "rounded-t-xl"}`}
                     style={{ background: "rgba(10,13,20,0.94)", backdropFilter: "blur(6px)" }}
                   >
                     <ChevronDown
@@ -3297,7 +3300,7 @@ export default function ClientPackage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-[11px] font-bold text-zinc-200 truncate" data-testid={`delivery-recipient-${d.id}`}>
+                        <span className="text-[11px] font-bold text-[var(--kiq-ink-soft)] truncate" data-testid={`delivery-recipient-${d.id}`}>
                           {highlight(toLabel)}
                         </span>
                         {d.cc && d.cc.length > 0 && (
@@ -3620,7 +3623,7 @@ export default function ClientPackage() {
                 type="button"
                 data-testid="verify-expected-clear"
                 onClick={(e) => { e.stopPropagation(); setExpectedVerifyFilename(null); setVerifyFilenameMismatch(null); }}
-                className="text-zinc-500 hover:text-zinc-300 flex-shrink-0"
+                className="text-zinc-500 hover:text-[var(--kiq-muted)] flex-shrink-0"
                 aria-label="Clear expected filename"
               >
                 <X className="w-3.5 h-3.5" />
@@ -3638,12 +3641,12 @@ export default function ClientPackage() {
             onClick={() => verifyInputRef.current?.click()}
             className="rounded-xl border-2 border-dashed p-6 text-center cursor-pointer transition-colors outline-none focus:ring-2 focus:ring-offset-0"
             style={{
-              background:  verifyDragOver ? `${BLUE}10` : "rgba(255,255,255,0.02)",
+              background:  verifyDragOver ? `${BLUE}10` : "#ffffff",
               borderColor: verifyDragOver
                 ? `${BLUE}80`
                 : expectedVerifyFilename
                   ? `${GREEN}55`
-                  : "rgba(255,255,255,0.10)",
+                  : "rgba(15,23,42,0.06)",
             }}
           >
             <input
@@ -3663,7 +3666,7 @@ export default function ClientPackage() {
               ) : (
                 <Upload className="w-5 h-5" style={{ color: verifyDragOver ? BLUE : "#71717A" }} />
               )}
-              <div className="text-[11px] font-bold text-zinc-300">
+              <div className="text-[11px] font-bold text-[var(--kiq-muted)]">
                 {verifyLoading
                   ? "Recomputing SHA-256 hashes…"
                   : verifyFile
@@ -3685,7 +3688,7 @@ export default function ClientPackage() {
               style={{ background: `${GOLD}10`, border: `1px solid ${GOLD}40` }}
             >
               <AlertTriangle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" style={{ color: GOLD }} />
-              <span className="text-[11px] text-zinc-300">{verifyFilenameMismatch}</span>
+              <span className="text-[11px] text-[var(--kiq-muted)]">{verifyFilenameMismatch}</span>
             </div>
           )}
 
@@ -3696,7 +3699,7 @@ export default function ClientPackage() {
               style={{ background: `${RED}10`, border: `1px solid ${RED}30` }}
             >
               <AlertTriangle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" style={{ color: RED }} />
-              <span className="text-[11px] text-zinc-300">{verifyError}</span>
+              <span className="text-[11px] text-[var(--kiq-muted)]">{verifyError}</span>
             </div>
           )}
 
@@ -3749,7 +3752,7 @@ export default function ClientPackage() {
                     </div>
                     <button
                       onClick={clearVerify}
-                      className="text-zinc-500 hover:text-zinc-300"
+                      className="text-zinc-500 hover:text-[var(--kiq-muted)]"
                       data-testid="verify-clear"
                       aria-label="Clear verification result"
                     >
@@ -3763,7 +3766,7 @@ export default function ClientPackage() {
               {verifyResult.files.length > 0 && (
                 <div
                   className="rounded-xl border border-zinc-900 overflow-hidden"
-                  style={{ background: "#0A0D14" }}
+                  style={{ background: "#F8FAFC" }}
                   data-testid="verify-files-table"
                 >
                   <div className="grid grid-cols-[1fr_auto_auto] gap-3 px-4 py-2 border-b border-zinc-900 text-[9px] font-mono font-bold uppercase tracking-[0.14em] text-zinc-600">
@@ -3787,7 +3790,7 @@ export default function ClientPackage() {
                         className={`grid grid-cols-[1fr_auto_auto] gap-3 px-4 py-2.5 items-start ${i > 0 ? "border-t border-zinc-900" : ""}`}
                       >
                         <div className="min-w-0">
-                          <div className="text-[11px] font-bold text-zinc-200 truncate">
+                          <div className="text-[11px] font-bold text-[var(--kiq-ink-soft)] truncate">
                             {f.filename}
                           </div>
                           {f.label && f.label !== f.filename && (

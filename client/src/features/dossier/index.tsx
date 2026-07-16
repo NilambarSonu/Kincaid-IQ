@@ -61,17 +61,17 @@ export function DossierExplorer({ className }: { className?: string }) {
   return (
     <div className={cn("space-y-6", className)} data-testid="dossier-explorer">
       {/* Generator */}
-      <div className="rounded-lg border border-slate-800 bg-[#0B1117] p-4 space-y-4">
+      <div className="rounded-lg border border-slate-200 bg-[#0B1117] p-4 space-y-4">
         <div className="flex items-center gap-2">
           <FolderOpen className="w-4 h-4 text-[#00A8FF]" />
-          <span className="text-sm font-semibold text-white">Entity Dossier Generator</span>
+          <span className="text-sm font-semibold text-slate-900">Entity Dossier Generator</span>
         </div>
         <div className="flex gap-3">
           <input
             value={subject}
             onChange={e => setSubject(e.target.value)}
             placeholder="Subject name or keyword (e.g. 'pharmacy', 'NPS', 'contract')"
-            className="flex-1 rounded bg-slate-900 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#00A8FF]/60"
+            className="flex-1 rounded bg-slate-50 border border-slate-200 px-3 py-2 text-sm text-slate-900 placeholder-slate-500 focus:outline-none focus:border-[#00A8FF]/60"
             data-testid="input-dossier-subject"
             list="dossier-subjects"
           />
@@ -83,7 +83,7 @@ export function DossierExplorer({ className }: { className?: string }) {
           <select
             value={subjectType}
             onChange={e => setSubjectType(e.target.value)}
-            className="rounded bg-slate-900 border border-slate-700 px-3 py-2 text-sm text-white focus:outline-none"
+            className="rounded bg-slate-50 border border-slate-200 px-3 py-2 text-sm text-slate-900 focus:outline-none"
             data-testid="select-dossier-type"
           >
             {["plan", "provider", "drug", "counterparty"].map(t => (
@@ -111,7 +111,7 @@ export function DossierExplorer({ className }: { className?: string }) {
               <p className="text-[10px] font-mono text-[#00A8FF] uppercase tracking-widest mb-1">
                 {dossier.subject_type.toUpperCase()} DOSSIER
               </p>
-              <h2 className="text-lg font-bold text-white">{dossier.subject}</h2>
+              <h2 className="text-lg font-bold text-slate-900">{dossier.subject}</h2>
               <p className="text-xs text-slate-400 mt-0.5">
                 {dossier.claims.length} claims · {dossier.risk_flags.length} risk flags ·{" "}
                 Generated {new Date(dossier.generated_at).toLocaleTimeString()}
@@ -147,7 +147,7 @@ export function DossierExplorer({ className }: { className?: string }) {
                       {f.severity}
                     </span>
                     <span className="font-mono text-slate-400">{f.claim_id}</span>
-                    <span className="text-slate-300">{f.title}</span>
+                    <span className="text-slate-500">{f.title}</span>
                     <span className="text-slate-500">— {f.flag}</span>
                   </div>
                 ))}
@@ -156,19 +156,19 @@ export function DossierExplorer({ className }: { className?: string }) {
           )}
 
           {/* Claims */}
-          <div className="rounded-lg border border-slate-800 bg-[#0B1117] overflow-hidden">
-            <div className="px-4 py-3 border-b border-slate-800 flex items-center gap-2">
+          <div className="rounded-lg border border-slate-200 bg-[#0B1117] overflow-hidden">
+            <div className="px-4 py-3 border-b border-slate-200 flex items-center gap-2">
               <Shield className="w-4 h-4 text-slate-500" />
-              <span className="text-sm font-semibold text-white">Governed Claims</span>
+              <span className="text-sm font-semibold text-slate-900">Governed Claims</span>
             </div>
-            <div className="divide-y divide-slate-800/60">
+            <div className="divide-y divide-slate-200/60">
               {dossier.claims.map(c => (
                 <div key={c.claim_id}
                   className="px-4 py-3 grid grid-cols-[1fr_auto_auto_auto] gap-3 items-center hover:bg-white/[0.015]"
                   data-testid={`dossier-claim-${c.claim_id}`}
                 >
                   <div>
-                    <p className="text-xs font-medium text-white/90">{c.title}</p>
+                    <p className="text-xs font-medium text-slate-900/90">{c.title}</p>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="font-mono text-[9px] text-slate-500">{c.claim_id}</span>
                       {c.source_hash && <EvidencePill artifact={c.source_hash} hash={c.source_hash}

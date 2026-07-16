@@ -98,13 +98,13 @@ async def submit_prompt(request: schemas.PromptRequest, db: Session = Depends(ge
 
 @router.post("/pull-kincaid")
 async def pull_kincaid(request: schemas.PullKincaidRequest, db: Session = Depends(get_db)):
-    prompt = request.prompt or "all of Kincaid IQ"
+    prompt = request.prompt or "all of Kincaid Health"
 
     try:
         response = await anthropic_client.messages.create(
             model="claude-sonnet-4-6",
             max_tokens=8192,
-            system="You are an expert engineer with access to the Kincaid IQ transparency engine codebase. Provide the full source code for components requested. Return ONLY the code, no markdown blocks, no explanations.",
+            system="You are an expert engineer with access to the Kincaid Health transparency engine codebase. Provide the full source code for components requested. Return ONLY the code, no markdown blocks, no explanations.",
             messages=[{"role": "user", "content": f"Pull all code for: {prompt}"}],
         )
         content = response.content[0]
@@ -112,7 +112,7 @@ async def pull_kincaid(request: schemas.PullKincaidRequest, db: Session = Depend
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Claude error: {str(e)}")
 
-    log = models.Log(prompt=f"Pull Kincaid IQ: {prompt}", provider="anthropic-kincaid", response=code)
+    log = models.Log(prompt=f"Pull Kincaid Health: {prompt}", provider="anthropic-kincaid", response=code)
     db.add(log)
     db.commit()
 
@@ -139,7 +139,7 @@ class DealMemoRequest(BaseModel):
 
 
 PORTFOLIO_CONTEXT = """
-Jeremiah Shrack — UHNW Client, Carmel IN. Net Worth ~$2.41B managed via Kincaid RMC.
+Jeremiah Shrack — UHNW Client, Carmel IN. Net Worth ~$2.41B managed via Kincaid Health.
 
 ASSET ALLOCATION:
 - Public Equities: $580M (24.1%) — large-cap US, international developed, emerging markets
@@ -173,7 +173,7 @@ async def ask_portfolio(request: AskPortfolioRequest, db: Session = Depends(get_
     if not question:
         raise HTTPException(status_code=400, detail="Question is required")
 
-    system = f"""You are a senior fiduciary wealth advisor at Kincaid RMC, serving Jeremiah Shrack exclusively. You have deep knowledge of his complete financial picture.
+    system = f"""You are a senior fiduciary wealth advisor at Kincaid Health, serving Jeremiah Shrack exclusively. You have deep knowledge of his complete financial picture.
 
 {PORTFOLIO_CONTEXT}
 
@@ -197,7 +197,7 @@ async def market_briefing(db: Session = Depends(get_db)):
     from datetime import date
     today = date.today().strftime("%B %d, %Y")
 
-    system = f"""You are a senior market strategist at Kincaid RMC, delivering a personalized morning briefing to Jeremiah Shrack.
+    system = f"""You are a senior market strategist at Kincaid Health, delivering a personalized morning briefing to Jeremiah Shrack.
 
 {PORTFOLIO_CONTEXT}
 
@@ -220,7 +220,7 @@ Format as a professional morning brief with sections: Macro Overview, Portfolio 
 
 @router.post("/deal-memo")
 async def deal_memo(request: DealMemoRequest, db: Session = Depends(get_db)):
-    system = f"""You are a senior private equity and venture capital deal analyst at Kincaid RMC, writing investment memos for Jeremiah Shrack.
+    system = f"""You are a senior private equity and venture capital deal analyst at Kincaid Health, writing investment memos for Jeremiah Shrack.
 
 {PORTFOLIO_CONTEXT}
 
@@ -267,7 +267,7 @@ class NewsGenerateRequest(BaseModel):
 async def company_analyze(request: CompanyAnalyzeRequest, db: Session = Depends(get_db)):
     ticker = request.ticker.upper()
     name = request.company_name or ticker
-    system = f"""You are a senior equity research analyst at Kincaid RMC, writing a company deep-dive for Jeremiah Shrack (UHNW client, $2.41B portfolio).
+    system = f"""You are a senior equity research analyst at Kincaid Health, writing a company deep-dive for Jeremiah Shrack (UHNW client, $2.41B portfolio).
 
 Analyze {name} ({ticker}) with the depth of a Bloomberg Intelligence or Goldman Sachs initiation report. Cover:
 1. Business overview (2-3 sentences — what they do, market position, moat)
@@ -301,7 +301,7 @@ async def news_generate(request: NewsGenerateRequest, db: Session = Depends(get_
     today = datetime.now().strftime("%B %d, %Y")
     holdings_str = ", ".join(request.holdings) if request.holdings else "SPY, QQQ, AAPL, MSFT, NVDA, GLD, TLT"
 
-    system = f"""You are a Bloomberg Intelligence AI for Kincaid RMC, generating a personalized AI news feed for Jeremiah Shrack.
+    system = f"""You are a Bloomberg Intelligence AI for Kincaid Health, generating a personalized AI news feed for Jeremiah Shrack.
 
 {PORTFOLIO_CONTEXT}
 

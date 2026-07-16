@@ -14,9 +14,9 @@ import { SAMPLE_BY_MODE, KiqSample } from "@/lib/kiqSamples";
 // ─── Design Tokens ────────────────────────────────────────────────────────────
 const BG       = "#05070a";
 const NAVY     = "#0b1220";
-const GLASS    = "rgba(255,255,255,0.06)";
+const GLASS    = "#f1f5f9";
 const GLASS2   = "rgba(10,14,42,0.92)";
-const BORDER   = "rgba(255,255,255,0.10)";
+const BORDER   = "rgba(15,23,42,0.06)";
 const GLOW_B   = "rgba(100,150,255,0.15)";
 const TEXT1    = "#e8eeff";
 const TEXT2    = "#6b7fb5";
@@ -690,7 +690,7 @@ function LeftPanel({ selectedCase, setSelectedCase, content, setContent, onRun, 
           boxShadow: dominanceMode ? `0 0 8px ${CRIMSON}60` : "none" }}>
           <div style={{ position:"absolute", top:2, left: dominanceMode ? 15 : 2,
             width:12, height:12, borderRadius:"50%", background:"#fff",
-            transition:"left 0.2s", boxShadow:"0 1px 3px rgba(0,0,0,0.4)" }}/>
+            transition:"left 0.2s", boxShadow:"0 1px 3px rgba(0,0,0,0.06)" }}/>
         </div>
       </button>
 
@@ -735,7 +735,7 @@ function CenterPanel({ agentStates, running, selectedCase, liveEntities, liveRis
       {/* Engine Viz Card */}
       <div style={{ background:GLASS, border:`1px solid ${running ? `${ROSE}30` : BORDER}`,
         borderRadius:16, padding:"18px 20px", backdropFilter:"blur(16px)",
-        boxShadow: running ? `0 0 32px ${ROSE}12, inset 0 1px 0 rgba(255,255,255,0.05)` : "none",
+        boxShadow: running ? `0 0 32px ${ROSE}12, inset 0 1px 0 #f8fafc` : "none",
         display:"flex", flexDirection:"column", alignItems:"center", position:"relative", overflow:"hidden" }}>
 
         {/* Scan line when running */}
@@ -1496,7 +1496,7 @@ function PrintOverlay({ result, selectedCase, onClose }:
         fontFamily:"'Georgia', serif", padding:40, color:"#111", background:"white" }}>
         <div style={{ borderBottom:"3px solid #9B1C2E", paddingBottom:16, marginBottom:24 }}>
           <div style={{ fontSize:10, fontWeight:800, color:"#9B1C2E", letterSpacing:1.5, textTransform:"uppercase" }}>
-            KINCAID IQ — FIDUCIARY INTELLIGENCE REPORT
+            KINCAID HEALTH — FIDUCIARY INTELLIGENCE REPORT
           </div>
           <h1 style={{ fontSize:24, fontWeight:900, margin:"8px 0 4px", color:"#002B5C" }}>
             {selectedCase?.name || "Intelligence Analysis"}
@@ -1535,7 +1535,7 @@ function PrintOverlay({ result, selectedCase, onClose }:
           </div>
         )}
         <div style={{ borderTop:"1px solid #ddd", paddingTop:12, fontSize:8.5, color:"#999", marginTop:32 }}>
-          Kincaid IQ Intelligence Engine™ — 7-Agent Orchestrated Fiduciary Pipeline.
+          Kincaid Health Intelligence Engine™ — 7-Agent Orchestrated Fiduciary Pipeline.
           Audit-defensible. Not legal advice.
           Authority: ERISA §§ 402-408, 503 · ACA §§ 2701-2719 · 29 C.F.R. § 2560.503-1
         </div>
@@ -1762,7 +1762,7 @@ export default function KiqEngine() {
             <div style={{ width:8, height:8, borderRadius:"50%", background:ROSE,
               boxShadow:`0 0 10px ${ROSE}`, animation:"glow-throb 2s infinite" }}/>
             <span style={{ color:TEXT1, fontSize:13, fontWeight:900, letterSpacing:"-0.02em" }}>
-              Kincaid IQ
+              Kincaid Health
             </span>
           </div>
           <div style={{ width:1, height:20, background:BORDER }}/>

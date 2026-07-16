@@ -7,13 +7,13 @@ function MarkdownText({ text }: { text: string }) {
   return (
     <div className="text-sm leading-relaxed space-y-1.5">
       {text.split("\n").map((line, i) => {
-        if (line.match(/^#{1,3}\s/)) return <p key={i} className="font-bold text-white mt-4 mb-1 text-base" style={{ color: "#00A8FF" }}>{line.replace(/^#{1,3}\s/, "")}</p>;
-        if (line.match(/^\*\*.*\*\*:/)) return <p key={i} className="font-semibold text-white mt-2" dangerouslySetInnerHTML={{ __html: line.replace(/\*\*([^*]+)\*\*/g, '<span style="color:#FFB800">$1</span>') }} />;
-        if (line.startsWith("- ") || line.startsWith("• ")) return <p key={i} className="pl-3 flex gap-2 text-muted-foreground"><span style={{ color: "rgba(0,168,255,0.5)" }}>·</span><span dangerouslySetInnerHTML={{ __html: line.slice(2).replace(/\*\*([^*]+)\*\*/g, '<strong class="text-white">$1</strong>') }} /></p>;
-        if (line.match(/^\d+\.\s/)) { const content = line.replace(/^\d+\.\s/, ""); const num = line.match(/^(\d+)\./)?.[1]; return <p key={i} className="flex gap-2 text-muted-foreground"><span className="font-bold flex-shrink-0" style={{ color: "#00FF94" }}>{num}.</span><span dangerouslySetInnerHTML={{ __html: content.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-white">$1</strong>') }} /></p>; }
-        if (line.trim() === "---" || line.trim() === "***") return <div key={i} className="my-3 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />;
+        if (line.match(/^#{1,3}\s/)) return <p key={i} className="font-bold text-[var(--kiq-ink)] mt-4 mb-1 text-base" style={{ color: "#00A8FF" }}>{line.replace(/^#{1,3}\s/, "")}</p>;
+        if (line.match(/^\*\*.*\*\*:/)) return <p key={i} className="font-semibold text-[var(--kiq-ink)] mt-2" dangerouslySetInnerHTML={{ __html: line.replace(/\*\*([^*]+)\*\*/g, '<span style="color:#FFB800">$1</span>') }} />;
+        if (line.startsWith("- ") || line.startsWith("• ")) return <p key={i} className="pl-3 flex gap-2 text-muted-foreground"><span style={{ color: "rgba(0,168,255,0.5)" }}>·</span><span dangerouslySetInnerHTML={{ __html: line.slice(2).replace(/\*\*([^*]+)\*\*/g, '<strong class="text-[var(--kiq-ink)]">$1</strong>') }} /></p>;
+        if (line.match(/^\d+\.\s/)) { const content = line.replace(/^\d+\.\s/, ""); const num = line.match(/^(\d+)\./)?.[1]; return <p key={i} className="flex gap-2 text-muted-foreground"><span className="font-bold flex-shrink-0" style={{ color: "#00FF94" }}>{num}.</span><span dangerouslySetInnerHTML={{ __html: content.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-[var(--kiq-ink)]">$1</strong>') }} /></p>; }
+        if (line.trim() === "---" || line.trim() === "***") return <div key={i} className="my-3 h-px" style={{ background: "#f1f5f9" }} />;
         if (line.trim() === "") return <div key={i} className="h-1" />;
-        return <p key={i} className="text-muted-foreground" dangerouslySetInnerHTML={{ __html: line.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-white">$1</strong>') }} />;
+        return <p key={i} className="text-muted-foreground" dangerouslySetInnerHTML={{ __html: line.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-[var(--kiq-ink)]">$1</strong>') }} />;
       })}
     </div>
   );
@@ -54,7 +54,7 @@ export default function MarketBriefing() {
         {[
           { label: "Today", value: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" }), color: "#00A8FF", sub: today.split(",")[0] },
           { label: "Portfolio Context", value: "$2.41B", color: "#00FF94", sub: "Full AUM in context" },
-          { label: "AI Engine", value: "GPT-4o", color: "#FFB800", sub: "Kincaid RMC Advisor" },
+          { label: "AI Engine", value: "GPT-4o", color: "#FFB800", sub: "Kincaid Health Advisor" },
           { label: "Coverage", value: "7 Areas", color: "#A855F7", sub: "Macro + portfolio impact" },
         ].map((c) => (
           <div key={c.label} className="metric-card" style={{ borderTop: `2px solid ${c.color}` }}
@@ -73,7 +73,7 @@ export default function MarketBriefing() {
             style={{ background: "rgba(0,168,255,0.08)", border: "1px solid rgba(0,168,255,0.15)" }}>
             <Newspaper size={28} style={{ color: "#00A8FF" }} />
           </div>
-          <p className="font-bold text-white mb-1">Generate Today's Market Briefing</p>
+          <p className="font-bold text-[var(--kiq-ink)] mb-1">Generate Today's Market Briefing</p>
           <p className="text-xs text-muted-foreground mb-6 text-center max-w-sm">
             GPT-4o analyzes current macro conditions and translates them into portfolio-specific implications for Jeremiah Shrack
           </p>
@@ -91,7 +91,7 @@ export default function MarketBriefing() {
       {mutation.isPending && (
         <div className="metric-card flex flex-col items-center justify-center py-20" data-testid="loading-briefing">
           <Loader2 size={32} className="animate-spin mb-4" style={{ color: "#00A8FF" }} />
-          <p className="font-bold text-white mb-1">Generating your personalized briefing…</p>
+          <p className="font-bold text-[var(--kiq-ink)] mb-1">Generating your personalized briefing…</p>
           <p className="text-xs text-muted-foreground">GPT-4o is analyzing macro conditions and portfolio implications</p>
         </div>
       )}
@@ -106,7 +106,7 @@ export default function MarketBriefing() {
                 <Newspaper size={15} style={{ color: "#00A8FF" }} />
               </div>
               <div>
-                <p className="font-bold text-white">Kincaid RMC Intelligence Brief</p>
+                <p className="font-bold text-[var(--kiq-ink)]">Kincaid Health Intelligence Brief</p>
                 <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                   <Calendar size={9} /> {briefing.date}
                   <span className="mx-1">·</span>
@@ -118,13 +118,13 @@ export default function MarketBriefing() {
               onClick={() => mutation.mutate()}
               disabled={mutation.isPending}
               className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(150,170,210,0.6)" }}
+              style={{ background: "#ffffff", border: "1px solid #e2e8f0", color: "rgba(150,170,210,0.6)" }}
               data-testid="button-regenerate"
             >
               <RefreshCw size={10} /> Regenerate
             </button>
           </div>
-          <div className="pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="pt-4" style={{ borderTop: "1px solid #f1f5f9" }}>
             <MarkdownText text={briefing.text} />
           </div>
         </div>

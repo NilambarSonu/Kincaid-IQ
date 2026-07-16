@@ -9,12 +9,12 @@ function MarkdownText({ text }: { text: string }) {
   return (
     <div className="text-sm leading-relaxed space-y-1.5">
       {text.split("\n").map((line, i) => {
-        if (line.match(/^#{1,3}\s/)) return <p key={i} className="font-bold text-white mt-4 mb-1" style={{ color: "#FFB800", fontFamily: "var(--font-display)" }}>{line.replace(/^#{1,3}\s/, "")}</p>;
-        if (line.match(/^\*\*.*\*\*:?$/)) return <p key={i} className="font-semibold text-white mt-3 mb-0.5">{line.replace(/\*\*/g, "")}</p>;
-        if (line.startsWith("- ") || line.startsWith("• ")) return <p key={i} className="pl-3 flex gap-2 text-muted-foreground"><span style={{ color: "rgba(255,184,0,0.5)" }}>·</span><span dangerouslySetInnerHTML={{ __html: line.slice(2).replace(/\*\*([^*]+)\*\*/g, '<strong class="text-white">$1</strong>') }} /></p>;
-        if (line.trim() === "---") return <div key={i} className="my-3 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />;
+        if (line.match(/^#{1,3}\s/)) return <p key={i} className="font-bold text-[var(--kiq-ink)] mt-4 mb-1" style={{ color: "#FFB800", fontFamily: "var(--font-display)" }}>{line.replace(/^#{1,3}\s/, "")}</p>;
+        if (line.match(/^\*\*.*\*\*:?$/)) return <p key={i} className="font-semibold text-[var(--kiq-ink)] mt-3 mb-0.5">{line.replace(/\*\*/g, "")}</p>;
+        if (line.startsWith("- ") || line.startsWith("• ")) return <p key={i} className="pl-3 flex gap-2 text-muted-foreground"><span style={{ color: "rgba(255,184,0,0.5)" }}>·</span><span dangerouslySetInnerHTML={{ __html: line.slice(2).replace(/\*\*([^*]+)\*\*/g, '<strong class="text-[var(--kiq-ink)]">$1</strong>') }} /></p>;
+        if (line.trim() === "---") return <div key={i} className="my-3 h-px" style={{ background: "#f1f5f9" }} />;
         if (line.trim() === "") return <div key={i} className="h-1.5" />;
-        return <p key={i} className="text-muted-foreground" dangerouslySetInnerHTML={{ __html: line.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-white">$1</strong>') }} />;
+        return <p key={i} className="text-muted-foreground" dangerouslySetInnerHTML={{ __html: line.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-[var(--kiq-ink)]">$1</strong>') }} />;
       })}
     </div>
   );
@@ -71,7 +71,7 @@ export default function DealMemo() {
           <div className="metric-card" style={{ border: "1px solid rgba(255,184,0,0.12)" }} data-testid="card-deal-form">
             <div className="flex items-center gap-2 mb-4">
               <Handshake size={14} style={{ color: "#FFB800" }} />
-              <p className="font-bold text-sm text-white">Deal Details</p>
+              <p className="font-bold text-sm text-[var(--kiq-ink)]">Deal Details</p>
             </div>
             <div className="space-y-3">
               {[
@@ -88,7 +88,7 @@ export default function DealMemo() {
                     onChange={(e) => update(f.key, e.target.value)}
                     placeholder={f.placeholder}
                     className="w-full text-sm px-3 py-2 rounded-lg"
-                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                    style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                     data-testid={`input-deal-${f.key}`}
                   />
                 </div>
@@ -103,10 +103,10 @@ export default function DealMemo() {
                     value={(form as any)[f.key]}
                     onChange={(e) => update(f.key, e.target.value)}
                     className="w-full text-sm px-3 py-2 rounded-lg"
-                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                    style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                     data-testid={`select-deal-${f.key}`}
                   >
-                    {f.options.map((o) => <option key={o} value={o} style={{ background: "#0a0a1a" }}>{o}</option>)}
+                    {f.options.map((o) => <option key={o} value={o} style={{ background: "#F8FAFC" }}>{o}</option>)}
                   </select>
                 </div>
               ))}
@@ -118,7 +118,7 @@ export default function DealMemo() {
                   placeholder="Team background, key metrics, competitive dynamics, strategic rationale…"
                   rows={4}
                   className="w-full text-sm px-3 py-2 rounded-lg resize-none"
-                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                  style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                   data-testid="input-deal-notes"
                 />
               </div>
@@ -155,7 +155,7 @@ export default function DealMemo() {
           {loading && (
             <div className="metric-card flex flex-col items-center justify-center py-20" data-testid="loading-memo">
               <Loader2 size={32} className="animate-spin mb-4" style={{ color: "#FFB800" }} />
-              <p className="font-bold text-white mb-1">Claude is writing your investment memo…</p>
+              <p className="font-bold text-[var(--kiq-ink)] mb-1">Claude is writing your investment memo…</p>
               <p className="text-xs text-muted-foreground">Synthesizing market analysis, risk assessment, and portfolio fit</p>
             </div>
           )}
@@ -168,14 +168,14 @@ export default function DealMemo() {
                     <Handshake size={13} style={{ color: "#FFB800" }} />
                   </div>
                   <div>
-                    <p className="font-bold text-white text-sm">{memo.name}</p>
+                    <p className="font-bold text-[var(--kiq-ink)] text-sm">{memo.name}</p>
                     <p className="text-[10px] text-muted-foreground">Claude Opus · Investment Memo</p>
                   </div>
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleCopy}
                     className="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg"
-                    style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: copied ? "#00FF94" : "rgba(150,170,210,0.6)" }}
+                    style={{ background: "#ffffff", border: "1px solid #e2e8f0", color: copied ? "#00FF94" : "rgba(150,170,210,0.6)" }}
                     data-testid="button-copy-memo">
                     {copied ? <><Check size={10} /> Copied</> : <><Copy size={10} /> Copy</>}
                   </button>
@@ -187,7 +187,7 @@ export default function DealMemo() {
                   </button>
                 </div>
               </div>
-              <div className="pt-4 max-h-[600px] overflow-y-auto custom-scrollbar" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              <div className="pt-4 max-h-[600px] overflow-y-auto custom-scrollbar" style={{ borderTop: "1px solid #f1f5f9" }}>
                 <MarkdownText text={memo.text} />
               </div>
             </div>

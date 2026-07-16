@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// KINCAID IQ — ACTUARIAL ENGINE IQ™  v1.0
+// KINCAID HEALTH — ACTUARIAL ENGINE IQ™  v1.0
 //
 // Single-Employer DB (Schedule SB) + Multiemployer (Schedule MB)
 // AFTAP · Funded Status · Segment Rates · At-Risk Liability
@@ -18,21 +18,21 @@ import FileUploadZone, { UploadedDocument } from "@/components/FileUploadZone";
 
 // ── Design tokens ─────────────────────────────────────────────────────────
 const T = {
-  bg:     "#030509",
-  panel:  "#080e1c",
-  card:   "#0d1526",
-  card2:  "#111c30",
-  border: "rgba(255,255,255,0.07)",
-  border2:"rgba(255,255,255,0.12)",
-  text:   "#eef2fa",
-  sub:    "#7a8fb0",
-  muted:  "#364a6a",
+  bg:     "#F8FAFC",
+  panel:  "#FFFFFF",
+  card:   "#F1F5F9",
+  card2:  "#E2E8F0",
+  border: "#e2e8f0",
+  border2:"#cbd5e1",
+  text:   "#0F172A",
+  sub:    "#64748B",
+  muted:  "#94A3B8",
   gold:   "#e8b84b",
   cyan:   "#00f0d4",
   ok:     "#00e87a",
   warn:   "#ffb020",
   bad:    "#ff3d60",
-  blue:   "#5cacff",
+  blue:   "#0284c7",
   purple: "#a78bfa",
   orange: "#ff7c3a",
   mono:   "'JetBrains Mono','SF Mono','Fira Code',monospace",
@@ -662,7 +662,7 @@ export default function ActuarialEngineIQ() {
             <div>
               <div style={{ fontSize:9, fontFamily:T.mono, fontWeight:800, letterSpacing:"0.22em",
                 textTransform:"uppercase", color:T.cyan, marginBottom:2 }}>
-                KINCAID RMC · KINCAID IQ™ PLATFORM
+                KINCAID HEALTH™ PLATFORM
               </div>
               <div style={{ fontSize:22, fontWeight:900, color:T.text, lineHeight:1 }}>
                 Actuarial Engine IQ™

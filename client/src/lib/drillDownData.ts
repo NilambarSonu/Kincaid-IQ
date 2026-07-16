@@ -58,7 +58,7 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
       {
         id: "nw-equities", label: "Public Equities", value: "$724.0M", change: "+$6.1M", changePositive: true,
         badge: "30.0%", badgeAccent: "#00A8FF",
-        meta: [{ key: "Benchmark", value: "MSCI World" }, { key: "vs Benchmark", value: "+3.4% YTD", positive: true }, { key: "Custodian", value: "Kincaid RMC / Fidelity" }],
+        meta: [{ key: "Benchmark", value: "MSCI World" }, { key: "vs Benchmark", value: "+3.4% YTD", positive: true }, { key: "Custodian", value: "Kincaid Health / Fidelity" }],
         children: [
           {
             id: "nw-eq-tiger", label: "Tiger Global Long-Only", value: "$280.0M", change: "+2.8%", changePositive: true,
@@ -86,22 +86,22 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                             id: "nw-eq-tiger-aapl-lot1", label: "Buy — Dec 14, 2021", value: "$2.55M",
                             meta: [{ key: "Shares", value: "15,000" }, { key: "Price", value: "$170.22" }, { key: "Account", value: "SHRACK-7742" }, { key: "Settle Date", value: "Dec 16, 2021" }],
                             children: [
-                              { id: "ev-aapl-lot1-dtcc", label: "DTCC Trade Confirm", isEvidence: true, evidenceType: "broker-confirm", institution: "DTCC / Kincaid RMC", refNumber: "TXN-2021-1214-AAPL-001", date: "Dec 14, 2021", hash: "a3f8c2d1e9b4…", description: "Exchange-cleared equity trade confirmation. Settlement T+2. Counterparty: Goldman Sachs Prime." },
-                              { id: "ev-aapl-lot1-stmt", label: "Kincaid RMC Account Statement Q4 2021", isEvidence: true, evidenceType: "broker-confirm", institution: "Kincaid RMC", refNumber: "STMT-Q42021-7742", date: "Dec 31, 2021", hash: "b7e1f4a2c6d8…", description: "End-of-quarter custody statement. Position reconciled by KPMG. Includes all dividends and corporate actions." },
+                              { id: "ev-aapl-lot1-dtcc", label: "DTCC Trade Confirm", isEvidence: true, evidenceType: "broker-confirm", institution: "DTCC / Kincaid Health", refNumber: "TXN-2021-1214-AAPL-001", date: "Dec 14, 2021", hash: "a3f8c2d1e9b4…", description: "Exchange-cleared equity trade confirmation. Settlement T+2. Counterparty: Goldman Sachs Prime." },
+                              { id: "ev-aapl-lot1-stmt", label: "Kincaid Health Account Statement Q4 2021", isEvidence: true, evidenceType: "broker-confirm", institution: "Kincaid Health", refNumber: "STMT-Q42021-7742", date: "Dec 31, 2021", hash: "b7e1f4a2c6d8…", description: "End-of-quarter custody statement. Position reconciled by KPMG. Includes all dividends and corporate actions." },
                             ],
                           },
                           {
                             id: "nw-eq-tiger-aapl-lot2", label: "Buy — Jun 3, 2022", value: "$1.45M",
                             meta: [{ key: "Shares", value: "10,000" }, { key: "Price", value: "$144.80" }, { key: "Account", value: "SHRACK-7742" }],
                             children: [
-                              { id: "ev-aapl-lot2-dtcc", label: "DTCC Trade Confirm", isEvidence: true, evidenceType: "broker-confirm", institution: "DTCC / Kincaid RMC", refNumber: "TXN-2022-0603-AAPL-002", date: "Jun 3, 2022", hash: "c9d2e5f1a7b3…", description: "Exchange-cleared equity trade. Market dip purchase. Settlement T+2." },
+                              { id: "ev-aapl-lot2-dtcc", label: "DTCC Trade Confirm", isEvidence: true, evidenceType: "broker-confirm", institution: "DTCC / Kincaid Health", refNumber: "TXN-2022-0603-AAPL-002", date: "Jun 3, 2022", hash: "c9d2e5f1a7b3…", description: "Exchange-cleared equity trade. Market dip purchase. Settlement T+2." },
                             ],
                           },
                           {
                             id: "nw-eq-tiger-aapl-lot3", label: "Buy — Sep 15, 2023", value: "$3.82M",
                             meta: [{ key: "Shares", value: "214,200" }, { key: "Price", value: "$178.40" }, { key: "Account", value: "SHRACK-7742" }],
                             children: [
-                              { id: "ev-aapl-lot3-dtcc", label: "DTCC Trade Confirm", isEvidence: true, evidenceType: "broker-confirm", institution: "DTCC / Kincaid RMC", refNumber: "TXN-2023-0915-AAPL-003", date: "Sep 15, 2023", hash: "d4f6b8c2e1a9…", description: "Block purchase. Tiger Global program trade via Morgan Stanley." },
+                              { id: "ev-aapl-lot3-dtcc", label: "DTCC Trade Confirm", isEvidence: true, evidenceType: "broker-confirm", institution: "DTCC / Kincaid Health", refNumber: "TXN-2023-0915-AAPL-003", date: "Sep 15, 2023", hash: "d4f6b8c2e1a9…", description: "Block purchase. Tiger Global program trade via Morgan Stanley." },
                               { id: "ev-aapl-lot3-audit", label: "Annual Audit Reconciliation 2023", isEvidence: true, evidenceType: "audit", institution: "KPMG LLP", refNumber: "AUDIT-2023-KR-EQ-047", date: "Feb 14, 2024", hash: "e2a1b9c4d7f5…", description: "PwC/KPMG independent audit confirms position value and cost basis. No material differences noted." },
                             ],
                           },
@@ -120,7 +120,7 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                     children: [
                       { id: "nw-eq-tiger-nvda-txn", label: "Buy — Mar 12, 2021", value: "$9.25M", meta: [{ key: "Shares", value: "38,100" }, { key: "Price", value: "$242.80" }],
                         children: [
-                          { id: "ev-nvda-dtcc", label: "DTCC Trade Confirm", isEvidence: true, evidenceType: "broker-confirm", institution: "DTCC / Kincaid RMC", refNumber: "TXN-2021-0312-NVDA-001", date: "Mar 12, 2021", hash: "f3c8e2a1b6d4…", description: "Equity trade confirm. Pre-AI wave purchase. Settlement via DTC." },
+                          { id: "ev-nvda-dtcc", label: "DTCC Trade Confirm", isEvidence: true, evidenceType: "broker-confirm", institution: "DTCC / Kincaid Health", refNumber: "TXN-2021-0312-NVDA-001", date: "Mar 12, 2021", hash: "f3c8e2a1b6d4…", description: "Equity trade confirm. Pre-AI wave purchase. Settlement via DTC." },
                         ],
                       },
                     ],
@@ -136,8 +136,8 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                     children: [
                       { id: "nw-eq-tiger-msft-txn", label: "Buy — Aug 4, 2022", value: "$22.1M", meta: [{ key: "Shares", value: "79,400" }, { key: "Price", value: "$278.60" }],
                         children: [
-                          { id: "ev-msft-dtcc", label: "DTCC Trade Confirm", isEvidence: true, evidenceType: "broker-confirm", institution: "DTCC / Kincaid RMC", refNumber: "TXN-2022-0804-MSFT-001", date: "Aug 4, 2022", hash: "g1h7i3j9k5l2…", description: "Program trade via Citadel Securities. Settlement T+2." },
-                          { id: "ev-msft-stmt", label: "Kincaid RMC Q3 2022 Statement", isEvidence: true, evidenceType: "broker-confirm", institution: "Kincaid RMC", refNumber: "STMT-Q32022-7742", date: "Sep 30, 2022", hash: "h4j8k2l6m1n9…", description: "Quarterly custody statement confirming position." },
+                          { id: "ev-msft-dtcc", label: "DTCC Trade Confirm", isEvidence: true, evidenceType: "broker-confirm", institution: "DTCC / Kincaid Health", refNumber: "TXN-2022-0804-MSFT-001", date: "Aug 4, 2022", hash: "g1h7i3j9k5l2…", description: "Program trade via Citadel Securities. Settlement T+2." },
+                          { id: "ev-msft-stmt", label: "Kincaid Health Q3 2022 Statement", isEvidence: true, evidenceType: "broker-confirm", institution: "Kincaid Health", refNumber: "STMT-Q32022-7742", date: "Sep 30, 2022", hash: "h4j8k2l6m1n9…", description: "Quarterly custody statement confirming position." },
                         ],
                       },
                     ],
@@ -179,7 +179,7 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                     children: [
                       { id: "nw-eq-voo-t1", label: "Buy — Jan 2024", value: "$12.1M", meta: [{ key: "Shares", value: "28,400" }, { key: "Price", value: "$426.40" }],
                         children: [
-                          { id: "ev-voo-dtcc1", label: "DTCC Trade Confirm — Jan 2024", isEvidence: true, evidenceType: "broker-confirm", institution: "DTCC / Kincaid RMC", refNumber: "TXN-2024-0115-VOO-001", date: "Jan 15, 2024", hash: "m3n7o1p5q9r4…", description: "ETF settlement. In-kind creation unit via Authorized Participant Vanguard. DTCC Continuous Net Settlement." },
+                          { id: "ev-voo-dtcc1", label: "DTCC Trade Confirm — Jan 2024", isEvidence: true, evidenceType: "broker-confirm", institution: "DTCC / Kincaid Health", refNumber: "TXN-2024-0115-VOO-001", date: "Jan 15, 2024", hash: "m3n7o1p5q9r4…", description: "ETF settlement. In-kind creation unit via Authorized Participant Vanguard. DTCC Continuous Net Settlement." },
                         ],
                       },
                     ],
@@ -255,7 +255,7 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                       { id: "nw-pe-seq-stripe-409a", label: "409A Valuation", value: "$14.8M",
                         children: [
                           { id: "ev-seq-409a", label: "Stripe 409A Valuation — Nov 2025", isEvidence: true, evidenceType: "valuation", institution: "Carta Valuations / Sequoia GP", refNumber: "STRIPE-409A-NOV2025-001", date: "Nov 30, 2025", hash: "s1t2r3i4p5e6…", description: "Independent 409A per IRC §409A. OPM Backsolve methodology. Reviewed by Sequoia's fund auditors." },
-                          { id: "ev-seq-cap", label: "Sequoia XVIII Capital Account Statement", isEvidence: true, evidenceType: "fund-statement", institution: "Sequoia Capital Operations", refNumber: "SEQXVIII-CAPCALL-14", date: "Dec 31, 2025", hash: "c8a9p0i1t2a3…", description: "LP capital call notice and account reconciliation. Signed by GP. Confirmed by Kincaid RMC custody." },
+                          { id: "ev-seq-cap", label: "Sequoia XVIII Capital Account Statement", isEvidence: true, evidenceType: "fund-statement", institution: "Sequoia Capital Operations", refNumber: "SEQXVIII-CAPCALL-14", date: "Dec 31, 2025", hash: "c8a9p0i1t2a3…", description: "LP capital call notice and account reconciliation. Signed by GP. Confirmed by Kincaid Health custody." },
                         ],
                       },
                     ],
@@ -398,9 +398,9 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
         meta: [{ key: "USD Cash", value: "$42.0M" }, { key: "T-Bills", value: "$28.0M" }, { key: "Money Market", value: "$16.4M" }, { key: "FX", value: "$10.0M" }],
         children: [
           { id: "nw-cash-usd", label: "USD Cash Accounts", value: "$42.0M",
-            meta: [{ key: "Kincaid RMC Checking", value: "$18.2M" }, { key: "Kincaid RMC Savings", value: "$12.8M" }, { key: "JP Morgan PB", value: "$11.0M" }],
+            meta: [{ key: "Kincaid Health Checking", value: "$18.2M" }, { key: "Kincaid Health Savings", value: "$12.8M" }, { key: "JP Morgan PB", value: "$11.0M" }],
             children: [
-              { id: "nw-cash-invst", label: "Kincaid RMC — Operating Account", value: "$18.2M",
+              { id: "nw-cash-invst", label: "Kincaid Health — Operating Account", value: "$18.2M",
                 meta: [{ key: "Account #", value: "****7742" }, { key: "FDIC", value: "Insured ($250K)" }, { key: "Rate", value: "4.85% HYSA" }],
                 children: [
                   { id: "nw-cash-invst-txn", label: "Recent Activity (last 30 days)", value: "$18.2M",
@@ -408,8 +408,8 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                     children: [
                       { id: "nw-cash-invst-wires", label: "Wire Transfers & Distributions", value: "$4.2M inflow",
                         children: [
-                          { id: "ev-cash-stmt", label: "Kincaid RMC Account Statement — Feb 2026", isEvidence: true, evidenceType: "broker-confirm", institution: "Kincaid RMC / FDIC", refNumber: "Kincaid RMC-ACCT-7742-FEB2026", date: "Feb 28, 2026", hash: "b1a2n3k4s5t6…", description: "Official monthly account statement showing all transactions, balances, and interest earned. FDIC insured up to $250K." },
-                          { id: "ev-cash-wire", label: "Fed Wire Confirmation — Feb 14, 2026", isEvidence: true, evidenceType: "broker-confirm", institution: "Federal Reserve Wire Network / Kincaid RMC", refNumber: "FEDWIRE-20260214-000042187", date: "Feb 14, 2026", hash: "w7i8r9e0f1e2…", description: "Distribution wire from KKR Americas XII fund account. Settled via Fedwire Funds Service. Irrevocable." },
+                          { id: "ev-cash-stmt", label: "Kincaid Health Account Statement — Feb 2026", isEvidence: true, evidenceType: "broker-confirm", institution: "Kincaid Health / FDIC", refNumber: "Kincaid Health-ACCT-7742-FEB2026", date: "Feb 28, 2026", hash: "b1a2n3k4s5t6…", description: "Official monthly account statement showing all transactions, balances, and interest earned. FDIC insured up to $250K." },
+                          { id: "ev-cash-wire", label: "Fed Wire Confirmation — Feb 14, 2026", isEvidence: true, evidenceType: "broker-confirm", institution: "Federal Reserve Wire Network / Kincaid Health", refNumber: "FEDWIRE-20260214-000042187", date: "Feb 14, 2026", hash: "w7i8r9e0f1e2…", description: "Distribution wire from KKR Americas XII fund account. Settled via Fedwire Funds Service. Irrevocable." },
                         ],
                       },
                     ],
@@ -490,12 +490,12 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                 children: [
                   { id: "ytd-eq-jan-wk1-perf", label: "Daily Attribution", value: "+0.62%",
                     children: [
-                      { id: "ev-ytd-jan-perf", label: "Kincaid RMC Performance Report — Jan 2026", isEvidence: true, evidenceType: "audit", institution: "Kincaid RMC / Advent Geneva", refNumber: "PERF-RPT-202601-KR-001", date: "Feb 1, 2026", hash: "p9e8r7f6o5r4…", description: "GIPS-compliant performance report. Time-weighted return per AIMR standards. Verified by independent performance measurer." },
+                      { id: "ev-ytd-jan-perf", label: "Kincaid Health Performance Report — Jan 2026", isEvidence: true, evidenceType: "audit", institution: "Kincaid Health / Advent Geneva", refNumber: "PERF-RPT-202601-KR-001", date: "Feb 1, 2026", hash: "p9e8r7f6o5r4…", description: "GIPS-compliant performance report. Time-weighted return per AIMR standards. Verified by independent performance measurer." },
                     ],
                   },
                 ],
               },
-              { id: "ytd-eq-jan-wk2", label: "Week of Jan 13", value: "+0.44%", children: [{ id: "ytd-eq-jan-wk2-ev", label: "Week Performance Attribution", isEvidence: true, evidenceType: "audit", institution: "Kincaid RMC Portfolio Analytics", refNumber: "PERF-WK2-202601-KR", date: "Jan 17, 2026", hash: "w2e3e4k5p6e7…", description: "Weekly performance attribution report." }] },
+              { id: "ytd-eq-jan-wk2", label: "Week of Jan 13", value: "+0.44%", children: [{ id: "ytd-eq-jan-wk2-ev", label: "Week Performance Attribution", isEvidence: true, evidenceType: "audit", institution: "Kincaid Health Portfolio Analytics", refNumber: "PERF-WK2-202601-KR", date: "Jan 17, 2026", hash: "w2e3e4k5p6e7…", description: "Weekly performance attribution report." }] },
             ],
           },
           { id: "ytd-eq-feb", label: "February 2026", value: "+1.40%",
@@ -503,7 +503,7 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
             children: [
               { id: "ytd-eq-feb-wk", label: "Monthly Attribution", value: "+1.40%",
                 children: [
-                  { id: "ev-ytd-feb-perf", label: "Kincaid RMC Performance Report — Feb 2026", isEvidence: true, evidenceType: "audit", institution: "Kincaid RMC / Advent Geneva", refNumber: "PERF-RPT-202602-KR-001", date: "Mar 1, 2026", hash: "f8e9b0r1u2a3…", description: "Monthly GIPS performance report. YTD calculations independently verified." },
+                  { id: "ev-ytd-feb-perf", label: "Kincaid Health Performance Report — Feb 2026", isEvidence: true, evidenceType: "audit", institution: "Kincaid Health / Advent Geneva", refNumber: "PERF-RPT-202602-KR-001", date: "Mar 1, 2026", hash: "f8e9b0r1u2a3…", description: "Monthly GIPS performance report. YTD calculations independently verified." },
                 ],
               },
             ],
@@ -513,7 +513,7 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
             children: [
               { id: "ytd-eq-mar-daily", label: "Daily Returns MTD", value: "+0.86%",
                 children: [
-                  { id: "ev-ytd-mar-perf", label: "Kincaid RMC Daily Performance — Mar 5, 2026", isEvidence: true, evidenceType: "audit", institution: "Kincaid RMC Portfolio Analytics", refNumber: "PERF-DAILY-20260305-KR", date: "Mar 5, 2026", hash: "m5a6r7d8a9i0…", description: "End-of-day performance attribution. Sourced from real-time pricing feeds (Bloomberg/Refinitiv)." },
+                  { id: "ev-ytd-mar-perf", label: "Kincaid Health Daily Performance — Mar 5, 2026", isEvidence: true, evidenceType: "audit", institution: "Kincaid Health Portfolio Analytics", refNumber: "PERF-DAILY-20260305-KR", date: "Mar 5, 2026", hash: "m5a6r7d8a9i0…", description: "End-of-day performance attribution. Sourced from real-time pricing feeds (Bloomberg/Refinitiv)." },
                 ],
               },
             ],
@@ -541,7 +541,7 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
             children: [
               { id: "ytd-re-appr-gain", label: "Unrealized Appreciation", value: "+$13.8M",
                 children: [
-                  { id: "ev-ytd-re-perf", label: "Kincaid RMC Real Estate Portfolio Report Q1 2026", isEvidence: true, evidenceType: "valuation", institution: "CBRE / JLL / Savills", refNumber: "RE-PORT-Q12026-KR", date: "Apr 15, 2026", hash: "r3e4a5l6e7s8…", description: "Consolidated real estate performance report. Appraisals, rental income, and unrealized gains. Multi-currency reconciliation." },
+                  { id: "ev-ytd-re-perf", label: "Kincaid Health Real Estate Portfolio Report Q1 2026", isEvidence: true, evidenceType: "valuation", institution: "CBRE / JLL / Savills", refNumber: "RE-PORT-Q12026-KR", date: "Apr 15, 2026", hash: "r3e4a5l6e7s8…", description: "Consolidated real estate performance report. Appraisals, rental income, and unrealized gains. Multi-currency reconciliation." },
                 ],
               },
             ],
@@ -587,8 +587,8 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                       { id: "sharpe-rolling", label: "Rolling 12M Sharpe History", value: "1.64 current",
                         meta: [{ key: "12M ago", value: "1.48" }, { key: "24M ago", value: "1.72" }, { key: "36M ago", value: "1.51" }],
                         children: [
-                          { id: "ev-sharpe-calc", label: "Kincaid RMC Risk Report — Mar 5, 2026", isEvidence: true, evidenceType: "audit", institution: "Kincaid RMC Risk Analytics / Bloomberg PORT", refNumber: "RISK-RPT-20260305-KR-SHARPE", date: "Mar 5, 2026", hash: "s1h2a3r4p5e6…", description: "Full Sharpe ratio calculation methodology. Daily return series. Covariance matrix from Bloomberg. Independently verified by Kincaid RMC quantitative team." },
-                          { id: "ev-sharpe-audit", label: "Annual Risk Audit — FY 2025", isEvidence: true, evidenceType: "audit", institution: "Aon Hewitt Investment Consulting", refNumber: "AON-RISK-KR-FY2025-SHARPE", date: "Jan 31, 2026", hash: "a7o8n9r1i2s3…", description: "Independent risk audit. Kincaid RMC portfolio risk metrics verified against Bloomberg BVAL and Refinitiv data. Sharpe confirmed at 1.64." },
+                          { id: "ev-sharpe-calc", label: "Kincaid Health Risk Report — Mar 5, 2026", isEvidence: true, evidenceType: "audit", institution: "Kincaid Health Risk Analytics / Bloomberg PORT", refNumber: "RISK-RPT-20260305-KR-SHARPE", date: "Mar 5, 2026", hash: "s1h2a3r4p5e6…", description: "Full Sharpe ratio calculation methodology. Daily return series. Covariance matrix from Bloomberg. Independently verified by Kincaid Health quantitative team." },
+                          { id: "ev-sharpe-audit", label: "Annual Risk Audit — FY 2025", isEvidence: true, evidenceType: "audit", institution: "Aon Hewitt Investment Consulting", refNumber: "AON-RISK-KR-FY2025-SHARPE", date: "Jan 31, 2026", hash: "a7o8n9r1i2s3…", description: "Independent risk audit. Kincaid Health portfolio risk metrics verified against Bloomberg BVAL and Refinitiv data. Sharpe confirmed at 1.64." },
                         ],
                       },
                     ],
@@ -612,9 +612,9 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
     description: "Total liquid and near-liquid assets available within 5 business days. Burn rate: $850K/month.",
     children: [
       { id: "liq-cash", label: "USD Cash", value: "$42.0M", badge: "Immediate", badgeAccent: "#00FF94",
-        meta: [{ key: "Kincaid RMC Operating", value: "$18.2M" }, { key: "Kincaid RMC Savings", value: "$12.8M" }, { key: "JP Morgan PB", value: "$11.0M" }, { key: "FDIC Coverage", value: "$250K" }],
+        meta: [{ key: "Kincaid Health Operating", value: "$18.2M" }, { key: "Kincaid Health Savings", value: "$12.8M" }, { key: "JP Morgan PB", value: "$11.0M" }, { key: "FDIC Coverage", value: "$250K" }],
         children: [
-          { id: "liq-cash-invst-op", label: "Kincaid RMC Operating Account ****7742", value: "$18.2M",
+          { id: "liq-cash-invst-op", label: "Kincaid Health Operating Account ****7742", value: "$18.2M",
             meta: [{ key: "Available Balance", value: "$18.2M" }, { key: "Rate", value: "4.85%" }, { key: "YTD Interest", value: "$218K" }],
             children: [
               { id: "liq-cash-invst-recent", label: "Last 30 Days Activity", value: "$18.2M",
@@ -622,7 +622,7 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                 children: [
                   { id: "liq-cash-invst-txns", label: "Transaction Ledger", value: "+$2.4M net",
                     children: [
-                      { id: "ev-liq-cash-stmt", label: "Kincaid RMC Feb 2026 Account Statement", isEvidence: true, evidenceType: "broker-confirm", institution: "Kincaid RMC / Apex Clearing", refNumber: "Kincaid RMC-STMT-7742-202602", date: "Feb 28, 2026", hash: "l8i9q0u1i2d3…", description: "Official monthly statement. All transactions reconciled. Apex Clearing acts as custodian. SIPC insured." },
+                      { id: "ev-liq-cash-stmt", label: "Kincaid Health Feb 2026 Account Statement", isEvidence: true, evidenceType: "broker-confirm", institution: "Kincaid Health / Apex Clearing", refNumber: "Kincaid Health-STMT-7742-202602", date: "Feb 28, 2026", hash: "l8i9q0u1i2d3…", description: "Official monthly statement. All transactions reconciled. Apex Clearing acts as custodian. SIPC insured." },
                     ],
                   },
                 ],
@@ -704,14 +704,14 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
         meta: [{ key: "EUR", value: "€3.87M ($4.2M)" }, { key: "CHF", value: "CHF3.10M ($2.8M)" }, { key: "GBP", value: "£1.51M ($1.9M)" }, { key: "SGD", value: "SGD1.49M ($1.1M)" }],
         children: [
           { id: "liq-fx-eur", label: "Euro (EUR)", value: "$4.2M",
-            meta: [{ key: "Balance", value: "€3.87M" }, { key: "Rate", value: "1.085 USD/EUR" }, { key: "Account", value: "Kincaid RMC FX Account" }],
+            meta: [{ key: "Balance", value: "€3.87M" }, { key: "Rate", value: "1.085 USD/EUR" }, { key: "Account", value: "Kincaid Health FX Account" }],
             children: [
               { id: "liq-fx-eur-hedge", label: "FX Hedge Status", value: "$4.2M",
                 meta: [{ key: "Hedged?", value: "Partially (50%)" }, { key: "Forward", value: "EUR/USD 1.092 Jun 2026" }, { key: "Cost", value: "0.8% annualized" }],
                 children: [
                   { id: "liq-fx-eur-confirm", label: "FX Forward Confirmation", value: "$2.1M hedged",
                     children: [
-                      { id: "ev-fx-eur-confirm", label: "Deutsche Bank FX Forward Confirm", isEvidence: true, evidenceType: "broker-confirm", institution: "Deutsche Bank AG / Kincaid RMC FX", refNumber: "DB-FX-FORWARD-20260305-EUR-KR", date: "Mar 5, 2026", hash: "f1x2e3u4r5c6…", description: "ISDA master agreement trade confirmation. EUR/USD forward. Gross settlement. Counterparty: Deutsche Bank AG." },
+                      { id: "ev-fx-eur-confirm", label: "Deutsche Bank FX Forward Confirm", isEvidence: true, evidenceType: "broker-confirm", institution: "Deutsche Bank AG / Kincaid Health FX", refNumber: "DB-FX-FORWARD-20260305-EUR-KR", date: "Mar 5, 2026", hash: "f1x2e3u4r5c6…", description: "ISDA master agreement trade confirmation. EUR/USD forward. Gross settlement. Counterparty: Deutsche Bank AG." },
                     ],
                   },
                 ],
@@ -760,7 +760,7 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                 children: [
                   { id: "helios-irr-comps", label: "Comparable Transactions", value: "9x EBITDA target",
                     children: [
-                      { id: "ev-helios-comps", label: "Solar Sector M&A Comparable Analysis", isEvidence: true, evidenceType: "valuation", institution: "Kincaid RMC Investment Banking / Bloomberg", refNumber: "Kincaid RMC-IB-HELIOS-COMPS-202602", date: "Feb 20, 2026", hash: "c5o6m7p8s9a0…", description: "Precedent transaction analysis. 18 comparable solar/storage M&A transactions 2021–2025. Bloomberg M&A database." },
+                      { id: "ev-helios-comps", label: "Solar Sector M&A Comparable Analysis", isEvidence: true, evidenceType: "valuation", institution: "Kincaid Health Investment Banking / Bloomberg", refNumber: "Kincaid Health-IB-HELIOS-COMPS-202602", date: "Feb 20, 2026", hash: "c5o6m7p8s9a0…", description: "Precedent transaction analysis. 18 comparable solar/storage M&A transactions 2021–2025. Bloomberg M&A database." },
                     ],
                   },
                 ],
@@ -827,7 +827,7 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                 children: [
                   { id: "sc-eq-tech-aapl-hist", label: "GFC Historical Drawdown", value: "−66% (2007-09)",
                     children: [
-                      { id: "ev-sc-equity", label: "Bloomberg Historical Stress Test — 2008 GFC", isEvidence: true, evidenceType: "regulatory", institution: "Kincaid RMC Risk Analytics / Bloomberg", refNumber: "Kincaid RMC-STRESS-GFC2008-20260305", date: "Mar 5, 2026", hash: "s1t2r3e4s5s6…", description: "Historical scenario analysis using actual 2007-09 drawdown data. Bloomberg equity return series. 50th percentile of 2008 peak-to-trough." },
+                      { id: "ev-sc-equity", label: "Bloomberg Historical Stress Test — 2008 GFC", isEvidence: true, evidenceType: "regulatory", institution: "Kincaid Health Risk Analytics / Bloomberg", refNumber: "Kincaid Health-STRESS-GFC2008-20260305", date: "Mar 5, 2026", hash: "s1t2r3e4s5s6…", description: "Historical scenario analysis using actual 2007-09 drawdown data. Bloomberg equity return series. 50th percentile of 2008 peak-to-trough." },
                     ],
                   },
                 ],
@@ -841,7 +841,7 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                 children: [
                   { id: "sc-eq-recovery-mc", label: "Monte Carlo Analysis (10,000 runs)", value: "22mo median",
                     children: [
-                      { id: "ev-sc-recovery", label: "Kincaid RMC Scenario Engine — Recovery Analysis", isEvidence: true, evidenceType: "audit", institution: "Kincaid RMC Risk Analytics / Moody's Analytics", refNumber: "Kincaid RMC-SCEN-RECOVER-GFC-20260305", date: "Mar 5, 2026", hash: "r5e6c7o8v9e0…", description: "Monte Carlo recovery analysis. 10,000 paths. Recovery defined as return to pre-shock NAV. Based on historical GFC factor loadings." },
+                      { id: "ev-sc-recovery", label: "Kincaid Health Scenario Engine — Recovery Analysis", isEvidence: true, evidenceType: "audit", institution: "Kincaid Health Risk Analytics / Moody's Analytics", refNumber: "Kincaid Health-SCEN-RECOVER-GFC-20260305", date: "Mar 5, 2026", hash: "r5e6c7o8v9e0…", description: "Monte Carlo recovery analysis. 10,000 paths. Recovery defined as return to pre-shock NAV. Based on historical GFC factor loadings." },
                     ],
                   },
                 ],
@@ -862,7 +862,7 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                 children: [
                   { id: "sc-liq-gates", label: "Hedge Fund Gate Analysis", value: "$0 gated",
                     children: [
-                      { id: "ev-sc-liq", label: "Kincaid RMC Liquidity Stress Test — Mar 2026", isEvidence: true, evidenceType: "regulatory", institution: "Kincaid RMC Risk / Moody's Analytics", refNumber: "Kincaid RMC-LIQ-STRESS-202603-KR", date: "Mar 5, 2026", hash: "l3i4q5s6t7r8…", description: "Liquidity stress test per SEC family office guidelines. Gate provisions reviewed for all hedge funds. No material redemption restrictions." },
+                      { id: "ev-sc-liq", label: "Kincaid Health Liquidity Stress Test — Mar 2026", isEvidence: true, evidenceType: "regulatory", institution: "Kincaid Health Risk / Moody's Analytics", refNumber: "Kincaid Health-LIQ-STRESS-202603-KR", date: "Mar 5, 2026", hash: "l3i4q5s6t7r8…", description: "Liquidity stress test per SEC family office guidelines. Gate provisions reviewed for all hedge funds. No material redemption restrictions." },
                     ],
                   },
                 ],
@@ -895,8 +895,8 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                     children: [
                       { id: "vol-source-calc", label: "Methodology & Data Sources", value: "9.8%",
                         children: [
-                          { id: "ev-vol-bloomberg", label: "Bloomberg Portfolio Risk Report — Mar 5, 2026", isEvidence: true, evidenceType: "audit", institution: "Bloomberg PORT / Kincaid RMC Risk", refNumber: "BLOOM-PORTQ-RISK-20260305-KR", date: "Mar 5, 2026", hash: "v1o2l3a4t5i6…", description: "Daily returns sourced from Bloomberg total return indices. Volatility calculated as annualized 36M rolling standard deviation. Covariance matrix updated daily." },
-                          { id: "ev-vol-audit", label: "Aon Risk Audit — Volatility Verification", isEvidence: true, evidenceType: "audit", institution: "Aon Hewitt Investment Consulting", refNumber: "AON-RISK-VOL-KR-FY2025", date: "Jan 31, 2026", hash: "a2o3n4r5i6s7…", description: "Independent verification of portfolio volatility calculations. Agrees with Kincaid RMC calculation within 0.05% tolerance." },
+                          { id: "ev-vol-bloomberg", label: "Bloomberg Portfolio Risk Report — Mar 5, 2026", isEvidence: true, evidenceType: "audit", institution: "Bloomberg PORT / Kincaid Health Risk", refNumber: "BLOOM-PORTQ-RISK-20260305-KR", date: "Mar 5, 2026", hash: "v1o2l3a4t5i6…", description: "Daily returns sourced from Bloomberg total return indices. Volatility calculated as annualized 36M rolling standard deviation. Covariance matrix updated daily." },
+                          { id: "ev-vol-audit", label: "Aon Risk Audit — Volatility Verification", isEvidence: true, evidenceType: "audit", institution: "Aon Hewitt Investment Consulting", refNumber: "AON-RISK-VOL-KR-FY2025", date: "Jan 31, 2026", hash: "a2o3n4r5i6s7…", description: "Independent verification of portfolio volatility calculations. Agrees with Kincaid Health calculation within 0.05% tolerance." },
                         ],
                       },
                     ],
@@ -943,7 +943,7 @@ const DRILL_TREES: Record<string, DrillDownRoot> = {
                 children: [
                   { id: "active-invperiod-doc", label: "Fund Documents", value: "LPA Section 4.1",
                     children: [
-                      { id: "ev-active-lpa", label: "KKR Americas XII Limited Partnership Agreement", isEvidence: true, evidenceType: "legal", institution: "KKR Americas XII GP LLC / Ropes & Gray", refNumber: "LPA-KKRXII-2020-ART4", date: "Feb 14, 2020", hash: "l1p2a3k4k5r6…", description: "Executed LPA. Investment period Section 4.1: 3 years from closing. Reviewed by Kincaid RMC legal counsel Willkie Farr." },
+                      { id: "ev-active-lpa", label: "KKR Americas XII Limited Partnership Agreement", isEvidence: true, evidenceType: "legal", institution: "KKR Americas XII GP LLC / Ropes & Gray", refNumber: "LPA-KKRXII-2020-ART4", date: "Feb 14, 2020", hash: "l1p2a3k4k5r6…", description: "Executed LPA. Investment period Section 4.1: 3 years from closing. Reviewed by Kincaid Health legal counsel Willkie Farr." },
                     ],
                   },
                 ],

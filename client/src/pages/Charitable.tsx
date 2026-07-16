@@ -63,7 +63,7 @@ export default function Charitable() {
           value={giftAmount}
           onChange={(e) => setGiftAmount(parseInt(e.target.value))}
           className="w-full h-2 rounded-full appearance-none cursor-pointer"
-          style={{ background: `linear-gradient(to right, #00FF94 ${((giftAmount - 1_000_000) / 99_000_000) * 100}%, rgba(255,255,255,0.08) ${((giftAmount - 1_000_000) / 99_000_000) * 100}%)`, accentColor: "#00FF94" }}
+          style={{ background: `linear-gradient(to right, #00FF94 ${((giftAmount - 1_000_000) / 99_000_000) * 100}%, #e2e8f0 ${((giftAmount - 1_000_000) / 99_000_000) * 100}%)`, accentColor: "#00FF94" }}
           data-testid="slider-gift-amount"
         />
         <div className="flex justify-between text-[9px] text-muted-foreground mt-1 opacity-50">
@@ -94,7 +94,7 @@ export default function Charitable() {
                 </div>
                 {isSelected && <CheckCircle size={14} style={{ color }} />}
               </div>
-              <p className="font-bold text-sm text-white mb-1">{STRATEGY_LABELS[key]}</p>
+              <p className="font-bold text-sm text-[var(--kiq-ink)] mb-1">{STRATEGY_LABELS[key]}</p>
               <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{s.description}</p>
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs">
@@ -103,11 +103,11 @@ export default function Charitable() {
                 </div>
                 <div className="flex justify-between text-xs">
                   <span className="text-muted-foreground">Setup Time</span>
-                  <span className="text-white">{s.setupTime}</span>
+                  <span className="text-[var(--kiq-ink)]">{s.setupTime}</span>
                 </div>
                 <div className="flex justify-between text-xs">
                   <span className="text-muted-foreground">Complexity</span>
-                  <span className="text-white">{s.grantFlexibility} flex</span>
+                  <span className="text-[var(--kiq-ink)]">{s.grantFlexibility} flex</span>
                 </div>
               </div>
             </button>
@@ -123,7 +123,7 @@ export default function Charitable() {
               {STRATEGY_ICONS[selected]}
             </div>
             <div>
-              <p className="font-bold text-white">{STRATEGY_LABELS[selected]}</p>
+              <p className="font-bold text-[var(--kiq-ink)]">{STRATEGY_LABELS[selected]}</p>
               <p className="text-xs text-muted-foreground">Strategy Analysis</p>
             </div>
           </div>
@@ -162,7 +162,7 @@ export default function Charitable() {
                     <span style={{ color: selected === key ? color : "rgba(150,170,210,0.7)" }} className="font-semibold">{STRATEGY_LABELS[key]}</span>
                     <span className="font-bold" style={{ color }}>{formatCurrency(savings)}</span>
                   </div>
-                  <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
+                  <div className="w-full h-2 rounded-full overflow-hidden" style={{ background: "#f8fafc" }}>
                     <div className="h-full rounded-full transition-all duration-500" style={{ width: `${barPct}%`, background: color, opacity: selected === key ? 1 : 0.4 }} />
                   </div>
                 </button>
@@ -176,11 +176,11 @@ export default function Charitable() {
               <p className="text-xs font-semibold" style={{ color: "#00FF94" }}>Philanthropic Impact</p>
             </div>
             <p className="text-xs text-muted-foreground">
-              With the <strong className="text-white">{STRATEGY_LABELS[selected]}</strong> strategy, your{" "}
-              <strong className="text-white">{formatCurrency(giftAmount)}</strong> gift generates{" "}
+              With the <strong className="text-[var(--kiq-ink)]">{STRATEGY_LABELS[selected]}</strong> strategy, your{" "}
+              <strong className="text-[var(--kiq-ink)]">{formatCurrency(giftAmount)}</strong> gift generates{" "}
               <strong style={{ color: "#00FF94" }}>{formatCurrency(scaledSavings)}</strong> in tax savings,{" "}
               giving you an effective giving cost of{" "}
-              <strong className="text-white">{formatCurrency(giftAmount - scaledSavings)}</strong>.
+              <strong className="text-[var(--kiq-ink)]">{formatCurrency(giftAmount - scaledSavings)}</strong>.
             </p>
           </div>
         </div>

@@ -112,7 +112,7 @@ export default function Screener() {
       <div className="flex flex-wrap gap-2 mb-5">
         {PREBUILT_SCREENS.map(screen => (
           <Button key={screen.id} variant="outline" size="sm" onClick={() => applyPreset(screen.id)}
-            className="rounded-xl border-white/10 bg-white/5 hover:bg-white/10" data-testid={`button-screen-${screen.id}`}>
+            className="rounded-xl border-white/10 bg-[var(--kiq-surface)]/5 hover:bg-[var(--kiq-surface)]/10" data-testid={`button-screen-${screen.id}`}>
             <BarChart3 className="mr-2 h-3 w-3" />{screen.label}
           </Button>
         ))}
@@ -191,7 +191,7 @@ export default function Screener() {
         {/* Main table */}
         <div className="lg:col-span-3">
           <Card className="sidebar-metal-glass border-white/10 overflow-hidden">
-            <div className="px-4 py-3 border-b border-white/10 flex justify-between items-center bg-white/5">
+            <div className="px-4 py-3 border-b border-white/10 flex justify-between items-center bg-[var(--kiq-surface)]/5">
               <Badge variant="outline" className="text-[10px] font-mono bg-black/40 border-white/10">
                 {sortedStocks.length} / {screenerStocks.length} stocks
               </Badge>
@@ -215,14 +215,14 @@ export default function Screener() {
                   {sortedStocks.map(stock => (
                     <Fragment key={stock.ticker}>
                       <TableRow
-                        className={`border-white/5 hover:bg-white/5 cursor-pointer transition-colors ${expandedRow === stock.ticker ? "bg-primary/5" : ""}`}
+                        className={`border-white/5 hover:bg-[var(--kiq-surface)]/5 cursor-pointer transition-colors ${expandedRow === stock.ticker ? "bg-primary/5" : ""}`}
                         onClick={() => setExpandedRow(expandedRow === stock.ticker ? null : stock.ticker)}
                         data-testid={`row-stock-${stock.ticker}`}
                       >
                         <TableCell className="font-black text-primary font-mono">{stock.ticker}</TableCell>
                         <TableCell className="text-sm font-medium">{stock.name}</TableCell>
                         <TableCell>
-                          <Badge variant="secondary" className="text-[9px] bg-white/5">{stock.sector}</Badge>
+                          <Badge variant="secondary" className="text-[9px] bg-[var(--kiq-surface)]/5">{stock.sector}</Badge>
                         </TableCell>
                         <TableCell className="text-right text-xs font-mono">${(stock.marketCap / 1e12).toFixed(2)}T</TableCell>
                         <TableCell className="text-right text-xs font-mono">{stock.pe.toFixed(1)}x</TableCell>
@@ -250,7 +250,7 @@ export default function Screener() {
                                   { label: "Debt/Equity", value: `${stock.debtEquity}`, color: "#FFB800" },
                                   { label: "Beta", value: `${stock.beta}`, color: "#A855F7" },
                                 ].map(m => (
-                                  <div key={m.label} className="p-2.5 rounded-lg" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                                  <div key={m.label} className="p-2.5 rounded-lg" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
                                     <p className="text-[9px] text-muted-foreground uppercase font-bold mb-0.5">{m.label}</p>
                                     <p className="text-sm font-bold" style={{ color: m.color }}>{m.value}</p>
                                   </div>

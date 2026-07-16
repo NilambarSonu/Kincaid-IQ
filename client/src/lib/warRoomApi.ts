@@ -1,6 +1,6 @@
 /**
  * warRoomApi.ts
- * Kincaid IQ VERIFY™ — API client for war room endpoints.
+ * Kincaid Health VERIFY™ — API client for war room endpoints.
  * All calls route to the same FastAPI origin (no localhost:3001).
  */
 

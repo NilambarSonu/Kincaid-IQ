@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { CheckCircle, XCircle, AlertTriangle, Activity, TrendingUp } from "lucide-react";
 
-const BG = "#07091c"; const T1 = "#f0f4ff"; const BORDER = "rgba(255,255,255,0.08)";
-const GREEN = "#22c55e"; const RED = "#ef4444"; const AMBER = "#f59e0b";
-const CYAN = "#00D4FF"; const PURPLE = "#A855F7"; const ACCENT = "#4f7dff"; const GOLD = "#FFB800";
+const BG = "#F8FAFC"; const T1 = "#0f172a"; const BORDER = "rgba(15,23,42,0.08)";
+const GREEN = "#10b981"; const RED = "#e11d48"; const AMBER = "#d97706";
+const CYAN = "#0ea5e9"; const PURPLE = "#7c3aed"; const ACCENT = "#533afd"; const GOLD = "#f59e0b";
 
 const DOMAINS = [
   {
@@ -71,40 +71,40 @@ export default function CeiEngine() {
   const ceiColor = overallCei >= 90 ? GREEN : overallCei >= 75 ? AMBER : RED;
 
   return (
-    <div style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-body)", padding: "24px 28px" }}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-sans)", padding: "24px 28px" }}>
 
-      <div style={{ marginBottom: 24 }}>
+      <div className="kiq-ops-header" style={{ marginBottom: 24, padding: 24, borderRadius: 24 }}>
         <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.22em", color: ACCENT, marginBottom: 6 }}>
-          ◈ KINCAID IQ · CEI · CONFIDENCE ENGINE INDEX · KPI VERIFICATION SCORING ACROSS ALL PLATFORM MODULES
+          ◈ KINCAID HEALTH · CEI · CONFIDENCE ENGINE INDEX · KPI VERIFICATION SCORING ACROSS ALL PLATFORM MODULES
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
           <div>
             <h1 style={{ fontSize: 26, fontWeight: 900, letterSpacing: "-0.02em", margin: 0 }}>Confidence Engine Index™</h1>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>
+            <div style={{ fontSize: 12, color: "#475569", marginTop: 4 }}>
               SHA-256 evidence verification · Proof-carrying KPI architecture · 278 KPIs across 22 operating systems
             </div>
           </div>
           <div style={{ display: "flex", gap: 12 }}>
             <div style={{ padding: "14px 20px", background: `${ceiColor}12`, border: `1px solid ${ceiColor}40`, borderRadius: 14, textAlign: "center" }}>
               <div style={{ fontSize: 32, fontWeight: 900, color: ceiColor }}>{overallCei}%</div>
-              <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", letterSpacing: "0.12em" }}>PLATFORM CEI</div>
+              <div style={{ fontSize: 9, color: "#475569", letterSpacing: "0.12em" }}>PLATFORM CEI</div>
             </div>
-            <div style={{ padding: "14px 20px", background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`, borderRadius: 14, textAlign: "center" }}>
-              <div style={{ fontSize: 32, fontWeight: 900, color: T1 }}>{totalVerified}<span style={{ fontSize: 16, color: "rgba(255,255,255,0.3)" }}>/{totalKpis}</span></div>
-              <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", letterSpacing: "0.12em" }}>KPIs VERIFIED</div>
+            <div style={{ padding: "14px 20px", background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 14, textAlign: "center" }}>
+              <div style={{ fontSize: 32, fontWeight: 900, color: T1 }}>{totalVerified}<span style={{ fontSize: 16, color: "#64748b" }}>/{totalKpis}</span></div>
+              <div style={{ fontSize: 9, color: "#475569", letterSpacing: "0.12em" }}>KPIs VERIFIED</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Overall progress bar */}
-      <div style={{ marginBottom: 20, padding: "16px 20px", background: "rgba(255,255,255,0.02)",
+      <div style={{ marginBottom: 20, padding: "16px 20px", background: "#ffffff",
         border: `1px solid ${BORDER}`, borderRadius: 14 }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
-          <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>Platform CEI Progress</span>
+          <span style={{ fontSize: 11, color: "#334155" }}>Platform CEI Progress</span>
           <span style={{ fontSize: 12, fontWeight: 900, color: ceiColor }}>{totalVerified} of {totalKpis} KPIs verified</span>
         </div>
-        <div style={{ height: 10, background: "rgba(255,255,255,0.06)", borderRadius: 5, overflow: "hidden" }}>
+        <div style={{ height: 10, background: "#f1f5f9", borderRadius: 5, overflow: "hidden" }}>
           <div style={{ height: "100%", width: `${overallCei}%`, background: `linear-gradient(90deg, ${ACCENT}, ${ceiColor})`,
             borderRadius: 5, transition: "width 0.6s" }} />
         </div>
@@ -117,7 +117,7 @@ export default function CeiEngine() {
           ].map(l => (
             <div key={l.label} style={{ display: "flex", alignItems: "center", gap: 6 }}>
               <div style={{ width: 8, height: 8, borderRadius: "50%", background: l.color }} />
-              <span style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>{l.label}: </span>
+              <span style={{ fontSize: 10, color: "#475569" }}>{l.label}: </span>
               <span style={{ fontSize: 10, fontWeight: 900, color: l.color }}>{l.count}</span>
             </div>
           ))}
@@ -125,13 +125,13 @@ export default function CeiEngine() {
       </div>
 
       {/* Domain cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 14 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 14 }}>
         {DOMAINS.map(d => {
           const domainCei = Math.round(d.verified / d.total * 100);
           const dc = domainCei >= 90 ? GREEN : domainCei >= 75 ? AMBER : RED;
           const isOpen = openDomain === d.id;
           return (
-            <div key={d.id} style={{ background: isOpen ? `${d.color}08` : "rgba(255,255,255,0.02)",
+            <div key={d.id} style={{ background: isOpen ? `${d.color}08` : "#ffffff",
               border: `1px solid ${isOpen ? `${d.color}40` : BORDER}`, borderRadius: 16, overflow: "hidden" }}>
               <div onClick={() => setOpenDomain(isOpen ? null : d.id)}
                 data-testid={`cei-domain-${d.id}`}
@@ -140,11 +140,11 @@ export default function CeiEngine() {
                   <div>
                     <div style={{ fontSize: 9, fontWeight: 900, color: d.color, letterSpacing: "0.14em", marginBottom: 4 }}>{d.id}</div>
                     <div style={{ fontSize: 13, fontWeight: 800, color: T1 }}>{d.label}</div>
-                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>{d.verified}/{d.total} KPIs verified</div>
+                    <div style={{ fontSize: 10, color: "#64748b", marginTop: 2 }}>{d.verified}/{d.total} KPIs verified</div>
                   </div>
                   <div style={{ fontSize: 24, fontWeight: 900, color: dc }}>{domainCei}%</div>
                 </div>
-                <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden" }}>
+                <div style={{ height: 6, background: "#f1f5f9", borderRadius: 3, overflow: "hidden" }}>
                   <div style={{ height: "100%", width: `${domainCei}%`, background: d.color, borderRadius: 3 }} />
                 </div>
               </div>
@@ -158,13 +158,13 @@ export default function CeiEngine() {
                         background: confColor(k.confidence), boxShadow: `0 0 5px ${confColor(k.confidence)}` }} />
                       <div style={{ flex: 1 }}>
                         <div style={{ fontSize: 10, fontWeight: 600, color: T1 }}>{k.label}</div>
-                        <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)" }}>{k.source}</div>
+                        <div style={{ fontSize: 8, color: "#64748b" }}>{k.source}</div>
                       </div>
                       <div style={{ textAlign: "right" }}>
                         <div style={{ fontSize: 11, fontWeight: 900, color: confColor(k.confidence) }}>
                           {k.confidence === 0 ? "UNVERIFIED" : `${k.confidence}%`}
                         </div>
-                        <div style={{ fontSize: 8, color: "rgba(255,255,255,0.25)" }}>{k.id}</div>
+                        <div style={{ fontSize: 8, color: "#64748b" }}>{k.id}</div>
                       </div>
                     </div>
                   ))}
@@ -179,7 +179,7 @@ export default function CeiEngine() {
       <div style={{ marginTop: 20, padding: "14px 20px", background: `${RED}08`, border: `1px solid ${RED}30`,
         borderRadius: 14, display: "flex", alignItems: "center", gap: 16 }}>
         <XCircle size={16} color={RED} />
-        <div style={{ flex: 1, fontSize: 12, color: "rgba(255,255,255,0.5)" }}>
+        <div style={{ flex: 1, fontSize: 12, color: "#334155" }}>
           <strong style={{ color: RED }}>Export Gate Blocked · </strong>
           1 KPI at 0% confidence (CEI-D2-004 · Excise Tax Exposure). All KPIs must reach ≥75% confidence before the
           fiduciary export is authorized. Open Actuarial Engine IQ™ to resolve.

@@ -309,12 +309,6 @@ function calcSavings(provisions: ProvisionScore[]): {
   return { total, byProvision };
 }
 
-function fmtMoney(n: number): string {
-  if (n >= 1000000) return `$${(n / 1000000).toFixed(1)}M`;
-  if (n >= 1000) return `$${Math.round(n / 1000)}K`;
-  return `$${n.toLocaleString()}`;
-}
-
 /* ─── PRIORITY RANKING ───────────────────────────────────────────────────── */
 
 function prioritizeIssues(provisions: ProvisionScore[], savingsMap: Record<number, number>) {
@@ -346,7 +340,7 @@ function prioritizeIssues(provisions: ProvisionScore[], savingsMap: Record<numbe
 /* ─── REPORT BODY COMPONENTS ─────────────────────────────────────────────── */
 
 const S = {
-  page: { background: "#dde3ec", color: "#000", padding: "24px 0 40px", margin: "0", fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif" } as React.CSSProperties,
+  page: { background: "linear-gradient(180deg, #eef3fb 0%, #dde3ec 100%)", color: "#000", padding: "28px 0 44px", margin: "0", fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif" } as React.CSSProperties,
   section: { background: "#ffffff", borderRadius: 16, margin: "0 24px 16px", padding: "48px 56px", boxShadow: "0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05)" } as React.CSSProperties,
   sectionSm: { background: "#ffffff", borderRadius: 16, margin: "0 24px 16px", padding: "32px 56px", boxShadow: "0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05)" } as React.CSSProperties,
   h1: { fontSize: 42, fontWeight: 900, color: "#000", letterSpacing: "-0.02em", margin: 0 } as React.CSSProperties,
@@ -384,7 +378,6 @@ function CoverPage({ contract }: { contract: Contract }) {
   const score = contract.overall_score ?? 0;
   const date = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
   const provisions = contract.provision_scores;
-  const { total } = calcSavings(provisions);
   const criticals = contract.key_findings.filter(f => f.severity === "critical").length;
   const unfound = provisions.reduce((a, p) => a + p.issues.filter(i => !i.found).length, 0);
   const found = provisions.reduce((a, p) => a + p.issues.filter(i => i.found).length, 0);
@@ -394,25 +387,25 @@ function CoverPage({ contract }: { contract: Contract }) {
 
       {/* ── KIQ Banner ──────────────────────────────────────────── */}
       <div style={{ width: "100%", height: 80, background: "linear-gradient(135deg, #002B5C 0%, #9B1C2E 100%)", display: "flex", alignItems: "center", padding: "0 56px" }}>
-        <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 900, fontSize: 11, letterSpacing: "0.24em", textTransform: "uppercase" as const }}>KINCAID IQ — FIDUCIARY INTELLIGENCE PLATFORM</span>
+        <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 900, fontSize: 11, letterSpacing: "0.24em", textTransform: "uppercase" as const }}>KINCAID HEALTH — FIDUCIARY INTELLIGENCE PLATFORM</span>
       </div>
 
       {/* ── Sub-header strip ─────────────────────────────────────── */}
-      <div style={{ background: "#002B5C", padding: "10px 56px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ background: "#F8FAFC", padding: "10px 56px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.25)" }} />
+          <div style={{ width: 1, height: 28, background: "rgba(15,23,42,0.08)" }} />
           <div>
             <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.28em", color: "rgba(255,255,255,0.90)", textTransform: "uppercase" }}>
-              Rx Defense IQ™ · Fiduciary-Grade PBM Intelligence
+              PBM Contract Clarity 360™ · Fiduciary-Grade PBM Intelligence
             </div>
             <div style={{ fontSize: 9, color: "rgba(255,255,255,0.45)", letterSpacing: "0.10em", marginTop: 2 }}>
-              Powered by Kincaid IQ Intelligence Platform
+              Powered by Kincaid Health Intelligence Platform
             </div>
           </div>
         </div>
         <div style={{ textAlign: "right" }}>
           <div style={{ fontSize: 9, color: "rgba(255,255,255,0.55)", letterSpacing: "0.10em" }}>{date}</div>
-          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.35)", marginTop: 2, letterSpacing: "0.08em" }}>CONFIDENTIAL · BROKER USE ONLY</div>
+          <div style={{ fontSize: 9, color: "#64748b", marginTop: 2, letterSpacing: "0.08em" }}>CONFIDENTIAL · BROKER USE ONLY</div>
         </div>
       </div>
 
@@ -459,9 +452,8 @@ function CoverPage({ contract }: { contract: Contract }) {
         </div>
 
         {/* Key stats */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12, maxWidth: 720 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, maxWidth: 720 }}>
           {[
-            { label: "Estimated Annual Savings", value: fmtMoney(total), color: NEON.green },
             { label: "Critical Flags", value: String(criticals), color: NEON.red },
             { label: "Issues Not Met", value: String(unfound), color: NEON.orange },
             { label: "Protections Found", value: String(found), color: NEON.blue },
@@ -479,11 +471,11 @@ function CoverPage({ contract }: { contract: Contract }) {
         <div style={{ marginTop: 40, paddingTop: 20, borderTop: "1px solid rgba(0,0,0,0.10)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 28, height: 28, borderRadius: 6, background: "#9B1C2E", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <span style={{ fontSize: 9, fontWeight: 900, color: "#fff", letterSpacing: "0.04em" }}>KIQ</span>
+              <span style={{ fontSize: 9, fontWeight: 900, color: "#0F172A", letterSpacing: "0.04em" }}>KIQ</span>
             </div>
             <div>
-              <div style={{ fontSize: 10, fontWeight: 800, color: "#002B5C", letterSpacing: "0.10em" }}>KINCAID IQ</div>
-              <div style={{ fontSize: 9, color: "#666", letterSpacing: "0.06em" }}>Intelligence Platform · Rx Defense IQ™</div>
+              <div style={{ fontSize: 10, fontWeight: 800, color: "#002B5C", letterSpacing: "0.10em" }}>KINCAID HEALTH</div>
+              <div style={{ fontSize: 9, color: "#666", letterSpacing: "0.06em" }}>Intelligence Platform · PBM Contract Clarity 360™</div>
             </div>
           </div>
           <div style={{ fontSize: 9, color: "#888" }}>
@@ -500,15 +492,14 @@ function CoverPage({ contract }: { contract: Contract }) {
 function TableOfContents({ provisions }: { provisions: ProvisionScore[] }) {
   const sections = [
     { label: "1", title: "Executive Summary", sub: "Overall assessment and key risk profile" },
-    { label: "2", title: "Financial Impact Analysis", sub: "Estimated annual savings by provision" },
-    { label: "3", title: "Critical Issues Ranked by Priority", sub: "All unmet requirements ordered by fiduciary risk and financial impact" },
+    { label: "2", title: "Critical Issues Ranked by Priority", sub: "All unmet requirements ordered by fiduciary risk and CAA 2026 compliance priority" },
     ...provisions.map((p, i) => ({
-      label: String(4 + i), title: `Provision ${p.id}: ${p.name}`, sub: `Detailed analysis — ${p.issues.length} issues evaluated`
+      label: String(3 + i), title: `Provision ${p.id}: ${p.name}`, sub: `Detailed analysis — ${p.issues.length} issues evaluated`
     })),
-    { label: String(4 + provisions.length), title: "Negotiation Playbook", sub: "Model language, talking points, and remediation roadmap" },
-    { label: String(5 + provisions.length), title: "Appendix A — Contract Evidence Register", sub: `All ${provisions.reduce((a,p) => a+p.issues.length, 0)} issues with verbatim contract language and AI match results` },
-    { label: String(6 + provisions.length), title: "Appendix B — Score Calculation Sheet", sub: "Full issue match log, weighted scoring math, and overall score derivation" },
-    { label: String(7 + provisions.length), title: "Methodology & Disclaimer", sub: "Scoring framework, CAA 2026 alignment, and legal notice" },
+    { label: String(3 + provisions.length), title: "Negotiation Playbook", sub: "Model language, talking points, and remediation roadmap" },
+    { label: String(4 + provisions.length), title: "Appendix A — Contract Evidence Register", sub: `All ${provisions.reduce((a,p) => a+p.issues.length, 0)} issues with verbatim contract language and AI match results` },
+    { label: String(5 + provisions.length), title: "Appendix B — Score Calculation Sheet", sub: "Full issue match log, weighted scoring math, and overall score derivation" },
+    { label: String(6 + provisions.length), title: "Methodology & Disclaimer", sub: "Scoring framework, CAA 2026 alignment, and legal notice" },
   ];
 
   return (
@@ -518,7 +509,7 @@ function TableOfContents({ provisions }: { provisions: ProvisionScore[] }) {
       <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {sections.map((s, i) => (
           <button key={i}
-            onClick={() => document.getElementById(`rpt-section-${i}`)?.scrollIntoView({ behavior: "smooth", block: "start" })}
+            onClick={() => document.getElementById(`rpt-section-${i + 2}`)?.scrollIntoView({ behavior: "smooth", block: "start" })}
             style={{ display: "flex", alignItems: "baseline", gap: 10, padding: "10px 12px", margin: "0 -12px",
               borderBottom: "1px solid rgba(0,0,0,0.04)", cursor: "pointer", background: "transparent",
               border: "none", borderRadius: 8, textAlign: "left", transition: "background 0.15s",
@@ -543,7 +534,6 @@ function ExecutiveSummary({ contract }: { contract: Contract }) {
   const rating = contract.rating ? RATING_CFG[contract.rating] : RATING_CFG.concern;
   const score = contract.overall_score ?? 0;
   const provisions = contract.provision_scores;
-  const { total } = calcSavings(provisions);
   const redFlags = provisions.filter(p => p.rating === "red_flag").length;
   const concerns = provisions.filter(p => p.rating === "concern").length;
   const criticals = contract.key_findings.filter(f => f.severity === "critical");
@@ -585,20 +575,6 @@ function ExecutiveSummary({ contract }: { contract: Contract }) {
               </div>
             );
           })}
-        </div>
-      </div>
-
-      {/* Financial headline */}
-      <div style={{ ...S.card, display: "flex", alignItems: "center", gap: 24, marginBottom: 28,
-        background: "rgba(0,255,148,0.05)", border: `1px solid ${NEON.green}25` }}>
-        <DollarSign style={{ width: 40, height: 40, color: NEON.green, flexShrink: 0 }} />
-        <div>
-          <div style={{ fontSize: 36, fontWeight: 900, color: NEON.green, lineHeight: 1 }}>{fmtMoney(total)}</div>
-          <div style={{ fontSize: 12, color: "#000", marginTop: 4 }}>
-            Estimated annual savings opportunity if all identified gaps are remediated through renegotiation.
-            This represents the cumulative financial impact of spread pricing, unreturned rebates, audit recovery potential,
-            specialty pharmacy excess cost, and administrative fee reduction.
-          </div>
         </div>
       </div>
 
@@ -669,100 +645,20 @@ function ExecutiveSummary({ contract }: { contract: Contract }) {
   );
 }
 
-/* ─── FINANCIAL IMPACT ───────────────────────────────────────────────────── */
-
-function FinancialImpact({ provisions }: { provisions: ProvisionScore[] }) {
-  const { total, byProvision } = calcSavings(provisions);
-  const sorted = [...byProvision].sort((a, b) => b.savings - a.savings);
-
-  return (
-    <div style={S.section}>
-      <SectionLabel color={NEON.green}>Section 2</SectionLabel>
-      <div style={S.h2}>Financial Impact Analysis</div>
-
-      <div style={{ fontSize: 15, lineHeight: 1.85, color: "#000", marginBottom: 28, maxWidth: 740 }}>
-        The following savings estimates represent the potential annual financial benefit to the plan if the identified contractual
-        gaps in each provision are remediated through renegotiation. Estimates are derived from the provision score deficit
-        (the gap between the contract's actual score and a fully-compliant score of 10/10) applied to industry-standard
-        ranges for each provision type. Actual savings will vary based on plan size, drug mix, specialty spend, and negotiation outcomes.
-      </div>
-
-      {/* Total headline */}
-      <div style={{ ...S.card, display: "flex", alignItems: "center", gap: 24, marginBottom: 32,
-        background: "rgba(0,255,148,0.06)", border: `1px solid ${NEON.green}30`, padding: "28px 32px" }}>
-        <div>
-          <div style={S.label}>Total Estimated Annual Savings Opportunity</div>
-          <div style={{ fontSize: 56, fontWeight: 900, color: NEON.green, lineHeight: 1,
-            letterSpacing: "-0.01em" }}>{fmtMoney(total)}</div>
-          <div style={{ fontSize: 12, color: "#000", marginTop: 6 }}>
-            Across all 13 provisions · CAA 2026 Fiduciary Standard · Annual basis
-          </div>
-        </div>
-      </div>
-
-      {/* Provision breakdown */}
-      <div style={{ marginBottom: 28 }}>
-        <div style={S.label}>Savings Breakdown by Provision</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-          {sorted.map((p) => {
-            const cfg = RATING_CFG[p.rating];
-            const pct = (p.savings / total) * 100;
-            return (
-              <div key={p.id} style={{ ...S.card, padding: "16px 20px" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 10 }}>
-                  <span style={{ fontSize: 10, fontWeight: 900, color: "#000", width: 20 }}>{String(p.id).padStart(2,"0")}</span>
-                  <span style={{ fontSize: 13, fontWeight: 700, color: "#000", flex: 1 }}>{p.name}</span>
-                  <span style={{ fontSize: 12, fontWeight: 900, color: cfg.color, flexShrink: 0 }}>{cfg.label} ({p.score.toFixed(1)}/10)</span>
-                  <span style={{ fontSize: 20, fontWeight: 900, color: NEON.green, flexShrink: 0, minWidth: 80, textAlign: "right" }}>
-                    {fmtMoney(p.savings)}
-                  </span>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <div style={{ flex: 1, height: 8, background: "rgba(0,0,0,0.04)", borderRadius: 4, overflow: "hidden" }}>
-                    <div style={{ width: `${pct}%`, height: "100%", background: `linear-gradient(90deg, ${NEON.green}aa, ${NEON.green})`,
-                      borderRadius: 4, boxShadow: `0 0 8px ${NEON.green}44` }} />
-                  </div>
-                  <span style={{ fontSize: 10, color: "#000", width: 36, textAlign: "right" }}>{pct.toFixed(0)}%</span>
-                </div>
-                <div style={{ fontSize: 11, color: "#000", marginTop: 8 }}>{p.basis}</div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* ROI note */}
-      <div style={{ ...S.card, background: "rgba(0,212,255,0.04)", border: `1px solid ${NEON.blue}20`, borderLeft: `3px solid ${NEON.blue}` }}>
-        <div style={{ fontSize: 12, fontWeight: 900, color: NEON.blue, letterSpacing: "0.1em", textTransform: "uppercase" as const, marginBottom: 8 }}>
-          Return on Negotiation
-        </div>
-        <div style={{ fontSize: 13, color: "#000", lineHeight: 1.7 }}>
-          The cost of PBM contract renegotiation — including legal counsel, consultant fees, and actuarial review —
-          typically ranges from $15,000 to $75,000 for a mid-market plan. Against a total savings opportunity of {fmtMoney(total)},
-          the return on investment for a rigorous renegotiation effort is substantial. Plans that implement pass-through pricing,
-          full rebate capture, and meaningful audit rights consistently outperform market averages by 8–18% on total pharmacy spend.
-        </div>
-      </div>
-    </div>
-  );
-}
-
 /* ─── CRITICAL ISSUES RANKED ─────────────────────────────────────────────── */
 
 function CriticalIssuesRanked({ provisions }: { provisions: ProvisionScore[] }) {
-  const { byProvision } = calcSavings(provisions);
-  const savingsMap = Object.fromEntries(byProvision.map(p => [p.id, p.savings]));
-  const ranked = prioritizeIssues(provisions, savingsMap);
+  const ranked = prioritizeIssues(provisions, {});
 
   return (
     <div style={S.section}>
-      <SectionLabel color={NEON.red}>Section 3</SectionLabel>
+      <SectionLabel color={NEON.red}>Section 2</SectionLabel>
       <div style={S.h2}>Critical Issues Ranked by Priority</div>
 
       <div style={{ fontSize: 15, lineHeight: 1.85, color: "#000", marginBottom: 24, maxWidth: 740 }}>
-        The following {ranked.length} unmet requirements are ordered by fiduciary risk and estimated financial impact.
-        Items are ranked using a weighted formula incorporating provision severity rating, estimated annual savings per issue,
-        and CAA 2026 compliance priority. Address items in this order for maximum fiduciary protection and financial recovery.
+        The following {ranked.length} unmet requirements are ordered by fiduciary risk.
+        Items are ranked using a weighted formula incorporating provision severity rating
+        and CAA 2026 compliance priority. Address items in this order for maximum fiduciary protection.
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -804,12 +700,6 @@ function CriticalIssuesRanked({ provisions }: { provisions: ProvisionScore[] }) 
                     </div>
                   )}
                 </div>
-
-                {/* Savings */}
-                <div style={{ flexShrink: 0, textAlign: "right" }}>
-                  <div style={{ fontSize: 18, fontWeight: 900, color: NEON.green }}>{fmtMoney(item.savingsShare)}</div>
-                  <div style={{ fontSize: 9, color: "#000", textTransform: "uppercase" as const, letterSpacing: "0.1em", marginTop: 2 }}>est. annual</div>
-                </div>
               </div>
             </div>
           );
@@ -824,8 +714,6 @@ function CriticalIssuesRanked({ provisions }: { provisions: ProvisionScore[] }) 
 function ProvisionSection({ p, sectionNum }: { p: ProvisionScore; sectionNum: number }) {
   const cfg = RATING_CFG[p.rating];
   const range = PROVISION_SAVINGS[p.id];
-  const deficit = Math.max(0, 10 - p.score) / 10;
-  const savings = range ? Math.round(range.low + deficit * (range.high - range.low)) : 0;
   const found = p.issues.filter(i => i.found);
   const unfound = p.issues.filter(i => !i.found);
   const context = PROVISION_CONTEXT[p.id as keyof typeof PROVISION_CONTEXT] || "";
@@ -851,8 +739,6 @@ function ProvisionSection({ p, sectionNum }: { p: ProvisionScore; sectionNum: nu
         <div style={{ flexShrink: 0, textAlign: "right" }}>
           <div style={{ fontSize: 52, fontWeight: 900, color: cfg.color, lineHeight: 1 }}>{p.score.toFixed(1)}</div>
           <div style={{ fontSize: 10, color: "#000", letterSpacing: "0.1em", textTransform: "uppercase" as const }}>out of 10</div>
-          <div style={{ fontSize: 16, fontWeight: 900, color: NEON.green, marginTop: 8 }}>{fmtMoney(savings)}</div>
-          <div style={{ fontSize: 9, color: "#000", textTransform: "uppercase" as const, letterSpacing: "0.08em" }}>savings opportunity</div>
         </div>
       </div>
 
@@ -1093,17 +979,17 @@ function ProvisionSection({ p, sectionNum }: { p: ProvisionScore; sectionNum: nu
 
 function NegotiationPlaybook({ provisions }: { provisions: ProvisionScore[] }) {
   const { byProvision } = calcSavings(provisions);
-  const sorted = [...byProvision].sort((a, b) => b.savings - a.savings);
+  const sorted = [...byProvision].sort((a, b) => a.score - b.score);
 
   return (
     <div style={S.section}>
-      <SectionLabel color={NEON.gold}>Section {4 + provisions.length}</SectionLabel>
+      <SectionLabel color={NEON.gold}>Section {3 + provisions.length}</SectionLabel>
       <div style={S.h2}>Negotiation Playbook</div>
 
       <div style={{ fontSize: 15, lineHeight: 1.85, color: "#000", marginBottom: 28, maxWidth: 720 }}>
-        The following is a consolidated negotiation roadmap, ordered by financial impact. Use this as your
+        The following is a consolidated negotiation roadmap, ordered by provision severity. Use this as your
         primary action document in PBM renegotiation meetings. Each item includes a talking point and the
-        estimated financial value of resolution.
+        contractual gap to close.
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -1123,7 +1009,6 @@ function NegotiationPlaybook({ provisions }: { provisions: ProvisionScore[] }) {
                 <span style={{ fontSize: 10, fontWeight: 900, color: cfg.color, background: cfg.bg,
                   border: `1px solid ${cfg.border}`, borderRadius: 4, padding: "2px 8px",
                   textTransform: "uppercase" as const, letterSpacing: "0.08em" }}>{cfg.label}</span>
-                <span style={{ fontSize: 18, fontWeight: 900, color: NEON.green }}>{fmtMoney(p.savings)}</span>
               </div>
               {neg.talking_point && (
                 <div style={{ fontSize: 14, color: "#000", lineHeight: 1.82,
@@ -1334,8 +1219,6 @@ const PROVISION_WEIGHTS: Record<number, number> = {
 };
 
 function ScoreCalculationSheet({ provisions, contract, sectionNum }: { provisions: ProvisionScore[]; contract: Contract; sectionNum: number }) {
-  const { byProvision, total } = calcSavings(provisions);
-  const savingsMap = Object.fromEntries(byProvision.map(p => [p.id, p.savings]));
 
   const totalWeight = provisions.reduce((a, p) => a + (PROVISION_WEIGHTS[p.id] ?? 5), 0);
   const weightedSum = provisions.reduce((a, p) => {
@@ -1386,10 +1269,10 @@ function ScoreCalculationSheet({ provisions, contract, sectionNum }: { provision
         <div style={S.label}>Provision Score Summary</div>
 
         {/* Table header */}
-        <div style={{ display: "grid", gridTemplateColumns: "36px 1fr 80px 80px 80px 60px 80px 100px",
+        <div style={{ display: "grid", gridTemplateColumns: "36px 1fr 80px 80px 80px 60px 80px",
           gap: 8, padding: "10px 16px",
-          background: "#002B5C", borderRadius: "10px 10px 0 0", alignItems: "center" }}>
-          {["#", "Provision", "Met", "Total", "Score", "Rating", "Weight", "Est. Savings"].map(h => (
+          background: "#F8FAFC", borderRadius: "10px 10px 0 0", alignItems: "center" }}>
+          {["#", "Provision", "Met", "Total", "Score", "Rating", "Weight"].map(h => (
             <div key={h} style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.12em",
               textTransform: "uppercase" as const, color: "rgba(255,255,255,0.75)" }}>{h}</div>
           ))}
@@ -1402,10 +1285,9 @@ function ScoreCalculationSheet({ provisions, contract, sectionNum }: { provision
             const met   = p.issues.filter(i => i.found).length;
             const total_i = p.issues.length;
             const w = PROVISION_WEIGHTS[p.id] ?? 5;
-            const savings = savingsMap[p.id] ?? 0;
             return (
               <div key={p.id} style={{ display: "grid",
-                gridTemplateColumns: "36px 1fr 80px 80px 80px 60px 80px 100px",
+                gridTemplateColumns: "36px 1fr 80px 80px 80px 60px 80px",
                 gap: 8, padding: "11px 16px", alignItems: "center",
                 background: idx % 2 === 0 ? "#fff" : "rgba(0,0,0,0.015)",
                 borderBottom: idx < provisions.length - 1 ? "1px solid rgba(0,0,0,0.05)" : "none" }}>
@@ -1425,18 +1307,15 @@ function ScoreCalculationSheet({ provisions, contract, sectionNum }: { provision
                   </span>
                 </div>
                 <div style={{ fontSize: 12, color: "#555" }}>{w}%</div>
-                <div style={{ fontSize: 13, fontWeight: 800, color: savings > 0 ? NEON.green : "#aaa" }}>
-                  {savings > 0 ? fmtMoney(savings) : "—"}
-                </div>
               </div>
             );
           })}
 
           {/* Totals row */}
           <div style={{ display: "grid",
-            gridTemplateColumns: "36px 1fr 80px 80px 80px 60px 80px 100px",
+            gridTemplateColumns: "36px 1fr 80px 80px 80px 60px 80px",
             gap: 8, padding: "12px 16px", alignItems: "center",
-            background: "#002B5C", borderTop: "2px solid rgba(0,43,92,0.15)" }}>
+            background: "#F8FAFC", borderTop: "2px solid rgba(0,43,92,0.15)" }}>
             <div />
             <div style={{ fontSize: 11, fontWeight: 900, color: "rgba(255,255,255,0.70)",
               letterSpacing: "0.10em", textTransform: "uppercase" as const }}>Overall</div>
@@ -1447,12 +1326,11 @@ function ScoreCalculationSheet({ provisions, contract, sectionNum }: { provision
               {provisions.reduce((a, p) => a + p.issues.length, 0)}
             </div>
             <div>
-              <span style={{ fontSize: 18, fontWeight: 900, color: "#fff" }}>{Math.round(contract.overall_score ?? computedOverall)}</span>
+              <span style={{ fontSize: 18, fontWeight: 900, color: "#0F172A" }}>{Math.round(contract.overall_score ?? computedOverall)}</span>
               <span style={{ fontSize: 10, color: "rgba(255,255,255,0.50)" }}>/100</span>
             </div>
             <div />
             <div style={{ fontSize: 12, color: "rgba(255,255,255,0.60)" }}>{totalWeight}%</div>
-            <div style={{ fontSize: 15, fontWeight: 900, color: "#00FF94" }}>{fmtMoney(total)}</div>
           </div>
         </div>
       </div>
@@ -1494,7 +1372,7 @@ function ScoreCalculationSheet({ provisions, contract, sectionNum }: { provision
                       gap: 10, padding: "8px 16px", alignItems: "flex-start",
                       borderBottom: idx < p.issues.length - 1 ? "1px solid rgba(0,0,0,0.04)" : "none",
                       background: idx % 2 === 0 ? "#fff" : "rgba(0,0,0,0.013)" }}>
-                      <span style={{ fontSize: 10, color: "#ccc", fontWeight: 700, paddingTop: 1 }}>
+                      <span style={{ fontSize: 10, color: "#475569", fontWeight: 700, paddingTop: 1 }}>
                         {String(idx + 1).padStart(2, "0")}
                       </span>
                       <span style={{
@@ -1523,7 +1401,7 @@ function ScoreCalculationSheet({ provisions, contract, sectionNum }: { provision
 
         {/* Grand total calculation */}
         <div style={{ marginTop: 20, padding: "20px 24px", borderRadius: 12,
-          background: "linear-gradient(135deg, #002B5C, #003A7A)",
+          background: "linear-gradient(135deg, #F8FAFC, #F1F5F9)",
           border: "1px solid rgba(0,43,92,0.30)" }}>
           <div style={{ fontSize: 11, fontWeight: 900, letterSpacing: "0.16em", textTransform: "uppercase" as const,
             color: "rgba(255,255,255,0.55)", marginBottom: 14 }}>Overall Score Derivation</div>
@@ -1535,13 +1413,13 @@ function ScoreCalculationSheet({ provisions, contract, sectionNum }: { provision
                   return `(${p.score.toFixed(1)} × ${w})`;
                 }).join(" + ")}
               </div>
-              <div style={{ height: 1, background: "rgba(255,255,255,0.15)", margin: "8px 0" }} />
+              <div style={{ height: 1, background: "#cbd5e1", margin: "8px 0" }} />
               <div style={{ fontFamily: "monospace", fontSize: 12, color: "rgba(255,255,255,0.65)" }}>
-                {totalWeight} (total weight) × 10 = <strong style={{ color: "#fff" }}>{computedOverall}</strong>
+                {totalWeight} (total weight) × 10 = <strong style={{ color: "#0F172A" }}>{computedOverall}</strong>
               </div>
             </div>
             <div style={{ textAlign: "right" }}>
-              <div style={{ fontSize: 48, fontWeight: 900, color: "#fff", lineHeight: 1 }}>
+              <div style={{ fontSize: 48, fontWeight: 900, color: "#0F172A", lineHeight: 1 }}>
                 {Math.round(contract.overall_score ?? computedOverall)}
               </div>
               <div style={{ fontSize: 10, color: "rgba(255,255,255,0.45)", textTransform: "uppercase" as const, letterSpacing: "0.1em" }}>out of 100</div>
@@ -1561,14 +1439,13 @@ function Methodology({ provisions }: { provisions: ProvisionScore[] }) {
 
   return (
     <div style={S.section}>
-      <SectionLabel color={NEON.purple}>Section {5 + provisions.length}</SectionLabel>
+      <SectionLabel color={NEON.purple}>Section {6 + provisions.length}</SectionLabel>
       <div style={S.h2}>Methodology & Disclaimer</div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 28 }}>
         {[
           { title: "Scoring Framework", body: `Each of the 13 provisions is evaluated against 4–6 specific issues (65 total). Each issue is scored as found (1) or not found (0). The provision score (0–10) is the weighted sum of issues met. The overall score (0–100) is the weighted average of all provision scores, adjusted for CAA 2026 priority weighting. ${found} of ${total} issues were found in this contract.` },
           { title: "CAA 2026 Alignment", body: "This framework is aligned with the Consolidated Appropriations Act of 2021, 2022, and 2026, which established PBM transparency requirements, fiduciary obligations, and pass-through pricing standards for self-funded group health plans. Provisions are weighted by their relevance to the CAA's core requirements." },
-          { title: "Savings Methodology", body: "Estimated savings are calculated using industry-standard ranges for each provision type, scaled by the provision score deficit (gap from a perfect score of 10). Ranges are derived from published studies, DOL enforcement actions, and actuarial analyses of PBM contract audits. Estimates assume full implementation of all recommended language." },
           { title: "AI Analysis", body: "Contract text was analyzed using an AI language model trained on PBM contract standards, ERISA fiduciary requirements, and CAA 2026 compliance frameworks. The AI extracts relevant contract language, identifies gaps against each issue criterion, and scores each provision. Results are subject to the limitations of AI document analysis." },
         ].map(({ title, body }) => (
           <div key={title} style={S.card}>
@@ -1583,9 +1460,8 @@ function Methodology({ provisions }: { provisions: ProvisionScore[] }) {
         <div style={{ fontSize: 11, fontWeight: 900, color: NEON.red, letterSpacing: "0.1em",
           textTransform: "uppercase" as const, marginBottom: 8 }}>Important Disclaimer</div>
         <div style={{ fontSize: 13, color: "#000", lineHeight: 1.82 }}>
-          This report is for informational purposes only and does not constitute legal advice. Savings estimates are projections
-          based on industry data and should not be relied upon as guarantees of actual savings. Plan fiduciaries should consult
-          qualified ERISA counsel before making contractual decisions based on this analysis. Kincaid IQ and Kincaid RMC make no
+          This report is for informational purposes only and does not constitute legal advice. Plan fiduciaries should consult
+          qualified ERISA counsel before making contractual decisions based on this analysis. Kincaid Health makes no
           representation as to the legal enforceability of any model contract language provided herein. This analysis is based
           solely on the contract text submitted — oral representations, side agreements, and business practices are not evaluated.
           Scores reflect the analysis of AI systems and should be verified by qualified legal and actuarial professionals.
@@ -1597,10 +1473,10 @@ function Methodology({ provisions }: { provisions: ProvisionScore[] }) {
         display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ width: 24, height: 24, borderRadius: 5, background: "#9B1C2E", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ fontSize: 8, fontWeight: 900, color: "#fff", letterSpacing: "0.04em" }}>KIQ</span>
+            <span style={{ fontSize: 8, fontWeight: 900, color: "#0F172A", letterSpacing: "0.04em" }}>KIQ</span>
           </div>
           <div>
-            <div style={{ fontSize: 10, fontWeight: 900, color: "#002B5C", letterSpacing: "0.15em" }}>KINCAID IQ · RX DEFENSE IQ™</div>
+            <div style={{ fontSize: 10, fontWeight: 900, color: "#002B5C", letterSpacing: "0.15em" }}>KINCAID HEALTH · RX DEFENSE IQ™</div>
             <div style={{ fontSize: 9, color: "#666", marginTop: 2 }}>Fiduciary-Grade PBM Contract Intelligence · CAA 2026 Aligned</div>
           </div>
         </div>
@@ -1655,15 +1531,15 @@ export default function RxDefenseFullReport({ contract, onClose }: { contract: C
   const provisions = contract.provision_scores;
 
   return (
-    <div id="kiq-print-overlay" style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(0,0,0,0.96)",
+    <div id="kiq-print-overlay" className="kiq-report-overlay" style={{ position: "fixed", inset: 0, zIndex: 60, background: "var(--kiq-report-overlay-bg)",
       display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
       {/* ── Toolbar ── */}
       <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 12, padding: "12px 24px",
-        background: "#ffffff", borderBottom: "1px solid rgba(0,0,0,0.10)" }} className="print-hide">
+        background: "rgba(255,255,255,0.78)", borderBottom: "1px solid rgba(13,37,61,0.08)" }} className="print-hide kiq-report-toolbar">
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 12, fontWeight: 900, color: "#000", letterSpacing: "0.15em", textTransform: "uppercase" }}>
-            Rx Defense IQ™ · Full Fiduciary Report
+            PBM Contract Clarity 360™ · Full Fiduciary Report
           </div>
           <div style={{ fontSize: 11, color: "#000", marginTop: 1 }}>
             {contract.pbm_name || contract.contract_filename} · {Math.round(contract.overall_score ?? 0)}/100
@@ -1671,6 +1547,7 @@ export default function RxDefenseFullReport({ contract, onClose }: { contract: C
         </div>
 
         <button
+          className="kiq-report-action"
           data-testid="rx-fullreport-email"
           onClick={() => setEmailOpen(true)}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", borderRadius: 10,
@@ -1681,6 +1558,7 @@ export default function RxDefenseFullReport({ contract, onClose }: { contract: C
         </button>
 
         <button
+          className="kiq-report-action"
           data-testid="rx-fullreport-print"
           onClick={handlePrint}
           disabled={printing}
@@ -1692,6 +1570,7 @@ export default function RxDefenseFullReport({ contract, onClose }: { contract: C
         </button>
 
         <button
+          className="kiq-report-action"
           data-testid="rx-fullreport-download"
           onClick={handleDownload}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", borderRadius: 10,
@@ -1702,6 +1581,7 @@ export default function RxDefenseFullReport({ contract, onClose }: { contract: C
         </button>
 
         <button
+          className="kiq-report-action"
           data-testid="rx-fullreport-close"
           onClick={onClose}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 16px", borderRadius: 10,
@@ -1713,26 +1593,26 @@ export default function RxDefenseFullReport({ contract, onClose }: { contract: C
 
       {/* ── Report scroll area ── */}
       <div id="kiq-print-scroll" style={{ flex: 1, overflowY: "auto", overflowX: "hidden" }}>
-        <div ref={reportRef} style={{ ...S.page, maxWidth: 1140, margin: "0 auto" }}>
+        <div ref={reportRef} className="kiq-report-document" style={{ ...S.page, maxWidth: 1140, margin: "0 auto" }}>
           <div id="rpt-section-0"><CoverPage contract={contract} /></div>
           <div id="rpt-section-1"><TableOfContents provisions={provisions} /></div>
           <div id="rpt-section-2"><ExecutiveSummary contract={contract} /></div>
-          <div id="rpt-section-3"><FinancialImpact provisions={provisions} /></div>
-          <div id="rpt-section-4"><CriticalIssuesRanked provisions={provisions} /></div>
+          <div id="rpt-section-3"><CriticalIssuesRanked provisions={provisions} /></div>
           {provisions.map((p, i) => (
-            <div key={p.id} id={`rpt-section-${5 + i}`}>
-              <ProvisionSection p={p} sectionNum={4 + i} />
+            <div key={p.id} id={`rpt-section-${4 + i}`}>
+              <ProvisionSection p={p} sectionNum={3 + i} />
             </div>
           ))}
-          <div id={`rpt-section-${5 + provisions.length}`}><NegotiationPlaybook provisions={provisions} /></div>
-          <div id={`rpt-section-${6 + provisions.length}`}><ContractEvidenceRegister provisions={provisions} sectionNum={6 + provisions.length} /></div>
-          <div id={`rpt-section-${7 + provisions.length}`}><ScoreCalculationSheet provisions={provisions} contract={contract} sectionNum={7 + provisions.length} /></div>
-          <div id={`rpt-section-${8 + provisions.length}`}><Methodology provisions={provisions} /></div>
+          <div id={`rpt-section-${4 + provisions.length}`}><NegotiationPlaybook provisions={provisions} /></div>
+          <div id={`rpt-section-${5 + provisions.length}`}><ContractEvidenceRegister provisions={provisions} sectionNum={4 + provisions.length} /></div>
+          <div id={`rpt-section-${6 + provisions.length}`}><ScoreCalculationSheet provisions={provisions} contract={contract} sectionNum={5 + provisions.length} /></div>
+          <div id={`rpt-section-${7 + provisions.length}`}><Methodology provisions={provisions} /></div>
         </div>
 
         {/* Back to top */}
         <div className="print-hide" style={{ display: "flex", justifyContent: "center", padding: "32px 0 48px" }}>
           <button
+            className="kiq-report-action"
             onClick={() => document.getElementById("rpt-section-0")?.scrollIntoView({ behavior: "smooth" })}
             style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 24px", borderRadius: 10,
               background: "rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.10)",
@@ -1753,7 +1633,6 @@ export default function RxDefenseFullReport({ contract, onClose }: { contract: C
           "Score": `${Math.round(contract.overall_score ?? 0)}/100`,
           "Risk": contract.rating ?? "—",
           "Provisions OK": `${contract.provision_scores.filter(p => p.rating === "good").length}/${contract.provision_scores.length}`,
-          "Est. Exposure": `$${Math.round(Math.max(0, (70 - (contract.overall_score ?? 52)) * 3800)).toLocaleString()}`,
         }}
         reportData={contract}
       />
@@ -1766,7 +1645,7 @@ export default function RxDefenseFullReport({ contract, onClose }: { contract: C
             position: static !important; inset: auto !important;
             height: auto !important; overflow: visible !important;
             display: flex !important; flex-direction: column !important;
-            background: #f0f4f8 !important; width: 100% !important;
+            background: #ffffff !important; width: 100% !important;
           }
           #kiq-print-scroll {
             overflow: visible !important; height: auto !important;
@@ -1778,7 +1657,7 @@ export default function RxDefenseFullReport({ contract, onClose }: { contract: C
           * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
           @page { margin: 0.4in; size: letter portrait; }
           body::after {
-            content: "KINCAID IQ — STRICTLY CONFIDENTIAL · ACCOUNT SHRACK-7742";
+            content: "KINCAID HEALTH — STRICTLY CONFIDENTIAL · ACCOUNT SHRACK-7742";
             position: fixed; bottom: 0.15in; left: 0; right: 0;
             text-align: center; font-size: 6pt; font-weight: 700;
             letter-spacing: 0.14em; text-transform: uppercase;

@@ -1,5 +1,5 @@
 """
-Account Intelligence Hub — Kincaid IQ
+Account Intelligence Hub — Kincaid Health
 Unified account enrichment from multiple data providers.
 
 Providers (all run in parallel per request):
@@ -438,7 +438,7 @@ INTEL_STACK_EVAL = {
     "unified_schema": {
         "description": "Normalized Account Intelligence Layer — all providers map to this schema",
         "fields": {
-            "company_id": "UUID — internal Kincaid IQ identifier",
+            "company_id": "UUID — internal Kincaid Health identifier",
             "domain": "Primary domain (from Clearbit/Apollo/BuiltWith)",
             "duns": "DUNS number (D&B Direct+)",
             "state": "US state (from Apollo/Clearbit/D&B — used for Sales IQ regulatory overlay)",
@@ -1368,7 +1368,7 @@ async def get_tech_stack(domain: str):
         for t in ts_tech:
             all_tech.add(t)
 
-    # HR/Benefits software detection (opportunity signals for Kincaid IQ)
+    # HR/Benefits software detection (opportunity signals for Kincaid Health)
     hr_tech_keywords = ["workday", "bamboo", "adp", "paylocity", "paychex", "gusto", "zenefits",
                         "benefitfocus", "bswift", "businessolver", "benefitsync", "luminos",
                         "fidelity", "voya", "empower", "principal", "lincoln", "unum"]
@@ -1412,7 +1412,7 @@ async def get_tech_stack(domain: str):
 async def get_company_signals(domain: str):
     """
     Buying signal intelligence — Crunchbase + TheirStack + Apollo signals in parallel.
-    Returns ranked signals with Kincaid IQ-specific interpretations.
+    Returns ranked signals with Kincaid Health-specific interpretations.
     """
     clean_domain = _clean_domain(domain)
     if not clean_domain:
@@ -1497,7 +1497,7 @@ async def get_company_signals(domain: str):
 async def get_intel_stack():
     """
     Ranked API Intelligence Stack evaluation — MVP and Enterprise recommendations.
-    Returns full analysis of all 14 providers with Kincaid IQ-specific use cases.
+    Returns full analysis of all 14 providers with Kincaid Health-specific use cases.
     """
     provider_statuses = {_provider_status(p)["id"]: _provider_status(p)["configured"] for p in PROVIDERS}
 

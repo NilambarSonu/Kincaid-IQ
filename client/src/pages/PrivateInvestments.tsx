@@ -29,7 +29,7 @@ export default function PrivateInvestments() {
 
   return (
     <Layout>
-      <div className="mb-8">
+      <div className="kiq-command-hero mb-8 px-6 py-5">
         <p className="section-label mb-1">Alternatives</p>
         <h1 className="text-3xl font-bold" style={{ fontFamily: "var(--font-display)", color: "hsl(var(--primary))" }}>
           Private Investment Tracker
@@ -54,8 +54,8 @@ export default function PrivateInvestments() {
       </div>
 
       {/* Investments Table */}
-      <div className="bg-white rounded-2xl border border-border/60 shadow-sm overflow-hidden" data-testid="table-private-investments">
-        <div className="px-6 py-4 border-b border-border/40">
+      <div className="kiq-command-card overflow-hidden" data-testid="table-private-investments">
+        <div className="px-6 py-4 border-b border-border/40 bg-[var(--kiq-surface)]/42">
           <h2 className="font-semibold" style={{ fontFamily: "var(--font-display)" }}>Active Positions</h2>
         </div>
         <div className="overflow-x-auto">
@@ -73,7 +73,7 @@ export default function PrivateInvestments() {
               {privateInvestments.map((inv) => (
                 <tr
                   key={inv.id}
-                  className="border-b border-border/20 last:border-0 hover:bg-white/5 transition-colors cursor-pointer"
+                  className="border-b border-border/20 last:border-0 hover:bg-[var(--kiq-surface)]/70 transition-colors cursor-pointer"
                   data-testid={`row-investment-${inv.id}`}
                   onClick={() => open("ytd-return")}
                 >

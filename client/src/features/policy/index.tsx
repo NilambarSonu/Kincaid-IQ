@@ -65,7 +65,7 @@ export const RENDER_BG: Record<string, string> = {
   CAUTION:  "border-[#FFB800]/25 bg-[#FFB800]/5",
   BLOCKED:  "border-[#FF4D6D]/25 bg-[#FF4D6D]/5",
   REDACTED: "border-[#A855F7]/25 bg-[#A855F7]/5",
-  PENDING:  "border-zinc-700/40 bg-zinc-900/40",
+  PENDING:  "border-slate-200/40 bg-slate-50/40",
 };
 
 export const POSTURE_COLOR: Record<string, string> = {
@@ -100,7 +100,7 @@ function ClaimPolicyRow({ r }: { r: ClaimPolicyResult }) {
   const rc = RENDER_COLOR[r.renderPolicy] ?? "#94a3b8";
 
   return (
-    <div className={cn("rounded-xl border overflow-hidden", RENDER_BG[r.renderPolicy] ?? "border-zinc-800")}
+    <div className={cn("rounded-xl border overflow-hidden", RENDER_BG[r.renderPolicy] ?? "border-slate-200")}
       data-testid={`policy-row-${r.claimId}`}>
       <button
         onClick={() => setOpen(o => !o)}
@@ -109,8 +109,8 @@ function ClaimPolicyRow({ r }: { r: ClaimPolicyResult }) {
       >
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-semibold text-zinc-100 truncate">{r.title}</span>
-            <span className="text-[9px] font-mono border border-zinc-700 rounded px-1.5 py-0.5 text-zinc-500">{r.kpiKey}</span>
+            <span className="text-xs font-semibold text-slate-900 truncate">{r.title}</span>
+            <span className="text-[9px] font-mono border border-slate-200 rounded px-1.5 py-0.5 text-zinc-500">{r.kpiKey}</span>
           </div>
           <div className="flex items-center gap-2 mt-0.5">
             <span className="text-[10px] font-mono text-zinc-600">{r.claimId}</span>
@@ -122,7 +122,7 @@ function ClaimPolicyRow({ r }: { r: ClaimPolicyResult }) {
             style={{ color: rc, borderColor: `${rc}40`, background: `${rc}10` }}>
             {r.renderPolicy}
           </span>
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-zinc-700 text-zinc-400"
+          <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-slate-200 text-zinc-400"
             style={{ color: POSTURE_COLOR[r.trustPosture] ?? "#94a3b8" }}>
             {r.trustPosture}
           </span>
@@ -135,7 +135,7 @@ function ClaimPolicyRow({ r }: { r: ClaimPolicyResult }) {
       </button>
 
       {open && (
-        <div className="border-t border-zinc-800/60 px-4 py-4 space-y-4">
+        <div className="border-t border-slate-200/60 px-4 py-4 space-y-4">
           {r.gateReason && (
             <div className="flex items-start gap-2 rounded-lg border border-[#FFB800]/20 bg-[#FFB800]/5 px-3 py-2">
               <AlertTriangle className="w-3 h-3 text-[#FFB800] mt-0.5 shrink-0" />
@@ -152,7 +152,7 @@ function ClaimPolicyRow({ r }: { r: ClaimPolicyResult }) {
                 <div key={s.stage} className="flex items-start gap-2">
                   <StagePip stage={s} />
                   <div className="flex-1">
-                    <span className="text-[10px] font-mono font-semibold text-zinc-300">{s.name}</span>
+                    <span className="text-[10px] font-mono font-semibold text-slate-500">{s.name}</span>
                     <p className="text-[9px] text-zinc-600 leading-relaxed">{s.note}</p>
                   </div>
                 </div>
@@ -160,13 +160,13 @@ function ClaimPolicyRow({ r }: { r: ClaimPolicyResult }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2 pt-2 border-t border-zinc-800/50">
+          <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-200/50">
             {[
               { label: "Board Grade",    val: r.policy.board_grade,       col: "#00FF94" },
               { label: "Export Allowed", val: r.policy.export_allowed,    col: "#00A8FF" },
               { label: "Narrative OK",   val: r.policy.narrative_allowed, col: "#FFB800" },
             ].map(({ label, val, col }) => (
-              <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-900/50 px-2 py-1.5 text-center">
+              <div key={label} className="rounded-lg border border-slate-200 bg-slate-50/50 px-2 py-1.5 text-center">
                 <div className="flex items-center justify-center gap-1 mb-0.5">
                   {val
                     ? <CheckCircle2 className="w-2.5 h-2.5" style={{ color: col }} />
@@ -225,14 +225,14 @@ export function PolicyCheckWidget({
   return (
     <div className={cn("space-y-4", className)} data-testid="policy-check-widget">
       {/* Controls */}
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4 flex items-end gap-3 flex-wrap">
+      <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4 flex items-end gap-3 flex-wrap">
         <div>
           <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-1.5">Audience</label>
           <select
             data-testid="select-audience"
             value={audience}
             onChange={e => setAudience(e.target.value as typeof defaultAudience)}
-            className="bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs font-mono text-zinc-200 focus:outline-none focus:border-[#00A8FF]/50"
+            className="bg-white border border-slate-200 rounded-lg px-3 py-2 text-xs font-mono text-slate-700 focus:outline-none focus:border-[#00A8FF]/50"
           >
             <option value="board">Board</option>
             <option value="executive">Executive</option>
@@ -255,7 +255,7 @@ export function PolicyCheckWidget({
         <div className="space-y-4" data-testid="policy-results">
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
             {Object.entries(result.renderCounts).map(([policy, count]) => (
-              <div key={policy} className="rounded-lg border border-zinc-800 bg-zinc-900/50 px-3 py-2 text-center">
+              <div key={policy} className="rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-2 text-center">
                 <p className="text-lg font-bold font-mono tabular-nums" style={{ color: RENDER_COLOR[policy] ?? "#94a3b8" }}>
                   {count}
                 </p>
@@ -273,7 +273,7 @@ export function PolicyCheckWidget({
                 placeholder="Filter by title / ID / KPI key…"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="w-full bg-zinc-950 border border-zinc-700 rounded-lg pl-7 pr-3 py-2 text-xs text-zinc-300 placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]/40"
+                className="w-full bg-white border border-slate-200 rounded-lg pl-7 pr-3 py-2 text-xs text-slate-500 placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]/40"
               />
             </div>
             <div className="flex items-center gap-1">
@@ -282,7 +282,7 @@ export function PolicyCheckWidget({
                 data-testid="select-filter-policy"
                 value={filterPolicy}
                 onChange={e => setFilterPolicy(e.target.value)}
-                className="bg-zinc-950 border border-zinc-700 rounded-lg px-2 py-2 text-[10px] font-mono text-zinc-300 focus:outline-none"
+                className="bg-white border border-slate-200 rounded-lg px-2 py-2 text-[10px] font-mono text-slate-500 focus:outline-none"
               >
                 <option value="ALL">All Policies</option>
                 {["ALLOWED","CAUTION","BLOCKED","REDACTED","PENDING"].map(p => (

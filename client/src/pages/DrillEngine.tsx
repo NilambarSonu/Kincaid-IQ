@@ -93,11 +93,11 @@ const sevCls    = (s: Severity) =>
   : s === "HIGH"   ? "text-orange-400 bg-orange-500/10 border-orange-500/30"
   : s === "MEDIUM" ? "text-amber-400 bg-amber-500/10 border-amber-500/30"
   :                  "text-emerald-400 bg-emerald-500/10 border-emerald-500/30";
-const dirCls    = (d: Dir) => d === "good" || d === "up" ? "text-emerald-400" : d === "bad" || d === "down" ? "text-red-400" : "text-white/35";
+const dirCls    = (d: Dir) => d === "good" || d === "up" ? "text-emerald-400" : d === "bad" || d === "down" ? "text-red-400" : "text-[var(--kiq-ink)]/35";
 function DirIcon({ dir }: { dir: Dir }) {
   if (dir === "good" || dir === "up")   return <TrendingUp  size={10} className="text-emerald-400" />;
   if (dir === "bad"  || dir === "down") return <TrendingDown size={10} className="text-red-400" />;
-  return <Minus size={10} className="text-white/25" />;
+  return <Minus size={10} className="text-[var(--kiq-ink)]/25" />;
 }
 
 // ── Mini bar chart (SVG) ──────────────────────────────────────────────────────
@@ -108,10 +108,10 @@ function MiniBar({ data, accent }: { data: ChartPoint[]; accent: string }) {
   const W = 300; const H = 68;
   const bw = Math.floor((W - (data.length - 1) * 3) / data.length);
   return (
-    <div className="rounded-lg p-3" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+    <div className="rounded-lg p-3" style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
       <div className="flex items-center gap-1.5 mb-2">
-        <Activity size={10} className="text-white/25" />
-        <span className="text-[9px] font-mono text-white/25 uppercase tracking-widest">Trend Index</span>
+        <Activity size={10} className="text-[var(--kiq-ink)]/25" />
+        <span className="text-[9px] font-mono text-[var(--kiq-ink)]/25 uppercase tracking-widest">Trend Index</span>
       </div>
       <svg width="100%" viewBox={`0 0 ${W} ${H}`}>
         {data.map((pt, i) => {
@@ -122,7 +122,7 @@ function MiniBar({ data, accent }: { data: ChartPoint[]; accent: string }) {
             <g key={i}>
               <rect x={x} y={y} width={bw} height={bh} rx={2} fill={accent} opacity={0.25 + (i / data.length) * 0.6} />
               <text x={x + bw / 2} y={H - 1} textAnchor="middle" fontSize={7} fill="rgba(255,255,255,0.28)" fontFamily="monospace">{pt.label}</text>
-              <text x={x + bw / 2} y={y - 2}  textAnchor="middle" fontSize={7} fill="rgba(255,255,255,0.5)"  fontFamily="monospace">{pt.value}</text>
+              <text x={x + bw / 2} y={y - 2}  textAnchor="middle" fontSize={7} fill="#334155"  fontFamily="monospace">{pt.value}</text>
             </g>
           );
         })}
@@ -138,7 +138,7 @@ function ScoreGauge({ score, category }: { score: number; category: Category }) 
   return (
     <div className="flex flex-col items-center flex-shrink-0">
       <svg width={68} height={40} viewBox="0 0 72 42">
-        <path d="M 6 38 A 30 30 0 0 1 66 38" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={7} strokeLinecap="round" />
+        <path d="M 6 38 A 30 30 0 0 1 66 38" fill="none" stroke="#f1f5f9" strokeWidth={7} strokeLinecap="round" />
         <path d="M 6 38 A 30 30 0 0 1 66 38" fill="none" stroke={fill} strokeWidth={7} strokeLinecap="round"
           strokeDasharray={`${(score / 100) * 94.2} 94.2`} opacity={0.85} />
         <text x={36} y={36} textAnchor="middle" fontSize={13} fontWeight="bold" fill="white" fontFamily="monospace">{score}</text>
@@ -159,7 +159,7 @@ function Breadcrumb({ screens }: { screens: DrillScreen[] }) {
         const cfg = CAT[n.category];
         return (
           <div key={n.id} className="flex items-center gap-1">
-            {i > 0 && <ArrowRight size={9} className="text-white/15" />}
+            {i > 0 && <ArrowRight size={9} className="text-[var(--kiq-ink)]/15" />}
             <span className="text-[9px] font-mono px-1.5 py-0.5 rounded border truncate max-w-[110px]"
               style={{ color: cfg.accent, borderColor: `${cfg.accent}28`, background: `${cfg.accent}0c` }}
               title={n.title}>
@@ -183,10 +183,10 @@ function DepthDots({ depth }: { depth: number }) {
             width: i < depth ? 16 : 6,
             background: i < depth
               ? i >= 7 ? "#f87171" : i >= 5 ? "#fb923c" : i >= 3 ? "#fbbf24" : "#3b82f6"
-              : "rgba(255,255,255,0.07)",
+              : "#e2e8f0",
           }} />
       ))}
-      <span className="text-[9px] font-mono text-white/25 ml-1">L{depth}/9</span>
+      <span className="text-[9px] font-mono text-[var(--kiq-ink)]/25 ml-1">L{depth}/9</span>
     </div>
   );
 }
@@ -200,11 +200,11 @@ function SkeletonGrid() {
       {cats.map((c) => (
         <div key={c} className={`rounded-2xl border p-5 animate-pulse ${CAT[c].border}`}
           style={{ background: "rgba(255,255,255,0.025)" }}>
-          <div className="h-3 w-16 rounded bg-white/10 mb-3" />
-          <div className="h-0.5 w-full bg-white/5 rounded mb-3" />
-          <div className="h-3.5 w-4/5 rounded bg-white/10 mb-2" />
-          <div className="h-2.5 w-full rounded bg-white/7 mb-1.5" />
-          <div className="h-2.5 w-3/4 rounded bg-white/7" />
+          <div className="h-3 w-16 rounded bg-[var(--kiq-surface)]/10 mb-3" />
+          <div className="h-0.5 w-full bg-[var(--kiq-surface)]/5 rounded mb-3" />
+          <div className="h-3.5 w-4/5 rounded bg-[var(--kiq-surface)]/10 mb-2" />
+          <div className="h-2.5 w-full rounded bg-[var(--kiq-surface)]/7 mb-1.5" />
+          <div className="h-2.5 w-3/4 rounded bg-[var(--kiq-surface)]/7" />
         </div>
       ))}
     </div>
@@ -222,7 +222,7 @@ function ParentDetail({ tile }: { tile: DrillNode }) {
 
   return (
     <div className="rounded-2xl border overflow-hidden mb-6"
-      style={{ background: "rgba(255,255,255,0.03)", borderColor: `${cfg.accent}30` }}>
+      style={{ background: "#ffffff", borderColor: `${cfg.accent}30` }}>
 
       {/* Header */}
       <div className="px-5 py-4 border-b flex items-start justify-between gap-4"
@@ -232,10 +232,10 @@ function ParentDetail({ tile }: { tile: DrillNode }) {
             <span className={`inline-flex items-center gap-1.5 text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${cfg.badge}`}>
               {cfg.label.toUpperCase()} ANALYSIS
             </span>
-            <span className="text-[9px] font-mono text-white/20">L{tile.level}</span>
+            <span className="text-[9px] font-mono text-[var(--kiq-ink)]/20">L{tile.level}</span>
           </div>
-          <h2 className="text-white font-bold text-base leading-snug mb-1">{tile.title}</h2>
-          <p className="text-white/60 text-sm leading-relaxed">{tile.description}</p>
+          <h2 className="text-[var(--kiq-ink)] font-bold text-base leading-snug mb-1">{tile.title}</h2>
+          <p className="text-[var(--kiq-ink)]/60 text-sm leading-relaxed">{tile.description}</p>
         </div>
         {tile.score != null && <ScoreGauge score={tile.score} category={tile.category} />}
       </div>
@@ -243,13 +243,13 @@ function ParentDetail({ tile }: { tile: DrillNode }) {
       {/* KPIs */}
       {kpis.length > 0 && (
         <div className="px-5 py-4 border-b grid grid-cols-2 gap-3 sm:grid-cols-4"
-          style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+          style={{ borderColor: "#f8fafc" }}>
           {kpis.map((kpi, i) => (
             <div key={i} className="rounded-xl p-3"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
+              style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
               <div className="flex items-center gap-1 mb-1.5">
                 <DirIcon dir={kpi.dir} />
-                <span className="text-[9px] font-mono text-white/30 uppercase tracking-wider truncate">{kpi.label}</span>
+                <span className="text-[9px] font-mono text-[var(--kiq-ink)]/30 uppercase tracking-wider truncate">{kpi.label}</span>
               </div>
               <div className="text-xl font-bold font-mono leading-none mb-1" style={{ color: cfg.accent }}>{kpi.value}</div>
               <div className={`text-[9px] font-mono truncate ${dirCls(kpi.dir)}`}>{kpi.delta}</div>
@@ -260,19 +260,19 @@ function ParentDetail({ tile }: { tile: DrillNode }) {
 
       {/* Chart + Findings */}
       <div className="px-5 py-4 border-b grid gap-4 sm:grid-cols-2"
-        style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+        style={{ borderColor: "#f8fafc" }}>
         {chart.length > 0 && <MiniBar data={chart} accent={cfg.accent} />}
         {findings.length > 0 && (
-          <div className="rounded-lg p-3" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="rounded-lg p-3" style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
             <div className="flex items-center gap-1.5 mb-2.5">
-              <Target size={10} className="text-white/25" />
-              <span className="text-[9px] font-mono text-white/25 uppercase tracking-widest">Intelligence Findings</span>
+              <Target size={10} className="text-[var(--kiq-ink)]/25" />
+              <span className="text-[9px] font-mono text-[var(--kiq-ink)]/25 uppercase tracking-widest">Intelligence Findings</span>
             </div>
             <ul className="space-y-2">
               {findings.map((f, i) => (
                 <li key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 flex-shrink-0 w-1 h-1 rounded-full" style={{ background: cfg.accent, opacity: 0.7 }} />
-                  <span className="text-xs text-white/65 leading-relaxed">{f}</span>
+                  <span className="text-xs text-[var(--kiq-ink)]/65 leading-relaxed">{f}</span>
                 </li>
               ))}
             </ul>
@@ -285,8 +285,8 @@ function ParentDetail({ tile }: { tile: DrillNode }) {
         {risks.length > 0 && (
           <div className="flex-1">
             <div className="flex items-center gap-1.5 mb-2">
-              <ShieldAlert size={10} className="text-white/25" />
-              <span className="text-[9px] font-mono text-white/25 uppercase tracking-widest">Risk Factors</span>
+              <ShieldAlert size={10} className="text-[var(--kiq-ink)]/25" />
+              <span className="text-[9px] font-mono text-[var(--kiq-ink)]/25 uppercase tracking-widest">Risk Factors</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {risks.map((r, i) => (
@@ -303,7 +303,7 @@ function ParentDetail({ tile }: { tile: DrillNode }) {
             <Zap size={12} className="mt-0.5 flex-shrink-0" style={{ color: cfg.accent }} />
             <div>
               <span className="text-[9px] font-mono uppercase tracking-wider mb-1 block" style={{ color: cfg.accent, opacity: 0.65 }}>Next Action</span>
-              <span className="text-xs text-white/80 leading-relaxed">{tile.action}</span>
+              <span className="text-xs text-[var(--kiq-ink)]/80 leading-relaxed">{tile.action}</span>
             </div>
           </div>
         )}
@@ -355,25 +355,25 @@ function ChildTile({
 
       {/* Score bar */}
       {node.score != null && (
-        <div className="w-full h-0.5 rounded-full bg-white/5 mb-3">
+        <div className="w-full h-0.5 rounded-full bg-[var(--kiq-surface)]/5 mb-3">
           <div className="h-0.5 rounded-full" style={{ width: `${node.score}%`, background: scoreBar(node.score) }} />
         </div>
       )}
 
-      <h3 className="text-white font-semibold text-sm leading-snug mb-2">{node.title}</h3>
-      <p className="text-white/50 text-xs leading-relaxed line-clamp-3">{node.description}</p>
+      <h3 className="text-[var(--kiq-ink)] font-semibold text-sm leading-snug mb-2">{node.title}</h3>
+      <p className="text-[var(--kiq-ink)]/50 text-xs leading-relaxed line-clamp-3">{node.description}</p>
 
       {/* Click hint */}
       {!isFinal && (
         <div className="mt-4 flex items-center justify-between">
-          <span className="text-[9px] font-mono text-white/20">tap to drill deeper</span>
+          <span className="text-[9px] font-mono text-[var(--kiq-ink)]/20">tap to drill deeper</span>
           <div className="flex items-center gap-1">
-            <ChevronRight size={13} className="text-white/20" />
+            <ChevronRight size={13} className="text-[var(--kiq-ink)]/20" />
           </div>
         </div>
       )}
       {isFinal && (
-        <span className="mt-3 inline-block text-[9px] font-mono text-white/25 border border-white/10 px-1.5 py-0.5 rounded">FINAL L9</span>
+        <span className="mt-3 inline-block text-[9px] font-mono text-[var(--kiq-ink)]/25 border border-white/10 px-1.5 py-0.5 rounded">FINAL L9</span>
       )}
     </motion.div>
   );
@@ -509,7 +509,7 @@ export default function DrillEngine() {
 
   const handleExport = () => {
     const lines = [
-      "KINCAID IQ — DRILL-DOWN INTELLIGENCE REPORT",
+      "KINCAID HEALTH — DRILL-DOWN INTELLIGENCE REPORT",
       `Topic: ${topic}`,
       `Generated: ${new Date().toISOString()}`,
       `Depth: L${depth}`,
@@ -545,7 +545,7 @@ export default function DrillEngine() {
   // ════════════════════════════════════════════════════════════════════════
 
   return (
-    <div className="min-h-screen text-white overflow-x-hidden" style={{ background: "#05070a" }}>
+    <div className="min-h-screen text-[var(--kiq-ink)] overflow-x-hidden" style={{ background: "#F8FAFC" }}>
 
       {/* ── Persistent top bar (always visible) ── */}
       <div className="sticky top-0 z-30 border-b border-white/6 backdrop-blur-md"
@@ -557,7 +557,7 @@ export default function DrillEngine() {
               <button
                 onClick={handleBack}
                 data-testid="button-drill-back"
-                className="flex items-center gap-1 text-white/40 hover:text-white/80 transition-colors text-xs font-mono"
+                className="flex items-center gap-1 text-[var(--kiq-ink)]/40 hover:text-[var(--kiq-ink)]/80 transition-colors text-xs font-mono"
               >
                 <ChevronLeft size={14} />
                 Back
@@ -572,7 +572,7 @@ export default function DrillEngine() {
                 DRILL ENGINE
               </span>
               {started && (
-                <span className="text-[9px] font-mono text-white/25 hidden sm:inline">
+                <span className="text-[9px] font-mono text-[var(--kiq-ink)]/25 hidden sm:inline">
                   {topic.length > 28 ? topic.slice(0, 28) + "…" : topic}
                 </span>
               )}
@@ -584,19 +584,19 @@ export default function DrillEngine() {
             {started && <DepthDots depth={depth} />}
             {started && selectedPath.length > 0 && (
               <button onClick={handleSave} data-testid="button-save-path"
-                className="flex items-center gap-1 text-white/30 hover:text-white/70 transition-colors">
+                className="flex items-center gap-1 text-[var(--kiq-ink)]/30 hover:text-[var(--kiq-ink)]/70 transition-colors">
                 <Bookmark size={12} />
               </button>
             )}
             {started && selectedPath.length > 0 && (
               <button onClick={handleExport} data-testid="button-export-drill"
-                className="flex items-center gap-1 text-white/30 hover:text-white/70 transition-colors">
+                className="flex items-center gap-1 text-[var(--kiq-ink)]/30 hover:text-[var(--kiq-ink)]/70 transition-colors">
                 <Download size={12} />
               </button>
             )}
             {started && (
               <button onClick={handleReset} data-testid="button-reset-drill"
-                className="flex items-center gap-1 text-white/30 hover:text-white/70 transition-colors">
+                className="flex items-center gap-1 text-[var(--kiq-ink)]/30 hover:text-[var(--kiq-ink)]/70 transition-colors">
                 <RotateCcw size={11} />
               </button>
             )}
@@ -606,7 +606,7 @@ export default function DrillEngine() {
         {/* Breadcrumb strip under top bar */}
         {started && selectedPath.length > 0 && (
           <div className="max-w-5xl mx-auto px-5 pb-2 flex items-center gap-1.5 flex-wrap">
-            <span className="text-[8px] font-mono text-white/20 uppercase tracking-widest">Path:</span>
+            <span className="text-[8px] font-mono text-[var(--kiq-ink)]/20 uppercase tracking-widest">Path:</span>
             <Breadcrumb screens={screenStack} />
           </div>
         )}
@@ -625,7 +625,7 @@ export default function DrillEngine() {
               <h1 className="text-2xl font-bold mb-1" style={{ fontFamily: "'Orbitron', monospace" }}>
                 KIQ DRILL ENGINE
               </h1>
-              <p className="text-white/40 text-sm leading-relaxed">
+              <p className="text-[var(--kiq-ink)]/40 text-sm leading-relaxed">
                 Click a tile → get a flood of KPIs, charts, findings &amp; risk data.
                 Then click through to the next screen — up to 9 levels deep.
               </p>
@@ -633,7 +633,7 @@ export default function DrillEngine() {
 
             <div className="rounded-2xl border border-white/8 p-7" style={{ background: "rgba(255,255,255,0.035)" }}>
               {/* Quick topics */}
-              <p className="text-white/35 text-xs font-mono uppercase tracking-widest mb-3">Quick Topics</p>
+              <p className="text-[var(--kiq-ink)]/35 text-xs font-mono uppercase tracking-widest mb-3">Quick Topics</p>
               <div className="flex flex-wrap gap-2 mb-6">
                 {[
                   "PBM spread pricing",
@@ -648,8 +648,8 @@ export default function DrillEngine() {
                   <button key={t}
                     onClick={() => setInputValue(t)}
                     data-testid={`quick-topic-${t.replace(/\s+/g, "-").toLowerCase()}`}
-                    className="text-xs px-3 py-1.5 rounded-full border border-white/12 text-white/45
-                               hover:border-white/30 hover:text-white/75 transition-all">
+                    className="text-xs px-3 py-1.5 rounded-full border border-white/12 text-[var(--kiq-ink)]/45
+                               hover:border-white/30 hover:text-[var(--kiq-ink)]/75 transition-all">
                     {t}
                   </button>
                 ))}
@@ -663,23 +663,23 @@ export default function DrillEngine() {
                 onClick={() => fileInputRef.current?.click()}
                 data-testid="dropzone-document"
                 className={`mb-5 rounded-xl border-2 border-dashed px-5 py-4 cursor-pointer text-center transition-all
-                  ${dragOver ? "border-rose-500/55 bg-rose-900/8" : fileText ? "border-emerald-500/35 bg-emerald-900/8" : "border-white/8 hover:border-white/20 bg-white/[0.015]"}`}>
+                  ${dragOver ? "border-rose-500/55 bg-rose-900/8" : fileText ? "border-emerald-500/35 bg-emerald-900/8" : "border-white/8 hover:border-white/20 bg-[var(--kiq-surface)]/[0.015]"}`}>
                 <input ref={fileInputRef} type="file" accept=".pdf,.txt,.md,.csv" className="hidden"
                   onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
                 {extracting ? (
-                  <p className="text-xs text-white/40">Extracting…</p>
+                  <p className="text-xs text-[var(--kiq-ink)]/40">Extracting…</p>
                 ) : fileText ? (
                   <div className="flex items-center justify-center gap-2">
                     <span className="text-emerald-400 text-xs font-mono">✓ {fileName}</span>
-                    <span className="text-white/20 text-xs">·</span>
-                    <span className="text-white/30 text-xs">{Math.round(fileText.length / 1000)}k chars</span>
+                    <span className="text-[var(--kiq-ink)]/20 text-xs">·</span>
+                    <span className="text-[var(--kiq-ink)]/30 text-xs">{Math.round(fileText.length / 1000)}k chars</span>
                     <button onClick={(e) => { e.stopPropagation(); setFileText(null); setFileName(null); }}
-                      className="ml-2 text-white/20 hover:text-white/50 text-xs">✕</button>
+                      className="ml-2 text-[var(--kiq-ink)]/20 hover:text-[var(--kiq-ink)]/50 text-xs">✕</button>
                   </div>
                 ) : (
                   <>
-                    <p className="text-white/30 text-xs font-mono">DROP CONTRACT OR DOCUMENT HERE</p>
-                    <p className="text-white/18 text-[10px] mt-0.5">PDF · TXT · MD — AI drills into specific clauses and figures</p>
+                    <p className="text-[var(--kiq-ink)]/30 text-xs font-mono">DROP CONTRACT OR DOCUMENT HERE</p>
+                    <p className="text-[var(--kiq-ink)]/18 text-[10px] mt-0.5">PDF · TXT · MD — AI drills into specific clauses and figures</p>
                   </>
                 )}
               </div>
@@ -691,11 +691,11 @@ export default function DrillEngine() {
                   onKeyDown={(e) => { if (e.key === "Enter") handleStart(); }}
                   placeholder="e.g. PBM spread pricing, ERISA fiduciary breach…"
                   data-testid="input-drill-topic"
-                  className="flex-1 bg-white/4 border-white/12 text-white placeholder:text-white/22 text-sm focus:border-rose-500/45"
+                  className="flex-1 bg-[var(--kiq-surface)]/4 border-white/12 text-[var(--kiq-ink)] placeholder:text-[var(--kiq-ink)]/22 text-sm focus:border-rose-500/45"
                 />
                 <Button onClick={handleStart} disabled={!inputValue.trim() || loading}
                   data-testid="button-start-drill"
-                  className="px-6 font-semibold" style={{ background: "#9B1C2E", color: "white" }}>
+                  className="px-6 font-semibold" style={{ background: "#9B1C2E", color: "#0F172A" }}>
                   <Search size={13} className="mr-2" />
                   Begin
                 </Button>
@@ -705,7 +705,7 @@ export default function DrillEngine() {
               {savedPaths.length > 0 && (
                 <div className="mt-5 pt-4 border-t border-white/6">
                   <button onClick={() => setShowSaved((v) => !v)}
-                    className="flex items-center gap-2 text-xs text-white/25 hover:text-white/55 transition-colors">
+                    className="flex items-center gap-2 text-xs text-[var(--kiq-ink)]/25 hover:text-[var(--kiq-ink)]/55 transition-colors">
                     <History size={11} />
                     {savedPaths.length} saved path{savedPaths.length !== 1 ? "s" : ""}
                     <ChevronDown size={10} className={`transition-transform ${showSaved ? "rotate-180" : ""}`} />
@@ -718,8 +718,8 @@ export default function DrillEngine() {
                           <button key={i} onClick={() => setInputValue(sp.topic)}
                             className="w-full text-left rounded-lg border border-white/6 px-3 py-2 hover:border-white/16 transition-all"
                             style={{ background: "rgba(255,255,255,0.025)" }}>
-                            <span className="text-white/55 text-xs font-medium">{sp.topic}</span>
-                            <span className="text-white/20 text-[9px] ml-2 font-mono">
+                            <span className="text-[var(--kiq-ink)]/55 text-xs font-medium">{sp.topic}</span>
+                            <span className="text-[var(--kiq-ink)]/20 text-[9px] ml-2 font-mono">
                               {sp.path.length} levels · {new Date(sp.savedAt).toLocaleDateString()}
                             </span>
                           </button>
@@ -743,7 +743,7 @@ export default function DrillEngine() {
                     style={{ animationDelay: `${i * 150}ms` }} />
                 ))}
               </div>
-              <span className="text-xs font-mono text-white/30">Generating Level 1 intelligence…</span>
+              <span className="text-xs font-mono text-[var(--kiq-ink)]/30">Generating Level 1 intelligence…</span>
             </div>
             <SkeletonGrid />
           </div>
@@ -769,7 +769,7 @@ export default function DrillEngine() {
                     style={{ background: "rgba(155,28,46,0.3)", border: "1px solid rgba(155,28,46,0.4)", color: "#f87171" }}>
                     {depth}
                   </div>
-                  <span className="text-[10px] font-mono text-white/30">
+                  <span className="text-[10px] font-mono text-[var(--kiq-ink)]/30">
                     LEVEL {depth}
                     {depth === 1 ? " — STRATEGIC LANDSCAPE"
                       : depth <= 3 ? " — STRUCTURAL DIAGNOSIS"
@@ -778,8 +778,8 @@ export default function DrillEngine() {
                       : " — FINAL WEAPON"}
                   </span>
                 </div>
-                <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.04)" }} />
-                <Badge variant="outline" className="text-[9px] border-white/12 text-white/25 font-mono">
+                <div className="flex-1 h-px" style={{ background: "#ffffff" }} />
+                <Badge variant="outline" className="text-[9px] border-white/12 text-[var(--kiq-ink)]/25 font-mono">
                   {currentScreen.children.length} tiles
                 </Badge>
               </div>
@@ -791,12 +791,12 @@ export default function DrillEngine() {
 
               {/* Section label for child tiles */}
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-[9px] font-mono text-white/25 uppercase tracking-widest">
+                <span className="text-[9px] font-mono text-[var(--kiq-ink)]/25 uppercase tracking-widest">
                   {currentScreen.parentTile
                     ? `Drill deeper — select a lens to continue`
                     : `Select an analytical lens to begin your investigation`}
                 </span>
-                <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.04)" }} />
+                <div className="flex-1 h-px" style={{ background: "#ffffff" }} />
               </div>
 
               {/* 4 child tile cards */}
@@ -819,7 +819,7 @@ export default function DrillEngine() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     className="mt-6 flex items-center gap-3 justify-center py-4 rounded-xl border border-white/6"
-                    style={{ background: "rgba(255,255,255,0.02)" }}
+                    style={{ background: "#ffffff" }}
                   >
                     <div className="flex gap-1">
                       {[0, 1, 2, 3].map((i) => (
@@ -827,7 +827,7 @@ export default function DrillEngine() {
                           style={{ animationDelay: `${i * 120}ms` }} />
                       ))}
                     </div>
-                    <span className="text-xs font-mono text-white/30">Drilling deeper…</span>
+                    <span className="text-xs font-mono text-[var(--kiq-ink)]/30">Drilling deeper…</span>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -838,8 +838,8 @@ export default function DrillEngine() {
                   className="mt-6 rounded-2xl border border-white/8 p-5 text-center"
                   style={{ background: "rgba(155,28,46,0.05)" }}>
                   <div className="text-rose-400 text-[10px] font-mono mb-1">MAXIMUM DEPTH — L9</div>
-                  <p className="text-white/40 text-sm mb-4">Final intelligence artifacts unlocked.</p>
-                  <Button onClick={handleExport} style={{ background: "#9B1C2E", color: "white" }}
+                  <p className="text-[var(--kiq-ink)]/40 text-sm mb-4">Final intelligence artifacts unlocked.</p>
+                  <Button onClick={handleExport} style={{ background: "#9B1C2E", color: "#0F172A" }}
                     data-testid="button-export-final" size="sm">
                     <Download size={12} className="mr-2" />
                     Export Full Report

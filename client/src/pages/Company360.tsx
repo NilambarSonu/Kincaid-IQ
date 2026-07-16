@@ -10,15 +10,15 @@ import {
 } from "lucide-react";
 
 // ── Palette ───────────────────────────────────────────────────────────────────
-const BG = "#0a0e1a";
-const PANEL = "#111726";
-const BORDER = "rgba(255,255,255,0.08)";
+const BG = "#F8FAFC";
+const PANEL = "#ffffff";
+const BORDER = "rgba(15,23,42,0.08)";
 const GOLD = "#FFB800";
-const GREEN = "#00FF94";
+const GREEN = "#10B981";
 const BLUE = "#4f7dff";
-const CYAN = "#00D4FF";
-const RED = "#FF4D6D";
-const MUTED = "rgba(255,255,255,0.55)";
+const CYAN = "#2563EB";
+const RED = "#E11D48";
+const MUTED = "#475569";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 interface Kpi { label: string; value: any; unit: string; }
@@ -133,7 +133,7 @@ export default function Company360() {
 
   return (
     <Layout>
-      <div style={{ background: BG, minHeight: "100%", padding: "28px 32px", color: "#fff" }}>
+      <div className="kiq-ops-shell kiq-readable-surface" style={{ background: BG, minHeight: "100%", padding: "28px 32px", color: "#0F172A" }}>
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
           <Building2 size={22} color={CYAN} />
@@ -143,7 +143,7 @@ export default function Company360() {
         </div>
         <p style={{ color: MUTED, fontSize: 13, margin: "0 0 22px", maxWidth: 720 }}>
           One employer, every module. Search a company to assemble a single EIN-keyed
-          dossier across Filing Intelligence, Shady Broker, Sales OS, Stop-Loss,
+          dossier across Filing Intelligence, Broker Compensation Index, Sales OS, Stop-Loss,
           Network, Fiduciary, and the CFO War Room — each finding tagged with its
           evidence tier and a deep link into the module that produced it.
         </p>
@@ -159,7 +159,7 @@ export default function Company360() {
               placeholder="Search employer by name…"
               style={{
                 width: "100%", background: PANEL, border: `1px solid ${BORDER}`,
-                borderRadius: 10, padding: "11px 14px 11px 38px", color: "#fff",
+                borderRadius: 10, padding: "11px 14px 11px 38px", color: "#0F172A",
                 fontSize: 14, outline: "none",
               }}
             />
@@ -172,7 +172,7 @@ export default function Company360() {
             <div style={{
               position: "absolute", top: 48, left: 0, right: 0, zIndex: 30,
               background: PANEL, border: `1px solid ${BORDER}`, borderRadius: 10,
-              overflow: "hidden", boxShadow: "0 14px 40px rgba(0,0,0,0.5)",
+              overflow: "hidden", boxShadow: "0 14px 40px rgba(0,0,0,0.08)",
             }}>
               {results.map((r) => (
                 <button
@@ -182,7 +182,7 @@ export default function Company360() {
                   style={{
                     display: "flex", width: "100%", textAlign: "left", gap: 10,
                     alignItems: "center", padding: "10px 14px", background: "transparent",
-                    border: "none", borderBottom: `1px solid ${BORDER}`, color: "#fff",
+                    border: "none", borderBottom: `1px solid ${BORDER}`, color: "#0F172A",
                     cursor: "pointer",
                   }}
                 >
@@ -242,7 +242,7 @@ export default function Company360() {
                   onClick={() => sendTo("exec-war-room", dossier.ein, dossier.identity.sponsor)}
                   style={{
                     display: "inline-flex", alignItems: "center", gap: 7,
-                    background: `${BLUE}22`, border: `1px solid ${BLUE}55`, color: "#cdd9ff",
+                    background: "rgba(83,58,253,0.10)", border: "1px solid rgba(83,58,253,0.24)", color: "#312e81",
                     borderRadius: 9, padding: "9px 14px", fontSize: 13, fontWeight: 800, cursor: "pointer",
                   }}
                 >
@@ -294,7 +294,7 @@ export default function Company360() {
                       <span style={{ fontSize: 14, fontWeight: 900 }}>{m.module}</span>
                       <ConfidenceBadge tier={m.confidence} />
                     </div>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: gap ? MUTED : "#fff", marginTop: 10 }}>
+                    <div style={{ fontSize: 13, fontWeight: 800, color: gap ? MUTED : "#0f172a", marginTop: 10 }}>
                       {m.headline}
                     </div>
                     <div style={{ fontSize: 12, color: MUTED, marginTop: 6, lineHeight: 1.5, flex: 1 }}>
@@ -307,7 +307,7 @@ export default function Company360() {
                       }}>
                         {m.kpis.map((k, i) => (
                           <div key={i} style={{
-                            background: "rgba(255,255,255,0.03)", border: `1px solid ${BORDER}`,
+                            background: "#ffffff", border: `1px solid ${BORDER}`,
                             borderRadius: 8, padding: "8px 10px",
                           }}>
                             <div style={{ fontSize: 9, color: MUTED, textTransform: "uppercase", letterSpacing: "0.06em" }}>
@@ -329,7 +329,7 @@ export default function Company360() {
                           display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 7,
                           marginTop: 14, background: gap ? "transparent" : `${BLUE}1A`,
                           border: `1px solid ${gap ? BORDER : `${BLUE}44`}`,
-                          color: gap ? MUTED : "#cdd9ff", borderRadius: 9, padding: "8px 12px",
+                          color: gap ? MUTED : "#312e81", borderRadius: 9, padding: "8px 12px",
                           fontSize: 12, fontWeight: 800, cursor: "pointer",
                         }}
                       >
@@ -350,7 +350,7 @@ export default function Company360() {
 function RollupTile({ icon, color, label, value }: { icon: any; color: string; label: string; value: string }) {
   return (
     <div style={{
-      background: "rgba(255,255,255,0.03)", border: `1px solid ${color}33`,
+      background: "#ffffff", border: `1px solid ${color}33`,
       borderRadius: 10, padding: "12px 14px",
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 6, color: MUTED, fontSize: 10, textTransform: "uppercase", letterSpacing: "0.06em" }}>

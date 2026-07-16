@@ -49,12 +49,12 @@ export function DossierNarrativeSection({
 
   return (
     <div
-      className={cn("rounded-xl border border-zinc-800 bg-zinc-900/60 overflow-hidden", className)}
+      className={cn("rounded-xl border border-slate-200 bg-slate-50/60 overflow-hidden", className)}
       data-testid="dossier-narrative-section"
     >
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-zinc-800">
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-200">
         <Sparkles className="w-3.5 h-3.5 text-[#FFB800]" />
-        <span className="text-xs font-semibold text-zinc-200">AI Narrative</span>
+        <span className="text-xs font-semibold text-slate-700">AI Narrative</span>
         {result?.board_grade && (
           <span className="text-[9px] font-mono border border-[#FFB800]/30 bg-[#FFB800]/10 text-[#FFB800] rounded px-1.5 py-0.5">
             BOARD GRADE
@@ -75,7 +75,7 @@ export function DossierNarrativeSection({
               className={cn(
                 "flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-mono transition-all",
                 isPending
-                  ? "bg-zinc-800 border border-zinc-700 text-zinc-500 cursor-not-allowed"
+                  ? "bg-white border border-slate-200 text-zinc-500 cursor-not-allowed"
                   : "bg-[#FFB800]/10 border border-[#FFB800]/30 text-[#FFB800] hover:bg-[#FFB800]/20",
               )}
             >
@@ -102,13 +102,13 @@ export function DossierNarrativeSection({
               <button
                 onClick={copy}
                 data-testid="button-copy-narrative"
-                className="ml-auto flex items-center gap-1 text-[9px] font-mono text-zinc-600 hover:text-zinc-300 transition-colors"
+                className="ml-auto flex items-center gap-1 text-[9px] font-mono text-zinc-600 hover:text-slate-500 transition-colors"
               >
                 {copied ? <Check className="w-2.5 h-2.5 text-[#00FF94]" /> : <Copy className="w-2.5 h-2.5" />}
                 {copied ? "Copied" : "Copy"}
               </button>
             </div>
-            <p className="text-xs text-zinc-300 leading-relaxed whitespace-pre-wrap"
+            <p className="text-xs text-slate-500 leading-relaxed whitespace-pre-wrap"
               data-testid="dossier-narrative-text">
               {result.narrative}
             </p>

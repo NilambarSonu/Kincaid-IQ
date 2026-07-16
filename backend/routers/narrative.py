@@ -76,7 +76,7 @@ def generate_narrative(req: NarrativeRequest, db: Session = Depends(get_db)):
         from backend.gemini_compat import SyncGeminiClient
         client = SyncGeminiClient()
         system = (
-            f"You are a fiduciary-grade financial intelligence analyst for Kincaid RMC. "
+            f"You are a fiduciary-grade financial intelligence analyst for Kincaid Health. "
             f"You are writing for a {req.audience} audience. "
             f"Every factual claim you make MUST cite one of the provided governed data points. "
             f"Do not hallucinate or introduce facts not present in the evidence. "

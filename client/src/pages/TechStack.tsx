@@ -199,7 +199,7 @@ const LAYERS: StackLayer[] = [
     number: "08",
     title: "Ecosystem Extensibility",
     subtitle: "The Future",
-    philosophy: "Kincaid IQ as the central hub of a new economy",
+    philosophy: "Kincaid Health as the central hub of a new economy",
     accent: "#8B5CF6",
     glow: "rgba(139,92,246,0.3)",
     border: "border-violet-700/40",
@@ -209,7 +209,7 @@ const LAYERS: StackLayer[] = [
     components: [
       { label: "Actuarial Data Science Workbench", desc: "Integrated Jupyter notebooks with full access to certified data lake — no data science team needed", tag: "Jupyter" },
       { label: "Open-Source Contribution Protocol", desc: "Community-vetted actuarial models submitted, peer-reviewed, and promoted to production", tag: "Open" },
-      { label: "Developer Community API Layer", desc: "Third parties build clinical and financial apps on top of Kincaid IQ certified data foundation", tag: "REST/gRPC" },
+      { label: "Developer Community API Layer", desc: "Third parties build clinical and financial apps on top of Kincaid Health certified data foundation", tag: "REST/gRPC" },
       { label: "Mobile War Room App", desc: "Critical alerts, KPI snapshots, and one-tap board escalation — iOS and Android", tag: "Mobile" },
     ],
     metrics: [
@@ -228,11 +228,12 @@ function LayerCard({ layer, index }: { layer: StackLayer; index: number }) {
 
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border bg-gradient-to-r
-        ${layer.from} ${layer.via} to-zinc-900/40 ${layer.border}
-        transition-all duration-300 cursor-pointer
-        hover:scale-[1.005] hover:shadow-2xl`}
-      style={{ boxShadow: `0 0 0 1px ${layer.accent}15` }}
+      className="kiq-ops-card relative overflow-hidden rounded-2xl border transition-all duration-300 cursor-pointer hover:scale-[1.005]"
+      style={{
+        background: `linear-gradient(135deg, ${layer.accent}24 0%, rgba(255,255,255,0.88) 44%, ${layer.accent}12 100%)`,
+        borderColor: `${layer.accent}42`,
+        boxShadow: `0 18px 54px rgba(15,23,42,0.10), inset 0 1px 0 rgba(255,255,255,0.92)`,
+      }}
       onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = `0 4px 32px ${layer.glow}, 0 0 0 1px ${layer.accent}30`; }}
       onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = `0 0 0 1px ${layer.accent}15`; }}
       onClick={() => setExpanded(v => !v)}
@@ -264,19 +265,19 @@ function LayerCard({ layer, index }: { layer: StackLayer; index: number }) {
         {/* Title block */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-base font-bold text-zinc-100">{layer.title}</h3>
+            <h3 className="text-base font-bold text-[var(--kiq-ink)]">{layer.title}</h3>
             <span className="text-[11px] px-2 py-0.5 rounded-full font-semibold"
               style={{ background: `${layer.accent}15`, color: layer.accent, border: `1px solid ${layer.accent}30` }}>
               {layer.subtitle}
             </span>
           </div>
-          <p className="text-xs text-zinc-400 mt-0.5 italic">"{layer.philosophy}"</p>
+          <p className="text-xs mt-0.5 italic font-semibold" style={{ color: "#1e2f46" }}>"{layer.philosophy}"</p>
           {/* Metrics row */}
           {layer.metrics && (
             <div className="flex gap-4 mt-2 flex-wrap">
               {layer.metrics.map(m => (
                 <div key={m.label} className="flex flex-col">
-                  <span className="text-[10px] text-zinc-500 uppercase tracking-wider">{m.label}</span>
+                  <span className="text-[10px] uppercase tracking-wider font-bold" style={{ color: "#3f516a" }}>{m.label}</span>
                   <span className="text-sm font-bold" style={{ color: layer.accent }}>{m.value}</span>
                 </div>
               ))}
@@ -286,22 +287,22 @@ function LayerCard({ layer, index }: { layer: StackLayer; index: number }) {
 
         {/* Expand toggle */}
         <button
-          className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center border border-zinc-700/50 bg-zinc-900/50 hover:border-zinc-600 transition-colors"
+          className="shrink-0 w-8 h-8 rounded-lg flex items-center justify-center border border-[var(--kiq-hairline)]/50 bg-[var(--kiq-canvas-soft)]/50 hover:border-zinc-600 transition-colors"
           data-testid={`expand-${layer.id}`}
         >
           {expanded
-            ? <ChevronUp size={14} className="text-zinc-400" />
-            : <ChevronDown size={14} className="text-zinc-400" />}
+            ? <ChevronUp size={14} className="text-slate-700" />
+            : <ChevronDown size={14} className="text-slate-700" />}
         </button>
       </div>
 
       {/* Expanded components */}
       {expanded && (
-        <div className="relative z-10 px-5 pb-5 pt-1 grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-zinc-800/60">
+        <div className="relative z-10 px-5 pb-5 pt-1 grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-[var(--kiq-hairline)]/60">
           {layer.components.map((c, i) => (
-            <div key={i} className="rounded-xl p-3 bg-zinc-900/50 border border-zinc-800/60">
+            <div key={i} className="rounded-xl p-3 bg-white/70 border border-[rgba(15,23,42,0.08)]">
               <div className="flex items-start justify-between gap-2 mb-1">
-                <span className="text-sm font-semibold text-zinc-200 leading-snug">{c.label}</span>
+                <span className="text-sm font-semibold text-[var(--kiq-ink-soft)] leading-snug">{c.label}</span>
                 {c.tag && (
                   <span className="shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider"
                     style={{ background: `${layer.accent}15`, color: layer.accent, border: `1px solid ${layer.accent}25` }}>
@@ -309,7 +310,7 @@ function LayerCard({ layer, index }: { layer: StackLayer; index: number }) {
                   </span>
                 )}
               </div>
-              <p className="text-[11px] text-zinc-400 leading-relaxed">{c.desc}</p>
+              <p className="text-[11px] leading-relaxed font-medium" style={{ color: "#1e2f46" }}>{c.desc}</p>
             </div>
           ))}
         </div>
@@ -325,20 +326,20 @@ export default function TechStack() {
 
   return (
     <Layout>
-      <div className="p-6 space-y-6 max-w-5xl mx-auto">
+      <div className="kiq-ops-shell p-6 space-y-6 max-w-5xl mx-auto rounded-[24px]">
         {/* Page header */}
         <div className="space-y-2">
           <div className="flex items-start justify-between gap-4 flex-wrap">
             <div>
-              <h1 className="text-2xl font-bold text-zinc-100 tracking-tight">
-                Kincaid IQ Technology Architecture
+              <h1 className="text-2xl font-bold text-[var(--kiq-ink)] tracking-tight">
+                Kincaid Health Technology Architecture
               </h1>
-              <p className="text-sm text-zinc-400 mt-1">
+              <p className="text-sm mt-1 font-medium" style={{ color: "#1e2f46" }}>
                 Deterministic Financial Operating System · Zero-Trust Fiduciary Intelligence · 8-Layer Stack
               </p>
             </div>
             <button
-              className="text-xs px-3 py-1.5 rounded-lg border border-zinc-700 bg-zinc-900/50 text-zinc-400 hover:border-zinc-500 hover:text-zinc-200 transition-all"
+              className="text-xs px-3 py-1.5 rounded-lg border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/50 text-zinc-400 hover:border-zinc-500 hover:text-[var(--kiq-ink-soft)] transition-all"
               onClick={() => setAllExpanded(v => !v)}
               data-testid="expand-all-btn"
             >
@@ -355,9 +356,9 @@ export default function TechStack() {
               { icon: ShieldCheck, label: "Board-Defensible Truth", color: "#A855F7" },
             ].map(p => (
               <div key={p.label}
-                className="flex items-center gap-2 px-3 py-2 rounded-xl border border-zinc-800/60 bg-zinc-900/40">
+                className="flex items-center gap-2 px-3 py-2 rounded-xl border border-[var(--kiq-hairline)]/60 bg-[var(--kiq-canvas-soft)]/40">
                 <p.icon size={14} style={{ color: p.color }} />
-                <span className="text-xs font-semibold text-zinc-300">{p.label}</span>
+                <span className="text-xs font-semibold text-[var(--kiq-muted)]">{p.label}</span>
               </div>
             ))}
           </div>
@@ -365,9 +366,9 @@ export default function TechStack() {
 
         {/* Stack diagram label */}
         <div className="flex items-center gap-3">
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-zinc-700 to-transparent" />
-          <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-widest">Stack Layers — click any to expand</span>
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-zinc-700 to-transparent" />
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent" />
+          <span className="text-[11px] font-mono uppercase tracking-widest font-bold" style={{ color: "#3f516a" }}>Stack Layers — click any to expand</span>
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-300 to-transparent" />
         </div>
 
         {/* Layer cards — stacked bottom-up visually by reversing index for z-depth feel */}
@@ -378,14 +379,14 @@ export default function TechStack() {
         </div>
 
         {/* Footer note */}
-        <div className="rounded-xl border border-zinc-800/60 bg-zinc-900/30 p-4 flex gap-3 items-start">
+        <div className="kiq-ops-card rounded-xl border border-[rgba(15,23,42,0.10)] bg-white/72 p-4 flex gap-3 items-start">
           <Code2 size={16} className="text-zinc-500 shrink-0 mt-0.5" />
-          <p className="text-[12px] text-zinc-400 leading-relaxed">
-            <span className="text-zinc-200 font-semibold">Design principle:</span>{" "}
+          <p className="text-[12px] leading-relaxed font-medium" style={{ color: "#1e2f46" }}>
+            <span className="text-[var(--kiq-ink-soft)] font-semibold">Design principle:</span>{" "}
             The stack is immutable at the bottom (cryptographic evidence spine), infinitely scalable in the middle
             (actuarial computation + governance pipeline), and effortlessly simple at the top (executive control plane).
             Every calculation is cryptographically verifiable. Every KPI is stamped with a source hash, transform hash,
-            DQ test results, and a confidence score — making Kincaid IQ the only platform producing
+            DQ test results, and a confidence score — making Kincaid Health the only platform producing
             board-defensible fiduciary intelligence.
           </p>
         </div>

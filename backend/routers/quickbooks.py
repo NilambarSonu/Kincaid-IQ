@@ -17,7 +17,7 @@ DEMO_COMPANY = {
 DEMO_VENDORS = [
     {"id": "v001", "name": "Guardian Life Insurance Company of America", "category": "Carrier — Health/Life", "ytd_payments": 1423890, "prior_year": 1182340, "flag": "CARRIER", "flag_color": "blue"},
     {"id": "v002", "name": "OptumRx (PBM Services)", "category": "Pharmacy Benefit Manager", "ytd_payments": 487620, "prior_year": 441200, "flag": "PBM", "flag_color": "red"},
-    {"id": "v003", "name": "Kincaid RMC Benefits Advisory", "category": "Broker / Benefits Advisor", "ytd_payments": 0, "prior_year": 0, "flag": "BROKER_KINCAID", "flag_color": "green"},
+    {"id": "v003", "name": "Kincaid Health Benefits Advisory", "category": "Broker / Benefits Advisor", "ytd_payments": 0, "prior_year": 0, "flag": "BROKER_KINCAID", "flag_color": "green"},
     {"id": "v004", "name": "Benefits Broker Services LLC", "category": "Broker / TPA Admin", "ytd_payments": 299827, "prior_year": 257366, "flag": "BROKER_CURRENT", "flag_color": "amber"},
     {"id": "v005", "name": "HealthMarket TPA Inc.", "category": "Third-Party Administrator", "ytd_payments": 214400, "prior_year": 198750, "flag": "TPA", "flag_color": "purple"},
     {"id": "v006", "name": "Lincoln National Life Insurance", "category": "Former Carrier", "ytd_payments": 0, "prior_year": 0, "flag": "FORMER_CARRIER", "flag_color": "gray"},

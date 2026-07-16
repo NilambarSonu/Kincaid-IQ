@@ -12,15 +12,15 @@ import {
 
 // ── Theme ──────────────────────────────────────────────────────────────────────
 const T = {
-  bg:      "#04060f",
-  surface: "#080c1a",
-  s2:      "#0d1020",
-  border:  "#1a1f35",
+  bg:      "#F8FAFC",
+  surface: "rgba(255,255,255,0.78)",
+  s2:      "rgba(255,255,255,0.62)",
+  border:  "rgba(15,23,42,0.10)",
   gold:    "#FBB724",
   goldDim: "rgba(251,183,36,0.12)",
   goldBorder: "rgba(251,183,36,0.28)",
-  text:    "#ccd0e8",
-  muted:   "#5a6080",
+  text:    "#0F172A",
+  muted:   "#64748B",
   green:   "#22c55e",
   red:     "#ef4444",
   blue:    "#3b82f6",
@@ -174,8 +174,8 @@ function StageDropdown({ opp, onClose }: { opp: Opportunity; onClose: () => void
       onClick={e => e.stopPropagation()}
       style={{
         position: "absolute", top: "calc(100% + 4px)", left: 0, zIndex: 100,
-        background: "#0a0c1a", border: `1px solid ${T.border}`, borderRadius: 10,
-        padding: 6, minWidth: 160, boxShadow: "0 8px 32px rgba(0,0,0,0.7)",
+        background: "rgba(255,255,255,0.94)", border: `1px solid ${T.border}`, borderRadius: 12,
+        padding: 6, minWidth: 160, boxShadow: "0 18px 45px rgba(15,23,42,0.16)", backdropFilter: "blur(18px)",
       }}
     >
       <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: T.muted, padding: "4px 8px 6px" }}>
@@ -192,7 +192,7 @@ function StageDropdown({ opp, onClose }: { opp: Opportunity; onClose: () => void
             background: s.key === opp.stage ? `${s.color}18` : "transparent",
             color: s.key === opp.stage ? s.color : T.text, fontSize: 12, fontWeight: s.key === opp.stage ? 700 : 400,
           }}
-          onMouseEnter={e => { if (s.key !== opp.stage) e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
+          onMouseEnter={e => { if (s.key !== opp.stage) e.currentTarget.style.background = "#f8fafc"; }}
           onMouseLeave={e => { if (s.key !== opp.stage) e.currentTarget.style.background = "transparent"; }}
         >
           <div style={{ width: 8, height: 8, borderRadius: "50%", background: s.color, flexShrink: 0 }} />
@@ -227,8 +227,8 @@ function OwnerPopover({ opp, onClose }: { opp: Opportunity; onClose: () => void 
       onClick={e => e.stopPropagation()}
       style={{
         position: "absolute", top: "calc(100% + 4px)", left: 0, zIndex: 100,
-        background: "#0a0c1a", border: `1px solid ${T.border}`, borderRadius: 10,
-        padding: 10, minWidth: 200, boxShadow: "0 8px 32px rgba(0,0,0,0.7)",
+        background: "rgba(255,255,255,0.94)", border: `1px solid ${T.border}`, borderRadius: 12,
+        padding: 10, minWidth: 200, boxShadow: "0 18px 45px rgba(15,23,42,0.16)", backdropFilter: "blur(18px)",
       }}
     >
       <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: T.muted, marginBottom: 8 }}>
@@ -241,7 +241,7 @@ function OwnerPopover({ opp, onClose }: { opp: Opportunity; onClose: () => void 
         autoFocus
         onKeyDown={e => { if (e.key === "Enter") saveMut.mutate(val.trim()); if (e.key === "Escape") onClose(); }}
         style={{
-          width: "100%", background: "rgba(255,255,255,0.06)", border: `1px solid ${T.border}`,
+          width: "100%", background: "#f1f5f9", border: `1px solid ${T.border}`,
           borderRadius: 7, padding: "7px 10px", color: T.text, fontSize: 12, outline: "none",
           boxSizing: "border-box",
         }}
@@ -290,8 +290,8 @@ function DeadlinePopover({ opp, onClose }: { opp: Opportunity; onClose: () => vo
       onClick={e => e.stopPropagation()}
       style={{
         position: "absolute", top: "calc(100% + 4px)", left: 0, zIndex: 100,
-        background: "#0a0c1a", border: `1px solid ${T.border}`, borderRadius: 10,
-        padding: 10, minWidth: 200, boxShadow: "0 8px 32px rgba(0,0,0,0.7)",
+        background: "rgba(255,255,255,0.94)", border: `1px solid ${T.border}`, borderRadius: 12,
+        padding: 10, minWidth: 200, boxShadow: "0 18px 45px rgba(15,23,42,0.16)", backdropFilter: "blur(18px)",
       }}
     >
       <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.15em", textTransform: "uppercase", color: T.muted, marginBottom: 8 }}>
@@ -303,7 +303,7 @@ function DeadlinePopover({ opp, onClose }: { opp: Opportunity; onClose: () => vo
         onChange={e => setVal(e.target.value)}
         onKeyDown={e => { if (e.key === "Enter") saveMut.mutate(val); if (e.key === "Escape") onClose(); }}
         style={{
-          width: "100%", background: "rgba(255,255,255,0.06)", border: `1px solid ${T.border}`,
+          width: "100%", background: "#f1f5f9", border: `1px solid ${T.border}`,
           borderRadius: 7, padding: "7px 10px", color: T.text, fontSize: 12, outline: "none",
           boxSizing: "border-box", colorScheme: "dark",
         }}
@@ -353,6 +353,7 @@ function KanbanCard({ opp }: { opp: Opportunity }) {
     <div
       ref={cardRef}
       data-testid={`kanban-card-${opp.id}`}
+      className="kiq-ops-card"
       style={{
         background: T.surface, border: `1px solid ${borderColor}`,
         borderRadius: 12, padding: 14, marginBottom: 8, position: "relative",
@@ -402,7 +403,7 @@ function KanbanCard({ opp }: { opp: Opportunity }) {
             data-testid={`stage-btn-${opp.id}`}
             style={{
               display: "flex", alignItems: "center", gap: 5, padding: "4px 8px", borderRadius: 7,
-              border: `1px solid ${T.border}`, background: "rgba(255,255,255,0.04)", cursor: "pointer",
+              border: `1px solid ${T.border}`, background: "#ffffff", cursor: "pointer",
               color: T.muted, fontSize: 10,
             }}
           >
@@ -422,7 +423,7 @@ function KanbanCard({ opp }: { opp: Opportunity }) {
             data-testid={`owner-btn-${opp.id}`}
             style={{
               display: "flex", alignItems: "center", gap: 5, padding: "3px 8px", borderRadius: 6,
-              border: `1px solid ${T.border}`, background: "rgba(255,255,255,0.03)", cursor: "pointer",
+              border: `1px solid ${T.border}`, background: "#ffffff", cursor: "pointer",
               color: opp.owner ? T.text : T.muted, fontSize: 10,
             }}
           >
@@ -440,7 +441,7 @@ function KanbanCard({ opp }: { opp: Opportunity }) {
             style={{
               display: "flex", alignItems: "center", gap: 5, padding: "3px 8px", borderRadius: 6,
               border: `1px solid ${dStatus === "overdue" ? `${T.red}50` : dStatus === "atrisk" ? `${T.amber}50` : T.border}`,
-              background: dStatus === "overdue" ? `${T.red}08` : dStatus === "atrisk" ? `${T.amber}08` : "rgba(255,255,255,0.03)",
+              background: dStatus === "overdue" ? `${T.red}08` : dStatus === "atrisk" ? `${T.amber}08` : "#ffffff",
               cursor: "pointer",
             }}
           >
@@ -460,17 +461,17 @@ function KanbanColumn({ stage, opps }: { stage: typeof STAGES[number]; opps: Opp
   const atriskCount = opps.filter(o => deadlineStatus(getDeadline(o)) === "atrisk").length;
 
   return (
-    <div style={{
+    <div className="kiq-ops-card" style={{
       minWidth: 260, maxWidth: 280, flex: "0 0 260px",
-      background: "rgba(255,255,255,0.02)", border: `1px solid ${T.border}`,
+      background: T.surface, border: `1px solid ${T.border}`,
       borderRadius: 14, display: "flex", flexDirection: "column", maxHeight: "calc(100vh - 240px)",
     }}>
       {/* Column header */}
       <div style={{
         padding: "12px 14px 10px", borderBottom: `1px solid ${T.border}`,
         flexShrink: 0, position: "sticky", top: 0, zIndex: 1,
-        background: "rgba(10,12,26,0.95)", borderRadius: "14px 14px 0 0",
-        backdropFilter: "blur(8px)",
+        background: "linear-gradient(135deg, rgba(255,255,255,0.88), rgba(248,250,252,0.66))", borderRadius: "14px 14px 0 0",
+        backdropFilter: "blur(18px)",
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
           <div style={{ width: 8, height: 8, borderRadius: "50%", background: stage.color, flexShrink: 0 }} />
@@ -674,9 +675,10 @@ function StatsBar({ opps }: { opps: Opportunity[] }) {
         { label: "Pipeline Value", value: fmt$(totalValue), color: T.gold, wide: true },
       ].map(stat => (
         <div
+          className="kiq-ops-card"
           key={stat.label}
           style={{
-            background: T.surface, border: `1px solid ${T.border}`, borderRadius: 10,
+            background: T.surface, border: `1px solid ${T.border}`, borderRadius: 14,
             padding: "10px 16px", minWidth: stat.wide ? 140 : 90, textAlign: "center",
           }}
         >
@@ -711,14 +713,15 @@ export default function RfpBoard() {
 
   return (
     <Layout>
+      <div className="kiq-ops-shell" style={{ minHeight: "calc(100vh - 56px)", padding: "28px 32px 56px" }}>
       {/* Header */}
-      <div style={{ marginBottom: 20 }}>
+      <div className="kiq-ops-header" style={{ marginBottom: 20, borderRadius: 24, padding: "20px 22px" }}>
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
           <div>
             <p style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.18em", textTransform: "uppercase", color: T.gold, marginBottom: 4 }}>
               RFP Intelligence OS
             </p>
-            <h1 style={{ fontSize: 28, fontWeight: 900, color: "#e8eaf6", lineHeight: 1.2, margin: 0 }}>
+            <h1 style={{ fontSize: 28, fontWeight: 900, color: T.text, lineHeight: 1.2, margin: 0, letterSpacing: "-0.035em" }}>
               Workflow Board
             </h1>
             <p style={{ fontSize: 13, color: T.muted, marginTop: 4 }}>
@@ -727,7 +730,7 @@ export default function RfpBoard() {
           </div>
 
           {/* View toggle */}
-          <div style={{ display: "flex", gap: 6, background: T.s2, border: `1px solid ${T.border}`, borderRadius: 10, padding: 4 }}>
+          <div className="kiq-ops-control" style={{ display: "flex", gap: 6, borderRadius: 999, padding: 4 }}>
             {[
               { id: "board", label: "Board", icon: LayoutGrid },
               { id: "deadlines", label: "Deadlines", icon: Clock },
@@ -767,7 +770,7 @@ export default function RfpBoard() {
       )}
 
       {!isLoading && opps.length === 0 && (
-        <div style={{
+        <div className="kiq-ops-card" style={{
           textAlign: "center", padding: "80px 0",
           background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16,
         }}>
@@ -808,6 +811,7 @@ export default function RfpBoard() {
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
       `}</style>
+      </div>
     </Layout>
   );
 }

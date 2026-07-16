@@ -10,9 +10,9 @@ import {
   CartesianGrid, Legend, Cell, PieChart, Pie, Area, AreaChart, ReferenceLine
 } from "recharts";
 
-const BG="#07091c", CARD="#0d1033", BORDER="rgba(255,255,255,0.08)";
-const TEXT1="#f0f4ff", TEXT2="#8b9dd4", ACCENT="#4f7dff";
-const GREEN="#22c55e", AMBER="#f59e0b", RED="#ef4444", PURPLE="#a855f7", CYAN="#06b6d4";
+const BG="#F8FAFC", CARD="#ffffff", BORDER="rgba(15,23,42,0.08)";
+const TEXT1="#0f172a", TEXT2="#475569", ACCENT="#533afd";
+const GREEN="#10b981", AMBER="#d97706", RED="#e11d48", PURPLE="#7c3aed", CYAN="#0ea5e9";
 const PALETTE=[ACCENT,CYAN,GREEN,AMBER,PURPLE,RED,"#f472b6","#34d399","#fb923c","#818cf8"];
 
 const fmt=(n:number,d=0)=>n>=1e9?`$${(n/1e9).toFixed(1)}B`:n>=1e6?`$${(n/1e6).toFixed(d||1)}M`:n>=1e3?`$${(n/1e3).toFixed(0)}K`:`$${n.toFixed(0)}`;
@@ -26,7 +26,7 @@ const riskColor=(s:number)=>s>=70?RED:s>=40?AMBER:GREEN;
 
 function KV({label,value,sub,color,yoy}:{label:string;value:string;sub?:string;color?:string;yoy?:number|null}){
   return(
-    <div style={{background:CARD,border:`1px solid ${BORDER}`,borderRadius:8,padding:"14px 16px",minWidth:140}}>
+    <div className="kiq-ops-card" style={{background:CARD,border:`1px solid ${BORDER}`,borderRadius:12,padding:"14px 16px",minWidth:140}}>
       <div style={{color:TEXT2,fontSize:11,textTransform:"uppercase",letterSpacing:1,marginBottom:4}}>{label}</div>
       <div style={{color:color||TEXT1,fontSize:20,fontWeight:700,fontVariantNumeric:"tabular-nums"}}>{value}</div>
       {yoy!=null&&<div style={{color:yoyColor(yoy),fontSize:11,marginTop:2,fontWeight:600}}>{yoyArrow(yoy)}</div>}
@@ -48,7 +48,7 @@ function Flag({text}:{text:string}){
 function Section({title,icon,children,defaultOpen=true}:{title:string;icon?:any;children:any;defaultOpen?:boolean}){
   const [open,setOpen]=useState(defaultOpen);
   return(
-    <div style={{background:CARD,border:`1px solid ${BORDER}`,borderRadius:10,marginBottom:14,overflow:"hidden"}}>
+    <div className="kiq-ops-card" style={{background:CARD,border:`1px solid ${BORDER}`,borderRadius:16,marginBottom:14,overflow:"hidden"}}>
       <button onClick={()=>setOpen(!open)} style={{width:"100%",display:"flex",justifyContent:"space-between",alignItems:"center",padding:"14px 18px",background:"none",border:"none",cursor:"pointer",borderBottom:open?`1px solid ${BORDER}`:"none"}}>
         <div style={{display:"flex",alignItems:"center",gap:8,color:TEXT1,fontWeight:700,fontSize:14}}>
           {icon}{title}
@@ -144,7 +144,7 @@ function PlanHistoryPanel({ein}:{ein:string}){
       <div style={{overflowX:"auto"}}>
         <table style={{width:"100%",borderCollapse:"collapse",fontSize:12}}>
           <thead>
-            <tr style={{background:"#ffffff06"}}>
+              <tr style={{background:"#f8fafc"}}>
               {["Year","Plans","Participants","Plan Income","Total Fees","YoY Fees","Broker Comm.","Carriers"].map(h=>(
                 <th key={h} style={{color:TEXT2,textAlign:"left",padding:"8px 10px",borderBottom:`1px solid ${BORDER}`,fontSize:11,textTransform:"uppercase",letterSpacing:0.5}}>{h}</th>
               ))}
@@ -279,7 +279,7 @@ function FcrModule({fcr,edgar,dol}:any){
           <KV label="EBITDA Impact" value={pct(fcr.ebitda_impact_pct)} color={fcr.ebitda_impact_pct>5?RED:AMBER} sub="% of estimated EBITDA"/>
           <KV label="Recoverable" value={fmt(fcr.recoverable)} color={GREEN} sub="40% capture rate"/>
         </div>
-        <div style={{background:"#ffffff06",border:`1px solid ${BORDER}`,borderRadius:8,padding:"14px 16px"}}>
+        <div style={{background:"#f8fafc",border:`1px solid ${BORDER}`,borderRadius:12,padding:"14px 16px"}}>
           <div style={{color:TEXT2,fontSize:11,textTransform:"uppercase",letterSpacing:1,marginBottom:8}}>Verdict</div>
           <Badge text={fcr.verdict} color={verdictColor(fcr.verdict)}/>
           <div style={{color:TEXT1,fontSize:13,marginTop:10}}>
@@ -1015,9 +1015,9 @@ export default function CrossIntelligence(){
   const [selectedEin,setSelectedEin]=useState("");
   const [selectedName,setSelectedName]=useState("");
   return(
-    <div style={{background:BG,minHeight:"100vh",color:TEXT1,fontFamily:"system-ui,-apple-system,sans-serif",padding:"24px 28px"}}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{background:BG,minHeight:"100vh",color:TEXT1,fontFamily:"var(--font-sans)",padding:"24px 28px"}}>
       <style>{`@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}`}</style>
-      <div style={{marginBottom:20}}>
+      <div className="kiq-ops-header" style={{marginBottom:20,padding:20,borderRadius:24}}>
         <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:6}}>
           <Zap size={22} color={ACCENT}/>
           <h1 style={{margin:0,fontSize:22,fontWeight:800}}>DOL × EDGAR Intelligence Center</h1>
@@ -1027,7 +1027,7 @@ export default function CrossIntelligence(){
           Cross-reference 937,000 DOL Form 5500 filings with SEC EDGAR public company data via EIN join. Six analytical modules with deep drill-downs for every layer.
         </p>
       </div>
-      <div style={{display:"flex",gap:2,marginBottom:22,background:CARD,padding:4,borderRadius:10,border:`1px solid ${BORDER}`,width:"fit-content"}}>
+      <div style={{display:"flex",gap:2,marginBottom:22,background:"rgba(255,255,255,0.72)",padding:4,borderRadius:14,border:`1px solid ${BORDER}`,width:"fit-content",flexWrap:"wrap"}}>
         {TABS.map(t=>(
           <button key={t.key} data-testid={`tab-main-${t.key}`} onClick={()=>setTab(t.key)}
             style={{display:"flex",alignItems:"center",gap:6,padding:"8px 18px",borderRadius:7,border:"none",cursor:"pointer",fontSize:13,fontWeight:600,transition:"all 0.15s",background:tab===t.key?ACCENT:"transparent",color:tab===t.key?"#fff":TEXT2}}>

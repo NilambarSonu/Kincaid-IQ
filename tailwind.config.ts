@@ -4,14 +4,21 @@ export default {
   darkMode: ["class"],
   content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    screens: {
+      'xs': '375px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     extend: {
       borderRadius: {
-        lg: ".5625rem", /* 9px */
-        md: ".375rem", /* 6px */
-        sm: ".1875rem", /* 3px */
+        lg: ".5625rem",
+        md: ".375rem",
+        sm: ".1875rem",
       },
       colors: {
-        // Flat / base colors (regular buttons)
         background: "hsl(var(--background) / <alpha-value>)",
         foreground: "hsl(var(--foreground) / <alpha-value>)",
         border: "hsl(var(--border) / <alpha-value>)",
@@ -52,6 +59,14 @@ export default {
           border: "var(--destructive-border)",
         },
         ring: "hsl(var(--ring) / <alpha-value>)",
+        /* Kincaid Healthcare brand */
+        kincaid: {
+          navy: "hsl(var(--kincaid-navy) / <alpha-value>)",
+          crimson: "hsl(var(--kincaid-crimson) / <alpha-value>)",
+          gold: "hsl(var(--kincaid-gold) / <alpha-value>)",
+          emerald: "hsl(var(--kincaid-emerald) / <alpha-value>)",
+          sky: "hsl(var(--kincaid-sky) / <alpha-value>)",
+        },
         chart: {
           "1": "hsl(var(--chart-1) / <alpha-value>)",
           "2": "hsl(var(--chart-2) / <alpha-value>)",
@@ -84,8 +99,17 @@ export default {
       },
       fontFamily: {
         sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
+        display: ["var(--font-display)"],
+        serif: ["var(--font-display)"],
         mono: ["var(--font-mono)"],
+      },
+      boxShadow: {
+        'glass': '0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04), 0 12px 48px rgba(0,0,0,0.03)',
+        '3d': '0 2px 4px rgba(0,0,0,0.02), 0 8px 24px rgba(0,0,0,0.04), 0 20px 60px rgba(0,0,0,0.03)',
+        '3d-hover': '0 4px 8px rgba(0,0,0,0.03), 0 12px 32px rgba(0,0,0,0.06), 0 28px 72px rgba(0,0,0,0.05)',
+        'metric': '0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03)',
+        'metric-hover': '0 4px 8px rgba(0,0,0,0.04), 0 12px 32px rgba(0,0,0,0.06), 0 24px 64px rgba(0,0,0,0.04)',
+        'crimson': '0 4px 16px rgba(155,28,46,0.12)',
       },
       keyframes: {
         "accordion-down": {
@@ -96,10 +120,25 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "kincaid-fade-in": {
+          from: { opacity: "0", transform: "translateY(8px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "kincaid-scale-in": {
+          from: { opacity: "0", transform: "scale(0.95)" },
+          to: { opacity: "1", transform: "scale(1)" },
+        },
+        "kincaid-slide-up": {
+          from: { opacity: "0", transform: "translateY(20px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "kincaid-fade-in": "kincaid-fade-in 0.4s ease-out forwards",
+        "kincaid-scale-in": "kincaid-scale-in 0.35s ease-out forwards",
+        "kincaid-slide-up": "kincaid-slide-up 0.5s ease-out forwards",
       },
     },
   },

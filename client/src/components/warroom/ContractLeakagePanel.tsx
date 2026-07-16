@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Activity, ShieldCheck, AlertTriangle, FileCheck2 } from "lucide-react";
 
-// Kincaid IQ · War Room · Contract Leakage (DRAP Reconciliation)
+// Kincaid Health · War Room · Contract Leakage (DRAP Reconciliation)
 // Supplemental strip (Hard Rule 01: not a board tile). Surfaces the deterministic
 // DRAP pipeline: DRAP = Sum(Paid - Allowable) across every claim, reconciled
 // against the ingested fee schedule, breach-flagged, category-rolled, and sealed
@@ -76,8 +76,8 @@ function ConfChip({ tier }: { tier: string }) {
   const color = certified ? GREEN : RED;
   return (
     <span
-      className="text-[7px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
-      style={{ color, background: `${color}1a`, border: `1px solid ${color}40` }}
+      className="text-[7.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded"
+      style={{ color, background: `${color}14`, border: `1px solid ${color}33` }}
       data-testid={`leakage-chip-${tier.toLowerCase()}`}
     >
       {certified ? "Certified" : "Insufficient"}
@@ -88,14 +88,14 @@ function ConfChip({ tier }: { tier: string }) {
 function Stat({ label, value, color, testid }: { label: string; value: string; color: string; testid: string }) {
   return (
     <div
-      className="rounded-lg px-3 py-2.5 flex flex-col gap-1"
-      style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.06)" }}
+      className="rounded-xl px-4 py-3.5 flex flex-col gap-1 shadow-sm"
+      style={{ background: "#ffffff", border: "1px solid rgba(0, 37, 80, 0.08)" }}
       data-testid={testid}
     >
-      <span className="text-[8px] font-mono uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.4)" }}>
+      <span className="text-[9px] font-mono uppercase tracking-[0.12em]" style={{ color: "var(--kiq-muted)" }}>
         {label}
       </span>
-      <span className="text-[15px] font-black tabular-nums leading-none" style={{ color }}>
+      <span className="text-[18px] font-bold tabular-nums leading-none mt-1" style={{ color }}>
         {value}
       </span>
     </div>
@@ -122,7 +122,7 @@ export default function ContractLeakagePanel() {
         data-testid="leakage-loading"
       >
         <Activity className="w-3 h-3 animate-pulse" style={{ color: GOLD }} />
-        <span className="text-[9px] font-mono uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.4)" }}>
+        <span className="text-[9px] font-mono uppercase tracking-widest text-slate-500">
           Reconciling contract leakage…
         </span>
       </div>
@@ -137,29 +137,28 @@ export default function ContractLeakagePanel() {
 
   return (
     <div
-      className="mt-3 rounded-xl px-4 py-3"
-      style={{ background: "rgba(245,166,35,0.04)", border: "1px solid rgba(245,166,35,0.15)" }}
+      className="mt-3 rounded-xl px-4 py-4"
+      style={{ background: "rgba(245,166,35,0.04)", border: "1px solid rgba(245,166,35,0.22)" }}
       data-testid="leakage-panel"
     >
       {/* Header */}
-      <div className="flex items-center gap-2 mb-3 flex-wrap">
-        <ShieldCheck className="w-3 h-3" style={{ color: GOLD }} />
-        <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: GOLD }}>
+      <div className="flex items-center gap-2 mb-3.5 flex-wrap">
+        <ShieldCheck className="w-3.5 h-3.5" style={{ color: GOLD }} />
+        <span className="text-[10px] font-bold uppercase tracking-widest" style={{ color: GOLD }}>
           Contract Leakage · DRAP Reconciliation
         </span>
-        <span className="text-[8px] font-mono uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.25)" }}>
+        <span className="text-[8.5px] font-mono uppercase tracking-wider text-slate-400">
           Supplemental · not a board tile
         </span>
         <span
-          className="text-[8px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded"
-          style={{ color: BLUE, background: `${BLUE}14`, border: `1px solid ${BLUE}33` }}
+          className="text-[8.5px] font-mono uppercase tracking-wider px-2 py-0.5 rounded"
+          style={{ color: "var(--kiq-primary)", background: "rgba(83, 58, 253, 0.08)", border: "1px solid rgba(83, 58, 253, 0.2)" }}
           data-testid="leakage-demo-tag"
         >
           Demo fixture · not the loaded entity
         </span>
         <span
-          className="ml-auto text-[8px] font-mono uppercase tracking-wider"
-          style={{ color: "rgba(255,255,255,0.3)" }}
+          className="ml-auto text-[8.5px] font-mono uppercase tracking-wider text-slate-500"
           data-testid="leakage-census"
         >
           {census.CERTIFIED} certified · {census.INSUFFICIENT_EVIDENCE} insufficient
@@ -167,40 +166,40 @@ export default function ContractLeakagePanel() {
       </div>
 
       {/* Vendor line */}
-      <div className="text-[8px] font-mono uppercase tracking-wider mb-2" style={{ color: "rgba(255,255,255,0.35)" }}>
+      <div className="text-[9px] font-mono uppercase tracking-wider mb-3 text-slate-500">
         {contract.vendor} · effective {contract.effective_date} · tolerance {contract.tolerance_bps} bps · terms{" "}
         {shortHash(contract.terms_source_hash)}
       </div>
 
       {/* Headline stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
-        <Stat label="Net DRAP" value={usd(rec.drap_cents)} color={GOLD} testid="leakage-net" />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3.5 mb-3.5">
+        <Stat label="Net DRAP" value={usd(rec.drap_cents)} color="var(--kiq-gold)" testid="leakage-net" />
         <Stat label="Gross Overpaid" value={usd(rec.gross_overpaid_cents)} color={RED} testid="leakage-gross" />
-        <Stat label="Favorable" value={usd(rec.favorable_cents)} color={GREEN} testid="leakage-favorable" />
+        <Stat label="Favorable" value={usd(rec.favorable_cents)} color="var(--kiq-health)" testid="leakage-favorable" />
         <Stat
           label="Tolerance Breaches"
           value={`${rec.breach_count} / ${rec.receipts.length}`}
-          color={rec.breach_count > 0 ? RED : GREEN}
+          color={rec.breach_count > 0 ? RED : "var(--kiq-health)"}
           testid="leakage-breaches"
         />
       </div>
 
       {/* Category rollups */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3.5">
         {catEntries.map(([cat, roll]) => (
           <div
             key={cat}
-            className="rounded-lg px-3 py-2 flex items-center justify-between"
-            style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.06)" }}
+            className="rounded-xl px-4 py-3 flex items-center justify-between shadow-sm"
+            style={{ background: "#ffffff", border: "1px solid rgba(0, 37, 80, 0.08)" }}
             data-testid={`leakage-cat-${cat.toLowerCase()}`}
           >
-            <span className="text-[9px] font-bold uppercase tracking-wider" style={{ color: BLUE }}>
+            <span className="text-[9px] font-bold uppercase tracking-wider text-indigo-600">
               {cat.replace(/_/g, " ")}
             </span>
-            <span className="text-[10px] font-black tabular-nums" style={{ color: "#e5e7eb" }}>
+            <span className="text-[13px] font-bold tabular-nums text-slate-900">
               {usd(roll.variance_cents)}
             </span>
-            <span className="text-[8px] font-mono" style={{ color: "rgba(255,255,255,0.4)" }}>
+            <span className="text-[9px] font-mono text-slate-400">
               {roll.claims} claims · {roll.breaches} breach
             </span>
           </div>
@@ -208,15 +207,14 @@ export default function ContractLeakagePanel() {
       </div>
 
       {/* Receipts table */}
-      <div className="rounded-lg overflow-hidden mb-3" style={{ border: "1px solid rgba(255,255,255,0.06)" }}>
+      <div className="rounded-xl overflow-hidden mb-3.5 shadow-sm" style={{ border: "1px solid rgba(0, 37, 80, 0.08)" }}>
         <table className="w-full text-left" data-testid="leakage-receipts">
           <thead>
-            <tr style={{ background: "rgba(255,255,255,0.03)" }}>
+            <tr style={{ background: "rgba(0, 37, 80, 0.02)" }}>
               {["Claim", "Code", "Qty", "Paid", "Allowable", "Variance", "Bps", "Conf"].map((h) => (
                 <th
                   key={h}
-                  className="px-2 py-1.5 text-[7px] font-mono uppercase tracking-wider"
-                  style={{ color: "rgba(255,255,255,0.4)" }}
+                  className="px-3 py-2 text-[9px] font-mono uppercase tracking-wider text-slate-500 border-b border-slate-100"
                 >
                   {h}
                 </th>
@@ -230,45 +228,45 @@ export default function ContractLeakagePanel() {
                 <tr
                   key={r.claim_id}
                   style={{
-                    background: orphan ? "rgba(255,77,109,0.06)" : r.breach ? "rgba(255,77,109,0.03)" : "transparent",
-                    borderTop: "1px solid rgba(255,255,255,0.04)",
+                    background: orphan ? "rgba(255,77,109,0.04)" : r.breach ? "rgba(255,77,109,0.015)" : "transparent",
                   }}
+                  className="border-b border-slate-100/50 hover:bg-slate-50/40 transition-colors"
                   data-testid={`leakage-row-${r.claim_id}`}
                 >
-                  <td className="px-2 py-1 text-[8px] font-mono" style={{ color: "rgba(255,255,255,0.55)" }}>
+                  <td className="px-3 py-1.5 text-[10px] font-mono text-slate-400">
                     {r.claim_id.replace("CLM_DEMO_", "#")}
                   </td>
-                  <td className="px-2 py-1 text-[8px] font-mono" style={{ color: "rgba(255,255,255,0.7)" }}>
+                  <td className="px-3 py-1.5 text-[10px] font-mono text-slate-800">
                     {r.code}
                   </td>
-                  <td className="px-2 py-1 text-[8px] tabular-nums" style={{ color: "rgba(255,255,255,0.55)" }}>
+                  <td className="px-3 py-1.5 text-[10px] tabular-nums text-slate-500">
                     {r.qty.toLocaleString()}
                   </td>
-                  <td className="px-2 py-1 text-[8px] tabular-nums" style={{ color: "rgba(255,255,255,0.7)" }}>
+                  <td className="px-3 py-1.5 text-[10px] tabular-nums text-slate-800 font-medium">
                     {usd(r.paid_cents)}
                   </td>
-                  <td className="px-2 py-1 text-[8px] tabular-nums" style={{ color: "rgba(255,255,255,0.5)" }}>
+                  <td className="px-3 py-1.5 text-[10px] tabular-nums text-slate-600">
                     {r.allowable_cents == null ? "·" : usd(r.allowable_cents)}
                   </td>
                   <td
-                    className="px-2 py-1 text-[8px] font-bold tabular-nums"
+                    className="px-3 py-1.5 text-[10px] font-semibold tabular-nums"
                     style={{
                       color:
                         r.variance_cents == null
-                          ? "rgba(255,255,255,0.4)"
+                          ? "var(--kiq-muted)"
                           : r.variance_cents > 0
                           ? RED
                           : r.variance_cents < 0
                           ? GREEN
-                          : "rgba(255,255,255,0.5)",
+                          : "var(--kiq-muted)",
                     }}
                   >
                     {r.variance_cents == null ? "·" : usd(r.variance_cents)}
                   </td>
-                  <td className="px-2 py-1 text-[8px] tabular-nums" style={{ color: "rgba(255,255,255,0.5)" }}>
+                  <td className="px-3 py-1.5 text-[10px] tabular-nums text-slate-600">
                     {r.unit_over_bps == null ? "·" : r.unit_over_bps.toLocaleString()}
                   </td>
-                  <td className="px-2 py-1">
+                  <td className="px-3 py-1.5">
                     <ConfChip tier={r.confidence} />
                   </td>
                 </tr>
@@ -280,22 +278,22 @@ export default function ContractLeakagePanel() {
 
       {/* Proof packet footer */}
       <div
-        className="rounded-lg px-3 py-2 flex items-center gap-3 flex-wrap"
-        style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.06)" }}
+        className="rounded-xl px-4 py-3 flex items-center gap-3 flex-wrap shadow-sm"
+        style={{ background: "#ffffff", border: "1px solid rgba(0, 37, 80, 0.08)" }}
         data-testid="leakage-packet"
       >
-        <FileCheck2 className="w-3 h-3" style={{ color: GREEN }} />
-        <span className="text-[8px] font-bold uppercase tracking-wider" style={{ color: GREEN }}>
+        <FileCheck2 className="w-3.5 h-3.5" style={{ color: "var(--kiq-health)" }} />
+        <span className="text-[9px] font-bold uppercase tracking-wider text-slate-800">
           Proof Packet Sealed
         </span>
-        <span className="text-[8px] font-mono" style={{ color: "rgba(255,255,255,0.45)" }}>
+        <span className="text-[9px] font-mono text-slate-400">
           {pkt.packet_id} · content {shortHash(pkt.content_hash)}
         </span>
-        <span className="flex items-center gap-1 text-[8px] font-mono" style={{ color: attest.valid ? GREEN : RED }}>
-          {attest.valid ? <ShieldCheck className="w-2.5 h-2.5" /> : <AlertTriangle className="w-2.5 h-2.5" />}
+        <span className="flex items-center gap-1 text-[9px] font-mono" style={{ color: attest.valid ? "var(--kiq-health)" : RED }}>
+          {attest.valid ? <ShieldCheck className="w-3 h-3" /> : <AlertTriangle className="w-3 h-3" />}
           chain {attest.valid ? "verified" : "broken"} · {attest.events_checked} events · {attest.breaks} breaks
         </span>
-        <span className="ml-auto text-[8px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>
+        <span className="ml-auto text-[9px] font-mono text-slate-400">
           DRAP = Σ(Paid − Allowable) · run {shortHash(rec.run_hash)}
         </span>
       </div>

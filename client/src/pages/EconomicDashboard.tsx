@@ -45,8 +45,8 @@ export default function EconomicDashboard() {
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-[#0a0a1a] border border-white/10 p-2 rounded-lg shadow-xl text-xs">
-          <p className="text-white font-bold mb-1">{label}</p>
+        <div className="bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] p-2 rounded-lg shadow-xl text-xs">
+          <p className="text-[var(--kiq-ink)] font-bold mb-1">{label}</p>
           {payload.map((entry: any, index: number) => (
             <p key={index} style={{ color: entry.color }}>
               {entry.name}: {entry.value.toLocaleString()}
@@ -86,7 +86,7 @@ export default function EconomicDashboard() {
               <p className="section-label">{m.label}</p>
               <m.icon size={14} style={{ color: m.color }} />
             </div>
-            <p className="text-2xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>{m.value}</p>
+            <p className="text-2xl font-bold text-[var(--kiq-ink)]" style={{ fontFamily: "var(--font-display)" }}>{m.value}</p>
           </div>
         ))}
       </div>
@@ -96,7 +96,7 @@ export default function EconomicDashboard() {
         <div className="metric-card" data-testid="chart-gdp-trend">
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp size={16} className="text-[#00FF94]" />
-            <h3 className="font-bold text-white">GDP Trend (Quarterly YoY)</h3>
+            <h3 className="font-bold text-[var(--kiq-ink)]">GDP Trend (Quarterly YoY)</h3>
           </div>
           <div className="h-[250px] w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -107,9 +107,9 @@ export default function EconomicDashboard() {
                     <stop offset="95%" stopColor="#00FF94" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                <XAxis dataKey="quarter" stroke="rgba(255,255,255,0.3)" fontSize={10} />
-                <YAxis stroke="rgba(255,255,255,0.3)" fontSize={10} unit="%" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" vertical={false} />
+                <XAxis dataKey="quarter" stroke="#64748b" fontSize={10} />
+                <YAxis stroke="#64748b" fontSize={10} unit="%" />
                 <Tooltip content={<CustomTooltip />} />
                 <Area type="monotone" dataKey="value" name="GDP Growth" stroke="#00FF94" fillOpacity={1} fill="url(#colorGdp)"  isAnimationActive={false} />
               </AreaChart>
@@ -121,14 +121,14 @@ export default function EconomicDashboard() {
         <div className="metric-card" data-testid="chart-inflation">
           <div className="flex items-center gap-2 mb-4">
             <Activity size={16} className="text-[#FF4D6D]" />
-            <h3 className="font-bold text-white">Inflation (CPI vs Core CPI)</h3>
+            <h3 className="font-bold text-[var(--kiq-ink)]">Inflation (CPI vs Core CPI)</h3>
           </div>
           <div className="h-[250px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={inflationData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                <XAxis dataKey="date" stroke="rgba(255,255,255,0.3)" fontSize={10} />
-                <YAxis stroke="rgba(255,255,255,0.3)" fontSize={10} unit="%" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" vertical={false} />
+                <XAxis dataKey="date" stroke="#64748b" fontSize={10} />
+                <YAxis stroke="#64748b" fontSize={10} unit="%" />
                 <Tooltip content={<CustomTooltip />} />
                 <Line type="monotone" dataKey="cpi" name="CPI YoY" stroke="#FF4D6D" strokeWidth={2} dot={false}  isAnimationActive={false} />
                 <Line type="monotone" dataKey="coreCpi" name="Core CPI" stroke="#FFB800" strokeWidth={2} dot={false}  isAnimationActive={false} />
@@ -143,15 +143,15 @@ export default function EconomicDashboard() {
         <div className="metric-card" data-testid="chart-labor">
           <div className="flex items-center gap-2 mb-4">
             <Users size={16} className="text-[#00A8FF]" />
-            <h3 className="font-bold text-white">Labor Market (NFP & Unemployment)</h3>
+            <h3 className="font-bold text-[var(--kiq-ink)]">Labor Market (NFP & Unemployment)</h3>
           </div>
           <div className="h-[250px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={laborData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                <XAxis dataKey="date" stroke="rgba(255,255,255,0.3)" fontSize={10} />
-                <YAxis yAxisId="left" stroke="rgba(255,255,255,0.3)" fontSize={10} unit="K" />
-                <YAxis yAxisId="right" orientation="right" stroke="rgba(255,255,255,0.3)" fontSize={10} unit="%" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" vertical={false} />
+                <XAxis dataKey="date" stroke="#64748b" fontSize={10} />
+                <YAxis yAxisId="left" stroke="#64748b" fontSize={10} unit="K" />
+                <YAxis yAxisId="right" orientation="right" stroke="#64748b" fontSize={10} unit="%" />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar yAxisId="left" dataKey="nfp" name="NFP Change" fill="#00A8FF" radius={[4, 4, 0, 0]}  isAnimationActive={false} />
                 <Line yAxisId="right" type="monotone" dataKey="unemployment" name="Unemployment Rate" stroke="#A855F7" strokeWidth={2} dot={false}  isAnimationActive={false} />
@@ -166,7 +166,7 @@ export default function EconomicDashboard() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <History size={16} className="text-[#00E5FF]" />
-                <h3 className="font-bold text-white">2s10s Spread History</h3>
+                <h3 className="font-bold text-[var(--kiq-ink)]">2s10s Spread History</h3>
               </div>
               <div className="bg-red-500/10 border border-red-500/20 px-2 py-1 rounded flex items-center gap-1.5">
                 <AlertTriangle size={10} className="text-red-500" />
@@ -182,9 +182,9 @@ export default function EconomicDashboard() {
                       <stop offset="95%" stopColor="#FF4D6D" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" vertical={false} />
                   <XAxis dataKey="date" hide />
-                  <YAxis stroke="rgba(255,255,255,0.3)" fontSize={10} />
+                  <YAxis stroke="#64748b" fontSize={10} />
                   <Tooltip content={<CustomTooltip />} />
                   <Area type="monotone" dataKey="value" name="2s10s Spread" stroke="#FF4D6D" fill="url(#colorSpread)"  isAnimationActive={false} />
                 </AreaChart>
@@ -196,9 +196,9 @@ export default function EconomicDashboard() {
             <div className="metric-card" data-testid="gauge-recession-prob">
               <p className="section-label mb-2">Recession Prob. (12M)</p>
               <div className="flex items-end gap-3">
-                <p className="text-3xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>{recessionProb}%</p>
+                <p className="text-3xl font-bold text-[var(--kiq-ink)]" style={{ fontFamily: "var(--font-display)" }}>{recessionProb}%</p>
                 <div className="flex-1 pb-2">
-                  <Progress value={recessionProb} className="h-2 bg-white/5" />
+                  <Progress value={recessionProb} className="h-2 bg-[var(--kiq-surface)]/5" />
                 </div>
               </div>
               <p className="text-[10px] text-muted-foreground mt-2">NY Fed Model based on 10Y-3M spread</p>
@@ -209,10 +209,10 @@ export default function EconomicDashboard() {
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-[#00A8FF]/10 border border-[#00A8FF]/20 flex flex-col items-center justify-center">
                   <span className="text-[10px] font-bold text-[#00A8FF] uppercase">Mar</span>
-                  <span className="text-lg font-bold text-white leading-none">21</span>
+                  <span className="text-lg font-bold text-[var(--kiq-ink)] leading-none">21</span>
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-white">Rate Decision</p>
+                  <p className="text-xs font-bold text-[var(--kiq-ink)]">Rate Decision</p>
                   <p className="text-[10px] text-muted-foreground">Market Implied: 84% Hold</p>
                 </div>
               </div>
@@ -225,7 +225,7 @@ export default function EconomicDashboard() {
       <div className="metric-card overflow-x-auto">
         <div className="flex items-center gap-2 mb-4">
           <Calendar size={16} className="text-[#00E5FF]" />
-          <h3 className="font-bold text-white">FOMC Meeting Probabilities</h3>
+          <h3 className="font-bold text-[var(--kiq-ink)]">FOMC Meeting Probabilities</h3>
         </div>
         <table className="w-full text-xs">
           <thead>
@@ -239,12 +239,12 @@ export default function EconomicDashboard() {
           </thead>
           <tbody className="divide-y divide-white/5">
             {fomc.map((meeting) => (
-              <tr key={meeting.date} className="hover:bg-white/5 transition-colors">
-                <td className="py-2.5 text-white font-medium">{meeting.date}</td>
+              <tr key={meeting.date} className="hover:bg-[var(--kiq-surface)]/5 transition-colors">
+                <td className="py-2.5 text-[var(--kiq-ink)] font-medium">{meeting.date}</td>
                 <td className="py-2.5 text-center">
                   <span className={meeting.probability.cut > 50 ? "text-[#00FF94]" : "text-muted-foreground"}>{meeting.probability.cut}%</span>
                 </td>
-                <td className="py-2.5 text-center text-white">{meeting.probability.hold}%</td>
+                <td className="py-2.5 text-center text-[var(--kiq-ink)]">{meeting.probability.hold}%</td>
                 <td className="py-2.5 text-center text-muted-foreground">{meeting.probability.hike}%</td>
                 <td className="py-2.5 text-right font-mono text-[#00E5FF]">{meeting.decision}</td>
               </tr>

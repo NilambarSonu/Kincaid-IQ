@@ -74,7 +74,7 @@ export default function CostBasis() {
           <p className="section-label mb-4">Unrealized P&L by Position</p>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={chartData} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
               <XAxis dataKey="name" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fill: "rgba(130,150,200,0.4)", fontSize: 9 }} axisLine={false} tickLine={false}
                 tickFormatter={(v) => `$${v >= 0 ? "" : "-"}${(Math.abs(v) / 1e6).toFixed(1)}M`} width={44} />
@@ -82,7 +82,7 @@ export default function CostBasis() {
                 content={({ active, payload }) =>
                   active && payload?.length ? (
                     <div className="rounded-xl px-3 py-2 text-xs" style={{ background: "rgba(8,10,40,0.95)", border: "1px solid rgba(0,140,255,0.2)" }}>
-                      <p className="font-bold text-white">{payload[0].payload.name}</p>
+                      <p className="font-bold text-[var(--kiq-ink)]">{payload[0].payload.name}</p>
                       <p style={{ color: payload[0].payload.color }}>{formatCurrency(payload[0].value as number)}</p>
                     </div>
                   ) : null
@@ -140,8 +140,8 @@ export default function CostBasis() {
               <button key={f} onClick={() => setFilter(f)}
                 className="text-xs px-3 py-1 rounded-lg capitalize transition-all"
                 style={{
-                  background: filter === f ? "rgba(0,168,255,0.12)" : "rgba(255,255,255,0.03)",
-                  border: `1px solid ${filter === f ? "rgba(0,168,255,0.3)" : "rgba(255,255,255,0.06)"}`,
+                  background: filter === f ? "rgba(0,168,255,0.12)" : "#ffffff",
+                  border: `1px solid ${filter === f ? "rgba(0,168,255,0.3)" : "#f1f5f9"}`,
                   color: filter === f ? "#00A8FF" : "rgba(150,170,210,0.5)",
                 }}
                 data-testid={`filter-cb-${f}`}
@@ -152,7 +152,7 @@ export default function CostBasis() {
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <tr style={{ borderBottom: "1px solid #f1f5f9" }}>
                 {[
                   { key: "name", label: "Position" },
                   { key: null, label: "Asset Class" },
@@ -166,7 +166,7 @@ export default function CostBasis() {
                 ].map(({ key, label }) => (
                   <th
                     key={label}
-                    className={`text-left px-3 py-2 text-muted-foreground font-medium whitespace-nowrap ${key ? "cursor-pointer hover:text-white" : ""}`}
+                    className={`text-left px-3 py-2 text-muted-foreground font-medium whitespace-nowrap ${key ? "cursor-pointer hover:text-[var(--kiq-ink)]" : ""}`}
                     onClick={() => key && setSort(key as SortKey)}
                   >
                     <div className="flex items-center gap-1">
@@ -182,13 +182,13 @@ export default function CostBasis() {
                 const isGain = lot.unrealizedGain > 0;
                 const color = ASSET_COLORS[lot.assetClass] || "rgba(150,170,210,0.7)";
                 return (
-                  <tr key={lot.id} className="hover:bg-white/5 cursor-pointer transition-colors"
-                    style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
+                  <tr key={lot.id} className="hover:bg-[var(--kiq-surface)]/5 cursor-pointer transition-colors"
+                    style={{ borderBottom: "1px solid #ffffff" }}
                     onClick={() => open("ytd-return")}
                     data-testid={`row-cb-${lot.id}`}
                   >
                     <td className="px-3 py-2.5">
-                      <p className="font-semibold text-white">{lot.ticker}</p>
+                      <p className="font-semibold text-[var(--kiq-ink)]">{lot.ticker}</p>
                       <p className="text-[10px] text-muted-foreground">{lot.name}</p>
                     </td>
                     <td className="px-3 py-2.5">
@@ -196,7 +196,7 @@ export default function CostBasis() {
                     </td>
                     <td className="px-3 py-2.5 text-muted-foreground">{lot.acquiredDate}</td>
                     <td className="px-3 py-2.5 text-muted-foreground">${lot.costBasis.toFixed(2)}</td>
-                    <td className="px-3 py-2.5 text-white font-semibold">${lot.currentPrice.toFixed(2)}</td>
+                    <td className="px-3 py-2.5 text-[var(--kiq-ink)] font-semibold">${lot.currentPrice.toFixed(2)}</td>
                     <td className="px-3 py-2.5">
                       <div className="flex items-center gap-1" style={{ color: isGain ? "#00FF94" : "#FF4D6D" }}>
                         {isGain ? <TrendingUp size={10} /> : <TrendingDown size={10} />}

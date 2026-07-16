@@ -52,14 +52,14 @@ class SMSTemplateRequest(BaseModel):
 
 
 SMS_TEMPLATES = {
-    "alert_high_cost": "⚠️ Kincaid IQ Alert: High healthcare cost detected — {amount} flagged in {category}. Log in to review: {link}",
-    "compliance_deadline": "📋 Kincaid IQ: ERISA compliance deadline approaching — {deadline} for {requirement}. Action required.",
-    "audit_ready": "✅ Kincaid IQ: Your DOL audit readiness score has been updated to {score}%. View your report: {link}",
-    "claim_approved": "✔️ Kincaid IQ: Claim #{claim_id} has been approved for {amount}. Decision receipt available in your portal.",
-    "renewal_reminder": "🔔 Kincaid IQ: Your {plan_name} plan renews on {date}. Review your coverage options: {link}",
-    "weekly_digest": "📊 Kincaid IQ Weekly: EBITDA impact {ebitda}, Recoverable waste {waste}, Audit score {score}. Full report inside.",
-    "security_alert": "🔐 Kincaid IQ Security: New login detected from {location} at {time}. If this wasn't you, contact support immediately.",
-    "rx_savings": "💊 Kincaid IQ Rx Defense: Potential PBM savings of {savings} identified in your contract analysis. View now: {link}",
+    "alert_high_cost": "⚠️ Kincaid Health Alert: High healthcare cost detected — {amount} flagged in {category}. Log in to review: {link}",
+    "compliance_deadline": "📋 Kincaid Health: ERISA compliance deadline approaching — {deadline} for {requirement}. Action required.",
+    "audit_ready": "✅ Kincaid Health: Your DOL audit readiness score has been updated to {score}%. View your report: {link}",
+    "claim_approved": "✔️ Kincaid Health: Claim #{claim_id} has been approved for {amount}. Decision receipt available in your portal.",
+    "renewal_reminder": "🔔 Kincaid Health: Your {plan_name} plan renews on {date}. Review your coverage options: {link}",
+    "weekly_digest": "📊 Kincaid Health Weekly: EBITDA impact {ebitda}, Recoverable waste {waste}, Audit score {score}. Full report inside.",
+    "security_alert": "🔐 Kincaid Health Security: New login detected from {location} at {time}. If this wasn't you, contact support immediately.",
+    "rx_savings": "💊 Kincaid Health PBM Contract Clarity 360: Potential PBM savings of {savings} identified in your contract analysis. View now: {link}",
 }
 
 

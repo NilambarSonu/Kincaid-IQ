@@ -18,15 +18,15 @@ import {
 
 // ── Theme ─────────────────────────────────────────────────────────────────────
 const T = {
-  bg: "#050508",
-  surface: "#0d0d14",
-  surface2: "#13131e",
-  border: "#1e1e2e",
+  bg: "#F8FAFC",
+  surface: "rgba(255,255,255,0.80)",
+  surface2: "rgba(248,250,252,0.78)",
+  border: "rgba(15,23,42,0.10)",
   gold: "#D4AF37",
   goldLight: "#f0d060",
-  text: "#c8c8d8",
-  textLight: "#e8e8f0",
-  muted: "#5a5a7a",
+  text: "#1e2f46",
+  textLight: "#08111f",
+  muted: "#3f516a",
   green: "#22c55e",
   red: "#ef4444",
   blue: "#3b82f6",
@@ -100,8 +100,9 @@ const inputStyle: React.CSSProperties = {
   borderRadius: 5,
   padding: "7px 10px",
   color: T.text,
-  fontFamily: "JetBrains Mono, monospace",
-  fontSize: 10,
+  fontFamily: "var(--font-sans)",
+  fontSize: 11,
+  fontWeight: 600,
   outline: "none",
   boxSizing: "border-box",
 };
@@ -118,7 +119,7 @@ const btnStyle = (active = false): React.CSSProperties => ({
   border: `1px solid ${active ? T.gold : T.border}`,
   borderRadius: 5,
   padding: "6px 12px",
-  fontFamily: "JetBrains Mono, monospace",
+  fontFamily: "var(--font-sans)",
   fontSize: 9,
   fontWeight: 700,
   letterSpacing: "0.1em",
@@ -131,7 +132,7 @@ const CHART_COLORS = [T.gold, T.blue, T.purple, T.green, T.orange, T.cyan, T.red
 function CustomTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
-    <div style={{ background: T.surface2, border: `1px solid ${T.border}`, borderRadius: 6, padding: "8px 12px", fontFamily: "JetBrains Mono, monospace", fontSize: 9 }}>
+    <div style={{ background: T.surface2, border: `1px solid ${T.border}`, borderRadius: 8, padding: "8px 12px", fontFamily: "var(--font-sans)", fontSize: 10, boxShadow: "0 12px 28px rgba(15,23,42,0.08)" }}>
       <div style={{ color: T.muted, marginBottom: 4 }}>{label}</div>
       {payload.map((p: any) => (
         <div key={p.name} style={{ color: p.color || T.gold }}>
@@ -172,7 +173,7 @@ function DashboardPanel() {
   );
 
   return (
-    <div style={{ padding: 24, fontFamily: "JetBrains Mono, monospace", overflowY: "auto", height: "100%" }}>
+    <div style={{ padding: 24, fontFamily: "var(--font-sans)", overflowY: "auto", height: "100%" }}>
       <div style={{ marginBottom: 20 }}>
         <div style={{ fontSize: 18, fontWeight: 800, color: T.gold, letterSpacing: "0.06em" }}>SALES INTELLIGENCE DASHBOARD</div>
         <div style={{ fontSize: 9, color: T.muted, marginTop: 2 }}>Real-time pipeline metrics · DOL Form 5500 intelligence · MODELED confidence</div>
@@ -318,7 +319,7 @@ function TargetAccountsPanel() {
   const selectedProspects = prospects.filter((p) => selectedEins.has(p.ein));
 
   return (
-    <div style={{ display: "flex", height: "100%", fontFamily: "JetBrains Mono, monospace" }}>
+    <div style={{ display: "flex", height: "100%", fontFamily: "var(--font-sans)" }}>
       {/* Left control panel */}
       <div style={{ width: 230, flexShrink: 0, borderRight: `1px solid ${T.border}`, padding: "16px 14px", overflowY: "auto", background: T.surface }}>
         <div style={{ fontSize: 9, fontWeight: 800, color: T.gold, letterSpacing: "0.15em", marginBottom: 16 }}>FILTER CONTROLS</div>
@@ -579,7 +580,7 @@ function KanbanPipeline() {
   const totalInPipeline = Object.values(grouped).reduce((acc: number, v: any) => acc + (v?.length || 0), 0);
 
   return (
-    <div style={{ padding: "16px 18px", fontFamily: "JetBrains Mono, monospace", height: "100%", overflowY: "auto" }}>
+    <div style={{ padding: "16px 18px", fontFamily: "var(--font-sans)", height: "100%", overflowY: "auto" }}>
       <div style={{ marginBottom: 14, display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
         <div>
           <div style={{ fontSize: 14, fontWeight: 800, color: T.gold }}>PIPELINE — 8-STAGE KANBAN</div>
@@ -694,7 +695,7 @@ function AnalyticsPanel() {
   const analytics = data?.data;
 
   return (
-    <div style={{ padding: "16px 18px", fontFamily: "JetBrains Mono, monospace", overflowY: "auto", height: "100%" }}>
+    <div style={{ padding: "16px 18px", fontFamily: "var(--font-sans)", overflowY: "auto", height: "100%" }}>
       <div style={{ marginBottom: 16, display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
         <div>
           <div style={{ fontSize: 14, fontWeight: 800, color: T.gold }}>MARKET ANALYTICS</div>
@@ -848,7 +849,7 @@ function StatesPanel() {
   const states: any[] = analytics?.states || [];
 
   return (
-    <div style={{ display: "flex", height: "100%", fontFamily: "JetBrains Mono, monospace" }}>
+    <div style={{ display: "flex", height: "100%", fontFamily: "var(--font-sans)" }}>
       {/* State selector sidebar */}
       <div style={{ width: 180, flexShrink: 0, borderRight: `1px solid ${T.border}`, background: T.surface, overflowY: "auto" }}>
         <div style={{ padding: "12px 14px", borderBottom: `1px solid ${T.border}` }}>
@@ -995,7 +996,7 @@ function CopilotPanel({ onClose }: { onClose?: () => void }) {
   ];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", fontFamily: "JetBrains Mono, monospace" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%", fontFamily: "var(--font-sans)" }}>
       <div style={{ padding: "12px 18px", borderBottom: `1px solid ${T.border}`, background: T.surface, flexShrink: 0 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
           <div>
@@ -1087,7 +1088,7 @@ function SettingsPanel() {
   const getStatus = (id: string) => statuses.find((s: any) => s.id === id);
 
   return (
-    <div style={{ display: "flex", height: "100%", fontFamily: "JetBrains Mono, monospace" }}>
+    <div style={{ display: "flex", height: "100%", fontFamily: "var(--font-sans)" }}>
       {/* Settings nav */}
       <div style={{ width: 160, flexShrink: 0, borderRight: `1px solid ${T.border}`, background: T.surface }}>
         <div style={{ padding: "12px 14px", borderBottom: `1px solid ${T.border}` }}>
@@ -1190,7 +1191,7 @@ export function AccountBriefView() {
   const acct = brief?.account;
 
   return (
-    <div style={{ display: "flex", height: "100%", fontFamily: "JetBrains Mono, monospace" }}>
+    <div style={{ display: "flex", height: "100%", fontFamily: "var(--font-sans)" }}>
       <div style={{ width: 200, flexShrink: 0, borderRight: `1px solid ${T.border}`, overflowY: "auto", background: T.surface }}>
         <div style={{ padding: "12px 14px", borderBottom: `1px solid ${T.border}` }}><SectionLabel>SELECT ACCOUNT</SectionLabel></div>
         {accounts.map((a: any) => {
@@ -1287,7 +1288,7 @@ export function PipelineView() {
   const stats = statsData?.data;
   const pipeline: any[] = pipelineData?.data || [];
   return (
-    <div style={{ padding: 24, fontFamily: "JetBrains Mono, monospace" }}>
+    <div style={{ padding: 24, fontFamily: "var(--font-sans)" }}>
       <h2 style={{ color: T.gold, fontSize: 16, fontWeight: 800, marginBottom: 4 }}>SEED ACCOUNT PIPELINE</h2>
       <div style={{ fontSize: 9, color: T.muted, marginBottom: 16 }}>Pre-seeded accounts · SBI™ scored · Sorted by recoverable capital</div>
       {stats && (
@@ -1349,7 +1350,7 @@ export function ApiRegistryView() {
   ];
   const getStatus = (id: string) => statuses.find((s: any) => s.id === id);
   return (
-    <div style={{ padding: 24, fontFamily: "JetBrains Mono, monospace", maxWidth: 860 }}>
+    <div style={{ padding: 24, fontFamily: "var(--font-sans)", maxWidth: 860 }}>
       <h2 style={{ color: T.gold, fontSize: 16, fontWeight: 800, marginBottom: 4 }}>FEDERAL API REGISTRY</h2>
       <div style={{ fontSize: 9, color: T.muted, marginBottom: 20 }}>Six federal data sources · Zero proprietary vendors · Pure public regulatory intelligence</div>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -1416,7 +1417,7 @@ export function BenchmarkView() {
     </Card>
   );
   return (
-    <div style={{ padding: 24, fontFamily: "JetBrains Mono, monospace", maxWidth: 860 }}>
+    <div style={{ padding: 24, fontFamily: "var(--font-sans)", maxWidth: 860 }}>
       <h2 style={{ color: T.gold, fontSize: 16, fontWeight: 800, marginBottom: 4 }}>BENCHMARK ENGINE</h2>
       <div style={{ fontSize: 9, color: T.muted, marginBottom: 16 }}>Peer cohort statistics · k-anonymity enforced (minimum k=11) · MODELED</div>
       <Card style={{ padding: "14px 16px", marginBottom: 16 }}>
@@ -1474,7 +1475,7 @@ export function IngestLogView() {
   };
 
   return (
-    <div style={{ padding: 24, fontFamily: "JetBrains Mono, monospace", maxWidth: 860 }}>
+    <div style={{ padding: 24, fontFamily: "var(--font-sans)", maxWidth: 860 }}>
       <h2 style={{ color: T.gold, fontSize: 16, fontWeight: 800, marginBottom: 4 }}>INGEST LOG</h2>
       <div style={{ fontSize: 9, color: T.muted, marginBottom: 16 }}>Federal API connection status · SHA-256 evidence fingerprinting on every record</div>
       <Card style={{ marginBottom: 20 }}>
@@ -1548,7 +1549,7 @@ export function SalesOSAccountDetail() {
 
   return (
     <Layout>
-      <div style={{ minHeight: "100vh", background: T.bg, fontFamily: "JetBrains Mono, monospace", overflowY: "auto" }}>
+      <div className="kiq-ops-shell" style={{ minHeight: "100vh", fontFamily: "var(--font-sans)", overflowY: "auto" }}>
         <div style={{ padding: "14px 24px", borderBottom: `1px solid ${T.border}`, background: T.surface, display: "flex", alignItems: "center", gap: 14 }}>
           <button onClick={() => setLocation("/sales-os/prospects")} style={{ ...btnStyle(false), fontSize: 8 }}>← BACK</button>
           <div>
@@ -2145,12 +2146,12 @@ export default function SalesOS() {
 
   return (
     <Layout>
-      <div style={{ minHeight: "100vh", background: T.bg, display: "flex", flexDirection: "column", fontFamily: "JetBrains Mono, monospace", position: "relative" }}>
+      <div className="kiq-ops-shell" style={{ minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: "var(--font-sans)", position: "relative" }}>
         {/* Brand bar */}
         <div style={{ padding: "10px 24px", borderBottom: `1px solid ${T.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", background: T.surface, flexShrink: 0, gap: 16 }}>
           <div style={{ flexShrink: 0 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ fontSize: 13, fontWeight: 800, color: T.gold, letterSpacing: "0.08em" }}>KINCAID IQ VERIFY™</span>
+              <span style={{ fontSize: 13, fontWeight: 800, color: T.gold, letterSpacing: "0.08em" }}>KINCAID HEALTH VERIFY™</span>
               <span style={{ fontSize: 9, color: T.muted, letterSpacing: "0.12em" }}>SALES OS</span>
               <span style={{ fontSize: 7, color: T.green, border: `1px solid ${T.green}`, padding: "1px 5px", borderRadius: 3 }}>LIVE</span>
             </div>
@@ -2203,7 +2204,7 @@ export default function SalesOS() {
                   padding: "10px 16px", background: "transparent", border: "none",
                   borderBottom: isActive ? `2px solid ${T.gold}` : "2px solid transparent",
                   color: isActive ? T.gold : T.muted,
-                  fontFamily: "JetBrains Mono, monospace", fontSize: 8, fontWeight: 700,
+                  fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 800,
                   letterSpacing: "0.12em", cursor: "pointer", whiteSpace: "nowrap",
                   display: "flex", alignItems: "center", gap: 5, transition: "all 0.15s",
                 }}
@@ -2231,7 +2232,7 @@ export default function SalesOS() {
 
           {/* Copilot drawer */}
           {copilotOpen && (
-            <div style={{ width: 420, flexShrink: 0, borderLeft: `1px solid ${T.border}`, display: "flex", flexDirection: "column", background: T.bg, overflow: "hidden" }}>
+            <div className="kiq-ops-card" style={{ width: 420, flexShrink: 0, borderLeft: `1px solid ${T.border}`, display: "flex", flexDirection: "column", background: T.surface, overflow: "hidden", borderRadius: 0 }}>
               <CopilotPanel onClose={() => setCopilotOpen(false)} />
             </div>
           )}

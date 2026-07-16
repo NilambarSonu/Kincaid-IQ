@@ -195,7 +195,7 @@ function MethodBadge({ method }: { method: string }) {
     DELETE: "text-[#FF4D6D] bg-[#FF4D6D]/10 border-[#FF4D6D]/30",
   };
   return (
-    <span className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded border ${colors[method] ?? "text-zinc-400 bg-zinc-800 border-zinc-700"}`}>
+    <span className={`text-[9px] font-mono font-bold px-1.5 py-0.5 rounded border ${colors[method] ?? "text-zinc-400 bg-[var(--kiq-surface)] border-[var(--kiq-hairline)]"}`}>
       {method}
     </span>
   );
@@ -207,8 +207,8 @@ function SectionCard({ title, icon: Icon, accent, children }: {
   title: string; icon: React.ElementType; accent: string; children: React.ReactNode;
 }) {
   return (
-    <div className="bg-zinc-950/80 border border-zinc-800/60 rounded-2xl overflow-hidden">
-      <div className="flex items-center gap-2.5 px-5 py-3.5 border-b border-zinc-800/60">
+    <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/60 rounded-2xl overflow-hidden">
+      <div className="flex items-center gap-2.5 px-5 py-3.5 border-b border-[var(--kiq-hairline)]/60">
         <Icon className="w-4 h-4 flex-shrink-0" style={{ color: accent }} />
         <span className="text-xs font-mono font-bold uppercase tracking-widest" style={{ color: accent }}>
           {title}
@@ -223,7 +223,7 @@ function StatTile({ label, value, sub, accent }: {
   label: string; value: string | number; sub?: string; accent: string;
 }) {
   return (
-    <div className="bg-zinc-900/60 border border-zinc-800/50 rounded-xl p-4">
+    <div className="bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/50 rounded-xl p-4">
       <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">{label}</p>
       <p className="text-2xl font-black mt-1 font-mono" style={{ color: accent }}>
         {typeof value === "number" ? fmtNum(value) : value}
@@ -245,7 +245,7 @@ function TableRow({ t }: { t: DBTable }) {
     <div className="flex items-center gap-3 py-2.5 border-b border-zinc-900/60 last:border-0"
       data-testid={`table-row-${t.name}`}>
       <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: accent }} />
-      <span className="flex-1 text-xs font-mono text-zinc-200">{TABLE_LABELS[t.name] ?? t.name}</span>
+      <span className="flex-1 text-xs font-mono text-[var(--kiq-ink-soft)]">{TABLE_LABELS[t.name] ?? t.name}</span>
       <span className="text-[10px] font-mono text-zinc-500 w-16 text-right">{fmtNum(t.rowCount)} rows</span>
       <span className="text-[10px] font-mono text-zinc-600 w-12 text-right">{t.totalSize}</span>
       <span className="text-[10px] font-mono text-zinc-700 w-6 text-right">{t.colCount}c</span>
@@ -259,10 +259,10 @@ function RouteGroup({ prefix, routes }: { prefix: string; routes: APIRoute[] }) 
   const [open, setOpen] = useState(false);
   const manifestCount = routes.filter(r => r.manifestCompliant).length;
   return (
-    <div className="border border-zinc-800/50 rounded-xl overflow-hidden mb-2">
+    <div className="border border-[var(--kiq-hairline)]/50 rounded-xl overflow-hidden mb-2">
       <button
         onClick={() => setOpen(v => !v)}
-        className="w-full flex items-center gap-3 px-4 py-2.5 bg-zinc-900/50 hover:bg-zinc-800/40 transition-colors"
+        className="w-full flex items-center gap-3 px-4 py-2.5 bg-[var(--kiq-canvas-soft)]/50 hover:bg-[var(--kiq-surface)]/40 transition-colors"
         data-testid={`route-group-${prefix.replace(/\//g, "-")}`}
       >
         <span className="text-xs font-mono text-[#00A8FF] flex-1 text-left">{prefix}</span>
@@ -279,13 +279,13 @@ function RouteGroup({ prefix, routes }: { prefix: string; routes: APIRoute[] }) 
         {open ? <ChevronDown className="w-3 h-3 text-zinc-500" /> : <ChevronRight className="w-3 h-3 text-zinc-500" />}
       </button>
       {open && (
-        <div className="bg-zinc-950/60 divide-y divide-zinc-900/40">
+        <div className="bg-[var(--kiq-surface)]/60 divide-y divide-zinc-900/40">
           {routes.map((r, i) => (
             <div key={i} className="flex items-center gap-2 px-4 py-2">
               <div className="flex gap-1 flex-shrink-0">
                 {r.methods.map(m => <MethodBadge key={m} method={m} />)}
               </div>
-              <span className="text-[11px] font-mono text-zinc-300 flex-1">{r.path}</span>
+              <span className="text-[11px] font-mono text-[var(--kiq-muted)] flex-1">{r.path}</span>
               {r.manifestCompliant && (
                 <span
                   className="text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
@@ -318,9 +318,9 @@ function SeedButton({ label, endpoint, accent }: {
     },
   });
   return (
-    <div className="flex items-center justify-between gap-3 bg-zinc-900/50 border border-zinc-800/50 rounded-xl px-4 py-3">
+    <div className="flex items-center justify-between gap-3 bg-[var(--kiq-canvas-soft)]/50 border border-[var(--kiq-hairline)]/50 rounded-xl px-4 py-3">
       <div>
-        <p className="text-xs font-mono text-zinc-200">{label}</p>
+        <p className="text-xs font-mono text-[var(--kiq-ink-soft)]">{label}</p>
         <p className="text-[10px] text-zinc-600 mt-0.5">{endpoint}</p>
       </div>
       <div className="flex items-center gap-2">
@@ -358,11 +358,11 @@ function SnapshotRetentionCard({ s }: { s?: SnapshotStorage }) {
   });
 
   return (
-    <div className="mt-4 border-t border-zinc-800/40 pt-4" data-testid="card-snapshot-retention">
+    <div className="mt-4 border-t border-[var(--kiq-hairline)]/40 pt-4" data-testid="card-snapshot-retention">
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-1">Delivery Snapshot Storage</p>
-          <p className="text-xs font-mono text-zinc-300">
+          <p className="text-xs font-mono text-[var(--kiq-muted)]">
             <span data-testid="text-snapshot-count">{fmtNum(s?.snapshotCount ?? 0)}</span> snapshot blobs ·{" "}
             <span data-testid="text-snapshot-bytes">{fmtBytes(s?.snapshotBytes ?? 0)}</span>
           </p>
@@ -448,20 +448,20 @@ function UserManagement() {
 
         {/* Create User Form */}
         {showCreate && (
-          <div className="bg-zinc-900 rounded-xl p-4 border border-zinc-700 space-y-3">
-            <p className="text-sm font-semibold text-white mb-2">New User Account</p>
+          <div className="bg-[var(--kiq-canvas-soft)] rounded-xl p-4 border border-[var(--kiq-hairline)] space-y-3">
+            <p className="text-sm font-semibold text-[var(--kiq-ink)] mb-2">New User Account</p>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="text-xs text-zinc-500 mb-1 block">Username *</label>
                 <input data-testid="input-new-username"
-                  className="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-3 py-2 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]"
+                  className="w-full bg-[var(--kiq-surface)] border border-zinc-600 rounded-lg px-3 py-2 text-sm text-[var(--kiq-ink)] placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]"
                   placeholder="jane.smith" value={form.username}
                   onChange={(e) => setForm({ ...form, username: e.target.value })} />
               </div>
               <div>
                 <label className="text-xs text-zinc-500 mb-1 block">Full Name</label>
                 <input data-testid="input-new-fullname"
-                  className="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-3 py-2 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]"
+                  className="w-full bg-[var(--kiq-surface)] border border-zinc-600 rounded-lg px-3 py-2 text-sm text-[var(--kiq-ink)] placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]"
                   placeholder="Jane Smith" value={form.full_name}
                   onChange={(e) => setForm({ ...form, full_name: e.target.value })} />
               </div>
@@ -469,7 +469,7 @@ function UserManagement() {
                 <label className="text-xs text-zinc-500 mb-1 block">Email</label>
                 <input data-testid="input-new-email"
                   type="email"
-                  className="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-3 py-2 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]"
+                  className="w-full bg-[var(--kiq-surface)] border border-zinc-600 rounded-lg px-3 py-2 text-sm text-[var(--kiq-ink)] placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]"
                   placeholder="jane@company.com" value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })} />
               </div>
@@ -477,7 +477,7 @@ function UserManagement() {
                 <label className="text-xs text-zinc-500 mb-1 block">Password *</label>
                 <input data-testid="input-new-password"
                   type="password"
-                  className="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-3 py-2 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]"
+                  className="w-full bg-[var(--kiq-surface)] border border-zinc-600 rounded-lg px-3 py-2 text-sm text-[var(--kiq-ink)] placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]"
                   placeholder="Temporary password" value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })} />
               </div>
@@ -486,7 +486,7 @@ function UserManagement() {
               data-testid="button-submit-create-user"
               onClick={() => createMutation.mutate(form)}
               disabled={!form.username || !form.password || createMutation.isPending}
-              className="w-full py-2 bg-[#00A8FF] hover:bg-[#00A8FF]/80 disabled:opacity-40 rounded-lg text-sm font-semibold text-white transition-colors"
+              className="w-full py-2 bg-[#00A8FF] hover:bg-[#00A8FF]/80 disabled:opacity-40 rounded-lg text-sm font-semibold text-[var(--kiq-ink)] transition-colors"
             >
               {createMutation.isPending ? "Creating…" : "Create Account"}
             </button>
@@ -500,13 +500,13 @@ function UserManagement() {
           <div className="space-y-1">
             {users.map((u) => (
               <div key={u.id} data-testid={`user-row-${u.username}`}
-                className="flex items-center gap-3 bg-zinc-900/50 rounded-xl px-4 py-3 border border-zinc-800/50 group">
-                <div className="w-7 h-7 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-zinc-400 flex-shrink-0">
+                className="flex items-center gap-3 bg-[var(--kiq-canvas-soft)]/50 rounded-xl px-4 py-3 border border-[var(--kiq-hairline)]/50 group">
+                <div className="w-7 h-7 rounded-full bg-[var(--kiq-surface)] flex items-center justify-center text-xs font-bold text-zinc-400 flex-shrink-0">
                   {(u.full_name || u.username).charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-white font-medium">{u.username}</span>
+                    <span className="text-sm text-[var(--kiq-ink)] font-medium">{u.username}</span>
                     {u.is_admin && (
                       <span className="text-[10px] px-1.5 py-0.5 bg-[#FFB800]/10 text-[#FFB800] border border-[#FFB800]/20 rounded-full font-semibold">ADMIN</span>
                     )}
@@ -521,7 +521,7 @@ function UserManagement() {
                     <button
                       data-testid={`button-reset-${u.username}`}
                       onClick={() => { setResetUserId(u.id); setNewPass(""); }}
-                      className="px-2 py-1 text-xs bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 rounded-lg text-zinc-400 transition-colors"
+                      className="px-2 py-1 text-xs bg-[var(--kiq-surface)] hover:bg-zinc-700 border border-[var(--kiq-hairline)] rounded-lg text-zinc-400 transition-colors"
                     >
                       Reset PW
                     </button>
@@ -542,27 +542,27 @@ function UserManagement() {
         {/* Password Reset Modal */}
         {resetUserId && (
           <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-            <div className="bg-zinc-900 rounded-2xl p-6 border border-zinc-700 w-full max-w-sm space-y-4">
-              <p className="text-white font-semibold">Reset Password</p>
+            <div className="bg-[var(--kiq-canvas-soft)] rounded-2xl p-6 border border-[var(--kiq-hairline)] w-full max-w-sm space-y-4">
+              <p className="text-[var(--kiq-ink)] font-semibold">Reset Password</p>
               <p className="text-xs text-zinc-500">Enter a new password for this user.</p>
               <input
                 data-testid="input-reset-password"
                 type="password"
-                className="w-full bg-zinc-800 border border-zinc-600 rounded-lg px-3 py-2 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]"
+                className="w-full bg-[var(--kiq-surface)] border border-zinc-600 rounded-lg px-3 py-2 text-sm text-[var(--kiq-ink)] placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]"
                 placeholder="New password"
                 value={newPass}
                 onChange={(e) => setNewPass(e.target.value)}
               />
               <div className="flex gap-2">
                 <button onClick={() => setResetUserId(null)}
-                  className="flex-1 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-lg text-sm text-zinc-400 transition-colors">
+                  className="flex-1 py-2 bg-[var(--kiq-surface)] hover:bg-zinc-700 rounded-lg text-sm text-zinc-400 transition-colors">
                   Cancel
                 </button>
                 <button
                   data-testid="button-confirm-reset"
                   disabled={!newPass || resetMutation.isPending}
                   onClick={() => resetMutation.mutate({ id: resetUserId!, password: newPass })}
-                  className="flex-1 py-2 bg-[#00A8FF] hover:bg-[#00A8FF]/80 disabled:opacity-40 rounded-lg text-sm font-semibold text-white transition-colors">
+                  className="flex-1 py-2 bg-[#00A8FF] hover:bg-[#00A8FF]/80 disabled:opacity-40 rounded-lg text-sm font-semibold text-[var(--kiq-ink)] transition-colors">
                   {resetMutation.isPending ? "Resetting…" : "Set Password"}
                 </button>
               </div>
@@ -643,8 +643,8 @@ function ScoringNumberField({ value, onChange, testId }: {
         onChange(n);
       }}
       data-testid={testId}
-      className={`w-full bg-zinc-900/60 border rounded-md px-2 py-1 text-[11px] font-mono text-zinc-200 focus:outline-none ${
-        bad ? "border-[#FF4D6D]/70 focus:border-[#FF4D6D]" : "border-zinc-800/60 focus:border-zinc-600"
+      className={`w-full bg-[var(--kiq-canvas-soft)]/60 border rounded-md px-2 py-1 text-[11px] font-mono text-[var(--kiq-ink-soft)] focus:outline-none ${
+        bad ? "border-[#FF4D6D]/70 focus:border-[#FF4D6D]" : "border-[var(--kiq-hairline)]/60 focus:border-zinc-600"
       }`}
     />
   );
@@ -669,7 +669,7 @@ function ScoringListField({ value, onChange, testId }: {
       }}
       data-testid={testId}
       placeholder="comma-separated values"
-      className="w-full bg-zinc-900/60 border border-zinc-800/60 rounded-md px-2 py-1.5 text-[11px] font-mono text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600 resize-y"
+      className="w-full bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-md px-2 py-1.5 text-[11px] font-mono text-[var(--kiq-ink-soft)] placeholder-zinc-600 focus:outline-none focus:border-zinc-600 resize-y"
     />
   );
 }
@@ -716,7 +716,7 @@ function ScoringFields({ node, path, draft, onChange }: {
         );
       })}
       {dictEntries.map(([k, v]) => (
-        <div key={k} className="border-l border-zinc-800/50 pl-3">
+        <div key={k} className="border-l border-[var(--kiq-hairline)]/50 pl-3">
           <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-600 mb-2">{k}</p>
           <ScoringFields node={v} path={[...path, k]} draft={draft} onChange={onChange} />
         </div>
@@ -854,7 +854,7 @@ function ScoringEditor() {
             onClick={() => resetMut.mutate()}
             disabled={resetMut.isPending}
             data-testid="btn-scoring-reset"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold uppercase tracking-widest border transition-all hover:opacity-80 disabled:opacity-40 text-zinc-400 border-zinc-700 bg-zinc-800/40"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-bold uppercase tracking-widest border transition-all hover:opacity-80 disabled:opacity-40 text-zinc-400 border-[var(--kiq-hairline)] bg-[var(--kiq-surface)]/40"
           >
             <RotateCcw className={`w-3 h-3 ${resetMut.isPending ? "animate-spin" : ""}`} />
             Reset to Defaults
@@ -891,7 +891,7 @@ function ScoringEditor() {
       {/* Editable sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {sections.map(key => (
-          <div key={key} className="bg-zinc-900/40 border border-zinc-800/50 rounded-xl p-4" data-testid={`scoring-section-${key}`}>
+          <div key={key} className="bg-[var(--kiq-canvas-soft)]/40 border border-[var(--kiq-hairline)]/50 rounded-xl p-4" data-testid={`scoring-section-${key}`}>
             <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 mb-3">
               {SCORING_SECTION_LABELS[key] ?? key}
             </p>
@@ -957,7 +957,7 @@ export default function AdminView() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-zinc-950 p-6 space-y-6">
+      <div className="min-h-screen bg-[var(--kiq-surface)] p-6 space-y-6">
 
         {/* ── Header ─────────────────────────────────────────────────────── */}
         <div className="flex items-start justify-between">
@@ -976,7 +976,7 @@ export default function AdminView() {
                 </span>
               )}
             </div>
-            <h1 className="text-2xl font-black text-zinc-100 tracking-tight">Kincaid IQ Control Room</h1>
+            <h1 className="text-2xl font-black text-[var(--kiq-ink)] tracking-tight">Kincaid Health Control Room</h1>
             <p className="text-xs text-zinc-500 mt-1">
               {stats?.client} · Platform v{stats?.version ?? "2.0.0"} · Uptime {stats?.uptimeHuman ?? "—"}
             </p>
@@ -1002,31 +1002,31 @@ export default function AdminView() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <SectionCard title="System Health" icon={Activity} accent="#00FF94">
             <div className="grid grid-cols-2 gap-3">
-              <div className="flex items-center justify-between bg-zinc-900/50 rounded-xl px-4 py-3 border border-zinc-800/50" data-testid="health-database">
+              <div className="flex items-center justify-between bg-[var(--kiq-canvas-soft)]/50 rounded-xl px-4 py-3 border border-[var(--kiq-hairline)]/50" data-testid="health-database">
                 <div className="flex items-center gap-2">
                   <Database className="w-4 h-4 text-[#00A8FF]" />
-                  <span className="text-xs font-mono text-zinc-300">PostgreSQL</span>
+                  <span className="text-xs font-mono text-[var(--kiq-muted)]">PostgreSQL</span>
                 </div>
                 <StatusDot ok={health?.database.ok ?? true} />
               </div>
-              <div className="flex items-center justify-between bg-zinc-900/50 rounded-xl px-4 py-3 border border-zinc-800/50" data-testid="health-backend">
+              <div className="flex items-center justify-between bg-[var(--kiq-canvas-soft)]/50 rounded-xl px-4 py-3 border border-[var(--kiq-hairline)]/50" data-testid="health-backend">
                 <div className="flex items-center gap-2">
                   <Server className="w-4 h-4 text-[#A855F7]" />
-                  <span className="text-xs font-mono text-zinc-300">FastAPI</span>
+                  <span className="text-xs font-mono text-[var(--kiq-muted)]">FastAPI</span>
                 </div>
                 <StatusDot ok={true} />
               </div>
-              <div className="flex items-center justify-between bg-zinc-900/50 rounded-xl px-4 py-3 border border-zinc-800/50" data-testid="health-frontend">
+              <div className="flex items-center justify-between bg-[var(--kiq-canvas-soft)]/50 rounded-xl px-4 py-3 border border-[var(--kiq-hairline)]/50" data-testid="health-frontend">
                 <div className="flex items-center gap-2">
                   <Globe className="w-4 h-4 text-[#00FF94]" />
-                  <span className="text-xs font-mono text-zinc-300">Vite Frontend</span>
+                  <span className="text-xs font-mono text-[var(--kiq-muted)]">Vite Frontend</span>
                 </div>
                 <StatusDot ok={true} />
               </div>
-              <div className="flex items-center justify-between bg-zinc-900/50 rounded-xl px-4 py-3 border border-zinc-800/50" data-testid="health-session">
+              <div className="flex items-center justify-between bg-[var(--kiq-canvas-soft)]/50 rounded-xl px-4 py-3 border border-[var(--kiq-hairline)]/50" data-testid="health-session">
                 <div className="flex items-center gap-2">
                   <Lock className="w-4 h-4 text-[#FFB800]" />
-                  <span className="text-xs font-mono text-zinc-300">Session Auth</span>
+                  <span className="text-xs font-mono text-[var(--kiq-muted)]">Session Auth</span>
                 </div>
                 <StatusDot ok={true} />
               </div>
@@ -1042,11 +1042,11 @@ export default function AdminView() {
                 { label: "PostgreSQL DB",     key: "database",  icon: Database,   accent: "#00A8FF", from: config?.integrations },
               ].map(({ label, key, icon: Icon, accent, from }) => (
                 <div key={key}
-                  className="flex items-center justify-between bg-zinc-900/50 rounded-xl px-4 py-2.5 border border-zinc-800/50"
+                  className="flex items-center justify-between bg-[var(--kiq-canvas-soft)]/50 rounded-xl px-4 py-2.5 border border-[var(--kiq-hairline)]/50"
                   data-testid={`provider-${key}`}>
                   <div className="flex items-center gap-2">
                     <Icon className="w-3.5 h-3.5" style={{ color: accent }} />
-                    <span className="text-xs font-mono text-zinc-300">{label}</span>
+                    <span className="text-xs font-mono text-[var(--kiq-muted)]">{label}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <StatusDot ok={from ? from[key] : false} />
@@ -1075,7 +1075,7 @@ export default function AdminView() {
               )
             }
           </div>
-          <div className="mt-4 flex items-center gap-6 border-t border-zinc-800/40 pt-4">
+          <div className="mt-4 flex items-center gap-6 border-t border-[var(--kiq-hairline)]/40 pt-4">
             <span className="text-[10px] font-mono text-zinc-600">
               {tables.length} tables · {fmtNum(totalDbRows)} total rows · {stats?.dbSize ?? "—"} on disk
             </span>
@@ -1157,7 +1157,7 @@ export default function AdminView() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-center justify-between gap-3 py-1 border-b border-zinc-900/40">
                     <span className="text-[10px] font-mono text-zinc-500">SOURCE</span>
-                    <span className="text-[10px] font-mono text-zinc-300">
+                    <span className="text-[10px] font-mono text-[var(--kiq-muted)]">
                       {rfpHealth.source ?? "— none —"}
                     </span>
                   </div>
@@ -1177,7 +1177,7 @@ export default function AdminView() {
                       {rfpHealth.override_keys.map(k => (
                         <span
                           key={k}
-                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-900/60 border border-zinc-800/60 text-zinc-300"
+                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 text-[var(--kiq-muted)]"
                           data-testid={`rfp-override-key-${k}`}
                         >
                           {k}
@@ -1219,12 +1219,12 @@ export default function AdminView() {
               value={routeFilter}
               onChange={e => setRouteFilter(e.target.value)}
               placeholder="Filter routes…"
-              className="flex-1 bg-zinc-900/60 border border-zinc-800/60 rounded-lg px-3 py-1.5 text-xs font-mono text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
+              className="flex-1 bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/60 rounded-lg px-3 py-1.5 text-xs font-mono text-[var(--kiq-ink-soft)] placeholder-zinc-600 focus:outline-none focus:border-zinc-600"
               data-testid="input-route-filter"
             />
             {routeFilter && (
               <button onClick={() => setRouteFilter("")}
-                className="text-[10px] font-mono text-zinc-500 hover:text-zinc-300">
+                className="text-[10px] font-mono text-zinc-500 hover:text-[var(--kiq-muted)]">
                 ✕ clear
               </button>
             )}
@@ -1267,12 +1267,12 @@ export default function AdminView() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
             {filteredPages.map(p => (
               <div key={p.path}
-                className="flex items-center gap-3 bg-zinc-900/40 border border-zinc-800/40 rounded-xl px-3 py-2"
+                className="flex items-center gap-3 bg-[var(--kiq-canvas-soft)]/40 border border-[var(--kiq-hairline)]/40 rounded-xl px-3 py-2"
                 data-testid={`page-item-${p.path.replace(/\//g, "").replace(/-/g, "_")}`}>
                 <span className="w-2 h-2 rounded-full flex-shrink-0"
                   style={{ background: CATEGORY_COLORS[p.category] ?? "#6B7280" }} />
                 <div className="flex-1 min-w-0">
-                  <p className="text-[11px] font-mono text-zinc-200 truncate">{p.label}</p>
+                  <p className="text-[11px] font-mono text-[var(--kiq-ink-soft)] truncate">{p.label}</p>
                   <p className="text-[9px] font-mono text-zinc-600">{p.path}</p>
                 </div>
                 <span className="text-[9px] font-mono text-zinc-700 flex-shrink-0">{p.category}</span>
@@ -1289,7 +1289,7 @@ export default function AdminView() {
             <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
               {logs.map(l => (
                 <div key={l.id}
-                  className="bg-zinc-900/50 border border-zinc-800/40 rounded-xl px-4 py-3"
+                  className="bg-[var(--kiq-canvas-soft)]/50 border border-[var(--kiq-hairline)]/40 rounded-xl px-4 py-3"
                   data-testid={`log-entry-${l.id}`}>
                   <div className="flex items-center justify-between mb-1">
                     <span className="text-[10px] font-mono text-[#A855F7] uppercase">{l.provider}</span>

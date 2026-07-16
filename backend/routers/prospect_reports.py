@@ -91,31 +91,33 @@ def download_shady_pdf(ein: str):
     total_broker = sum(float(r['broker_commissions'] or 0) for r in welfare_rows)
     total_income = sum(float(r['total_income'] or 0) for r in welfare_rows)
 
-    BG   = colors.HexColor("#07091c")
-    CARD = colors.HexColor("#0d1033")
+    BG   = colors.HexColor("#ffffff")
+    CARD = colors.HexColor("#f8fafc")
     RED  = colors.HexColor("#ef4444")
     AMB  = colors.HexColor("#f59e0b")
-    CYN  = colors.HexColor("#00D4FF")
-    ACC  = colors.HexColor("#4f7dff")
+    CYN  = colors.HexColor("#2563eb")
+    ACC  = colors.HexColor("#533afd")
     GRN  = colors.HexColor("#22c55e")
-    T1   = colors.HexColor("#f0f4ff")
-    T2   = colors.HexColor("#94a3b8")
-    BDR  = colors.HexColor("#1e2a4a")
-    GOLD = colors.HexColor("#f59e0b")
-    ALT  = colors.HexColor("#0a0e28")
+    T1   = colors.HexColor("#0f172a")
+    T2   = colors.HexColor("#475569")
+    BDR  = colors.HexColor("#dbe4ef")
+    GOLD = colors.HexColor("#b45309")
+    ALT  = colors.HexColor("#f1f5f9")
 
     buf = io.BytesIO()
 
     def hdr_ftr(canvas_obj, doc):
         W, H = letter
         canvas_obj.saveState()
-        canvas_obj.setFillColor(BG)
+        canvas_obj.setFillColor(colors.HexColor("#ffffff"))
         canvas_obj.rect(0, H-52, W, 52, fill=1, stroke=0)
-        canvas_obj.setFillColor(RED)
-        canvas_obj.rect(0, H-54, W, 3, fill=1, stroke=0)
+        canvas_obj.setFillColor(colors.HexColor("#eff6ff"))
+        canvas_obj.rect(0, H-52, W, 52, fill=1, stroke=0)
+        canvas_obj.setFillColor(ACC)
+        canvas_obj.rect(0, H-54, W, 2.4, fill=1, stroke=0)
         canvas_obj.setFont("Helvetica-Bold", 8)
         canvas_obj.setFillColor(T1)
-        canvas_obj.drawString(36, H-20, "KINCAID IQ VERIFY™ — SHADY BROKER INTELLIGENCE REPORT")
+        canvas_obj.drawString(36, H-20, "KINCAID HEALTH VERIFY™ — BROKER COMPENSATION INTELLIGENCE REPORT")
         canvas_obj.setFont("Helvetica", 7.5)
         canvas_obj.setFillColor(T2)
         canvas_obj.drawString(36, H-33, f"SHRACK-7742  |  CONFIDENTIAL — LICENSED BROKER USE ONLY")
@@ -125,13 +127,13 @@ def download_shady_pdf(ein: str):
         canvas_obj.setFont("Helvetica", 7.5)
         canvas_obj.setFillColor(T2)
         canvas_obj.drawRightString(W-36, H-33, f"EIN: {ein}")
-        canvas_obj.setFillColor(BG)
+        canvas_obj.setFillColor(colors.HexColor("#ffffff"))
         canvas_obj.rect(0, 0, W, 34, fill=1, stroke=0)
-        canvas_obj.setFillColor(RED)
-        canvas_obj.rect(0, 34, W, 2, fill=1, stroke=0)
+        canvas_obj.setFillColor(colors.HexColor("#e2e8f0"))
+        canvas_obj.rect(0, 34, W, 1, fill=1, stroke=0)
         canvas_obj.setFont("Helvetica", 7)
         canvas_obj.setFillColor(T2)
-        canvas_obj.drawString(36, 12, f"Generated: {datetime.date.today().strftime('%B %d, %Y')}  |  Kincaid RMC — Jeremiah Shrack  |  SHRACK-7742")
+        canvas_obj.drawString(36, 12, f"Generated: {datetime.date.today().strftime('%B %d, %Y')}  |  Kincaid Health — Jeremiah Shrack  |  SHRACK-7742")
         canvas_obj.drawRightString(W-36, 12, f"Page {doc.page}  |  FOR LICENSED BROKER USE ONLY — NOT FOR CLIENT DISTRIBUTION")
         canvas_obj.restoreState()
 
@@ -148,12 +150,12 @@ def download_shady_pdf(ein: str):
             spaceBefore=kw.get('before',0), alignment=kw.get('align', TA_LEFT)))
 
     story.append(Spacer(1, 0.1*inch))
-    hdr_data = [[p("🚨 SHADY BROKER INTELLIGENCE REPORT", font='Helvetica-Bold', size=18, color=RED, leading=22)],
+    hdr_data = [[p("🚨 BROKER COMPENSATION INTELLIGENCE REPORT", font='Helvetica-Bold', size=18, color=RED, leading=22)],
                 [p(f"{sponsor}", font='Helvetica-Bold', size=13, color=T1, leading=16)],
                 [p(f"EIN: {ein}  ·  {city}, {state}  ·  Kincaid Prospecting Engine™", size=9, color=T2)]]
     ht = Table(hdr_data, colWidths=[W])
     ht.setStyle(TableStyle([
-        ('BACKGROUND',(0,0),(-1,-1), colors.HexColor("#100510")),
+        ('BACKGROUND',(0,0),(-1,-1), colors.HexColor("#ffffff")),
         ('BOX',(0,0),(-1,-1),1.5,RED), ('LEFTPADDING',(0,0),(-1,-1),16),
         ('TOPPADDING',(0,0),(-1,-1),10), ('BOTTOMPADDING',(0,0),(-1,-1),10),
     ]))
@@ -174,7 +176,7 @@ def download_shady_pdf(ein: str):
         flags_d.append([fl, dt])
     ft = Table(flags_d, colWidths=[2.2*inch, W-2.2*inch])
     ft.setStyle(TableStyle([
-        ('BACKGROUND',(0,0),(-1,0),CARD),('TEXTCOLOR',(0,0),(-1,0),RED),
+        ('BACKGROUND',(0,0),(-1,0),colors.HexColor("#fff7ed")),('TEXTCOLOR',(0,0),(-1,0),RED),
         ('FONTNAME',(0,0),(-1,0),'Helvetica-Bold'),('FONTSIZE',(0,0),(-1,0),8),
         ('TOPPADDING',(0,0),(-1,0),6),('BOTTOMPADDING',(0,0),(-1,0),6),
         ('ROWBACKGROUNDS',(0,1),(-1,-1),[BG, ALT]),
@@ -220,7 +222,7 @@ def download_shady_pdf(ein: str):
         ('FONTNAME',(0,0),(-1,0),'Helvetica-Bold'),('FONTSIZE',(0,0),(-1,0),7),
         ('TOPPADDING',(0,0),(-1,0),6),('BOTTOMPADDING',(0,0),(-1,0),6),
         ('ROWBACKGROUNDS',(0,1),(-1,-2),[BG, ALT]),
-        ('BACKGROUND',(0,-1),(-1,-1),colors.HexColor("#0a1040")),
+        ('BACKGROUND',(0,-1),(-1,-1),colors.HexColor("#fff7ed")),
         ('TEXTCOLOR',(0,-1),(-1,-1),GOLD),('FONTNAME',(0,-1),(-1,-1),'Helvetica-Bold'),
         ('TEXTCOLOR',(4,1),(5,-2),AMB),('FONTNAME',(4,1),(5,-2),'Helvetica-Bold'),
         ('TEXTCOLOR',(6,1),(6,-2),RED),('FONTNAME',(6,1),(6,-2),'Helvetica-Bold'),
@@ -269,13 +271,13 @@ def download_shady_pdf(ein: str):
     story.append(Spacer(1, 0.18*inch))
     story.append(HRFlowable(width=W, thickness=0.5, color=BDR, spaceAfter=6))
     story.append(p(
-        f"Report generated {datetime.date.today().strftime('%B %d, %Y')} · Kincaid IQ VERIFY™ · SHRACK-7742 · "
+        f"Report generated {datetime.date.today().strftime('%B %d, %Y')} · Kincaid Health VERIFY™ · SHRACK-7742 · "
         f"Data: DOL EFAST2 federal database · EIN {ein} · For licensed broker use only.",
         size=7, color=T2, align=TA_CENTER))
 
     doc.build(story, onFirstPage=hdr_ftr, onLaterPages=hdr_ftr)
     raw = buf.getvalue()
-    filename = f"KincaidIQ_ShadyBroker_{ein}_{sponsor.replace(' ','_')[:30]}.pdf"
+    filename = f"KincaidIQ_BrokerCompensationIndex_{ein}_{sponsor.replace(' ','_')[:30]}.pdf"
     return StreamingResponse(
         io.BytesIO(raw),
         media_type="application/pdf",

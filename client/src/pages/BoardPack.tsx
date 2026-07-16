@@ -81,7 +81,7 @@ const FRESHNESS_DOT: Record<string, string> = {
 
 function StatPill({ label, value, color }: { label: string; value: number | string; color: string }) {
   return (
-    <div className="flex flex-col items-center px-4 py-2.5 rounded-lg border border-zinc-800 bg-zinc-900/50 min-w-[72px]">
+    <div className="flex flex-col items-center px-4 py-2.5 rounded-lg border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/50 min-w-[72px]">
       <span className="text-2xl font-bold font-mono tabular-nums" style={{ color }}>{value}</span>
       <span className="text-[10px] text-zinc-500 uppercase tracking-wider mt-0.5">{label}</span>
     </div>
@@ -99,7 +99,7 @@ function CoverCard({ cover }: { cover: BoardPackResponse["cover"] }) {
         </span>
       </div>
 
-      <h2 className="text-xl font-bold text-zinc-100 mb-1">{cover.packTitle}</h2>
+      <h2 className="text-xl font-bold text-[var(--kiq-ink)] mb-1">{cover.packTitle}</h2>
       <p className="text-[11px] font-mono text-[#FFB800] mb-4">{cover.packId}</p>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
@@ -109,17 +109,17 @@ function CoverCard({ cover }: { cover: BoardPackResponse["cover"] }) {
           { icon: Lock,      label: "Account",   value: cover.account   },
           { icon: Calendar,  label: "Generated", value: fmt(cover.generatedAt).split(",")[0] },
         ].map(({ icon: Icon, label, value }) => (
-          <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-900/50 px-3 py-2">
+          <div key={label} className="rounded-lg border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/50 px-3 py-2">
             <div className="flex items-center gap-1.5 mb-1">
               <Icon className="w-3 h-3 text-zinc-600" />
               <span className="text-[9px] font-mono text-zinc-600 uppercase tracking-wider">{label}</span>
             </div>
-            <span className="text-xs font-mono text-zinc-200">{value}</span>
+            <span className="text-xs font-mono text-[var(--kiq-ink-soft)]">{value}</span>
           </div>
         ))}
       </div>
 
-      <div className="rounded-lg border border-zinc-800/60 bg-zinc-950/40 px-4 py-3 text-[10px] text-zinc-500 leading-relaxed font-mono">
+      <div className="rounded-lg border border-[var(--kiq-hairline)]/60 bg-[var(--kiq-surface)]/40 px-4 py-3 text-[10px] text-zinc-500 leading-relaxed font-mono">
         {cover.notice}
       </div>
     </div>
@@ -143,12 +143,12 @@ function AdmittedClaimRow({ payload, idx }: { payload: ClaimPayload; idx: number
         <span className="text-[10px] font-mono text-zinc-600 w-5 text-center">{idx + 1}</span>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-semibold text-zinc-100 truncate">{c.title}</span>
-            <span className="text-[9px] font-mono border border-zinc-700 rounded px-1.5 py-0.5 text-zinc-500">{c.kpiKey}</span>
+            <span className="text-xs font-semibold text-[var(--kiq-ink)] truncate">{c.title}</span>
+            <span className="text-[9px] font-mono border border-[var(--kiq-hairline)] rounded px-1.5 py-0.5 text-zinc-500">{c.kpiKey}</span>
           </div>
         </div>
         <div className="flex items-center gap-3 shrink-0">
-          <span className="text-sm font-bold font-mono tabular-nums text-zinc-100">
+          <span className="text-sm font-bold font-mono tabular-nums text-[var(--kiq-ink)]">
             {c.value}{c.unit ? <span className="text-xs text-zinc-500 ml-1">{c.unit}</span> : null}
           </span>
           {pct !== null && (
@@ -163,7 +163,7 @@ function AdmittedClaimRow({ payload, idx }: { payload: ClaimPayload; idx: number
 
       {/* Expanded detail */}
       {open && (
-        <div className="border-t border-zinc-800 px-4 py-4 space-y-4">
+        <div className="border-t border-[var(--kiq-hairline)] px-4 py-4 space-y-4">
           {/* Claim metadata */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[10px] font-mono">
             <div>
@@ -172,19 +172,19 @@ function AdmittedClaimRow({ payload, idx }: { payload: ClaimPayload; idx: number
                 {c.verifiedStatus === "VERIFIED"
                   ? <ShieldCheck className="w-3 h-3 text-[#00FF94]" />
                   : <ShieldAlert className="w-3 h-3 text-[#FFB800]" />}
-                <span className="text-zinc-300">{c.verifiedStatus}</span>
+                <span className="text-[var(--kiq-muted)]">{c.verifiedStatus}</span>
               </div>
             </div>
             <div>
               <p className="text-zinc-600 mb-1">Freshness</p>
               <div className="flex items-center gap-1.5">
                 <div className={cn("w-2 h-2 rounded-full", FRESHNESS_DOT[c.freshnessStatus] ?? "bg-zinc-600")} />
-                <span className="text-zinc-300">{c.freshnessStatus}</span>
+                <span className="text-[var(--kiq-muted)]">{c.freshnessStatus}</span>
               </div>
             </div>
             <div>
               <p className="text-zinc-600 mb-1">Period</p>
-              <span className="text-zinc-300">{c.period ?? "—"}</span>
+              <span className="text-[var(--kiq-muted)]">{c.period ?? "—"}</span>
             </div>
             <div>
               <p className="text-zinc-600 mb-1">Computed</p>
@@ -227,7 +227,7 @@ function AdmittedClaimRow({ payload, idx }: { payload: ClaimPayload; idx: number
           )}
 
           {/* Evidence hash + receipt link */}
-          <div className="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-zinc-800">
+          <div className="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-[var(--kiq-hairline)]">
             <div className="flex items-center gap-1.5 text-[9px] font-mono text-zinc-600">
               <Hash className="w-2.5 h-2.5 shrink-0" />
               <span className="break-all">{c.evidenceHash ?? "—"}</span>
@@ -253,8 +253,8 @@ function BlockedClaimRow({ item }: { item: BlockedClaim }) {
       <ShieldX className="w-3.5 h-3.5 text-[#FF4D6D] mt-0.5 shrink-0" />
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1 flex-wrap">
-          <span className="text-xs font-semibold text-zinc-300 truncate">{item.title}</span>
-          <span className="text-[9px] font-mono border border-zinc-700 rounded px-1.5 py-0.5 text-zinc-500">{item.kpiKey}</span>
+          <span className="text-xs font-semibold text-[var(--kiq-muted)] truncate">{item.title}</span>
+          <span className="text-[9px] font-mono border border-[var(--kiq-hairline)] rounded px-1.5 py-0.5 text-zinc-500">{item.kpiKey}</span>
           <span className="text-[9px] font-mono text-zinc-600 ml-auto">{item.claimId}</span>
         </div>
         <p className="text-[10px] font-mono text-[#FF4D6D] leading-relaxed">{item.reason}</p>
@@ -268,7 +268,7 @@ function BlockedClaimRow({ item }: { item: BlockedClaim }) {
 
 function ManifestCard({ manifest, receiptId }: { manifest: BoardPackResponse["manifest"]; receiptId: string }) {
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-5">
+    <div className="rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60 p-5">
       <div className="flex items-center gap-2 mb-4">
         <Hash className="w-4 h-4 text-[#FFB800]" />
         <span className="text-xs font-mono font-bold text-[#FFB800] uppercase tracking-widest">Manifest</span>
@@ -284,14 +284,14 @@ function ManifestCard({ manifest, receiptId }: { manifest: BoardPackResponse["ma
           { label: "Decision Receipt", value: receiptId },
           { label: "Generated At",     value: fmt(manifest.generatedAt) },
         ].map(({ label, value }) => (
-          <div key={label} className="flex items-baseline gap-3 py-2 border-b border-zinc-800/50 last:border-0">
+          <div key={label} className="flex items-baseline gap-3 py-2 border-b border-[var(--kiq-hairline)]/50 last:border-0">
             <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-wider w-36 shrink-0">{label}</span>
-            <span className="text-[11px] font-mono text-zinc-300 break-all">{value}</span>
+            <span className="text-[11px] font-mono text-[var(--kiq-muted)] break-all">{value}</span>
           </div>
         ))}
       </div>
 
-      <div className="border-t border-zinc-800 pt-3">
+      <div className="border-t border-[var(--kiq-hairline)] pt-3">
         <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mb-2">Admitted Claim IDs</p>
         <div className="flex flex-wrap gap-1.5">
           {manifest.claimIds.map(id => (
@@ -327,7 +327,7 @@ export default function BoardPack() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-zinc-950 text-zinc-100 p-6 max-w-4xl mx-auto">
+      <div className="min-h-screen bg-[var(--kiq-surface)] text-[var(--kiq-ink)] p-6 max-w-4xl mx-auto">
 
         {/* ── Header ─────────────────────────────────────────────────────────── */}
         <div className="flex items-start justify-between gap-4 mb-6 flex-wrap">
@@ -346,7 +346,7 @@ export default function BoardPack() {
         </div>
 
         {/* ── Generator form ─────────────────────────────────────────────────── */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-5 mb-6">
+        <div className="rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60 p-5 mb-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
             <div>
               <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-1.5">
@@ -357,7 +357,7 @@ export default function BoardPack() {
                 type="text"
                 value={packTitle}
                 onChange={e => setPackTitle(e.target.value)}
-                className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#FFB800]/60"
+                className="w-full bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg px-3 py-2 text-xs text-[var(--kiq-ink-soft)] placeholder-zinc-600 focus:outline-none focus:border-[#FFB800]/60"
               />
             </div>
             <div>
@@ -369,7 +369,7 @@ export default function BoardPack() {
                 type="text"
                 value={requester}
                 onChange={e => setRequester(e.target.value)}
-                className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-xs font-mono text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#FFB800]/60"
+                className="w-full bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg px-3 py-2 text-xs font-mono text-[var(--kiq-ink-soft)] placeholder-zinc-600 focus:outline-none focus:border-[#FFB800]/60"
               />
             </div>
           </div>
@@ -405,7 +405,7 @@ export default function BoardPack() {
                 {pack.exportStatus}
               </span>
               <span className="text-zinc-500">·</span>
-              <span className="text-zinc-300">{pack.reason}</span>
+              <span className="text-[var(--kiq-muted)]">{pack.reason}</span>
               <span className="text-zinc-700 ml-auto">{pack.packId}</span>
             </div>
 

@@ -15,7 +15,7 @@ export default function FamilyOffice() {
   const { open } = useDrillDown();
   return (
     <Layout>
-      <div className="mb-8">
+      <div className="kiq-command-hero mb-8 px-6 py-5">
         <p className="section-label mb-1">Multi-Generational</p>
         <h1 className="text-3xl font-bold" style={{ fontFamily: "var(--font-display)", color: "hsl(var(--primary))" }}>
           Family Office

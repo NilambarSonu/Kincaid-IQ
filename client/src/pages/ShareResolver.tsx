@@ -54,14 +54,14 @@ export default function ShareResolver() {
   if (status === "error") {
     return (
       <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
-        background: "linear-gradient(135deg,#060b18 0%,#080d1e 50%,#060a16 100%)", fontFamily: "system-ui,sans-serif" }}>
-        <div style={{ maxWidth: 460, padding: "44px 36px", background: "rgba(255,255,255,0.03)",
-          border: "1px solid rgba(255,255,255,0.08)", borderRadius: 20, textAlign: "center" }}>
+        background: "linear-gradient(135deg,#F8FAFC 0%,#FFFFFF 50%,#F8FAFC 100%)", fontFamily: "system-ui,sans-serif" }}>
+        <div style={{ maxWidth: 460, padding: "44px 36px", background: "#ffffff",
+          border: "1px solid #e2e8f0", borderRadius: 20, textAlign: "center" }}>
           <div style={{ width: 56, height: 56, borderRadius: 16, margin: "0 auto 20px", display: "flex", alignItems: "center", justifyContent: "center",
             background: "rgba(255,184,0,0.12)", border: "1px solid rgba(255,184,0,0.3)" }}>
             <AlertTriangle style={{ width: 26, height: 26, color: "#FFB800" }} />
           </div>
-          <h1 style={{ color: "#fff", fontSize: 20, fontWeight: 800, marginBottom: 10 }}>This link is no longer available</h1>
+          <h1 style={{ color: "#0F172A", fontSize: 20, fontWeight: 800, marginBottom: 10 }}>This link is no longer available</h1>
           <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 13, lineHeight: 1.6, marginBottom: 26 }}>
             The shared view you're trying to open has expired or the link is invalid. Ask the sender for a fresh link.
           </p>
@@ -80,13 +80,13 @@ export default function ShareResolver() {
 
   return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center",
-      background: "linear-gradient(135deg,#060b18 0%,#080d1e 50%,#060a16 100%)", fontFamily: "system-ui,sans-serif" }}>
+      background: "linear-gradient(135deg,#F8FAFC 0%,#FFFFFF 50%,#F8FAFC 100%)", fontFamily: "system-ui,sans-serif" }}>
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
         <div style={{ width: 48, height: 48, borderRadius: 14, display: "flex", alignItems: "center", justifyContent: "center",
           background: "rgba(191,95,255,0.12)", border: "1px solid rgba(191,95,255,0.3)" }}>
           <LinkIcon style={{ width: 22, height: 22, color: "#BF5FFF" }} />
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, color: "rgba(255,255,255,0.6)", fontSize: 13 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, color: "#1e293b", fontSize: 13 }}>
           <Loader2 style={{ width: 16, height: 16, animation: "spin 1s linear infinite" }} />
           Opening shared view…
         </div>

@@ -97,7 +97,7 @@ function ClaimEligibilityRow({ item }: { item: ClaimEligibility }) {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-[10px] font-mono font-bold text-zinc-200">{item.claimId}</span>
+            <span className="text-[10px] font-mono font-bold text-slate-700">{item.claimId}</span>
             <span
               className="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded border"
               style={{ color: rc, borderColor: `${rc}35`, background: `${rc}08` }}
@@ -149,7 +149,7 @@ function ClaimEligibilityRow({ item }: { item: ClaimEligibility }) {
 
       {/* Expanded: stage details + gate reason */}
       {open && (
-        <div className="border-t border-zinc-800 px-4 py-4 space-y-3">
+        <div className="border-t border-slate-200 px-4 py-4 space-y-3">
           {item.gateReason && (
             <div className="flex items-start gap-2 rounded border border-[#FF4D6D]/20 bg-[#FF4D6D]/5 px-3 py-2">
               <AlertTriangle className="w-3 h-3 text-[#FF4D6D] mt-0.5 shrink-0" />
@@ -204,7 +204,7 @@ function EligibilitySummary({ response }: { response: EligibilityResponse }) {
   const pct     = total > 0 ? Math.round((allowed / total) * 100) : 0;
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-3"
+    <div className="rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-3"
       data-testid="eligibility-summary">
       <div className="flex items-center gap-4 flex-wrap mb-3">
         {[
@@ -224,7 +224,7 @@ function EligibilitySummary({ response }: { response: EligibilityResponse }) {
       </div>
 
       {/* Progress bar */}
-      <div className="h-1.5 rounded-full bg-zinc-800 overflow-hidden">
+      <div className="h-1.5 rounded-full bg-white overflow-hidden">
         <div
           className="h-1.5 rounded-full transition-all"
           style={{
@@ -289,7 +289,7 @@ export function ExportEligibilityPanel({
             setAudience(e.target.value as typeof audience);
             setResult(null);
           }}
-          className="bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-[10px] font-mono text-zinc-200 focus:outline-none focus:border-[#00A8FF]/50"
+          className="bg-white border border-slate-200 rounded-lg px-3 py-2 text-[10px] font-mono text-slate-700 focus:outline-none focus:border-[#00A8FF]/50"
         >
           <option value="board">Board (≥90% conf + GREEN)</option>
           <option value="executive">Executive (≥75% conf)</option>
@@ -303,7 +303,7 @@ export function ExportEligibilityPanel({
           className={cn(
             "flex items-center gap-1.5 px-4 py-2 rounded-lg text-[10px] font-mono font-semibold transition-all",
             isPending
-              ? "bg-zinc-800 border border-zinc-700 text-zinc-500 cursor-not-allowed"
+              ? "bg-white border border-slate-200 text-zinc-500 cursor-not-allowed"
               : "bg-[#00A8FF]/10 border border-[#00A8FF]/30 text-[#00A8FF] hover:bg-[#00A8FF]/20",
           )}
         >

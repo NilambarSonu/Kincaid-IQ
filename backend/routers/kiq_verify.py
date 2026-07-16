@@ -1,5 +1,5 @@
 """
-Kincaid IQ Verify router. Surfaces the ported BFF feature set as native
+Kincaid Health Verify router. Surfaces the ported BFF feature set as native
 FastAPI endpoints under /api/kiq-verify:
 
   GET  /health            public, counts only

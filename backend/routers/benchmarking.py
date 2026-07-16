@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Benefits Benchmarking Engine
+Kincaid Health — Benefits Benchmarking Engine
 Queries the DOL EFAST2 DuckDB database to benchmark any employer against
 national and state-level peers by industry (NAICS/business code).
 """

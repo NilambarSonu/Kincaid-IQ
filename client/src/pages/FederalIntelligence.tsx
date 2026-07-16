@@ -8,12 +8,12 @@ import {
 } from "lucide-react";
 import FederalIntelReport from "./FederalIntelReport";
 
-const BG    = "#07091c";
-const CARD  = "#0d1033";
-const CARD2 = "#111540";
-const BORDER= "rgba(255,255,255,0.08)";
-const TEXT1 = "#f0f4ff";
-const TEXT2 = "#8b9dd4";
+const BG    = "transparent";
+const CARD  = "rgba(255,255,255,0.82)";
+const CARD2 = "rgba(248,250,252,0.82)";
+const BORDER= "rgba(15,23,42,0.10)";
+const TEXT1 = "#08111f";
+const TEXT2 = "#3f516a";
 const ACCENT= "#4f7dff";
 const GREEN = "#22c55e";
 const AMBER = "#f59e0b";
@@ -98,7 +98,7 @@ function RiskGauge({ score, signal, color }: { score: number; signal: string; co
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
       <svg width={112} height={80} viewBox="0 0 112 80">
-        <circle cx={cx} cy={cy} r={r} fill="none" stroke="#ffffff10" strokeWidth={8}
+        <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(15,23,42,0.10)" strokeWidth={8}
           strokeDasharray={`${dashArr} ${circ}`} strokeDashoffset={-circ * 0.125}
           strokeLinecap="round" transform="rotate(135, 56, 56)"/>
         <circle cx={cx} cy={cy} r={r} fill="none" stroke={color} strokeWidth={8}
@@ -136,7 +136,7 @@ function RecordTable({ records, source }: { records: Record<string,unknown>[]; s
           </tr>
         </thead>
         <tbody>{records.map((r, i) => (
-          <tr key={i} style={{ background: i % 2 === 0 ? "transparent" : `${BORDER}` }}>
+          <tr key={i} style={{ background: i % 2 === 0 ? "transparent" : "rgba(15,23,42,0.025)" }}>
             {allKeys.map(k => (
               <td key={k} style={{ padding: "7px 10px",
                 color: (k.includes("name") || k.includes("Name") || k.includes("firm")) ? TEXT1 : TEXT2,
@@ -321,11 +321,11 @@ export default function FederalIntelligence() {
     {showReport && data && (
       <FederalIntelReport data={data} onClose={() => setShowReport(false)}/>
     )}
-    <div style={{ minHeight: "100vh", background: BG, padding: "28px 24px", color: TEXT1 }}>
+    <div className="kiq-ops-shell" style={{ minHeight: "100vh", background: BG, padding: "28px 24px", color: TEXT1, fontFamily: "var(--font-sans)" }}>
       <div style={{ maxWidth: 1000, margin: "0 auto" }}>
 
         {/* Header */}
-        <div style={{ marginBottom: 24 }}>
+        <div className="kiq-ops-header" style={{ marginBottom: 24, padding: 20, borderRadius: 18 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
             <div style={{ background: `${ROSE}22`, border: `1px solid ${ROSE}44`, borderRadius: 10, padding: 10 }}>
               <Shield size={22} color={ROSE}/>
@@ -359,14 +359,14 @@ export default function FederalIntelligence() {
         </div>
 
         {/* Search */}
-        <div style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 14, padding: "18px 20px", marginBottom: 16 }}>
+        <div className="kiq-ops-card" style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 14, padding: "18px 20px", marginBottom: 16 }}>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <div style={{ flex: 2, minWidth: 240, position: "relative" }}>
               <Search size={14} color={TEXT2} style={{ position: "absolute", left: 11, top: "50%", transform: "translateY(-50%)" }}/>
               <input data-testid="input-federal-intel-name"
                 value={inputName} onChange={e => setInputName(e.target.value)} onKeyDown={handleKey}
                 placeholder="Company or entity name (e.g. CVS Health, McKesson…)"
-                style={{ width: "100%", background: "#ffffff08", border: `1px solid ${BORDER}`, borderRadius: 8,
+                style={{ width: "100%", background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 8,
                   padding: "10px 12px 10px 32px", color: TEXT1, fontSize: 13, outline: "none", boxSizing: "border-box" }}/>
             </div>
             <div style={{ flex: 1, minWidth: 150, position: "relative" }}>
@@ -374,14 +374,14 @@ export default function FederalIntelligence() {
               <input data-testid="input-federal-intel-ein"
                 value={inputEin} onChange={e => setInputEin(e.target.value)} onKeyDown={handleKey}
                 placeholder="EIN (optional)"
-                style={{ width: "100%", background: "#ffffff08", border: `1px solid ${BORDER}`, borderRadius: 8,
+                style={{ width: "100%", background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 8,
                   padding: "10px 12px 10px 28px", color: TEXT1, fontSize: 13, outline: "none", boxSizing: "border-box" }}/>
             </div>
             <button data-testid="button-federal-intel-search" onClick={() => handleSearch()}
               disabled={isLoading || inputName.trim().length < 2}
               style={{
                 background: isLoading || inputName.trim().length < 2 ? `${ROSE}44` : ROSE,
-                border: "none", borderRadius: 8, color: "#fff", fontSize: 13, fontWeight: 700,
+                border: "none", borderRadius: 8, color: "#0F172A", fontSize: 13, fontWeight: 700,
                 padding: "10px 22px", cursor: isLoading || inputName.trim().length < 2 ? "not-allowed" : "pointer",
                 display: "flex", alignItems: "center", gap: 7,
               }}>
@@ -432,7 +432,7 @@ export default function FederalIntelligence() {
               <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                 <button data-testid="button-federal-intel-full-report" onClick={() => setShowReport(true)}
                   style={{
-                    background: ROSE, border: "none", borderRadius: 8, color: "#fff",
+                    background: ROSE, border: "none", borderRadius: 8, color: "#0F172A",
                     fontSize: 12, fontWeight: 700, padding: "9px 18px", cursor: "pointer",
                     display: "flex", alignItems: "center", gap: 7, whiteSpace: "nowrap",
                   }}>

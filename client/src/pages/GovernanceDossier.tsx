@@ -54,23 +54,23 @@ function DossierCard({ claim }: { claim: Claim }) {
   const confColor = claim.confidence_score >= 0.9 ? "#00FF94" : claim.confidence_score >= 0.8 ? "#FFB800" : "#FF4D6D";
 
   return (
-    <div className="bg-zinc-950/80 border border-zinc-800/40 rounded-2xl overflow-hidden">
+    <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/40 rounded-2xl overflow-hidden">
       <div
-        className="flex items-start gap-4 p-5 cursor-pointer hover:bg-zinc-900/20 transition-colors"
+        className="flex items-start gap-4 p-5 cursor-pointer hover:bg-[var(--kiq-canvas-soft)]/20 transition-colors"
         onClick={() => setExpanded(e => !e)}
         data-testid={`dossier-expand-${claim.claim_id}`}>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-[9px] font-mono text-[#A855F7] bg-zinc-900/60 border border-zinc-800/40 rounded px-1.5 py-0.5">
+            <span className="text-[9px] font-mono text-[#A855F7] bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/40 rounded px-1.5 py-0.5">
               {claim.kpi_key}
             </span>
             <span className="text-[9px] font-mono text-zinc-600">{claim.period}</span>
           </div>
-          <p className="text-sm font-semibold text-zinc-200 mb-2">{claim.title}</p>
+          <p className="text-sm font-semibold text-[var(--kiq-ink-soft)] mb-2">{claim.title}</p>
           <div className="flex items-center gap-4 text-xs">
             <span className="text-2xl font-black font-mono" style={{ color: confColor }}>{fmtValue(claim)}</span>
             <div>
-              <div className="h-1 w-20 bg-zinc-800 rounded-full overflow-hidden">
+              <div className="h-1 w-20 bg-[var(--kiq-surface)] rounded-full overflow-hidden">
                 <div className="h-full rounded-full" style={{ width: `${Math.round(claim.confidence_score * 100)}%`, background: confColor }} />
               </div>
               <span className="text-[9px] text-zinc-600">{Math.round(claim.confidence_score * 100)}% confidence</span>
@@ -91,7 +91,7 @@ function DossierCard({ claim }: { claim: Claim }) {
       </div>
 
       {expanded && (
-        <div className="border-t border-zinc-800/40 p-5 space-y-4 bg-zinc-900/20">
+        <div className="border-t border-[var(--kiq-hairline)]/40 p-5 space-y-4 bg-[var(--kiq-canvas-soft)]/20">
           {/* Evidence */}
           <div>
             <div className="flex items-center gap-2 mb-3">
@@ -103,10 +103,10 @@ function DossierCard({ claim }: { claim: Claim }) {
             {receipt ? (
               receipt.evidence.map((ev: any) => (
                 <div key={ev.evidence_id}
-                  className="bg-zinc-900/60 border border-zinc-800/40 rounded-xl p-4 mb-2">
+                  className="bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/40 rounded-xl p-4 mb-2">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <p className="text-xs font-medium text-zinc-200 mb-1">{ev.title}</p>
+                      <p className="text-xs font-medium text-[var(--kiq-ink-soft)] mb-1">{ev.title}</p>
                       <p className="text-[10px] font-mono text-zinc-600 truncate">{ev.source_uri}</p>
                     </div>
                     <div className="flex-shrink-0 flex gap-2">
@@ -120,7 +120,7 @@ function DossierCard({ claim }: { claim: Claim }) {
                 </div>
               ))
             ) : (
-              <div className="h-12 bg-zinc-900/40 rounded-xl animate-pulse" />
+              <div className="h-12 bg-[var(--kiq-canvas-soft)]/40 rounded-xl animate-pulse" />
             )}
           </div>
 
@@ -135,7 +135,7 @@ function DossierCard({ claim }: { claim: Claim }) {
             {receipt ? (
               receipt.transforms.map((tr: any) => (
                 <div key={tr.transform_id}
-                  className="bg-zinc-900/60 border border-zinc-800/40 rounded-xl p-4 mb-2">
+                  className="bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/40 rounded-xl p-4 mb-2">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-[10px] font-mono text-zinc-400 mb-1">{tr.transform_id}</p>
@@ -149,13 +149,13 @@ function DossierCard({ claim }: { claim: Claim }) {
                 </div>
               ))
             ) : (
-              <div className="h-12 bg-zinc-900/40 rounded-xl animate-pulse" />
+              <div className="h-12 bg-[var(--kiq-canvas-soft)]/40 rounded-xl animate-pulse" />
             )}
           </div>
 
           {/* Receipt hash */}
           {receipt && (
-            <div className="flex items-start gap-2 bg-zinc-900/40 rounded-xl p-4">
+            <div className="flex items-start gap-2 bg-[var(--kiq-canvas-soft)]/40 rounded-xl p-4">
               <Lock className="w-3.5 h-3.5 text-zinc-600 flex-shrink-0 mt-0.5" />
               <div>
                 <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-600 mb-1">Immutable Receipt Hash</p>
@@ -177,7 +177,7 @@ export default function GovernanceDossier() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-zinc-950 p-6 space-y-6">
+      <div className="min-h-screen bg-[var(--kiq-surface)] p-6 space-y-6">
         <div>
           <div className="flex items-center gap-2 mb-1">
             <BookOpen className="w-4 h-4 text-[#FFB800]" />
@@ -185,7 +185,7 @@ export default function GovernanceDossier() {
               Governed Audit Surface
             </span>
           </div>
-          <h1 className="text-2xl font-black text-zinc-100">Plan Dossier</h1>
+          <h1 className="text-2xl font-black text-[var(--kiq-ink)]">Plan Dossier</h1>
           <p className="text-xs text-zinc-500 mt-1">
             Full claim review with evidence lineage, transform chains, and immutable receipt hashes
           </p>
@@ -209,7 +209,7 @@ export default function GovernanceDossier() {
             { label: "Evidence Items", value: data?.count ?? 0,
               sub: "per claim average",              color: "#FFB800" },
           ].map(({ label, value, sub, color }) => (
-            <div key={label} className="bg-zinc-950/80 border border-zinc-800/50 rounded-xl p-4">
+            <div key={label} className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-xl p-4">
               <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-600 mb-1">{label}</p>
               <p className="text-2xl font-black font-mono" style={{ color }}>{value}</p>
               <p className="text-[10px] text-zinc-700 mt-1">{sub}</p>
@@ -220,7 +220,7 @@ export default function GovernanceDossier() {
         <div className="space-y-3">
           {isLoading
             ? [...Array(2)].map((_, i) => (
-                <div key={i} className="bg-zinc-900/40 border border-zinc-800/30 rounded-2xl h-28 animate-pulse" />
+                <div key={i} className="bg-[var(--kiq-canvas-soft)]/40 border border-[var(--kiq-hairline)]/30 rounded-2xl h-28 animate-pulse" />
               ))
             : (data?.items ?? []).map(c => (
                 <DossierCard key={c.claim_id} claim={c} />

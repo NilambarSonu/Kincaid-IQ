@@ -64,7 +64,7 @@ export default function SbiLanding() {
   });
 
   return (
-    <div className="min-h-screen text-white" style={{ background: "#030308" }}>
+    <div className="min-h-screen text-[var(--kiq-ink)]" style={{ background: "#F8FAFC" }}>
       <TopBar />
       <Hero />
       <NameSearch />
@@ -92,22 +92,22 @@ function TopBar() {
   return (
     <div className="sticky top-0 z-50 px-8 py-3 flex items-center justify-between" style={{
       background: "rgba(3,3,8,0.85)", backdropFilter: "blur(12px)",
-      borderBottom: "1px solid rgba(255,255,255,0.06)",
+      borderBottom: "1px solid #f1f5f9",
     }}>
       <div className="flex items-center gap-2.5">
         <ShieldAlert className="w-5 h-5" style={{ color: NEON.red }} />
         <div>
           <div className="text-sm font-black tracking-tight">
-            SHADY BROKER INDEX<span style={{ color: NEON.red }}>™</span>
+            BROKER COMPENSATION INDEX<span style={{ color: NEON.red }}>™</span>
           </div>
           <div className="text-[9px] text-zinc-500 tracking-[0.15em] uppercase">Fiduciary Transparency Engine</div>
         </div>
       </div>
       <div className="flex items-center gap-3">
-        <Link href="/shady-broker-index" data-testid="link-enterprise" className="text-xs text-zinc-400 hover:text-white">Enterprise →</Link>
+        <Link href="/shady-broker-index" data-testid="link-enterprise" className="text-xs text-zinc-400 hover:text-[var(--kiq-ink)]">Enterprise →</Link>
         <Link href="/signup" data-testid="link-signup"
           className="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all"
-          style={{ background: NEON.red, color: "#fff", boxShadow: `0 0 24px ${NEON.red}55` }}>
+          style={{ background: NEON.red, color: "#0F172A", boxShadow: `0 0 24px ${NEON.red}55` }}>
           Get Your Broker's Score
         </Link>
       </div>
@@ -160,7 +160,7 @@ function Hero() {
             WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
           }}>not telling you?</span>
         </h1>
-        <p className="text-lg text-zinc-300 max-w-2xl mx-auto leading-relaxed mb-3">
+        <p className="text-lg text-[var(--kiq-muted)] max-w-2xl mx-auto leading-relaxed mb-3">
           The first fiduciary transparency index for healthcare brokers. SBI converts opaque
           procurement into measurable intelligence — across 936,865 employer plan filings.
         </p>
@@ -171,7 +171,7 @@ function Hero() {
         <div className="max-w-xl mx-auto relative">
           <div
             className="rounded-2xl p-2 flex items-center gap-2"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+            style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
             <Search className="w-4 h-4 text-zinc-500 ml-3" />
             <input
               value={q}
@@ -184,14 +184,14 @@ function Hero() {
             />
             {isFetching && <Loader2 className="w-4 h-4 animate-spin text-zinc-500 mr-1" />}
             <span className="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center gap-2"
-              style={{ background: NEON.red, color: "#fff", boxShadow: `0 0 24px ${NEON.red}55` }}>
+              style={{ background: NEON.red, color: "#0F172A", boxShadow: `0 0 24px ${NEON.red}55` }}>
               Run Score <ArrowRight className="w-3.5 h-3.5" />
             </span>
           </div>
 
           {open && debounced.length >= 2 && (
             <div className="absolute left-0 right-0 mt-2 rounded-2xl overflow-hidden z-30 text-left"
-              style={{ background: "#0a0a14", border: "1px solid rgba(255,255,255,0.1)",
+              style={{ background: "#F8FAFC", border: "1px solid #e2e8f0",
                        boxShadow: "0 24px 48px rgba(0,0,0,0.6)" }}>
               {!data || data.results.length === 0 ? (
                 <div className="px-5 py-6 text-center text-xs text-zinc-500">
@@ -204,11 +204,11 @@ function Hero() {
                       <button
                         onMouseDown={(e) => { e.preventDefault(); pick(r); }}
                         data-testid={`hero-search-result-${r.ein}`}
-                        className="w-full text-left px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors border-t"
-                        style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                        className="w-full text-left px-4 py-3 flex items-center gap-3 hover:bg-[var(--kiq-surface)]/5 transition-colors border-t"
+                        style={{ borderColor: "#0F172A" }}>
                         <Building2 className="w-3.5 h-3.5 flex-shrink-0" style={{ color: NEON.blue }} />
                         <div className="flex-1 min-w-0">
-                          <div className="text-sm font-bold text-white truncate">{r.sponsor}</div>
+                          <div className="text-sm font-bold text-[var(--kiq-ink)] truncate">{r.sponsor}</div>
                           <div className="text-[10px] text-zinc-500 mt-0.5">
                             {r.city}, {r.state} · {r.participants.toLocaleString()} participants · FY{r.latest_year}
                           </div>
@@ -262,7 +262,7 @@ function Positioning() {
       <div className="grid md:grid-cols-2 gap-4">
         {items.map(({ icon: Icon, color, title, text }) => (
           <div key={title} className="rounded-2xl p-6"
-            style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${color}25` }}>
+            style={{ background: "#ffffff", border: `1px solid ${color}25` }}>
             <Icon className="w-6 h-6 mb-3" style={{ color }} />
             <h3 className="text-lg font-bold mb-2">{title}</h3>
             <p className="text-sm text-zinc-400 leading-relaxed">{text}</p>
@@ -285,7 +285,7 @@ function LiveLeaderboards({ mostShady, cleanest }: { mostShady: LeaderRow[]; cle
       </div>
       <div className="grid md:grid-cols-2 gap-5">
         <LeaderBoard
-          title="Top 10 Most Shady Plans"
+          title="Top 10 Least Transparent Plans"
           subtitle="Average broker % of plan income · 2+ years"
           rows={mostShady} color={NEON.red} reverse={false}
         />
@@ -301,7 +301,7 @@ function LiveLeaderboards({ mostShady, cleanest }: { mostShady: LeaderRow[]; cle
 
 function LeaderBoard({ title, subtitle, rows, color, reverse }: { title: string; subtitle: string; rows: LeaderRow[]; color: string; reverse: boolean }) {
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${color}30` }}>
+    <div className="rounded-2xl overflow-hidden" style={{ background: "#ffffff", border: `1px solid ${color}30` }}>
       <div className="px-5 py-4" style={{ borderBottom: `1px solid ${color}25`, background: `${color}08` }}>
         <div className="text-sm font-black flex items-center gap-2" style={{ color }}>
           {reverse ? <CheckCircle2 className="w-4 h-4" /> : <AlertOctagon className="w-4 h-4" />}
@@ -317,11 +317,11 @@ function LeaderBoard({ title, subtitle, rows, color, reverse }: { title: string;
       <ol>
         {rows.map((r, i) => (
           <li key={r.ein}
-            className="px-5 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors border-t"
-            style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+            className="px-5 py-3 flex items-center gap-3 hover:bg-[var(--kiq-surface)]/5 transition-colors border-t"
+            style={{ borderColor: "#0F172A" }}>
             <span className="w-6 text-right font-mono text-[11px]" style={{ color: i < 3 ? color : "#444" }}>{i + 1}</span>
             <div className="flex-1 min-w-0">
-              <div className="text-xs font-bold text-white truncate">{r.sponsor}</div>
+              <div className="text-xs font-bold text-[var(--kiq-ink)] truncate">{r.sponsor}</div>
               <div className="text-[10px] text-zinc-600">{r.state} · EIN {r.ein} · {r.years}yr</div>
             </div>
             <div className="text-right">
@@ -329,7 +329,7 @@ function LeaderBoard({ title, subtitle, rows, color, reverse }: { title: string;
               <div className="text-[9px] text-zinc-600 uppercase tracking-widest">{fmt$(r.total_commissions ?? 0)}</div>
             </div>
             <Link href="/shady-broker-index" data-testid={`leaderboard-row-${r.ein}`}>
-              <ChevronRight className="w-4 h-4 text-zinc-700 hover:text-white transition-colors" />
+              <ChevronRight className="w-4 h-4 text-zinc-700 hover:text-[var(--kiq-ink)] transition-colors" />
             </Link>
           </li>
         ))}
@@ -348,10 +348,10 @@ function BrokerRankings({ rows }: { rows: LeaderRow[] }) {
         <h2 className="text-4xl font-black tracking-tight">The Brokers Moving the Most Money</h2>
         <p className="text-sm text-zinc-500 mt-2">Carriers ranked by total broker commissions across all employer plans they touch.</p>
       </div>
-      <div className="rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
+      <div className="rounded-2xl overflow-hidden" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
         <table className="w-full text-sm">
           <thead>
-            <tr style={{ background: "rgba(255,255,255,0.03)" }}>
+            <tr style={{ background: "#ffffff" }}>
               {["#","Broker / Carrier","Employers","Lives","Total Commissions","Avg % Income",""].map(h => (
                 <th key={h} className="text-left px-5 py-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500">{h}</th>
               ))}
@@ -362,10 +362,10 @@ function BrokerRankings({ rows }: { rows: LeaderRow[] }) {
               const pct = r.avg_pct_income ?? 0;
               const color = pct > 10 ? NEON.red : pct > 5 ? NEON.orange : pct > 2 ? NEON.gold : NEON.green;
               return (
-                <tr key={r.slug} className="border-t hover:bg-white/5 transition-colors" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                <tr key={r.slug} className="border-t hover:bg-[var(--kiq-surface)]/5 transition-colors" style={{ borderColor: "#0F172A" }}>
                   <td className="px-5 py-3 font-mono text-[11px] text-zinc-600">{i + 1}</td>
                   <td className="px-5 py-3">
-                    <Link href={`/sbi/broker/${r.slug}`} data-testid={`broker-row-${r.slug}`} className="font-bold text-white hover:underline">
+                    <Link href={`/sbi/broker/${r.slug}`} data-testid={`broker-row-${r.slug}`} className="font-bold text-[var(--kiq-ink)] hover:underline">
                       {r.carrier}
                     </Link>
                   </td>
@@ -375,7 +375,7 @@ function BrokerRankings({ rows }: { rows: LeaderRow[] }) {
                   <td className="px-5 py-3 font-bold" style={{ color }}>{pct.toFixed(1)}%</td>
                   <td className="px-5 py-3 text-right">
                     <Link href={`/sbi/broker/${r.slug}`}>
-                      <ArrowRight className="w-4 h-4 text-zinc-600 hover:text-white inline" />
+                      <ArrowRight className="w-4 h-4 text-zinc-600 hover:text-[var(--kiq-ink)] inline" />
                     </Link>
                   </td>
                 </tr>
@@ -416,7 +416,7 @@ function CfoCalculator() {
         <h2 className="text-4xl font-black tracking-tight">How much is your broker costing you?</h2>
       </div>
       <div className="grid md:grid-cols-2 gap-5">
-        <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
+        <div className="rounded-2xl p-6" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
           <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-5">Plan Inputs</div>
           {[
             { label: "Covered employees",         val: employees, set: setEmployees, min: 50,  max: 100000, step: 50, fmt: (n: number) => n.toLocaleString() },
@@ -427,7 +427,7 @@ function CfoCalculator() {
             <div key={label} className="mb-4">
               <div className="flex items-center justify-between mb-1.5">
                 <span className="text-xs text-zinc-400">{label}</span>
-                <span className="text-sm font-bold text-white">{fmt(val)}</span>
+                <span className="text-sm font-bold text-[var(--kiq-ink)]">{fmt(val)}</span>
               </div>
               <input type="range" min={min} max={max} step={step} value={val} onChange={(e) => set(Number(e.target.value))}
                 data-testid={`leakage-input-${label}`} className="w-full accent-red-500" />
@@ -435,7 +435,7 @@ function CfoCalculator() {
           ))}
           <button onClick={run} disabled={loading} data-testid="button-leakage-run"
             className="w-full mt-3 px-5 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2"
-            style={{ background: NEON.red, color: "#fff", boxShadow: `0 0 24px ${NEON.red}55` }}>
+            style={{ background: NEON.red, color: "#0F172A", boxShadow: `0 0 24px ${NEON.red}55` }}>
             {loading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <DollarSign className="w-3.5 h-3.5" />}
             Calculate Annual Leakage
           </button>
@@ -446,7 +446,7 @@ function CfoCalculator() {
           {!result && (
             <div className="h-full flex flex-col items-center justify-center text-center py-16">
               <DollarSign className="w-10 h-10 text-zinc-700 mb-3" />
-              <p className="text-sm text-zinc-500">Adjust inputs and click <span className="font-bold text-zinc-300">Calculate</span> to see your fiduciary exposure.</p>
+              <p className="text-sm text-zinc-500">Adjust inputs and click <span className="font-bold text-[var(--kiq-muted)]">Calculate</span> to see your fiduciary exposure.</p>
             </div>
           )}
           {result && (
@@ -459,8 +459,8 @@ function CfoCalculator() {
                 <div><div className="text-[10px] text-zinc-500 uppercase tracking-widest">10-Year Leakage</div>
                   <div className="text-xl font-black" style={{ color: NEON.gold }}>{fmt$(result.ten_year_leakage)}</div></div>
               </div>
-              <p className="text-xs text-zinc-300 mt-6 leading-relaxed italic">"{result.narrative}"</p>
-              <div className="mt-6 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              <p className="text-xs text-[var(--kiq-muted)] mt-6 leading-relaxed italic">"{result.narrative}"</p>
+              <div className="mt-6 pt-5" style={{ borderTop: "1px solid #f1f5f9" }}>
                 <Link href="/signup" data-testid="link-leakage-audit"
                   className="text-xs font-bold uppercase tracking-wider flex items-center gap-2"
                   style={{ color: NEON.red }}>
@@ -486,7 +486,7 @@ function StateHeatmap({ rows }: { rows: LeaderRow[] }) {
         <h2 className="text-4xl font-black tracking-tight">Broker Opacity by State</h2>
         <p className="text-sm text-zinc-500 mt-2">Average broker compensation as % of plan income · 5+ employers per state.</p>
       </div>
-      <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
+      <div className="rounded-2xl p-6" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
         <div className="space-y-2">
           {rows.map(r => {
             const pct = r.avg_pct_income ?? 0;
@@ -495,7 +495,7 @@ function StateHeatmap({ rows }: { rows: LeaderRow[] }) {
             return (
               <div key={r.state} className="flex items-center gap-3" data-testid={`heatmap-state-${r.state}`}>
                 <div className="w-10 font-mono text-xs font-bold text-zinc-400">{r.state}</div>
-                <div className="flex-1 h-7 rounded relative overflow-hidden" style={{ background: "rgba(255,255,255,0.04)" }}>
+                <div className="flex-1 h-7 rounded relative overflow-hidden" style={{ background: "#ffffff" }}>
                   <div className="h-full transition-all" style={{ width: `${w}%`, background: color, boxShadow: `0 0 12px ${color}66` }} />
                   <div className="absolute inset-0 px-3 flex items-center justify-between">
                     <span className="text-[10px] text-zinc-400">{r.employers} employers · {fmt$(r.total_commissions ?? 0)}</span>
@@ -533,9 +533,9 @@ function Methodology() {
           ["Concentration Risk",      "6%", "Single carrier high-commission streak ≥ 3 years."],
           ["Admin-Fee Inflation",     "6%", "Admin fees above P90 (proxy for hidden broker comp)."],
         ].map(([label, weight, desc]) => (
-          <div key={label} className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+          <div key={label} className="rounded-xl p-4" style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
             <div className="flex items-center justify-between mb-1">
-              <div className="text-sm font-bold text-white">{label}</div>
+              <div className="text-sm font-bold text-[var(--kiq-ink)]">{label}</div>
               <div className="text-[10px] font-mono font-bold" style={{ color: NEON.gold }}>{weight}</div>
             </div>
             <div className="text-xs text-zinc-500 leading-relaxed">{desc}</div>
@@ -568,7 +568,7 @@ function Ethics() {
         <div className="grid md:grid-cols-2 gap-4">
           {principles.map(({ icon: Icon, title, text }) => (
             <div key={title} className="flex items-start gap-3 p-4 rounded-xl"
-              style={{ background: "rgba(255,255,255,0.02)" }}>
+              style={{ background: "#ffffff" }}>
               <Icon className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: NEON.green }} />
               <div>
                 <div className="text-sm font-bold">{title}</div>
@@ -590,12 +590,12 @@ function FinalCta() {
       <div className="flex items-center justify-center gap-3">
         <Link href="/shady-broker-index" data-testid="cta-public-score"
           className="px-6 py-3 rounded-xl text-sm font-bold uppercase tracking-wider transition-all"
-          style={{ background: NEON.red, color: "#fff", boxShadow: `0 0 24px ${NEON.red}55` }}>
+          style={{ background: NEON.red, color: "#0F172A", boxShadow: `0 0 24px ${NEON.red}55` }}>
           See Your Broker's Score
         </Link>
         <Link href="/signup" data-testid="cta-enterprise"
           className="px-6 py-3 rounded-xl text-sm font-bold uppercase tracking-wider transition-all"
-          style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff" }}>
+          style={{ background: "#f1f5f9", border: "1px solid #cbd5e1", color: "#0F172A" }}>
           Enterprise Access
         </Link>
       </div>
@@ -636,7 +636,7 @@ function NameSearch() {
   return (
     <div className="relative max-w-3xl mx-auto px-8 -mt-6 pb-10">
       <div className="rounded-2xl p-2 flex items-center gap-2 relative"
-        style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${NEON.blue}40`,
+        style={{ background: "#ffffff", border: `1px solid ${NEON.blue}40`,
                  boxShadow: `0 0 32px ${NEON.blue}15` }}>
         <div className="pl-3 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest"
           style={{ color: NEON.blue }}>
@@ -657,7 +657,7 @@ function NameSearch() {
 
       {open && debounced.length >= 2 && (
         <div className="absolute left-8 right-8 mt-2 rounded-2xl overflow-hidden z-30"
-          style={{ background: "#0a0a14", border: "1px solid rgba(255,255,255,0.1)",
+          style={{ background: "#F8FAFC", border: "1px solid #e2e8f0",
                    boxShadow: "0 24px 48px rgba(0,0,0,0.6)" }}>
           {!data || data.results.length === 0 ? (
             <div className="px-5 py-6 text-center text-xs text-zinc-500">
@@ -666,7 +666,7 @@ function NameSearch() {
           ) : (
             <>
               <div className="px-4 py-2 text-[9px] uppercase tracking-widest text-zinc-600 font-mono"
-                style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                style={{ borderBottom: "1px solid #f1f5f9" }}>
                 {data.source}
               </div>
               <ul className="max-h-96 overflow-auto">
@@ -675,11 +675,11 @@ function NameSearch() {
                     <button
                       onMouseDown={(e) => { e.preventDefault(); pick(r); }}
                       data-testid={`search-result-${r.ein}`}
-                      className="w-full text-left px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors border-t"
-                      style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                      className="w-full text-left px-4 py-3 flex items-center gap-3 hover:bg-[var(--kiq-surface)]/5 transition-colors border-t"
+                      style={{ borderColor: "#0F172A" }}>
                       <Building2 className="w-3.5 h-3.5 flex-shrink-0" style={{ color: NEON.blue }} />
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-bold text-white truncate">{r.sponsor}</div>
+                        <div className="text-sm font-bold text-[var(--kiq-ink)] truncate">{r.sponsor}</div>
                         <div className="text-[10px] text-zinc-500 mt-0.5">
                           EIN {r.ein} · {r.city}, {r.state} · {r.participants.toLocaleString()} participants · FY{r.latest_year}
                         </div>
@@ -734,7 +734,7 @@ function TrustBar() {
   ];
   return (
     <div className="border-y" style={{
-      borderColor: "rgba(255,255,255,0.05)",
+      borderColor: "#f8fafc",
       background: "rgba(255,255,255,0.015)",
     }}>
       <div className="max-w-6xl mx-auto px-8 py-8">
@@ -765,13 +765,13 @@ function WhySbiExists() {
           <h2 className="text-4xl font-black tracking-tight leading-[1.05]">
             Healthcare procurement<br />deserves modern<br /><span style={{ color: NEON.gold }}>intelligence tooling.</span>
           </h2>
-          <div className="mt-6 px-4 py-3 rounded-xl text-xs text-zinc-300 italic leading-relaxed"
+          <div className="mt-6 px-4 py-3 rounded-xl text-xs text-[var(--kiq-muted)] italic leading-relaxed"
             style={{ background: `${NEON.gold}08`, border: `1px solid ${NEON.gold}25` }}>
             <Quote className="w-4 h-4 mb-1.5" style={{ color: NEON.gold }} />
             SBI measures transparency signals and fiduciary alignment indicators — not intent.
           </div>
         </div>
-        <div className="space-y-5 text-[15px] leading-relaxed text-zinc-300">
+        <div className="space-y-5 text-[15px] leading-relaxed text-[var(--kiq-muted)]">
           <p>
             Employer healthcare is the second-largest line item on most corporate P&Ls, and
             yet it is procured through a compensation architecture that few CFOs can fully
@@ -785,8 +785,8 @@ function WhySbiExists() {
             indirect compensation in writing. But disclosure is not the same as visibility.
             A 47-page service agreement is technically compliant — and operationally opaque.
           </p>
-          <p className="font-bold text-white">
-            The Shady Broker Index turns the entire public DOL Form 5500 corpus into a
+          <p className="font-bold text-[var(--kiq-ink)]">
+            The Broker Compensation Index turns the entire public DOL Form 5500 corpus into a
             single, comparable trust signal. One number. Backed by evidence. Updated as the
             data is filed. The first measurable answer to: <em className="text-zinc-400">is your broker actually
             aligned with you?</em>
@@ -825,7 +825,7 @@ function AiInsightSample() {
         <div className="p-7 space-y-5 text-sm leading-relaxed">
           <div>
             <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1.5">Headline</div>
-            <div className="text-base font-bold text-white">
+            <div className="text-base font-bold text-[var(--kiq-ink)]">
               Broker compensation has compounded at 4.1× the rate of plan participant growth
               over the last three filings, a structural anomaly inconsistent with arm's-length
               renewal pricing.
@@ -833,7 +833,7 @@ function AiInsightSample() {
           </div>
           <div>
             <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1.5">Why this scores poorly</div>
-            <p className="text-zinc-300">
+            <p className="text-[var(--kiq-muted)]">
               Schedule A direct-compensation disclosures show broker commissions exceeding
               the DOL-EFAST2 P90 benchmark for three consecutive years, while administrative
               service fees rose in lockstep — a coupling pattern that, while not dispositive,
@@ -843,7 +843,7 @@ function AiInsightSample() {
           </div>
           <div>
             <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1.5">5 Questions the CFO Should Ask</div>
-            <ol className="text-zinc-300 space-y-1.5 list-decimal pl-5">
+            <ol className="text-[var(--kiq-muted)] space-y-1.5 list-decimal pl-5">
               <li>Request the §408(b)(2) disclosure for the last three plan years and reconcile against Schedule A line items.</li>
               <li>What indirect compensation, override bonuses, or PBM-side payments flow to the broker outside the published commission?</li>
               <li>When was the carrier last competitively re-marketed, and which alternative carriers declined to bid?</li>
@@ -853,7 +853,7 @@ function AiInsightSample() {
           </div>
         </div>
         <div className="px-7 py-3 text-[10px] text-zinc-600 italic"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+          style={{ borderTop: "1px solid #ffffff" }}>
           Generated by SBI Investigative Engine · Probabilistic framing · Backed by Form 5500 evidence trail
         </div>
       </div>
@@ -887,10 +887,10 @@ function StakeholderGrid() {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {roles.map(({ icon: Icon, color, who, cta, text }) => (
           <div key={who} className="rounded-2xl p-6 flex flex-col"
-            style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${color}25` }}>
+            style={{ background: "#ffffff", border: `1px solid ${color}25` }}>
             <Icon className="w-6 h-6 mb-3" style={{ color }} />
             <div className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color }}>{who}</div>
-            <p className="text-sm text-zinc-300 leading-relaxed flex-1">{text}</p>
+            <p className="text-sm text-[var(--kiq-muted)] leading-relaxed flex-1">{text}</p>
             <Link href="/signup" data-testid={`cta-stakeholder-${who.toLowerCase().replace(/[^a-z]+/g,"-")}`}
               className="mt-5 text-xs font-bold uppercase tracking-wider flex items-center gap-2 group"
               style={{ color }}>
@@ -928,8 +928,8 @@ function Manifesto() {
             { k: "We do not accuse.",             v: "We measure. Every finding is a probabilistic signal anchored to public Form 5500 evidence."},
             { k: "We do not stop at a score.",    v: "Every score links back to the specific filing, the specific line item, the specific year."},
           ].map(({ k, v }) => (
-            <div key={k} className="p-5 rounded-2xl" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div className="text-sm font-bold text-white mb-2">{k}</div>
+            <div key={k} className="p-5 rounded-2xl" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid #f1f5f9" }}>
+              <div className="text-sm font-bold text-[var(--kiq-ink)] mb-2">{k}</div>
               <div className="text-xs text-zinc-400 leading-relaxed">{v}</div>
             </div>
           ))}
@@ -941,9 +941,9 @@ function Manifesto() {
 
 function Footer() {
   return (
-    <div className="border-t px-8 py-10 text-center" style={{ borderColor: "rgba(255,255,255,0.05)" }}>
+    <div className="border-t px-8 py-10 text-center" style={{ borderColor: "#f8fafc" }}>
       <div className="text-[10px] text-zinc-600 uppercase tracking-[0.2em]">
-        Shady Broker Index™ · A Kincaid IQ Property · Data from DOL EFAST2 Form 5500 (public domain)
+        Broker Compensation Index™ · A Kincaid Health Property · Data from DOL EFAST2 Form 5500 (public domain)
       </div>
     </div>
   );

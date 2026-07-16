@@ -47,12 +47,12 @@ export default function SbiBrokerProfile() {
   });
 
   if (isLoading) return (
-    <div className="min-h-screen flex items-center justify-center text-zinc-500" style={{ background: "#030308" }}>
+    <div className="min-h-screen flex items-center justify-center text-zinc-500" style={{ background: "#F8FAFC" }}>
       <Loader2 className="w-5 h-5 animate-spin mr-3" /> Loading broker profile…
     </div>
   );
   if (error || !data) return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-zinc-500" style={{ background: "#030308" }}>
+    <div className="min-h-screen flex flex-col items-center justify-center text-zinc-500" style={{ background: "#F8FAFC" }}>
       <ShieldAlert className="w-10 h-10 mb-3" style={{ color: NEON.red }} />
       <div>Broker profile not found.</div>
       <Link href="/sbi" data-testid="link-sbi-back" className="mt-4 text-xs underline" style={{ color: NEON.gold }}>← Back to SBI</Link>
@@ -64,17 +64,17 @@ export default function SbiBrokerProfile() {
   const maxStateN = Math.max(...data.state_distribution.map(s => s.employers), 1);
 
   return (
-    <div className="min-h-screen text-white" style={{ background: "#030308" }}>
+    <div className="min-h-screen text-[var(--kiq-ink)]" style={{ background: "#F8FAFC" }}>
       <div className="sticky top-0 z-10 px-8 py-3 flex items-center justify-between"
         style={{ background: "rgba(3,3,8,0.85)", backdropFilter: "blur(12px)",
-                 borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                 borderBottom: "1px solid #f1f5f9" }}>
         <Link href="/sbi" data-testid="link-back-sbi"
-          className="flex items-center gap-2 text-xs text-zinc-500 hover:text-white">
-          <ArrowLeft className="w-3.5 h-3.5" /> SBI
+          className="flex items-center gap-2 text-xs text-zinc-500 hover:text-[var(--kiq-ink)]">
+          <ArrowLeft className="w-3.5 h-3.5" /> BCI
         </Link>
         <div className="flex items-center gap-2.5">
           <ShieldAlert className="w-4 h-4" style={{ color: NEON.red }} />
-          <span className="text-xs font-black tracking-tight">SHADY BROKER INDEX™</span>
+          <span className="text-xs font-black tracking-tight">BROKER COMPENSATION INDEX™</span>
         </div>
       </div>
 
@@ -107,7 +107,7 @@ export default function SbiBrokerProfile() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6 mt-8 pt-6"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+            style={{ borderTop: "1px solid #f8fafc" }}>
             {[
               { label: "EMPLOYERS",     value: data.summary.employers_touched.toLocaleString(), color: NEON.blue, icon: Building2 },
               { label: "LIVES",         value: data.summary.lives_covered.toLocaleString(),     color: NEON.purple, icon: Users },
@@ -127,7 +127,7 @@ export default function SbiBrokerProfile() {
 
       <div className="max-w-6xl mx-auto px-8 py-10 space-y-8">
         {/* Yearly trend */}
-        <div className="rounded-2xl p-6" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
+        <div className="rounded-2xl p-6" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
           <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-5">Commission Volume by Year</div>
           <div className="flex items-end gap-3 h-40">
             {data.yearly.map(y => {
@@ -146,18 +146,18 @@ export default function SbiBrokerProfile() {
 
         {/* Two columns: top employers + state distribution */}
         <div className="grid md:grid-cols-2 gap-5">
-          <div className="rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
+          <div className="rounded-2xl overflow-hidden" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
             <div className="px-5 py-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500"
-              style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              style={{ borderBottom: "1px solid #f1f5f9" }}>
               Top Employer Plans (by commission)
             </div>
             <ul>
               {data.top_employers.slice(0, 12).map((e, i) => (
-                <li key={e.ein} className="px-5 py-3 flex items-center gap-3 border-t hover:bg-white/5"
-                  style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                <li key={e.ein} className="px-5 py-3 flex items-center gap-3 border-t hover:bg-[var(--kiq-surface)]/5"
+                  style={{ borderColor: "#0F172A" }}>
                   <span className="w-5 text-right text-[10px] font-mono text-zinc-600">{i + 1}</span>
                   <div className="flex-1 min-w-0">
-                    <div className="text-xs font-bold text-white truncate" data-testid={`employer-${e.ein}`}>{e.sponsor}</div>
+                    <div className="text-xs font-bold text-[var(--kiq-ink)] truncate" data-testid={`employer-${e.ein}`}>{e.sponsor}</div>
                     <div className="text-[10px] text-zinc-600">{e.state} · EIN {e.ein}</div>
                   </div>
                   <div className="text-right">
@@ -170,9 +170,9 @@ export default function SbiBrokerProfile() {
             </ul>
           </div>
 
-          <div className="rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
+          <div className="rounded-2xl overflow-hidden" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
             <div className="px-5 py-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500"
-              style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              style={{ borderBottom: "1px solid #f1f5f9" }}>
               <MapPin className="inline w-3 h-3 mr-1.5" /> State Footprint
             </div>
             <div className="p-5 space-y-2">
@@ -181,10 +181,10 @@ export default function SbiBrokerProfile() {
                 return (
                   <div key={s.state} className="flex items-center gap-3">
                     <div className="w-10 font-mono text-xs font-bold text-zinc-400">{s.state}</div>
-                    <div className="flex-1 h-6 rounded relative overflow-hidden" style={{ background: "rgba(255,255,255,0.04)" }}>
+                    <div className="flex-1 h-6 rounded relative overflow-hidden" style={{ background: "#ffffff" }}>
                       <div className="h-full" style={{ width: `${w}%`, background: NEON.blue, boxShadow: `0 0 8px ${NEON.blue}55` }} />
                       <div className="absolute inset-0 px-3 flex items-center justify-end">
-                        <span className="text-[10px] font-bold text-white">{s.employers}</span>
+                        <span className="text-[10px] font-bold text-[var(--kiq-ink)]">{s.employers}</span>
                       </div>
                     </div>
                   </div>

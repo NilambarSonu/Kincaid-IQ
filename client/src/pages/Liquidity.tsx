@@ -18,7 +18,7 @@ export default function Liquidity() {
 
   return (
     <Layout>
-      <div className="mb-8">
+      <div className="kiq-command-hero mb-8 px-6 py-5">
         <p className="section-label mb-1">Balance Sheet</p>
         <h1 className="text-3xl font-bold" style={{ fontFamily: "var(--font-display)", color: "hsl(var(--primary))" }}>
           Liquidity Dashboard
@@ -29,19 +29,19 @@ export default function Liquidity() {
       {/* Hero Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div
-          className="rounded-2xl p-6 cursor-pointer"
-          style={{ background: "hsl(var(--primary))" }}
+          className="kiq-command-card p-6 cursor-pointer"
+          style={{ borderTop: "3px solid hsl(var(--kiq-primary))" }}
           data-testid="card-total-liquidity"
           onClick={() => open("liquidity")}
         >
           <div className="flex items-center gap-2 mb-3">
             <Droplets size={16} style={{ color: "hsl(38 65% 60%)" }} />
-            <p className="text-sm font-medium" style={{ color: "hsl(38 20% 70%)" }}>Total Liquid Capital</p>
+            <p className="text-sm font-medium text-[var(--kiq-muted)]">Total Liquid Capital</p>
           </div>
-          <p className="text-3xl font-bold text-white" style={{ fontFamily: "var(--font-display)" }}>
+          <p className="text-3xl font-bold text-[var(--kiq-ink)]" style={{ fontFamily: "var(--font-display)" }}>
             {formatCurrency(liquidityPositions.total)}
           </p>
-          <p className="text-sm mt-1" style={{ color: "hsl(38 40% 60%)" }}>Across all instruments</p>
+          <p className="text-sm mt-1 text-[var(--kiq-muted)]">Across all instruments</p>
         </div>
 
         <div className="metric-card cursor-pointer" data-testid="card-liquidity-horizon" onClick={() => open("liquidity")}>

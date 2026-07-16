@@ -103,13 +103,13 @@ export function ExportBlockedNotice({
           {blockedClaims.map(bc => (
             <div
               key={bc.claimId}
-              className="flex items-start gap-3 rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2.5"
+              className="flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-50/60 px-3 py-2.5"
               data-testid={`blocked-claim-${bc.claimId}`}
             >
               <XCircle className="w-3.5 h-3.5 text-[#FF4D6D] shrink-0 mt-0.5" />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap mb-0.5">
-                  <span className="text-[10px] font-mono font-bold text-zinc-300">{bc.claimId}</span>
+                  <span className="text-[10px] font-mono font-bold text-slate-500">{bc.claimId}</span>
                   <GatePill gate={bc.gate} />
                 </div>
                 <p className="text-[10px] text-zinc-500 truncate">{bc.title}</p>
@@ -126,7 +126,7 @@ export function ExportBlockedNotice({
       )}
 
       {/* Gate criteria reminder */}
-      <div className="px-5 py-3 border-t border-zinc-800/50 bg-zinc-900/40">
+      <div className="px-5 py-3 border-t border-slate-200/50 bg-slate-50/40">
         <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mb-2">Gate Criteria — {audience}</p>
         <div className="flex flex-wrap gap-2">
           {[
@@ -137,7 +137,7 @@ export function ExportBlockedNotice({
               : [{ label: "≥75% confidence", pass: true }]),
           ].map(({ label }) => (
             <span key={label}
-              className="text-[9px] font-mono px-2 py-1 rounded border border-zinc-700 bg-zinc-800/50 text-zinc-500">
+              className="text-[9px] font-mono px-2 py-1 rounded border border-slate-200 bg-white/50 text-zinc-500">
               {label}
             </span>
           ))}
@@ -151,7 +151,7 @@ export function ExportBlockedNotice({
             <button
               data-testid="button-retry-export"
               onClick={onRetry}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-700 text-zinc-400 hover:text-zinc-200 hover:border-zinc-600 text-[10px] font-mono transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-zinc-400 hover:text-slate-700 hover:border-zinc-600 text-[10px] font-mono transition-colors"
             >
               <RefreshCw className="w-2.5 h-2.5" />Retry
             </button>

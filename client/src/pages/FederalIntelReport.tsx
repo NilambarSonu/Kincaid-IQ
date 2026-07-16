@@ -1,6 +1,6 @@
 /**
  * Federal Risk Intelligence™ — Full Fiduciary Report
- * Kincaid IQ · Kincaid RMC
+ * Kincaid Health
  *
  * Styled as a print-quality overlay following the same pattern
  * as RxDefenseFullReport.tsx: fixed overlay → window.print() for PDF,
@@ -220,7 +220,7 @@ function CoverPage({ data }: { data: FederalScanData }) {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
           <div>
             <div style={{ fontSize: 11, fontWeight: 900, color: "rgba(255,255,255,0.65)", letterSpacing: "0.2em",
-              textTransform: "uppercase", marginBottom: 4 }}>Kincaid IQ™ · Kincaid RMC</div>
+              textTransform: "uppercase", marginBottom: 4 }}>Kincaid Health™</div>
             <div style={{ fontSize: 26, fontWeight: 900, color: C.white, letterSpacing: "-0.02em" }}>
               Federal Risk Intelligence™
             </div>
@@ -253,14 +253,14 @@ function CoverPage({ data }: { data: FederalScanData }) {
           {/* Risk Gauge */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <svg width={128} height={96} viewBox="0 0 128 96">
-              <circle cx={cx} cy={cy} r={r} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth={9}
+              <circle cx={cx} cy={cy} r={r} fill="none" stroke="#cbd5e1" strokeWidth={9}
                 strokeDasharray={`${dashArr} ${circ}`} strokeDashoffset={-circ * 0.125}
                 strokeLinecap="round" transform="rotate(135, 64, 64)"/>
               <circle cx={cx} cy={cy} r={r} fill="none" stroke={sig.color} strokeWidth={9}
                 strokeDasharray={`${dashArr - dashOff} ${circ}`} strokeDashoffset={-circ * 0.125}
                 strokeLinecap="round" transform="rotate(135, 64, 64)"/>
               <text x={cx} y={cy - 5} textAnchor="middle" fill={C.white} fontSize={26} fontWeight={900}>{data.risk_score}</text>
-              <text x={cx} y={cy + 13} textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize={9} letterSpacing={1}>RISK SCORE</text>
+              <text x={cx} y={cy + 13} textAnchor="middle" fill="#1e293b" fontSize={9} letterSpacing={1}>RISK SCORE</text>
             </svg>
             <div style={{ fontSize: 14, fontWeight: 900, color: sig.color, letterSpacing: 1.5,
               marginTop: -4, textShadow: `0 0 20px ${sig.color}44` }}>
@@ -292,7 +292,7 @@ function CoverPage({ data }: { data: FederalScanData }) {
           const cfg = STATUS_CFG[src.status] ?? STATUS_CFG.UNAVAILABLE;
           return (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: 6,
-              background: "rgba(255,255,255,0.05)", borderRadius: 6, padding: "5px 12px" }}>
+              background: "#f8fafc", borderRadius: 6, padding: "5px 12px" }}>
               <div style={{ width: 7, height: 7, borderRadius: "50%", background: cfg.color, flexShrink: 0 }}/>
               <span style={{ fontSize: 10, color: "rgba(255,255,255,0.75)", fontWeight: 600 }}>{src.source}</span>
               <span style={{ fontSize: 9, color: cfg.color, fontWeight: 800 }}>{cfg.label}</span>
@@ -305,10 +305,10 @@ function CoverPage({ data }: { data: FederalScanData }) {
       <div style={{ background: C.gray6, padding: "12px 48px", borderBottom: `2px solid ${C.gray5}` }}>
         <p style={{ margin: 0, fontSize: 9, color: C.gray3, lineHeight: 1.6 }}>
           <strong style={{ color: C.gray2 }}>CONFIDENTIAL — PREPARED FOR AUTHORIZED USE ONLY.</strong>{" "}
-          This Federal Risk Intelligence Report is prepared by Kincaid IQ™ and Kincaid RMC exclusively for the
+          This Federal Risk Intelligence Report is prepared by Kincaid Health™ exclusively for the
           named recipient's internal due diligence purposes. This report does not constitute legal advice, a
           sanctions determination, or a federal compliance clearance. All findings must be independently verified
-          by qualified legal counsel before any compliance determination is made. © Kincaid IQ · Kincaid RMC.
+          by qualified legal counsel before any compliance determination is made. © Kincaid Health.
         </p>
       </div>
     </div>
@@ -616,7 +616,7 @@ function LegalDisclaimer({ data }: { data: FederalScanData }) {
       <div style={{ marginTop: 28, paddingTop: 16, borderTop: `1px solid ${C.gray5}`,
         display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ fontSize: 9, color: C.gray4 }}>
-          © Kincaid IQ™ · Kincaid RMC · Federal Risk Intelligence™
+          © Kincaid Health™ · Federal Risk Intelligence™
         </div>
         <div style={{ fontSize: 9, color: C.gray4 }}>
           Report generated: {data.scanned_at ? new Date(data.scanned_at).toLocaleString() : new Date().toLocaleString()}
@@ -719,7 +719,7 @@ export default function FederalIntelReport({
       {/* ── Report scroll area ── */}
       <div id="kiq-print-scroll" style={{ flex: 1, overflowY: "auto", overflowX: "hidden" }}>
         <div ref={reportRef} style={{ maxWidth: 1100, margin: "0 auto", background: C.white,
-          boxShadow: "0 0 60px rgba(0,0,0,0.5)" }}>
+          boxShadow: "0 0 60px rgba(0,0,0,0.08)" }}>
           <CoverPage data={data}/>
           <ExecutiveSummary data={data}/>
           {data.sources.map((src, i) => <SourceSection key={i} src={src} num={i + 2}/>)}

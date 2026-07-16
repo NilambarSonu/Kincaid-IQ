@@ -13,7 +13,7 @@ import {
   Cell, AreaChart, Area, CartesianGrid, LineChart, Line
 } from "recharts";
 
-const BG="#07091c", CARD="#0d1033", BORDER="rgba(255,255,255,0.08)";
+const BG="#F8FAFC", CARD="#0d1033", BORDER="#e2e8f0";
 const TEXT1="#f0f4ff", TEXT2="#8b9dd4";
 const ACCENT="#4f7dff", GREEN="#22c55e", AMBER="#f59e0b", RED="#ef4444";
 const CYAN="#06b6d4", PURPLE="#a855f7", GOLD="#f59e0b";
@@ -466,7 +466,7 @@ function Gate7({data}:{data:any}){
   const scoreColor = composite_score>=70?GREEN:composite_score>=45?AMBER:RED;
   const allGates = Object.values(gates) as any[];
   const goCount = allGates.filter(g=>g.status==="GO").length;
-  const narrative = `KINCAID IQ VERIFY™ — PROSPECT ANALYSIS SUMMARY
+  const narrative = `KINCAID HEALTH VERIFY™ — PROSPECT ANALYSIS SUMMARY
 Company: ${edgar.name}
 EIN: ${data.ein} | SIC: ${edgar.sic} | ${edgar.sector}
 Analysis Date: ${new Date().toLocaleDateString()}
@@ -485,7 +485,7 @@ GATE CLEARANCE: ${goCount}/7 gates cleared | Composite score: ${composite_score}
 
 RECOMMENDED NEXT STEP: Schedule a 30-minute fiduciary benchmark review with the CFO/HR Director. Present the DOL-sourced fee comparison against ${fcr.sector_plans} sector peers.
 
-—Kincaid RMC | SHRACK-7742 | Kincaid IQ VERIFY™`;
+—Kincaid Health | SHRACK-7742 | Kincaid Health VERIFY™`;
   return(
     <div>
       <GateHeader num={7} label="Commit & Proposal" status={g.status} note={g.note} score={g.score}/>
@@ -532,11 +532,11 @@ RECOMMENDED NEXT STEP: Schedule a 30-minute fiduciary benchmark review with the 
                 // Header bar
                 doc.setFillColor(7,9,28); doc.rect(0,0,W,40,"F");
                 doc.setTextColor(79,125,255); doc.setFontSize(18); doc.setFont("helvetica","bold");
-                doc.text("KINCAID IQ VERIFY™",lm,16);
+                doc.text("KINCAID HEALTH VERIFY™",lm,16);
                 doc.setTextColor(240,244,255); doc.setFontSize(10); doc.setFont("helvetica","normal");
                 doc.text(`KincaidCommit Engine™ — 7-Gate Prospect Analysis`,lm,24);
                 doc.setFontSize(8); doc.setTextColor(139,157,212);
-                doc.text(`Generated ${new Date().toLocaleDateString()} · SHRACK-7742 · Kincaid RMC`,lm,32);
+                doc.text(`Generated ${new Date().toLocaleDateString()} · SHRACK-7742 · Kincaid Health`,lm,32);
                 // Composite score badge
                 const sc2=composite_score>=70?"#22c55e":composite_score>=45?"#f59e0b":"#ef4444";
                 const [r2,g2,b2]=[parseInt(sc2.slice(1,3),16),parseInt(sc2.slice(3,5),16),parseInt(sc2.slice(5,7),16)];
@@ -595,7 +595,7 @@ RECOMMENDED NEXT STEP: Schedule a 30-minute fiduciary benchmark review with the 
                 const fY=270;
                 doc.setDrawColor(30,40,100); doc.line(lm,fY,W-rm,fY);
                 doc.setFontSize(7); doc.setTextColor(80,100,160);
-                doc.text("Kincaid RMC · Kincaid IQ VERIFY™ · Fiduciary-grade analysis from 937K+ DOL Form 5500 filings",lm,fY+5);
+                doc.text("Kincaid Health VERIFY™ · Fiduciary-grade analysis from 937K+ DOL Form 5500 filings",lm,fY+5);
                 doc.save(`KincaidCommit_${edgar.name?.replace(/\s+/g,"_")}_${new Date().toISOString().slice(0,10)}.pdf`);
               }}
               style={{flex:1,background:`${GREEN}22`,border:`1px solid ${GREEN}44`,color:GREEN,borderRadius:8,padding:"10px 0",cursor:"pointer",fontSize:13,fontWeight:700}}>

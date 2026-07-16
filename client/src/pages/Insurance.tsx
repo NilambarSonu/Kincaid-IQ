@@ -63,7 +63,7 @@ export default function Insurance() {
           <div key={groupName} className="mb-6">
             <div className="flex items-center gap-2 mb-3">
               <p className="section-label">{groupName}</p>
-              <div className="h-px flex-1" style={{ background: "rgba(255,255,255,0.05)" }} />
+              <div className="h-px flex-1" style={{ background: "#f8fafc" }} />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {policies.map((policy) => {
@@ -78,7 +78,7 @@ export default function Insurance() {
                     data-testid={`card-policy-${policy.id}`}>
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <p className="font-bold text-sm text-white">{policy.type}</p>
+                        <p className="font-bold text-sm text-[var(--kiq-ink)]">{policy.type}</p>
                         <p className="text-[11px] text-muted-foreground">{policy.carrier} · {policy.insured}</p>
                       </div>
                       <div className="flex items-center gap-1.5 text-[10px] font-semibold px-1.5 py-0.5 rounded"
@@ -93,11 +93,11 @@ export default function Insurance() {
                       </div>
                       <div>
                         <p className="text-[9px] text-muted-foreground mb-0.5">Annual Premium</p>
-                        <p className="text-sm font-bold text-white">{formatCurrency(policy.premiumAnnual)}</p>
+                        <p className="text-sm font-bold text-[var(--kiq-ink)]">{formatCurrency(policy.premiumAnnual)}</p>
                       </div>
                       <div>
                         <p className="text-[9px] text-muted-foreground mb-0.5">Deductible</p>
-                        <p className="text-sm font-bold text-white">{policy.deductible > 0 ? formatCurrency(policy.deductible) : "Zero"}</p>
+                        <p className="text-sm font-bold text-[var(--kiq-ink)]">{policy.deductible > 0 ? formatCurrency(policy.deductible) : "Zero"}</p>
                       </div>
                     </div>
                     <p className="text-[10px] text-muted-foreground mb-2 leading-relaxed">{policy.notes}</p>

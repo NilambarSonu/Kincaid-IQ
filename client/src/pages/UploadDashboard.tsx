@@ -6,10 +6,10 @@ import {
 import { KiqProvider, useKiq, KiqMode } from "@/context/KiqContext";
 import { SAMPLE_BY_MODE } from "@/lib/kiqSamples";
 
-const BG     = "#07091c";
+const BG     = "#F8FAFC";
 const CARD   = "#0d1033";
 const CARD2  = "#111540";
-const BORDER = "rgba(255,255,255,0.08)";
+const BORDER = "#e2e8f0";
 const TEXT1  = "#f0f4ff";
 const TEXT2  = "#8b9dd4";
 const GREEN  = "#22c55e";
@@ -221,7 +221,7 @@ function UploadDashboardInner() {
         data-testid="button-run-pipeline"
         onClick={runPipeline}
         disabled={content.trim().length < 20 || loading}
-        style={{ width: "100%", height: 48, border: "none", borderRadius: 12, color: "#fff",
+        style={{ width: "100%", height: 48, border: "none", borderRadius: 12, color: "#0F172A",
           fontSize: 13, fontWeight: 800, cursor: content.trim().length > 20 ? "pointer" : "not-allowed",
           display: "flex", alignItems: "center", justifyContent: "center", gap: 10, letterSpacing: 0.3,
           background: content.trim().length > 20 ? ROSE : `${ROSE}40`, transition: "background 0.2s" }}>

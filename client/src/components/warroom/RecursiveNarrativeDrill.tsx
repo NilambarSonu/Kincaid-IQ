@@ -1,6 +1,6 @@
 import { useState, useMemo, Fragment } from "react";
 
-// Kincaid IQ · War Room · 4-Tile Recursive Drill-Down (C-Suite Narrative Engine)
+// Kincaid Health · War Room · 4-Tile Recursive Drill-Down (C-Suite Narrative Engine)
 // Constitutional: one screen, four tiles always (L9 end-state is the exception).
 // Each click is a narrative layer shift (different resolution), not "more data".
 // Ported verbatim from the canonical reference design; narrative content is
@@ -273,24 +273,50 @@ const PAL = {
   bg: "#08080a",
   bgTile: "#0f0f13",
   bgTileHover: "#16161c",
-  border: "#1f1f27",
+  border: "#E2E8F0",
   borderActive: "#3a3a48",
   text: "#e8e8ec",
   textDim: "#7a7a86",
   textMuted: "#4a4a54",
   gold: "#d4a84b",
+  goldBright: "#f5d97a",
   green: "#4ade80",
   red: "#ef4444",
   amber: "#f59e0b",
+  goldDivider: "#4a3c18",
 };
 
+// ── Brushed / polished gold-metal treatment for the four tiles ──
+const GOLD_METAL = {
+  bg: "linear-gradient(135deg, #fbeaa2 0%, #edcb66 20%, #d3a63c 46%, #f0d573 66%, #bd8b2b 100%)",
+  bgHover: "linear-gradient(135deg, #fdf1b8 0%, #f4d778 20%, #ddb349 46%, #f8e494 66%, #c99a34 100%)",
+  border: "#8a6a24",
+  borderHover: "#a37e2b",
+  sheen:
+    "inset 0 1px 0 rgba(255,255,255,0.55), inset 0 -3px 7px rgba(120,80,20,0.5), 0 2px 10px rgba(0,0,0,0.06)",
+  sheenHover:
+    "inset 0 1px 0 #0f172a, inset 0 -3px 8px rgba(120,80,20,0.45), 0 5px 18px rgba(0,0,0,0.45)",
+};
+
+// Dark, embossed text tokens for reading on the solid gold surface
+const ON_GOLD = {
+  strong: "#241a04",
+  mid: "#4a3711",
+  soft: "#6b5320",
+  divider: "rgba(90,66,20,0.5)",
+  emboss: "0 1px 0 #475569",
+};
+
+// Solid multi-color accents for the domain badges (one per tile slot)
+const BADGE_COLORS = ["#1d4ed8", "#15803d", "#6d28d9", "#be123c"];
+
 const directionGlyph = (dir: Direction): { glyph: string; color: string } => {
-  if (dir === "up-bad") return { glyph: "▲", color: PAL.red };
-  if (dir === "down-good") return { glyph: "▼", color: PAL.green };
-  if (dir === "down-bad") return { glyph: "▼", color: PAL.red };
-  if (dir === "right-opp") return { glyph: "▶", color: PAL.gold };
-  if (dir === "right-neutral") return { glyph: "▶", color: PAL.textDim };
-  return { glyph: "→", color: PAL.textDim };
+  if (dir === "up-bad") return { glyph: "▲", color: "#9b1c1c" };
+  if (dir === "down-good") return { glyph: "▼", color: "#166534" };
+  if (dir === "down-bad") return { glyph: "▼", color: "#9b1c1c" };
+  if (dir === "right-opp") return { glyph: "▶", color: "#7a5712" };
+  if (dir === "right-neutral") return { glyph: "▶", color: "#5c4a1f" };
+  return { glyph: "→", color: "#5c4a1f" };
 };
 
 const MONO = "'JetBrains Mono', 'Menlo', monospace";
@@ -301,11 +327,13 @@ function Tile({
   onDrill,
   evidence,
   level,
+  accent,
 }: {
   tile: DrillTile;
   onDrill: (nextKey: string, parent: DrillTile) => void;
   evidence: boolean;
   level: number;
+  accent: string | null;
 }) {
   const [hover, setHover] = useState(false);
   const arrow = directionGlyph(tile.direction);
@@ -318,12 +346,13 @@ function Tile({
       onMouseLeave={() => setHover(false)}
       data-testid={`rnd-tile-${tile.id}`}
       style={{
-        background: hover && clickable ? PAL.bgTileHover : PAL.bgTile,
-        border: `1px solid ${hover && clickable ? PAL.borderActive : PAL.border}`,
-        borderRadius: 2,
+        background: hover && clickable ? GOLD_METAL.bgHover : GOLD_METAL.bg,
+        border: `1.5px solid ${hover && clickable ? GOLD_METAL.borderHover : GOLD_METAL.border}`,
+        boxShadow: hover && clickable ? GOLD_METAL.sheenHover : GOLD_METAL.sheen,
+        borderRadius: 14,
         padding: "18px 20px",
         cursor: clickable ? "pointer" : "default",
-        transition: "background 120ms ease, border 120ms ease",
+        transition: "background 140ms ease, box-shadow 140ms ease",
         display: "flex",
         flexDirection: "column",
         gap: 14,
@@ -332,37 +361,37 @@ function Tile({
         fontFamily: MONO,
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", borderBottom: `1px solid ${PAL.border}`, paddingBottom: 10 }}>
-        <div style={{ fontSize: 10, letterSpacing: "0.14em", color: PAL.textDim, fontWeight: 600, textTransform: "uppercase" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", borderBottom: `1px solid ${ON_GOLD.divider}`, paddingBottom: 10 }}>
+        <div style={{ fontSize: 10, letterSpacing: "0.1em", color: accent ? "#ffffff" : ON_GOLD.strong, fontWeight: 700, textTransform: "uppercase", background: accent ?? "#d4af37", padding: "4px 10px", borderRadius: 999, boxShadow: "inset 0 1px 0 #64748b, 0 1px 2px rgba(0,0,0,0.05)", textShadow: accent ? undefined : ON_GOLD.emboss }}>
           {tile.domain}
         </div>
-        <div style={{ fontSize: 10, color: PAL.textMuted, letterSpacing: "0.08em" }}>L{level}</div>
+        <div style={{ fontSize: 10, color: ON_GOLD.soft, letterSpacing: "0.08em", fontWeight: 600 }}>L{level}</div>
       </div>
 
       <div style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-        <div style={{ fontSize: 32, fontWeight: 700, letterSpacing: "-0.02em", color: PAL.text, lineHeight: 1 }}>{tile.kpi}</div>
-        <div style={{ fontSize: 11, color: PAL.textDim, letterSpacing: "0.06em" }}>{tile.unit}</div>
+        <div style={{ fontSize: 32, fontWeight: 800, letterSpacing: "-0.02em", color: ON_GOLD.strong, textShadow: ON_GOLD.emboss, lineHeight: 1 }}>{tile.kpi}</div>
+        <div style={{ fontSize: 11, color: ON_GOLD.mid, letterSpacing: "0.06em" }}>{tile.unit}</div>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
         <span style={{ color: arrow.color, fontSize: 12 }}>{arrow.glyph}</span>
-        <span style={{ fontSize: 11, color: PAL.text, letterSpacing: "0.04em" }}>{tile.delta}</span>
+        <span style={{ fontSize: 11, color: ON_GOLD.strong, letterSpacing: "0.04em", fontWeight: 600 }}>{tile.delta}</span>
       </div>
 
-      <div style={{ fontSize: 12, color: PAL.textDim, lineHeight: 1.5, marginTop: "auto", fontFamily: SANS }}>{tile.narrative}</div>
+      <div style={{ fontSize: 12, color: ON_GOLD.mid, lineHeight: 1.5, marginTop: "auto", fontFamily: SANS }}>{tile.narrative}</div>
 
       {evidence && tile.claimRef && (
-        <div style={{ display: "flex", alignItems: "center", gap: 8, borderTop: `1px solid ${PAL.border}`, paddingTop: 10 }}>
-          <div style={{ background: `${PAL.green}11`, border: `1px solid ${PAL.green}44`, borderRadius: 2, padding: "3px 8px", fontSize: 9, color: PAL.green, letterSpacing: "0.1em", fontWeight: 600 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, borderTop: `1px solid ${ON_GOLD.divider}`, paddingTop: 10 }}>
+          <div style={{ background: "rgba(20,83,45,0.14)", border: "1px solid rgba(20,83,45,0.5)", borderRadius: 2, padding: "3px 8px", fontSize: 9, color: "#14532d", letterSpacing: "0.1em", fontWeight: 700 }}>
             ◆ EVIDENCE
           </div>
-          <div style={{ fontSize: 9, color: PAL.textDim, letterSpacing: "0.06em" }}>{tile.claimRef}</div>
-          <div style={{ fontSize: 9, color: PAL.textMuted, marginLeft: "auto" }}>{SHA(tile.claimRef)}</div>
+          <div style={{ fontSize: 9, color: ON_GOLD.soft, letterSpacing: "0.06em" }}>{tile.claimRef}</div>
+          <div style={{ fontSize: 9, color: ON_GOLD.soft, marginLeft: "auto" }}>{SHA(tile.claimRef)}</div>
         </div>
       )}
 
       {clickable && (
-        <div style={{ position: "absolute", bottom: 10, right: 12, fontSize: 10, color: hover ? PAL.gold : PAL.textMuted, letterSpacing: "0.1em", transition: "color 120ms" }}>
+        <div style={{ position: "absolute", bottom: 10, right: 12, fontSize: 10, fontWeight: 700, color: hover ? "#241a04" : "#7a6428", letterSpacing: "0.1em", transition: "color 120ms" }}>
           DRILL →
         </div>
       )}
@@ -496,7 +525,7 @@ export default function RecursiveNarrativeDrill() {
         <span style={{ fontFamily: MONO, fontSize: 9, fontWeight: 700, letterSpacing: "0.18em", color: PAL.gold, textTransform: "uppercase" }}>
           Recursive Narrative Drill · C-Suite Engine
         </span>
-        <span style={{ fontFamily: MONO, fontSize: 8, letterSpacing: "0.12em", color: "rgba(255,255,255,0.25)", textTransform: "uppercase" }}>
+        <span style={{ fontFamily: MONO, fontSize: 8, letterSpacing: "0.12em", color: "rgba(15,23,42,0.08)", textTransform: "uppercase" }}>
           Supplemental · not a board tile
         </span>
         <span style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 8 }}>
@@ -515,8 +544,15 @@ export default function RecursiveNarrativeDrill() {
         <>
           <LevelHeaderRow level={currentScreen.level} name={currentScreen.layerName} subtitle={currentScreen.layerSubtitle} question={currentScreen.question} />
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 12 }}>
-            {currentScreen.tiles.map((tile) => (
-              <Tile key={tile.id} tile={tile} level={currentScreen.level} evidence={!!currentScreen.evidence} onDrill={handleDrill} />
+            {currentScreen.tiles.map((tile, i) => (
+              <Tile
+                key={tile.id}
+                tile={tile}
+                level={currentScreen.level}
+                evidence={!!currentScreen.evidence}
+                onDrill={handleDrill}
+                accent={currentScreen.level === 1 || currentScreen.level === 2 ? null : BADGE_COLORS[i % BADGE_COLORS.length]}
+              />
             ))}
           </div>
         </>
@@ -524,7 +560,7 @@ export default function RecursiveNarrativeDrill() {
 
       <div style={{ marginTop: 20, paddingTop: 14, borderTop: `1px solid ${PAL.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8, fontFamily: MONO, fontSize: 9, color: PAL.textMuted, letterSpacing: "0.12em" }}>
         <div>ONE SCREEN · FOUR TILES · EVERY NUMBER CLICKABLE · NARRATIVES NEVER OUTRUN EVIDENCE</div>
-        <div>KINCAID IQ · CAPITAL EFFICIENCY INTELLIGENCE</div>
+        <div>KINCAID HEALTH · CAPITAL EFFICIENCY INTELLIGENCE</div>
       </div>
     </div>
   );

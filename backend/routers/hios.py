@@ -7,7 +7,7 @@ and a 3-tier multi-agent AI orchestration layer.
 
 Cross-wired to:
   - Claims Recovery IQ findings (recovery_actions, claims-recovery dashboard)
-  - Rx Defense contracts (rx_defense_contracts)
+  - PBM Contract Clarity 360 contracts (rx_defense_contracts)
   - Fiduciary IQ plans (fiduciary_plans)
   - DOL Form 5500 via DuckDB
 
@@ -304,7 +304,7 @@ def _intelligence_feed() -> List[dict]:
 @router.get("/command")
 def command_center(db: Session = Depends(get_db), user: models.User = Depends(get_current_user)):
     """Top-level executive command tile. Aggregates across Claims Recovery,
-    Rx Defense, Fiduciary IQ, and live HIOS subsystems."""
+    PBM Contract Clarity 360, Fiduciary IQ, and live HIOS subsystems."""
     pa = _pa_cases()
     pbm = _pbm_anomalies()
     lit = _litigation_risk_signals()
@@ -488,7 +488,7 @@ ERISA §502(a), and regulatory complaint to the U.S. Department of Labor.
 
 Respectfully submitted,
 
-Kincaid IQ — Healthcare Intelligence Operating System
+Kincaid Health — Healthcare Intelligence Operating System
 Prior Authorization Resolution Agent ({case['agent']})
 On behalf of the Plan Sponsor
 
@@ -603,7 +603,7 @@ Also cite: 29 CFR 2560.503-1 (ERISA §503), the plan's prudent-expert standard
 under ERISA §404(a), MHPAEA NQTL analysis if behavioral, and preserve external
 review + ERISA §502(a) civil action rights. Close with three specific asks:
 (1) reversal, (2) 72-hour peer-to-peer, (3) written specific clinical criteria
-not satisfied. Sign as 'Kincaid IQ Healthcare Intelligence Operating System on
+not satisfied. Sign as 'Kincaid Health Intelligence Operating System on
 behalf of the Plan Sponsor.'"""
         resp = await client.chat.completions.create(
             model="gemini-2.5-flash",
@@ -676,7 +676,7 @@ action, and U.S. Department of Labor regulatory complaint.
 
 Respectfully submitted,
 
-Kincaid IQ — Healthcare Intelligence Operating System
+Kincaid Health — Healthcare Intelligence Operating System
 Prior Authorization Resolution Agent ({case['agent']})
 On behalf of the Plan Sponsor
 
@@ -778,7 +778,7 @@ def payer_playbook(payer: str, user: models.User = Depends(get_current_user)):
     pk = payer.strip()
     for key in _PAYER_PLAYBOOK:
         if key.lower() in pk.lower() or pk.lower() in key.lower():
-            return {"payer": key, "playbook": _PAYER_PLAYBOOK[key], "source": "Kincaid IQ Payer Intel · curated from public portals + FOIA"}
+            return {"payer": key, "playbook": _PAYER_PLAYBOOK[key], "source": "Kincaid Health Payer Intel · curated from public portals + FOIA"}
     return {"payer": pk, "playbook": _payer_default(), "source": "Default ERISA framework"}
 
 

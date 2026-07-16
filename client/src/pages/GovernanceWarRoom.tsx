@@ -82,7 +82,7 @@ function ConfidenceBar({ score }: { score: number }) {
   const color = pct >= 90 ? "#00FF94" : pct >= 80 ? "#FFB800" : "#FF4D6D";
   return (
     <div className="flex items-center gap-2">
-      <div className="flex-1 h-1 bg-zinc-800 rounded-full overflow-hidden">
+      <div className="flex-1 h-1 bg-[var(--kiq-surface)] rounded-full overflow-hidden">
         <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: color }} />
       </div>
       <span className="text-[10px] font-mono" style={{ color }}>{pct}%</span>
@@ -117,8 +117,8 @@ function ReceiptDrawer({ claim, onClose }: { claim: Claim; onClose: () => void }
     <div className="fixed inset-0 z-50 flex justify-end"
       style={{ background: "rgba(0,0,0,0.75)" }}>
       <div className="absolute inset-0" onClick={onClose} />
-      <div className="relative z-10 w-[680px] max-w-full h-full bg-zinc-950 border-l border-zinc-800/60 overflow-y-auto flex flex-col">
-        <div className="flex items-start justify-between p-6 border-b border-zinc-800/40 sticky top-0 bg-zinc-950 z-10">
+      <div className="relative z-10 w-[680px] max-w-full h-full bg-[var(--kiq-surface)] border-l border-[var(--kiq-hairline)]/60 overflow-y-auto flex flex-col">
+        <div className="flex items-start justify-between p-6 border-b border-[var(--kiq-hairline)]/40 sticky top-0 bg-[var(--kiq-surface)] z-10">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <Hash className="w-4 h-4 text-[#A855F7]" />
@@ -126,29 +126,29 @@ function ReceiptDrawer({ claim, onClose }: { claim: Claim; onClose: () => void }
                 Governed Proof Surface
               </span>
             </div>
-            <h2 className="text-lg font-black text-zinc-100">Receipt Chain</h2>
+            <h2 className="text-lg font-black text-[var(--kiq-ink)]">Receipt Chain</h2>
           </div>
           <button onClick={onClose} data-testid="btn-close-drawer"
-            className="text-xs font-mono text-zinc-400 hover:text-zinc-200 border border-zinc-800/50 rounded-lg px-3 py-1.5 transition-colors">
+            className="text-xs font-mono text-zinc-400 hover:text-[var(--kiq-ink-soft)] border border-[var(--kiq-hairline)]/50 rounded-lg px-3 py-1.5 transition-colors">
             Close
           </button>
         </div>
 
         <div className="p-6 space-y-5">
           {/* Claim */}
-          <div className="bg-zinc-900/60 border border-zinc-800/50 rounded-2xl p-5">
+          <div className="bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/50 rounded-2xl p-5">
             <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-600 mb-2">Claim</p>
-            <p className="text-base font-bold text-zinc-100 mb-3">{claim.title}</p>
+            <p className="text-base font-bold text-[var(--kiq-ink)] mb-3">{claim.title}</p>
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div><span className="text-zinc-600">Value:</span> <span className="font-mono text-[#00A8FF]">{fmtValue(claim)}</span></div>
-              <div><span className="text-zinc-600">Period:</span> <span className="font-mono text-zinc-300">{claim.period}</span></div>
+              <div><span className="text-zinc-600">Period:</span> <span className="font-mono text-[var(--kiq-muted)]">{claim.period}</span></div>
               <div><span className="text-zinc-600">KPI:</span> <span className="font-mono text-zinc-400">{claim.kpi_key}</span></div>
               <div><span className="text-zinc-600">Confidence:</span> <span className="font-mono text-[#00FF94]">{Math.round(claim.confidence_score * 100)}%</span></div>
             </div>
           </div>
 
           {/* Policy */}
-          <div className="bg-zinc-900/60 border border-zinc-800/50 rounded-2xl p-5">
+          <div className="bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/50 rounded-2xl p-5">
             <div className="flex items-center justify-between mb-3">
               <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-600">Policy Evaluation</p>
               <PolicyBadge policy={claim.policy} />
@@ -158,21 +158,21 @@ function ReceiptDrawer({ claim, onClose }: { claim: Claim; onClose: () => void }
                 <FreshnessDot status={claim.policy.freshness_status} />
                 <span className="text-zinc-500">Freshness: {claim.policy.freshness_status}</span>
               </div>
-              <div><span className="text-zinc-600">Reason:</span> <span className="text-zinc-300">{claim.policy.reason_detail}</span></div>
+              <div><span className="text-zinc-600">Reason:</span> <span className="text-[var(--kiq-muted)]">{claim.policy.reason_detail}</span></div>
               <div><span className="text-zinc-600">Scope:</span> <span className="font-mono text-zinc-400">{claim.policy.scope}</span></div>
             </div>
           </div>
 
           {/* Evidence */}
           {receipt && (
-            <div className="bg-zinc-900/60 border border-zinc-800/50 rounded-2xl p-5">
+            <div className="bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/50 rounded-2xl p-5">
               <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-600 mb-3">
                 Evidence Chain · {receipt.summary?.evidence_count} item{receipt.summary?.evidence_count !== 1 ? "s" : ""}
               </p>
               {receipt.evidence?.map((ev: any) => (
                 <div key={ev.evidence_id}
-                  className="bg-zinc-950/60 border border-zinc-800/40 rounded-xl p-4 mb-2 text-xs">
-                  <p className="font-medium text-zinc-200 mb-1">{ev.title}</p>
+                  className="bg-[var(--kiq-surface)]/60 border border-[var(--kiq-hairline)]/40 rounded-xl p-4 mb-2 text-xs">
+                  <p className="font-medium text-[var(--kiq-ink-soft)] mb-1">{ev.title}</p>
                   <p className="text-zinc-600 font-mono text-[10px] truncate">{ev.source_uri}</p>
                   <div className="flex items-center gap-3 mt-2">
                     <span className="text-zinc-600">Type: <span className="text-zinc-400">{ev.source_type}</span></span>
@@ -185,13 +185,13 @@ function ReceiptDrawer({ claim, onClose }: { claim: Claim; onClose: () => void }
 
           {/* Transforms */}
           {receipt && receipt.transforms?.length > 0 && (
-            <div className="bg-zinc-900/60 border border-zinc-800/50 rounded-2xl p-5">
+            <div className="bg-[var(--kiq-canvas-soft)]/60 border border-[var(--kiq-hairline)]/50 rounded-2xl p-5">
               <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-600 mb-3">
                 Transform Chain · {receipt.summary?.transform_count} step{receipt.summary?.transform_count !== 1 ? "s" : ""}
               </p>
               {receipt.transforms.map((tr: any) => (
                 <div key={tr.transform_id}
-                  className="bg-zinc-950/60 border border-zinc-800/40 rounded-xl p-4 mb-2 text-xs">
+                  className="bg-[var(--kiq-surface)]/60 border border-[var(--kiq-hairline)]/40 rounded-xl p-4 mb-2 text-xs">
                   <p className="font-mono text-zinc-400 text-[10px] mb-1">{tr.transform_id}</p>
                   <div className="flex items-center gap-3">
                     <span className="text-zinc-600">Type: <span className="text-[#A855F7]">{tr.transform_type}</span></span>
@@ -205,7 +205,7 @@ function ReceiptDrawer({ claim, onClose }: { claim: Claim; onClose: () => void }
 
           {/* Receipt hash */}
           {receipt && (
-            <div className="bg-zinc-900/40 border border-zinc-800/30 rounded-xl p-4">
+            <div className="bg-[var(--kiq-canvas-soft)]/40 border border-[var(--kiq-hairline)]/30 rounded-xl p-4">
               <div className="flex items-center gap-2 mb-1">
                 <Lock className="w-3 h-3 text-zinc-600" />
                 <span className="text-[9px] font-mono uppercase tracking-widest text-zinc-600">Receipt Hash</span>
@@ -256,7 +256,7 @@ export default function GovernanceWarRoom() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-zinc-950 p-6 space-y-6">
+      <div className="min-h-screen bg-[var(--kiq-surface)] p-6 space-y-6">
 
         {/* Header */}
         <div className="flex items-start justify-between">
@@ -267,7 +267,7 @@ export default function GovernanceWarRoom() {
                 SiriusB · Fiduciary Intelligence Layer
               </span>
             </div>
-            <h1 className="text-2xl font-black text-zinc-100 tracking-tight">Governance War Room</h1>
+            <h1 className="text-2xl font-black text-[var(--kiq-ink)] tracking-tight">Governance War Room</h1>
             <p className="text-xs text-zinc-500 mt-1">
               Live evidence lineage · Policy-gated export · Board-grade claim verification
             </p>
@@ -287,7 +287,7 @@ export default function GovernanceWarRoom() {
         {isLoading ? (
           <div className="grid grid-cols-5 gap-3">
             {[...Array(5)].map((_, i) => (
-              <div key={i} className="bg-zinc-900/40 border border-zinc-800/30 rounded-xl p-4 animate-pulse h-16" />
+              <div key={i} className="bg-[var(--kiq-canvas-soft)]/40 border border-[var(--kiq-hairline)]/30 rounded-xl p-4 animate-pulse h-16" />
             ))}
           </div>
         ) : (
@@ -299,7 +299,7 @@ export default function GovernanceWarRoom() {
               { label: "Low Confidence", value: ts?.low_confidence_count ?? 0, icon: AlertTriangle, color: "#FF4D6D" },
               { label: "Export Ready",   value: ts?.export_ready ? "Yes" : "No", icon: Shield,   color: "#A855F7", string: true },
             ].map(({ label, value, icon: Icon, color, string }) => (
-              <div key={label} className="bg-zinc-950/80 border border-zinc-800/50 rounded-xl p-4">
+              <div key={label} className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-xl p-4">
                 <div className="flex items-center gap-1.5 mb-1">
                   <Icon className="w-3 h-3" style={{ color }} />
                   <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-600">{label}</p>
@@ -318,7 +318,7 @@ export default function GovernanceWarRoom() {
             { label: "Export Governance", check: exportCheck, mode: "EXPORT",      color: "#00FF94" },
             { label: "Board Pack Gate",   check: boardPackCheck, mode: "BOARD_PACK", color: "#FFB800" },
           ].map(({ label, check, mode, color }) => (
-            <div key={mode} className="bg-zinc-950/80 border border-zinc-800/50 rounded-2xl p-5">
+            <div key={mode} className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-2xl p-5">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <Lock className="w-3.5 h-3.5" style={{ color }} />
@@ -333,12 +333,12 @@ export default function GovernanceWarRoom() {
               </div>
               {check ? (
                 <div className="text-xs space-y-1">
-                  <div><span className="text-zinc-600">Mode:</span> <span className="font-mono text-zinc-300">{check.mode}</span></div>
-                  <div><span className="text-zinc-600">Claims checked:</span> <span className="font-mono text-zinc-300">{check.claim_count}</span></div>
+                  <div><span className="text-zinc-600">Mode:</span> <span className="font-mono text-[var(--kiq-muted)]">{check.mode}</span></div>
+                  <div><span className="text-zinc-600">Claims checked:</span> <span className="font-mono text-[var(--kiq-muted)]">{check.claim_count}</span></div>
                   <div><span className="text-zinc-600">Results:</span> <span className="font-mono text-zinc-400">{check.results?.length ?? 0} commits evaluated</span></div>
                 </div>
               ) : (
-                <div className="h-12 animate-pulse bg-zinc-900/50 rounded-lg" />
+                <div className="h-12 animate-pulse bg-[var(--kiq-canvas-soft)]/50 rounded-lg" />
               )}
             </div>
           ))}
@@ -353,24 +353,24 @@ export default function GovernanceWarRoom() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {isLoading
               ? [...Array(2)].map((_, i) => (
-                  <div key={i} className="bg-zinc-900/40 border border-zinc-800/30 rounded-2xl p-6 animate-pulse h-48" />
+                  <div key={i} className="bg-[var(--kiq-canvas-soft)]/40 border border-[var(--kiq-hairline)]/30 rounded-2xl p-6 animate-pulse h-48" />
                 ))
               : dashboard?.tiles.map(tile => {
                   const c = tile.primaryClaim;
                   const severe = c.confidence_score >= 0.9 ? "#00FF94" : c.confidence_score >= 0.8 ? "#FFB800" : "#FF4D6D";
                   return (
                     <div key={tile.id}
-                      className="bg-zinc-950/80 border border-zinc-800/40 rounded-2xl p-6 hover:border-zinc-700/60 transition-all group cursor-pointer"
+                      className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/40 rounded-2xl p-6 hover:border-[var(--kiq-hairline)]/60 transition-all group cursor-pointer"
                       onClick={() => setActiveClaimId(c.claim_id)}
                       data-testid={`tile-${tile.id}`}>
                       <div className="flex items-start justify-between mb-4">
                         <div>
                           <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-600 mb-1">{c.kpi_key}</p>
-                          <p className="text-sm font-semibold text-zinc-200">{c.title}</p>
+                          <p className="text-sm font-semibold text-[var(--kiq-ink-soft)]">{c.title}</p>
                         </div>
                         <div className="flex items-center gap-2">
                           <PolicyBadge policy={c.policy} />
-                          <button className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-zinc-800"
+                          <button className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 rounded-lg hover:bg-[var(--kiq-surface)]"
                             onClick={e => { e.stopPropagation(); setActiveClaimId(c.claim_id); }}>
                             <Eye className="w-3.5 h-3.5 text-zinc-400" />
                           </button>
@@ -384,7 +384,7 @@ export default function GovernanceWarRoom() {
 
                       <ConfidenceBar score={c.confidence_score} />
 
-                      <div className="flex items-center justify-between mt-4 pt-4 border-t border-zinc-800/40">
+                      <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--kiq-hairline)]/40">
                         <div className="flex items-center gap-3 text-[10px] text-zinc-600">
                           <span className="flex items-center gap-1">
                             <FreshnessDot status={c.freshness_status} />
@@ -397,7 +397,7 @@ export default function GovernanceWarRoom() {
                         </div>
                         <button
                           onClick={e => { e.stopPropagation(); navigate(tile.drillPath); }}
-                          className="flex items-center gap-1 text-[10px] font-mono text-zinc-600 hover:text-zinc-300 transition-colors"
+                          className="flex items-center gap-1 text-[10px] font-mono text-zinc-600 hover:text-[var(--kiq-muted)] transition-colors"
                           data-testid={`btn-drill-${tile.id}`}>
                           Drill
                           <ChevronRight className="w-3 h-3" />
@@ -410,8 +410,8 @@ export default function GovernanceWarRoom() {
         </div>
 
         {/* Evidence Feed */}
-        <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-2xl overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-3.5 border-b border-zinc-800/40">
+        <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-2xl overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-3.5 border-b border-[var(--kiq-hairline)]/40">
             <Database className="w-3.5 h-3.5 text-[#A855F7]" />
             <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Evidence Registry</span>
           </div>
@@ -438,11 +438,11 @@ function EvidenceFeed() {
       {items.length === 0 ? (
         <div className="px-5 py-6 text-xs text-zinc-600 text-center">No evidence items loaded.</div>
       ) : items.map(ev => (
-        <div key={ev.evidence_id} className="flex items-center gap-4 px-5 py-3 hover:bg-zinc-900/20">
+        <div key={ev.evidence_id} className="flex items-center gap-4 px-5 py-3 hover:bg-[var(--kiq-canvas-soft)]/20">
           <div className="w-2 h-2 rounded-full flex-shrink-0"
             style={{ background: ev.freshness_status === "GREEN" ? "#00FF94" : "#FFB800" }} />
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-zinc-200 font-medium truncate">{ev.title}</p>
+            <p className="text-xs text-[var(--kiq-ink-soft)] font-medium truncate">{ev.title}</p>
             <p className="text-[10px] font-mono text-zinc-600 truncate">{ev.source_uri}</p>
           </div>
           <div className="flex items-center gap-3 flex-shrink-0">

@@ -26,7 +26,7 @@ DEMO_SIGNING_SECRET = "rbl_demo_signing_secret_change_me"
 
 def _hashed_member(i: int) -> str:
     # Mirrors Rebel IQ's §12 obligation: members are de-identified as full
-    # HMAC-SHA256 hex digests (64 hex chars) before being sent to Kincaid IQ.
+    # HMAC-SHA256 hex digests (64 hex chars) before being sent to Kincaid Health.
     return hashlib.sha256(f"demo-member-{i}".encode()).hexdigest()
 
 

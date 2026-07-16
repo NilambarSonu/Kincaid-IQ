@@ -55,13 +55,13 @@ function CoverPage({ data }: { data: NetworkData }) {
         background: "linear-gradient(135deg, #0c1a3a 0%, #0f2352 60%, #1a3a6e 100%)",
         borderRadius: 12, padding: "28px 32px",
         display: "flex", alignItems: "flex-start", justifyContent: "space-between",
-        color: "white",
+        color: "#0F172A",
       }}>
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
             <Network size={20} color="#22D3EE" />
             <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", color: "#22D3EE", textTransform: "uppercase" }}>
-              Network IQ™ · Kincaid RMC
+              Network IQ™ · Kincaid Health
             </span>
           </div>
           <h1 style={{ fontSize: 26, fontWeight: 800, margin: "0 0 4px 0", lineHeight: 1.2 }}>
@@ -72,10 +72,10 @@ function CoverPage({ data }: { data: NetworkData }) {
           </p>
         </div>
         <div style={{ textAlign: "right" }}>
-          <p style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", margin: "0 0 4px 0" }}>Report ID</p>
+          <p style={{ fontSize: 10, color: "#475569", margin: "0 0 4px 0" }}>Report ID</p>
           <p style={{ fontSize: 13, fontWeight: 700, color: "#22D3EE", margin: "0 0 12px 0" }}>{REPORT_ID}</p>
-          <p style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", margin: "0 0 2px 0" }}>Prepared</p>
-          <p style={{ fontSize: 11, color: "rgba(255,255,255,0.8)", margin: 0 }}>{TODAY}</p>
+          <p style={{ fontSize: 10, color: "#475569", margin: "0 0 2px 0" }}>Prepared</p>
+          <p style={{ fontSize: 11, color: "#0f172a", margin: 0 }}>{TODAY}</p>
         </div>
       </div>
 
@@ -195,15 +195,15 @@ function DisruptionRegister({ data }: { data: NetworkData }) {
             <p style={{ fontSize: 10, color: "#374151", lineHeight: 1.6, margin: "0 0 10px 0" }}>{r.reason}</p>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
-              <div style={{ background: "rgba(255,255,255,0.7)", borderRadius: 6, padding: "8px 10px" }}>
+              <div style={{ background: "#F8FAFC", borderRadius: 6, padding: "8px 10px" }}>
                 <p style={{ fontSize: 9, color: "#9CA3AF", margin: "0 0 2px 0", textTransform: "uppercase", letterSpacing: "0.08em" }}>Members Affected</p>
                 <p style={{ fontSize: 14, fontWeight: 800, color: "#2563EB", margin: 0 }}>{r.members_using}</p>
               </div>
-              <div style={{ background: "rgba(255,255,255,0.7)", borderRadius: 6, padding: "8px 10px" }}>
+              <div style={{ background: "#F8FAFC", borderRadius: 6, padding: "8px 10px" }}>
                 <p style={{ fontSize: 9, color: "#9CA3AF", margin: "0 0 2px 0", textTransform: "uppercase", letterSpacing: "0.08em" }}>OON Exposure</p>
                 <p style={{ fontSize: 14, fontWeight: 800, color: "#DC2626", margin: 0 }}>${(r.financial_impact / 1000).toFixed(0)}K/yr</p>
               </div>
-              <div style={{ background: "rgba(255,255,255,0.7)", borderRadius: 6, padding: "8px 10px" }}>
+              <div style={{ background: "#F8FAFC", borderRadius: 6, padding: "8px 10px" }}>
                 <p style={{ fontSize: 9, color: "#9CA3AF", margin: "0 0 2px 0", textTransform: "uppercase", letterSpacing: "0.08em" }}>INN Alternatives</p>
                 <p style={{ fontSize: 14, fontWeight: 800, color: "#059669", margin: 0 }}>{r.alternatives} available</p>
               </div>
@@ -220,7 +220,7 @@ function CaaNoticeTimeline() {
     {
       days: "T−90",
       title: "Initiate Contract Remediation",
-      owner: "Kincaid RMC",
+      owner: "Kincaid Health",
       desc: "Confirm at-risk provider status. Begin contract extension or replacement negotiations. Pull claims for members seen by at-risk providers in last 12 months.",
       statute: null,
       color: "#DC2626",
@@ -244,7 +244,7 @@ function CaaNoticeTimeline() {
     {
       days: "T−45",
       title: "Activate Care Transition Navigators",
-      owner: "TPA / Kincaid RMC",
+      owner: "TPA / Kincaid Health",
       desc: "Assign care coordinators to members with chronic conditions, ongoing specialty treatment, or active episodes who use at-risk providers. Priority: mental health, oncology, endocrinology.",
       statute: "NSA — Continuity of Care",
       color: "#2563EB",
@@ -280,7 +280,7 @@ function CaaNoticeTimeline() {
                 display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
                 zIndex: 1,
               }}>
-                <span style={{ fontSize: 8, fontWeight: 800, color: "white", letterSpacing: "-0.02em" }}>{s.days}</span>
+                <span style={{ fontSize: 8, fontWeight: 800, color: "#0F172A", letterSpacing: "-0.02em" }}>{s.days}</span>
               </div>
               {i < steps.length - 1 && (
                 <div style={{ width: 2, flex: 1, minHeight: 14, background: "#E5E7EB" }} />
@@ -402,7 +402,7 @@ function ReportFooter() {
     <div style={{ borderTop: "1px solid #E5E7EB", paddingTop: 14, marginTop: 8 }}>
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
         <div>
-          <p style={{ fontSize: 10, fontWeight: 700, color: "#1D4ED8", margin: "0 0 2px 0" }}>Kincaid RMC · Network IQ™</p>
+          <p style={{ fontSize: 10, fontWeight: 700, color: "#1D4ED8", margin: "0 0 2px 0" }}>Kincaid Health · Network IQ™</p>
           <p style={{ fontSize: 9, color: "#9CA3AF", margin: 0 }}>Jeremiah Shrack, CEO · Account SHRACK-7742</p>
         </div>
         <div style={{ textAlign: "right" }}>
@@ -411,7 +411,7 @@ function ReportFooter() {
         </div>
       </div>
       <p style={{ fontSize: 8, color: "#D1D5DB", margin: "10px 0 0 0", lineHeight: 1.5 }}>
-        CONFIDENTIAL — This report contains proprietary health plan analysis prepared exclusively for the named plan sponsor by Kincaid RMC under broker-client privilege. Not for redistribution. Network data sourced from carrier claims files and CMS provider directories. Financial projections are estimates based on trailing 12-month claims data and industry benchmarks. This report does not constitute legal advice.
+        CONFIDENTIAL — This report contains proprietary health plan analysis prepared exclusively for the named plan sponsor by Kincaid Health under broker-client privilege. Not for redistribution. Network data sourced from carrier claims files and CMS provider directories. Financial projections are estimates based on trailing 12-month claims data and industry benchmarks. This report does not constitute legal advice.
       </p>
     </div>
   );
@@ -438,7 +438,7 @@ export default function NetworkDisruptionReport() {
     setExporting(true);
     try {
       const canvas = await html2canvas(reportRef.current, {
-        backgroundColor: "#ffffff", scale: 2, useCORS: true, logging: false,
+        backgroundColor: "#0F172A", scale: 2, useCORS: true, logging: false,
       });
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
@@ -485,8 +485,8 @@ export default function NetworkDisruptionReport() {
           data-testid="report-back-btn"
           style={{
             display: "flex", alignItems: "center", gap: 6,
-            background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: 7, padding: "6px 12px", color: "rgba(255,255,255,0.7)",
+            background: "#e2e8f0", border: "1px solid #cbd5e1",
+            borderRadius: 7, padding: "6px 12px", color: "#0f172a",
             fontSize: 12, cursor: "pointer",
           }}
         >
@@ -495,8 +495,8 @@ export default function NetworkDisruptionReport() {
 
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginLeft: 4 }}>
           <Network size={15} color="#22D3EE" />
-          <span style={{ color: "white", fontSize: 13, fontWeight: 700 }}>Network Disruption Report</span>
-          <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 11 }}>· {REPORT_ID}</span>
+          <span style={{ color: "#0F172A", fontSize: 13, fontWeight: 700 }}>Network Disruption Report</span>
+          <span style={{ color: "#64748b", fontSize: 11 }}>· {REPORT_ID}</span>
         </div>
 
         <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
@@ -505,8 +505,8 @@ export default function NetworkDisruptionReport() {
             data-testid="report-print-btn"
             style={{
               display: "flex", alignItems: "center", gap: 6,
-              background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)",
-              borderRadius: 7, padding: "6px 14px", color: "rgba(255,255,255,0.7)",
+              background: "#e2e8f0", border: "1px solid #cbd5e1",
+              borderRadius: 7, padding: "6px 14px", color: "#0f172a",
               fontSize: 12, cursor: "pointer",
             }}
           >

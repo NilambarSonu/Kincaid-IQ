@@ -69,7 +69,7 @@ export default function DividendCalendar() {
       <div className="metric-card mb-6" data-testid="card-cal-monthly-bars">
         <div className="flex items-center justify-between mb-4">
           <p className="section-label">Monthly Income — Click to Filter</p>
-          <button onClick={() => setSelectedMonth(null)} className="text-xs text-muted-foreground hover:text-white transition-colors">Clear filter</button>
+          <button onClick={() => setSelectedMonth(null)} className="text-xs text-muted-foreground hover:text-[var(--kiq-ink)] transition-colors">Clear filter</button>
         </div>
         <div className="grid grid-cols-6 sm:grid-cols-12 gap-2">
           {monthTotals.map((m) => {
@@ -82,10 +82,10 @@ export default function DividendCalendar() {
                 className="flex flex-col items-center gap-1 group"
                 data-testid={`bar-cal-${m.key}`}
               >
-                <div className="text-[9px] font-semibold text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                <div className="text-[9px] font-semibold text-[var(--kiq-ink)] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                   {formatCurrency(m.total)}
                 </div>
-                <div className="w-full h-16 flex items-end rounded-lg overflow-hidden" style={{ background: "rgba(255,255,255,0.03)" }}>
+                <div className="w-full h-16 flex items-end rounded-lg overflow-hidden" style={{ background: "#ffffff" }}>
                   <div
                     className="w-full rounded-t-lg transition-all duration-300"
                     style={{
@@ -114,8 +114,8 @@ export default function DividendCalendar() {
                 <button key={t} onClick={() => setFilterType(t as typeof filterType)}
                   className="text-[10px] px-2 py-1 rounded-lg capitalize transition-all"
                   style={{
-                    background: filterType === t ? (c?.bg || "rgba(0,168,255,0.12)") : "rgba(255,255,255,0.03)",
-                    border: `1px solid ${filterType === t ? (c?.border || "rgba(0,168,255,0.3)") : "rgba(255,255,255,0.06)"}`,
+                    background: filterType === t ? (c?.bg || "rgba(0,168,255,0.12)") : "#ffffff",
+                    border: `1px solid ${filterType === t ? (c?.border || "rgba(0,168,255,0.3)") : "#f1f5f9"}`,
                     color: filterType === t ? (c?.color || "#00A8FF") : "rgba(150,170,210,0.5)",
                   }}
                   data-testid={`filter-cal-${t.toLowerCase()}`}
@@ -131,8 +131,8 @@ export default function DividendCalendar() {
             return (
               <div
                 key={event.id}
-                className="flex items-center justify-between p-3 rounded-xl transition-colors hover:bg-white/5 cursor-pointer"
-                style={{ border: "1px solid rgba(255,255,255,0.05)" }}
+                className="flex items-center justify-between p-3 rounded-xl transition-colors hover:bg-[var(--kiq-surface)]/5 cursor-pointer"
+                style={{ border: "1px solid #f8fafc" }}
                 onClick={() => open("liquidity")}
                 data-testid={`row-cal-${event.id}`}
               >
@@ -143,7 +143,7 @@ export default function DividendCalendar() {
                      <Calendar size={13} style={{ color: cs.color }} />}
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-white">{event.source}</p>
+                    <p className="text-sm font-semibold text-[var(--kiq-ink)]">{event.source}</p>
                     <div className="flex items-center gap-2 mt-0.5">
                       <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded" style={{ background: cs.bg, color: cs.color, border: `1px solid ${cs.border}` }}>{event.type}</span>
                       <span className="text-xs text-muted-foreground flex items-center gap-1"><Clock size={9} /> {date}</span>

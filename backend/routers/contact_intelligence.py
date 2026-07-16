@@ -210,7 +210,7 @@ async def discover_contact(req: DiscoverRequest, db: Session = Depends(get_db)):
 
     ai_result = {"subject_lines": [], "email_body": ""}
     if ANTHROPIC_KEY:
-        prompt = f"""You are drafting an executive-level business development communication for Kincaid IQ — a fiduciary intelligence platform purpose-built for employer-sponsored health plan sponsors, ERISA plan administrators, and their advisors.
+        prompt = f"""You are drafting an executive-level business development communication for Kincaid Health — a fiduciary intelligence platform purpose-built for employer-sponsored health plan sponsors, ERISA plan administrators, and their advisors.
 
 Target recipient:
 - Name: {contact_name}
@@ -224,7 +224,7 @@ Drafting standards:
 1. Open with a precise reference to their plan's public DOL Form 5500 filing — frame this as publicly available fiduciary data, not surveillance. The tone should convey that you are peer, not vendor.
 2. Identify one specific, legally grounded risk with precision: either (a) CAA §204 PBM spread pricing obligations and pass-through enforcement gaps, (b) ERISA §408(b)(2) fee disclosure deficiencies creating prohibited transaction exposure for named plan fiduciaries, or (c) CAA 2026 comparative effectiveness and mental health parity enforcement under MHPAEA — select the most compelling for a plan of this size.
 3. Articulate the cost of inaction in concrete terms — personal liability under ERISA §409, DOL civil monetary penalties under §502(c), or recoverable overpayments as a percentage of welfare premiums.
-4. Request a focused 20-minute working session — frame it as showing them what their own plan's data looks like inside Kincaid IQ, not a sales pitch.
+4. Request a focused 20-minute working session — frame it as showing them what their own plan's data looks like inside Kincaid Health, not a sales pitch.
 5. Tone: direct, measured, and executive-to-executive. Avoid superlatives, marketing language, and platitudes. Write as a senior advisor who has read their filing, not as a vendor who bought a list.
 6. Length: three paragraphs, under 180 words. Every sentence must earn its place.
 
@@ -257,9 +257,9 @@ Subject lines should be specific, non-promotional, and reference a concrete lega
                     f"Dear {contact_name},\n\n"
                     f"Your organization's DOL Form 5500 filing reflects a self-funded welfare benefit plan covering {req.participants:,} participants with ${req.welfare_premiums:,.0f} in reported welfare premiums — plan data that is publicly available and actively reviewed by DOL enforcement staff. "
                     f"For plans of this size, two statutory obligations are frequently unaddressed: ERISA §408(b)(2) requires written fee disclosure from every covered service provider before or upon execution of any service agreement — deficiencies constitute prohibited transactions attaching personal liability to named plan administrators regardless of intent; and CAA §204 requires PBM contracts to prohibit spread pricing and mandates pass-through pricing — non-compliant contracts expose the plan to retroactive recovery claims and DOL referral.\n\n"
-                    f"Kincaid IQ is a fiduciary intelligence platform that maps your plan's contractual and statutory exposure against public DOL data and current enforcement priorities. Plans our clients have analyzed have identified, on average, recoverable overpayments of 9–14% of annual welfare spend.\n\n"
-                    f"I would welcome the opportunity to spend twenty minutes showing you what your plan's data surfaces inside Kincaid IQ — not a presentation, but your actual filings reviewed in real time. Would that be worthwhile?\n\n"
-                    f"Regards,\n[Your name]\nKincaid IQ  |  kincaidiq.com"
+                    f"Kincaid Health is a fiduciary intelligence platform that maps your plan's contractual and statutory exposure against public DOL data and current enforcement priorities. Plans our clients have analyzed have identified, on average, recoverable overpayments of 9–14% of annual welfare spend.\n\n"
+                    f"I would welcome the opportunity to spend twenty minutes showing you what your plan's data surfaces inside Kincaid Health — not a presentation, but your actual filings reviewed in real time. Would that be worthwhile?\n\n"
+                    f"Regards,\n[Your name]\nKincaid Health  |  kincaidiq.com"
                 ),
             }
 
@@ -275,9 +275,9 @@ Subject lines should be specific, non-promotional, and reference a concrete lega
                 f"Dear {contact_name},\n\n"
                 f"Your organization's DOL Form 5500 filing reflects a self-funded welfare benefit plan covering {req.participants:,} participants with ${req.welfare_premiums:,.0f} in reported welfare premiums — plan data that is publicly available and actively reviewed by DOL enforcement staff. "
                 f"For plans of this size, two statutory obligations are frequently unaddressed: ERISA §408(b)(2) requires written fee disclosure from every covered service provider before or upon execution of any service agreement — deficiencies constitute prohibited transactions attaching personal liability to named plan administrators regardless of intent; and CAA §204 requires PBM contracts to prohibit spread pricing and mandates pass-through pricing — non-compliant contracts expose the plan to retroactive recovery claims and DOL referral.\n\n"
-                f"Kincaid IQ is a fiduciary intelligence platform that maps your plan's contractual and statutory exposure against public DOL data and current enforcement priorities. Plans our clients have analyzed have identified, on average, recoverable overpayments of 9–14% of annual welfare spend.\n\n"
-                f"I would welcome the opportunity to spend twenty minutes showing you what your plan's data surfaces inside Kincaid IQ — not a presentation, but your actual filings reviewed in real time. Would that be worthwhile?\n\n"
-                f"Regards,\n[Your name]\nKincaid IQ  |  kincaidiq.com"
+                f"Kincaid Health is a fiduciary intelligence platform that maps your plan's contractual and statutory exposure against public DOL data and current enforcement priorities. Plans our clients have analyzed have identified, on average, recoverable overpayments of 9–14% of annual welfare spend.\n\n"
+                f"I would welcome the opportunity to spend twenty minutes showing you what your plan's data surfaces inside Kincaid Health — not a presentation, but your actual filings reviewed in real time. Would that be worthwhile?\n\n"
+                f"Regards,\n[Your name]\nKincaid Health  |  kincaidiq.com"
             ),
         }
 

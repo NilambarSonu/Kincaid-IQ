@@ -1,6 +1,6 @@
 """
 permissions.py
-Kincaid IQ — User module permission management.
+Kincaid Health — User module permission management.
 Admin-only endpoints to grant, revoke, and query per-user module access.
 """
 from __future__ import annotations

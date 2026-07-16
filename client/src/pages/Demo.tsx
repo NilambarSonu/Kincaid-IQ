@@ -6,15 +6,16 @@ export default function Demo() {
   const [, setLocation] = useLocation();
 
   return (
-    <main className="kiq-command-bg min-h-screen text-white">
+    <main className="kiq-public-shell min-h-screen">
+      <div className="kiq-shell-ambient" aria-hidden="true" />
       <Hero
         headline="The Intelligence Layer Beneath Healthcare"
-        subheadline="Kincaid IQ exposes hidden financial risk inside PBM contracts."
+        subheadline="Kincaid Health exposes hidden financial risk inside PBM contracts."
         badgeText="Contract X-Ray Demo"
         primaryCta="Get full access"
         secondaryCta="Sign in"
-        onPrimary={() => setLocation("/signup")}
-        onSecondary={() => setLocation("/login")}
+        onPrimary={() => setLocation("/auth?mode=register")}
+        onSecondary={() => setLocation("/auth")}
       />
       <CommandCenter />
     </main>

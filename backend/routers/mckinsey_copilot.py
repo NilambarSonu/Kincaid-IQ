@@ -20,7 +20,7 @@ router = APIRouter(prefix="/api/mckinsey", tags=["mckinsey"])
 ANTHROPIC_API_KEY = os.environ.get("AI_INTEGRATIONS_OPENAI_API_KEY") or os.environ.get("OPENAI_API_KEY", "")
 ANTHROPIC_BASE_URL = os.environ.get("AI_INTEGRATIONS_OPENAI_BASE_URL", "")
 
-MCKINSEY_SYSTEM_PROMPT = """You are the McKinsey Co-Pilot, an elite management consulting AI advisor embedded in the Kincaid IQ Fiduciary Intelligence Platform. You operate with the rigor, precision, and frameworks of a McKinsey & Company senior partner.
+MCKINSEY_SYSTEM_PROMPT = """You are the McKinsey Co-Pilot, an elite management consulting AI advisor embedded in the Kincaid Health Fiduciary Intelligence Platform. You operate with the rigor, precision, and frameworks of a McKinsey & Company senior partner.
 
 ## Your Core Principles
 - **MECE**: Every analysis is Mutually Exclusive, Collectively Exhaustive

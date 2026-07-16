@@ -22,11 +22,11 @@ function CustomTooltip({ active, payload, label }: TooltipProps) {
   const LABELS: Record<string, string> = { p90: "90th pct", p75: "75th pct", p50: "Median", p25: "25th pct", p10: "10th pct" };
   return (
     <div className="rounded-xl p-3 text-xs" style={{ background: "rgba(8,10,40,0.95)", border: "1px solid rgba(0,140,255,0.2)", minWidth: 200 }}>
-      <p className="font-bold text-white mb-2">{label}</p>
+      <p className="font-bold text-[var(--kiq-ink)] mb-2">{label}</p>
       {[...payload].reverse().map((p: any) => (
         <div key={p.dataKey} className="flex justify-between gap-4 mb-0.5">
           <span style={{ color: p.fill || p.stroke }}>{LABELS[p.dataKey] || p.dataKey}</span>
-          <span className="font-semibold text-white">{formatCurrency(p.value)}</span>
+          <span className="font-semibold text-[var(--kiq-ink)]">{formatCurrency(p.value)}</span>
         </div>
       ))}
     </div>
@@ -111,11 +111,11 @@ export default function MonteCarlo() {
                   </linearGradient>
                 ))}
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
               <XAxis dataKey="year" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fill: "rgba(130,150,200,0.4)", fontSize: 9 }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1e9).toFixed(0)}B`} width={36} />
               <Tooltip content={<CustomTooltip />} />
-              <ReferenceLine y={monteCarloParams.currentNetWorth} stroke="rgba(255,255,255,0.1)" strokeDasharray="4 4" label={{ value: "Today", fill: "rgba(150,170,210,0.4)", fontSize: 9 }} />
+              <ReferenceLine y={monteCarloParams.currentNetWorth} stroke="#e2e8f0" strokeDasharray="4 4" label={{ value: "Today", fill: "rgba(150,170,210,0.4)", fontSize: 9 }} />
               <Area type="monotone" dataKey="p90" stroke={PERCENTILE_COLORS.p90} strokeWidth={1.5} fill="url(#grad-p90)" dot={false} isAnimationActive={false} />
               <Area type="monotone" dataKey="p75" stroke={PERCENTILE_COLORS.p75} strokeWidth={1.5} fill="url(#grad-p75)" dot={false} isAnimationActive={false} />
               <Area type="monotone" dataKey="p50" stroke={PERCENTILE_COLORS.p50} strokeWidth={2.5} fill="url(#grad-p50)" dot={false} isAnimationActive={false} />
@@ -143,7 +143,7 @@ export default function MonteCarlo() {
                   <input type="range" min={min} max={max} step={unit === "M" ? 1 : 0.2} value={value}
                     onChange={(e) => set(parseFloat(e.target.value))}
                     className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
-                    style={{ background: `linear-gradient(to right, ${color} ${pct}%, rgba(255,255,255,0.08) ${pct}%)` }}
+                    style={{ background: `linear-gradient(to right, ${color} ${pct}%, #e2e8f0 ${pct}%)` }}
                     data-testid={`slider-mc-${label.toLowerCase().replace(/\s+/g, "-")}`}
                   />
                 </div>

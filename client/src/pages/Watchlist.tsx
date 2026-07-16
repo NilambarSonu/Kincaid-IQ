@@ -140,8 +140,8 @@ export default function Watchlist() {
                   onClick={() => setForm((f) => ({ ...f, ticker: s.ticker, display_name: s.display_name }))}
                   className="text-xs px-2.5 py-1 rounded-lg transition-all"
                   style={{
-                    background: form.ticker === s.ticker ? "rgba(0,168,255,0.15)" : "rgba(255,255,255,0.04)",
-                    border: `1px solid ${form.ticker === s.ticker ? "rgba(0,168,255,0.3)" : "rgba(255,255,255,0.07)"}`,
+                    background: form.ticker === s.ticker ? "rgba(0,168,255,0.15)" : "#ffffff",
+                    border: `1px solid ${form.ticker === s.ticker ? "rgba(0,168,255,0.3)" : "#e2e8f0"}`,
                     color: form.ticker === s.ticker ? "#00A8FF" : "rgba(150,170,210,0.7)",
                   }}
                   data-testid={`suggestion-${s.ticker}`}
@@ -166,7 +166,7 @@ export default function Watchlist() {
                   onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
                   placeholder={placeholder}
                   className="w-full text-sm px-3 py-2 rounded-lg"
-                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                  style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                   data-testid={`input-watchlist-${key}`}
                 />
               </div>
@@ -188,7 +188,7 @@ export default function Watchlist() {
       {isLoading ? (
         <div className="space-y-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-16 rounded-xl animate-pulse" style={{ background: "rgba(255,255,255,0.03)" }} />
+            <div key={i} className="h-16 rounded-xl animate-pulse" style={{ background: "#ffffff" }} />
           ))}
         </div>
       ) : watchlist.length === 0 ? (

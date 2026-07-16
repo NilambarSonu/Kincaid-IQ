@@ -28,20 +28,20 @@ import {
 
 // ── Theme ─────────────────────────────────────────────────────────────────────
 const T = {
-  bg:      "#04060f",
-  surface: "#080c1a",
-  s2:      "#0d1020",
-  border:  "#1a1f35",
-  gold:    "#FBB724",
-  goldDim: "rgba(251,183,36,0.15)",
-  goldBorder: "rgba(251,183,36,0.30)",
-  text:    "#ccd0e8",
-  muted:   "#5a6080",
-  green:   "#22c55e",
-  red:     "#ef4444",
-  blue:    "#3b82f6",
-  amber:   "#f59e0b",
-  purple:  "#a855f7",
+  bg:      "transparent",
+  surface: "rgba(255,255,255,0.78)",
+  s2:      "rgba(255,255,255,0.58)",
+  border:  "rgba(13,37,61,0.08)",
+  gold:    "#D97706",
+  goldDim: "rgba(217,119,6,0.08)",
+  goldBorder: "rgba(217,119,6,0.22)",
+  text:    "#0F172A",
+  muted:   "#64748B",
+  green:   "#16a34a",
+  red:     "#dc2626",
+  blue:    "#2563eb",
+  amber:   "#d97706",
+  purple:  "#9333ea",
 };
 
 // ── Shared confidence-factor state (persists across header widget + module) ───
@@ -319,7 +319,7 @@ function ScoreBadge({ score, tier, size = "sm" }: { score?: number; tier?: strin
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
       <div style={{
         width: px * 2, height: px * 2, borderRadius: "50%",
-        background: `conic-gradient(${color} ${score * 3.6}deg, rgba(255,255,255,0.06) 0deg)`,
+        background: `conic-gradient(${color} ${score * 3.6}deg, rgba(15,23,42,0.03) 0deg)`,
         display: "flex", alignItems: "center", justifyContent: "center",
         boxShadow: `0 0 ${size === "lg" ? 12 : 6}px ${color}30`,
       }}>
@@ -381,7 +381,7 @@ function FactorBar({ label, score, weight, rationale, expanded }: {
         <span style={{ fontSize: 9, color: T.muted, flexShrink: 0 }}>{fmtWeight(weight)} weight</span>
         <span style={{ fontSize: 12, fontWeight: 800, color, width: 28, textAlign: "right", flexShrink: 0 }}>{score}</span>
       </div>
-      <div style={{ height: 6, borderRadius: 3, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+      <div style={{ height: 6, borderRadius: 3, background: "rgba(15,23,42,0.03)", overflow: "hidden" }}>
         <div style={{ height: "100%", width: `${score}%`, background: color,
           borderRadius: 3, transition: "width 0.6s ease" }} />
       </div>
@@ -522,7 +522,7 @@ function UploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
         onDrop={e => { e.preventDefault(); setDragging(false); handleFiles(e.dataTransfer.files); }}
         onClick={() => !loading && fileRef.current?.click()}
         style={{
-          border: `2px dashed ${dragging ? T.gold : "rgba(255,255,255,0.12)"}`,
+          border: `2px dashed ${dragging ? T.gold : "rgba(15,23,42,0.06)"}`,
           borderRadius: 12, padding: "32px 24px", textAlign: "center",
           cursor: loading ? "not-allowed" : "pointer", transition: "all 0.2s",
           background: dragging ? T.goldDim : "rgba(255,255,255,0.015)",
@@ -639,13 +639,13 @@ function MiniGauge({ label, value, testKey }: { label: string; value: number | n
   const color = pctColor(value);
   return (
     <div data-testid={`benchmark-gauge-${testKey}`}
-      style={{ flex: 1, padding: "10px 12px", background: "rgba(255,255,255,0.03)",
-        border: `1px solid rgba(255,255,255,0.07)`, borderRadius: 8, minWidth: 0 }}>
+      style={{ flex: 1, padding: "10px 12px", background: "rgba(15,23,42,0.03)",
+        border: `1px solid rgba(15,23,42,0.03)`, borderRadius: 8, minWidth: 0 }}>
       <div style={{ fontSize: 9, color: T.muted, textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 4 }}>{label}</div>
       <div style={{ fontSize: 22, fontWeight: 900, color, lineHeight: 1 }}>
         {value}<span style={{ fontSize: 11, fontWeight: 600 }}>th</span>
       </div>
-      <div style={{ marginTop: 5, height: 3, background: "rgba(255,255,255,0.07)", borderRadius: 2 }}>
+      <div style={{ marginTop: 5, height: 3, background: "rgba(15,23,42,0.03)", borderRadius: 2 }}>
         <div style={{ height: "100%", width: `${value}%`, background: color, borderRadius: 2 }} />
       </div>
       <div style={{ fontSize: 9, color, marginTop: 3, fontWeight: 600 }}>{pctLabel(value)}</div>
@@ -832,9 +832,9 @@ function BenchmarkPanel({ opp, onEinSaved }: { opp: Opportunity; onEinSaved: (ei
           {bench?.matched && bench.employer && (
             <>
               {/* Employer summary */}
-              <div style={{ padding: "8px 10px", background: "rgba(255,255,255,0.03)",
-                border: "1px solid rgba(255,255,255,0.07)", borderRadius: 7, marginBottom: 10 }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: "#fff", marginBottom: 2 }}>
+              <div style={{ padding: "8px 10px", background: "rgba(15,23,42,0.03)",
+                border: "1px solid rgba(15,23,42,0.03)", borderRadius: 7, marginBottom: 10 }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: "#0F172A", marginBottom: 2 }}>
                   {bench.employer.name}
                 </div>
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap", fontSize: 10, color: T.muted }}>
@@ -850,15 +850,15 @@ function BenchmarkPanel({ opp, onEinSaved }: { opp: Opportunity; onEinSaved: (ei
               {/* PMPM row */}
               {(bench.employerPmpm != null || bench.natPmpm != null) && (
                 <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-                  <div style={{ flex: 1, padding: "8px 10px", background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.07)", borderRadius: 7 }}>
+                  <div style={{ flex: 1, padding: "8px 10px", background: "rgba(15,23,42,0.03)",
+                    border: "1px solid rgba(15,23,42,0.03)", borderRadius: 7 }}>
                     <div style={{ fontSize: 9, color: T.muted, textTransform: "uppercase", letterSpacing: "0.1em" }}>Employer PMPM</div>
                     <div style={{ fontSize: 18, fontWeight: 900, color: T.text }}>
                       {bench.employerPmpm != null ? `$${bench.employerPmpm}` : "—"}
                     </div>
                   </div>
-                  <div style={{ flex: 1, padding: "8px 10px", background: "rgba(255,255,255,0.03)",
-                    border: "1px solid rgba(255,255,255,0.07)", borderRadius: 7 }}>
+                  <div style={{ flex: 1, padding: "8px 10px", background: "rgba(15,23,42,0.03)",
+                    border: "1px solid rgba(15,23,42,0.03)", borderRadius: 7 }}>
                     <div style={{ fontSize: 9, color: T.muted, textTransform: "uppercase", letterSpacing: "0.1em" }}>Industry Avg PMPM</div>
                     <div style={{ fontSize: 18, fontWeight: 900, color: T.muted }}>
                       {bench.natPmpm != null ? `$${bench.natPmpm}` : "—"}
@@ -884,7 +884,7 @@ function BenchmarkPanel({ opp, onEinSaved }: { opp: Opportunity; onEinSaved: (ei
                   { label: "Welfare Premiums", value: bench.employer.totalWelfarePremiums },
                 ].map(({ label, value }) => (
                   <div key={label} style={{ padding: "6px 8px", background: "rgba(255,255,255,0.02)",
-                    border: "1px solid rgba(255,255,255,0.06)", borderRadius: 6 }}>
+                    border: "1px solid rgba(15,23,42,0.03)", borderRadius: 6 }}>
                     <div style={{ fontSize: 8, color: T.muted, textTransform: "uppercase", letterSpacing: "0.1em" }}>{label}</div>
                     <div style={{ fontSize: 13, fontWeight: 700, color: T.text }}>{fmt$(value)}</div>
                   </div>
@@ -933,7 +933,7 @@ function BenchmarkPanel({ opp, onEinSaved }: { opp: Opportunity; onEinSaved: (ei
                         data-testid={`talking-point-${i}`}
                         style={{ display: "flex", gap: 8, alignItems: "flex-start",
                           padding: "8px 10px", background: "rgba(255,255,255,0.025)",
-                          border: "1px solid rgba(255,255,255,0.07)", borderRadius: 7 }}>
+                          border: "1px solid rgba(15,23,42,0.03)", borderRadius: 7 }}>
                         <span style={{ fontSize: 9, fontWeight: 800, color: T.gold,
                           background: T.goldDim, border: `1px solid ${T.goldBorder}`,
                           borderRadius: 3, padding: "1px 5px", flexShrink: 0, marginTop: 1 }}>
@@ -1028,7 +1028,7 @@ function DetailPanel({ opp, onClose, onRefresh }: {
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 6 }}>
               <SourceIcon source={opp.source} />
-              <span style={{ fontSize: 14, fontWeight: 700, color: "#fff", flex: 1 }}>{name}</span>
+              <span style={{ fontSize: 14, fontWeight: 700, color: "#0F172A", flex: 1 }}>{name}</span>
               <StagePill stage={opp.stage} />
               {hasScore && <TierBadge tier={opp.score_tier} />}
             </div>
@@ -1385,7 +1385,7 @@ function EmailIntakeSetup() {
       <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 14 }}>
         <Mail size={18} style={{ color: T.gold }} />
         <div>
-          <p style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 2 }}>Email Intake Setup</p>
+          <p style={{ fontSize: 14, fontWeight: 700, color: "#0F172A", marginBottom: 2 }}>Email Intake Setup</p>
           <p style={{ fontSize: 11, color: T.muted }}>Forward RFP emails directly into the platform for auto-parsing.</p>
         </div>
       </div>
@@ -1785,7 +1785,7 @@ function ScoringView() {
                       {/* Info */}
                       <div style={{ flex: 1, minWidth: 0 }} onClick={() => setSelectedId(isSelected ? null : opp.id)}>
                         <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 4 }}>
-                          <span style={{ fontSize: 13, fontWeight: 700, color: "#fff", flex: 1, minWidth: 0,
+                          <span style={{ fontSize: 13, fontWeight: 700, color: "#0F172A", flex: 1, minWidth: 0,
                             overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{name}</span>
                           <TierBadge tier={opp.score_tier} />
                         </div>
@@ -1961,7 +1961,7 @@ function AccuracyPanel({
       color: mapeColor, sub: `over ${accuracy.count} closed`, testid: "accuracy-mape" },
     { label: "Actual win rate",
       value: accuracy.win_rate_actual != null ? `${(accuracy.win_rate_actual * 100).toFixed(0)}%` : "—",
-      color: "#fff", sub: "deals won ÷ closed", testid: "accuracy-win-actual" },
+      color: "#0F172A", sub: "deals won ÷ closed", testid: "accuracy-win-actual" },
     { label: "Predicted win rate",
       value: accuracy.win_rate_predicted != null ? `${(accuracy.win_rate_predicted * 100).toFixed(0)}%` : "—",
       color: T.blue, sub: "model avg (base)", testid: "accuracy-win-predicted" },
@@ -2044,7 +2044,7 @@ function AccuracyPanel({
           </thead>
           <tbody>
             {accuracy.records.slice(0, 8).map(r => (
-              <tr key={r.id} style={{ borderBottom: `1px solid rgba(255,255,255,0.04)` }}
+              <tr key={r.id} style={{ borderBottom: `1px solid rgba(15,23,42,0.03)` }}
                 data-testid={`accuracy-row-${r.opportunity_id}`}>
                 <td style={{ padding: "8px 10px", color: T.text, maxWidth: 220 }}>
                   <div style={{ fontSize: 11, fontWeight: 600, overflow: "hidden",
@@ -2123,7 +2123,7 @@ function PipelineForecastWidget() {
           letterSpacing: "0.1em", color: T.gold, textTransform: "uppercase" }}>
           <Activity size={11} /> Pipeline Forecast
         </span>
-        <span data-testid="text-forecast-p50" style={{ fontSize: 18, fontWeight: 800, color: "#fff", lineHeight: 1.1 }}>
+        <span data-testid="text-forecast-p50" style={{ fontSize: 18, fontWeight: 800, color: "#0F172A", lineHeight: 1.1 }}>
           {forecast ? fmt$(forecast.p50) : "—"}
         </span>
         <span style={{ fontSize: 8.5, color: T.muted, fontWeight: 500 }}>P50 median · open pipeline</span>
@@ -2257,7 +2257,7 @@ function CommandCenterView() {
           <BarChart3 size={32} style={{ color: T.gold }} />
         </div>
         <div>
-          <p style={{ fontSize: 18, fontWeight: 800, color: "#fff", marginBottom: 6 }}>
+          <p style={{ fontSize: 18, fontWeight: 800, color: "#0F172A", marginBottom: 6 }}>
             No open opportunities in pipeline
           </p>
           <p style={{ fontSize: 13, color: T.muted, maxWidth: 400, lineHeight: 1.6 }}>
@@ -2314,7 +2314,7 @@ function CommandCenterView() {
             <div>
               <p style={{ fontSize: 9, fontWeight: 700, color: T.muted, textTransform: "uppercase",
                 letterSpacing: "0.12em", marginBottom: 3 }}>Simulation Results</p>
-              <p style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>
+              <p style={{ fontSize: 14, fontWeight: 800, color: "#0F172A" }}>
                 Revenue Distribution — 10,000 Simulations
               </p>
             </div>
@@ -2341,7 +2341,7 @@ function CommandCenterView() {
             <div style={{ flex: 1, minHeight: 180 }}>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={simResult.histogram} margin={{ top: 4, right: 4, left: 0, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(15,23,42,0.03)" vertical={false} />
                   <XAxis dataKey="label" tick={{ fill: "rgba(130,150,200,0.45)", fontSize: 9 }}
                     axisLine={false} tickLine={false} interval={3} />
                   <YAxis hide />
@@ -2352,7 +2352,7 @@ function CommandCenterView() {
                       return (
                         <div style={{ background: "rgba(8,10,40,0.96)", border: "1px solid rgba(0,140,255,0.2)",
                           borderRadius: 8, padding: "8px 12px", fontSize: 11 }}>
-                          <p style={{ color: "#fff", fontWeight: 700 }}>{d.label}</p>
+                          <p style={{ color: "#0F172A", fontWeight: 700 }}>{d.label}</p>
                           <p style={{ color: T.muted }}>{d.count.toLocaleString()} simulations</p>
                           <p style={{ color: T.gold }}>{((d.count / 10000) * 100).toFixed(1)}% of runs</p>
                         </div>
@@ -2398,7 +2398,7 @@ function CommandCenterView() {
                   { label: "P50", value: fmt$(simResult.p50), color: T.gold },
                   { label: "P75", value: fmt$(simResult.p75), color: T.blue },
                   { label: "P90", value: fmt$(simResult.p90), color: T.green },
-                  { label: "Mean", value: fmt$(simResult.mean), color: "#fff" },
+                  { label: "Mean", value: fmt$(simResult.mean), color: "#0F172A" },
                 ].map(p => (
                   <div key={p.label} style={{ display: "flex", gap: 5, alignItems: "center" }}>
                     <div style={{ width: 8, height: 8, borderRadius: 2, background: p.color }} />
@@ -2445,7 +2445,7 @@ function CommandCenterView() {
                 onChange={e => { applyFactor(parseFloat(e.target.value)); }}
                 data-testid="mc-confidence-slider"
                 style={{ width: "100%", appearance: "none", height: 4, borderRadius: 4,
-                  background: `linear-gradient(to right, ${T.gold} ${((confidenceFactor - 0.25) / 1.75) * 100}%, rgba(255,255,255,0.08) ${((confidenceFactor - 0.25) / 1.75) * 100}%)`,
+                  background: `linear-gradient(to right, ${T.gold} ${((confidenceFactor - 0.25) / 1.75) * 100}%, rgba(15,23,42,0.03) ${((confidenceFactor - 0.25) / 1.75) * 100}%)`,
                   cursor: "pointer" }}
                 onMouseUp={e => runSimWithFactor(parseFloat((e.target as HTMLInputElement).value))}
                 onTouchEnd={e => runSimWithFactor(parseFloat((e.target as HTMLInputElement).value))}
@@ -2476,7 +2476,7 @@ function CommandCenterView() {
                   onChange={e => setRevenueTarget(Math.max(0, Number(e.target.value) || 0))}
                   data-testid="mc-target-input"
                   style={{ width: "100%", padding: "8px 10px 8px 22px", borderRadius: 7,
-                    fontSize: 13, fontWeight: 700, color: "#fff", background: T.s2,
+                    fontSize: 13, fontWeight: 700, color: "#0F172A", background: T.s2,
                     border: `1px solid ${T.border}`, outline: "none",
                     fontVariantNumeric: "tabular-nums" }}
                 />
@@ -2538,7 +2538,7 @@ function CommandCenterView() {
                 <span style={{ fontSize: 11, fontWeight: 700, color: T.red,
                   fontVariantNumeric: "tabular-nums" }}>{fmt$(simResult.p10)}</span>
                 <div style={{ flex: 1, height: 4, borderRadius: 2, overflow: "hidden",
-                  background: "rgba(255,255,255,0.06)" }}>
+                  background: "rgba(15,23,42,0.03)" }}>
                   <div style={{ height: "100%", borderRadius: 2,
                     background: `linear-gradient(to right, ${T.red}, ${T.gold}, ${T.green})` }} />
                 </div>
@@ -2595,7 +2595,7 @@ function CommandCenterView() {
                   const ev = pWin * rev;
                   const stageC = STAGE_CFG[opp.stage] ?? { color: T.muted };
                   return (
-                    <tr key={opp.id} style={{ borderBottom: `1px solid rgba(255,255,255,0.04)` }}
+                    <tr key={opp.id} style={{ borderBottom: `1px solid rgba(15,23,42,0.03)` }}
                       data-testid={`mc-opp-row-${opp.id}`}>
                       <td style={{ padding: "8px 10px", color: T.text, maxWidth: 200 }}>
                         <div style={{ fontSize: 11, fontWeight: 600, overflow: "hidden",
@@ -3032,7 +3032,7 @@ function ProposalCopilotView() {
           padding: 24, width: 580, maxHeight: "85vh", overflow: "auto" }}
           onClick={e => e.stopPropagation()}>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 20 }}>
-            <h3 style={{ fontSize: 14, fontWeight: 800, color: "#fff", margin: 0 }}>
+            <h3 style={{ fontSize: 14, fontWeight: 800, color: "#0F172A", margin: 0 }}>
               {item ? "Edit Library Section" : "Add Library Section"}
             </h3>
             <button onClick={onCancel} style={{ background: "none", border: "none", cursor: "pointer", color: T.muted }}>
@@ -3046,7 +3046,7 @@ function ProposalCopilotView() {
               <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
                 placeholder="e.g. Fiduciary Value Proposition"
                 style={{ width: "100%", padding: "8px 10px", background: T.s2, border: `1px solid ${T.border}`,
-                  borderRadius: 6, color: "#fff", fontSize: 13, boxSizing: "border-box" }} />
+                  borderRadius: 6, color: "#0F172A", fontSize: 13, boxSizing: "border-box" }} />
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -3054,7 +3054,7 @@ function ProposalCopilotView() {
                 <label style={{ fontSize: 11, color: T.muted, fontWeight: 600, display: "block", marginBottom: 4 }}>Section Type</label>
                 <select value={form.section_type} onChange={e => setForm(f => ({ ...f, section_type: e.target.value }))}
                   style={{ width: "100%", padding: "8px 10px", background: T.s2, border: `1px solid ${T.border}`,
-                    borderRadius: 6, color: "#fff", fontSize: 12 }}>
+                    borderRadius: 6, color: "#0F172A", fontSize: 12 }}>
                   {Object.entries(SECTION_TYPE_LABELS).map(([v, l]) => (
                     <option key={v} value={v}>{l}</option>
                   ))}
@@ -3065,7 +3065,7 @@ function ProposalCopilotView() {
                 <input value={form.tags} onChange={e => setForm(f => ({ ...f, tags: e.target.value }))}
                   placeholder="e.g. self-funded, pharma, midwest"
                   style={{ width: "100%", padding: "8px 10px", background: T.s2, border: `1px solid ${T.border}`,
-                    borderRadius: 6, color: "#fff", fontSize: 12 }} />
+                    borderRadius: 6, color: "#0F172A", fontSize: 12 }} />
               </div>
             </div>
 
@@ -3074,7 +3074,7 @@ function ProposalCopilotView() {
               <textarea value={form.content} onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
                 rows={8} placeholder="Paste the reusable section content here..."
                 style={{ width: "100%", padding: "8px 10px", background: T.s2, border: `1px solid ${T.border}`,
-                  borderRadius: 6, color: "#fff", fontSize: 12, resize: "vertical", boxSizing: "border-box", lineHeight: 1.5 }} />
+                  borderRadius: 6, color: "#0F172A", fontSize: 12, resize: "vertical", boxSizing: "border-box", lineHeight: 1.5 }} />
             </div>
 
             <div>
@@ -3082,7 +3082,7 @@ function ProposalCopilotView() {
               <input value={form.win_context} onChange={e => setForm(f => ({ ...f, win_context: e.target.value }))}
                 placeholder="e.g. Used in Acme Manufacturing win (500 lives, self-funded)"
                 style={{ width: "100%", padding: "8px 10px", background: T.s2, border: `1px solid ${T.border}`,
-                  borderRadius: 6, color: "#fff", fontSize: 12 }} />
+                  borderRadius: 6, color: "#0F172A", fontSize: 12 }} />
             </div>
 
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -3090,7 +3090,7 @@ function ProposalCopilotView() {
                 style={{ width: 16, height: 16, borderRadius: 3, border: `1.5px solid ${form.is_winning ? T.green : T.border}`,
                   background: form.is_winning ? T.green : "transparent", cursor: "pointer",
                   display: "flex", alignItems: "center", justifyContent: "center" }}>
-                {form.is_winning && <Check size={10} style={{ color: "#fff" }} />}
+                {form.is_winning && <Check size={10} style={{ color: "#0F172A" }} />}
               </button>
               <span style={{ fontSize: 12, color: T.text }}>From a winning proposal (prioritized in AI retrieval)</span>
             </div>
@@ -3145,7 +3145,7 @@ function ProposalCopilotView() {
           <div style={{ flex: 1, overflowY: "auto", padding: "14px 12px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
               <div>
-                <p style={{ fontSize: 13, fontWeight: 700, color: "#fff", margin: 0 }}>Proposal Library</p>
+                <p style={{ fontSize: 13, fontWeight: 700, color: "#0F172A", margin: 0 }}>Proposal Library</p>
                 <p style={{ fontSize: 10, color: T.muted, margin: 0 }}>{library.length} sections · reused in AI drafts</p>
               </div>
               <button
@@ -3188,7 +3188,7 @@ function ProposalCopilotView() {
                               {item.is_winning && (
                                 <Trophy size={9} style={{ color: T.green, flexShrink: 0 }} />
                               )}
-                              <span style={{ fontSize: 12, fontWeight: 600, color: "#fff", overflow: "hidden",
+                              <span style={{ fontSize: 12, fontWeight: 600, color: "#0F172A", overflow: "hidden",
                                 textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.title}</span>
                             </div>
                             {item.win_context && (
@@ -3232,7 +3232,7 @@ function ProposalCopilotView() {
         ) : (
           /* Drafts panel */
           <div style={{ flex: 1, overflowY: "auto", padding: "14px 12px" }}>
-            <p style={{ fontSize: 13, fontWeight: 700, color: "#fff", margin: "0 0 4px" }}>Select Opportunity</p>
+            <p style={{ fontSize: 13, fontWeight: 700, color: "#0F172A", margin: "0 0 4px" }}>Select Opportunity</p>
             <p style={{ fontSize: 10, color: T.muted, margin: "0 0 12px" }}>Generate proposal drafts for your RFPs</p>
 
             {oppsLoading ? (
@@ -3353,19 +3353,19 @@ function ProposalCopilotView() {
               <div style={{ padding: "14px 18px", background: T.s2, borderRadius: 10, border: `1px solid ${T.border}`,
                 textAlign: "center", width: 130 }}>
                 <BookOpen size={18} style={{ color: T.gold, marginBottom: 6 }} />
-                <p style={{ fontSize: 11, fontWeight: 700, color: "#fff", margin: 0 }}>Content Library</p>
+                <p style={{ fontSize: 11, fontWeight: 700, color: "#0F172A", margin: 0 }}>Content Library</p>
                 <p style={{ fontSize: 10, color: T.muted, margin: "3px 0 0" }}>Past wins · approved sections</p>
               </div>
               <div style={{ padding: "14px 18px", background: T.s2, borderRadius: 10, border: `1px solid ${T.border}`,
                 textAlign: "center", width: 130 }}>
                 <TrendingUp size={18} style={{ color: T.purple, marginBottom: 6 }} />
-                <p style={{ fontSize: 11, fontWeight: 700, color: "#fff", margin: 0 }}>Win/Loss Lessons</p>
+                <p style={{ fontSize: 11, fontWeight: 700, color: "#0F172A", margin: 0 }}>Win/Loss Lessons</p>
                 <p style={{ fontSize: 10, color: T.muted, margin: "3px 0 0" }}>Adaptive to outcomes</p>
               </div>
               <div style={{ padding: "14px 18px", background: T.s2, borderRadius: 10, border: `1px solid ${T.border}`,
                 textAlign: "center", width: 130 }}>
                 <Sparkles size={18} style={{ color: T.blue, marginBottom: 6 }} />
-                <p style={{ fontSize: 11, fontWeight: 700, color: "#fff", margin: 0 }}>AI Co-pilot</p>
+                <p style={{ fontSize: 11, fontWeight: 700, color: "#0F172A", margin: 0 }}>AI Co-pilot</p>
                 <p style={{ fontSize: 10, color: T.muted, margin: "3px 0 0" }}>Sections with citations</p>
               </div>
             </div>
@@ -3395,7 +3395,7 @@ function ProposalCopilotView() {
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 2 }}>
-                    <span style={{ fontSize: 14, fontWeight: 800, color: "#fff" }}>
+                    <span style={{ fontSize: 14, fontWeight: 800, color: "#0F172A" }}>
                       {selectedOpp?.employer_name || "Proposal Draft"}
                     </span>
                     <span style={{ fontSize: 10, fontWeight: 700, color: T.gold,
@@ -3494,7 +3494,7 @@ function ProposalCopilotView() {
                             borderRadius: 3, padding: "2px 6px", flexShrink: 0 }}>
                             {SECTION_TYPE_LABELS[section.section_type] || section.section_type}
                           </span>
-                          <span style={{ fontSize: 13, fontWeight: 700, color: "#fff", flex: 1 }}>
+                          <span style={{ fontSize: 13, fontWeight: 700, color: "#0F172A", flex: 1 }}>
                             {section.title}
                           </span>
                           {/* Confidence badge */}
@@ -3557,7 +3557,7 @@ function ProposalCopilotView() {
                               onChange={e => setRegenGuidance(e.target.value)}
                               placeholder="Optional guidance for regeneration (e.g. 'focus on stop-loss capability', 'shorten to 1 paragraph')"
                               style={{ flex: 1, padding: "5px 8px", background: T.bg, border: `1px solid ${T.border}`,
-                                borderRadius: 5, color: "#fff", fontSize: 11 }}
+                                borderRadius: 5, color: "#0F172A", fontSize: 11 }}
                             />
                             <button
                               onClick={() => regenSection.mutate({ draftId: activeDraft.id, section_type: section.section_type, guidance: regenGuidance })}
@@ -3580,14 +3580,14 @@ function ProposalCopilotView() {
                               rows={Math.max(6, currentContent.split("\n").length + 2)}
                               style={{ width: "100%", padding: "8px 10px", background: T.bg,
                                 border: `1px solid ${T.gold}60`, borderRadius: 6,
-                                color: "#fff", fontSize: 12, resize: "vertical",
+                                color: "#0F172A", fontSize: 12, resize: "vertical",
                                 lineHeight: 1.7, boxSizing: "border-box" }}
                             />
                           ) : (
                             <div style={{ fontSize: 13, color: T.text, lineHeight: 1.75, whiteSpace: "pre-wrap" }}>
                               {section.content.split(/(\*\*.*?\*\*)/).map((part, i) =>
                                 part.startsWith("**") && part.endsWith("**")
-                                  ? <strong key={i} style={{ color: "#fff" }}>{part.slice(2, -2)}</strong>
+                                  ? <strong key={i} style={{ color: "#0F172A" }}>{part.slice(2, -2)}</strong>
                                   : part
                               )}
                             </div>
@@ -3820,7 +3820,7 @@ function OutcomeFormModal({
         border: `1px solid ${T.border}`, borderRadius: 16, padding: 24 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
           <TrendingUp size={16} style={{ color: T.gold }} />
-          <h2 style={{ fontSize: 15, fontWeight: 800, color: "#fff", margin: 0 }}>Record Outcome</h2>
+          <h2 style={{ fontSize: 15, fontWeight: 800, color: "#0F172A", margin: 0 }}>Record Outcome</h2>
           <span style={{ fontSize: 11, color: T.muted, marginLeft: 4 }}>
             {opp.employer_name || "Unknown"}
           </span>
@@ -3861,7 +3861,7 @@ function OutcomeFormModal({
             <div style={{ flex: 1 }}>
               <p style={{ fontSize: 9, fontWeight: 700, color: T.gold, textTransform: "uppercase",
                 letterSpacing: "0.1em", marginBottom: 3 }}>Bid Optimizer Recommended Range</p>
-              <p style={{ fontSize: 13, fontWeight: 800, color: "#fff", fontVariantNumeric: "tabular-nums" }}>
+              <p style={{ fontSize: 13, fontWeight: 800, color: "#0F172A", fontVariantNumeric: "tabular-nums" }}>
                 {fmt$(bidRec.range_lo)} – {fmt$(bidRec.range_hi)}
                 <span style={{ fontSize: 10, fontWeight: 500, color: T.muted, marginLeft: 8 }}>
                   ({bidRec.range_lo_factor}%–{bidRec.range_hi_factor}% of baseline)
@@ -3934,7 +3934,7 @@ function OutcomeFormModal({
                     background: form[key] ? T.red : "transparent",
                     border: `1.5px solid ${form[key] ? T.red : T.muted}`,
                     display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    {form[key] && <Check size={8} style={{ color: "#fff" }} />}
+                    {form[key] && <Check size={8} style={{ color: "#0F172A" }} />}
                   </div>
                   {label}
                 </button>
@@ -3980,7 +3980,7 @@ function OutcomeFormModal({
                 background: form.enroll_monitoring ? T.green : "transparent",
                 border: `1.5px solid ${form.enroll_monitoring ? T.green : T.muted}`,
                 display: "flex", alignItems: "center", justifyContent: "center" }}>
-                {form.enroll_monitoring && <Check size={8} style={{ color: "#fff" }} />}
+                {form.enroll_monitoring && <Check size={8} style={{ color: "#0F172A" }} />}
               </div>
               Enroll account in monitoring workflow (re-engage at next renewal)
             </button>
@@ -4464,7 +4464,7 @@ function WinLossView() {
                   <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
                     <span style={{ fontSize: 11, fontWeight: 600, color: T.text, flex: 1 }}>{c.competitor}</span>
                     <span style={{ fontSize: 10, color: T.red }}>{c.our_losses} loss{c.our_losses !== 1 ? "es" : ""}</span>
-                    <div style={{ width: 60, height: 6, borderRadius: 3, background: "rgba(255,255,255,0.06)" }}>
+                    <div style={{ width: 60, height: 6, borderRadius: 3, background: "rgba(15,23,42,0.03)" }}>
                       <div style={{ height: "100%", borderRadius: 3, background: T.red,
                         width: `${Math.min(100, c.our_losses / Math.max(...analytics.by_competitor.map(x => x.our_losses)) * 100)}%` }} />
                     </div>
@@ -4482,7 +4482,7 @@ function WinLossView() {
                   <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
                     <span style={{ fontSize: 11, fontWeight: 600, color: T.text, flex: 1 }}>{r.reason}</span>
                     <span style={{ fontSize: 10, color: T.amber }}>{r.count}</span>
-                    <div style={{ width: 60, height: 6, borderRadius: 3, background: "rgba(255,255,255,0.06)" }}>
+                    <div style={{ width: 60, height: 6, borderRadius: 3, background: "rgba(15,23,42,0.03)" }}>
                       <div style={{ height: "100%", borderRadius: 3, background: T.amber,
                         width: `${Math.min(100, r.count / Math.max(...analytics.by_reason.map(x => x.count)) * 100)}%` }} />
                     </div>
@@ -4503,7 +4503,7 @@ function WinLossView() {
                       </span>
                       <span style={{ fontSize: 9, color: T.muted }}>({r.total})</span>
                     </div>
-                    <div style={{ height: 5, borderRadius: 3, background: "rgba(255,255,255,0.06)" }}>
+                    <div style={{ height: 5, borderRadius: 3, background: "rgba(15,23,42,0.03)" }}>
                       <div style={{ height: "100%", borderRadius: 3, background: scoreColor(r.win_rate),
                         width: `${r.win_rate}%` }} />
                     </div>
@@ -4524,7 +4524,7 @@ function WinLossView() {
                       </span>
                       <span style={{ fontSize: 9, color: T.muted }}>({r.total})</span>
                     </div>
-                    <div style={{ height: 5, borderRadius: 3, background: "rgba(255,255,255,0.06)" }}>
+                    <div style={{ height: 5, borderRadius: 3, background: "rgba(15,23,42,0.03)" }}>
                       <div style={{ height: "100%", borderRadius: 3, background: scoreColor(r.win_rate),
                         width: `${r.win_rate}%` }} />
                     </div>
@@ -4573,7 +4573,7 @@ function WinLossView() {
                     const confColor = conf === "CERTIFIED" ? T.green
                       : conf === "MODELED" ? T.amber : T.muted;
                     const confBg = conf === "CERTIFIED" ? "rgba(52,211,153,0.12)"
-                      : conf === "MODELED" ? "rgba(251,183,36,0.12)" : "rgba(255,255,255,0.05)";
+                      : conf === "MODELED" ? "rgba(251,183,36,0.12)" : "rgba(15,23,42,0.03)";
                     const insufficient = conf === "INSUFFICIENT_EVIDENCE";
                     return (
                       <div key={i} data-testid={`insight-card-${i}`}
@@ -4670,7 +4670,7 @@ function WinLossView() {
                         {fmtWeight(weight)}
                       </span>
                     </div>
-                    <div style={{ height: 6, borderRadius: 3, background: "rgba(255,255,255,0.06)", position: "relative" }}>
+                    <div style={{ height: 6, borderRadius: 3, background: "rgba(15,23,42,0.03)", position: "relative" }}>
                       {/* Default ghost bar */}
                       <div style={{ position: "absolute", height: "100%", borderRadius: 3,
                         background: "rgba(251,183,36,0.15)", width: `${defaultW * 400}%` }} />
@@ -4739,7 +4739,7 @@ function WinLossView() {
                     data-testid="input-recalibrate-threshold"
                     disabled={setThresholdMut.isPending}
                     style={{ width: 80, padding: "7px 9px", borderRadius: 7, fontSize: 12,
-                      background: T.s1, border: `1px solid ${T.border}`, color: T.text }}
+                      background: T.s2, border: `1px solid ${T.border}`, color: T.text }}
                   />
                   <span style={{ fontSize: 10, color: T.muted, flex: 1 }}>decided outcomes</span>
                   <button
@@ -5018,7 +5018,7 @@ function SendBidModal({ employer, onClose, onSend }: {
         border: `1px solid ${T.border}`, borderRadius: 16, padding: 24 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
           <Mail size={16} style={{ color: T.gold }} />
-          <h2 style={{ fontSize: 15, fontWeight: 800, color: "#fff", margin: 0 }}>Send Bid Recommendation</h2>
+          <h2 style={{ fontSize: 15, fontWeight: 800, color: "#0F172A", margin: 0 }}>Send Bid Recommendation</h2>
           <button onClick={onClose} data-testid="send-bid-close" style={{ marginLeft: "auto", background: "none",
             border: "none", cursor: "pointer", color: T.muted, padding: 4 }}>
             <X size={14} />
@@ -5238,7 +5238,7 @@ function BidOptimizerView() {
       let chartImage: BidRecommendationChartImage | null = null;
       if (chartRef.current) {
         const canvas = await html2canvas(chartRef.current, {
-          backgroundColor: "#080c1a", scale: 2, useCORS: true, logging: false,
+          backgroundColor: "#0F172A", scale: 2, useCORS: true, logging: false,
         });
         chartImage = {
           dataUrl: canvas.toDataURL("image/png"),
@@ -5261,7 +5261,7 @@ function BidOptimizerView() {
     let chartImage: BidRecommendationChartImage | null = null;
     if (chartRef.current) {
       const canvas = await html2canvas(chartRef.current, {
-        backgroundColor: "#080c1a", scale: 2, useCORS: true, logging: false,
+        backgroundColor: "#0F172A", scale: 2, useCORS: true, logging: false,
       });
       chartImage = {
         dataUrl: canvas.toDataURL("image/png"),
@@ -5303,7 +5303,7 @@ function BidOptimizerView() {
     if (!d) return null;
     const isRec = d.price_abs >= (view?.range_lo ?? 0) && d.price_abs <= (view?.range_hi ?? 0);
     return (
-      <div style={{ background: "rgba(4,6,15,0.97)", border: `1px solid ${isRec ? T.gold : T.border}`,
+      <div style={{ background: "rgba(248,250,252,0.97)", border: `1px solid ${isRec ? T.gold : T.border}`,
         borderRadius: 10, padding: "10px 14px", fontSize: 11, minWidth: 170 }}>
         <p style={{ fontWeight: 800, color: isRec ? T.gold : "#fff", marginBottom: 4 }}>
           {label} of baseline
@@ -5336,7 +5336,7 @@ function BidOptimizerView() {
           <Sigma size={28} style={{ color: T.gold }} />
         </div>
         <div>
-          <p style={{ fontSize: 18, fontWeight: 800, color: "#fff", marginBottom: 6 }}>No Scored Opportunities</p>
+          <p style={{ fontSize: 18, fontWeight: 800, color: "#0F172A", marginBottom: 6 }}>No Scored Opportunities</p>
           <p style={{ fontSize: 12, color: T.muted, maxWidth: 380, lineHeight: 1.6 }}>
             Upload an RFP in the Intake tab and score it. The Bid Optimizer needs at least one
             scored opportunity to generate a bid recommendation.
@@ -5360,7 +5360,7 @@ function BidOptimizerView() {
           onChange={e => setSelectedId(e.target.value)}
           data-testid="bid-opp-select"
           style={{ flex: 1, maxWidth: 420, padding: "6px 10px", borderRadius: 7, fontSize: 12,
-            background: T.s2, border: `1px solid ${T.border}`, color: "#fff", cursor: "pointer", outline: "none" }}
+            background: T.s2, border: `1px solid ${T.border}`, color: "#0F172A", cursor: "pointer", outline: "none" }}
         >
           {scored.map(o => (
             <option key={o.id} value={o.id}>
@@ -5534,7 +5534,7 @@ function BidOptimizerView() {
                   <div>
                     <p style={{ fontSize: 9, fontWeight: 700, color: T.muted, textTransform: "uppercase",
                       letterSpacing: "0.1em", marginBottom: 5 }}>Actual Close Price</p>
-                    <p style={{ fontSize: 14, fontWeight: 900, color: "#fff",
+                    <p style={{ fontSize: 14, fontWeight: 900, color: "#0F172A",
                       fontVariantNumeric: "tabular-nums" }} data-testid="bid-actual-value">
                       {oc.actual_value != null ? `${fmt$(oc.actual_value)}/yr` : "—"}
                     </p>
@@ -5600,7 +5600,7 @@ function BidOptimizerView() {
                 <p style={{ fontSize: 9, fontWeight: 700, color: T.muted, textTransform: "uppercase",
                   letterSpacing: "0.12em", marginBottom: 3 }}>Win Probability & Expected Value Curve</p>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <p style={{ fontSize: 13, fontWeight: 800, color: "#fff" }}>
+                  <p style={{ fontSize: 13, fontWeight: 800, color: "#0F172A" }}>
                     Price Trade-off — {view.employer_name || view.opp_title}
                   </p>
                   {overrides && (
@@ -5633,7 +5633,7 @@ function BidOptimizerView() {
               <div ref={chartRef} style={{ flex: 1, minHeight: 200 }}>
                 <ResponsiveContainer width="100%" height={220}>
                   <ComposedChart data={view.curve} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(15,23,42,0.03)" vertical={false} />
                     <XAxis dataKey="price_label"
                       tick={{ fill: "rgba(130,150,200,0.45)", fontSize: 9 }}
                       axisLine={false} tickLine={false} interval={1} />
@@ -5683,7 +5683,7 @@ function BidOptimizerView() {
                     {Object.entries(view.band_stats).map(([band, stat]) => (
                       <div key={band} style={{
                         padding: "5px 9px", borderRadius: 6, fontSize: 10,
-                        background: stat.count > 0 ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.01)",
+                        background: stat.count > 0 ? "rgba(15,23,42,0.03)" : "rgba(255,255,255,0.01)",
                         border: stat.count > 0 ? `1px solid ${T.border}` : "1px solid transparent",
                       }}>
                         <span style={{ color: T.muted }}>{band}</span>
@@ -5816,8 +5816,8 @@ function BidOptimizerView() {
                       }}
                       placeholder={overrides ? "Name this scenario…" : "Name the baseline…"}
                       data-testid="input-scenario-name"
-                      style={{ flex: 1, background: "rgba(255,255,255,0.04)", border: `1px solid ${T.border}`,
-                        borderRadius: 7, padding: "7px 9px", fontSize: 10, color: "#fff", outline: "none" }}
+                      style={{ flex: 1, background: "rgba(15,23,42,0.03)", border: `1px solid ${T.border}`,
+                        borderRadius: 7, padding: "7px 9px", fontSize: 10, color: "#0F172A", outline: "none" }}
                     />
                     <button
                       onClick={() => saveScenario.mutate({ name: scenarioName.trim(), anchor: current.anchor,
@@ -5846,7 +5846,7 @@ function BidOptimizerView() {
                       return (
                         <div key={s.id} data-testid={`scenario-row-${s.id}`}
                           style={{ display: "flex", alignItems: "center", gap: 8,
-                            background: isActive ? T.goldDim : "rgba(255,255,255,0.03)",
+                            background: isActive ? T.goldDim : "rgba(15,23,42,0.03)",
                             border: `1px solid ${isActive ? T.goldBorder : T.border}`,
                             borderRadius: 8, padding: "8px 10px" }}>
                           <div style={{ flex: 1, minWidth: 0 }}>
@@ -5861,11 +5861,11 @@ function BidOptimizerView() {
                                 }}
                                 onBlur={() => commitRename(s.id)}
                                 data-testid={`input-rename-scenario-${s.id}`}
-                                style={{ width: "100%", background: "rgba(0,0,0,0.3)", border: `1px solid ${T.goldBorder}`,
-                                  borderRadius: 5, padding: "4px 6px", fontSize: 11, fontWeight: 700, color: "#fff",
+                                style={{ width: "100%", background: "rgba(0,0,0,0.05)", border: `1px solid ${T.goldBorder}`,
+                                  borderRadius: 5, padding: "4px 6px", fontSize: 11, fontWeight: 700, color: "#0F172A",
                                   outline: "none" }} />
                             ) : (
-                              <p style={{ fontSize: 11, fontWeight: 700, color: "#fff",
+                              <p style={{ fontSize: 11, fontWeight: 700, color: "#0F172A",
                                 whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
                                 data-testid={`text-scenario-name-${s.id}`}>{s.name}</p>
                             )}
@@ -5956,7 +5956,7 @@ function BidOptimizerView() {
                             const isBest = d.max_ev === bestPeakEv;
                             return (
                               <tr key={r.id} data-testid={`comparison-row-${r.id}`}
-                                style={{ color: "#fff",
+                                style={{ color: "#0F172A",
                                   background: r.isActive ? T.goldDim : "transparent",
                                   borderTop: `1px solid ${T.border}` }}>
                                 <td style={{ textAlign: "left", padding: "6px 7px 6px 0", maxWidth: 100,
@@ -5994,12 +5994,12 @@ function BidOptimizerView() {
                   <p style={{ fontSize: 9, fontWeight: 700, color: confidenceColor, textTransform: "uppercase",
                     letterSpacing: "0.1em" }}>Model Confidence</p>
                 </div>
-                <p style={{ fontSize: 11, color: "#fff", fontWeight: 600, marginBottom: 6 }}>
+                <p style={{ fontSize: 11, color: "#0F172A", fontWeight: 600, marginBottom: 6 }}>
                   {view.confidence_label}
                 </p>
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 8 }}>
                   {[
-                    { label: "Comparables", value: view.n_comparables, color: "#fff" },
+                    { label: "Comparables", value: view.n_comparables, color: "#0F172A" },
                     { label: "Wins", value: view.n_wins, color: T.green },
                     { label: "Losses", value: view.n_losses, color: T.red },
                   ].map(s => (
@@ -6029,7 +6029,7 @@ function BidOptimizerView() {
                 <p style={{ fontSize: 9, fontWeight: 700, color: T.muted, textTransform: "uppercase",
                   letterSpacing: "0.1em", marginBottom: 8 }}>Competitive Environment</p>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-                  <div style={{ flex: 1, height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 4, overflow: "hidden" }}>
+                  <div style={{ flex: 1, height: 6, background: "rgba(15,23,42,0.03)", borderRadius: 4, overflow: "hidden" }}>
                     <div style={{ height: "100%", width: `${view.ci_score}%`, background: ciColor,
                       borderRadius: 4, transition: "width 0.4s ease" }} />
                   </div>
@@ -6232,7 +6232,7 @@ function RoiTrackerView() {
           <Percent size={30} style={{ color: T.gold }} />
         </div>
         <div>
-          <p style={{ fontSize: 18, fontWeight: 800, color: "#fff", marginBottom: 8 }}>No closed opportunities yet</p>
+          <p style={{ fontSize: 18, fontWeight: 800, color: "#0F172A", marginBottom: 8 }}>No closed opportunities yet</p>
           <p style={{ fontSize: 13, color: T.muted, maxWidth: 420, lineHeight: 1.65 }}>
             Record outcomes in <strong style={{ color: T.gold }}>Win/Loss Intelligence</strong> to unlock ROI metrics.
             Once deals are closed, this view surfaces forecast accuracy, time-to-close, and cost-per-pursuit.
@@ -6421,13 +6421,13 @@ function RoiTrackerView() {
         <div style={{ background: T.surface, borderRadius: 10, border: `1px solid ${T.border}`, padding: "14px 16px" }}>
           <p style={{ fontSize: 9, fontWeight: 700, color: T.muted, textTransform: "uppercase",
             letterSpacing: "0.12em", marginBottom: 4 }}>Realized vs Forecasted Revenue</p>
-          <p style={{ fontSize: 13, fontWeight: 800, color: "#fff", marginBottom: 12 }}>
+          <p style={{ fontSize: 13, fontWeight: 800, color: "#0F172A", marginBottom: 12 }}>
             Monthly Closed Revenue — Last 12 Months
           </p>
           {roi?.revenue_timeline && roi.revenue_timeline.length > 0 ? (
             <ResponsiveContainer width="100%" height={160}>
               <LineChart data={roi.revenue_timeline} margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(15,23,42,0.03)" vertical={false} />
                 <XAxis dataKey="label" tick={{ fill: "rgba(130,150,200,0.45)", fontSize: 9 }}
                   axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: "rgba(130,150,200,0.35)", fontSize: 9 }}
@@ -6439,7 +6439,7 @@ function RoiTrackerView() {
                     return (
                       <div style={{ background: "rgba(8,10,40,0.96)", border: "1px solid rgba(0,140,255,0.2)",
                         borderRadius: 8, padding: "8px 12px", fontSize: 11 }}>
-                        <p style={{ color: "#fff", fontWeight: 700, marginBottom: 4 }}>{label}</p>
+                        <p style={{ color: "#0F172A", fontWeight: 700, marginBottom: 4 }}>{label}</p>
                         {payload.map(p => (
                           <p key={String(p.name)} style={{ color: p.color as string, margin: "2px 0" }}>
                             {p.name === "estimated" ? "Forecasted" : "Realized"}: {fmt$(Number(p.value))}
@@ -6471,7 +6471,7 @@ function RoiTrackerView() {
         <div style={{ background: T.surface, borderRadius: 10, border: `1px solid ${T.border}`, padding: "14px 16px" }}>
           <p style={{ fontSize: 9, fontWeight: 700, color: T.muted, textTransform: "uppercase",
             letterSpacing: "0.12em", marginBottom: 4 }}>Win Rate</p>
-          <p style={{ fontSize: 13, fontWeight: 800, color: "#fff", marginBottom: 12 }}>By Score Tier</p>
+          <p style={{ fontSize: 13, fontWeight: 800, color: "#0F172A", marginBottom: 12 }}>By Score Tier</p>
           {roi?.win_rate_by_tier && roi.win_rate_by_tier.length > 0 ? (
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {roi.win_rate_by_tier.map(t => {
@@ -6490,7 +6490,7 @@ function RoiTrackerView() {
                         </span>
                       </span>
                     </div>
-                    <div style={{ height: 6, borderRadius: 3, background: "rgba(255,255,255,0.06)" }}>
+                    <div style={{ height: 6, borderRadius: 3, background: "rgba(15,23,42,0.03)" }}>
                       <div style={{ height: "100%", borderRadius: 3, background: color,
                         width: `${pct}%`, transition: "width 0.5s" }} />
                     </div>
@@ -6511,7 +6511,7 @@ function RoiTrackerView() {
       {/* ── Breakdown section ─────────────────────────────────────────────────── */}
       <div style={{ background: T.surface, borderRadius: 10, border: `1px solid ${T.border}`, padding: "14px 16px" }}>
         <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 12 }}>
-          <p style={{ fontSize: 13, fontWeight: 800, color: "#fff", flex: 1 }}>Performance Breakdown</p>
+          <p style={{ fontSize: 13, fontWeight: 800, color: "#0F172A", flex: 1 }}>Performance Breakdown</p>
           {(["industry", "size", "owner", "competitor"] as const).map(dim => (
             <button key={dim} onClick={() => setActiveBreakdown(dim)}
               data-testid={`roi-breakdown-${dim}`}
@@ -6553,14 +6553,14 @@ function RoiTrackerView() {
                     {compRows.map((c, i) => {
                       const pct = Math.round(c.our_losses / maxLosses * 100);
                       return (
-                        <tr key={i} style={{ borderBottom: `1px solid rgba(255,255,255,0.04)` }}>
-                          <td style={{ padding: "8px 10px", color: "#fff", fontWeight: 700 }}>{c.competitor}</td>
+                        <tr key={i} style={{ borderBottom: `1px solid rgba(15,23,42,0.03)` }}>
+                          <td style={{ padding: "8px 10px", color: "#0F172A", fontWeight: 700 }}>{c.competitor}</td>
                           <td style={{ padding: "8px 10px", textAlign: "center", color: T.red, fontWeight: 800 }}>
                             {c.our_losses}
                           </td>
                           <td style={{ padding: "8px 10px" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                              <div style={{ flex: 1, height: 4, borderRadius: 2, background: "rgba(255,255,255,0.06)" }}>
+                              <div style={{ flex: 1, height: 4, borderRadius: 2, background: "rgba(15,23,42,0.03)" }}>
                                 <div style={{ height: "100%", borderRadius: 2,
                                   background: pct >= 75 ? T.red : pct >= 40 ? T.amber : T.muted,
                                   width: `${pct}%` }} />
@@ -6617,8 +6617,8 @@ function RoiTrackerView() {
                     const wr = (row as any).win_rate;
                     const rr = (row as any).realized_revenue ?? 0;
                     return (
-                      <tr key={i} style={{ borderBottom: `1px solid rgba(255,255,255,0.04)` }}>
-                        <td style={{ padding: "8px 10px", color: "#fff", fontWeight: 600 }}>{row.name}</td>
+                      <tr key={i} style={{ borderBottom: `1px solid rgba(15,23,42,0.03)` }}>
+                        <td style={{ padding: "8px 10px", color: "#0F172A", fontWeight: 600 }}>{row.name}</td>
                         <td style={{ padding: "8px 10px", textAlign: "center", color: T.green, fontWeight: 700 }}>
                           {(row as any).won ?? 0}
                         </td>
@@ -6629,7 +6629,7 @@ function RoiTrackerView() {
                           {wr != null ? (
                             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                               <div style={{ flex: 1, height: 4, borderRadius: 2,
-                                background: "rgba(255,255,255,0.06)" }}>
+                                background: "rgba(15,23,42,0.03)" }}>
                                 <div style={{ height: "100%", borderRadius: 2,
                                   background: wr >= 50 ? T.green : wr >= 30 ? T.gold : T.red,
                                   width: `${wr}%` }} />
@@ -6658,7 +6658,7 @@ function RoiTrackerView() {
       {/* ── Outcome Economics Capture ──────────────────────────────────────────── */}
       <div style={{ background: T.surface, borderRadius: 10, border: `1px solid ${T.border}`, padding: "14px 16px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-          <p style={{ fontSize: 13, fontWeight: 800, color: "#fff", flex: 1 }}>Outcome Economics</p>
+          <p style={{ fontSize: 13, fontWeight: 800, color: "#0F172A", flex: 1 }}>Outcome Economics</p>
           <span style={{ fontSize: 9, color: T.muted }}>
             Enter realized revenue &amp; pursuit effort to unlock forecast accuracy and pursuit ROI metrics.
           </span>
@@ -6686,7 +6686,7 @@ function RoiTrackerView() {
                       background: rec.outcome === "won" ? T.green : T.red }} />
                     <div style={{ flex: 1 }}>
                       <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 4 }}>
-                        <span style={{ fontSize: 12, fontWeight: 700, color: "#fff" }}>
+                        <span style={{ fontSize: 12, fontWeight: 700, color: "#0F172A" }}>
                           {rec.employer_name || "Unknown"}
                         </span>
                         <span style={{ fontSize: 9, fontWeight: 700,
@@ -6768,7 +6768,7 @@ function RoiTrackerView() {
                               placeholder={f.placeholder}
                               data-testid={`roi-input-${f.key}-${rec.opportunity_id}`}
                               style={{ width: "100%", background: T.bg, border: `1px solid ${T.border}`,
-                                borderRadius: 7, padding: "6px 10px", fontSize: 11, color: "#fff",
+                                borderRadius: 7, padding: "6px 10px", fontSize: 11, color: "#0F172A",
                                 outline: "none", boxSizing: "border-box" }}
                             />
                             <p style={{ fontSize: 8, color: T.muted, marginTop: 3, lineHeight: 1.4 }}>{f.hint}</p>
@@ -6816,7 +6816,7 @@ function PlaceholderView({ module }: { module: typeof MODULES[number] }) {
         <Icon size={32} style={{ color: T.gold }} />
       </div>
       <div>
-        <p style={{ fontSize: 20, fontWeight: 800, color: "#fff", marginBottom: 6 }}>{module.label}</p>
+        <p style={{ fontSize: 20, fontWeight: 800, color: "#0F172A", marginBottom: 6 }}>{module.label}</p>
         <p style={{ fontSize: 13, color: T.muted, maxWidth: 420, lineHeight: 1.6 }}>
           This module is planned for a future release. Once available, {module.label} will be accessible here
           and share the same data model established in the Intake Engine.
@@ -6862,19 +6862,19 @@ export default function RfpOS() {
 
   return (
     <Layout>
-      <div style={{ display: "flex", height: "calc(100vh - 56px)", overflow: "hidden",
-        background: T.bg, fontFamily: "system-ui, -apple-system, sans-serif" }}>
+      <div className="kiq-ops-shell" style={{ display: "flex", height: "calc(100vh - 56px)", overflow: "hidden",
+        fontFamily: "system-ui, -apple-system, sans-serif" }}>
 
         {/* Left module nav */}
         <div style={{ width: 220, flexShrink: 0, borderRight: `1px solid ${T.border}`,
-          background: T.surface, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+          background: "rgba(255,255,255,0.82)", backdropFilter: "blur(18px) saturate(150%)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
           {/* Brand header */}
           <div style={{ padding: "20px 16px 14px", borderBottom: `1px solid ${T.border}`,
             background: "linear-gradient(180deg, rgba(251,183,36,0.08) 0%, transparent 100%)" }}>
             <div style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 4 }}>
               <FileSearch size={18} style={{ color: T.gold }} />
-              <span style={{ fontSize: 13, fontWeight: 800, color: "#fff" }}>RFP Intelligence OS™</span>
+              <span style={{ fontSize: 13, fontWeight: 800, color: T.text }}>RFP Intelligence OS™</span>
             </div>
             <p style={{ fontSize: 10, color: T.muted, lineHeight: 1.4 }}>
               AI-powered RFP command center
@@ -6926,12 +6926,11 @@ export default function RfpOS() {
         {/* Main content */}
         <div style={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
           {/* Page header */}
-          <div style={{ padding: "16px 24px", borderBottom: `1px solid ${T.border}`, flexShrink: 0,
-            background: "linear-gradient(180deg, rgba(251,183,36,0.04) 0%, transparent 100%)" }}>
+          <div className="kiq-ops-header" style={{ padding: "16px 24px", borderLeft: 0, borderRight: 0, borderTop: 0, borderRadius: 0, flexShrink: 0 }}>
             <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
               <activeModule.icon size={18} style={{ color: T.gold }} />
               <div style={{ flex: 1 }}>
-                <h1 style={{ fontSize: 16, fontWeight: 800, color: "#fff", margin: 0 }}>{activeModule.label}</h1>
+                <h1 style={{ fontSize: 16, fontWeight: 800, color: T.text, margin: 0 }}>{activeModule.label}</h1>
                 <p style={{ fontSize: 11, color: T.muted, margin: 0 }}>{headerDescription()}</p>
               </div>
               {activeId !== "command" && <PipelineForecastWidget />}
@@ -6952,7 +6951,7 @@ export default function RfpOS() {
 
       <style>{`
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        select option { background: #0d1020; color: #ccd0e8; }
+        select option { background: #FFFFFF; color: #0F172A; }
       `}</style>
     </Layout>
   );

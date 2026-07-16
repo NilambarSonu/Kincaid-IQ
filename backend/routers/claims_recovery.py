@@ -686,7 +686,7 @@ def board_pack(db: Session = Depends(get_db), user: models.User = Depends(get_cu
             "plan_name": "Global Manufacturing Corp — Employee Benefits Plan",
             "covered_lives": 187400,
             "audit_period": "January 2024 – December 2024",
-            "prepared_by": "Kincaid RMC",
+            "prepared_by": "Kincaid Health",
             "prepared_date": datetime.utcnow().strftime("%B %d, %Y"),
             "report_id": f"CRIQ-{datetime.utcnow().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}",
         },
@@ -857,7 +857,7 @@ Re: Formal Recovery Demand — {finding.get('category', 'Identified Overpayment'
 
 Counsel:
 
-This firm has been retained as authorized recovery agent by the Plan Sponsor referenced above with respect to the Plan's self-funded health benefits program covering 187,400 lives and approximately $1.2 billion in annual claims. Pursuant to that engagement, Kincaid RMC has conducted a forensic audit of claims and remittance records.
+This firm has been retained as authorized recovery agent by the Plan Sponsor referenced above with respect to the Plan's self-funded health benefits program covering 187,400 lives and approximately $1.2 billion in annual claims. Pursuant to that engagement, Kincaid Health has conducted a forensic audit of claims and remittance records.
 
 The audit has identified the following recovery claim against {target}:
 
@@ -890,7 +890,7 @@ The Plan Sponsor expressly reserves all rights, including without limitation: (i
 
 Respectfully submitted,
 
-Kincaid RMC
+Kincaid Health
 As Authorized Recovery Agent for the Plan Sponsor
 Engagement Reference: {action.finding_id}-{action.id}
 
@@ -1276,7 +1276,7 @@ def dashboard(db: Session = Depends(get_db), user: models.User = Depends(get_cur
             {
                 "phase": "Engagement Authorization & Evidence Preservation",
                 "duration": "Days 1–14",
-                "description": "Execution of Contingency Fee Agreement and MNDA. Plan sponsor grants Kincaid RMC agency authorization to receive all claims data, PBM remittance reports, DIR records, TPA processing files, carrier contracts, and §408(b)(2) disclosures. Litigation hold issued to all custodians.",
+                "description": "Execution of Contingency Fee Agreement and MNDA. Plan sponsor grants Kincaid Health agency authorization to receive all claims data, PBM remittance reports, DIR records, TPA processing files, carrier contracts, and §408(b)(2) disclosures. Litigation hold issued to all custodians.",
             },
             {
                 "phase": "Forensic Audit — 90-Day Cycle",
@@ -1291,7 +1291,7 @@ def dashboard(db: Session = Depends(get_db), user: models.User = Depends(get_cur
             {
                 "phase": "Negotiation & Settlement Authorization",
                 "duration": "Days 104–180",
-                "description": "Kincaid RMC manages all negotiations. No settlement executed without written client authorization. Partial recovery settlements do not waive unreleased claims. Contemporaneous recovery log maintained.",
+                "description": "Kincaid Health manages all negotiations. No settlement executed without written client authorization. Partial recovery settlements do not waive unreleased claims. Contemporaneous recovery log maintained.",
             },
             {
                 "phase": "Recovery Distribution & Contingency Accounting",
@@ -1304,7 +1304,7 @@ def dashboard(db: Session = Depends(get_db), user: models.User = Depends(get_cur
             "audit_cycle": "90-day forensic audit cycle — Fortune 500 self-funded plans ≥50,000 lives.",
             "client_obligations": [
                 "Execute Contingency Fee Agreement and MNDA",
-                "Grant Kincaid RMC limited agency authority over audit data",
+                "Grant Kincaid Health limited agency authority over audit data",
                 "Issue litigation-hold to all TPAs, PBMs, carriers, and custodians",
                 "Authorize written settlement approval for demands exceeding $100,000",
             ],

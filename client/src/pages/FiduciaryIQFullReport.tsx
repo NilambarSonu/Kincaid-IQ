@@ -25,7 +25,7 @@ function statusColor(s: string) {
 
 /* ─── SHARED STYLES ──────────────────────────────────────────────────────── */
 const S = {
-  page: { background: "#dde3ec", color: "#000", padding: "24px 0 40px", fontFamily: "'Inter','Segoe UI',system-ui,sans-serif" } as React.CSSProperties,
+  page: { background: "linear-gradient(180deg, #eef3fb 0%, #dde3ec 100%)", color: "#000", padding: "28px 0 44px", fontFamily: "'Inter','Segoe UI',system-ui,sans-serif" } as React.CSSProperties,
   section: { background: "#fff", borderRadius: 16, margin: "0 24px 16px", padding: "48px 56px", boxShadow: "0 1px 3px rgba(0,0,0,0.08)" } as React.CSSProperties,
   h2: { fontSize: 24, fontWeight: 900, color: "#000", letterSpacing: "-0.01em", margin: "0 0 22px 0" } as React.CSSProperties,
   h3: { fontSize: 17, fontWeight: 800, color: "#000", margin: "0 0 12px 0" } as React.CSSProperties,
@@ -65,23 +65,23 @@ function CoverPage({ d }: { d: any }) {
     <div style={{ ...S.section, padding: 0, overflow: "hidden" }}>
       {/* KIQ Banner */}
       <div style={{ width: "100%", height: 80, background: "linear-gradient(135deg, #002B5C 0%, #9B1C2E 100%)", display: "flex", alignItems: "center", padding: "0 56px" }}>
-        <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 900, fontSize: 11, letterSpacing: "0.24em", textTransform: "uppercase" as const }}>KINCAID IQ — FIDUCIARY INTELLIGENCE PLATFORM</span>
+        <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 900, fontSize: 11, letterSpacing: "0.24em", textTransform: "uppercase" as const }}>KINCAID HEALTH — FIDUCIARY INTELLIGENCE PLATFORM</span>
       </div>
 
       {/* Sub-header */}
-      <div style={{ background: "#002B5C", padding: "10px 56px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ background: "#F8FAFC", padding: "10px 56px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.25)" }} />
+          <div style={{ width: 1, height: 28, background: "rgba(15,23,42,0.08)" }} />
           <div>
             <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.28em", color: "rgba(255,255,255,0.90)", textTransform: "uppercase" }}>
               ERISA Fiduciary IQ™ · 408(b)(2) · Fiduciary Risk · DOL Audit Readiness
             </div>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.45)", marginTop: 2 }}>Powered by Kincaid IQ Intelligence Platform</div>
+            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.45)", marginTop: 2 }}>Powered by Kincaid Health Intelligence Platform</div>
           </div>
         </div>
         <div style={{ textAlign: "right" }}>
           <div style={{ fontSize: 9, color: "rgba(255,255,255,0.55)" }}>{date}</div>
-          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>CONFIDENTIAL · BROKER USE ONLY</div>
+          <div style={{ fontSize: 9, color: "#64748b", marginTop: 2 }}>CONFIDENTIAL · BROKER USE ONLY</div>
         </div>
       </div>
 
@@ -134,10 +134,10 @@ function CoverPage({ d }: { d: any }) {
         <div style={{ marginTop: 40, paddingTop: 20, borderTop: "1px solid rgba(0,0,0,0.10)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 28, height: 28, borderRadius: 6, background: "#9B1C2E", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <span style={{ fontSize: 9, fontWeight: 900, color: "#fff" }}>KIQ</span>
+              <span style={{ fontSize: 9, fontWeight: 900, color: "#0F172A" }}>KIQ</span>
             </div>
             <div>
-              <div style={{ fontSize: 10, fontWeight: 800, color: "#002B5C" }}>KINCAID IQ</div>
+              <div style={{ fontSize: 10, fontWeight: 800, color: "#002B5C" }}>KINCAID HEALTH</div>
               <div style={{ fontSize: 9, color: "#666" }}>Intelligence Platform · ERISA Fiduciary IQ™</div>
             </div>
           </div>
@@ -629,17 +629,17 @@ function Methodology() {
       <div style={{ ...S.card, background: "rgba(220,38,38,0.04)", border: `1px solid ${NEON.red}20`, padding: "20px 24px" }}>
         <div style={{ fontSize: 11, fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: NEON.red, marginBottom: 8 }}>Legal Disclaimer</div>
         <div style={{ fontSize: 12, color: "#000", lineHeight: 1.9 }}>
-          CONFIDENTIAL — FOR AUTHORIZED USE ONLY. This report is prepared by Kincaid IQ™ exclusively for the named plan sponsor and its authorized legal counsel, ERISA fiduciary advisors, and plan administrator(s) of record. Unauthorized disclosure, reproduction, or distribution is prohibited without the prior written consent of Kincaid IQ. This report does not constitute legal advice, does not create an attorney-client relationship, and does not constitute a representation, warranty, or guarantee of ERISA compliance, DOL audit readiness, or freedom from governmental investigation or enforcement. All findings are based on plan data provided by or on behalf of the plan sponsor, DOL Form 5500 public filings, and applicable statutory and regulatory standards as of the report date; they do not reflect independent verification of underlying plan documents, contracts, or participant-level data. Named plan fiduciaries and plan administrators should engage qualified ERISA counsel before taking or refraining from taking any action in reliance on this report. To the maximum extent permitted by applicable law, Kincaid IQ disclaims all representations and warranties, express or implied, including without limitation warranties of merchantability, fitness for a particular purpose, and non-infringement, and disclaims all liability for damages of any kind arising out of or related to any action taken or not taken in reliance on this report. This report constitutes a covered service provider fee disclosure to the extent required under ERISA §408(b)(2) and 29 C.F.R. §2550.408b-2. Plan data sourced from DOL Form 5500 public records and platform-provided information. © Kincaid IQ | kincaidiq.com
+          CONFIDENTIAL — FOR AUTHORIZED USE ONLY. This report is prepared by Kincaid Health™ exclusively for the named plan sponsor and its authorized legal counsel, ERISA fiduciary advisors, and plan administrator(s) of record. Unauthorized disclosure, reproduction, or distribution is prohibited without the prior written consent of Kincaid Health. This report does not constitute legal advice, does not create an attorney-client relationship, and does not constitute a representation, warranty, or guarantee of ERISA compliance, DOL audit readiness, or freedom from governmental investigation or enforcement. All findings are based on plan data provided by or on behalf of the plan sponsor, DOL Form 5500 public filings, and applicable statutory and regulatory standards as of the report date; they do not reflect independent verification of underlying plan documents, contracts, or participant-level data. Named plan fiduciaries and plan administrators should engage qualified ERISA counsel before taking or refraining from taking any action in reliance on this report. To the maximum extent permitted by applicable law, Kincaid Health disclaims all representations and warranties, express or implied, including without limitation warranties of merchantability, fitness for a particular purpose, and non-infringement, and disclaims all liability for damages of any kind arising out of or related to any action taken or not taken in reliance on this report. This report constitutes a covered service provider fee disclosure to the extent required under ERISA §408(b)(2) and 29 C.F.R. §2550.408b-2. Plan data sourced from DOL Form 5500 public records and platform-provided information. © Kincaid Health | kincaidiq.com
         </div>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 28, paddingTop: 20, borderTop: "1px solid rgba(0,0,0,0.08)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ width: 28, height: 28, borderRadius: 6, background: "#9B1C2E", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ fontSize: 8, fontWeight: 900, color: "#fff" }}>KIQ</span>
+            <span style={{ fontSize: 8, fontWeight: 900, color: "#0F172A" }}>KIQ</span>
           </div>
           <div>
-            <div style={{ fontSize: 10, fontWeight: 900, color: "#002B5C", letterSpacing: "0.15em" }}>KINCAID IQ · ERISA FIDUCIARY IQ™</div>
+            <div style={{ fontSize: 10, fontWeight: 900, color: "#002B5C", letterSpacing: "0.15em" }}>KINCAID HEALTH · ERISA FIDUCIARY IQ™</div>
             <div style={{ fontSize: 9, color: "#666", marginTop: 2 }}>Fiduciary-Grade ERISA Compliance Intelligence</div>
           </div>
         </div>
@@ -684,27 +684,27 @@ export default function FiduciaryIQFullReport({ data, onClose }: { data: any; on
   const s = data.summary || {};
 
   return (
-    <div id="kiq-fiq-overlay" style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(0,0,0,0.96)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div id="kiq-fiq-overlay" className="kiq-report-overlay" style={{ position: "fixed", inset: 0, zIndex: 60, background: "var(--kiq-report-overlay-bg)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
       {/* Toolbar */}
-      <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 12, padding: "12px 24px", background: "#fff", borderBottom: "1px solid rgba(0,0,0,0.10)" }} className="print-hide">
+      <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 12, padding: "14px 24px", background: "rgba(255,255,255,0.78)", borderBottom: "1px solid rgba(13,37,61,0.08)" }} className="print-hide kiq-report-toolbar">
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 12, fontWeight: 900, color: "#000", letterSpacing: "0.15em", textTransform: "uppercase" }}>ERISA Fiduciary IQ™ · Full Fiduciary Due Diligence Report</div>
           <div style={{ fontSize: 11, color: "#000", marginTop: 1 }}>Risk Score {data.fiduciary_risk_score}/100 · {data.risk_level} · {s.critical_gaps} Critical Gaps</div>
         </div>
-        <button data-testid="fiq-fullreport-email" onClick={() => setEmailOpen(true)}
+        <button className="kiq-report-action" data-testid="fiq-fullreport-email" onClick={() => setEmailOpen(true)}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", borderRadius: 10, background: "rgba(217,119,6,0.08)", border: "1px solid rgba(217,119,6,0.25)", color: NEON.gold, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
           <Mail style={{ width: 14, height: 14 }} /> Email Report
         </button>
-        <button data-testid="fiq-fullreport-print" onClick={handlePrint} disabled={printing}
+        <button className="kiq-report-action" data-testid="fiq-fullreport-print" onClick={handlePrint} disabled={printing}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", borderRadius: 10, background: "rgba(37,99,235,0.08)", border: "1px solid rgba(37,99,235,0.2)", color: NEON.blue, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
           <Printer style={{ width: 14, height: 14 }} /> Print / Save PDF
         </button>
-        <button data-testid="fiq-fullreport-download" onClick={handleDownload}
+        <button className="kiq-report-action" data-testid="fiq-fullreport-download" onClick={handleDownload}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", borderRadius: 10, background: "rgba(5,150,105,0.08)", border: "1px solid rgba(5,150,105,0.2)", color: NEON.green, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
           <Download style={{ width: 14, height: 14 }} /> Download PNG
         </button>
-        <button data-testid="fiq-fullreport-close" onClick={onClose}
+        <button className="kiq-report-action" data-testid="fiq-fullreport-close" onClick={onClose}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 16px", borderRadius: 10, background: "rgba(0,0,0,0.04)", border: "1px solid rgba(0,0,0,0.08)", color: "#000", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
           ✕ Close
         </button>
@@ -712,7 +712,7 @@ export default function FiduciaryIQFullReport({ data, onClose }: { data: any; on
 
       {/* Scroll area */}
       <div id="kiq-fiq-scroll" style={{ flex: 1, overflowY: "auto", overflowX: "hidden" }}>
-        <div ref={reportRef} style={{ ...S.page, maxWidth: 1140, margin: "0 auto" }}>
+        <div ref={reportRef} className="kiq-report-document" style={{ ...S.page, maxWidth: 1140, margin: "0 auto" }}>
           <div id="rpt-fiq-section-0"><CoverPage d={data} /></div>
           <div id="rpt-fiq-section-toc"><TableOfContents /></div>
           <div id="rpt-fiq-section-1"><ExecutiveSummary d={data} /></div>
@@ -725,7 +725,7 @@ export default function FiduciaryIQFullReport({ data, onClose }: { data: any; on
           <div id="rpt-fiq-section-8"><Methodology /></div>
         </div>
         <div className="print-hide" style={{ display: "flex", justifyContent: "center", padding: "32px 0 48px" }}>
-          <button onClick={() => document.getElementById("rpt-fiq-section-0")?.scrollIntoView({ behavior: "smooth" })}
+          <button className="kiq-report-action" onClick={() => document.getElementById("rpt-fiq-section-0")?.scrollIntoView({ behavior: "smooth" })}
             style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 24px", borderRadius: 10, background: "rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.10)", color: "#000", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
             ↑ Back to Top
           </button>

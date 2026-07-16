@@ -9,16 +9,16 @@ import {
   CheckCircle2, AlertCircle, ExternalLink, Brain,
 } from "lucide-react";
 
-const NAVY   = "#020818";
-const CARD   = "#080f24";
-const BORDER = "rgba(255,255,255,0.07)";
+const NAVY   = "#F8FAFC";
+const CARD   = "#ffffff";
+const BORDER = "rgba(15,23,42,0.08)";
 const ACCENT = "#3b82f6";
 
 const NEON = {
-  blue:   "#00D4FF",
-  green:  "#00FF94",
+  blue:   "#2563EB",
+  green:  "#10B981",
   gold:   "#FFB800",
-  red:    "#FF4D6D",
+  red:    "#E11D48",
   purple: "#BF5FFF",
   orange: "#FF6B1A",
 };
@@ -52,10 +52,10 @@ function LiveBadge({ live, note }: { live: boolean; note?: string }) {
 
 function StatCard({ label, value, sub, color }: { label: string; value: string; sub?: string; color?: string }) {
   return (
-    <div style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${BORDER}`, borderRadius: 10, padding: "12px 14px" }}>
-      <div style={{ fontSize: 9, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(255,255,255,0.3)", marginBottom: 4 }}>{label}</div>
+    <div style={{ background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 10, padding: "12px 14px" }}>
+      <div style={{ fontSize: 9, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.12em", color: "#64748b", marginBottom: 4 }}>{label}</div>
       <div style={{ fontSize: 20, fontWeight: 900, color: color || "#fff", lineHeight: 1 }}>{value}</div>
-      {sub && <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 3 }}>{sub}</div>}
+      {sub && <div style={{ fontSize: 10, color: "#64748b", marginTop: 3 }}>{sub}</div>}
     </div>
   );
 }
@@ -71,8 +71,8 @@ function PanelHeader({ icon: Icon, title, source, live, note, color }: {
           <Icon size={14} style={{ color }} />
         </div>
         <div>
-          <div style={{ fontSize: 12, fontWeight: 800, color: "#fff" }}>{title}</div>
-          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", marginTop: 1 }}>
+          <div style={{ fontSize: 12, fontWeight: 800, color: "#0F172A" }}>{title}</div>
+          <div style={{ fontSize: 9, color: "#64748b", marginTop: 1 }}>
             {meta ? (
               <a href={meta.url} target="_blank" rel="noreferrer"
                 style={{ color: color, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 3 }}>
@@ -95,13 +95,13 @@ function BLSPanel({ data }: { data: any }) {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
         {series.map((s: any) => (
           <div key={s.id} style={{ background: "rgba(0,212,255,0.04)", border: "1px solid rgba(0,212,255,0.12)", borderRadius: 8, padding: "10px 12px" }}>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 3 }}>{s.name}</div>
+            <div style={{ fontSize: 9, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 3 }}>{s.name}</div>
             <div style={{ fontSize: 18, fontWeight: 900, color: NEON.blue }}>{s.value}</div>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", marginTop: 2 }}>{s.period}</div>
+            <div style={{ fontSize: 9, color: "#94a3b8", marginTop: 2 }}>{s.period}</div>
           </div>
         ))}
       </div>
-      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", borderTop: `1px solid ${BORDER}`, paddingTop: 8 }}>
+      <div style={{ fontSize: 9, color: "#94a3b8", borderTop: `1px solid ${BORDER}`, paddingTop: 8 }}>
         Updated: {data.updated}
       </div>
     </div>
@@ -118,19 +118,19 @@ function FDAPanel({ data }: { data: any }) {
         <StatCard label="Severity" value="Class I" sub="Most serious — may cause death" color={NEON.orange} />
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-        <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", marginBottom: 2 }}>Recent Recalls</div>
+        <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#64748b", marginBottom: 2 }}>Recent Recalls</div>
         {recalls.map((r: any, i: number) => (
           <div key={i} style={{ background: "rgba(255,77,109,0.04)", border: "1px solid rgba(255,77,109,0.12)", borderRadius: 8, padding: "8px 10px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 6 }}>
-              <div style={{ fontSize: 10, fontWeight: 700, color: "#fff", flex: 1, minWidth: 0 }}>{r.firm}</div>
+              <div style={{ fontSize: 10, fontWeight: 700, color: "#0F172A", flex: 1, minWidth: 0 }}>{r.firm}</div>
               <span style={{ fontSize: 8, fontWeight: 800, color: NEON.red, background: "rgba(255,77,109,0.1)", border: "1px solid rgba(255,77,109,0.25)", borderRadius: 4, padding: "1px 5px", flexShrink: 0 }}>{r.status}</span>
             </div>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.product}</div>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", marginTop: 2 }}>{r.reason}</div>
+            <div style={{ fontSize: 9, color: "#475569", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{r.product}</div>
+            <div style={{ fontSize: 9, color: "#64748b", marginTop: 2 }}>{r.reason}</div>
           </div>
         ))}
       </div>
-      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", borderTop: `1px solid ${BORDER}`, paddingTop: 8 }}>Updated: {data.updated}</div>
+      <div style={{ fontSize: 9, color: "#94a3b8", borderTop: `1px solid ${BORDER}`, paddingTop: 8 }}>Updated: {data.updated}</div>
     </div>
   );
 }
@@ -145,24 +145,24 @@ function USASpendingPanel({ data }: { data: any }) {
         <StatCard label={`FY${data.fiscal_year} Total Healthcare Contracts`} value={`$${data.total_healthcare_contracts_bn.toLocaleString()}B`} color={NEON.green} />
       )}
       <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-        <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", marginBottom: 2 }}>Top Awarding Agencies</div>
+        <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#64748b", marginBottom: 2 }}>Top Awarding Agencies</div>
         {agencies.map((a: any, i: number) => {
           const pct = maxAmt > 0 ? (a.amount / maxAmt) * 100 : 0;
           const amt = a.amount >= 1e9 ? `$${(a.amount / 1e9).toFixed(1)}B` : a.amount >= 1e6 ? `$${(a.amount / 1e6).toFixed(0)}M` : `$${a.amount?.toLocaleString() ?? "—"}`;
           return (
             <div key={i}>
               <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-                <span style={{ fontSize: 10, color: "rgba(255,255,255,0.7)", flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.name}</span>
+                <span style={{ fontSize: 10, color: "#0f172a", flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{a.name}</span>
                 <span style={{ fontSize: 10, fontWeight: 800, color: NEON.green, flexShrink: 0, marginLeft: 8 }}>{amt}</span>
               </div>
-              <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden" }}>
+              <div style={{ height: 3, background: "#f1f5f9", borderRadius: 2, overflow: "hidden" }}>
                 <div style={{ width: `${pct}%`, height: "100%", background: `linear-gradient(90deg, ${NEON.green}80, ${NEON.green})`, borderRadius: 2, transition: "width 0.6s ease" }} />
               </div>
             </div>
           );
         })}
       </div>
-      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", borderTop: `1px solid ${BORDER}`, paddingTop: 8 }}>Updated: {data.updated}</div>
+      <div style={{ fontSize: 9, color: "#94a3b8", borderTop: `1px solid ${BORDER}`, paddingTop: 8 }}>Updated: {data.updated}</div>
     </div>
   );
 }
@@ -180,23 +180,23 @@ function CMSPanel({ data }: { data: any }) {
         </div>
       )}
       <div>
-        <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(255,255,255,0.3)", marginBottom: 6 }}>Top Drugs by Spend</div>
+        <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "#64748b", marginBottom: 6 }}>Top Drugs by Spend</div>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
             <tr>
               {["Drug", "Annual Spend", "Claims"].map(h => (
-                <th key={h} style={{ fontSize: 8, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(255,255,255,0.25)", padding: "3px 6px", textAlign: h === "Drug" ? "left" : "right", borderBottom: `1px solid ${BORDER}` }}>{h}</th>
+                <th key={h} style={{ fontSize: 8, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(15,23,42,0.08)", padding: "3px 6px", textAlign: h === "Drug" ? "left" : "right", borderBottom: `1px solid ${BORDER}` }}>{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {drugs.slice(0, 6).map((d: any, i: number) => (
-              <tr key={i} style={{ borderBottom: `1px solid rgba(255,255,255,0.04)` }}>
-                <td style={{ fontSize: 9, color: "rgba(255,255,255,0.7)", padding: "5px 6px", maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{d.drug}</td>
+              <tr key={i} style={{ borderBottom: `1px solid #ffffff` }}>
+                <td style={{ fontSize: 9, color: "#0f172a", padding: "5px 6px", maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{d.drug}</td>
                 <td style={{ fontSize: 9, fontWeight: 800, color: NEON.purple, padding: "5px 6px", textAlign: "right" }}>
                   {d.total_spending >= 1e9 ? `$${(d.total_spending / 1e9).toFixed(1)}B` : `$${(d.total_spending / 1e6).toFixed(0)}M`}
                 </td>
-                <td style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", padding: "5px 6px", textAlign: "right" }}>
+                <td style={{ fontSize: 9, color: "#475569", padding: "5px 6px", textAlign: "right" }}>
                   {d.total_claims >= 1e6 ? `${(d.total_claims / 1e6).toFixed(1)}M` : d.total_claims?.toLocaleString() ?? "—"}
                 </td>
               </tr>
@@ -204,7 +204,7 @@ function CMSPanel({ data }: { data: any }) {
           </tbody>
         </table>
       </div>
-      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", borderTop: `1px solid ${BORDER}`, paddingTop: 8 }}>Updated: {data.updated}</div>
+      <div style={{ fontSize: 9, color: "#94a3b8", borderTop: `1px solid ${BORDER}`, paddingTop: 8 }}>Updated: {data.updated}</div>
     </div>
   );
 }
@@ -220,7 +220,7 @@ function FREDPanel({ data }: { data: any }) {
           <AlertCircle size={12} style={{ color: NEON.gold, flexShrink: 0, marginTop: 1 }} />
           <div>
             <div style={{ fontSize: 10, fontWeight: 700, color: NEON.gold }}>FRED_API_KEY not configured</div>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>Add a free FRED API key at fred.stlouisfed.org to enable live data. Showing benchmark reference values.</div>
+            <div style={{ fontSize: 9, color: "#475569", marginTop: 2 }}>Add a free FRED API key at fred.stlouisfed.org to enable live data. Showing benchmark reference values.</div>
           </div>
         </div>
       )}
@@ -230,21 +230,21 @@ function FREDPanel({ data }: { data: any }) {
           const isNeg = ind.change && parseFloat(ind.change) < 0;
           return (
             <div key={ind.id} style={{ background: "rgba(255,184,0,0.03)", border: "1px solid rgba(255,184,0,0.10)", borderRadius: 8, padding: "10px 12px" }}>
-              <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 3 }}>{ind.name}</div>
+              <div style={{ fontSize: 9, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 3 }}>{ind.name}</div>
               <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
                 <div style={{ fontSize: 17, fontWeight: 900, color: NEON.gold }}>{ind.value}</div>
                 {ind.change && ind.change !== "—" && (
-                  <div style={{ fontSize: 10, fontWeight: 700, color: isPos ? NEON.green : isNeg ? NEON.red : "rgba(255,255,255,0.4)" }}>
+                  <div style={{ fontSize: 10, fontWeight: 700, color: isPos ? NEON.green : isNeg ? NEON.red : "#475569" }}>
                     {isPos ? "▲" : isNeg ? "▼" : ""} {ind.change}
                   </div>
                 )}
               </div>
-              <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", marginTop: 2 }}>{ind.period}</div>
+              <div style={{ fontSize: 9, color: "#94a3b8", marginTop: 2 }}>{ind.period}</div>
             </div>
           );
         })}
       </div>
-      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", borderTop: `1px solid ${BORDER}`, paddingTop: 8 }}>Updated: {data.updated}</div>
+      <div style={{ fontSize: 9, color: "#94a3b8", borderTop: `1px solid ${BORDER}`, paddingTop: 8 }}>Updated: {data.updated}</div>
     </div>
   );
 }
@@ -260,7 +260,7 @@ function CensusPanel({ data }: { data: any }) {
           <AlertCircle size={12} style={{ color: NEON.orange, flexShrink: 0, marginTop: 1 }} />
           <div>
             <div style={{ fontSize: 10, fontWeight: 700, color: NEON.orange }}>CENSUS_API_KEY not configured</div>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>Add a free Census API key at api.census.gov/data/key_signup.html. Showing 2022 Census reference data.</div>
+            <div style={{ fontSize: 9, color: "#475569", marginTop: 2 }}>Add a free Census API key at api.census.gov/data/key_signup.html. Showing 2022 Census reference data.</div>
           </div>
         </div>
       )}
@@ -274,22 +274,22 @@ function CensusPanel({ data }: { data: any }) {
         <thead>
           <tr>
             {["Sector", "Estab.", "Employees", "Payroll"].map(h => (
-              <th key={h} style={{ fontSize: 8, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(255,255,255,0.25)", padding: "3px 6px", textAlign: h === "Sector" ? "left" : "right", borderBottom: `1px solid ${BORDER}` }}>{h}</th>
+              <th key={h} style={{ fontSize: 8, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(15,23,42,0.08)", padding: "3px 6px", textAlign: h === "Sector" ? "left" : "right", borderBottom: `1px solid ${BORDER}` }}>{h}</th>
             ))}
           </tr>
         </thead>
         <tbody>
           {stats.map((s: any, i: number) => (
-            <tr key={i} style={{ borderBottom: `1px solid rgba(255,255,255,0.04)` }}>
-              <td style={{ fontSize: 9, color: "rgba(255,255,255,0.7)", padding: "5px 6px" }}>{s.sector}</td>
-              <td style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", padding: "5px 6px", textAlign: "right" }}>{(s.establishments / 1000).toFixed(0)}K</td>
-              <td style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", padding: "5px 6px", textAlign: "right" }}>{(s.employees / 1e6).toFixed(1)}M</td>
+            <tr key={i} style={{ borderBottom: `1px solid #ffffff` }}>
+              <td style={{ fontSize: 9, color: "#0f172a", padding: "5px 6px" }}>{s.sector}</td>
+              <td style={{ fontSize: 9, color: "#475569", padding: "5px 6px", textAlign: "right" }}>{(s.establishments / 1000).toFixed(0)}K</td>
+              <td style={{ fontSize: 9, color: "#475569", padding: "5px 6px", textAlign: "right" }}>{(s.employees / 1e6).toFixed(1)}M</td>
               <td style={{ fontSize: 9, fontWeight: 700, color: NEON.orange, padding: "5px 6px", textAlign: "right" }}>${s.payroll_bn?.toFixed(0)}B</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", borderTop: `1px solid ${BORDER}`, paddingTop: 8 }}>Updated: {data.updated}</div>
+      <div style={{ fontSize: 9, color: "#94a3b8", borderTop: `1px solid ${BORDER}`, paddingTop: 8 }}>Updated: {data.updated}</div>
     </div>
   );
 }
@@ -324,7 +324,7 @@ export default function GovStatsHub() {
         messages: [
           {
             role: "system",
-            content: `You are Kincaid IQ's senior economist and healthcare intelligence analyst. 
+            content: `You are Kincaid Health's senior economist and healthcare intelligence analyst. 
 Analyze the following government data snapshots and provide a concise, actionable intelligence brief for an employer benefits advisor or CFO. 
 Focus on: healthcare cost trends, drug spend implications, labor market context, and macro risk factors.
 Write in 4-5 short paragraphs, professional tone, no bullet lists. End with one key action item.`,
@@ -365,18 +365,18 @@ Write in 4-5 short paragraphs, professional tone, no bullet lists. End with one 
 
   return (
     <Layout fullBleed>
-      <div style={{ background: NAVY, minHeight: "100vh", color: "#fff", fontFamily: "system-ui, sans-serif" }}>
+      <div className="kiq-ops-shell kiq-readable-surface" style={{ background: NAVY, minHeight: "100vh", color: "#0F172A", fontFamily: "var(--font-sans)" }}>
 
         {/* ── Header ── */}
-        <div style={{ background: "#040c22", borderBottom: `1px solid ${BORDER}`, padding: "18px 28px" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div className="kiq-ops-header" style={{ margin: 18, borderRadius: 24, padding: "18px 28px" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <Globe size={18} style={{ color: ACCENT }} />
-                <h1 style={{ fontSize: 18, fontWeight: 900, color: "#fff", margin: 0 }}>Government Statistics Intelligence Hub</h1>
-                <span style={{ fontSize: 10, fontWeight: 800, color: ACCENT, background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.25)", borderRadius: 6, padding: "2px 8px", letterSpacing: "0.08em" }}>KINCAID IQ</span>
+                <h1 style={{ fontSize: 18, fontWeight: 900, color: "#0F172A", margin: 0 }}>Government Statistics Intelligence Hub</h1>
+                <span style={{ fontSize: 10, fontWeight: 800, color: ACCENT, background: "rgba(59,130,246,0.12)", border: "1px solid rgba(59,130,246,0.25)", borderRadius: 6, padding: "2px 8px", letterSpacing: "0.08em" }}>KINCAID HEALTH</span>
               </div>
-              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", margin: "4px 0 0" }}>
+              <p style={{ fontSize: 11, color: "#64748b", margin: "4px 0 0" }}>
                 Live feeds from 6 free US government APIs — BLS · FDA · USASpending · CMS · FRED · Census
               </p>
             </div>
@@ -388,9 +388,9 @@ Write in 4-5 short paragraphs, professional tone, no bullet lists. End with one 
                     style={{
                       fontSize: 8, fontWeight: 800, letterSpacing: "0.1em",
                       padding: "2px 6px", borderRadius: 4,
-                      background: configured ? "rgba(0,255,148,0.08)" : "rgba(255,255,255,0.04)",
-                      border: `1px solid ${configured ? "rgba(0,255,148,0.2)" : "rgba(255,255,255,0.08)"}`,
-                      color: configured ? NEON.green : "rgba(255,255,255,0.2)",
+                      background: configured ? "rgba(0,255,148,0.08)" : "#ffffff",
+                      border: `1px solid ${configured ? "rgba(0,255,148,0.2)" : "#e2e8f0"}`,
+                      color: configured ? NEON.green : "#94a3b8",
                       cursor: "help",
                     }}>
                     {configured ? <CheckCircle2 size={8} style={{ display: "inline", marginRight: 3 }} /> : ""}
@@ -398,7 +398,7 @@ Write in 4-5 short paragraphs, professional tone, no bullet lists. End with one 
                   </span>
                 ))}
               </div>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", borderLeft: `1px solid ${BORDER}`, paddingLeft: 10 }}>
+              <div style={{ fontSize: 11, color: "#475569", borderLeft: `1px solid ${BORDER}`, paddingLeft: 10, fontWeight: 700 }}>
                 {isLoading ? "Loading…" : `${liveCount}/6 live`}
               </div>
               <button
@@ -408,8 +408,8 @@ Write in 4-5 short paragraphs, professional tone, no bullet lists. End with one 
                 style={{
                   display: "flex", alignItems: "center", gap: 6,
                   padding: "8px 14px", borderRadius: 9,
-                  background: "rgba(255,255,255,0.05)", border: `1px solid ${BORDER}`,
-                  color: "rgba(255,255,255,0.6)", fontSize: 11, fontWeight: 700, cursor: "pointer",
+                  background: "#f8fafc", border: `1px solid ${BORDER}`,
+                  color: "#1e293b", fontSize: 11, fontWeight: 700, cursor: "pointer",
                 }}>
                 <RefreshCw size={12} style={{ animation: (refresh.isPending || isLoading) ? "spin 1s linear infinite" : undefined }} />
                 Refresh All
@@ -423,7 +423,7 @@ Write in 4-5 short paragraphs, professional tone, no bullet lists. End with one 
                   padding: "8px 16px", borderRadius: 9,
                   background: aiLoading ? "rgba(59,130,246,0.15)" : `linear-gradient(135deg, #3b82f6, #1d4ed8)`,
                   border: "1px solid rgba(59,130,246,0.4)",
-                  color: "#fff", fontSize: 11, fontWeight: 800, cursor: aiLoading ? "not-allowed" : "pointer",
+                  color: "#ffffff", fontSize: 11, fontWeight: 800, cursor: aiLoading ? "not-allowed" : "pointer",
                 }}>
                 {aiLoading ? <Loader2 size={12} style={{ animation: "spin 1s linear infinite" }} /> : <Brain size={12} />}
                 AI Synthesis
@@ -439,8 +439,8 @@ Write in 4-5 short paragraphs, professional tone, no bullet lists. End with one 
                 <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: ACCENT }}>AI Intelligence Brief</span>
               </div>
               {aiLoading
-                ? <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", fontStyle: "italic" }}>Synthesizing data across all 6 government sources…</div>
-                : <div style={{ fontSize: 12, color: "rgba(255,255,255,0.8)", lineHeight: 1.7, whiteSpace: "pre-wrap" }}>{aiSummary}</div>
+                ? <div style={{ fontSize: 12, color: "#475569", fontStyle: "italic" }}>Synthesizing data across all 6 government sources…</div>
+                : <div style={{ fontSize: 12, color: "#0f172a", lineHeight: 1.7, whiteSpace: "pre-wrap" }}>{aiSummary}</div>
               }
             </div>
           )}
@@ -451,7 +451,7 @@ Write in 4-5 short paragraphs, professional tone, no bullet lists. End with one 
           {isLoading && (
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "80px 0", gap: 16 }}>
               <Loader2 size={32} style={{ color: ACCENT, animation: "spin 1s linear infinite" }} />
-              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>Fetching live data from 6 government APIs…</div>
+              <div style={{ fontSize: 13, color: "#475569" }}>Fetching live data from 6 government APIs…</div>
             </div>
           )}
 
@@ -460,13 +460,13 @@ Write in 4-5 short paragraphs, professional tone, no bullet lists. End with one 
               <AlertTriangle size={16} style={{ color: NEON.red }} />
               <div>
                 <div style={{ fontSize: 13, fontWeight: 700, color: NEON.red }}>Could not load government data</div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>{(error as Error).message}</div>
+                <div style={{ fontSize: 11, color: "#475569", marginTop: 2 }}>{(error as Error).message}</div>
               </div>
             </div>
           )}
 
           {data && (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 16 }}>
               <BLSPanel        data={sources.bls         ?? {}} />
               <FDAPanel        data={sources.fda         ?? {}} />
               <USASpendingPanel data={sources.usaspending ?? {}} />
@@ -478,9 +478,9 @@ Write in 4-5 short paragraphs, professional tone, no bullet lists. End with one 
 
           {/* Footer note */}
           {data && (
-            <div style={{ marginTop: 20, padding: "12px 16px", background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`, borderRadius: 10 }}>
+            <div style={{ marginTop: 20, padding: "12px 16px", background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 10 }}>
               <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}>
-                <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(255,255,255,0.25)" }}>Data Sources</div>
+                <div style={{ fontSize: 9, fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.12em", color: "#64748b" }}>Data Sources</div>
                 {[
                   { label: "BLS", url: "https://api.bls.gov/publicAPI/v1", note: "No key required" },
                   { label: "FDA openFDA", url: "https://api.fda.gov", note: "No key required" },
@@ -491,13 +491,13 @@ Write in 4-5 short paragraphs, professional tone, no bullet lists. End with one 
                 ].map(s => (
                   <a key={s.label} href={s.url} target="_blank" rel="noreferrer"
                     title={s.note}
-                    style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", textDecoration: "none", display: "flex", alignItems: "center", gap: 3 }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "#fff")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.3)")}>
+                    style={{ fontSize: 9, color: "#64748b", textDecoration: "none", display: "flex", alignItems: "center", gap: 3 }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "#0f172a")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "#64748b")}>
                     {s.label} <ExternalLink size={7} />
                   </a>
                 ))}
-                <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", marginLeft: "auto" }}>Last fetch: {data.fetched_at}</div>
+                <div style={{ fontSize: 9, color: "#94a3b8", marginLeft: "auto" }}>Last fetch: {data.fetched_at}</div>
               </div>
             </div>
           )}

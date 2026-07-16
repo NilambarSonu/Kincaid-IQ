@@ -1,5 +1,5 @@
 """
-Kincaid IQ — per-file evidence manifest helpers (Hard Rule #03).
+Kincaid Health — per-file evidence manifest helpers (Hard Rule #03).
 
 Hard Rule #03 requires that *every* export carry a SHA-256 evidence manifest.
 The unified Client Package builder in `export_router.py` does this with an

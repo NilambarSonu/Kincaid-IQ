@@ -69,10 +69,10 @@ export function PlanDossier({ className, subjects }: PlanDossierProps) {
   return (
     <div className={cn("space-y-5", className)} data-testid="plan-dossier">
       {/* Generator */}
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-4 space-y-3">
+      <div className="rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-4 space-y-3">
         <div className="flex items-center gap-2">
           <FolderOpen className="w-4 h-4 text-[#00A8FF]" />
-          <span className="text-xs font-semibold text-zinc-200">Entity Dossier Generator</span>
+          <span className="text-xs font-semibold text-slate-700">Entity Dossier Generator</span>
         </div>
 
         <div className="flex gap-2 flex-wrap">
@@ -81,7 +81,7 @@ export function PlanDossier({ className, subjects }: PlanDossierProps) {
             onChange={e => setSubject(e.target.value)}
             onKeyDown={e => { if (e.key === "Enter" && subject) generate(); }}
             placeholder="Subject name (e.g. pharmacy, NPS, contract)"
-            className="flex-1 min-w-48 rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]/50"
+            className="flex-1 min-w-48 rounded-lg bg-white border border-slate-200 px-3 py-2 text-sm text-slate-700 placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]/50"
             data-testid="input-dossier-subject"
             list="dossier-subject-list"
           />
@@ -94,7 +94,7 @@ export function PlanDossier({ className, subjects }: PlanDossierProps) {
           <select
             value={subjectType}
             onChange={e => setSubjectType(e.target.value)}
-            className="rounded-lg bg-zinc-950 border border-zinc-700 px-3 py-2 text-sm text-zinc-200 focus:outline-none"
+            className="rounded-lg bg-white border border-slate-200 px-3 py-2 text-sm text-slate-700 focus:outline-none"
             data-testid="select-dossier-type"
           >
             {["plan", "provider", "drug", "counterparty"].map(t => (
@@ -109,7 +109,7 @@ export function PlanDossier({ className, subjects }: PlanDossierProps) {
             className={cn(
               "flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-semibold transition-all",
               !subject || isPending
-                ? "bg-zinc-800 border border-zinc-700 text-zinc-500 cursor-not-allowed"
+                ? "bg-white border border-slate-200 text-zinc-500 cursor-not-allowed"
                 : "bg-[#00A8FF]/10 border border-[#00A8FF]/30 text-[#00A8FF] hover:bg-[#00A8FF]/20",
             )}
           >
@@ -159,7 +159,7 @@ export function PlanDossier({ className, subjects }: PlanDossierProps) {
                     {f.severity}
                   </span>
                   <span className="font-mono text-zinc-500">{f.claim_id}</span>
-                  <span className="text-zinc-300">{f.title}</span>
+                  <span className="text-slate-500">{f.title}</span>
                   <span className="text-zinc-600">— {f.flag}</span>
                 </div>
               ))}

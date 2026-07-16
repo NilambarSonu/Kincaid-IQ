@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Stop-Loss IQ™
+Kincaid Health — Stop-Loss IQ™
 AI-powered stop-loss contract analysis against 50 fiduciary-aligned issues across 10 provisions.
 Scores contracts 0–100 with negotiation guidance for brokers and self-funded plan sponsors.
 """

@@ -72,7 +72,7 @@ export default function NewsIntelligence() {
   };
 
   const NewsCard = ({ item, i }: { item: any; i: number }) => (
-    <div key={i} className="metric-card hover:bg-white/5 transition-colors cursor-pointer" data-testid={`card-news-${i}`}>
+    <div key={i} className="metric-card hover:bg-[var(--kiq-surface)]/5 transition-colors cursor-pointer" data-testid={`card-news-${i}`}>
       <div className="flex justify-between items-start mb-2">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-[10px] font-bold text-[#00A8FF] bg-[#00A8FF]/10 px-1.5 py-0.5 rounded border border-[#00A8FF]/20 uppercase">
@@ -90,7 +90,7 @@ export default function NewsIntelligence() {
           {item.sentiment}
         </span>
       </div>
-      <h3 className="text-base font-bold text-white mb-1.5 leading-tight hover:text-[#00A8FF] transition-colors">
+      <h3 className="text-base font-bold text-[var(--kiq-ink)] mb-1.5 leading-tight hover:text-[#00A8FF] transition-colors">
         {item.headline}
       </h3>
       <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{item.summary}</p>
@@ -100,7 +100,7 @@ export default function NewsIntelligence() {
             <button
               key={j}
               onClick={(e) => { e.stopPropagation(); navigate(`/company?ticker=${h}`); }}
-              className="text-[10px] font-bold bg-white/5 border border-white/10 px-1.5 py-0.5 rounded-lg text-white hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-all flex items-center gap-1"
+              className="text-[10px] font-bold bg-[var(--kiq-surface)]/5 border border-white/10 px-1.5 py-0.5 rounded-lg text-white hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-all flex items-center gap-1"
               data-testid="chip-holding-impact"
             >
               {h} <ExternalLink size={9} className="opacity-50" />
@@ -157,7 +157,7 @@ export default function NewsIntelligence() {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <div className="lg:col-span-3">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-            <TabsList className="bg-white/5 p-1 border border-white/10 rounded-xl flex-wrap h-auto gap-1">
+            <TabsList className="bg-[var(--kiq-surface)]/5 p-1 border border-white/10 rounded-xl flex-wrap h-auto gap-1">
               {tabDefs.map(tab => {
                 const Icon = tab.icon;
                 const count = tabCounts[tab.id] ?? 0;
@@ -171,7 +171,7 @@ export default function NewsIntelligence() {
                     <Icon size={12} />
                     {tab.label}
                     {count > 0 && news.length > 0 && (
-                      <span className="ml-1 text-[9px] font-bold bg-white/10 px-1.5 py-0.5 rounded-full">{count}</span>
+                      <span className="ml-1 text-[9px] font-bold bg-[var(--kiq-surface)]/10 px-1.5 py-0.5 rounded-full">{count}</span>
                     )}
                   </TabsTrigger>
                 );
@@ -183,7 +183,7 @@ export default function NewsIntelligence() {
                 {mutation.isPending && (
                   <div className="metric-card py-20 flex flex-col items-center justify-center">
                     <Loader2 size={32} className="animate-spin mb-4 text-[#00A8FF]" />
-                    <p className="font-bold text-white">Claude is synthesizing your intelligence feed…</p>
+                    <p className="font-bold text-[var(--kiq-ink)]">Claude is synthesizing your intelligence feed…</p>
                     <p className="text-xs text-muted-foreground mt-1 text-center max-w-sm">
                       Scanning macro data, earnings transcripts, and geopolitics for Jeremiah's $2.41B portfolio
                     </p>
@@ -220,7 +220,7 @@ export default function NewsIntelligence() {
             <p className="section-label mb-3">Trending Topics</p>
             <div className="flex flex-wrap gap-1.5">
               {["Fed Funds", "Nvidia Earnings", "China Stimulus", "OPEC+", "Big Tech", "Inflation", "Yield Curve", "Credit Spreads", "M&A Activity"].map(topic => (
-                <span key={topic} className="text-[10px] font-bold bg-white/5 border border-white/10 px-2 py-1 rounded-lg text-muted-foreground hover:text-white hover:bg-white/10 transition-all cursor-pointer">
+                <span key={topic} className="text-[10px] font-bold bg-[var(--kiq-surface)]/5 border border-white/10 px-2 py-1 rounded-lg text-muted-foreground hover:text-[var(--kiq-ink)] hover:bg-[var(--kiq-surface)]/10 transition-all cursor-pointer">
                   {topic}
                 </span>
               ))}

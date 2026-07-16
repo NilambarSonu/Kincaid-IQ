@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Agent 3: Economic Model Agent
+Kincaid Health — Agent 3: Economic Model Agent
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Quantifies all financial exposure from Agents 1 & 2 in precise dollar terms.
 Never leaves economic impact vague or unquantified.
@@ -77,7 +77,7 @@ def _parse_dollars(value) -> int:
     except (ValueError, TypeError):
         return 0
 
-SYSTEM = """You are the Kincaid IQ Economic Impact Agent — Layer 3 of a 5-agent fiduciary intelligence pipeline.
+SYSTEM = """You are the Kincaid Health Economic Impact Agent — Layer 3 of a 5-agent fiduciary intelligence pipeline.
 
 ROLE: Quantify ALL financial exposure in precise dollar terms. Never leave economic impact vague or unquantified.
 

@@ -47,7 +47,7 @@ function MarkdownText({ text }: { text: string }) {
           return <p key={i} className="font-bold mt-3 mb-1 text-sm" style={{ color: "#00A8FF" }}>{content}</p>;
         }
         if (line.match(/^\*\*.*\*\*$/)) {
-          return <p key={i} className="font-bold text-white mt-2">{line.replace(/\*\*/g, "")}</p>;
+          return <p key={i} className="font-bold text-[var(--kiq-ink)] mt-2">{line.replace(/\*\*/g, "")}</p>;
         }
         if (line.startsWith("- ") || line.startsWith("• ")) {
           return <p key={i} className="pl-3 flex gap-2"><span style={{ color: "rgba(0,168,255,0.5)" }}>·</span><span className="text-muted-foreground">{line.slice(2)}</span></p>;
@@ -58,7 +58,7 @@ function MarkdownText({ text }: { text: string }) {
           return <p key={i} className="flex gap-2"><span className="font-bold flex-shrink-0" style={{ color: "#FFB800" }}>{num}.</span><span className="text-muted-foreground">{content}</span></p>;
         }
         if (line.trim() === "") return <div key={i} className="h-1" />;
-        const boldified = line.replace(/\*\*([^*]+)\*\*/g, `<strong class="text-white">$1</strong>`);
+        const boldified = line.replace(/\*\*([^*]+)\*\*/g, `<strong class="text-[var(--kiq-ink)]">$1</strong>`);
         return <p key={i} className="text-muted-foreground" dangerouslySetInnerHTML={{ __html: boldified }} />;
       })}
     </div>
@@ -193,13 +193,13 @@ export default function TaxReturns() {
           <div className="metric-card" style={{ border: "1px solid rgba(255,77,109,0.15)" }} data-testid="card-tax-upload">
             <div className="flex items-center gap-2 mb-4">
               <Upload size={14} style={{ color: "#FF4D6D" }} />
-              <p className="font-bold text-sm text-white">Upload Tax Return</p>
+              <p className="font-bold text-sm text-[var(--kiq-ink)]">Upload Tax Return</p>
             </div>
 
             <div
               className="border-2 border-dashed rounded-xl p-8 text-center mb-4 cursor-pointer transition-all duration-200"
               style={{
-                borderColor: dragOver ? "rgba(255,77,109,0.5)" : selectedFile ? "rgba(255,77,109,0.35)" : "rgba(255,255,255,0.08)",
+                borderColor: dragOver ? "rgba(255,77,109,0.5)" : selectedFile ? "rgba(255,77,109,0.35)" : "#e2e8f0",
                 background: dragOver ? "rgba(255,77,109,0.06)" : selectedFile ? "rgba(255,77,109,0.04)" : "transparent",
               }}
               onClick={() => fileInputRef.current?.click()}
@@ -215,7 +215,7 @@ export default function TaxReturns() {
                   <p className="text-xs text-muted-foreground mt-1">{formatBytes(selectedFile.size)}</p>
                   <button
                     onClick={(e) => { e.stopPropagation(); setSelectedFile(null); }}
-                    className="mt-2 text-xs text-muted-foreground hover:text-white transition-colors"
+                    className="mt-2 text-xs text-muted-foreground hover:text-[var(--kiq-ink)] transition-colors"
                     data-testid="button-clear-file"
                   >
                     Clear ×
@@ -245,10 +245,10 @@ export default function TaxReturns() {
                   value={taxYear}
                   onChange={(e) => setTaxYear(e.target.value)}
                   className="w-full text-sm px-3 py-2 rounded-lg"
-                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                  style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                   data-testid="select-tax-year"
                 >
-                  {TAX_YEARS.map((y) => <option key={y} value={y} style={{ background: "#0a0a1a" }}>{y}</option>)}
+                  {TAX_YEARS.map((y) => <option key={y} value={y} style={{ background: "#F8FAFC" }}>{y}</option>)}
                 </select>
               </div>
               <div>
@@ -257,10 +257,10 @@ export default function TaxReturns() {
                   value={filingType}
                   onChange={(e) => setFilingType(e.target.value)}
                   className="w-full text-sm px-3 py-2 rounded-lg"
-                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                  style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                   data-testid="select-filing-type"
                 >
-                  {FILING_TYPES.map((t) => <option key={t} value={t} style={{ background: "#0a0a1a" }}>{t}</option>)}
+                  {FILING_TYPES.map((t) => <option key={t} value={t} style={{ background: "#F8FAFC" }}>{t}</option>)}
                 </select>
               </div>
               <div>
@@ -271,7 +271,7 @@ export default function TaxReturns() {
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="e.g., includes Schedule K-1 from Sequoia fund"
                   className="w-full text-sm px-3 py-2 rounded-lg"
-                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                  style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                   data-testid="input-tax-notes"
                 />
               </div>
@@ -302,7 +302,7 @@ export default function TaxReturns() {
               )}
             </button>
 
-            <div className="mt-4 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            <div className="mt-4 pt-4" style={{ borderTop: "1px solid #f1f5f9" }}>
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <CheckCircle size={10} style={{ color: "#00FF94" }} />
                 <span>Documents stored encrypted in secure vault</span>
@@ -322,7 +322,7 @@ export default function TaxReturns() {
         <div className="lg:col-span-3 space-y-4">
           {isLoading ? (
             <div className="space-y-3">
-              {[1, 2].map((i) => <div key={i} className="h-20 rounded-xl animate-pulse" style={{ background: "rgba(255,255,255,0.03)" }} />)}
+              {[1, 2].map((i) => <div key={i} className="h-20 rounded-xl animate-pulse" style={{ background: "#ffffff" }} />)}
             </div>
           ) : taxDocs.length === 0 ? (
             <div className="metric-card flex flex-col items-center justify-center py-16"
@@ -347,7 +347,7 @@ export default function TaxReturns() {
                           <FileText size={15} style={{ color: "#FF4D6D" }} />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-bold text-sm text-white truncate">{doc.original_filename}</p>
+                          <p className="font-bold text-sm text-[var(--kiq-ink)] truncate">{doc.original_filename}</p>
                           <div className="flex items-center gap-2 mt-0.5 flex-wrap">
                             {doc.linked_asset && (
                               <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
@@ -406,10 +406,10 @@ export default function TaxReturns() {
                         style={{ border: "1px solid rgba(0,168,255,0.15)", background: "rgba(0,168,255,0.02)" }}
                         data-testid="panel-analysis">
                         <div className="flex items-center justify-between px-4 py-3"
-                          style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                          style={{ borderBottom: "1px solid #f1f5f9" }}>
                           <div className="flex items-center gap-2">
                             <BrainCircuit size={13} style={{ color: "#00A8FF" }} />
-                            <p className="text-sm font-bold text-white">AI Analysis — {analysisPanel.filename}</p>
+                            <p className="text-sm font-bold text-[var(--kiq-ink)]">AI Analysis — {analysisPanel.filename}</p>
                             {!analysisPanel.text_extracted && (
                               <span className="text-[9px] px-1.5 py-0.5 rounded font-semibold"
                                 style={{ background: "rgba(255,184,0,0.08)", color: "#FFB800", border: "1px solid rgba(255,184,0,0.2)" }}>
@@ -418,7 +418,7 @@ export default function TaxReturns() {
                             )}
                           </div>
                           <button onClick={() => setAnalysisPanel(null)}
-                            className="text-muted-foreground hover:text-white transition-colors"
+                            className="text-muted-foreground hover:text-[var(--kiq-ink)] transition-colors"
                             data-testid="button-close-analysis">
                             <X size={13} />
                           </button>
@@ -429,9 +429,9 @@ export default function TaxReturns() {
                           const engineColor = engine === "openai" ? "#00FF94" : "#00A8FF";
                           const isExpanded = expandedEngine === engine;
                           return (
-                            <div key={engine} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                            <div key={engine} style={{ borderBottom: "1px solid #ffffff" }}>
                               <button
-                                className="w-full flex items-center justify-between px-4 py-3 hover:bg-white/[0.02] transition-colors"
+                                className="w-full flex items-center justify-between px-4 py-3 hover:bg-[var(--kiq-surface)]/[0.02] transition-colors"
                                 onClick={() => setExpandedEngine(isExpanded ? null : engine)}
                                 data-testid={`toggle-${engine}`}>
                                 <div className="flex items-center gap-2">

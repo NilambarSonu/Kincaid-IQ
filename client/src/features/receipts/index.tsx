@@ -69,14 +69,14 @@ export function ReceiptsLedger({ className, showNewForm = false }: ReceiptsLedge
     <div className={cn("space-y-4", className)} data-testid="receipts-ledger">
       {/* Header controls */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-1 rounded-lg border border-slate-800 bg-[#0B1117] p-1">
+        <div className="flex items-center gap-1 rounded-lg border border-slate-200 bg-[#0B1117] p-1">
           {(["all", "board", "export"] as const).map(f => (
             <button
               key={f}
               onClick={() => setFilter(f)}
               className={cn(
                 "px-3 py-1 rounded text-xs font-medium transition-colors",
-                filter === f ? "bg-slate-700 text-white" : "text-slate-500 hover:text-slate-300",
+                filter === f ? "bg-slate-700 text-slate-900" : "text-slate-500 hover:text-slate-500",
               )}
               data-testid={`filter-receipts-${f}`}
             >
@@ -111,7 +111,7 @@ export function ReceiptsLedger({ className, showNewForm = false }: ReceiptsLedge
                 value={form[key]}
                 onChange={e => setForm(p => ({ ...p, [key]: e.target.value }))}
                 placeholder={placeholder}
-                className="w-full rounded bg-slate-900 border border-slate-700 px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#00A8FF]/60"
+                className="w-full rounded bg-slate-50 border border-slate-200 px-3 py-2 text-sm text-slate-900 placeholder-slate-500 focus:outline-none focus:border-[#00A8FF]/60"
                 data-testid={`input-receipt-${key}`}
               />
             </div>
@@ -127,7 +127,7 @@ export function ReceiptsLedger({ className, showNewForm = false }: ReceiptsLedge
               Create Receipt
             </button>
             <button onClick={() => setFormOpen(false)}
-              className="px-4 py-2 text-xs text-slate-500 hover:text-slate-300">
+              className="px-4 py-2 text-xs text-slate-500 hover:text-slate-500">
               Cancel
             </button>
           </div>
@@ -137,10 +137,10 @@ export function ReceiptsLedger({ className, showNewForm = false }: ReceiptsLedge
       {/* Receipts list */}
       {isLoading ? (
         <div className="space-y-2 animate-pulse">
-          {[1, 2, 3].map(i => <div key={i} className="h-14 rounded-lg bg-slate-800/60" />)}
+          {[1, 2, 3].map(i => <div key={i} className="h-14 rounded-lg bg-white/60" />)}
         </div>
       ) : receipts.length === 0 ? (
-        <div className="rounded-lg border border-slate-800 bg-[#0B1117] p-8 text-center">
+        <div className="rounded-lg border border-slate-200 bg-[#0B1117] p-8 text-center">
           <Receipt className="w-8 h-8 text-slate-600 mx-auto mb-2" />
           <p className="text-sm text-slate-500">No decision receipts yet</p>
           <p className="text-xs text-slate-600 mt-1">Receipts are created when recommendations are issued</p>
@@ -191,17 +191,17 @@ export function ReceiptRow({
   const ac = receiptActionColor(r.action);
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 overflow-hidden"
+    <div className="rounded-xl border border-slate-200 bg-slate-50/50 overflow-hidden"
       data-testid={`receipt-row-${r.receipt_id}`}>
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-zinc-800/30 transition-colors text-left"
+        className="w-full flex items-center gap-3 px-4 py-3.5 hover:bg-white/30 transition-colors text-left"
         data-testid={`toggle-receipt-${r.receipt_id}`}
       >
         <FileCheck className="w-4 h-4 text-zinc-600 shrink-0" />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-xs font-mono font-bold text-zinc-200">{r.receipt_id}</span>
+            <span className="text-xs font-mono font-bold text-slate-700">{r.receipt_id}</span>
             <span className="text-[9px] font-mono px-1.5 py-0.5 rounded border"
               style={{ color: ac, borderColor: `${ac}40`, background: `${ac}10` }}>
               {r.action}
@@ -226,7 +226,7 @@ export function ReceiptRow({
       </button>
 
       {open && (
-        <div className="border-t border-zinc-800 px-4 py-4 space-y-4">
+        <div className="border-t border-slate-200 px-4 py-4 space-y-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-[10px] font-mono">
             {[
               { icon: Clock,        label: "Generated",     value: receiptFmt(r.generated_at) },
@@ -238,19 +238,19 @@ export function ReceiptRow({
                 color: r.board_grade ? "#FFB800" : "#94a3b8" },
               { icon: Hash,         label: "Confidence",    value: r.confidence != null ? `${Math.round(r.confidence * 100)}%` : "—" },
             ].map(({ icon: Icon, label, value, color }) => (
-              <div key={label} className="rounded-lg border border-zinc-800 bg-zinc-900/50 px-3 py-2">
+              <div key={label} className="rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-2">
                 <div className="flex items-center gap-1.5 mb-1">
                   <Icon className="w-3 h-3 text-zinc-600" />
                   <span className="text-[9px] text-zinc-600 uppercase tracking-wider">{label}</span>
                 </div>
-                <span style={{ color: color ?? undefined }} className="text-zinc-300 break-all">{value}</span>
+                <span style={{ color: color ?? undefined }} className="text-slate-500 break-all">{value}</span>
               </div>
             ))}
           </div>
 
-          <div className="rounded-lg border border-zinc-800 bg-zinc-950/40 px-3 py-2">
+          <div className="rounded-lg border border-slate-200 bg-white/40 px-3 py-2">
             <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-wider mb-1">Rationale</p>
-            <p className="text-[10px] font-mono text-zinc-300 leading-relaxed">{r.rationale}</p>
+            <p className="text-[10px] font-mono text-slate-500 leading-relaxed">{r.rationale}</p>
           </div>
 
           {r.claim_ids.length > 0 && (
@@ -313,7 +313,7 @@ export function ReceiptLookup({
   return (
     <div className={cn("space-y-5", className)} data-testid="receipt-lookup">
       {/* Lookup by ID */}
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
+      <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
         <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-1.5">
           Receipt ID Lookup
         </label>
@@ -327,7 +327,7 @@ export function ReceiptLookup({
               value={searchId}
               onChange={e => setSearchId(e.target.value)}
               onKeyDown={e => e.key === "Enter" && lookupById()}
-              className="w-full bg-zinc-950 border border-zinc-700 rounded-lg pl-7 pr-3 py-2 text-xs font-mono text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#A855F7]/50"
+              className="w-full bg-white border border-slate-200 rounded-lg pl-7 pr-3 py-2 text-xs font-mono text-slate-700 placeholder-zinc-600 focus:outline-none focus:border-[#A855F7]/50"
             />
           </div>
           <button

@@ -47,11 +47,11 @@ export default function DrillPension() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-zinc-950 p-6 space-y-6">
+      <div className="min-h-screen bg-[var(--kiq-surface)] p-6 space-y-6">
         <div className="flex items-start gap-4">
           <button onClick={() => navigate("/governance-war-room")}
             data-testid="btn-back-pension"
-            className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-zinc-300 border border-zinc-800/40 rounded-lg px-2.5 py-1.5 flex-shrink-0 mt-1">
+            className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-[var(--kiq-muted)] border border-[var(--kiq-hairline)]/40 rounded-lg px-2.5 py-1.5 flex-shrink-0 mt-1">
             <ArrowLeft className="w-3 h-3" />
             War Room
           </button>
@@ -60,7 +60,7 @@ export default function DrillPension() {
               <PiggyBank className="w-4 h-4 text-[#FFB800]" />
               <span className="text-[10px] font-mono uppercase tracking-widest text-[#FFB800]">Drill Surface · Pension</span>
             </div>
-            <h1 className="text-2xl font-black text-zinc-100">Retirement Plan Intelligence</h1>
+            <h1 className="text-2xl font-black text-[var(--kiq-ink)]">Retirement Plan Intelligence</h1>
             <p className="text-xs text-zinc-500 mt-1">401(k) assets · Allocation · Participation · Performance</p>
           </div>
         </div>
@@ -73,7 +73,7 @@ export default function DrillPension() {
             { label: "YTD Return",          value: PENSION_DATA.ytdReturn + "%",      color: "#00FF94" },
             { label: "Avg Balance",         value: fmtD(PENSION_DATA.averageBalance), color: "#A855F7" },
           ].map(({ label, value, color }) => (
-            <div key={label} className="bg-zinc-950/80 border border-zinc-800/50 rounded-xl p-4">
+            <div key={label} className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-xl p-4">
               <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-600 mb-1">{label}</p>
               <p className="text-xl font-black font-mono" style={{ color }}>{value}</p>
             </div>
@@ -82,7 +82,7 @@ export default function DrillPension() {
 
         <div className="grid grid-cols-2 gap-4">
           {/* Asset allocation */}
-          <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-2xl p-5">
+          <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-4">
               <BarChart3 className="w-3.5 h-3.5 text-[#00A8FF]" />
               <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Asset Allocation</span>
@@ -91,13 +91,13 @@ export default function DrillPension() {
               {ASSET_ALLOCATION.map(a => (
                 <div key={a.category} data-testid={`asset-${a.category.replace(/\s+/g, "-").toLowerCase()}`}>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs text-zinc-300">{a.category}</span>
+                    <span className="text-xs text-[var(--kiq-muted)]">{a.category}</span>
                     <div className="text-right">
                       <span className="text-xs font-mono font-bold" style={{ color: a.color }}>{a.pct}%</span>
                       <span className="text-[10px] font-mono text-zinc-600 ml-2">{fmtD(a.value)}</span>
                     </div>
                   </div>
-                  <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                  <div className="h-1.5 bg-[var(--kiq-surface)] rounded-full overflow-hidden">
                     <div className="h-full rounded-full" style={{ width: `${a.pct}%`, background: a.color }} />
                   </div>
                 </div>
@@ -106,7 +106,7 @@ export default function DrillPension() {
           </div>
 
           {/* Deferral distribution */}
-          <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-2xl p-5">
+          <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-2xl p-5">
             <div className="flex items-center gap-2 mb-4">
               <Percent className="w-3.5 h-3.5 text-[#A855F7]" />
               <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Deferral Rate Distribution</span>
@@ -126,7 +126,7 @@ export default function DrillPension() {
             </div>
 
             {/* Plan details */}
-            <div className="mt-4 pt-4 border-t border-zinc-800/40 space-y-2 text-xs">
+            <div className="mt-4 pt-4 border-t border-[var(--kiq-hairline)]/40 space-y-2 text-xs">
               {[
                 ["Plan Type", PENSION_DATA.planType],
                 ["Match Formula", PENSION_DATA.matchFormula],
@@ -136,7 +136,7 @@ export default function DrillPension() {
               ].map(([k, v]) => (
                 <div key={k} className="flex justify-between">
                   <span className="text-zinc-600">{k}</span>
-                  <span className="text-zinc-300 text-right max-w-[55%]">{v}</span>
+                  <span className="text-[var(--kiq-muted)] text-right max-w-[55%]">{v}</span>
                 </div>
               ))}
             </div>

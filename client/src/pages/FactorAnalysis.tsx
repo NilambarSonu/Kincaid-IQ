@@ -42,7 +42,7 @@ export default function FactorAnalysis() {
           <p className="text-xs text-muted-foreground mb-4">Portfolio active exposure vs. S&P 500 benchmark</p>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={exposures} layout="vertical" margin={{ left: 20, right: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" horizontal={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" horizontal={false} />
               <XAxis type="number" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} />
               <YAxis dataKey="factor" type="category" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} width={80} />
               <Tooltip 
@@ -63,7 +63,7 @@ export default function FactorAnalysis() {
           <p className="text-xs text-muted-foreground mb-4">Contribution to total portfolio return by factor and strategy</p>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={attribution} layout="vertical" margin={{ left: 40, right: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" horizontal={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" horizontal={false} />
               <XAxis type="number" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} unit="%" />
               <YAxis dataKey="name" type="category" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} width={120} />
               <Tooltip 
@@ -85,7 +85,7 @@ export default function FactorAnalysis() {
           <p className="section-label mb-4">Sector Active Weights</p>
           <ResponsiveContainer width="100%" height={350}>
             <BarChart data={sectorWeights} layout="vertical" margin={{ left: 60, right: 20 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" horizontal={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" horizontal={false} />
               <XAxis type="number" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} unit="%" />
               <YAxis dataKey="sector" type="category" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} width={120} />
               <Tooltip 
@@ -103,39 +103,39 @@ export default function FactorAnalysis() {
 
         <div className="metric-card" data-testid="grid-style-box">
           <p className="section-label mb-6">Equity Style Box</p>
-          <div className="grid grid-cols-4 gap-1 aspect-square relative border border-white/10 p-1 bg-white/5 rounded-md">
+          <div className="grid grid-cols-4 gap-1 aspect-square relative border border-white/10 p-1 bg-[var(--kiq-surface)]/5 rounded-md">
             <div className="col-span-1"></div>
             <div className="text-[10px] text-center text-muted-foreground uppercase">Value</div>
             <div className="text-[10px] text-center text-muted-foreground uppercase">Blend</div>
             <div className="text-[10px] text-center text-muted-foreground uppercase">Growth</div>
             
             <div className="text-[10px] flex items-center justify-end text-muted-foreground uppercase pr-2">Large</div>
-            <div className="bg-white/5 rounded-sm border border-white/5 flex items-center justify-center">
+            <div className="bg-[var(--kiq-surface)]/5 rounded-sm border border-white/5 flex items-center justify-center">
                {styleBox.largeCapWeight > 0.5 && styleBox.valueWeight > 0.4 && <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />}
             </div>
-            <div className="bg-white/5 rounded-sm border border-white/5 flex items-center justify-center">
+            <div className="bg-[var(--kiq-surface)]/5 rounded-sm border border-white/5 flex items-center justify-center">
                {styleBox.largeCapWeight > 0.5 && styleBox.blendWeight > 0.4 && <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />}
             </div>
-            <div className="bg-white/10 rounded-sm border border-primary/40 flex items-center justify-center shadow-[0_0_15px_rgba(0,168,255,0.3)]">
+            <div className="bg-[var(--kiq-surface)]/10 rounded-sm border border-primary/40 flex items-center justify-center shadow-[0_0_15px_rgba(0,168,255,0.3)]">
                {styleBox.largeCapWeight > 0.5 && styleBox.growthWeight > 0.4 && <div className="w-4 h-4 rounded-full bg-primary" />}
             </div>
 
             <div className="text-[10px] flex items-center justify-end text-muted-foreground uppercase pr-2">Mid</div>
-            <div className="bg-white/5 rounded-sm border border-white/5"></div>
-            <div className="bg-white/5 rounded-sm border border-white/5"></div>
-            <div className="bg-white/5 rounded-sm border border-white/5"></div>
+            <div className="bg-[var(--kiq-surface)]/5 rounded-sm border border-white/5"></div>
+            <div className="bg-[var(--kiq-surface)]/5 rounded-sm border border-white/5"></div>
+            <div className="bg-[var(--kiq-surface)]/5 rounded-sm border border-white/5"></div>
 
             <div className="text-[10px] flex items-center justify-end text-muted-foreground uppercase pr-2">Small</div>
-            <div className="bg-white/5 rounded-sm border border-white/5"></div>
-            <div className="bg-white/5 rounded-sm border border-white/5"></div>
-            <div className="bg-white/5 rounded-sm border border-white/5"></div>
+            <div className="bg-[var(--kiq-surface)]/5 rounded-sm border border-white/5"></div>
+            <div className="bg-[var(--kiq-surface)]/5 rounded-sm border border-white/5"></div>
+            <div className="bg-[var(--kiq-surface)]/5 rounded-sm border border-white/5"></div>
           </div>
           <div className="mt-6 space-y-2">
             <div className="flex justify-between text-xs">
               <span className="text-muted-foreground">Large Cap Growth</span>
-              <span className="font-bold text-white">{(styleBox.largeCapWeight * styleBox.growthWeight * 100).toFixed(1)}%</span>
+              <span className="font-bold text-[var(--kiq-ink)]">{(styleBox.largeCapWeight * styleBox.growthWeight * 100).toFixed(1)}%</span>
             </div>
-            <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+            <div className="w-full h-1.5 bg-[var(--kiq-surface)]/5 rounded-full overflow-hidden">
               <div className="h-full bg-primary" style={{ width: `${styleBox.largeCapWeight * styleBox.growthWeight * 100}%` }} />
             </div>
           </div>
@@ -147,7 +147,7 @@ export default function FactorAnalysis() {
           <p className="section-label mb-4">Rolling Factor Exposure (12M)</p>
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={rollingExposures}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
               <XAxis dataKey="date" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} />
               <YAxis tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} />
               <Tooltip 

@@ -543,7 +543,7 @@ def sf_push_lead(req: SalesforcePush, db: Session = Depends(get_db)):
             "Company": req.company or "Unknown",
             "Title": req.title or "",
             "State": req.state or "",
-            "LeadSource": "Kincaid IQ — Contact Intelligence™",
+            "LeadSource": "Kincaid Health — Contact Intelligence™",
         }
         if req.participants:
             lead_data["NumberOfEmployees"] = req.participants

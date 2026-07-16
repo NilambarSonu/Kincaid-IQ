@@ -131,16 +131,16 @@ function EmployerNameSearch({ onPick }: { onPick: (ein: string) => void }) {
         data-testid="input-sbi-name"
         className="pl-9 pr-8 py-2 rounded-lg text-xs w-full outline-none transition-all"
         style={{
-          background: "rgba(255,255,255,0.04)",
-          border: "1px solid rgba(255,255,255,0.08)",
-          color: "#fff",
+          background: "#ffffff",
+          border: "1px solid #e2e8f0",
+          color: "#0F172A",
         }}
       />
       {isFetching && <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 animate-spin text-zinc-500" />}
 
       {open && debounced.length >= 2 && (
         <div className="absolute left-0 right-0 mt-2 rounded-xl overflow-hidden z-50"
-          style={{ background: "#0a0a14", border: "1px solid rgba(255,255,255,0.1)",
+          style={{ background: "#F8FAFC", border: "1px solid #e2e8f0",
                    boxShadow: "0 24px 48px rgba(0,0,0,0.6)" }}>
           {!data || data.results.length === 0 ? (
             <div className="px-4 py-5 text-center text-[11px] text-zinc-500">
@@ -153,11 +153,11 @@ function EmployerNameSearch({ onPick }: { onPick: (ein: string) => void }) {
                   <button
                     onMouseDown={(e) => { e.preventDefault(); pick(r); }}
                     data-testid={`sbi-search-result-${r.ein}`}
-                    className="w-full text-left px-3 py-2.5 flex items-center gap-2.5 hover:bg-white/5 transition-colors border-t"
-                    style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                    className="w-full text-left px-3 py-2.5 flex items-center gap-2.5 hover:bg-[var(--kiq-surface)]/5 transition-colors border-t"
+                    style={{ borderColor: "#0F172A" }}>
                     <Building2 className="w-3.5 h-3.5 flex-shrink-0" style={{ color: NEON.blue }} />
                     <div className="flex-1 min-w-0">
-                      <div className="text-xs font-bold text-white truncate">{r.sponsor}</div>
+                      <div className="text-xs font-bold text-[var(--kiq-ink)] truncate">{r.sponsor}</div>
                       <div className="text-[10px] text-zinc-500 mt-0.5 truncate">
                         {r.city}, {r.state} · {r.participants.toLocaleString()} participants · FY{r.latest_year}
                       </div>
@@ -189,15 +189,17 @@ export default function ShadyBrokerIndex() {
 
   return (
     <Layout fullBleed>
-      <div className="min-h-screen" style={{ background: "#030308" }}>
+      <div className="min-h-screen kiq-readable-surface" style={{ background: "#F8FAFC" }}>
         {/* EIN selector strip */}
         <div className="px-8 py-3 flex items-center gap-3" style={{
-          background: "linear-gradient(180deg, rgba(20,12,32,0.6) 0%, rgba(8,4,18,0.6) 100%)",
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
+          background: "linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(248,250,252,0.70) 100%)",
+          borderBottom: "1px solid rgba(15,23,42,0.08)",
+          backdropFilter: "blur(18px) saturate(160%)",
+          WebkitBackdropFilter: "blur(18px) saturate(160%)",
         }}>
           <ShieldAlert className="w-4 h-4" style={{ color: NEON.red }} />
-          <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500">
-            Shady Broker Index™ · DOL Form 5500 Forensic Engine
+          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-600">
+            Broker Compensation Index™ · DOL Form 5500 Forensic Engine
           </span>
           <div className="ml-auto flex items-center gap-2">
             <EmployerNameSearch onPick={(e) => setEin(e)} />
@@ -235,7 +237,7 @@ export default function ShadyBrokerIndex() {
             <ReportHeader report={report} />
 
             {/* Tab bar */}
-            <div className="flex" style={{ borderBottom: "1px solid rgba(255,255,255,0.07)", background: "#030308" }}>
+            <div className="flex" style={{ borderBottom: "1px solid #e2e8f0", background: "#F8FAFC" }}>
               {TABS.map(({ id, label, icon: Icon, color }) => {
                 const active = activeTab === id;
                 return (
@@ -244,7 +246,7 @@ export default function ShadyBrokerIndex() {
                     onClick={() => setActiveTab(id)}
                     data-testid={`sbi-tab-${id}`}
                     className="flex-1 flex items-center justify-center gap-1.5 py-3.5 text-xs font-bold uppercase tracking-wider transition-all relative"
-                    style={{ color: active ? color : "rgba(255,255,255,0.25)" }}
+                    style={{ color: active ? color : "#64748b" }}
                   >
                     <Icon className="w-3.5 h-3.5" />
                     {label}
@@ -277,8 +279,9 @@ function ReportHeader({ report }: { report: Report }) {
   const rating = RATING_CONFIG[report.rating] ?? RATING_CONFIG.concern;
   return (
     <div className="relative overflow-hidden" style={{
-      background: "linear-gradient(135deg, #000 0%, #140014 50%, #000 100%)",
-      borderBottom: `1px solid ${rating.border}`,
+      background: "radial-gradient(circle at 82% 18%, rgba(83,58,253,0.12), transparent 36%), linear-gradient(135deg, rgba(255,255,255,0.94) 0%, rgba(248,250,252,0.76) 100%)",
+      borderBottom: "1px solid rgba(15,23,42,0.08)",
+      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.92), 0 18px 44px rgba(15,23,42,0.06)",
     }}>
       <div className="absolute inset-0 pointer-events-none" style={{
         background: `radial-gradient(ellipse at 80% 50%, ${rating.color}15 0%, transparent 60%)`,
@@ -289,10 +292,10 @@ function ReportHeader({ report }: { report: Report }) {
             <div className="flex items-center gap-2 mb-1">
               <ShieldAlert className="w-4 h-4" style={{ color: NEON.red }} />
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-600">
-                Shady Broker Index™ · Fiduciary Forensic Analysis
+                Broker Compensation Index™ · Fiduciary Forensic Analysis
               </span>
             </div>
-            <h2 className="text-2xl font-black text-white truncate leading-tight" data-testid="sbi-sponsor-name">
+            <h2 className="text-2xl font-black text-[var(--kiq-ink)] truncate leading-tight" data-testid="sbi-sponsor-name">
               {report.sponsor_name}
             </h2>
             <p className="text-xs text-zinc-600 mt-0.5 flex items-center gap-3">
@@ -315,7 +318,7 @@ function ReportHeader({ report }: { report: Report }) {
         </div>
 
         {/* Stat strip */}
-        <div className="flex items-center gap-6 mt-5 pt-5" style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="flex items-center gap-6 mt-5 pt-5" style={{ borderTop: "1px solid #f8fafc" }}>
           {[
             { label: "CATEGORIES",       value: "10",                                              color: NEON.blue },
             { label: "CRITICAL FLAGS",   value: String(report.criticals),                          color: NEON.red },
@@ -369,7 +372,7 @@ function QuickLookTab({ report }: { report: Report }) {
             <div key={c.key} className="rounded-xl p-4 transition-all"
               data-testid={`sbi-category-${c.key}`}
               style={{
-                background: "rgba(255,255,255,0.02)",
+                background: "#ffffff",
                 border: `1px solid ${cfg.border}`,
               }}>
               <div className="flex items-start justify-between gap-3">
@@ -383,9 +386,9 @@ function QuickLookTab({ report }: { report: Report }) {
                 </div>
               </div>
               {c.value != null && (
-                <div className="mt-3 pt-3 flex items-center gap-3" style={{ borderTop: "1px solid rgba(255,255,255,0.04)" }}>
+                <div className="mt-3 pt-3 flex items-center gap-3" style={{ borderTop: "1px solid #ffffff" }}>
                   <span className="text-[10px] text-zinc-600 uppercase tracking-wider">{c.unit}</span>
-                  <span className="text-xs font-bold text-zinc-300 ml-auto">{typeof c.value === "number" ? c.value.toLocaleString() : c.value}</span>
+                  <span className="text-xs font-bold text-[var(--kiq-muted)] ml-auto">{typeof c.value === "number" ? c.value.toLocaleString() : c.value}</span>
                 </div>
               )}
             </div>
@@ -408,13 +411,13 @@ function ScorecardTab({ report }: { report: Report }) {
         const cfg = RATING_CONFIG[c.rating] ?? RATING_CONFIG.concern;
         return (
           <div key={c.key} className="rounded-xl overflow-hidden" style={{
-            background: "rgba(255,255,255,0.02)",
+            background: "#ffffff",
             border: `1px solid ${cfg.border}`,
           }}>
-            <div className="flex items-center gap-4 px-5 py-3.5" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+            <div className="flex items-center gap-4 px-5 py-3.5" style={{ borderBottom: "1px solid #ffffff" }}>
               <div className="text-[10px] font-mono text-zinc-600 w-6">#{c.id.toString().padStart(2,"0")}</div>
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-bold text-white">{c.label}</div>
+                <div className="text-sm font-bold text-[var(--kiq-ink)]">{c.label}</div>
                 <div className="text-[10px] text-zinc-500 mt-0.5">Weight {Math.round(c.weight * 100)}% · severity {c.severity}</div>
               </div>
               <div className="text-right">
@@ -423,17 +426,17 @@ function ScorecardTab({ report }: { report: Report }) {
               </div>
             </div>
             <div className="px-5 py-3.5 space-y-2.5">
-              <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+              <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#f1f5f9" }}>
                 <div className="h-full rounded-full" style={{ width: `${c.score}%`, background: cfg.color, boxShadow: `0 0 8px ${cfg.color}` }} />
               </div>
-              <div className="text-xs text-zinc-300 leading-relaxed">{c.narrative}</div>
+              <div className="text-xs text-[var(--kiq-muted)] leading-relaxed">{c.narrative}</div>
               {c.evidence?.length > 0 && (
                 <details className="mt-2">
-                  <summary className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 cursor-pointer hover:text-zinc-300">
+                  <summary className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 cursor-pointer hover:text-[var(--kiq-muted)]">
                     Evidence · {c.evidence.length} record(s)
                   </summary>
                   <div className="mt-2 rounded-lg p-3 text-[11px] font-mono text-zinc-400 overflow-x-auto"
-                    style={{ background: "rgba(0,0,0,0.4)", border: "1px solid rgba(255,255,255,0.04)" }}>
+                    style={{ background: "rgba(0,0,0,0.06)", border: "1px solid #ffffff" }}>
                     <pre>{JSON.stringify(c.evidence, null, 2)}</pre>
                   </div>
                 </details>
@@ -466,14 +469,14 @@ function ExposureTab({ report }: { report: Report }) {
         ))}
       </div>
 
-      <div className="rounded-xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
+      <div className="rounded-xl overflow-hidden" style={{ border: "1px solid #e2e8f0" }}>
         <div className="px-5 py-3 text-[10px] font-bold uppercase tracking-widest text-zinc-500"
-          style={{ background: "rgba(255,255,255,0.03)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+          style={{ background: "#ffffff", borderBottom: "1px solid #f1f5f9" }}>
           Engagement Scenarios
         </div>
         <table className="w-full text-xs">
           <thead>
-            <tr style={{ background: "rgba(255,255,255,0.02)" }}>
+            <tr style={{ background: "#ffffff" }}>
               <th className="text-left px-5 py-2.5 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Scenario</th>
               <th className="text-right px-5 py-2.5 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Annual</th>
               <th className="text-right px-5 py-2.5 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Y1–Y5</th>
@@ -482,8 +485,8 @@ function ExposureTab({ report }: { report: Report }) {
           </thead>
           <tbody>
             {report.exposure.scenarios.map(s => (
-              <tr key={s.name} className="border-t" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
-                <td className="px-5 py-3 text-zinc-300">{s.name}</td>
+              <tr key={s.name} className="border-t" style={{ borderColor: "#0F172A" }}>
+                <td className="px-5 py-3 text-[var(--kiq-muted)]">{s.name}</td>
                 <td className="px-5 py-3 text-right font-bold" style={{ color: NEON.gold }}>{s.annual ? fmt$(s.annual) : "—"}</td>
                 <td className="px-5 py-3 text-right font-bold" style={{ color: NEON.gold }}>{fmt$(s.five_year)}</td>
                 <td className="px-5 py-3 text-zinc-500">{s.strategy}</td>
@@ -507,7 +510,7 @@ function RedFlagsTab({ report }: { report: Report }) {
       {critical.length === 0 && warning.length === 0 && (
         <div className="rounded-2xl p-8 text-center" style={{ background: `${NEON.green}0a`, border: `1px solid ${NEON.green}35` }}>
           <CheckCircle2 className="w-10 h-10 mx-auto mb-3" style={{ color: NEON.green }} />
-          <div className="text-sm font-bold text-white">No critical or warning flags detected.</div>
+          <div className="text-sm font-bold text-[var(--kiq-ink)]">No critical or warning flags detected.</div>
           <div className="text-xs text-zinc-500 mt-1">Broker scored cleanly across all 10 forensic categories.</div>
         </div>
       )}
@@ -540,7 +543,7 @@ function FlagCard({ severity, color, text, category, icon: Icon }: { severity: s
           <span className="text-[10px] text-zinc-500">·</span>
           <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">{category}</span>
         </div>
-        <div className="text-xs text-zinc-200 leading-relaxed">{text}</div>
+        <div className="text-xs text-[var(--kiq-ink-soft)] leading-relaxed">{text}</div>
       </div>
     </div>
   );
@@ -552,7 +555,7 @@ function MultiYearTab({ report }: { report: Report }) {
   const maxPct = Math.max(...report.yearly.map(y => y.broker_pct_income ?? 0), report.benchmarks.p90_broker_pct_income);
   return (
     <div className="p-6 space-y-5">
-      <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
+      <div className="rounded-xl p-5" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
         <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-4">Broker Commission % of Plan Income · Year-over-Year</div>
         <div className="flex items-end gap-2 h-48">
           {report.yearly.map(y => {
@@ -579,10 +582,10 @@ function MultiYearTab({ report }: { report: Report }) {
         </div>
       </div>
 
-      <div className="rounded-xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.08)" }}>
+      <div className="rounded-xl overflow-hidden" style={{ border: "1px solid #e2e8f0" }}>
         <table className="w-full text-xs">
           <thead>
-            <tr style={{ background: "rgba(255,255,255,0.03)" }}>
+            <tr style={{ background: "#ffffff" }}>
               {["Year","Plan","Carrier","Participants","Plan Income","Broker Comm","Admin Fees","% Income","$/Member"].map(h => (
                 <th key={h} className="text-left px-4 py-2.5 text-[10px] font-bold uppercase tracking-widest text-zinc-500">{h}</th>
               ))}
@@ -590,18 +593,18 @@ function MultiYearTab({ report }: { report: Report }) {
           </thead>
           <tbody>
             {report.yearly.map(y => (
-              <tr key={y.year} className="border-t" style={{ borderColor: "rgba(255,255,255,0.04)" }} data-testid={`sbi-year-${y.year}`}>
-                <td className="px-4 py-2.5 font-mono text-zinc-300">{y.year}</td>
+              <tr key={y.year} className="border-t" style={{ borderColor: "#0F172A" }} data-testid={`sbi-year-${y.year}`}>
+                <td className="px-4 py-2.5 font-mono text-[var(--kiq-muted)]">{y.year}</td>
                 <td className="px-4 py-2.5 text-zinc-400 truncate max-w-[160px]" title={y.plan_name}>{y.plan_name}</td>
                 <td className="px-4 py-2.5 text-zinc-500 truncate max-w-[140px]" title={y.carrier}>{y.carrier}</td>
-                <td className="px-4 py-2.5 text-zinc-300">{y.participants.toLocaleString()}</td>
-                <td className="px-4 py-2.5 text-zinc-300">{fmt$(y.total_income)}</td>
+                <td className="px-4 py-2.5 text-[var(--kiq-muted)]">{y.participants.toLocaleString()}</td>
+                <td className="px-4 py-2.5 text-[var(--kiq-muted)]">{fmt$(y.total_income)}</td>
                 <td className="px-4 py-2.5 font-bold" style={{ color: NEON.red }}>{fmt$(y.broker_commissions)}</td>
-                <td className="px-4 py-2.5 text-zinc-300">{fmt$(y.admin_fees)}</td>
+                <td className="px-4 py-2.5 text-[var(--kiq-muted)]">{fmt$(y.admin_fees)}</td>
                 <td className="px-4 py-2.5 font-bold" style={{ color: (y.broker_pct_income ?? 0) > report.benchmarks.p90_broker_pct_income ? NEON.red : NEON.gold }}>
                   {fmtPct(y.broker_pct_income)}
                 </td>
-                <td className="px-4 py-2.5 text-zinc-300">{y.broker_per_member ? fmt$(y.broker_per_member) : "—"}</td>
+                <td className="px-4 py-2.5 text-[var(--kiq-muted)]">{y.broker_per_member ? fmt$(y.broker_per_member) : "—"}</td>
               </tr>
             ))}
           </tbody>
@@ -656,17 +659,17 @@ function latestPerMember(report: Report): number {
 function BenchmarkBlock({ title, unit, values, dollar }: { title: string; unit: string; values: { label: string; value: number; color: string; current?: boolean }[]; dollar?: boolean }) {
   const max = Math.max(...values.map(v => v.value));
   return (
-    <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
+    <div className="rounded-xl p-5" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
       <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-1">{title}</div>
       <div className="text-[10px] text-zinc-600 mb-4">{unit}</div>
       <div className="space-y-3">
         {values.map(v => (
           <div key={v.label}>
             <div className="flex items-center justify-between text-[11px] mb-1">
-              <span className={v.current ? "font-bold text-white" : "text-zinc-400"}>{v.label}</span>
+              <span className={v.current ? "font-bold text-[var(--kiq-ink)]" : "text-zinc-400"}>{v.label}</span>
               <span className="font-bold" style={{ color: v.color }}>{dollar ? fmt$(v.value) : `${v.value.toFixed(1)}%`}</span>
             </div>
-            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "#f1f5f9" }}>
               <div className="h-full" style={{ width: `${(v.value / max) * 100}%`, background: v.color, boxShadow: `0 0 8px ${v.color}80` }} />
             </div>
           </div>
@@ -686,15 +689,15 @@ function EngagementTab({ report }: { report: Report }) {
           <Sparkles className="w-4 h-4" style={{ color: NEON.green }} />
           <span className="text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: NEON.green }}>Opener Script</span>
         </div>
-        <p className="text-sm text-zinc-200 leading-relaxed italic">"{report.engagement.opener}"</p>
+        <p className="text-sm text-[var(--kiq-ink-soft)] leading-relaxed italic">"{report.engagement.opener}"</p>
       </div>
 
       {report.engagement.talking_points.length > 0 && (
-        <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
+        <div className="rounded-xl p-5" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
           <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Talking Points (top {report.engagement.talking_points.length})</div>
           <ol className="space-y-2.5">
             {report.engagement.talking_points.map((t, i) => (
-              <li key={i} className="flex items-start gap-3 text-xs text-zinc-300 leading-relaxed">
+              <li key={i} className="flex items-start gap-3 text-xs text-[var(--kiq-muted)] leading-relaxed">
                 <span className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold"
                   style={{ background: `${NEON.red}18`, color: NEON.red, border: `1px solid ${NEON.red}33` }}>{i + 1}</span>
                 {t}
@@ -704,11 +707,11 @@ function EngagementTab({ report }: { report: Report }) {
         </div>
       )}
 
-      <div className="rounded-xl p-5" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)" }}>
+      <div className="rounded-xl p-5" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
         <div className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">ERISA / DOL Citations</div>
         <ul className="space-y-2">
           {report.engagement.citations.map((c, i) => (
-            <li key={i} className="flex items-start gap-2 text-xs text-zinc-300">
+            <li key={i} className="flex items-start gap-2 text-xs text-[var(--kiq-muted)]">
               <FileText className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" style={{ color: NEON.blue }} />
               {c}
             </li>

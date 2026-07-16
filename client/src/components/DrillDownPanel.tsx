@@ -72,10 +72,10 @@ function EvidenceCard({ node }: { node: DrillNode }) {
             </span>
           )}
         </div>
-        <p className="text-xs font-semibold text-white mb-1">{node.label}</p>
+        <p className="text-xs font-semibold text-slate-900 mb-1">{node.label}</p>
         {node.institution && (
           <p className="text-[10px] text-muted-foreground mb-1.5">
-            Issued by: <span className="text-white/70">{node.institution}</span>
+            Issued by: <span className="text-slate-900/70">{node.institution}</span>
           </p>
         )}
         {node.description && (
@@ -124,22 +124,22 @@ function ChildCard({
       onClick={onClick}
       className="w-full text-left rounded-xl p-4 transition-all duration-200 group"
       style={{
-        background: "rgba(255,255,255,0.02)",
-        border: `1px solid rgba(255,255,255,0.06)`,
+        background: "#ffffff",
+        border: `1px solid #f1f5f9`,
       }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLElement).style.background = `${accent}08`;
         (e.currentTarget as HTMLElement).style.borderColor = `${accent}28`;
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.02)";
-        (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.06)";
+        (e.currentTarget as HTMLElement).style.background = "#ffffff";
+        (e.currentTarget as HTMLElement).style.borderColor = "#f1f5f9";
       }}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1 flex-wrap">
-            <span className="text-xs font-semibold text-white truncate">{node.label}</span>
+            <span className="text-xs font-semibold text-slate-900 truncate">{node.label}</span>
             {node.badge && (
               <span
                 className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full"
@@ -272,7 +272,7 @@ export function DrillDownPanel() {
               <button
                 onClick={close}
                 className="w-7 h-7 rounded-lg flex items-center justify-center hover:opacity-80 transition-opacity"
-                style={{ background: "rgba(255,255,255,0.05)", color: "rgba(130,160,200,0.6)" }}
+                style={{ background: "#f8fafc", color: "rgba(130,160,200,0.6)" }}
               >
                 <X size={14} />
               </button>
@@ -282,11 +282,11 @@ export function DrillDownPanel() {
             {path.length > 0 && (
               <div
                 className="flex-shrink-0 px-5 py-2 flex items-center gap-1 overflow-x-auto"
-                style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
+                style={{ borderBottom: "1px solid #ffffff" }}
               >
                 <button
                   onClick={() => goToLevel(0)}
-                  className="text-[10px] text-muted-foreground hover:text-white transition-colors whitespace-nowrap"
+                  className="text-[10px] text-muted-foreground hover:text-slate-900 transition-colors whitespace-nowrap"
                 >
                   {root?.title}
                 </button>
@@ -295,7 +295,7 @@ export function DrillDownPanel() {
                     <ChevronRight size={9} className="text-muted-foreground flex-shrink-0" />
                     <button
                       onClick={() => goToLevel(i + 1)}
-                      className="text-[10px] whitespace-nowrap hover:text-white transition-colors truncate max-w-[120px]"
+                      className="text-[10px] whitespace-nowrap hover:text-slate-900 transition-colors truncate max-w-[120px]"
                       style={{ color: i === path.length - 1 ? accent : "rgba(130,160,200,0.6)" }}
                     >
                       {node.label}
@@ -316,7 +316,7 @@ export function DrillDownPanel() {
                     {root.subtitle}
                   </p>
                   <h2
-                    className="text-2xl font-bold text-white mb-1"
+                    className="text-2xl font-bold text-slate-900 mb-1"
                     style={{ fontFamily: "var(--font-display)", color: accent }}
                   >
                     {root.value ?? root.title}
@@ -353,7 +353,7 @@ export function DrillDownPanel() {
                     )}
                   </div>
                   <h2
-                    className="text-xl font-bold text-white mb-1"
+                    className="text-xl font-bold text-slate-900 mb-1"
                     style={{ fontFamily: "var(--font-display)", color: accent }}
                   >
                     {currentNode.value ?? currentNode.label}
@@ -370,7 +370,7 @@ export function DrillDownPanel() {
                   {currentNode.meta && currentNode.meta.length > 0 && (
                     <div
                       className="mt-2 p-3 rounded-xl grid grid-cols-2 gap-x-4 gap-y-1.5"
-                      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                      style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}
                     >
                       {currentNode.meta.map((m) => (
                         <div key={m.key}>
@@ -463,15 +463,15 @@ export function DrillDownPanel() {
             {/* Footer */}
             <div
               className="flex-shrink-0 px-5 py-3 flex items-center justify-between"
-              style={{ borderTop: "1px solid rgba(255,255,255,0.05)", background: "rgba(0,0,0,0.2)" }}
+              style={{ borderTop: "1px solid #f8fafc", background: "rgba(0,0,0,0.2)" }}
             >
               <div className="flex items-center gap-1.5">
                 <div
                   className="w-1.5 h-1.5 rounded-full animate-pulse"
-                  style={{ background: "#00FF94" }}
+                  style={{ background: "#F8FAFC" }}
                 />
                 <span className="text-[9px] font-medium" style={{ color: "rgba(0,255,148,0.6)" }}>
-                  Immutable Evidence Trail · Kincaid RMC Record
+                  Immutable Evidence Trail · Kincaid Health Record
                 </span>
               </div>
               <div className="flex gap-1">
@@ -480,7 +480,7 @@ export function DrillDownPanel() {
                     key={i}
                     className="w-1 h-1 rounded-full transition-all duration-200"
                     style={{
-                      background: i <= currentLevel ? accent : "rgba(255,255,255,0.1)",
+                      background: i <= currentLevel ? accent : "#e2e8f0",
                       transform: i === currentLevel ? "scale(1.4)" : "scale(1)",
                     }}
                   />

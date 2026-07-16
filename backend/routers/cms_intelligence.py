@@ -1,5 +1,5 @@
 """
-CMS & Healthcare Intelligence Layer — Kincaid IQ
+CMS & Healthcare Intelligence Layer — Kincaid Health
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 6 free public APIs — no key required for any endpoint.
 
@@ -29,7 +29,7 @@ _anthropic = AsyncAnthropic(
     base_url=settings.openai_base_url,
 )
 
-_PA_SYSTEM_PROMPT = """You are Kincaid IQ — a fiduciary-grade prior authorization intelligence engine.
+_PA_SYSTEM_PROMPT = """You are Kincaid Health — a fiduciary-grade prior authorization intelligence engine.
 
 You function as a hybrid of:
 - MIT-level systems engineer (data modeling, causal reasoning, structured systems)
@@ -552,7 +552,7 @@ class PAAnalyzeRequest(BaseModel):
 @router.post("/pa-analyze")
 async def pa_analyze(req: PAAnalyzeRequest):
     """
-    PA IQ — AI-powered prior authorization intelligence using the Kincaid IQ fiduciary engine.
+    PA IQ — AI-powered prior authorization intelligence using the Kincaid Health fiduciary engine.
     Produces structured 6-section analysis: Problem Definition, Economic Impact, Root Cause,
     Intelligence Output, Prioritized Decisions, and Recommended Actions.
     """

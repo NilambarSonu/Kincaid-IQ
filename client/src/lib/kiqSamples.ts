@@ -1,5 +1,5 @@
 /**
- * Kincaid IQ — Sample Documents
+ * Kincaid Health — Sample Documents
  * One-click demo inputs for each analysis mode.
  * Used by UploadDashboard and KiqEngine Screen 1.
  */

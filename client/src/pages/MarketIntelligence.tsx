@@ -6,12 +6,12 @@ import {
   Activity, Users, MapPin, FileText
 } from "lucide-react";
 
-const BG    = "#07091c";
-const CARD  = "#0d1033";
-const CARD2 = "#111540";
-const BORDER= "rgba(255,255,255,0.08)";
-const TEXT1 = "#f0f4ff";
-const TEXT2 = "#8b9dd4";
+const BG    = "transparent";
+const CARD  = "rgba(255,255,255,0.82)";
+const CARD2 = "rgba(248,250,252,0.82)";
+const BORDER= "rgba(15,23,42,0.10)";
+const TEXT1 = "#08111f";
+const TEXT2 = "#3f516a";
 const ACCENT= "#4f7dff";
 const GREEN = "#22c55e";
 const AMBER = "#f59e0b";
@@ -385,7 +385,7 @@ function EdgarXbrlSection() {
           onClick={() => query.trim() && setSearch(query.trim())}
           disabled={isFetching}
           style={{ height: 40, padding: "0 20px", background: PURPLE, border: "none", borderRadius: 8,
-            color: "#fff", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
+            color: "#0F172A", fontSize: 13, fontWeight: 700, cursor: "pointer" }}>
           {isFetching ? "…" : "Pull Financials"}
         </button>
       </div>
@@ -537,11 +537,11 @@ export default function MarketIntelligence() {
   const [activeSection, setActiveSection] = useState("fred");
 
   return (
-    <div style={{ minHeight: "100vh", background: BG, padding: "28px 24px", color: TEXT1 }}>
+    <div className="kiq-ops-shell" style={{ minHeight: "100vh", background: BG, padding: "28px 24px", color: TEXT1, fontFamily: "var(--font-sans)" }}>
       <div style={{ maxWidth: 1060, margin: "0 auto" }}>
 
         {/* Header */}
-        <div style={{ marginBottom: 24 }}>
+        <div className="kiq-ops-header" style={{ marginBottom: 24, padding: 20, borderRadius: 18 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
             <div style={{ width: 40, height: 40, borderRadius: 10, background: `${TEAL}18`,
               border: `1px solid ${TEAL}40`, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -575,7 +575,7 @@ export default function MarketIntelligence() {
         </div>
 
         {/* Section Nav */}
-        <div style={{ display: "flex", gap: 4, background: CARD, borderRadius: 12,
+        <div className="kiq-ops-card" style={{ display: "flex", gap: 4, background: CARD, borderRadius: 12,
           border: `1px solid ${BORDER}`, padding: 6, marginBottom: 20, flexWrap: "wrap" }}>
           {SECTIONS.map(s => {
             const active = activeSection === s.id;
@@ -601,7 +601,7 @@ export default function MarketIntelligence() {
         </div>
 
         {/* Section description */}
-        <div style={{ background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 8,
+        <div className="kiq-ops-card" style={{ background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 8,
           padding: "8px 14px", marginBottom: 18 }}>
           <p style={{ color: TEXT2, fontSize: 11, margin: 0 }}>
             {SECTIONS.find(s => s.id === activeSection)?.desc}

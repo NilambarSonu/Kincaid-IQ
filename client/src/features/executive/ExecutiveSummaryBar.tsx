@@ -35,7 +35,7 @@ function PillGroup({
       <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mb-1.5">{label}</p>
 
       {/* Stacked bar */}
-      <div className="flex h-1.5 rounded-full overflow-hidden mb-2 bg-zinc-800">
+      <div className="flex h-1.5 rounded-full overflow-hidden mb-2 bg-white">
         {Object.entries(counts).map(([policy, count]) => (
           <div
             key={policy}
@@ -80,7 +80,7 @@ export function ExecutiveSummaryBar({
 }: ExecutiveSummaryBarProps) {
   return (
     <div
-      className={cn("grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-xl border border-zinc-800 bg-zinc-900/60 px-4 py-4", className)}
+      className={cn("grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-4", className)}
       data-testid="executive-summary-bar"
     >
       <PillGroup label="Render Policy"  counts={renderPolicyCounts} colorMap={RENDER_COLOR}  />

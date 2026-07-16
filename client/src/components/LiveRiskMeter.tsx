@@ -92,9 +92,9 @@ export function LiveRiskMeter({
             gap: 5,
             padding: "2px 8px",
             borderRadius: 6,
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            color: "rgba(255,255,255,0.4)",
+            background: "#ffffff",
+            border: "1px solid #e2e8f0",
+            color: "#475569",
             fontSize: 10,
             fontWeight: 700,
             letterSpacing: "0.08em",
@@ -108,7 +108,7 @@ export function LiveRiskMeter({
     return (
       <div
         data-testid="live-risk-loading"
-        style={{ height: 108, borderRadius: 8, background: "rgba(255,255,255,0.04)" }}
+        style={{ height: 108, borderRadius: 8, background: "#ffffff" }}
       />
     );
   }
@@ -158,18 +158,18 @@ export function LiveRiskMeter({
         <div
           style={{
             fontSize: 10,
-            fontWeight: 900,
+            fontWeight: 700,
             letterSpacing: "0.12em",
-            color: "rgba(255,255,255,0.55)",
+            color: "var(--kiq-muted)",
             textTransform: "uppercase",
           }}
         >
           OS-13 · Live Risk Index
         </div>
         <div style={{ flex: 1 }} />
-        <div style={{ fontSize: 24, fontWeight: 900, color, lineHeight: 1 }}>
+        <div style={{ fontSize: 24, fontWeight: 700, color, lineHeight: 1 }}>
           {risk.toFixed(0)}
-          <span style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", marginLeft: 4 }}>
+          <span style={{ fontSize: 10, color: "var(--kiq-muted)", marginLeft: 4 }}>
             /100
           </span>
         </div>
@@ -182,7 +182,7 @@ export function LiveRiskMeter({
           height: 8,
           borderRadius: 4,
           overflow: "hidden",
-          background: "rgba(255,255,255,0.06)",
+          background: "#e2e8f0",
         }}
       >
         <div
@@ -215,8 +215,8 @@ export function LiveRiskMeter({
         style={{
           display: "flex",
           gap: 12,
-          fontSize: 9,
-          color: "rgba(255,255,255,0.45)",
+          fontSize: 9.5,
+          color: "var(--kiq-muted)",
           letterSpacing: "0.05em",
         }}
       >
@@ -231,8 +231,8 @@ export function LiveRiskMeter({
             marginTop: 4,
             padding: 8,
             borderRadius: 6,
-            background: "rgba(255, 77, 109, 0.04)",
-            border: "1px solid rgba(255, 77, 109, 0.15)",
+            background: "rgba(255, 77, 109, 0.03)",
+            border: "1px solid rgba(255, 77, 109, 0.22)",
             display: "flex",
             flexDirection: "column",
             gap: 4,
@@ -241,9 +241,9 @@ export function LiveRiskMeter({
           <div
             style={{
               fontSize: 9,
-              fontWeight: 800,
+              fontWeight: 700,
               letterSpacing: "0.12em",
-              color: "rgba(255,255,255,0.40)",
+              color: "#FF4D6D",
               textTransform: "uppercase",
               marginBottom: 2,
             }}
@@ -259,7 +259,7 @@ export function LiveRiskMeter({
                 alignItems: "center",
                 gap: 8,
                 fontSize: 10,
-                color: "rgba(255,255,255,0.65)",
+                color: "var(--kiq-ink-soft)",
                 fontFamily: "ui-sans-serif, system-ui",
               }}
             >
@@ -267,14 +267,19 @@ export function LiveRiskMeter({
                 style={{
                   fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
                   fontSize: 9,
-                  fontWeight: 800,
+                  fontWeight: 700,
                   color:
                     f.drift_reason === "UNVERIFIED" ? "#FF4D6D"
                     : f.drift_reason === "STALE" ? "#F59E0B"
                     : "#BF5FFF",
                   padding: "1px 6px",
                   borderRadius: 3,
-                  background: "rgba(255,255,255,0.04)",
+                  border: `1px solid ${
+                    f.drift_reason === "UNVERIFIED" ? "rgba(255, 77, 109, 0.3)"
+                    : f.drift_reason === "STALE" ? "rgba(245, 158, 11, 0.3)"
+                    : "rgba(191, 95, 255, 0.3)"
+                  }`,
+                  background: "#ffffff",
                   flexShrink: 0,
                   width: 88,
                   textAlign: "center",
@@ -285,7 +290,7 @@ export function LiveRiskMeter({
               <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {f.title}
               </span>
-              <span style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontSize: 9, color: "rgba(255,255,255,0.35)" }}>
+              <span style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontSize: 9, color: "var(--kiq-muted)" }}>
                 conf {f.confidence.toFixed(2)}
               </span>
             </div>

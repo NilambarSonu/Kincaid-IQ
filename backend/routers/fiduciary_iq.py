@@ -63,7 +63,7 @@ def _dashboard_data(plan_name: str = "Employer Health Plan", org_name: str | Non
              "annual_compensation": 98_400, "fee_basis": "Fixed premium",
              "disclosure_received": True, "disclosure_date": "2024-01-20",
              "disclosure_complete": True, "notes": None},
-            {"vendor": "Kincaid RMC", "type": "Broker / Consultant",
+            {"vendor": "Kincaid Health", "type": "Broker / Consultant",
              "annual_compensation": 142_000, "fee_basis": "Commission + consulting fee",
              "disclosure_received": True, "disclosure_date": "2024-01-10",
              "disclosure_complete": True, "notes": "Disclosed per ERISA 408(b)(2) and CAA §202"},

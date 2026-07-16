@@ -6,7 +6,7 @@ import { resolve } from "node:path";
 import { RX_PROVISION_PMPY } from "./pdfReports";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Cross-language parity test for the Rx Defense PMPY exposure model.
+// Cross-language parity test for the PBM Contract Clarity 360 PMPY exposure model.
 //
 // The client mirror (RX_PROVISION_PMPY in ./pdfReports.ts) duplicates the backend
 // _PROVISION_EXPOSURE_PMPY map (backend/routers/rx_defense.py) that drives every

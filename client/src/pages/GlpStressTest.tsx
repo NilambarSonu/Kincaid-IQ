@@ -2,15 +2,15 @@ import { useState, useMemo } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { AlertTriangle, TrendingUp, Download, RefreshCw, Shield, Activity, ChevronRight, Lock } from "lucide-react";
 
-const BG = "#07091c";
-const BORDER = "rgba(255,255,255,0.08)";
-const T1 = "#f0f4ff";
-const ACCENT = "#4f7dff";
-const GREEN = "#22c55e";
-const AMBER = "#f59e0b";
-const RED = "#ef4444";
-const CYAN = "#00D4FF";
-const PURPLE = "#A855F7";
+const BG = "#F8FAFC";
+const BORDER = "rgba(15,23,42,0.08)";
+const T1 = "#0f172a";
+const ACCENT = "#533afd";
+const GREEN = "#10b981";
+const AMBER = "#d97706";
+const RED = "#e11d48";
+const CYAN = "#0ea5e9";
+const PURPLE = "#7c3aed";
 
 const DRUGS = [
   { id: "sema", name: "Semaglutide", brand: "Ozempic / Wegovy", net: 11200, trend: 0.34, breach_rate: 0.09 },
@@ -104,29 +104,29 @@ export default function GlpStressTest() {
   ];
 
   const card = (children: React.ReactNode, style?: React.CSSProperties) => (
-    <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`, borderRadius: 16, padding: 20, ...style }}>
+    <div style={{ background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 16, padding: 20, ...style }}>
       {children}
     </div>
   );
 
-  const label9 = (text: string, color = "rgba(255,255,255,0.4)") => (
+  const label9 = (text: string, color = "#475569") => (
     <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.18em", textTransform: "uppercase", color, marginBottom: 8 }}>{text}</div>
   );
 
   return (
-    <div style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-body)", padding: "24px 28px" }}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-sans)", padding: "24px 28px" }}>
 
       {/* Header */}
-      <div style={{ marginBottom: 24 }}>
+      <div className="kiq-ops-header" style={{ marginBottom: 24, padding: 24, borderRadius: 24 }}>
         <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.22em", color: CYAN, marginBottom: 6 }}>
-          ◈ KINCAID IQ · GLP-1 STRESS TEST ENGINE · ERISA §3(1) WELFARE PLAN COST ANALYSIS · SHRACK-7742
+          ◈ KINCAID HEALTH · GLP-1 STRESS TEST ENGINE · ERISA §3(1) WELFARE PLAN COST ANALYSIS · SHRACK-7742
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
           <div>
             <h1 style={{ fontSize: 28, fontWeight: 900, letterSpacing: "-0.02em", margin: 0, lineHeight: 1.1 }}>
               GLP-1 Drug Cost Stress Test
             </h1>
-            <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>
+            <div style={{ fontSize: 13, color: "#475569", marginTop: 4 }}>
               Glucagon-Like Peptide-1 · Ozempic · Wegovy · Mounjaro · Zepbound — Stop-Loss Exposure Modeling
             </div>
           </div>
@@ -134,9 +134,9 @@ export default function GlpStressTest() {
             {SCENARIOS.map(s => (
               <button key={s.id} onClick={() => setActiveScenario(s.id)} data-testid={`scenario-${s.id}`}
                 style={{ padding: "8px 16px", borderRadius: 10, fontSize: 11, fontWeight: 900, cursor: "pointer",
-                  background: activeScenario === s.id ? `${s.color}22` : "rgba(255,255,255,0.04)",
+                  background: activeScenario === s.id ? `${s.color}22` : "#ffffff",
                   border: `1px solid ${activeScenario === s.id ? s.color : BORDER}`,
-                  color: activeScenario === s.id ? s.color : "rgba(255,255,255,0.4)", transition: "all 0.15s" }}>
+                  color: activeScenario === s.id ? s.color : "#475569", transition: "all 0.15s" }}>
                 {s.label}
               </button>
             ))}
@@ -145,7 +145,7 @@ export default function GlpStressTest() {
       </div>
 
       {/* KPI Tiles */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 12, marginBottom: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 12, marginBottom: 20 }}>
         {kpis.map(k => (
           <div key={k.id} onClick={() => setOpenReceipt(openReceipt === k.id ? null : k.id)}
             data-testid={`kpi-tile-${k.id}`}
@@ -156,16 +156,16 @@ export default function GlpStressTest() {
               {k.id} ◈ CLICK FOR RECEIPT
             </div>
             <div style={{ fontSize: 24, fontWeight: 900, color: k.color, marginBottom: 4 }}>{k.value}</div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>{k.label}</div>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>{k.sub}</div>
+            <div style={{ fontSize: 11, color: "#334155", lineHeight: 1.5 }}>{k.label}</div>
+            <div style={{ fontSize: 10, color: "#64748b", marginTop: 4 }}>{k.sub}</div>
 
             {openReceipt === k.id && (
-              <div style={{ marginTop: 14, padding: 12, background: "rgba(0,0,0,0.4)", borderRadius: 10,
+              <div style={{ marginTop: 14, padding: 12, background: "rgba(0,0,0,0.06)", borderRadius: 10,
                 border: `1px solid ${k.color}30` }}>
                 <div style={{ fontSize: 8, color: k.color, fontWeight: 900, letterSpacing: "0.15em", marginBottom: 8 }}>
                   ◈ SCHEDULE SB EVIDENCE RECEIPT
                 </div>
-                <div style={{ fontSize: 9, color: "rgba(255,255,255,0.5)", lineHeight: 1.8 }}>
+                <div style={{ fontSize: 9, color: "#334155", lineHeight: 1.8 }}>
                   <div>KPI ID: <span style={{ color: T1 }}>{k.id}</span></div>
                   <div>Source: <span style={{ color: T1 }}>GLP-1 Cost Engine v1.0</span></div>
                   <div>Benchmark: <span style={{ color: T1 }}>SHRM / KFF 2024 Employer Health Survey</span></div>
@@ -173,11 +173,11 @@ export default function GlpStressTest() {
                   <div>Trend: <span style={{ color: T1 }}>Milliman Medical Index 2024</span></div>
                   <div>Filed: <span style={{ color: T1 }}>2025-03-19 · KINCAID-RMC</span></div>
                 </div>
-                <div style={{ marginTop: 8, padding: "6px 10px", background: "rgba(0,0,0,0.3)", borderRadius: 6,
+                <div style={{ marginTop: 8, padding: "6px 10px", background: "rgba(0,0,0,0.05)", borderRadius: 6,
                   fontFamily: "monospace", fontSize: 8, color: k.color, wordBreak: "break-all", lineHeight: 1.6 }}>
                   {hash.slice(0, 32)}…
                 </div>
-                <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)", marginTop: 4 }}>SHA-256 · KINCAID EVIDENCE SPINE</div>
+                <div style={{ fontSize: 8, color: "#64748b", marginTop: 4 }}>SHA-256 · KINCAID EVIDENCE SPINE</div>
               </div>
             )}
           </div>
@@ -185,7 +185,7 @@ export default function GlpStressTest() {
       </div>
 
       {/* Main 3-column grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "280px 1fr 320px", gap: 16, marginBottom: 20 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 16, marginBottom: 20 }}>
 
         {/* Left: Inputs */}
         {card(
@@ -200,7 +200,7 @@ export default function GlpStressTest() {
             ].map(({ label, value, setter, min, max, step, fmt }) => (
               <div key={label} style={{ marginBottom: 16 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{label}</span>
+                  <span style={{ fontSize: 11, color: "#334155" }}>{label}</span>
                   <span style={{ fontSize: 13, fontWeight: 900, color: T1 }}>{fmt(value)}</span>
                 </div>
                 <input type="range" min={min} max={max} step={step} value={value}
@@ -218,7 +218,7 @@ export default function GlpStressTest() {
               ].map(({ label, value, setter, min, max, step, fmt }) => (
                 <div key={label} style={{ marginBottom: 16 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-                    <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{label}</span>
+                    <span style={{ fontSize: 11, color: "#334155" }}>{label}</span>
                     <span style={{ fontSize: 13, fontWeight: 900, color: AMBER }}>{fmt(value)}</span>
                   </div>
                   <input type="range" min={min} max={max} step={step} value={value}
@@ -232,11 +232,11 @@ export default function GlpStressTest() {
               <div style={{ fontSize: 9, color: CYAN, fontWeight: 900, letterSpacing: "0.12em", marginBottom: 6 }}>◈ DRUG MIX SUMMARY</div>
               {model.mix.map(({ drug, pct }) => pct > 0 ? (
                 <div key={drug.id} style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                  <span style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>{drug.name}</span>
+                  <span style={{ fontSize: 10, color: "#334155" }}>{drug.name}</span>
                   <span style={{ fontSize: 10, fontWeight: 700, color: T1 }}>{fmtPct(pct)} · {fmt$(drug.net)}/yr</span>
                 </div>
               ) : null)}
-              <div style={{ marginTop: 6, fontSize: 9, color: "rgba(255,255,255,0.3)" }}>
+              <div style={{ marginTop: 6, fontSize: 9, color: "#64748b" }}>
                 Remaining: Dulaglutide {Math.max(0, 100 - semaRatio - tirzRatio)}%
               </div>
             </div>
@@ -255,7 +255,7 @@ export default function GlpStressTest() {
                     {["Metric", "PY 2025", "PY 2026", "PY 2027", "3-Yr Total"].map(h => (
                       <th key={h} style={{ padding: "8px 12px", textAlign: h === "Metric" ? "left" : "right",
                         borderBottom: `1px solid ${BORDER}`, fontSize: 9, fontWeight: 900,
-                        letterSpacing: "0.12em", color: "rgba(255,255,255,0.4)" }}>{h}</th>
+                        letterSpacing: "0.12em", color: "#475569" }}>{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -268,15 +268,15 @@ export default function GlpStressTest() {
                     { label: "Likely Specific Breaches", vals: model.years.map(y => String(y.breechers)), total: String(model.years.reduce((a, y) => a + y.breechers, 0)), color: RED },
                     { label: "Specific SL Exposure", vals: model.years.map(y => fmt$(y.specificExposure)), total: fmt$(model.years.reduce((a, y) => a + y.specificExposure, 0)), color: RED },
                     { label: "Expected Total (w/ SL)", vals: model.years.map(y => fmt$(y.expectedTotal)), total: fmt$(model.years.reduce((a, y) => a + y.expectedTotal, 0)), color: PURPLE },
-                    { label: `Aggregate Corridor (${aggregate}%)`, vals: model.years.map(y => fmt$(y.aggregateCorridor)), total: "—", color: "rgba(255,255,255,0.3)" },
+                    { label: `Aggregate Corridor (${aggregate}%)`, vals: model.years.map(y => fmt$(y.aggregateCorridor)), total: "—", color: "#64748b" },
                   ].map((row, i) => (
-                    <tr key={row.label} style={{ background: i % 2 === 0 ? "rgba(255,255,255,0.01)" : "transparent" }}>
-                      <td style={{ padding: "10px 12px", fontSize: 11, color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>{row.label}</td>
+                    <tr key={row.label} style={{ background: i % 2 === 0 ? "#f8fafc" : "transparent" }}>
+                      <td style={{ padding: "10px 12px", fontSize: 11, color: "#1e293b", fontWeight: 600 }}>{row.label}</td>
                       {row.vals.map((v, vi) => (
                         <td key={vi} style={{ padding: "10px 12px", textAlign: "right", fontWeight: 900, color: row.color }}>{v}</td>
                       ))}
                       <td style={{ padding: "10px 12px", textAlign: "right", fontWeight: 900,
-                        color: row.total === "—" ? "rgba(255,255,255,0.2)" : row.color,
+                        color: row.total === "—" ? "#94a3b8" : row.color,
                         borderLeft: `1px solid ${BORDER}` }}>{row.total}</td>
                     </tr>
                   ))}
@@ -297,7 +297,7 @@ export default function GlpStressTest() {
                       <div style={{ fontSize: 10, fontWeight: 900, color: barColor }}>{fmt$(y.spend)}</div>
                       <div style={{ width: "100%", height: h, background: `${barColor}40`,
                         border: `1px solid ${barColor}80`, borderRadius: "6px 6px 0 0", transition: "height 0.4s" }} />
-                      <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>PY {y.year}</div>
+                      <div style={{ fontSize: 10, color: "#475569" }}>PY {y.year}</div>
                     </div>
                   );
                 })}
@@ -314,8 +314,8 @@ export default function GlpStressTest() {
                 <div key={b.label} style={{ padding: "10px 12px", background: `${b.color}08`,
                   border: `1px solid ${b.color}25`, borderRadius: 10 }}>
                   <div style={{ fontSize: 11, fontWeight: 900, color: b.color }}>{b.value}</div>
-                  <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", marginTop: 2 }}>{b.label}</div>
-                  <div style={{ fontSize: 8, color: "rgba(255,255,255,0.25)", marginTop: 2 }}>{b.source}</div>
+                  <div style={{ fontSize: 9, color: "#475569", marginTop: 2 }}>{b.label}</div>
+                  <div style={{ fontSize: 8, color: "#64748b", marginTop: 2 }}>{b.source}</div>
                 </div>
               ))}
             </div>
@@ -335,7 +335,7 @@ export default function GlpStressTest() {
                     {model.years[0].breechers > 2 ? "BREACH RISK ELEVATED" : "BREACH RISK CONTAINED"}
                   </span>
                 </div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>
+                <div style={{ fontSize: 11, color: "#334155", lineHeight: 1.6 }}>
                   {model.years[0].breechers} claimant{model.years[0].breechers !== 1 ? "s" : ""} projected to breach the
                   ${(specific / 1000).toFixed(0)}K specific deductible in PY 2025.
                 </div>
@@ -350,7 +350,7 @@ export default function GlpStressTest() {
               ].map(r => (
                 <div key={r.label} style={{ display: "flex", justifyContent: "space-between",
                   borderBottom: `1px solid ${BORDER}`, padding: "8px 0" }}>
-                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.45)" }}>{r.label}</span>
+                  <span style={{ fontSize: 11, color: "#475569" }}>{r.label}</span>
                   <span style={{ fontSize: 12, fontWeight: 900, color: r.color }}>{r.value}</span>
                 </div>
               ))}
@@ -371,7 +371,7 @@ export default function GlpStressTest() {
                   alignItems: "center", padding: "7px 0", borderBottom: `1px solid ${BORDER}` }}>
                   <div>
                     <div style={{ fontSize: 10, color: T1, fontWeight: 600 }}>{o.action}</div>
-                    <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>Effort: {o.effort}</div>
+                    <div style={{ fontSize: 9, color: "#64748b" }}>Effort: {o.effort}</div>
                   </div>
                   <span style={{ fontSize: 12, fontWeight: 900, color: GREEN }}>{o.savings}</span>
                 </div>
@@ -380,10 +380,10 @@ export default function GlpStressTest() {
           )}
 
           {/* Export */}
-          <div style={{ padding: "14px 16px", background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`,
+          <div style={{ padding: "14px 16px", background: "#ffffff", border: `1px solid ${BORDER}`,
             borderRadius: 14 }}>
             {label9("◈ Evidence Export", ACCENT)}
-            <div style={{ fontSize: 9, fontFamily: "monospace", color: ACCENT, background: "rgba(0,0,0,0.3)",
+            <div style={{ fontSize: 9, fontFamily: "monospace", color: ACCENT, background: "rgba(0,0,0,0.05)",
               padding: "8px 10px", borderRadius: 8, marginBottom: 12, wordBreak: "break-all", lineHeight: 1.6 }}>
               {hash}
             </div>
@@ -396,7 +396,7 @@ export default function GlpStressTest() {
               <Download size={13} />
               {exported ? "Receipt Sealed ✓" : "Export Stress Test + Receipt"}
             </button>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", textAlign: "center", marginTop: 6 }}>
+            <div style={{ fontSize: 9, color: "#64748b", textAlign: "center", marginTop: 6 }}>
               SHA-256 · KINCAID EVIDENCE SPINE · SHRACK-7742
             </div>
           </div>
@@ -409,7 +409,7 @@ export default function GlpStressTest() {
         <AlertTriangle size={18} color={AMBER} />
         <div style={{ flex: 1 }}>
           <span style={{ fontSize: 12, fontWeight: 900, color: AMBER }}>CAA 2026 Formulary Transparency Notice · </span>
-          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.5)" }}>
+          <span style={{ fontSize: 12, color: "#334155" }}>
             GLP-1 drugs crossing ${(specific / 1000).toFixed(0)}K specific deductible require individual carrier notification per plan year.
             Formulary exclusion without CMS exception documentation exposes plan to §502(a) fiduciary liability.
             Current projected claimants: <strong style={{ color: RED }}>{model.years[0].breechers}</strong>

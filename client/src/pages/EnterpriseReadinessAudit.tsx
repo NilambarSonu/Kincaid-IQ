@@ -7,11 +7,11 @@ import {
 } from "lucide-react";
 
 /* ── design tokens (matches platform Bloomberg-terminal aesthetic) ───────── */
-const BG = "#07091c";
-const T1 = "#f0f4ff";
-const BORDER = "rgba(255,255,255,0.08)";
-const MUTED = "rgba(255,255,255,0.45)";
-const FAINT = "rgba(255,255,255,0.3)";
+const BG = "transparent";
+const T1 = "#0F172A";
+const BORDER = "rgba(13,37,61,0.08)";
+const MUTED = "#64748B";
+const FAINT = "#64748b";
 const GREEN = "#22c55e";
 const RED = "#ef4444";
 const AMBER = "#f59e0b";
@@ -240,7 +240,7 @@ const ECON = [
     quality: "Modeled assumptions, no cohort actuals yet.",
     sensitivity: "Close-rate ±18% band drives a wide P10–P90 revenue spread." },
   { metric: "Client Cost Savings", forecast: "8–22% PMPM reduction", confidence: "CERTIFIED",
-    assumption: "Benchmarking + Rx Defense capture on real DOL 5500 / Schedule A data",
+    assumption: "Benchmarking + PBM Contract Clarity 360 capture on real DOL 5500 / Schedule A data",
     quality: "Grounded in real filings — floor is defensible.",
     sensitivity: "Varies by plan size + carrier; conservative floor holds." },
   { metric: "Adoption (rep activation)", forecast: "65% reach first opportunity", confidence: "INSUFFICIENT_EVIDENCE",
@@ -386,11 +386,11 @@ export default function EnterpriseReadinessAudit() {
 
   return (
     <Layout fullBleed>
-      <div style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-body)", padding: "24px 28px" }}>
+      <div className="kiq-ops-shell" style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-body)", padding: "24px 28px" }}>
         {/* Header */}
-        <div style={{ marginBottom: 22 }}>
+        <div className="kiq-ops-header" style={{ marginBottom: 22, borderRadius: 24, padding: "20px 22px" }}>
           <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.22em", color: ACCENT, marginBottom: 6 }}>
-            ◈ KINCAID IQ · ENTERPRISE DEPLOYMENT VERIFICATION ENGINE v1.0 · STANFORD + MIT SYSTEMS · FORENSIC COMPLETION AUDIT
+            ◈ KINCAID HEALTH · ENTERPRISE DEPLOYMENT VERIFICATION ENGINE v1.0 · STANFORD + MIT SYSTEMS · FORENSIC COMPLETION AUDIT
           </div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -410,9 +410,9 @@ export default function EnterpriseReadinessAudit() {
                   <button key={v.id} onClick={() => setView(v.id)} data-testid={`era-view-${v.id}`}
                     style={{ display: "flex", alignItems: "center", gap: 6, padding: "8px 14px", borderRadius: 10,
                       fontSize: 11, fontWeight: 900, cursor: "pointer",
-                      background: active ? `${v.color}20` : "rgba(255,255,255,0.04)",
+                      background: active ? `${v.color}20` : "#ffffff",
                       border: `1px solid ${active ? v.color : BORDER}`,
-                      color: active ? v.color : MUTED }}>
+                      color: active ? v.color : MUTED, boxShadow: active ? `0 12px 28px ${v.color}18` : "0 8px 22px rgba(15,23,42,0.04)" }}>
                     <Icon size={13} /> {v.label}
                   </button>
                 );
@@ -424,8 +424,7 @@ export default function EnterpriseReadinessAudit() {
         {/* ── EXECUTIVE VERDICT (Phase 6 + 10) ───────────────────────────── */}
         {view === "verdict" && (
           <>
-            <div data-testid="era-verdict-banner" style={{ marginBottom: 20, padding: "18px 22px", background: `${verdict.color}0e`,
-              border: `1px solid ${verdict.color}40`, borderRadius: 14 }}>
+            <div className="kiq-ops-card" data-testid="era-verdict-banner" style={{ marginBottom: 20, padding: "18px 22px", borderColor: `${verdict.color}40` }}>
               <div style={{ fontSize: 9, color: FAINT, letterSpacing: "0.16em", marginBottom: 8 }}>FINAL EXECUTIVE DEPLOYMENT VERDICT</div>
               <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
                 <Scale size={26} color={verdict.color} />
@@ -442,14 +441,14 @@ export default function EnterpriseReadinessAudit() {
               {SCORES.map((s) => {
                 const c = scoreColor(s.v);
                 return (
-                  <div key={s.label} data-testid={`era-score-${s.label}`} style={{ background: "rgba(255,255,255,0.02)",
+                  <div key={s.label} data-testid={`era-score-${s.label}`} style={{ background: "#ffffff",
                     border: `1px solid ${BORDER}`, borderRadius: 14, padding: "16px 18px" }}>
                     <div style={{ fontSize: 10, color: MUTED, marginBottom: 8, minHeight: 26 }}>{s.label}</div>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 5, marginBottom: 8 }}>
                       <span style={{ fontSize: 30, fontWeight: 900, color: c }}>{s.v}</span>
                       <span style={{ fontSize: 11, color: FAINT }}>%</span>
                     </div>
-                    <div style={{ height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden" }}>
+                    <div style={{ height: 6, background: "#f1f5f9", borderRadius: 3, overflow: "hidden" }}>
                       <div style={{ height: "100%", width: `${s.v}%`, background: c, borderRadius: 3 }} />
                     </div>
                   </div>
@@ -465,7 +464,7 @@ export default function EnterpriseReadinessAudit() {
                 const c = verdictColor(b.verdict);
                 return (
                   <div key={b.who} data-testid={`era-board-${b.who}`} style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap",
-                    background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`, borderRadius: 12, padding: "12px 16px" }}>
+                    background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 12, padding: "12px 16px" }}>
                     <div style={{ width: 160, fontSize: 12, fontWeight: 700 }}>{b.who}</div>
                     <div style={{ padding: "4px 10px", borderRadius: 6, fontSize: 10, fontWeight: 900, color: c,
                       background: `${c}15`, border: `1px solid ${c}35`, minWidth: 110, textAlign: "center" }}>{b.verdict}</div>
@@ -493,7 +492,7 @@ export default function EnterpriseReadinessAudit() {
                 return (
                   <div key={c.deliverable} onClick={() => setOpenRow(open ? null : c.deliverable)}
                     data-testid={`era-deliverable-${c.deliverable}`}
-                    style={{ background: open ? `${sc}08` : "rgba(255,255,255,0.02)", border: `1px solid ${open ? `${sc}40` : BORDER}`,
+                    style={{ background: open ? `${sc}08` : "#ffffff", border: `1px solid ${open ? `${sc}40` : BORDER}`,
                       borderRadius: 12, padding: "14px 16px", cursor: "pointer", transition: "all 0.15s" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
                       <Icon size={16} color={sc} style={{ flexShrink: 0 }} />
@@ -509,7 +508,7 @@ export default function EnterpriseReadinessAudit() {
                         <div style={{ fontSize: 8, color: FAINT }}>CONFIDENCE</div>
                       </div>
                     </div>
-                    <div style={{ height: 5, background: "rgba(255,255,255,0.06)", borderRadius: 3, overflow: "hidden", marginTop: 10 }}>
+                    <div style={{ height: 5, background: "#f1f5f9", borderRadius: 3, overflow: "hidden", marginTop: 10 }}>
                       <div style={{ height: "100%", width: `${c.completion}%`, background: sc, borderRadius: 3 }} />
                     </div>
                     {open && (
@@ -529,8 +528,7 @@ export default function EnterpriseReadinessAudit() {
         {/* ── READINESS DASHBOARD (Phase 3 + 8) ──────────────────────────── */}
         {view === "readiness" && (
           <>
-            <div style={{ marginBottom: 18, padding: "14px 18px", background: "rgba(255,255,255,0.02)",
-              border: `1px solid ${BORDER}`, borderRadius: 12, display: "flex", gap: 24, flexWrap: "wrap" }}>
+            <div className="kiq-ops-card" style={{ marginBottom: 18, padding: "14px 18px", display: "flex", gap: 24, flexWrap: "wrap" }}>
               <Stat label="MEAN CURRENT" value={`${overall.readiness}`} color={scoreColor(overall.readiness)} />
               <Stat label="MEAN TARGET" value={`${overall.target}`} color={GREEN} />
               <Stat label="MEAN GAP" value={`${overall.target - overall.readiness}`} color={AMBER} />
@@ -542,9 +540,9 @@ export default function EnterpriseReadinessAudit() {
                 const gap = r.target - r.current;
                 return (
                   <div key={r.dim} data-testid={`era-readiness-${r.dim}`} style={{ display: "flex", alignItems: "center", gap: 14,
-                    background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`, borderRadius: 10, padding: "10px 14px" }}>
+                    background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 10, padding: "10px 14px" }}>
                     <div style={{ width: 150, fontSize: 12, fontWeight: 600 }}>{r.dim}</div>
-                    <div style={{ flex: 1, minWidth: 160, height: 8, background: "rgba(255,255,255,0.06)", borderRadius: 4, position: "relative" }}>
+                    <div style={{ flex: 1, minWidth: 160, height: 8, background: "#f1f5f9", borderRadius: 4, position: "relative" }}>
                       <div style={{ height: "100%", width: `${r.current}%`, background: c, borderRadius: 4 }} />
                       <div style={{ position: "absolute", top: -3, left: `${r.target}%`, width: 2, height: 14, background: GREEN }} />
                     </div>
@@ -588,10 +586,10 @@ export default function EnterpriseReadinessAudit() {
             </div>
             <div style={{ display: "grid", gap: 8 }}>
               {BOTTLENECKS.map((b, i) => (
-                <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", background: "rgba(255,255,255,0.02)",
+                <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start", background: "#ffffff",
                   border: `1px solid ${BORDER}`, borderRadius: 10, padding: "10px 14px" }}>
                   <AlertTriangle size={14} color={ORANGE} style={{ marginTop: 2, flexShrink: 0 }} />
-                  <div style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", lineHeight: 1.6 }}>{b}</div>
+                  <div style={{ fontSize: 11, color: "#0f172a", lineHeight: 1.6 }}>{b}</div>
                 </div>
               ))}
             </div>
@@ -609,7 +607,7 @@ export default function EnterpriseReadinessAudit() {
               {REDTEAM.map((r) => {
                 const pc = r.prob === "High" ? RED : r.prob === "Medium" ? AMBER : GREEN;
                 return (
-                  <div key={r.risk} data-testid={`era-risk-${r.risk}`} style={{ background: "rgba(255,255,255,0.02)",
+                  <div key={r.risk} data-testid={`era-risk-${r.risk}`} style={{ background: "#ffffff",
                     border: `1px solid ${BORDER}`, borderRadius: 12, padding: "14px 16px" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 8 }}>
                       <ShieldAlert size={15} color={pc} style={{ flexShrink: 0 }} />
@@ -676,7 +674,7 @@ export default function EnterpriseReadinessAudit() {
                 const c = score >= 13 ? RED : score >= 10 ? AMBER : GREEN;
                 return (
                   <div key={t.task} data-testid={`era-task-${i}`} style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap",
-                    background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`, borderRadius: 10, padding: "11px 14px" }}>
+                    background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 10, padding: "11px 14px" }}>
                     <div style={{ width: 22, height: 22, borderRadius: 6, background: `${c}18`, border: `1px solid ${c}35`,
                       display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 900, color: c, flexShrink: 0 }}>{i + 1}</div>
                     <div style={{ flex: 1, minWidth: 240, fontSize: 12, fontWeight: 600 }}>{t.task}</div>
@@ -710,8 +708,8 @@ export default function EnterpriseReadinessAudit() {
         )}
 
         {/* doctrine footer */}
-        <div style={{ marginTop: 24, padding: "10px 14px", background: "rgba(0,0,0,0.3)", borderRadius: 10, fontFamily: "monospace", fontSize: 9, color: ACCENT }}>
-          ERA:SHA256:STANFORD-MIT-SYSTEMS · ENTERPRISE DEPLOYMENT VERIFICATION ENGINE v1.0 · EVIDENCE-GATED · SEALED UNDER KINCAID IQ VERIFY™ V10.0 · {new Date().toISOString().slice(0, 10)}
+        <div style={{ marginTop: 24, padding: "10px 14px", background: "rgba(0,0,0,0.05)", borderRadius: 10, fontFamily: "monospace", fontSize: 9, color: ACCENT }}>
+          ERA:SHA256:STANFORD-MIT-SYSTEMS · ENTERPRISE DEPLOYMENT VERIFICATION ENGINE v1.0 · EVIDENCE-GATED · SEALED UNDER KINCAID HEALTH VERIFY™ V10.0 · {new Date().toISOString().slice(0, 10)}
         </div>
       </div>
     </Layout>
@@ -725,7 +723,7 @@ function Detail({ label, icon: Icon, color, text }: { label: string; icon: typeo
       <Icon size={12} color={color} style={{ marginTop: 2, flexShrink: 0 }} />
       <div>
         <span style={{ fontSize: 9, fontWeight: 900, color, letterSpacing: "0.1em", marginRight: 8 }}>{label}</span>
-        <span style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", lineHeight: 1.6 }}>{text}</span>
+        <span style={{ fontSize: 11, color: "#1e293b", lineHeight: 1.6 }}>{text}</span>
       </div>
     </div>
   );
@@ -748,7 +746,7 @@ function Pill({ label, value }: { label: string; value: string }) {
 }
 function PlanCard({ title, icon: Icon, color, items, testid }: { title: string; icon: typeof Clock; color: string; items: string[]; testid: string }) {
   return (
-    <div data-testid={testid} style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`, borderRadius: 14, padding: "16px 18px" }}>
+    <div data-testid={testid} style={{ background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 14, padding: "16px 18px" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
         <Icon size={15} color={color} />
         <div style={{ fontSize: 11, fontWeight: 900, color, letterSpacing: "0.1em" }}>{title}</div>
@@ -758,7 +756,7 @@ function PlanCard({ title, icon: Icon, color, items, testid }: { title: string; 
           <div key={i} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
             <div style={{ width: 18, height: 18, borderRadius: 5, background: `${color}18`, border: `1px solid ${color}35`,
               display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 900, color, flexShrink: 0 }}>{i + 1}</div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.65)", lineHeight: 1.6 }}>{it}</div>
+            <div style={{ fontSize: 11, color: "#334155", lineHeight: 1.6 }}>{it}</div>
           </div>
         ))}
       </div>

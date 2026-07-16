@@ -38,8 +38,18 @@ export function useAuth() {
         body: JSON.stringify(credentials),
       });
       if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.detail || "Login failed");
+        let errMsg = "Login failed";
+        try {
+          const err = await res.json();
+          errMsg = err.detail || errMsg;
+        } catch {
+          if (res.status === 502 || res.status === 504 || res.status === 503) {
+            errMsg = "Cannot connect to backend server. Please verify the FastAPI backend is running on port 5000.";
+          } else {
+            errMsg = `Server error (${res.status}): ${res.statusText || "unknown error"}`;
+          }
+        }
+        throw new Error(errMsg);
       }
       return res.json();
     },
@@ -57,8 +67,18 @@ export function useAuth() {
         body: JSON.stringify(data),
       });
       if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.detail || "Registration failed");
+        let errMsg = "Registration failed";
+        try {
+          const err = await res.json();
+          errMsg = err.detail || errMsg;
+        } catch {
+          if (res.status === 502 || res.status === 504 || res.status === 503) {
+            errMsg = "Cannot connect to backend server. Please verify the FastAPI backend is running on port 5000.";
+          } else {
+            errMsg = `Server error (${res.status}): ${res.statusText || "unknown error"}`;
+          }
+        }
+        throw new Error(errMsg);
       }
       return res.json();
     },

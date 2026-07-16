@@ -53,14 +53,14 @@ export default function VolatilityMonitor() {
               }}
             />
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-center">
-              <p className="text-4xl font-bold text-white font-mono" data-testid="text-vix-current">{vixSpot.toFixed(2)}</p>
+              <p className="text-4xl font-bold text-[var(--kiq-ink)] font-mono" data-testid="text-vix-current">{vixSpot.toFixed(2)}</p>
               <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: regimeColor }}>{regime} Regime</p>
             </div>
           </div>
           <div className="flex gap-4 w-full justify-center pt-4 border-t border-white/5">
-            <div><p className="text-[9px] text-muted-foreground uppercase">VVIX</p><p className="text-sm font-bold text-white">{vix.vvix.toFixed(1)}</p></div>
-            <div><p className="text-[9px] text-muted-foreground uppercase">VXN</p><p className="text-sm font-bold text-white">{vix.vxn.toFixed(1)}</p></div>
-            <div><p className="text-[9px] text-muted-foreground uppercase">RVX</p><p className="text-sm font-bold text-white">{vix.rvx.toFixed(1)}</p></div>
+            <div><p className="text-[9px] text-muted-foreground uppercase">VVIX</p><p className="text-sm font-bold text-[var(--kiq-ink)]">{vix.vvix.toFixed(1)}</p></div>
+            <div><p className="text-[9px] text-muted-foreground uppercase">VXN</p><p className="text-sm font-bold text-[var(--kiq-ink)]">{vix.vxn.toFixed(1)}</p></div>
+            <div><p className="text-[9px] text-muted-foreground uppercase">RVX</p><p className="text-sm font-bold text-[var(--kiq-ink)]">{vix.rvx.toFixed(1)}</p></div>
           </div>
           {vixSpot > 25 && (
             <div className="mt-4 flex items-center gap-2 text-[10px] text-orange-400 font-bold">
@@ -80,10 +80,10 @@ export default function VolatilityMonitor() {
           <div className="h-[220px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={termStructure}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" vertical={false} />
                 <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} />
                 <YAxis axisLine={false} tickLine={false} tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} domain={["dataMin - 1", "dataMax + 1"]} />
-                <Tooltip contentStyle={{ background: "rgba(8,10,28,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "12px" }} />
+                <Tooltip contentStyle={{ background: "rgba(8,10,28,0.95)", border: "1px solid #e2e8f0", borderRadius: "12px" }} />
                 <ReferenceLine y={20} stroke="rgba(255,184,0,0.3)" strokeDasharray="4 4" label={{ value: "20 threshold", fill: "rgba(255,184,0,0.5)", fontSize: 9 }} />
                 <Line type="monotone" dataKey="value" stroke="#00A8FF" strokeWidth={3} dot={{ r: 5, fill: "#00A8FF", stroke: "rgba(0,168,255,0.3)", strokeWidth: 4 }} activeDot={{ r: 7 }} name="VIX Level"  isAnimationActive={false} />
               </LineChart>
@@ -101,10 +101,10 @@ export default function VolatilityMonitor() {
           <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={historical} barGap={4}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" vertical={false} />
                 <XAxis dataKey="period" axisLine={false} tickLine={false} tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 9 }} />
                 <YAxis axisLine={false} tickLine={false} tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} tickFormatter={(v) => `${v}%`} />
-                <Tooltip contentStyle={{ background: "rgba(8,10,28,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "12px" }} formatter={(v: number) => [`${v.toFixed(1)}%`]} />
+                <Tooltip contentStyle={{ background: "rgba(8,10,28,0.95)", border: "1px solid #e2e8f0", borderRadius: "12px" }} formatter={(v: number) => [`${v.toFixed(1)}%`]} />
                 <Bar dataKey="spx" name="SPX" fill="rgba(0,168,255,0.6)" radius={[2, 2, 0, 0]}  isAnimationActive={false} />
                 <Bar dataKey="aapl" name="AAPL" fill="rgba(0,255,148,0.6)" radius={[2, 2, 0, 0]}  isAnimationActive={false} />
                 <Bar dataKey="nvda" name="NVDA" fill="rgba(168,85,247,0.6)" radius={[2, 2, 0, 0]}  isAnimationActive={false} />
@@ -129,10 +129,10 @@ export default function VolatilityMonitor() {
           <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={skew}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" vertical={false} />
                 <XAxis dataKey="moneyness" axisLine={false} tickLine={false} tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 9 }} />
                 <YAxis axisLine={false} tickLine={false} tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} tickFormatter={(v) => `${v}%`} domain={["dataMin - 2", "dataMax + 2"]} />
-                <Tooltip contentStyle={{ background: "rgba(8,10,28,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "12px" }} formatter={(v: number) => [`${v.toFixed(1)}%`, "Impl. Vol"]} />
+                <Tooltip contentStyle={{ background: "rgba(8,10,28,0.95)", border: "1px solid #e2e8f0", borderRadius: "12px" }} formatter={(v: number) => [`${v.toFixed(1)}%`, "Impl. Vol"]} />
                 <ReferenceLine x="ATM" stroke="rgba(255,184,0,0.4)" strokeDasharray="4 4" />
                 <Line type="monotone" dataKey="iv" name="Implied Vol" stroke="#FF4D6D" strokeWidth={2.5} dot={{ r: 3, fill: "#FF4D6D" }} activeDot={{ r: 5 }}  isAnimationActive={false} />
               </LineChart>
@@ -150,10 +150,10 @@ export default function VolatilityMonitor() {
           <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={portfolioContrib} layout="vertical" margin={{ left: 20 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" horizontal={false} />
                 <XAxis type="number" axisLine={false} tickLine={false} tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} tickFormatter={(v) => `${v}%`} />
                 <YAxis dataKey="asset" type="category" axisLine={false} tickLine={false} tick={{ fill: "rgba(200,220,255,0.7)", fontSize: 10, fontWeight: "bold" }} width={110} />
-                <Tooltip contentStyle={{ background: "rgba(8,10,28,0.95)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "12px" }} formatter={(v: number) => [`${v.toFixed(2)}%`]} />
+                <Tooltip contentStyle={{ background: "rgba(8,10,28,0.95)", border: "1px solid #e2e8f0", borderRadius: "12px" }} formatter={(v: number) => [`${v.toFixed(2)}%`]} />
                 <Bar dataKey="contrib" name="Vol Contrib %" radius={[0, 4, 4, 0]} isAnimationActive={false} >
                   {portfolioContrib.map((_, i) => (
                     <Cell key={i} fill={COLORS[i % COLORS.length]} fillOpacity={0.7 + 0.05 * i} />
@@ -168,7 +168,7 @@ export default function VolatilityMonitor() {
               <div key={row.asset} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full" style={{ background: COLORS[i % COLORS.length] }} />
-                  <span className="text-xs font-medium text-white">{row.asset}</span>
+                  <span className="text-xs font-medium text-[var(--kiq-ink)]">{row.asset}</span>
                 </div>
                 <div className="flex items-center gap-4">
                   <span className="text-[10px] text-muted-foreground font-mono">HV: {row.vol.toFixed(1)}%</span>
@@ -178,7 +178,7 @@ export default function VolatilityMonitor() {
             ))}
             <div className="flex items-center justify-between pt-3 border-t border-white/10">
               <span className="text-[10px] font-bold uppercase text-muted-foreground tracking-widest">Total Portfolio Vol</span>
-              <span className="text-base font-bold text-white font-mono">
+              <span className="text-base font-bold text-[var(--kiq-ink)] font-mono">
                 {portfolioContrib.reduce((a, b) => a + b.contrib, 0).toFixed(2)}%
               </span>
             </div>

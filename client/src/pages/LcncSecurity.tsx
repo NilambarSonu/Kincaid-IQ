@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Shield, Lock, AlertTriangle, Eye, Server, GitBranch, Database, DollarSign, Settings } from "lucide-react";
 
-const BG = "#07091c"; const T1 = "#f0f4ff"; const BORDER = "rgba(255,255,255,0.08)";
-const GREEN = "#22c55e"; const RED = "#ef4444"; const AMBER = "#f59e0b";
-const CYAN = "#00D4FF"; const PURPLE = "#A855F7"; const ACCENT = "#4f7dff"; const GOLD = "#FFB800";
+const BG = "#F8FAFC"; const T1 = "#0f172a"; const BORDER = "rgba(15,23,42,0.08)";
+const GREEN = "#10b981"; const RED = "#e11d48"; const AMBER = "#d97706";
+const CYAN = "#0ea5e9"; const PURPLE = "#7c3aed"; const ACCENT = "#533afd"; const GOLD = "#f59e0b";
 
 const CATEGORIES = [
   {
@@ -97,32 +97,32 @@ export default function LcncSecurity() {
   const avgColor = scoreColor(avgScore);
 
   return (
-    <div style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-body)", padding: "24px 28px" }}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-sans)", padding: "24px 28px" }}>
 
       {/* Header */}
-      <div style={{ marginBottom: 24 }}>
+      <div className="kiq-ops-header" style={{ marginBottom: 24, padding: 24, borderRadius: 24 }}>
         <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.22em", color: PURPLE, marginBottom: 6 }}>
-          ◈ KINCAID IQ · LCNC/AI SECURITY · 30 KPIs · 7 CATEGORIES · NO-CODE + AI AGENT SECURITY POSTURE
+          ◈ KINCAID HEALTH · LCNC/AI SECURITY · 30 KPIs · 7 CATEGORIES · NO-CODE + AI AGENT SECURITY POSTURE
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
           <div>
             <h1 style={{ fontSize: 26, fontWeight: 900, letterSpacing: "-0.02em", margin: 0 }}>LCNC / AI Agent Security</h1>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 4 }}>
+            <div style={{ fontSize: 12, color: "#475569", marginTop: 4 }}>
               Low-code / no-code platform security · AI agent governance · Automation risk controls
             </div>
           </div>
           <div style={{ display: "flex", gap: 12 }}>
             <div style={{ padding: "12px 18px", background: `${avgColor}10`, border: `1px solid ${avgColor}35`, borderRadius: 12, textAlign: "center" }}>
               <div style={{ fontSize: 28, fontWeight: 900, color: avgColor }}>{avgScore}</div>
-              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>AVG SECURITY SCORE</div>
+              <div style={{ fontSize: 8, color: "#475569", letterSpacing: "0.1em" }}>AVG SECURITY SCORE</div>
             </div>
             <div style={{ padding: "12px 18px", background: `${RED}10`, border: `1px solid ${RED}35`, borderRadius: 12, textAlign: "center" }}>
               <div style={{ fontSize: 28, fontWeight: 900, color: RED }}>{criticalCount}</div>
-              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>CRITICAL GAPS</div>
+              <div style={{ fontSize: 8, color: "#475569", letterSpacing: "0.1em" }}>CRITICAL GAPS</div>
             </div>
             <div style={{ padding: "12px 18px", background: `${AMBER}10`, border: `1px solid ${AMBER}35`, borderRadius: 12, textAlign: "center" }}>
               <div style={{ fontSize: 28, fontWeight: 900, color: AMBER }}>{highCount}</div>
-              <div style={{ fontSize: 8, color: "rgba(255,255,255,0.4)", letterSpacing: "0.1em" }}>HIGH RISK</div>
+              <div style={{ fontSize: 8, color: "#475569", letterSpacing: "0.1em" }}>HIGH RISK</div>
             </div>
           </div>
         </div>
@@ -133,7 +133,7 @@ export default function LcncSecurity() {
         <div style={{ marginBottom: 20, padding: "14px 20px", background: `${RED}0a`,
           border: `1px solid ${RED}35`, borderRadius: 14, display: "flex", alignItems: "center", gap: 14 }}>
           <AlertTriangle size={18} color={RED} />
-          <div style={{ flex: 1, fontSize: 12, color: "rgba(255,255,255,0.6)" }}>
+          <div style={{ flex: 1, fontSize: 12, color: "#1e293b" }}>
             <strong style={{ color: RED }}>{criticalCount} Critical Gaps Identified: </strong>
             Hardcoded API keys in LCNC workflows (LCNC-SEC-001) · PHI exposure in AI pipelines (LCNC-DATA-002) ·
             AI agent output validation failure (LCNC-FLOW-004). Immediate remediation required.
@@ -146,16 +146,16 @@ export default function LcncSecurity() {
         {[["all", "All 30 KPIs"], ["critical", `Critical (${criticalCount})`], ["high", `High Risk (${highCount})`]].map(([id, label]) => (
           <button key={String(id)} onClick={() => setActiveFilter(id as any)} data-testid={`lcnc-filter-${id}`}
             style={{ padding: "7px 14px", borderRadius: 8, fontSize: 10, fontWeight: 700, cursor: "pointer",
-              background: activeFilter === id ? `${id === "critical" ? RED : id === "high" ? AMBER : ACCENT}20` : "rgba(255,255,255,0.04)",
+              background: activeFilter === id ? `${id === "critical" ? RED : id === "high" ? AMBER : ACCENT}20` : "#ffffff",
               border: `1px solid ${activeFilter === id ? (id === "critical" ? RED : id === "high" ? AMBER : ACCENT) : BORDER}`,
-              color: activeFilter === id ? (id === "critical" ? RED : id === "high" ? AMBER : ACCENT) : "rgba(255,255,255,0.4)" }}>
+              color: activeFilter === id ? (id === "critical" ? RED : id === "high" ? AMBER : ACCENT) : "#475569" }}>
             {String(label)}
           </button>
         ))}
       </div>
 
       {/* Category grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 14 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))", gap: 14 }}>
         {CATEGORIES.map(cat => {
           const filtered = cat.kpis.filter(k =>
             activeFilter === "all" ? true :
@@ -166,7 +166,7 @@ export default function LcncSecurity() {
           const catAvg = Math.round(filtered.reduce((a, k) => a + k.score, 0) / filtered.length);
           const isOpen = openCat === cat.id;
           return (
-            <div key={cat.id} style={{ background: isOpen ? `${cat.color}06` : "rgba(255,255,255,0.02)",
+            <div key={cat.id} style={{ background: isOpen ? `${cat.color}06` : "#ffffff",
               border: `1px solid ${isOpen ? `${cat.color}35` : BORDER}`, borderRadius: 16, overflow: "hidden" }}>
               <div onClick={() => setOpenCat(isOpen ? null : cat.id)} data-testid={`lcnc-cat-${cat.id}`}
                 style={{ padding: "16px 18px", cursor: "pointer", display: "flex", alignItems: "center",
@@ -176,12 +176,12 @@ export default function LcncSecurity() {
                   <div>
                     <div style={{ fontSize: 9, fontWeight: 900, color: cat.color, letterSpacing: "0.12em" }}>{cat.id}</div>
                     <div style={{ fontSize: 13, fontWeight: 700, color: T1 }}>{cat.label}</div>
-                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)" }}>{filtered.length} KPIs</div>
+                    <div style={{ fontSize: 10, color: "#64748b" }}>{filtered.length} KPIs</div>
                   </div>
                 </div>
                 <div style={{ textAlign: "right" }}>
                   <div style={{ fontSize: 22, fontWeight: 900, color: scoreColor(catAvg) }}>{catAvg}</div>
-                  <div style={{ height: 4, width: 60, background: "rgba(255,255,255,0.06)", borderRadius: 2, overflow: "hidden", marginTop: 4 }}>
+                  <div style={{ height: 4, width: 60, background: "#f1f5f9", borderRadius: 2, overflow: "hidden", marginTop: 4 }}>
                     <div style={{ height: "100%", width: `${catAvg}%`, background: cat.color, borderRadius: 2 }} />
                   </div>
                 </div>
@@ -195,7 +195,7 @@ export default function LcncSecurity() {
                         background: riskColor(k.risk), boxShadow: `0 0 5px ${riskColor(k.risk)}` }} />
                       <div style={{ flex: 1 }}>
                         <div style={{ fontSize: 10, fontWeight: 600, color: T1 }}>{k.label}</div>
-                        <div style={{ fontSize: 8, color: "rgba(255,255,255,0.3)" }}>{k.control}</div>
+                        <div style={{ fontSize: 8, color: "#64748b" }}>{k.control}</div>
                       </div>
                       <div style={{ textAlign: "right", minWidth: 80 }}>
                         <div style={{ fontSize: 11, fontWeight: 900, color: scoreColor(k.score) }}>{k.score}/100</div>

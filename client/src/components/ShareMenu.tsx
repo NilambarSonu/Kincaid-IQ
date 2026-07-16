@@ -166,8 +166,8 @@ export function ShareMenu({
             ...menuPos,
             zIndex: 70,
             width: emailMode ? 300 : 230,
-            background: "#0d0d16",
-            border: "1px solid rgba(255,255,255,0.12)",
+            background: "#F8FAFC",
+            border: "1px solid #cbd5e1",
             borderRadius: 14,
             boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
             padding: 8,
@@ -178,7 +178,7 @@ export function ShareMenu({
               <div style={{ padding: "4px 8px 8px" }}>
                 <div
                   className="flex items-center gap-1.5 mb-2"
-                  style={{ color: "rgba(255,255,255,0.4)" }}
+                  style={{ color: "#475569" }}
                 >
                   <Clock className="w-3 h-3" />
                   <span className="text-[10px] font-bold uppercase tracking-wider">Link expires</span>
@@ -197,9 +197,9 @@ export function ShareMenu({
                         onClick={() => setExpiryHours(opt.hours)}
                         className="px-2 py-1.5 rounded-lg text-[11px] font-bold transition-colors"
                         style={{
-                          background: selected ? `${accent}26` : "rgba(255,255,255,0.04)",
-                          border: `1px solid ${selected ? `${accent}59` : "rgba(255,255,255,0.08)"}`,
-                          color: selected ? accent : "rgba(255,255,255,0.6)",
+                          background: selected ? `${accent}26` : "#ffffff",
+                          border: `1px solid ${selected ? `${accent}59` : "#e2e8f0"}`,
+                          color: selected ? accent : "#1e293b",
                           cursor: "pointer",
                         }}
                       >
@@ -209,7 +209,7 @@ export function ShareMenu({
                   })}
                 </div>
               </div>
-              <div style={{ height: 1, background: "rgba(255,255,255,0.08)", margin: "0 4px 6px" }} />
+              <div style={{ height: 1, background: "#e2e8f0", margin: "0 4px 6px" }} />
               <button
                 type="button"
                 data-testid={`${testIdPrefix}-copy`}
@@ -217,13 +217,13 @@ export function ShareMenu({
                 onClick={handleCopy}
                 className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors"
                 style={{ background: "transparent", color: "rgba(255,255,255,0.85)", cursor: busy ? "wait" : "pointer" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.06)"; }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#f1f5f9"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
               >
                 {busy ? <Loader2 className="w-4 h-4 animate-spin" style={{ color: accent }} /> : <Link2 className="w-4 h-4" style={{ color: accent }} />}
                 <div>
                   <div className="text-[13px] font-bold">Copy link</div>
-                  <div className="text-[10px]" style={{ color: "rgba(255,255,255,0.4)" }}>Short branded URL to this view</div>
+                  <div className="text-[10px]" style={{ color: "#475569" }}>Short branded URL to this view</div>
                 </div>
               </button>
               <button
@@ -233,13 +233,13 @@ export function ShareMenu({
                 onClick={() => setEmailMode(true)}
                 className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors"
                 style={{ background: "transparent", color: "rgba(255,255,255,0.85)", cursor: "pointer" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.06)"; }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#f1f5f9"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
               >
                 <Mail className="w-4 h-4" style={{ color: accent }} />
                 <div>
                   <div className="text-[13px] font-bold">Email link</div>
-                  <div className="text-[10px]" style={{ color: "rgba(255,255,255,0.4)" }}>Send the link to someone</div>
+                  <div className="text-[10px]" style={{ color: "#475569" }}>Send the link to someone</div>
                 </div>
               </button>
             </>
@@ -247,7 +247,7 @@ export function ShareMenu({
             <div style={{ padding: 4 }}>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[11px] font-bold uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.55)" }}>Email link</span>
-                <button type="button" onClick={() => setEmailMode(false)} style={{ color: "rgba(255,255,255,0.4)", background: "none", border: "none", cursor: "pointer" }}>
+                <button type="button" onClick={() => setEmailMode(false)} style={{ color: "#475569", background: "none", border: "none", cursor: "pointer" }}>
                   <X className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -258,7 +258,7 @@ export function ShareMenu({
                 value={recipient}
                 onChange={e => setRecipient(e.target.value)}
                 className="w-full mb-2 px-3 py-2 rounded-lg text-[13px]"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff", outline: "none" }}
+                style={{ background: "#f8fafc", border: "1px solid #cbd5e1", color: "#0F172A", outline: "none" }}
               />
               <textarea
                 data-testid={`${testIdPrefix}-email-note`}
@@ -267,7 +267,7 @@ export function ShareMenu({
                 onChange={e => setNote(e.target.value)}
                 rows={2}
                 className="w-full mb-2 px-3 py-2 rounded-lg text-[12px] resize-none"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff", outline: "none" }}
+                style={{ background: "#f8fafc", border: "1px solid #cbd5e1", color: "#0F172A", outline: "none" }}
               />
               <button
                 type="button"

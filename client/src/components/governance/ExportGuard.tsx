@@ -67,7 +67,7 @@ export function ExportGuard({
               <div key={b.claim_id} className="flex items-start gap-1.5 text-[10px]">
                 <AlertTriangle className="w-3 h-3 text-[#FFB800] mt-0.5 shrink-0" />
                 <span className="text-slate-400">
-                  <span className="font-mono text-slate-300">{b.claim_id}</span>{" "}
+                  <span className="font-mono text-slate-500">{b.claim_id}</span>{" "}
                   {b.reasons?.[0]}
                 </span>
               </div>

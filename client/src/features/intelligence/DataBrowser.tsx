@@ -39,7 +39,7 @@ type SectionId = typeof SECTIONS[number]["id"];
 
 function StatusBadge({ val, map }: { val: string | undefined | null; map: Record<string, string> }) {
   const v = (val ?? "—").toString().toUpperCase();
-  const style = map[v] ?? "bg-zinc-800 text-zinc-400 border-zinc-700";
+  const style = map[v] ?? "bg-white text-zinc-400 border-slate-200";
   return (
     <span className={cn("inline-flex items-center px-1.5 py-0.5 rounded text-[9px] font-mono font-bold border", style)}>
       {val ?? "—"}
@@ -79,7 +79,7 @@ function Cell({ children, className }: { children: React.ReactNode; className?: 
 
 function Th({ children }: { children: React.ReactNode }) {
   return (
-    <th className="px-3 py-2 text-left text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-widest whitespace-nowrap border-b border-zinc-800">
+    <th className="px-3 py-2 text-left text-[9px] font-mono font-bold text-zinc-500 uppercase tracking-widest whitespace-nowrap border-b border-slate-200">
       {children}
     </th>
   );
@@ -93,11 +93,11 @@ function UsersTable({ data }: { data: any[] }) {
       <thead><tr><Th>id</Th><Th>username</Th><Th>email</Th><Th>full_name</Th><Th>oauth_provider</Th><Th>created_at</Th></tr></thead>
       <tbody>
         {data.map((u, i) => (
-          <tr key={u.id} className={cn("border-b border-zinc-800/60", i % 2 === 0 ? "bg-zinc-900/30" : "")}>
+          <tr key={u.id} className={cn("border-b border-slate-200/60", i % 2 === 0 ? "bg-slate-50/30" : "")}>
             <Cell><Mono className="text-zinc-500">{u.id}</Mono></Cell>
             <Cell><Mono className="text-[#00A8FF]">{u.username}</Mono></Cell>
-            <Cell><Mono className="text-zinc-300">{u.email ?? "—"}</Mono></Cell>
-            <Cell><Mono className="text-zinc-300">{u.fullName ?? "—"}</Mono></Cell>
+            <Cell><Mono className="text-slate-500">{u.email ?? "—"}</Mono></Cell>
+            <Cell><Mono className="text-slate-500">{u.fullName ?? "—"}</Mono></Cell>
             <Cell><Mono className="text-zinc-500">{u.oauthProvider ?? "local"}</Mono></Cell>
             <Cell><Mono className="text-zinc-500">{u.createdAt ? u.createdAt.slice(0,10) : "—"}</Mono></Cell>
           </tr>
@@ -114,12 +114,12 @@ function WatchlistTable({ data }: { data: any[] }) {
       <thead><tr><Th>id</Th><Th>ticker</Th><Th>display_name</Th><Th>target_price</Th><Th>alert_threshold_pct</Th></tr></thead>
       <tbody>
         {data.map((w, i) => (
-          <tr key={w.id} className={cn("border-b border-zinc-800/60", i % 2 === 0 ? "bg-zinc-900/30" : "")}>
+          <tr key={w.id} className={cn("border-b border-slate-200/60", i % 2 === 0 ? "bg-slate-50/30" : "")}>
             <Cell><Mono className="text-zinc-500">{w.id}</Mono></Cell>
             <Cell><Mono className="text-[#FFB800] font-bold">{w.ticker}</Mono></Cell>
-            <Cell><Mono className="text-zinc-300">{w.displayName}</Mono></Cell>
-            <Cell><Mono className="text-zinc-300">{w.targetPrice ?? "—"}</Mono></Cell>
-            <Cell><Mono className="text-zinc-300">{w.alertThresholdPct ? `${w.alertThresholdPct}%` : "—"}</Mono></Cell>
+            <Cell><Mono className="text-slate-500">{w.displayName}</Mono></Cell>
+            <Cell><Mono className="text-slate-500">{w.targetPrice ?? "—"}</Mono></Cell>
+            <Cell><Mono className="text-slate-500">{w.alertThresholdPct ? `${w.alertThresholdPct}%` : "—"}</Mono></Cell>
           </tr>
         ))}
       </tbody>
@@ -134,7 +134,7 @@ function VaultTable({ data }: { data: any[] }) {
       <thead><tr><Th>id</Th><Th>filename</Th><Th>category</Th><Th>description</Th></tr></thead>
       <tbody>
         {data.map((v, i) => (
-          <tr key={v.id} className={cn("border-b border-zinc-800/60", i % 2 === 0 ? "bg-zinc-900/30" : "")}>
+          <tr key={v.id} className={cn("border-b border-slate-200/60", i % 2 === 0 ? "bg-slate-50/30" : "")}>
             <Cell><Mono className="text-zinc-500">{v.id}</Mono></Cell>
             <Cell><Mono className="text-[#A855F7]">{v.filename}</Mono></Cell>
             <Cell><Mono className="text-zinc-400">{v.category ?? "—"}</Mono></Cell>
@@ -159,9 +159,9 @@ function ClaimsTable({ data }: { data: any[] }) {
       <tbody>
         {data.map((c, i) => (
           <tr key={c.claimId} data-testid={`db-row-claims-${c.claimId}`}
-            className={cn("border-b border-zinc-800/60", i % 2 === 0 ? "bg-zinc-900/30" : "")}>
+            className={cn("border-b border-slate-200/60", i % 2 === 0 ? "bg-slate-50/30" : "")}>
             <Cell><Mono className="text-[#00A8FF] font-bold">{c.claimId}</Mono></Cell>
-            <Cell><Mono className="text-zinc-300">{c.kpiKey}</Mono></Cell>
+            <Cell><Mono className="text-slate-500">{c.kpiKey}</Mono></Cell>
             <Cell><Mono className="text-[#00FF94] font-bold">{c.value}</Mono></Cell>
             <Cell><Mono className="text-zinc-400">{c.unit ?? "—"}</Mono></Cell>
             <Cell><Mono className="text-zinc-400">{c.period ?? "—"}</Mono></Cell>
@@ -188,7 +188,7 @@ function EvidenceTable({ data }: { data: any[] }) {
       <tbody>
         {data.map((e, i) => (
           <tr key={e.evidenceId} data-testid={`db-row-evidence-${e.evidenceId}`}
-            className={cn("border-b border-zinc-800/60", i % 2 === 0 ? "bg-zinc-900/30" : "")}>
+            className={cn("border-b border-slate-200/60", i % 2 === 0 ? "bg-slate-50/30" : "")}>
             <Cell><Mono className="text-[#00A8FF] font-bold">{e.evidenceId}</Mono></Cell>
             <Cell><Mono className="text-zinc-400">{e.sourceType ?? "—"}</Mono></Cell>
             <Cell><Mono className="text-zinc-500 truncate max-w-[120px]">{e.sourceUri ?? "—"}</Mono></Cell>
@@ -211,9 +211,9 @@ function TransformsTable({ data }: { data: any[] }) {
       <tbody>
         {data.map((t, i) => (
           <tr key={t.transformId} data-testid={`db-row-transforms-${t.transformId}`}
-            className={cn("border-b border-zinc-800/60", i % 2 === 0 ? "bg-zinc-900/30" : "")}>
+            className={cn("border-b border-slate-200/60", i % 2 === 0 ? "bg-slate-50/30" : "")}>
             <Cell><Mono className="text-[#A855F7] font-bold">{t.transformId}</Mono></Cell>
-            <Cell><Mono className="text-zinc-300">{t.name ?? "—"}</Mono></Cell>
+            <Cell><Mono className="text-slate-500">{t.name ?? "—"}</Mono></Cell>
             <Cell><Mono className="text-zinc-500 truncate max-w-[160px]">{t.formula ?? "—"}</Mono></Cell>
             <Cell><Mono className="text-zinc-600">{t.outputHash ? t.outputHash.slice(0,12)+"…" : "—"}</Mono></Cell>
             <Cell><Mono className="text-zinc-400">{t.codeVersion ?? "—"}</Mono></Cell>
@@ -233,7 +233,7 @@ function PolicyResultsTable({ data }: { data: any[] }) {
       <tbody>
         {data.map((r, i) => (
           <tr key={r.claimId} data-testid={`db-row-policy-${r.claimId}`}
-            className={cn("border-b border-zinc-800/60", i % 2 === 0 ? "bg-zinc-900/30" : "")}>
+            className={cn("border-b border-slate-200/60", i % 2 === 0 ? "bg-slate-50/30" : "")}>
             <Cell><Mono className="text-[#00A8FF] font-bold">{r.claimId}</Mono></Cell>
             <Cell><Mono className="text-zinc-400">{r.kpiKey}</Mono></Cell>
             <Cell><StatusBadge val={r.verifiedStatus} map={VERIFIED_MAP} /></Cell>
@@ -255,13 +255,13 @@ function NarrativeTable({ data }: { data: any[] }) {
       <thead><tr><Th>receipt_id</Th><Th>action</Th><Th>rationale</Th><Th>claims</Th><Th>export</Th><Th>board</Th><Th>generated_at</Th></tr></thead>
       <tbody>
         {data.map((b, i) => (
-          <tr key={b.receiptId} className={cn("border-b border-zinc-800/60", i % 2 === 0 ? "bg-zinc-900/30" : "")}>
+          <tr key={b.receiptId} className={cn("border-b border-slate-200/60", i % 2 === 0 ? "bg-slate-50/30" : "")}>
             <Cell><Mono className="text-[#00FF94] font-bold">{b.receiptId}</Mono></Cell>
-            <Cell><Mono className="text-zinc-300">{b.action}</Mono></Cell>
+            <Cell><Mono className="text-slate-500">{b.action}</Mono></Cell>
             <Cell><span className="text-zinc-400 text-[10px] line-clamp-2">{b.rationale ?? "—"}</span></Cell>
             <Cell><Mono className="text-zinc-400">{Array.isArray(b.claimIds) ? b.claimIds.length : 0}</Mono></Cell>
             <Cell><StatusBadge val={b.exportAllowed ? "ALLOWED" : "BLOCKED"} map={POLICY_MAP} /></Cell>
-            <Cell><StatusBadge val={b.boardGrade ? "YES" : "NO"} map={{ YES: "bg-[#00FF94]/10 text-[#00FF94] border-[#00FF94]/30", NO: "bg-zinc-800 text-zinc-500 border-zinc-700" }} /></Cell>
+            <Cell><StatusBadge val={b.boardGrade ? "YES" : "NO"} map={{ YES: "bg-[#00FF94]/10 text-[#00FF94] border-[#00FF94]/30", NO: "bg-white text-zinc-500 border-slate-200" }} /></Cell>
             <Cell><Mono className="text-zinc-500">{b.generatedAt ? b.generatedAt.slice(0,10) : "—"}</Mono></Cell>
           </tr>
         ))}
@@ -278,13 +278,13 @@ function ExportJobsTable({ data }: { data: any[] }) {
       <tbody>
         {data.map((j, i) => (
           <tr key={j.jobId} data-testid={`db-row-export-${j.jobId}`}
-            className={cn("border-b border-zinc-800/60", i % 2 === 0 ? "bg-zinc-900/30" : "")}>
+            className={cn("border-b border-slate-200/60", i % 2 === 0 ? "bg-slate-50/30" : "")}>
             <Cell><Mono className="text-[#FF4D6D] font-bold">{j.jobId}</Mono></Cell>
-            <Cell><Mono className="text-zinc-300">{j.action}</Mono></Cell>
+            <Cell><Mono className="text-slate-500">{j.action}</Mono></Cell>
             <Cell><Mono className="text-zinc-400">{j.policyState ?? "—"}</Mono></Cell>
-            <Cell><Mono className="text-zinc-300">{j.confidence != null ? `${(j.confidence * 100).toFixed(0)}%` : "—"}</Mono></Cell>
+            <Cell><Mono className="text-slate-500">{j.confidence != null ? `${(j.confidence * 100).toFixed(0)}%` : "—"}</Mono></Cell>
             <Cell><StatusBadge val={j.exportAllowed ? "ALLOWED" : "BLOCKED"} map={POLICY_MAP} /></Cell>
-            <Cell><StatusBadge val={j.boardGrade ? "YES" : "NO"} map={{ YES: "bg-[#00FF94]/10 text-[#00FF94] border-[#00FF94]/30", NO: "bg-zinc-800 text-zinc-500 border-zinc-700" }} /></Cell>
+            <Cell><StatusBadge val={j.boardGrade ? "YES" : "NO"} map={{ YES: "bg-[#00FF94]/10 text-[#00FF94] border-[#00FF94]/30", NO: "bg-white text-zinc-500 border-slate-200" }} /></Cell>
             <Cell><Mono className="text-zinc-400">{j.generatedBy ?? "—"}</Mono></Cell>
             <Cell><Mono className="text-zinc-500">{j.generatedAt ? j.generatedAt.slice(0,10) : "—"}</Mono></Cell>
           </tr>
@@ -300,9 +300,9 @@ function GovernanceLogsTable({ data }: { data: any[] }) {
       <thead><tr><Th>id</Th><Th>prompt</Th><Th>provider</Th><Th>model</Th><Th>tokens</Th><Th>created_at</Th></tr></thead>
       <tbody>
         {data.map((l, i) => (
-          <tr key={l.id} className={cn("border-b border-zinc-800/60", i % 2 === 0 ? "bg-zinc-900/30" : "")}>
+          <tr key={l.id} className={cn("border-b border-slate-200/60", i % 2 === 0 ? "bg-slate-50/30" : "")}>
             <Cell><Mono className="text-zinc-500">{l.id}</Mono></Cell>
-            <Cell><span className="text-zinc-300 text-[10px] line-clamp-1 max-w-[200px]">{l.prompt}</span></Cell>
+            <Cell><span className="text-slate-500 text-[10px] line-clamp-1 max-w-[200px]">{l.prompt}</span></Cell>
             <Cell><Mono className="text-[#A855F7]">{l.provider}</Mono></Cell>
             <Cell><Mono className="text-zinc-400">{l.model ?? "—"}</Mono></Cell>
             <Cell><Mono className="text-zinc-400">{l.tokensUsed ?? "—"}</Mono></Cell>
@@ -366,7 +366,7 @@ function CheckBar({ onResult }: { onResult: (type: string, data: any) => void })
           disabled={loading !== null}
           className={cn(
             "flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-[10px] font-mono font-semibold transition-all",
-            "border-zinc-700 bg-zinc-900 text-zinc-300 hover:border-zinc-500 hover:text-zinc-100",
+            "border-slate-200 bg-slate-50 text-slate-500 hover:border-zinc-500 hover:text-slate-900",
             "disabled:opacity-50 disabled:cursor-not-allowed",
             loading === t && "border-[#00A8FF]/40 text-[#00A8FF]",
           )}
@@ -418,7 +418,7 @@ function CheckResultPanel({ type, data, onClose }: { type: string; data: any; on
               <span className={cn("text-[10px] font-mono font-bold",
                 typeof v === "boolean"
                   ? v ? "text-[#00FF94]" : "text-[#FF4D6D]"
-                  : "text-zinc-200"
+                  : "text-slate-700"
               )}>
                 {typeof v === "boolean" ? (v ? "true" : "false") : String(v)}
               </span>
@@ -427,14 +427,14 @@ function CheckResultPanel({ type, data, onClose }: { type: string; data: any; on
       </div>
 
       {data.blockReason && (
-        <div className="flex items-center gap-2 pt-1 border-t border-zinc-800/50">
+        <div className="flex items-center gap-2 pt-1 border-t border-slate-200/50">
           <AlertTriangle className="w-3 h-3 text-[#FF4D6D]" />
           <span className="text-[10px] text-[#FF4D6D]">{data.blockReason}</span>
         </div>
       )}
 
       {Array.isArray(data.issues) && data.issues.length > 0 && (
-        <ul className="space-y-0.5 pt-1 border-t border-zinc-800/50">
+        <ul className="space-y-0.5 pt-1 border-t border-slate-200/50">
           {data.issues.map((issue: string, i: number) => (
             <li key={i} className="flex items-center gap-1.5 text-[10px] text-[#FFB800]">
               <AlertCircle className="w-3 h-3 flex-shrink-0" /> {issue}
@@ -475,15 +475,15 @@ function TablePanel({ section }: { section: typeof SECTIONS[number] }) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Icon className="w-4 h-4" style={{ color: section.color }} />
-          <span className="font-mono text-sm font-bold text-zinc-100">{section.label}</span>
-          <span className="px-1.5 py-0.5 rounded bg-zinc-800 text-[9px] font-mono text-zinc-400 border border-zinc-700">{count} rows</span>
+          <span className="font-mono text-sm font-bold text-slate-900">{section.label}</span>
+          <span className="px-1.5 py-0.5 rounded bg-white text-[9px] font-mono text-zinc-400 border border-slate-200">{count} rows</span>
         </div>
-        <button onClick={() => refetch()} className="flex items-center gap-1 text-[10px] font-mono text-zinc-500 hover:text-zinc-300 transition-colors">
+        <button onClick={() => refetch()} className="flex items-center gap-1 text-[10px] font-mono text-zinc-500 hover:text-slate-500 transition-colors">
           <RefreshCw className="w-3 h-3" /> refresh
         </button>
       </div>
 
-      <div className="rounded-xl border border-zinc-800 bg-zinc-950 overflow-x-auto">
+      <div className="rounded-xl border border-slate-200 bg-white overflow-x-auto">
         {section.id === "users"            && <UsersTable data={rows} />}
         {section.id === "watchlist"        && <WatchlistTable data={rows} />}
         {section.id === "vault"            && <VaultTable data={rows} />}
@@ -523,11 +523,11 @@ export function DataBrowser({ className }: DataBrowserProps) {
   }
 
   return (
-    <div className={cn("flex h-full min-h-screen bg-zinc-950 text-zinc-100", className)}
+    <div className={cn("flex h-full min-h-screen bg-white text-slate-900", className)}
       data-testid="data-browser">
 
       {/* Left nav */}
-      <aside className="w-44 flex-shrink-0 border-r border-zinc-800 bg-zinc-950 py-4" data-testid="db-nav">
+      <aside className="w-44 flex-shrink-0 border-r border-slate-200 bg-white py-4" data-testid="db-nav">
         <p className="px-3 text-[8px] font-mono font-bold text-zinc-600 uppercase tracking-[0.2em] mb-2">
           tables
         </p>
@@ -542,8 +542,8 @@ export function DataBrowser({ className }: DataBrowserProps) {
               className={cn(
                 "w-full flex items-center gap-2 px-3 py-2 text-[10px] font-mono transition-all text-left",
                 active
-                  ? "bg-zinc-800 text-zinc-100 border-r-2"
-                  : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900/50",
+                  ? "bg-white text-slate-900 border-r-2"
+                  : "text-zinc-500 hover:text-slate-500 hover:bg-slate-50/50",
               )}
               style={active ? { borderRightColor: s.color } : {}}
             >
@@ -557,10 +557,10 @@ export function DataBrowser({ className }: DataBrowserProps) {
       {/* Main content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top header bar */}
-        <div className="border-b border-zinc-800 bg-zinc-950 px-5 py-3 flex items-center justify-between gap-4 flex-wrap">
+        <div className="border-b border-slate-200 bg-white px-5 py-3 flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-2">
             <Database className="w-4 h-4 text-[#00A8FF]" />
-            <span className="text-xs font-bold font-mono text-zinc-200">
+            <span className="text-xs font-bold font-mono text-slate-700">
               kincaid_iq
               <span className="text-zinc-600 mx-1">/</span>
               <span style={{ color: currentSection.color }}>{currentSection.label}</span>

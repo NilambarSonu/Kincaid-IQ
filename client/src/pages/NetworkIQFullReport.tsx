@@ -48,7 +48,7 @@ function adequacyColor(a: string) {
 
 /* ─── SHARED STYLES ──────────────────────────────────────────────────────── */
 const S = {
-  page: { background: "#dde3ec", color: "#000", padding: "24px 0 40px", fontFamily: "'Inter','Segoe UI',system-ui,sans-serif" } as React.CSSProperties,
+  page: { background: "linear-gradient(180deg, #eef3fb 0%, #dde3ec 100%)", color: "#000", padding: "28px 0 44px", fontFamily: "'Inter','Segoe UI',system-ui,sans-serif" } as React.CSSProperties,
   section: { background: "#fff", borderRadius: 16, margin: "0 24px 16px", padding: "48px 56px", boxShadow: "0 1px 3px rgba(0,0,0,0.08)" } as React.CSSProperties,
   h2: { fontSize: 24, fontWeight: 900, color: "#000", letterSpacing: "-0.01em", margin: "0 0 22px 0" } as React.CSSProperties,
   h3: { fontSize: 17, fontWeight: 800, color: "#000", margin: "0 0 12px 0" } as React.CSSProperties,
@@ -82,23 +82,23 @@ function CoverPage({ data }: { data: NetworkData }) {
     <div style={{ ...S.section, padding: 0, overflow: "hidden" }}>
       {/* KIQ Banner */}
       <div style={{ width: "100%", height: 80, background: "linear-gradient(135deg, #002B5C 0%, #9B1C2E 100%)", display: "flex", alignItems: "center", padding: "0 56px" }}>
-        <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 900, fontSize: 11, letterSpacing: "0.24em", textTransform: "uppercase" as const }}>KINCAID IQ — FIDUCIARY INTELLIGENCE PLATFORM</span>
+        <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 900, fontSize: 11, letterSpacing: "0.24em", textTransform: "uppercase" as const }}>KINCAID HEALTH — FIDUCIARY INTELLIGENCE PLATFORM</span>
       </div>
 
       {/* Sub-header */}
-      <div style={{ background: "#002B5C", padding: "10px 56px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ background: "#F8FAFC", padding: "10px 56px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.25)" }} />
+          <div style={{ width: 1, height: 28, background: "rgba(15,23,42,0.08)" }} />
           <div>
             <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.28em", color: "rgba(255,255,255,0.90)", textTransform: "uppercase" }}>
               Network IQ™ · Provider Network Adequacy & CAA Compliance
             </div>
-            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.45)", marginTop: 2 }}>Powered by Kincaid IQ Intelligence Platform</div>
+            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.45)", marginTop: 2 }}>Powered by Kincaid Health Intelligence Platform</div>
           </div>
         </div>
         <div style={{ textAlign: "right" }}>
           <div style={{ fontSize: 9, color: "rgba(255,255,255,0.55)" }}>{date}</div>
-          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.35)", marginTop: 2 }}>CONFIDENTIAL · BROKER USE ONLY</div>
+          <div style={{ fontSize: 9, color: "#64748b", marginTop: 2 }}>CONFIDENTIAL · BROKER USE ONLY</div>
         </div>
       </div>
 
@@ -152,10 +152,10 @@ function CoverPage({ data }: { data: NetworkData }) {
         <div style={{ marginTop: 40, paddingTop: 20, borderTop: "1px solid rgba(0,0,0,0.10)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 28, height: 28, borderRadius: 6, background: "#9B1C2E", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <span style={{ fontSize: 9, fontWeight: 900, color: "#fff" }}>KIQ</span>
+              <span style={{ fontSize: 9, fontWeight: 900, color: "#0F172A" }}>KIQ</span>
             </div>
             <div>
-              <div style={{ fontSize: 10, fontWeight: 800, color: "#002B5C", letterSpacing: "0.10em" }}>KINCAID IQ</div>
+              <div style={{ fontSize: 10, fontWeight: 800, color: "#002B5C", letterSpacing: "0.10em" }}>KINCAID HEALTH</div>
               <div style={{ fontSize: 9, color: "#666" }}>Intelligence Platform · Network IQ™</div>
             </div>
           </div>
@@ -689,16 +689,16 @@ function Methodology() {
       <div style={{ ...S.card, background: "rgba(220,38,38,0.04)", border: `1px solid ${NEON.red}20`, padding: "20px 24px" }}>
         <div style={{ fontSize: 11, fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase" as const, color: NEON.red, marginBottom: 8 }}>Legal Disclaimer</div>
         <div style={{ fontSize: 12, color: "#000", lineHeight: 1.9 }}>
-          CONFIDENTIAL — FOR AUTHORIZED USE ONLY. This report is prepared by Kincaid IQ Network IQ™ exclusively for the named plan sponsor and its authorized broker, consultant, and ERISA counsel of record. Unauthorized disclosure, reproduction, or distribution is prohibited. This report does not constitute legal advice, actuarial opinion, or compliance certification, and does not create an attorney-client relationship. Network adequacy assessments are based on available provider data, CMS standards, and applicable state regulatory benchmarks as of the report date; they do not constitute a determination of regulatory compliance, and network composition may change materially prior to or following any plan year. This report does not account for DOL, CMS, or state department of insurance enforcement actions, pending regulatory changes, or provider contract amendments occurring after the data pull date. Named plan fiduciaries and plan administrators should engage qualified ERISA counsel and a licensed network adequacy specialist before taking or refraining from taking any action in reliance on this report. To the maximum extent permitted by applicable law, Kincaid IQ disclaims all representations and warranties, express or implied, and disclaims all liability for damages of any kind arising out of or related to any action taken or not taken in reliance on this report. © Kincaid IQ | kincaidiq.com
+          CONFIDENTIAL — FOR AUTHORIZED USE ONLY. This report is prepared by Kincaid Health Network IQ™ exclusively for the named plan sponsor and its authorized broker, consultant, and ERISA counsel of record. Unauthorized disclosure, reproduction, or distribution is prohibited. This report does not constitute legal advice, actuarial opinion, or compliance certification, and does not create an attorney-client relationship. Network adequacy assessments are based on available provider data, CMS standards, and applicable state regulatory benchmarks as of the report date; they do not constitute a determination of regulatory compliance, and network composition may change materially prior to or following any plan year. This report does not account for DOL, CMS, or state department of insurance enforcement actions, pending regulatory changes, or provider contract amendments occurring after the data pull date. Named plan fiduciaries and plan administrators should engage qualified ERISA counsel and a licensed network adequacy specialist before taking or refraining from taking any action in reliance on this report. To the maximum extent permitted by applicable law, Kincaid Health disclaims all representations and warranties, express or implied, and disclaims all liability for damages of any kind arising out of or related to any action taken or not taken in reliance on this report. © Kincaid Health | kincaidiq.com
         </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 28, paddingTop: 20, borderTop: "1px solid rgba(0,0,0,0.08)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ width: 28, height: 28, borderRadius: 6, background: "#9B1C2E", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ fontSize: 8, fontWeight: 900, color: "#fff" }}>KIQ</span>
+            <span style={{ fontSize: 8, fontWeight: 900, color: "#0F172A" }}>KIQ</span>
           </div>
           <div>
-            <div style={{ fontSize: 10, fontWeight: 900, color: "#002B5C", letterSpacing: "0.15em" }}>KINCAID IQ · NETWORK IQ™</div>
+            <div style={{ fontSize: 10, fontWeight: 900, color: "#002B5C", letterSpacing: "0.15em" }}>KINCAID HEALTH · NETWORK IQ™</div>
             <div style={{ fontSize: 9, color: "#666", marginTop: 2 }}>Fiduciary-Grade Network Intelligence · CAA 2026 Aligned</div>
           </div>
         </div>
@@ -743,27 +743,27 @@ export default function NetworkIQFullReport({ data, onClose }: { data: NetworkDa
   const s = data.summary;
 
   return (
-    <div id="kiq-niq-overlay" style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(0,0,0,0.96)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <div id="kiq-niq-overlay" className="kiq-report-overlay" style={{ position: "fixed", inset: 0, zIndex: 60, background: "var(--kiq-report-overlay-bg)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
       {/* Toolbar */}
-      <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 12, padding: "12px 24px", background: "#fff", borderBottom: "1px solid rgba(0,0,0,0.10)" }} className="print-hide">
+      <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 12, padding: "14px 24px", background: "rgba(255,255,255,0.78)", borderBottom: "1px solid rgba(13,37,61,0.08)" }} className="print-hide kiq-report-toolbar">
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 12, fontWeight: 900, color: "#000", letterSpacing: "0.15em", textTransform: "uppercase" }}>Network IQ™ · Full Network Intelligence Report</div>
           <div style={{ fontSize: 11, color: "#000", marginTop: 1 }}>Adequacy {s.network_adequacy_score}/100 · {s.in_network_rate}% In-Network · Leakage {fmtK(s.leakage_dollars)}</div>
         </div>
-        <button data-testid="niq-fullreport-email" onClick={() => setEmailOpen(true)}
+        <button className="kiq-report-action" data-testid="niq-fullreport-email" onClick={() => setEmailOpen(true)}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", borderRadius: 10, background: "rgba(217,119,6,0.08)", border: "1px solid rgba(217,119,6,0.25)", color: NEON.gold, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
           <Mail style={{ width: 14, height: 14 }} /> Email Report
         </button>
-        <button data-testid="niq-fullreport-print" onClick={handlePrint} disabled={printing}
+        <button className="kiq-report-action" data-testid="niq-fullreport-print" onClick={handlePrint} disabled={printing}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", borderRadius: 10, background: "rgba(37,99,235,0.08)", border: "1px solid rgba(37,99,235,0.2)", color: NEON.blue, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
           <Printer style={{ width: 14, height: 14 }} /> Print / Save PDF
         </button>
-        <button data-testid="niq-fullreport-download" onClick={handleDownload}
+        <button className="kiq-report-action" data-testid="niq-fullreport-download" onClick={handleDownload}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", borderRadius: 10, background: "rgba(5,150,105,0.08)", border: "1px solid rgba(5,150,105,0.2)", color: NEON.green, fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
           <Download style={{ width: 14, height: 14 }} /> Download PNG
         </button>
-        <button data-testid="niq-fullreport-close" onClick={onClose}
+        <button className="kiq-report-action" data-testid="niq-fullreport-close" onClick={onClose}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 16px", borderRadius: 10, background: "rgba(0,0,0,0.04)", border: "1px solid rgba(0,0,0,0.08)", color: "#000", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
           ✕ Close
         </button>
@@ -771,7 +771,7 @@ export default function NetworkIQFullReport({ data, onClose }: { data: NetworkDa
 
       {/* Scroll area */}
       <div id="kiq-niq-scroll" style={{ flex: 1, overflowY: "auto", overflowX: "hidden" }}>
-        <div ref={reportRef} style={{ ...S.page, maxWidth: 1140, margin: "0 auto" }}>
+        <div ref={reportRef} className="kiq-report-document" style={{ ...S.page, maxWidth: 1140, margin: "0 auto" }}>
           <div id="rpt-niq-section-0"><CoverPage data={data} /></div>
           <div id="rpt-niq-section-toc"><TableOfContents /></div>
           <div id="rpt-niq-section-1"><ExecutiveSummary data={data} /></div>
@@ -784,7 +784,7 @@ export default function NetworkIQFullReport({ data, onClose }: { data: NetworkDa
           <div id="rpt-niq-section-8"><Methodology /></div>
         </div>
         <div className="print-hide" style={{ display: "flex", justifyContent: "center", padding: "32px 0 48px" }}>
-          <button onClick={() => document.getElementById("rpt-niq-section-0")?.scrollIntoView({ behavior: "smooth" })}
+          <button className="kiq-report-action" onClick={() => document.getElementById("rpt-niq-section-0")?.scrollIntoView({ behavior: "smooth" })}
             style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 24px", borderRadius: 10, background: "rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.10)", color: "#000", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
             ↑ Back to Top
           </button>

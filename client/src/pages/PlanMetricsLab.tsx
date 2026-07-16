@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Layout } from "@/components/Layout";
 import {
   Layers, PieChart, Users, TrendingUp, Network, Pill, ShieldAlert,
   Coins, HeartPulse, Building2, BarChart3, Search, ShieldCheck,
@@ -49,8 +50,8 @@ function Section({ title, icon: Icon, color, desc, tier, children }: {
 }) {
   return (
     <div data-testid={`section-${title.replace(/\s+/g, "-").toLowerCase()}`} style={{
-      background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.08)",
-      borderRadius: 14, padding: 20, marginBottom: 18,
+      background: "linear-gradient(135deg, rgba(255,255,255,0.92), rgba(248,250,252,0.70))", border: "1px solid rgba(15,23,42,0.08)",
+      borderRadius: 18, padding: 20, marginBottom: 18, boxShadow: "0 18px 46px rgba(15,23,42,0.06)",
     }}>
       <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 14 }}>
         <div style={{
@@ -60,8 +61,8 @@ function Section({ title, icon: Icon, color, desc, tier, children }: {
           <Icon size={18} />
         </div>
         <div style={{ flex: 1 }}>
-          <h3 style={{ fontSize: 15, fontWeight: 700, color: "#f5f5f7", margin: 0 }}>{title}</h3>
-          <p style={{ fontSize: 12, color: "#8a8a92", margin: "3px 0 0" }}>{desc}</p>
+          <h3 style={{ fontSize: 15, fontWeight: 850, color: "#0f172a", margin: 0 }}>{title}</h3>
+          <p style={{ fontSize: 12, color: "#475569", margin: "3px 0 0", fontWeight: 600 }}>{desc}</p>
         </div>
         {tier && <TierBadge tier={tier} />}
       </div>
@@ -73,12 +74,12 @@ function Section({ title, icon: Icon, color, desc, tier, children }: {
 function Stat({ label, value, sub, color }: { label: string; value: string; sub?: string; color?: string }) {
   return (
     <div style={{
-      background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)",
+      background: "rgba(255,255,255,0.76)", border: "1px solid rgba(15,23,42,0.08)",
       borderRadius: 10, padding: "12px 14px", flex: 1, minWidth: 130,
     }}>
-      <div style={{ fontSize: 10, color: "#8a8a92", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700 }}>{label}</div>
-      <div style={{ fontSize: 22, fontWeight: 800, color: color || "#f5f5f7", marginTop: 4 }}>{value}</div>
-      {sub && <div style={{ fontSize: 11, color: "#8a8a92", marginTop: 2 }}>{sub}</div>}
+      <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 800 }}>{label}</div>
+      <div style={{ fontSize: 22, fontWeight: 900, color: color || "#0f172a", marginTop: 4 }}>{value}</div>
+      {sub && <div style={{ fontSize: 11, color: "#475569", marginTop: 2, fontWeight: 600 }}>{sub}</div>}
     </div>
   );
 }
@@ -122,14 +123,16 @@ export default function PlanMetricsLab() {
   const s = data?.sections || {};
 
   return (
-    <div style={{ maxWidth: 1100, margin: "0 auto", padding: "28px 22px 80px" }}>
+    <Layout>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", padding: "28px 22px 80px" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
       {/* Header */}
       <div style={{ marginBottom: 22 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <Activity size={22} style={{ color: "#4f7dff" }} />
-          <h1 style={{ fontSize: 24, fontWeight: 800, color: "#f5f5f7", margin: 0 }}>Plan Metrics Intelligence</h1>
+          <h1 style={{ fontSize: 24, fontWeight: 900, color: "#0f172a", margin: 0 }}>Plan Metrics Intelligence</h1>
         </div>
-        <p style={{ fontSize: 13, color: "#8a8a92", margin: "6px 0 0" }}>
+        <p style={{ fontSize: 13, color: "#475569", margin: "6px 0 0", fontWeight: 600 }}>
           Eleven employer-level intelligence sections computed live from DOL Form 5500 filings.
           Every finding carries a confidence tier — no number outruns its evidence.
         </p>
@@ -137,24 +140,24 @@ export default function PlanMetricsLab() {
 
       {/* Search */}
       <div style={{ position: "relative", marginBottom: 18 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, padding: "10px 14px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 10, padding: "10px 14px" }}>
           <Search size={16} style={{ color: "#8a8a92" }} />
           <input
             data-testid="input-employer-search"
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search employer by name or EIN…"
-            style={{ flex: 1, background: "transparent", border: "none", outline: "none", color: "#f5f5f7", fontSize: 14 }}
+            style={{ flex: 1, background: "transparent", border: "none", outline: "none", color: "#0f172a", fontSize: 14, fontWeight: 650 }}
           />
         </div>
         {hits && hits.length > 0 && q.trim().length >= 2 && (
-          <div style={{ position: "absolute", zIndex: 20, top: "100%", left: 0, right: 0, marginTop: 4, background: "#16161a", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 10, overflow: "hidden", maxHeight: 320, overflowY: "auto" }}>
+          <div style={{ position: "absolute", zIndex: 20, top: "100%", left: 0, right: 0, marginTop: 4, background: "#16161a", border: "1px solid #cbd5e1", borderRadius: 10, overflow: "hidden", maxHeight: 320, overflowY: "auto" }}>
             {hits.map((h) => (
               <button
                 key={h.ein}
                 data-testid={`result-employer-${h.ein}`}
                 onClick={() => { setEin(h.ein); setQ(""); }}
-                style={{ display: "block", width: "100%", textAlign: "left", padding: "10px 14px", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.05)", color: "#f5f5f7", cursor: "pointer" }}
+                style={{ display: "block", width: "100%", textAlign: "left", padding: "10px 14px", background: "transparent", border: "none", borderBottom: "1px solid #f8fafc", color: "#f5f5f7", cursor: "pointer" }}
               >
                 <div style={{ fontSize: 13, fontWeight: 600 }}>{h.name}</div>
                 <div style={{ fontSize: 11, color: "#8a8a92" }}>{h.city}, {h.state} · EIN {h.ein} · {fmtN(h.participants)} participants</div>
@@ -197,7 +200,7 @@ export default function PlanMetricsLab() {
               </div>
             )}
             {s.funding_type?.plans?.map((p: any, i: number) => (
-              <div key={i} style={{ display: "flex", justifyContent: "space-between", gap: 10, padding: "8px 0", borderTop: "1px solid rgba(255,255,255,0.05)", fontSize: 12 }}>
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", gap: 10, padding: "8px 0", borderTop: "1px solid #f8fafc", fontSize: 12 }}>
                 <span style={{ color: "#c7c7cf" }}>{p.plan} {p.carrier ? `· ${p.carrier}` : ""}</span>
                 <span style={{ color: p.funding === "Self-insured" ? "#fbbf24" : p.funding === "Fully-insured" ? "#34d399" : "#8a8a92", fontWeight: 700 }}>{p.funding}</span>
               </div>
@@ -218,7 +221,7 @@ export default function PlanMetricsLab() {
             {s.benefit_lines?.estimated_split?.map((b: any) => (
               <div key={b.code} style={{ display: "flex", alignItems: "center", gap: 10, padding: "6px 0", fontSize: 12 }}>
                 <span style={{ width: 130, color: "#c7c7cf" }}>{b.label}</span>
-                <div style={{ flex: 1, height: 8, background: "rgba(255,255,255,0.05)", borderRadius: 4, overflow: "hidden" }}>
+                <div style={{ flex: 1, height: 8, background: "#f8fafc", borderRadius: 4, overflow: "hidden" }}>
                   <div style={{ width: `${b.share_pct}%`, height: "100%", background: "#22d3ee" }} />
                 </div>
                 <span style={{ width: 60, textAlign: "right", color: "#8a8a92" }}>{b.share_pct}%</span>
@@ -242,10 +245,10 @@ export default function PlanMetricsLab() {
               <div style={{ height: 220, marginTop: 8 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={s.trends.series}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                     <XAxis dataKey="year" stroke="#8a8a92" fontSize={11} />
                     <YAxis stroke="#8a8a92" fontSize={11} tickFormatter={(v) => fmt$(v)} width={52} />
-                    <Tooltip contentStyle={{ background: "#16161a", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, fontSize: 12 }} formatter={(v: any) => fmt$(v)} />
+                    <Tooltip contentStyle={{ background: "#16161a", border: "1px solid #cbd5e1", borderRadius: 8, fontSize: 12 }} formatter={(v: any) => fmt$(v)} />
                     <Line type="monotone" dataKey="admin" name="Admin" stroke="#34d399" strokeWidth={2} dot={false} />
                     <Line type="monotone" dataKey="broker" name="Broker" stroke="#fbbf24" strokeWidth={2} dot={false} />
                     <Line type="monotone" dataKey="premium" name="Premium" stroke="#4f7dff" strokeWidth={2} dot={false} />
@@ -271,7 +274,7 @@ export default function PlanMetricsLab() {
           <Section title="Provider Leakage Map" icon={Network} color="#fb7185" tier={s.provider_leakage?.tier}
             desc="Carrier-level compensation; indirect Schedule C comp flagged where unavailable.">
             {s.provider_leakage?.providers?.map((p: any, i: number) => (
-              <div key={i} style={{ display: "flex", justifyContent: "space-between", gap: 10, padding: "8px 0", borderTop: i ? "1px solid rgba(255,255,255,0.05)" : "none", fontSize: 12 }}>
+              <div key={i} style={{ display: "flex", justifyContent: "space-between", gap: 10, padding: "8px 0", borderTop: i ? "1px solid #f8fafc" : "none", fontSize: 12 }}>
                 <span style={{ color: "#c7c7cf", flex: 1 }}>{p.carrier}{p.flag && <span style={{ color: "#f87171", marginLeft: 8, fontSize: 10 }}>⚑ {p.flag}</span>}</span>
                 <span style={{ color: "#8a8a92" }}>broker {fmt$(p.broker_comm)}</span>
                 <span style={{ color: "#8a8a92" }}>admin {fmt$(p.admin_fees)}</span>
@@ -327,10 +330,10 @@ export default function PlanMetricsLab() {
               <div style={{ height: 240, marginTop: 8 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={s.condition_exposure.conditions} layout="vertical" margin={{ left: 40 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                     <XAxis type="number" stroke="#8a8a92" fontSize={11} tickFormatter={(v) => fmt$(v)} />
                     <YAxis type="category" dataKey="condition" stroke="#8a8a92" fontSize={11} width={130} />
-                    <Tooltip contentStyle={{ background: "#16161a", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, fontSize: 12 }} formatter={(v: any) => fmt$(v)} />
+                    <Tooltip contentStyle={{ background: "#16161a", border: "1px solid #cbd5e1", borderRadius: 8, fontSize: 12 }} formatter={(v: any) => fmt$(v)} />
                     <Bar dataKey="annual_cost_exposure" name="Annual Exposure" radius={[0, 4, 4, 0]}>
                       {s.condition_exposure.conditions.map((_: any, i: number) => (
                         <Cell key={i} fill={["#f87171", "#fb7185", "#fb923c", "#f59e0b", "#fbbf24", "#a78bfa"][i % 6]} />
@@ -368,7 +371,7 @@ export default function PlanMetricsLab() {
                 const c = s.peer_cohorts?.[key];
                 if (!c) return null;
                 return (
-                  <div key={key} style={{ flex: 1, minWidth: 240, background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 10, padding: 14 }}>
+                  <div key={key} style={{ flex: 1, minWidth: 240, background: "rgba(255,255,255,0.025)", border: "1px solid #e2e8f0", borderRadius: 10, padding: 14 }}>
                     <div style={{ fontSize: 11, color: "#8a8a92", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, marginBottom: 8 }}>
                       {key === "national" ? "National Industry" : "State Cohort"} · {fmtN(c.plan_count)} plans
                     </div>
@@ -390,5 +393,7 @@ export default function PlanMetricsLab() {
         </>
       )}
     </div>
+    </div>
+    </Layout>
   );
 }

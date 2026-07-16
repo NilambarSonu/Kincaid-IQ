@@ -6,21 +6,21 @@ import { apiRequest } from "@/lib/queryClient";
 import { Shield, Zap, Users, Activity, Lock, Eye, CheckCircle, XCircle, AlertTriangle, RefreshCw, Terminal } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-const BG = "#07091c";
-const BORDER = "rgba(255,255,255,0.08)";
-const T1 = "#f0f4ff";
-const ACCENT = "#4f7dff";
-const GREEN = "#22c55e";
-const AMBER = "#f59e0b";
-const RED = "#ef4444";
-const GOLD = "#FFB800";
-const PURPLE = "#A855F7";
-const CYAN = "#00D4FF";
+const BG = "#F8FAFC";
+const BORDER = "rgba(15,23,42,0.08)";
+const T1 = "#0f172a";
+const ACCENT = "#533afd";
+const GREEN = "#10b981";
+const AMBER = "#d97706";
+const RED = "#e11d48";
+const GOLD = "#f59e0b";
+const PURPLE = "#7c3aed";
+const CYAN = "#0ea5e9";
 
 const MODULES = [
   { id: "executive-war-room", label: "Executive War Room", route: "/", status: "live", kpis: 14 },
   { id: "broker-iq", label: "Sales IQ Console", route: "/saas/broker", status: "live", kpis: 22 },
-  { id: "rx-defense", label: "Rx Defense IQ™", route: "/rx-defense", status: "live", kpis: 50 },
+  { id: "rx-defense", label: "PBM Contract Clarity 360™", route: "/rx-defense", status: "live", kpis: 50 },
   { id: "stop-loss", label: "Stop-Loss IQ™", route: "/stop-loss", status: "live", kpis: 38 },
   { id: "network-iq", label: "Network IQ™", route: "/network-iq", status: "live", kpis: 18 },
   { id: "fiduciary-iq", label: "Fiduciary IQ™", route: "/fiduciary-iq", status: "live", kpis: 29 },
@@ -54,7 +54,7 @@ export default function GodMode() {
   const [consoleLog, setConsoleLog] = useState<string[]>([
     "[ KINCAID GOD MODE ] Platform control active",
     `[ AUTH ] Operator: ${user?.username ?? "jeremiah.shrack"} · ADMIN LEVEL 10`,
-    "[ DB ] PostgreSQL · Kincaid IQ schema · 34 tables",
+    "[ DB ] PostgreSQL · Kincaid Health schema · 34 tables",
     "[ MODULES ] 16 registered · 12 live · 4 building",
     "[ KPI SPINE ] 278 KPIs · SHA-256 evidence chain active",
     "[ COMMIT ENGINE ] 7-gate KincaidCommitEngine · ARMED",
@@ -66,7 +66,7 @@ export default function GodMode() {
         justifyContent: "center", flexDirection: "column", gap: 16 }}>
         <Lock size={40} color={RED} />
         <div style={{ fontSize: 20, fontWeight: 900, color: RED }}>ACCESS DENIED</div>
-        <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)" }}>God Mode requires operator-level authentication.</div>
+        <div style={{ fontSize: 13, color: "#475569" }}>God Mode requires operator-level authentication.</div>
         <button onClick={() => navigate("/")} style={{ padding: "10px 20px", background: `${ACCENT}20`,
           border: `1px solid ${ACCENT}50`, borderRadius: 10, color: ACCENT, cursor: "pointer", fontSize: 12, fontWeight: 700 }}>
           Return to War Room
@@ -80,12 +80,12 @@ export default function GodMode() {
   const addLog = (msg: string) => setConsoleLog(prev => [...prev.slice(-50), `[ ${new Date().toLocaleTimeString()} ] ${msg}`]);
 
   const card = (children: React.ReactNode, style?: React.CSSProperties) => (
-    <div style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${BORDER}`, borderRadius: 16, padding: 20, ...style }}>
+    <div style={{ background: "#ffffff", border: `1px solid ${BORDER}`, borderRadius: 16, padding: 20, ...style }}>
       {children}
     </div>
   );
 
-  const label9 = (text: string, color = "rgba(255,255,255,0.4)") => (
+  const label9 = (text: string, color = "#475569") => (
     <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.18em", textTransform: "uppercase", color, marginBottom: 10 }}>{text}</div>
   );
 
@@ -99,12 +99,12 @@ export default function GodMode() {
   ];
 
   return (
-    <div style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-body)", padding: "24px 28px" }}>
+    <div className="kiq-ops-shell kiq-readable-surface" style={{ minHeight: "100vh", background: BG, color: T1, fontFamily: "var(--font-sans)", padding: "24px 28px" }}>
 
       {/* Header */}
-      <div style={{ marginBottom: 20 }}>
+      <div className="kiq-ops-header" style={{ marginBottom: 20, padding: 24, borderRadius: 24 }}>
         <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.22em", color: RED, marginBottom: 6 }}>
-          ◈ KINCAID IQ · GOD MODE · PLATFORM CONTROL PANEL · OPERATOR: {user.username.toUpperCase()} · SHRACK-7742
+          ◈ KINCAID HEALTH · GOD MODE · PLATFORM CONTROL PANEL · OPERATOR: {user.username.toUpperCase()} · SHRACK-7742
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <div style={{ width: 48, height: 48, borderRadius: 14, background: `${RED}15`,
@@ -116,7 +116,7 @@ export default function GodMode() {
             <h1 style={{ fontSize: 26, fontWeight: 900, margin: 0, letterSpacing: "-0.02em" }}>
               God Mode <span style={{ color: RED }}>·</span> Platform Control
             </h1>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.35)", marginTop: 3 }}>
+            <div style={{ fontSize: 12, color: "#64748b", marginTop: 3 }}>
               Full operator access · 7-gate KincaidCommitEngine · All overrides unlocked · Evidence spine live
             </div>
           </div>
@@ -135,10 +135,10 @@ export default function GodMode() {
           <button key={t.id} onClick={() => setActiveTab(t.id)} data-testid={`godmode-tab-${t.id}`}
             style={{ display: "flex", alignItems: "center", gap: 6, padding: "10px 16px", fontSize: 11, fontWeight: 700,
               cursor: "pointer", borderRadius: "10px 10px 0 0", transition: "all 0.15s",
-              background: activeTab === t.id ? "rgba(255,255,255,0.06)" : "transparent",
+              background: activeTab === t.id ? "#f1f5f9" : "transparent",
               border: `1px solid ${activeTab === t.id ? BORDER : "transparent"}`,
               borderBottom: activeTab === t.id ? "1px solid transparent" : "none",
-              color: activeTab === t.id ? T1 : "rgba(255,255,255,0.35)", marginBottom: -1 }}>
+              color: activeTab === t.id ? T1 : "#64748b", marginBottom: -1 }}>
             {t.icon}{t.label}
           </button>
         ))}
@@ -148,12 +148,12 @@ export default function GodMode() {
       {activeTab === "overview" && (
         <>
           {/* Platform Stats */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 10, marginBottom: 20 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(150px,1fr))", gap: 10, marginBottom: 20 }}>
             {PLATFORM_STATS.map(s => (
               <div key={s.label} style={{ padding: "14px 16px", background: `${s.color}08`,
                 border: `1px solid ${s.color}25`, borderRadius: 12 }}>
                 <div style={{ fontSize: 20, fontWeight: 900, color: s.color }}>{s.value}</div>
-                <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", marginTop: 4, letterSpacing: "0.06em" }}>{s.label}</div>
+                <div style={{ fontSize: 9, color: "#475569", marginTop: 4, letterSpacing: "0.06em" }}>{s.label}</div>
               </div>
             ))}
           </div>
@@ -162,11 +162,11 @@ export default function GodMode() {
           {card(
             <>
               {label9("◈ Module Health Matrix · 16 Registered Modules", CYAN)}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 8 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: 8 }}>
                 {MODULES.map(m => (
                   <div key={m.id} data-testid={`module-health-${m.id}`}
                     style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
-                      padding: "10px 14px", background: "rgba(255,255,255,0.02)",
+                      padding: "10px 14px", background: "#ffffff",
                       border: `1px solid ${m.status === "live" ? `${GREEN}25` : `${AMBER}25`}`, borderRadius: 10 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                       <div style={{ width: 8, height: 8, borderRadius: "50%",
@@ -174,14 +174,14 @@ export default function GodMode() {
                         boxShadow: `0 0 6px ${m.status === "live" ? GREEN : AMBER}` }} />
                       <div>
                         <div style={{ fontSize: 11, fontWeight: 700, color: T1 }}>{m.label}</div>
-                        <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>{m.route}</div>
+                        <div style={{ fontSize: 9, color: "#64748b" }}>{m.route}</div>
                       </div>
                     </div>
                     <div style={{ textAlign: "right" }}>
                       <div style={{ fontSize: 11, fontWeight: 900, color: m.status === "live" ? GREEN : AMBER }}>
                         {m.status === "live" ? "LIVE" : "BUILDING"}
                       </div>
-                      <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>{m.kpis} KPIs</div>
+                      <div style={{ fontSize: 9, color: "#64748b" }}>{m.kpis} KPIs</div>
                     </div>
                   </div>
                 ))}
@@ -200,7 +200,7 @@ export default function GodMode() {
               <thead>
                 <tr>{["Username", "Full Name", "Email", "Admin", "Created"].map(h => (
                   <th key={h} style={{ padding: "8px 12px", textAlign: "left", borderBottom: `1px solid ${BORDER}`,
-                    fontSize: 9, fontWeight: 900, letterSpacing: "0.12em", color: "rgba(255,255,255,0.4)" }}>{h}</th>
+                    fontSize: 9, fontWeight: 900, letterSpacing: "0.12em", color: "#475569" }}>{h}</th>
                 ))}</tr>
               </thead>
               <tbody>
@@ -209,12 +209,12 @@ export default function GodMode() {
                     <td style={{ padding: "10px 12px", fontWeight: 700, color: u.username === "jeremiah.shrack" ? GOLD : T1 }}>
                       {u.username} {u.username === "jeremiah.shrack" && <span style={{ fontSize: 9, color: GOLD }}>ADMIN</span>}
                     </td>
-                    <td style={{ padding: "10px 12px", color: "rgba(255,255,255,0.6)" }}>{u.full_name ?? "—"}</td>
-                    <td style={{ padding: "10px 12px", color: "rgba(255,255,255,0.4)" }}>{u.email ?? "—"}</td>
+                    <td style={{ padding: "10px 12px", color: "#1e293b" }}>{u.full_name ?? "—"}</td>
+                    <td style={{ padding: "10px 12px", color: "#475569" }}>{u.email ?? "—"}</td>
                     <td style={{ padding: "10px 12px" }}>
-                      {u.is_admin ? <CheckCircle size={14} color={GREEN} /> : <XCircle size={14} color="rgba(255,255,255,0.2)" />}
+                      {u.is_admin ? <CheckCircle size={14} color={GREEN} /> : <XCircle size={14} color="#94a3b8" />}
                     </td>
-                    <td style={{ padding: "10px 12px", color: "rgba(255,255,255,0.3)", fontSize: 10 }}>
+                    <td style={{ padding: "10px 12px", color: "#64748b", fontSize: 10 }}>
                       {u.created_at ? new Date(u.created_at).toLocaleDateString() : "—"}
                     </td>
                   </tr>
@@ -222,7 +222,7 @@ export default function GodMode() {
               </tbody>
             </table>
           ) : (
-            <div style={{ color: "rgba(255,255,255,0.3)", fontSize: 12, padding: 20, textAlign: "center" }}>
+            <div style={{ color: "#64748b", fontSize: 12, padding: 20, textAlign: "center" }}>
               Loading users...
             </div>
           )}
@@ -244,7 +244,7 @@ export default function GodMode() {
           <div style={{ padding: "14px 16px", background: `${AMBER}08`, border: `1px solid ${AMBER}30`,
             borderRadius: 12, marginBottom: 16, display: "flex", gap: 12, alignItems: "center" }}>
             <AlertTriangle size={16} color={AMBER} />
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.6)" }}>
+            <div style={{ fontSize: 12, color: "#1e293b" }}>
               KPI overrides bypass the SHA-256 verification gate and log an audit trail entry.
               Use only for emergency export situations. All overrides are immutable and visible to compliance.
             </div>
@@ -255,11 +255,11 @@ export default function GodMode() {
             { id: "SL-AGG-007", label: "Aggregate Stop-Loss Corridor", status: "unverified", module: "stop-loss" },
           ].map(kpi => (
             <div key={kpi.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
-              padding: "12px 16px", background: "rgba(255,255,255,0.02)",
+              padding: "12px 16px", background: "#ffffff",
               border: `1px solid ${kpi.status === "verified" ? `${GREEN}25` : `${RED}25`}`, borderRadius: 12, marginBottom: 8 }}>
               <div>
                 <div style={{ fontSize: 12, fontWeight: 700, color: T1 }}>{kpi.id} · {kpi.label}</div>
-                <div style={{ fontSize: 9, color: "rgba(255,255,255,0.3)" }}>Module: {kpi.module}</div>
+                <div style={{ fontSize: 9, color: "#64748b" }}>Module: {kpi.module}</div>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <span style={{ fontSize: 10, fontWeight: 900, color: kpi.status === "verified" ? GREEN : RED }}>
@@ -286,8 +286,8 @@ export default function GodMode() {
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
           {card(
             <>
-              {label9("◈ Platform Security Posture · Kincaid IQ Hardening Report", CYAN)}
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
+              {label9("◈ Platform Security Posture · Kincaid Health Hardening Report", CYAN)}
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 12 }}>
                 {[
                   { label: "Brute-Force Protection", status: "ARMED", detail: "10 failures → 15min lockout", color: GREEN },
                   { label: "Login Rate Limit", status: "ARMED", detail: "20 attempts / 5 min / IP", color: GREEN },
@@ -312,12 +312,12 @@ export default function GodMode() {
                   { label: "Export Gate (ACT-CG-004)", status: "BLOCKED", detail: "Unverified KPI blocks export", color: RED },
                   { label: "PostgreSQL Connection", status: "ACTIVE", detail: "Parameterized queries via SQLAlchemy", color: GREEN },
                 ].map((item) => (
-                  <div key={item.label} style={{ background: "rgba(255,255,255,0.02)", border: `1px solid ${item.color}25`,
+                  <div key={item.label} style={{ background: "#ffffff", border: `1px solid ${item.color}25`,
                     borderRadius: 10, padding: "12px 14px" }}>
-                    <div style={{ fontSize: 9, fontWeight: 900, color: "rgba(255,255,255,0.35)", letterSpacing: "0.12em",
+                    <div style={{ fontSize: 9, fontWeight: 900, color: "#64748b", letterSpacing: "0.12em",
                       textTransform: "uppercase", marginBottom: 4 }}>{item.label}</div>
                     <div style={{ fontSize: 12, fontWeight: 900, color: item.color, marginBottom: 2 }}>{item.status}</div>
-                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)" }}>{item.detail}</div>
+                    <div style={{ fontSize: 10, color: "#64748b" }}>{item.detail}</div>
                   </div>
                 ))}
               </div>
@@ -326,12 +326,12 @@ export default function GodMode() {
           {card(
             <>
               {label9("◈ Audit Trail · Recent Events", GOLD)}
-              <div style={{ background: "rgba(0,0,0,0.4)", border: `1px solid ${GOLD}20`, borderRadius: 10,
+              <div style={{ background: "rgba(0,0,0,0.06)", border: `1px solid ${GOLD}20`, borderRadius: 10,
                 padding: "12px 16px", fontFamily: "monospace", fontSize: 11, lineHeight: 1.7 }}>
                 <div style={{ color: GREEN }}>[ AUDIT ] AUTH · login_ok · actor=jeremiah.shrack · hash=a7f3c9d1…</div>
                 <div style={{ color: AMBER }}>[ AUDIT ] PERMISSION · permission_granted · actor=jeremiah.shrack → eric.dreyfus:rx-defense</div>
                 <div style={{ color: CYAN }}>[ AUDIT ] EXPORT · data_exported · actor=jeremiah.shrack · resource=rx-defense · rows=284</div>
-                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: 10, marginTop: 8 }}>
+                <div style={{ color: "#64748b", fontSize: 10, marginTop: 8 }}>
                   All audit events are SHA-256 hashed and persisted to the immutable log table. Full event history in server logs.
                 </div>
               </div>
@@ -344,7 +344,7 @@ export default function GodMode() {
       {activeTab === "console" && card(
         <>
           {label9("◈ System Console · Live Platform Log", GREEN)}
-          <div style={{ background: "rgba(0,0,0,0.5)", border: `1px solid ${GREEN}25`, borderRadius: 12,
+          <div style={{ background: "rgba(0,0,0,0.08)", border: `1px solid ${GREEN}25`, borderRadius: 12,
             padding: "14px 16px", fontFamily: "monospace", fontSize: 11, height: 360, overflowY: "auto" }}>
             {consoleLog.map((line, i) => (
               <div key={i} style={{ color: line.includes("ERROR") ? RED : line.includes("WARN") ? AMBER :
@@ -361,8 +361,8 @@ export default function GodMode() {
               { label: "Clear Log", action: () => setConsoleLog(["[ CONSOLE CLEARED ]"]) },
             ].map(b => (
               <button key={b.label} onClick={b.action} data-testid={`console-btn-${b.label.replace(/\s+/g,"-").toLowerCase()}`}
-                style={{ padding: "8px 14px", background: "rgba(255,255,255,0.04)", border: `1px solid ${BORDER}`,
-                  borderRadius: 8, fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.6)", cursor: "pointer" }}>
+                style={{ padding: "8px 14px", background: "#ffffff", border: `1px solid ${BORDER}`,
+                  borderRadius: 8, fontSize: 10, fontWeight: 700, color: "#1e293b", cursor: "pointer" }}>
                 {b.label}
               </button>
             ))}
@@ -396,20 +396,20 @@ function PermissionPanel({ addLog }: { addLog: (s: string) => void }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr auto", gap: 10, alignItems: "end" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))", gap: 10, alignItems: "end" }}>
         <div>
-          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", marginBottom: 6, letterSpacing: "0.1em" }}>USERNAME</div>
+          <div style={{ fontSize: 9, color: "#475569", marginBottom: 6, letterSpacing: "0.1em" }}>USERNAME</div>
           <input value={username} onChange={e => setUsername(e.target.value)}
             data-testid="permission-username-input" placeholder="e.g. eric.dreyfus"
-            style={{ width: "100%", padding: "10px 14px", background: "rgba(255,255,255,0.04)",
-              border: `1px solid rgba(255,255,255,0.12)`, borderRadius: 10, color: "#f0f4ff",
+            style={{ width: "100%", padding: "10px 14px", background: "#ffffff",
+              border: `1px solid #cbd5e1`, borderRadius: 10, color: "#0f172a",
               fontSize: 12, outline: "none", boxSizing: "border-box" }} />
         </div>
         <div>
-          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", marginBottom: 6, letterSpacing: "0.1em" }}>MODULE</div>
+          <div style={{ fontSize: 9, color: "#475569", marginBottom: 6, letterSpacing: "0.1em" }}>MODULE</div>
           <select value={module} onChange={e => setModule(e.target.value)} data-testid="permission-module-select"
-            style={{ width: "100%", padding: "10px 14px", background: "#0d1028",
-              border: `1px solid rgba(255,255,255,0.12)`, borderRadius: 10, color: "#f0f4ff", fontSize: 12, outline: "none" }}>
+            style={{ width: "100%", padding: "10px 14px", background: "#F8FAFC",
+              border: `1px solid #cbd5e1`, borderRadius: 10, color: "#0f172a", fontSize: 12, outline: "none" }}>
             {MODULES_LIST.map(m => <option key={m} value={m}>{m}</option>)}
           </select>
         </div>
@@ -420,8 +420,8 @@ function PermissionPanel({ addLog }: { addLog: (s: string) => void }) {
           {grantMutation.isPending ? "Granting…" : "Grant Access ⚡"}
         </button>
       </div>
-      <div style={{ fontSize: 10, color: "rgba(255,255,255,0.3)", padding: "10px 14px",
-        background: "rgba(255,255,255,0.02)", borderRadius: 10, border: `1px solid ${BORDER}` }}>
+      <div style={{ fontSize: 10, color: "#64748b", padding: "10px 14px",
+        background: "#ffffff", borderRadius: 10, border: `1px solid ${BORDER}` }}>
         All grants are logged to the immutable audit trail. Eric Dreyfus already has rx-defense access (can_view + can_edit).
       </div>
     </div>

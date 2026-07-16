@@ -25,7 +25,7 @@ const STRIP_ITEMS: StripItem[] = [
 export function ExecutiveStatusStrip({ summary, className }: ExecutiveStatusStripProps) {
   return (
     <div
-      className={cn("flex items-center gap-0 rounded-xl overflow-hidden border border-zinc-800", className)}
+      className={cn("flex items-center gap-0 rounded-xl overflow-hidden border border-slate-200", className)}
       data-testid="executive-status-strip"
     >
       {STRIP_ITEMS.map(({ key, label, icon: Icon, color, suffix }, i) => {
@@ -37,8 +37,8 @@ export function ExecutiveStatusStrip({ summary, className }: ExecutiveStatusStri
           <div
             key={key}
             className={cn(
-              "flex-1 flex items-center gap-2 px-4 py-3 bg-zinc-900/60",
-              i < STRIP_ITEMS.length - 1 && "border-r border-zinc-800",
+              "flex-1 flex items-center gap-2 px-4 py-3 bg-slate-50/60",
+              i < STRIP_ITEMS.length - 1 && "border-r border-slate-200",
             )}
           >
             <Icon className="w-3.5 h-3.5 shrink-0" style={{ color }} />

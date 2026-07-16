@@ -118,7 +118,7 @@ function ConfBar({ score }: { score: number | null }) {
   const color = pct >= 90 ? "#00FF94" : pct >= 75 ? "#FFB800" : "#FF4D6D";
   return (
     <div className="flex items-center gap-2">
-      <div className="flex-1 h-1.5 rounded-full bg-zinc-800 overflow-hidden">
+      <div className="flex-1 h-1.5 rounded-full bg-[var(--kiq-surface)] overflow-hidden">
         <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, backgroundColor: color }} />
       </div>
       <span className="text-[11px] font-mono font-bold tabular-nums" style={{ color }}>{pct}%</span>
@@ -150,7 +150,7 @@ function PostureBadge({ posture }: { posture: TrustPosture }) {
 
 function SummaryPill({ label, value, color }: { label: string; value: number; color: string }) {
   return (
-    <div className="flex flex-col items-center px-4 py-2 rounded-lg border border-zinc-800 bg-zinc-900/50 min-w-[72px]">
+    <div className="flex flex-col items-center px-4 py-2 rounded-lg border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/50 min-w-[72px]">
       <span className="text-xl font-bold font-mono tabular-nums" style={{ color }}>{value}</span>
       <span className="text-[10px] text-zinc-500 uppercase tracking-wider mt-0.5">{label}</span>
     </div>
@@ -163,7 +163,7 @@ function OpenReceiptButton({ claimId }: { claimId: string }) {
     <button
       data-testid={`button-open-receipt-${claimId}`}
       onClick={() => openReceipt(claimId)}
-      className="flex items-center justify-center gap-1.5 w-full rounded-lg border border-zinc-700 hover:border-[#00A8FF]/50 hover:bg-[#00A8FF]/5 text-zinc-500 hover:text-[#00A8FF] py-1.5 text-[10px] font-mono font-bold uppercase tracking-wider transition-all"
+      className="flex items-center justify-center gap-1.5 w-full rounded-lg border border-[var(--kiq-hairline)] hover:border-[#00A8FF]/50 hover:bg-[#00A8FF]/5 text-zinc-500 hover:text-[#00A8FF] py-1.5 text-[10px] font-mono font-bold uppercase tracking-wider transition-all"
     >
       <FileCheck className="w-2.5 h-2.5" />
       open receipt drawer
@@ -183,8 +183,8 @@ function TileCard({ tile }: { tile: ExecutiveTile }) {
     <div
       data-testid={`tile-card-${tile.claimId}`}
       className={cn(
-        "relative flex flex-col gap-3 rounded-xl border bg-zinc-900/60 backdrop-blur-sm p-4 transition-all duration-200",
-        "hover:bg-zinc-900/80 hover:scale-[1.01]",
+        "kiq-command-card relative flex flex-col gap-3 p-4 transition-all duration-200",
+        "hover:scale-[1.01]",
         renderCfg.border,
         renderCfg.glow,
       )}
@@ -199,13 +199,13 @@ function TileCard({ tile }: { tile: ExecutiveTile }) {
       <div>
         <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-0.5"
           data-testid={`text-kpikey-${tile.claimId}`}>{tile.kpiKey}</p>
-        <h3 className="text-sm font-semibold text-zinc-100 leading-snug line-clamp-2"
+        <h3 className="text-sm font-semibold text-[var(--kiq-ink)] leading-snug line-clamp-2"
           data-testid={`text-title-${tile.claimId}`}>{tile.title}</h3>
       </div>
 
       {/* Value — greyed if blocked */}
       <div className={cn("flex items-baseline gap-1.5", isBlocked && "opacity-30 select-none blur-[2px]")}>
-        <span className="text-2xl font-bold font-mono tabular-nums text-zinc-100"
+        <span className="text-2xl font-bold font-mono tabular-nums text-[var(--kiq-ink)]"
           data-testid={`text-value-${tile.claimId}`}>{tile.value}</span>
         {tile.unit && <span className="text-xs text-zinc-500 font-mono">{tile.unit}</span>}
         {tile.period && <span className="text-[10px] text-zinc-600 ml-1">{tile.period}</span>}
@@ -228,7 +228,7 @@ function TileCard({ tile }: { tile: ExecutiveTile }) {
       )}
 
       {/* Meta row */}
-      <div className="flex items-center justify-between gap-2 pt-1 border-t border-zinc-800/60 flex-wrap">
+      <div className="flex items-center justify-between gap-2 pt-1 border-t border-[var(--kiq-hairline)]/60 flex-wrap">
         {/* verified + freshness */}
         <div className="flex items-center gap-2">
           <VerIcon className="w-3 h-3" style={{ color: verCfg.color }} />
@@ -334,10 +334,10 @@ function ExecutiveTilesInner() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-zinc-950 text-zinc-100 p-6">
+      <div className="kiq-command-surface min-h-screen text-[color:var(--kiq-ink)] p-6">
 
         {/* ── Header ─────────────────────────────────────────────────────────── */}
-        <div className="flex items-start justify-between mb-6 gap-4 flex-wrap">
+        <div className="kiq-command-hero flex items-start justify-between mb-6 gap-4 flex-wrap px-6 py-5">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <LayoutGrid className="w-5 h-5 text-[#00A8FF]" />
@@ -354,7 +354,7 @@ function ExecutiveTilesInner() {
             data-testid="button-refresh"
             onClick={() => refetch()}
             disabled={isFetching}
-            className="flex items-center gap-2 text-xs text-zinc-400 border border-zinc-700 hover:border-zinc-500 hover:text-zinc-200 px-3 py-1.5 rounded-lg transition-all disabled:opacity-40"
+            className="kiq-command-control flex items-center gap-2 text-xs text-[var(--kiq-muted)] hover:text-[var(--kiq-ink-soft)] px-3 py-1.5 transition-all disabled:opacity-40"
           >
             <RefreshCw className={cn("w-3.5 h-3.5", isFetching && "animate-spin")} />
             Refresh
@@ -367,7 +367,7 @@ function ExecutiveTilesInner() {
             style={{ background: "rgba(245,166,35,0.07)", border: "1px solid rgba(245,166,35,0.22)" }}>
             <div className="flex-1 min-w-0">
               <div className="text-xs font-black" style={{ color: "#FFB800" }}>{handoffCompany}</div>
-              <div className="text-[9px] font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>
+              <div className="text-[9px] font-mono" style={{ color: "#64748b" }}>
                 EIN {handoffEin} · Handoff context active
               </div>
             </div>
@@ -388,11 +388,11 @@ function ExecutiveTilesInner() {
                 data-testid="handoff-tile-rxdefense"
                 className="text-[10px] font-bold px-2.5 py-1 rounded-lg border transition-all"
                 style={{ background: "rgba(168,85,247,0.1)", borderColor: "rgba(168,85,247,0.3)", color: "#A855F7" }}>
-                Rx Defense →
+                PBM Contract Clarity 360 →
               </button>
             </div>
             <button onClick={() => setHandoffDismissed(true)} data-testid="handoff-tile-dismiss"
-              className="text-zinc-500 hover:text-zinc-300 transition-colors text-sm px-1">✕</button>
+              className="text-zinc-500 hover:text-[var(--kiq-muted)] transition-colors text-sm px-1">✕</button>
           </div>
         )}
 
@@ -407,7 +407,7 @@ function ExecutiveTilesInner() {
                 "flex flex-col items-start px-4 py-2.5 rounded-xl border text-left transition-all text-xs",
                 audience === tab.id
                   ? "border-[#00A8FF]/60 bg-[#00A8FF]/10 text-[#00A8FF]"
-                  : "border-zinc-800 bg-zinc-900/40 text-zinc-400 hover:border-zinc-600 hover:text-zinc-200",
+                  : "border-[var(--kiq-hairline)] bg-[var(--kiq-surface)]/55 text-zinc-500 hover:border-[#00A8FF]/30 hover:text-[var(--kiq-ink-soft)]",
               )}
             >
               <span className="font-bold tracking-wide">{tab.label}</span>
@@ -427,7 +427,7 @@ function ExecutiveTilesInner() {
             <SummaryPill label="Blocked"   value={summary.byRenderPolicy.BLOCKED  ?? 0} color="#FF4D6D" />
             <SummaryPill label="Redacted"  value={summary.byRenderPolicy.REDACTED ?? 0} color="#A855F7" />
             <SummaryPill label="Pending"   value={summary.byRenderPolicy.PENDING  ?? 0} color="#94a3b8" />
-            <div className="w-px h-8 bg-zinc-800 mx-1" />
+            <div className="w-px h-8 bg-slate-200/70 mx-1" />
             <SummaryPill label="Brd‑Grade" value={summary.boardGrade}       color="#FFB800" />
             <SummaryPill label="Export OK" value={summary.exportAdmissible} color="#00A8FF" />
           </div>
@@ -459,7 +459,7 @@ function ExecutiveTilesInner() {
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search KPI key, title, claim ID…"
-              className="w-full pl-8 pr-3 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-xs text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-[#00A8FF]/60"
+              className="kiq-command-control w-full pl-8 pr-3 py-2 text-xs text-[var(--kiq-ink-soft)] placeholder:text-[var(--kiq-subtle)] focus:outline-none focus:border-[#00A8FF]/60"
             />
           </div>
 
@@ -470,7 +470,7 @@ function ExecutiveTilesInner() {
               data-testid="select-render-policy"
               value={renderFilter}
               onChange={e => setRenderFilter(e.target.value as RenderPolicy | "ALL")}
-              className="pl-8 pr-6 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-xs text-zinc-200 focus:outline-none focus:border-[#00A8FF]/60 appearance-none cursor-pointer"
+              className="kiq-command-control pl-8 pr-6 py-2 text-xs text-[var(--kiq-ink-soft)] focus:outline-none focus:border-[#00A8FF]/60 appearance-none cursor-pointer"
             >
               {RENDER_FILTERS.map(f => (
                 <option key={f.v} value={f.v}>{f.label}</option>
@@ -485,7 +485,7 @@ function ExecutiveTilesInner() {
               data-testid="select-trust-posture"
               value={postureFilter}
               onChange={e => setPostureFilter(e.target.value as TrustPosture | "ALL")}
-              className="pl-8 pr-6 py-2 bg-zinc-900 border border-zinc-700 rounded-lg text-xs text-zinc-200 focus:outline-none focus:border-[#00A8FF]/60 appearance-none cursor-pointer"
+              className="kiq-command-control pl-8 pr-6 py-2 text-xs text-[var(--kiq-ink-soft)] focus:outline-none focus:border-[#00A8FF]/60 appearance-none cursor-pointer"
             >
               {POSTURE_FILTERS.map(f => (
                 <option key={f.v} value={f.v}>{f.label}</option>
@@ -503,7 +503,7 @@ function ExecutiveTilesInner() {
         {isLoading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="h-52 rounded-xl border border-zinc-800 bg-zinc-900/40 animate-pulse" />
+              <div key={i} className="kiq-command-card h-52 animate-pulse" />
             ))}
           </div>
         ) : tiles.length === 0 ? (

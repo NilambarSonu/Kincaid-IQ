@@ -11,7 +11,7 @@ function ReadinessRing({ score, color }: { score: number; color: string }) {
   const dash = (score / 100) * circ;
   return (
     <svg width={72} height={72} className="flex-shrink-0">
-      <circle cx={36} cy={36} r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={5} />
+      <circle cx={36} cy={36} r={r} fill="none" stroke="#f1f5f9" strokeWidth={5} />
       <circle cx={36} cy={36} r={r} fill="none" stroke={color} strokeWidth={5}
         strokeDasharray={`${dash} ${circ - dash}`} strokeDashoffset={circ / 4}
         strokeLinecap="round" style={{ transition: "stroke-dasharray 0.8s ease" }} />
@@ -48,13 +48,13 @@ export default function Succession() {
             <div className="flex items-center gap-4">
               <ReadinessRing score={h.readinessScore} color={h.color} />
               <div>
-                <p className="font-bold text-white text-lg">{h.name}</p>
+                <p className="font-bold text-[var(--kiq-ink)] text-lg">{h.name}</p>
                 <p className="text-xs text-muted-foreground">{h.relation} · Age {h.age}</p>
                 <p className="text-xs mt-1" style={{ color: h.color }}>Readiness: {h.readinessScore}/100</p>
                 <p className="text-[10px] text-muted-foreground mt-0.5">Trustee eligible: {new Date(h.trusteeEligibility).toLocaleDateString("en-US",{month:"short",year:"numeric"})}</p>
               </div>
             </div>
-            <div className="mt-3 pt-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            <div className="mt-3 pt-3" style={{ borderTop: "1px solid #f1f5f9" }}>
               <p className="text-[10px] text-muted-foreground mb-1">Next: {h.nextMilestone}</p>
               <div className="flex flex-wrap gap-1">
                 {h.nominatedTrustee.map((t) => (
@@ -77,7 +77,7 @@ export default function Succession() {
               <Target size={15} style={{ color: heir.color }} />
             </div>
             <div>
-              <p className="font-bold text-white">{heir.name} — Readiness Areas</p>
+              <p className="font-bold text-[var(--kiq-ink)]">{heir.name} — Readiness Areas</p>
               <p className="text-xs text-muted-foreground">6 core competency assessment</p>
             </div>
           </div>
@@ -87,10 +87,10 @@ export default function Succession() {
               return (
                 <div key={area.area}>
                   <div className="flex justify-between items-center mb-1">
-                    <span className="text-xs font-semibold text-white">{area.area}</span>
+                    <span className="text-xs font-semibold text-[var(--kiq-ink)]">{area.area}</span>
                     <span className="text-xs font-bold" style={{ color }}>{area.score}/100</span>
                   </div>
-                  <div className="w-full h-2 rounded-full overflow-hidden mb-1" style={{ background: "rgba(255,255,255,0.05)" }}>
+                  <div className="w-full h-2 rounded-full overflow-hidden mb-1" style={{ background: "#f8fafc" }}>
                     <div className="h-full rounded-full transition-all duration-700" style={{ width: `${area.score}%`, background: color }} />
                   </div>
                   <p className="text-[10px] text-muted-foreground">{area.notes}</p>
@@ -104,12 +104,12 @@ export default function Succession() {
           <p className="section-label mb-4">Ownership Transfer Schedule</p>
           <div className="space-y-3 mb-6">
             {heir.ownershipTransfer.map((t) => (
-              <div key={t.entity} className="p-3 rounded-xl" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div key={t.entity} className="p-3 rounded-xl" style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
                 <div className="flex items-center justify-between mb-1">
-                  <p className="text-sm font-bold text-white">{t.entity}</p>
+                  <p className="text-sm font-bold text-[var(--kiq-ink)]">{t.entity}</p>
                   <span className="text-sm font-bold" style={{ color: heir.color }}>{t.pct}%</span>
                 </div>
-                <p className="text-xs text-muted-foreground">Scheduled transfer year: <span className="text-white font-semibold">{t.scheduledYear}</span></p>
+                <p className="text-xs text-muted-foreground">Scheduled transfer year: <span className="text-[var(--kiq-ink)] font-semibold">{t.scheduledYear}</span></p>
               </div>
             ))}
           </div>
@@ -118,7 +118,7 @@ export default function Succession() {
             {heir.nominatedTrustee.map((t) => (
               <div key={t} className="flex items-center gap-2 text-sm">
                 <Shield size={12} style={{ color: heir.color }} />
-                <span className="text-white">{t}</span>
+                <span className="text-[var(--kiq-ink)]">{t}</span>
               </div>
             ))}
           </div>
@@ -128,7 +128,7 @@ export default function Succession() {
       <div className="metric-card" data-testid="card-succession-roadmap">
         <p className="section-label mb-4">Family Succession Roadmap</p>
         <div className="relative">
-          <div className="absolute left-4 top-0 bottom-0 w-px" style={{ background: "rgba(255,255,255,0.06)" }} />
+          <div className="absolute left-4 top-0 bottom-0 w-px" style={{ background: "#f1f5f9" }} />
           <div className="space-y-4 pl-10">
             {successionData.successionRoadmap.map((event, i) => (
               <div key={i} className="relative" data-testid={`roadmap-${i}`}>
@@ -142,7 +142,7 @@ export default function Succession() {
                 <div className="flex items-start gap-4">
                   <span className="text-sm font-bold flex-shrink-0" style={{ color: event.critical ? "#FFB800" : "#00A8FF" }}>{event.year}</span>
                   <div>
-                    <p className="text-sm text-white">{event.event}</p>
+                    <p className="text-sm text-[var(--kiq-ink)]">{event.event}</p>
                     <div className="flex items-center gap-2 mt-0.5">
                       <span className="text-[10px] px-1.5 py-0.5 rounded font-semibold capitalize"
                         style={{

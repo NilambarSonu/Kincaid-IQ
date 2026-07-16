@@ -13,16 +13,16 @@ import {
 
 // ── Theme ─────────────────────────────────────────────────────────────────────
 const T = {
-  bg:      "#04060f",
-  surface: "#080c1a",
-  s2:      "#0d1020",
-  s3:      "#111528",
-  border:  "#1a1f35",
+  bg:      "#F8FAFC",
+  surface: "rgba(255,255,255,0.78)",
+  s2:      "rgba(255,255,255,0.62)",
+  s3:      "rgba(248,250,252,0.88)",
+  border:  "rgba(15,23,42,0.10)",
   gold:    "#FBB724",
   goldDim: "rgba(251,183,36,0.13)",
   goldBdr: "rgba(251,183,36,0.28)",
-  text:    "#ccd0e8",
-  muted:   "#5a6080",
+  text:    "#0F172A",
+  muted:   "#64748B",
   green:   "#22c55e",
   red:     "#ef4444",
   blue:    "#3b82f6",
@@ -189,7 +189,7 @@ function DecisionBadge({ d }: { d: AllocationRow["decision"] }) {
 
 function StatCard({ icon: Icon, label, value, sub, color }: { icon: any; label: string; value: string; sub?: string; color: string }) {
   return (
-    <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 10, padding: "14px 18px", flex: 1, minWidth: 140 }}>
+    <div className="kiq-ops-card" style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, padding: "14px 18px", flex: 1, minWidth: 140 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 6 }}>
         <Icon size={14} color={color} strokeWidth={1.8} />
         <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: T.muted }}>{label}</span>
@@ -289,17 +289,17 @@ export default function RfpResourceAllocator() {
 
   return (
     <Layout>
-      <div style={{ minHeight: "100vh", background: T.bg, color: T.text, padding: "28px 32px 60px" }}>
+      <div className="kiq-ops-shell" style={{ minHeight: "calc(100vh - 56px)", color: T.text, padding: "28px 32px 60px" }}>
 
         {/* ── Header ──────────────────────────────────────────────────────────── */}
-        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 28 }}>
+        <div className="kiq-ops-header" style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 28, borderRadius: 24, padding: "20px 22px" }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
               <div style={{ width: 36, height: 36, borderRadius: 9, background: T.goldDim, border: `1px solid ${T.goldBdr}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 <BarChart3 size={18} color={T.gold} strokeWidth={1.8} />
               </div>
               <div>
-                <h1 style={{ fontSize: 20, fontWeight: 800, color: "#fff", margin: 0, letterSpacing: "-0.02em" }}>
+                <h1 style={{ fontSize: 24, fontWeight: 900, color: T.text, margin: 0, letterSpacing: "-0.035em" }}>
                   Resource Allocation Optimizer
                 </h1>
                 <p style={{ fontSize: 12, color: T.muted, margin: 0 }}>
@@ -323,7 +323,7 @@ export default function RfpResourceAllocator() {
             <button
               data-testid="btn-refresh-opps"
               onClick={() => refetch()}
-              style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 12px", borderRadius: 7, border: `1px solid ${T.border}`, background: T.surface, color: T.muted, cursor: "pointer", fontSize: 12 }}>
+              style={{ display: "flex", alignItems: "center", gap: 6, padding: "7px 12px", borderRadius: 7, border: `1px solid ${T.border}`, background: "rgba(255,255,255,0.68)", color: T.muted, cursor: "pointer", fontSize: 12 }}>
               <RefreshCw size={13} strokeWidth={1.8} />
             </button>
           </div>
@@ -333,7 +333,7 @@ export default function RfpResourceAllocator() {
         <div style={{ display: "flex", gap: 16, marginBottom: 24, flexWrap: "wrap" }}>
 
           {/* Capacity panel */}
-          <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 10, padding: "16px 20px", minWidth: 320 }}>
+          <div className="kiq-ops-card" style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, padding: "16px 20px", minWidth: 320 }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: T.muted, marginBottom: 14 }}>
               Team Capacity
             </div>
@@ -345,7 +345,7 @@ export default function RfpResourceAllocator() {
                 </label>
                 <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                   <button data-testid="btn-team-minus" onClick={() => setTeamSize(v => Math.max(1, v - 1))} style={{ width: 26, height: 26, borderRadius: 5, border: `1px solid ${T.border}`, background: T.s2, color: T.text, cursor: "pointer", fontSize: 14 }}>−</button>
-                  <span style={{ fontSize: 20, fontWeight: 800, color: "#fff", minWidth: 28, textAlign: "center" }}>{teamSize}</span>
+                  <span style={{ fontSize: 20, fontWeight: 800, color: "#0F172A", minWidth: 28, textAlign: "center" }}>{teamSize}</span>
                   <button data-testid="btn-team-plus" onClick={() => setTeamSize(v => Math.min(20, v + 1))} style={{ width: 26, height: 26, borderRadius: 5, border: `1px solid ${T.border}`, background: T.s2, color: T.text, cursor: "pointer", fontSize: 14 }}>+</button>
                 </div>
               </div>
@@ -356,7 +356,7 @@ export default function RfpResourceAllocator() {
                 </label>
                 <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                   <button data-testid="btn-hrs-minus" onClick={() => setHrsPerPerson(v => Math.max(4, v - 4))} style={{ width: 26, height: 26, borderRadius: 5, border: `1px solid ${T.border}`, background: T.s2, color: T.text, cursor: "pointer", fontSize: 14 }}>−</button>
-                  <span style={{ fontSize: 20, fontWeight: 800, color: "#fff", minWidth: 36, textAlign: "center" }}>{hrsPerPerson}</span>
+                  <span style={{ fontSize: 20, fontWeight: 800, color: "#0F172A", minWidth: 36, textAlign: "center" }}>{hrsPerPerson}</span>
                   <button data-testid="btn-hrs-plus" onClick={() => setHrsPerPerson(v => Math.min(80, v + 4))} style={{ width: 26, height: 26, borderRadius: 5, border: `1px solid ${T.border}`, background: T.s2, color: T.text, cursor: "pointer", fontSize: 14 }}>+</button>
                 </div>
               </div>
@@ -374,7 +374,7 @@ export default function RfpResourceAllocator() {
                   {pct(capacityUtil)} utilized
                 </span>
               </div>
-              <div style={{ height: 6, borderRadius: 3, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+              <div style={{ height: 6, borderRadius: 3, background: "#f1f5f9", overflow: "hidden" }}>
                 <div style={{ height: "100%", borderRadius: 3, transition: "width 0.4s", width: `${capacityUtil}%`, background: capacityUtil > 95 ? T.red : capacityUtil > 75 ? T.amber : T.green }} />
               </div>
             </div>
@@ -385,7 +385,7 @@ export default function RfpResourceAllocator() {
                 onClick={() => setDeclineLockout(v => !v)}
                 style={{
                   width: 36, height: 20, borderRadius: 10, border: "none", cursor: "pointer",
-                  background: declineLockout ? T.gold : "rgba(255,255,255,0.1)", position: "relative", transition: "background 0.2s",
+                  background: declineLockout ? T.gold : "#e2e8f0", position: "relative", transition: "background 0.2s",
                 }}>
                 <div style={{
                   width: 14, height: 14, borderRadius: 7, background: "#fff",
@@ -453,17 +453,17 @@ export default function RfpResourceAllocator() {
 
         {/* ── EV chart (when data exists) ────────────────────────────────────── */}
         {inRows.length > 0 && (
-          <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 10, padding: "16px 20px", marginBottom: 24 }}>
+          <div className="kiq-ops-card" style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, padding: "16px 20px", marginBottom: 24 }}>
             <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: T.muted, marginBottom: 16 }}>
               Expected Value by Staffed Opportunity
             </div>
             <ResponsiveContainer width="100%" height={160}>
               <BarChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
                 <XAxis dataKey="name" tick={{ fill: T.muted, fontSize: 10 }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: T.muted, fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={v => v >= 1000 ? `$${(v/1000).toFixed(0)}K` : `$${v}`} />
                 <Tooltip
-                  contentStyle={{ background: T.s3, border: `1px solid ${T.border}`, borderRadius: 7, color: T.text, fontSize: 11 }}
+                  contentStyle={{ background: "rgba(255,255,255,0.96)", border: `1px solid ${T.border}`, borderRadius: 10, color: T.text, fontSize: 11, boxShadow: "0 16px 40px rgba(15,23,42,0.12)" }}
                   formatter={(v: number) => [fmtK$(v), "Expected Value"]}
                 />
                 <Bar dataKey="ev" radius={[3, 3, 0, 0]}>
@@ -485,7 +485,7 @@ export default function RfpResourceAllocator() {
         )}
 
         {!isLoading && opps.length === 0 && (
-          <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 12, padding: "48px 32px", textAlign: "center" }}>
+          <div className="kiq-ops-card" style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 18, padding: "48px 32px", textAlign: "center" }}>
             <BarChart3 size={36} style={{ margin: "0 auto 14px", color: T.muted, opacity: 0.5 }} />
             <p style={{ fontSize: 15, fontWeight: 600, color: T.text, marginBottom: 8 }}>No opportunities in the pipeline</p>
             <p style={{ fontSize: 12, color: T.muted, maxWidth: 400, margin: "0 auto 20px" }}>
@@ -499,7 +499,7 @@ export default function RfpResourceAllocator() {
         )}
 
         {!isLoading && opps.length > 0 && scoredOpps.length === 0 && (
-          <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 10, padding: "24px", marginBottom: 20, display: "flex", gap: 12, alignItems: "flex-start" }}>
+          <div className="kiq-ops-card" style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, padding: "24px", marginBottom: 20, display: "flex", gap: 12, alignItems: "flex-start" }}>
             <AlertTriangle size={18} color={T.amber} style={{ flexShrink: 0, marginTop: 1 }} />
             <div>
               <p style={{ fontSize: 13, fontWeight: 600, color: T.amber, margin: "0 0 4px" }}>
@@ -545,12 +545,12 @@ export default function RfpResourceAllocator() {
             </div>
 
             {/* Table */}
-            <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 10, overflow: "hidden" }}>
+            <div className="kiq-ops-card" style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 18, overflow: "hidden" }}>
               {/* Header */}
               <div style={{
                 display: "grid", gridTemplateColumns: "2fr 90px 90px 80px 80px 80px 1fr 110px",
                 gap: 0, padding: "10px 16px",
-                background: T.s3, borderBottom: `1px solid ${T.border}`,
+                background: "linear-gradient(135deg, rgba(255,255,255,0.92), rgba(248,250,252,0.72))", borderBottom: `1px solid ${T.border}`,
                 fontSize: 10, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: T.muted,
               }}>
                 <div>Opportunity</div>
@@ -587,7 +587,7 @@ export default function RfpResourceAllocator() {
                     }}>
                     {/* Name + industry */}
                     <div>
-                      <div style={{ fontSize: 13, fontWeight: 600, color: isIn ? "#fff" : T.text, marginBottom: 2 }}>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: T.text, marginBottom: 2 }}>
                         {row.opp.employer_name ?? `Opportunity ${row.opp.id.slice(0, 8)}`}
                       </div>
                       <div style={{ fontSize: 11, color: T.muted }}>
@@ -624,7 +624,7 @@ export default function RfpResourceAllocator() {
                         <button
                           data-testid={`btn-effort-minus-${row.opp.id}`}
                           onClick={() => setEffortMap(m => ({ ...m, [row.opp.id]: Math.max(0, effortVal - 4) }))}
-                          style={{ width: 18, height: 18, borderRadius: 3, border: `1px solid ${T.border}`, background: T.s3, color: T.muted, cursor: "pointer", fontSize: 11, lineHeight: 1 }}>
+                          style={{ width: 18, height: 18, borderRadius: 5, border: `1px solid ${T.border}`, background: "rgba(255,255,255,0.72)", color: T.muted, cursor: "pointer", fontSize: 11, lineHeight: 1 }}>
                           −
                         </button>
                         <span style={{ fontSize: 13, fontWeight: 600, color: T.text, minWidth: 26, textAlign: "center" }}>
@@ -633,7 +633,7 @@ export default function RfpResourceAllocator() {
                         <button
                           data-testid={`btn-effort-plus-${row.opp.id}`}
                           onClick={() => setEffortMap(m => ({ ...m, [row.opp.id]: effortVal + 4 }))}
-                          style={{ width: 18, height: 18, borderRadius: 3, border: `1px solid ${T.border}`, background: T.s3, color: T.muted, cursor: "pointer", fontSize: 11, lineHeight: 1 }}>
+                          style={{ width: 18, height: 18, borderRadius: 5, border: `1px solid ${T.border}`, background: "rgba(255,255,255,0.72)", color: T.muted, cursor: "pointer", fontSize: 11, lineHeight: 1 }}>
                           +
                         </button>
                       </div>
@@ -684,7 +684,7 @@ export default function RfpResourceAllocator() {
                   inRows.map(r => (
                     <div key={r.opp.id} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8, paddingBottom: 8, borderBottom: "1px solid rgba(34,197,94,0.1)" }}>
                       <div>
-                        <div style={{ fontSize: 12, fontWeight: 600, color: "#fff" }}>
+                        <div style={{ fontSize: 12, fontWeight: 600, color: "#0F172A" }}>
                           {r.opp.employer_name ?? r.opp.id.slice(0, 12)}
                         </div>
                         <div style={{ fontSize: 11, color: T.muted }}>{r.effortHrs} hrs · {tierCfg(r.opp.score_tier).label}</div>
@@ -699,7 +699,7 @@ export default function RfpResourceAllocator() {
               </div>
 
               {/* Out of scope */}
-              <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 10, padding: "16px 20px" }}>
+              <div className="kiq-ops-card" style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 16, padding: "16px 20px" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 12 }}>
                   <Minus size={15} color={T.amber} />
                   <span style={{ fontSize: 12, fontWeight: 700, color: T.amber, textTransform: "uppercase", letterSpacing: "0.08em" }}>

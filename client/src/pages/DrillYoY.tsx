@@ -32,11 +32,11 @@ export default function DrillYoY() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-zinc-950 p-6 space-y-6">
+      <div className="min-h-screen bg-[var(--kiq-surface)] p-6 space-y-6">
         <div className="flex items-start gap-4">
           <button onClick={() => navigate("/governance-war-room")}
             data-testid="btn-back-yoy"
-            className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-zinc-300 border border-zinc-800/40 rounded-lg px-2.5 py-1.5 flex-shrink-0 mt-1">
+            className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500 hover:text-[var(--kiq-muted)] border border-[var(--kiq-hairline)]/40 rounded-lg px-2.5 py-1.5 flex-shrink-0 mt-1">
             <ArrowLeft className="w-3 h-3" />
             War Room
           </button>
@@ -45,15 +45,15 @@ export default function DrillYoY() {
               <BarChart3 className="w-4 h-4 text-[#00FF94]" />
               <span className="text-[10px] font-mono uppercase tracking-widest text-[#00FF94]">Drill Surface · YoY</span>
             </div>
-            <h1 className="text-2xl font-black text-zinc-100">Year-over-Year Analysis</h1>
+            <h1 className="text-2xl font-black text-[var(--kiq-ink)]">Year-over-Year Analysis</h1>
             <p className="text-xs text-zinc-500 mt-1">2022 · 2023 · 2024 benefit plan cost trend</p>
           </div>
         </div>
 
-        <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-2xl overflow-hidden">
+        <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-2xl overflow-hidden">
           <table className="w-full text-xs">
             <thead>
-              <tr className="border-b border-zinc-800/40">
+              <tr className="border-b border-[var(--kiq-hairline)]/40">
                 {["Metric", "2022", "2023", "YoY 22→23", "2024", "YoY 23→24", "3-yr Δ"].map(h => (
                   <th key={h} className="px-4 py-3 text-left text-[9px] font-mono uppercase tracking-widest text-zinc-600">{h}</th>
                 ))}
@@ -71,15 +71,15 @@ export default function DrillYoY() {
                   : <TrendingDown className="w-3 h-3 inline mr-0.5" />;
 
                 return (
-                  <tr key={i} className="border-b border-zinc-900/40 hover:bg-zinc-900/20"
+                  <tr key={i} className="border-b border-zinc-900/40 hover:bg-[var(--kiq-canvas-soft)]/20"
                     data-testid={`yoy-row-${i}`}>
-                    <td className="px-4 py-3 font-medium text-zinc-200">{row.metric}</td>
+                    <td className="px-4 py-3 font-medium text-[var(--kiq-ink-soft)]">{row.metric}</td>
                     <td className="px-4 py-3 font-mono text-zinc-500">{fmtVal(row.y2022, row.unit)}</td>
                     <td className="px-4 py-3 font-mono text-zinc-400">{fmtVal(row.y2023, row.unit)}</td>
                     <td className="px-4 py-3 font-mono font-bold" style={{ color: dColor(d1) }}>
                       {DIcon(d1)}{d1 > 0 ? "+" : ""}{d1}%
                     </td>
-                    <td className="px-4 py-3 font-mono font-bold text-zinc-200">{fmtVal(row.y2024, row.unit)}</td>
+                    <td className="px-4 py-3 font-mono font-bold text-[var(--kiq-ink-soft)]">{fmtVal(row.y2024, row.unit)}</td>
                     <td className="px-4 py-3 font-mono font-bold" style={{ color: dColor(d2) }}>
                       {DIcon(d2)}{d2 > 0 ? "+" : ""}{d2}%
                     </td>

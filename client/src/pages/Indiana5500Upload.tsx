@@ -103,7 +103,7 @@ function PercentileGauge({ value, label, p50, p75, p90, color }: {
         <span className="text-[10px] text-zinc-500 uppercase tracking-widest">{label}</span>
         <span className="text-xs font-black font-mono" style={{ color }}>{fmtPct(value)}</span>
       </div>
-      <div className="relative h-2.5 bg-zinc-800 rounded-full overflow-hidden">
+      <div className="relative h-2.5 bg-[var(--kiq-surface)] rounded-full overflow-hidden">
         {/* Track zones */}
         <div className="absolute inset-y-0 left-0 rounded-full opacity-20" style={{ width: `${p50pct}%`, background: "#10b981" }} />
         <div className="absolute inset-y-0 rounded-full opacity-15" style={{ left: `${p50pct}%`, width: `${p75pct - p50pct}%`, background: "#f59e0b" }} />
@@ -135,7 +135,7 @@ function NarrativeProse({ text }: { text: string }) {
             </div>
           );
         if (line.startsWith("### "))
-          return <h4 key={i} className="text-[11px] font-bold text-zinc-300 mt-3 mb-1">{line.replace("### ", "")}</h4>;
+          return <h4 key={i} className="text-[11px] font-bold text-[var(--kiq-muted)] mt-3 mb-1">{line.replace("### ", "")}</h4>;
         if (line.startsWith("- "))
           return (
             <div key={i} className="flex items-start gap-2 text-xs text-zinc-400">
@@ -151,7 +151,7 @@ function NarrativeProse({ text }: { text: string }) {
 }
 
 // ── Report header watermark ──────────────────────────────────────────────────
-const DIVIDER = "linear-gradient(90deg,transparent,rgba(255,255,255,0.07) 20%,rgba(255,255,255,0.12) 50%,rgba(255,255,255,0.07) 80%,transparent)";
+const DIVIDER = "linear-gradient(90deg,transparent,#e2e8f0 20%,#cbd5e1 50%,#e2e8f0 80%,transparent)";
 
 // ── Main Component ───────────────────────────────────────────────────────────
 export default function Indiana5500Upload() {
@@ -187,29 +187,29 @@ export default function Indiana5500Upload() {
 
   return (
     <Layout>
-      <div className="min-h-full text-zinc-100" style={{ background: "#04060f" }}>
+      <div className="min-h-full text-[var(--kiq-ink)] kiq-ops-shell kiq-readable-surface" style={{ background: "#F8FAFC" }}>
 
         {/* ── PAGE HEADER ──────────────────────────────────────────────────── */}
-        <div style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(4,6,20,0.98)" }}>
+        <div className="kiq-ops-header" style={{ margin: 18, borderRadius: 24, borderBottom: "1px solid rgba(15,23,42,0.08)", background: "linear-gradient(135deg, rgba(255,255,255,0.92), rgba(248,250,252,0.70))" }}>
           <div className="max-w-5xl mx-auto px-8 py-5 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Link href="/actuarial-workbench">
-                <button data-testid="btn-back-workbench" className="p-1.5 rounded-lg transition-colors" style={{ color: "rgba(255,255,255,0.3)" }}
-                  onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
-                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.3)")}>
+                <button data-testid="btn-back-workbench" className="p-1.5 rounded-lg transition-colors" style={{ color: "#64748b" }}
+                  onMouseEnter={e => (e.currentTarget.style.color = "#0f172a")}
+                  onMouseLeave={e => (e.currentTarget.style.color = "#64748b")}>
                   <ArrowLeft className="w-4 h-4" />
                 </button>
               </Link>
-              <div className="w-px h-6" style={{ background: "rgba(255,255,255,0.08)" }} />
+              <div className="w-px h-6" style={{ background: "#e2e8f0" }} />
               <div>
                 <div className="flex items-center gap-2.5">
                   <BarChart3 className="w-4 h-4 text-emerald-400" />
-                  <h1 className="text-sm font-black tracking-tight text-white">Form 5500 Actuarial Analysis</h1>
+                  <h1 className="text-sm font-black tracking-tight text-[var(--kiq-ink)]">Form 5500 Actuarial Analysis</h1>
                   <span className="px-2 py-px rounded text-[9px] font-black tracking-widest uppercase" style={{ background: "rgba(79,125,255,0.15)", color: "#4f7dff", border: "1px solid rgba(79,125,255,0.25)" }}>
                     Tennessee · DOL Benchmarked
                   </span>
                 </div>
-                <p className="text-[10px] mt-0.5" style={{ color: "rgba(255,255,255,0.3)" }}>
+                <p className="text-[10px] mt-0.5" style={{ color: "#64748b" }}>
                   Upload 1–6 Form 5500 PDFs · Claude extracts financials · Benchmarked vs {result?.indiana_benchmark.employer_count.toLocaleString() ?? "3,232"} Tennessee DOL employers
                 </p>
               </div>
@@ -220,17 +220,17 @@ export default function Indiana5500Upload() {
               {[{ n: 1, label: "Upload" }, { n: 2, label: "Analyze" }, { n: 3, label: "Report" }].map((s, i, arr) => (
                 <div key={s.n} className="flex items-center gap-1">
                   <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold transition-all" style={{
-                    background: step >= s.n ? "rgba(16,185,129,0.12)" : "rgba(255,255,255,0.04)",
-                    color: step >= s.n ? "#10b981" : "rgba(255,255,255,0.25)",
-                    border: `1px solid ${step >= s.n ? "rgba(16,185,129,0.25)" : "rgba(255,255,255,0.06)"}`,
+                    background: step >= s.n ? "rgba(16,185,129,0.12)" : "#ffffff",
+                    color: step >= s.n ? "#10b981" : "#64748b",
+                    border: `1px solid ${step >= s.n ? "rgba(16,185,129,0.25)" : "#f1f5f9"}`,
                   }}>
                     <span className="w-3.5 h-3.5 rounded-full flex items-center justify-center text-[8px] font-black" style={{
-                      background: step >= s.n ? "#10b981" : "rgba(255,255,255,0.08)",
-                      color: step >= s.n ? "#fff" : "rgba(255,255,255,0.3)",
+                      background: step >= s.n ? "#10b981" : "#e2e8f0",
+                      color: step >= s.n ? "#fff" : "#64748b",
                     }}>{s.n}</span>
                     {s.label}
                   </div>
-                  {i < arr.length - 1 && <div className="w-5 h-px" style={{ background: step > s.n ? "rgba(16,185,129,0.4)" : "rgba(255,255,255,0.06)" }} />}
+                  {i < arr.length - 1 && <div className="w-5 h-px" style={{ background: step > s.n ? "rgba(16,185,129,0.4)" : "#f1f5f9" }} />}
                 </div>
               ))}
             </div>
@@ -250,25 +250,25 @@ export default function Indiana5500Upload() {
                 onClick={() => fileInputRef.current?.click()}
                 className="relative rounded-2xl border-2 border-dashed cursor-pointer flex flex-col items-center justify-center py-16 px-8 text-center transition-all"
                 style={{
-                  borderColor: dragging ? "rgba(16,185,129,0.6)" : "rgba(255,255,255,0.08)",
-                  background: dragging ? "rgba(16,185,129,0.04)" : "rgba(255,255,255,0.02)",
+                  borderColor: dragging ? "rgba(16,185,129,0.6)" : "#e2e8f0",
+                  background: dragging ? "rgba(16,185,129,0.04)" : "#ffffff",
                 }}
               >
                 <input ref={fileInputRef} type="file" multiple accept=".pdf" className="hidden"
                   onChange={e => { addFiles(Array.from(e.target.files ?? [])); e.target.value = ""; }} />
                 <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5 transition-all" style={{
-                  background: dragging ? "rgba(16,185,129,0.12)" : "rgba(255,255,255,0.04)",
-                  border: `1px solid ${dragging ? "rgba(16,185,129,0.35)" : "rgba(255,255,255,0.08)"}`,
+                  background: dragging ? "rgba(16,185,129,0.12)" : "#ffffff",
+                  border: `1px solid ${dragging ? "rgba(16,185,129,0.35)" : "#e2e8f0"}`,
                 }}>
-                  <Upload className="w-7 h-7" style={{ color: dragging ? "#10b981" : "rgba(255,255,255,0.25)" }} />
+                  <Upload className="w-7 h-7" style={{ color: dragging ? "#10b981" : "rgba(15,23,42,0.08)" }} />
                 </div>
-                <p className="text-base font-black text-white mb-1">{dragging ? "Release to add files" : "Drop Form 5500 PDFs here"}</p>
-                <p className="text-sm mb-5" style={{ color: "rgba(255,255,255,0.35)" }}>or click to browse</p>
-                <div className="flex items-center gap-3 text-[10px]" style={{ color: "rgba(255,255,255,0.2)" }}>
+                <p className="text-base font-black text-[var(--kiq-ink)] mb-1">{dragging ? "Release to add files" : "Drop Form 5500 PDFs here"}</p>
+                <p className="text-sm mb-5" style={{ color: "#64748b" }}>or click to browse</p>
+                <div className="flex items-center gap-3 text-[10px]" style={{ color: "#94a3b8" }}>
                   {["PDF only", "1–6 filings", "Tennessee employers", "Claude AI parsing"].map((t, i, a) => (
                     <span key={t} className="flex items-center gap-3">
                       {t}
-                      {i < a.length - 1 && <span className="w-px h-3 inline-block" style={{ background: "rgba(255,255,255,0.1)" }} />}
+                      {i < a.length - 1 && <span className="w-px h-3 inline-block" style={{ background: "#e2e8f0" }} />}
                     </span>
                   ))}
                 </div>
@@ -281,36 +281,36 @@ export default function Indiana5500Upload() {
 
               {files.length > 0 && (
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-widest mb-3" style={{ color: "rgba(255,255,255,0.25)" }}>Queued Filings</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest mb-3" style={{ color: "rgba(15,23,42,0.08)" }}>Queued Filings</p>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {files.map((f, i) => (
                       <div key={i} data-testid={`file-card-${i}`} className="relative rounded-xl p-4 flex flex-col gap-2 transition-all"
-                        style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                        style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
                         <button data-testid={`btn-remove-file-${i}`}
                           onClick={e => { e.stopPropagation(); setFiles(prev => prev.filter((_, j) => j !== i)); }}
                           className="absolute top-2.5 right-2.5 w-5 h-5 rounded flex items-center justify-center transition-colors"
-                          style={{ color: "rgba(255,255,255,0.2)" }}
+                          style={{ color: "#94a3b8" }}
                           onMouseEnter={e => { e.currentTarget.style.color = "#ef4444"; e.currentTarget.style.background = "rgba(239,68,68,0.1)"; }}
-                          onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.2)"; e.currentTarget.style.background = "transparent"; }}>
+                          onMouseLeave={e => { e.currentTarget.style.color = "#94a3b8"; e.currentTarget.style.background = "transparent"; }}>
                           <X className="w-3 h-3" />
                         </button>
                         <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}>
                           <FileText className="w-4 h-4 text-emerald-400" />
                         </div>
                         <div>
-                          <p className="text-xs font-semibold text-white truncate pr-4 leading-tight">{f.name.replace(".pdf", "")}</p>
-                          <p className="text-[10px] mt-0.5" style={{ color: "rgba(255,255,255,0.25)" }}>{(f.size / 1024).toFixed(0)} KB · PDF</p>
+                          <p className="text-xs font-semibold text-[var(--kiq-ink)] truncate pr-4 leading-tight">{f.name.replace(".pdf", "")}</p>
+                          <p className="text-[10px] mt-0.5" style={{ color: "rgba(15,23,42,0.08)" }}>{(f.size / 1024).toFixed(0)} KB · PDF</p>
                         </div>
                       </div>
                     ))}
                     {files.length < 6 && (
                       <div onClick={() => fileInputRef.current?.click()}
                         className="rounded-xl p-4 flex flex-col items-center justify-center gap-2 cursor-pointer min-h-[88px] transition-all"
-                        style={{ background: "rgba(255,255,255,0.01)", border: "1px dashed rgba(255,255,255,0.06)" }}
-                        onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.14)")}
-                        onMouseLeave={e => (e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)")}>
-                        <div className="w-6 h-6 rounded flex items-center justify-center text-lg leading-none" style={{ background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.3)" }}>+</div>
-                        <p className="text-[11px]" style={{ color: "rgba(255,255,255,0.2)" }}>Add more</p>
+                        style={{ background: "rgba(255,255,255,0.01)", border: "1px dashed #f1f5f9" }}
+                        onMouseEnter={e => (e.currentTarget.style.borderColor = "rgba(15,23,42,0.06)")}
+                        onMouseLeave={e => (e.currentTarget.style.borderColor = "#f1f5f9")}>
+                        <div className="w-6 h-6 rounded flex items-center justify-center text-lg leading-none" style={{ background: "#f8fafc", color: "#64748b" }}>+</div>
+                        <p className="text-[11px]" style={{ color: "#94a3b8" }}>Add more</p>
                       </div>
                     )}
                   </div>
@@ -335,9 +335,9 @@ export default function Indiana5500Upload() {
                     Analyze {files.length} Filing{files.length !== 1 ? "s" : ""} vs Tennessee Benchmarks
                   </Button>
                   <button data-testid="btn-clear-all" onClick={() => setFiles([])}
-                    className="text-xs transition-colors" style={{ color: "rgba(255,255,255,0.25)" }}
-                    onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.25)")}>
+                    className="text-xs transition-colors" style={{ color: "rgba(15,23,42,0.08)" }}
+                    onMouseEnter={e => (e.currentTarget.style.color = "#1e293b")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "rgba(15,23,42,0.08)")}>
                     Clear all
                   </button>
                 </div>
@@ -352,13 +352,13 @@ export default function Indiana5500Upload() {
                 <div className="w-20 h-20 rounded-3xl flex items-center justify-center" style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}>
                   <Sparkles className="w-8 h-8 text-emerald-400" />
                 </div>
-                <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center" style={{ background: "#04060f", border: "1px solid rgba(16,185,129,0.2)" }}>
+                <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center" style={{ background: "#F8FAFC", border: "1px solid rgba(16,185,129,0.2)" }}>
                   <Loader2 className="w-4 h-4 text-emerald-400 animate-spin" />
                 </div>
               </div>
               <div>
-                <p className="text-xl font-black text-white mb-2">Generating Actuarial Report</p>
-                <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>
+                <p className="text-xl font-black text-[var(--kiq-ink)] mb-2">Generating Actuarial Report</p>
+                <p className="text-sm leading-relaxed" style={{ color: "#475569" }}>
                   Extracting financials from {files.length} filing{files.length !== 1 ? "s" : ""} · benchmarking against 3,232 Tennessee employers
                 </p>
               </div>
@@ -368,7 +368,7 @@ export default function Indiana5500Upload() {
                     <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}>
                       <Loader2 className="w-3.5 h-3.5 text-emerald-400 animate-spin" style={{ animationDelay: `${i * 0.25}s` }} />
                     </div>
-                    <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.3)" }}>{s}</span>
+                    <span className="text-[10px]" style={{ color: "#64748b" }}>{s}</span>
                   </div>
                 ))}
               </div>
@@ -394,21 +394,21 @@ export default function Indiana5500Upload() {
               <div className="space-y-0">
 
                 {/* ── REPORT COVER ─────────────────────────────────────────── */}
-                <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.07)", background: "linear-gradient(160deg,rgba(16,185,129,0.06) 0%,rgba(4,6,20,0.95) 60%)" }}>
+                <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid #e2e8f0", background: "linear-gradient(160deg,rgba(16,185,129,0.06) 0%,rgba(4,6,20,0.95) 60%)" }}>
                   {/* Top brand strip */}
-                  <div className="flex items-center justify-between px-7 py-3" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)" }}>
+                  <div className="flex items-center justify-between px-7 py-3" style={{ borderBottom: "1px solid #f1f5f9", background: "#ffffff" }}>
                     <div className="flex items-center gap-2.5">
                       <div className="w-6 h-6 rounded-lg flex items-center justify-center" style={{ background: "rgba(16,185,129,0.15)", border: "1px solid rgba(16,185,129,0.25)" }}>
                         <BarChart3 className="w-3.5 h-3.5 text-emerald-400" />
                       </div>
-                      <span className="text-[10px] font-black tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.4)" }}>Kincaid IQ · Actuarial Intelligence Report</span>
+                      <span className="text-[10px] font-black tracking-widest uppercase" style={{ color: "#475569" }}>Kincaid Health · Actuarial Intelligence Report</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.2)" }}>
+                      <span className="text-[10px]" style={{ color: "#94a3b8" }}>
                         Generated {new Date(result.generated_at).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
                       </span>
-                      <span className="text-[10px] font-bold" style={{ color: "rgba(255,255,255,0.2)" }}>·</span>
-                      <span className="text-[10px] font-mono" style={{ color: "rgba(255,255,255,0.2)" }}>DOL 5500 · Tennessee</span>
+                      <span className="text-[10px] font-bold" style={{ color: "#94a3b8" }}>·</span>
+                      <span className="text-[10px] font-mono" style={{ color: "#94a3b8" }}>DOL 5500 · Tennessee</span>
                     </div>
                   </div>
 
@@ -418,12 +418,12 @@ export default function Indiana5500Upload() {
                     <div className="col-span-2 space-y-4">
                       <div>
                         <p className="text-[10px] font-black tracking-widest uppercase mb-2" style={{ color: "rgba(16,185,129,0.7)" }}>Form 5500 Actuarial Analysis</p>
-                        <h2 className="text-2xl font-black leading-tight text-white">
+                        <h2 className="text-2xl font-black leading-tight text-[var(--kiq-ink)]">
                           {result.file_count === 1
                             ? (result.filings[0]?.employer_name ?? "Employer Analysis")
                             : `${result.file_count}-Employer Comparative Analysis`}
                         </h2>
-                        <p className="text-sm mt-1.5" style={{ color: "rgba(255,255,255,0.4)" }}>
+                        <p className="text-sm mt-1.5" style={{ color: "#475569" }}>
                           {result.filings.map(f => f.plan_year).filter(Boolean).join(", ") || "Plan Year Analysis"} · Tennessee DOL Benchmarks
                         </p>
                       </div>
@@ -436,12 +436,12 @@ export default function Indiana5500Upload() {
                           { label: "Broker Commissions", val: fmt$(totalCommissions), icon: TrendingUp, accent: "#f59e0b" },
                           { label: "Admin Fees", val: fmt$(totalAdmin), icon: Shield, accent: "#a855f7" },
                         ].map((s, i) => (
-                          <div key={i} className="rounded-xl p-3" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                          <div key={i} className="rounded-xl p-3" style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
                             <div className="flex items-center gap-1.5 mb-1.5">
                               <s.icon className="w-3 h-3" style={{ color: s.accent }} />
-                              <p className="text-[9px] font-bold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.3)" }}>{s.label}</p>
+                              <p className="text-[9px] font-bold uppercase tracking-widest" style={{ color: "#64748b" }}>{s.label}</p>
                             </div>
-                            <p className="text-base font-black text-white font-mono">{s.val}</p>
+                            <p className="text-base font-black text-[var(--kiq-ink)] font-mono">{s.val}</p>
                           </div>
                         ))}
                       </div>
@@ -465,7 +465,7 @@ export default function Indiana5500Upload() {
                           { label: "Stop-loss coverage", val: `${result.filings.filter(f => f.has_stop_loss).length}/${result.file_count}` },
                         ].map(r => (
                           <div key={r.label} className="flex items-center justify-between text-[10px]">
-                            <span style={{ color: "rgba(255,255,255,0.4)" }}>{r.label}</span>
+                            <span style={{ color: "#475569" }}>{r.label}</span>
                             <span className="font-bold" style={{ color: risk.color }}>{r.val}</span>
                           </div>
                         ))}
@@ -477,7 +477,7 @@ export default function Indiana5500Upload() {
                 {/* ── SECTION DIVIDER ───────────────────────────────────────── */}
                 <div className="py-6 flex items-center gap-3">
                   <div className="flex-1 h-px" style={{ background: DIVIDER }} />
-                  <span className="text-[9px] font-black tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.15)" }}>Tennessee DOL Benchmarks</span>
+                  <span className="text-[9px] font-black tracking-widest uppercase" style={{ color: "#cbd5e1" }}>Tennessee DOL Benchmarks</span>
                   <div className="flex-1 h-px" style={{ background: DIVIDER }} />
                 </div>
 
@@ -499,7 +499,7 @@ export default function Indiana5500Upload() {
                       <div key={i} className="space-y-0.5">
                         <p className="text-[9px] font-bold uppercase tracking-widest" style={{ color: "rgba(79,125,255,0.6)" }}>{s.label}</p>
                         <p className="text-xl font-black font-mono" style={{ color: "#4f7dff" }}>{s.val}</p>
-                        <p className="text-[9px]" style={{ color: "rgba(255,255,255,0.2)" }}>{s.sub}</p>
+                        <p className="text-[9px]" style={{ color: "#94a3b8" }}>{s.sub}</p>
                       </div>
                     ))}
                   </div>
@@ -508,7 +508,7 @@ export default function Indiana5500Upload() {
                 {/* ── SECTION DIVIDER ───────────────────────────────────────── */}
                 <div className="py-6 flex items-center gap-3">
                   <div className="flex-1 h-px" style={{ background: DIVIDER }} />
-                  <span className="text-[9px] font-black tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.15)" }}>Per-Employer Analysis</span>
+                  <span className="text-[9px] font-black tracking-widest uppercase" style={{ color: "#cbd5e1" }}>Per-Employer Analysis</span>
                   <div className="flex-1 h-px" style={{ background: DIVIDER }} />
                 </div>
 
@@ -523,20 +523,20 @@ export default function Indiana5500Upload() {
                     const vsMedian = f.vs_in_broker_median_pct;
 
                     return (
-                      <div key={i} data-testid={`card-filing-${i}`} className="rounded-2xl overflow-hidden" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                      <div key={i} data-testid={`card-filing-${i}`} className="rounded-2xl overflow-hidden" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
 
                         {/* Card header */}
-                        <div className="flex items-center justify-between px-6 py-4" style={{ background: "rgba(255,255,255,0.02)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                        <div className="flex items-center justify-between px-6 py-4" style={{ background: "#ffffff", borderBottom: "1px solid #f1f5f9" }}>
                           <div className="flex items-center gap-3">
                             <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}>
                               <Building2 className="w-4 h-4 text-emerald-400" />
                             </div>
                             <div>
                               <div className="flex items-center gap-2">
-                                <p className="text-sm font-black text-white leading-tight">{f.employer_name ?? f.filename.replace(".pdf", "")}</p>
+                                <p className="text-sm font-black text-[var(--kiq-ink)] leading-tight">{f.employer_name ?? f.filename.replace(".pdf", "")}</p>
                                 {brokerHigh && <BadgeAlert className="w-3.5 h-3.5 text-red-400" />}
                               </div>
-                              <p className="text-[10px] mt-0.5" style={{ color: "rgba(255,255,255,0.3)" }}>
+                              <p className="text-[10px] mt-0.5" style={{ color: "#64748b" }}>
                                 {f.ein ? `EIN ${f.ein}` : "EIN unknown"}
                                 {f.plan_year ? ` · Plan Year ${f.plan_year}` : ""}
                                 {f.plan_name ? ` · ${f.plan_name}` : ""}
@@ -549,7 +549,7 @@ export default function Indiana5500Upload() {
                               ? <span className="flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full" style={{ background: "rgba(16,185,129,0.10)", color: "#10b981", border: "1px solid rgba(16,185,129,0.25)" }}><Shield className="w-2.5 h-2.5" />Stop-Loss ✓</span>
                               : <span className="flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-full" style={{ background: "rgba(239,68,68,0.08)", color: "#ef4444", border: "1px solid rgba(239,68,68,0.2)" }}><XCircle className="w-2.5 h-2.5" />No Stop-Loss</span>
                             }
-                            <span className="text-[10px] font-bold px-2 py-1 rounded-full" style={{ background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.4)", border: "1px solid rgba(255,255,255,0.08)" }}>
+                            <span className="text-[10px] font-bold px-2 py-1 rounded-full" style={{ background: "#ffffff", color: "#475569", border: "1px solid #e2e8f0" }}>
                               Filing {i + 1} of {result.file_count}
                             </span>
                           </div>
@@ -560,7 +560,7 @@ export default function Indiana5500Upload() {
 
                           {/* Col 1: Key metrics */}
                           <div className="space-y-4">
-                            <p className="text-[9px] font-black tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.2)" }}>Plan Financials</p>
+                            <p className="text-[9px] font-black tracking-widest uppercase" style={{ color: "#94a3b8" }}>Plan Financials</p>
                             <div className="space-y-2">
                               {[
                                 { label: "Participants", val: (f.participants_end || f.participants_beginning || 0).toLocaleString() },
@@ -568,9 +568,9 @@ export default function Indiana5500Upload() {
                                 { label: "PMPM Cost", val: f.pmpm ? fmt$(f.pmpm) : "—" },
                                 { label: "Total Income", val: fmt$(f.total_income) },
                               ].map(r => (
-                                <div key={r.label} className="flex items-center justify-between py-1.5" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-                                  <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.35)" }}>{r.label}</span>
-                                  <span className="text-xs font-black text-white font-mono">{r.val}</span>
+                                <div key={r.label} className="flex items-center justify-between py-1.5" style={{ borderBottom: "1px solid #ffffff" }}>
+                                  <span className="text-[10px]" style={{ color: "#64748b" }}>{r.label}</span>
+                                  <span className="text-xs font-black text-[var(--kiq-ink)] font-mono">{r.val}</span>
                                 </div>
                               ))}
                             </div>
@@ -583,7 +583,7 @@ export default function Indiana5500Upload() {
 
                           {/* Col 2: Benchmark gauges */}
                           <div className="space-y-4">
-                            <p className="text-[9px] font-black tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.2)" }}>Benchmark Position</p>
+                            <p className="text-[9px] font-black tracking-widest uppercase" style={{ color: "#94a3b8" }}>Benchmark Position</p>
                             <PercentileGauge
                               value={f.broker_pct}
                               label="Broker Commission %"
@@ -606,7 +606,7 @@ export default function Indiana5500Upload() {
                                 background: vsMedian > 50 ? "rgba(239,68,68,0.06)" : vsMedian > 0 ? "rgba(245,158,11,0.06)" : "rgba(16,185,129,0.06)",
                                 border: `1px solid ${vsMedian > 50 ? "rgba(239,68,68,0.2)" : vsMedian > 0 ? "rgba(245,158,11,0.2)" : "rgba(16,185,129,0.2)"}`,
                               }}>
-                                <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.4)" }}>vs TN Median Broker</span>
+                                <span className="text-[10px]" style={{ color: "#475569" }}>vs TN Median Broker</span>
                                 <span className="text-sm font-black font-mono" style={{ color: vsMedian > 50 ? "#ef4444" : vsMedian > 0 ? "#f59e0b" : "#10b981" }}>
                                   {vsMedian > 0 ? "+" : ""}{vsMedian.toFixed(1)}%
                                 </span>
@@ -616,23 +616,23 @@ export default function Indiana5500Upload() {
 
                           {/* Col 3: Dollar breakdown + verdict */}
                           <div className="space-y-4">
-                            <p className="text-[9px] font-black tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.2)" }}>Cost Breakdown</p>
+                            <p className="text-[9px] font-black tracking-widest uppercase" style={{ color: "#94a3b8" }}>Cost Breakdown</p>
                             <div className="space-y-3">
                               <div className="rounded-xl p-3.5" style={{ background: "rgba(79,125,255,0.05)", border: "1px solid rgba(79,125,255,0.14)" }}>
                                 <div className="flex items-center justify-between mb-0.5">
                                   <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: "rgba(79,125,255,0.6)" }}>Broker Commissions</span>
                                   <span className="text-[10px] font-black font-mono" style={{ color: brokerColor }}>{fmtPct(f.broker_pct)}</span>
                                 </div>
-                                <p className="text-base font-black text-white font-mono">{fmt$(f.total_broker_commissions)}</p>
-                                <p className="text-[9px] mt-0.5" style={{ color: "rgba(255,255,255,0.25)" }}>TN avg: {fmtPct(avgBrokerPct)}</p>
+                                <p className="text-base font-black text-[var(--kiq-ink)] font-mono">{fmt$(f.total_broker_commissions)}</p>
+                                <p className="text-[9px] mt-0.5" style={{ color: "rgba(15,23,42,0.08)" }}>TN avg: {fmtPct(avgBrokerPct)}</p>
                               </div>
                               <div className="rounded-xl p-3.5" style={{ background: "rgba(168,85,247,0.05)", border: "1px solid rgba(168,85,247,0.14)" }}>
                                 <div className="flex items-center justify-between mb-0.5">
                                   <span className="text-[9px] font-bold uppercase tracking-widest" style={{ color: "rgba(168,85,247,0.6)" }}>Admin Fees</span>
                                   <span className="text-[10px] font-black font-mono" style={{ color: adminHigh ? "#ef4444" : "#a855f7" }}>{fmtPct(f.admin_pct)}</span>
                                 </div>
-                                <p className="text-base font-black text-white font-mono">{fmt$(f.total_admin_fees)}</p>
-                                <p className="text-[9px] mt-0.5" style={{ color: "rgba(255,255,255,0.25)" }}>TN avg: {fmtPct(avgAdminPct)}</p>
+                                <p className="text-base font-black text-[var(--kiq-ink)] font-mono">{fmt$(f.total_admin_fees)}</p>
+                                <p className="text-[9px] mt-0.5" style={{ color: "rgba(15,23,42,0.08)" }}>TN avg: {fmtPct(avgAdminPct)}</p>
                               </div>
                             </div>
 
@@ -644,7 +644,7 @@ export default function Indiana5500Upload() {
                               <Flag className="w-3 h-3 mt-0.5 shrink-0" style={{ color: verdict.color }} />
                               <div>
                                 <p className="text-[9px] font-black uppercase tracking-widest mb-0.5" style={{ color: verdict.color }}>Actuarial Verdict</p>
-                                <p className="text-[10px] leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>{verdict.label}</p>
+                                <p className="text-[10px] leading-relaxed" style={{ color: "#334155" }}>{verdict.label}</p>
                               </div>
                             </div>
                           </div>
@@ -652,7 +652,7 @@ export default function Indiana5500Upload() {
 
                         {/* Notes strip */}
                         {f.notes && (
-                          <div className="px-6 py-3 flex items-start gap-2" style={{ borderTop: "1px solid rgba(255,255,255,0.04)", background: "rgba(255,255,255,0.01)" }}>
+                          <div className="px-6 py-3 flex items-start gap-2" style={{ borderTop: "1px solid #ffffff", background: "rgba(255,255,255,0.01)" }}>
                             <Info className="w-3 h-3 text-zinc-500 shrink-0 mt-0.5" />
                             <p className="text-[10px] text-zinc-500 leading-relaxed">{f.notes}</p>
                           </div>
@@ -667,7 +667,7 @@ export default function Indiana5500Upload() {
                   <div className="flex-1 h-px" style={{ background: DIVIDER }} />
                   <div className="flex items-center gap-1.5">
                     <Eye className="w-3 h-3" style={{ color: "#10b981" }} />
-                    <span className="text-[9px] font-black tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.15)" }}>Actuarial Intelligence Report</span>
+                    <span className="text-[9px] font-black tracking-widest uppercase" style={{ color: "#cbd5e1" }}>Actuarial Intelligence Report</span>
                   </div>
                   <div className="flex-1 h-px" style={{ background: DIVIDER }} />
                 </div>
@@ -681,7 +681,7 @@ export default function Indiana5500Upload() {
                       <span className="text-[10px] font-black tracking-widest uppercase text-emerald-400">Claude Actuarial Intelligence · Tennessee DOL Benchmarked</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-[9px] font-mono" style={{ color: "rgba(255,255,255,0.2)" }}>claude-sonnet · {bench.employer_count.toLocaleString()} employer pool</span>
+                      <span className="text-[9px] font-mono" style={{ color: "#94a3b8" }}>claude-sonnet · {bench.employer_count.toLocaleString()} employer pool</span>
                       <span className="text-[9px] px-2 py-0.5 rounded font-bold" style={{ background: "rgba(16,185,129,0.10)", color: "#10b981", border: "1px solid rgba(16,185,129,0.20)" }}>FIDUCIARY GRADE</span>
                     </div>
                   </div>
@@ -692,14 +692,14 @@ export default function Indiana5500Upload() {
                   </div>
 
                   {/* Footer */}
-                  <div className="flex items-center justify-between px-7 py-3" style={{ borderTop: "1px solid rgba(255,255,255,0.04)", background: "rgba(255,255,255,0.01)" }}>
-                    <p className="text-[9px]" style={{ color: "rgba(255,255,255,0.15)" }}>
-                      Generated by Kincaid IQ · Benchmarked vs {bench.employer_count.toLocaleString()} Tennessee DOL employers · For informational purposes only — not legal or investment advice
+                  <div className="flex items-center justify-between px-7 py-3" style={{ borderTop: "1px solid #ffffff", background: "rgba(255,255,255,0.01)" }}>
+                    <p className="text-[9px]" style={{ color: "#cbd5e1" }}>
+                      Generated by Kincaid Health · Benchmarked vs {bench.employer_count.toLocaleString()} Tennessee DOL employers · For informational purposes only — not legal or investment advice
                     </p>
                     <button data-testid="btn-new-analysis" onClick={reset}
-                      className="flex items-center gap-1.5 text-[10px] font-bold transition-colors" style={{ color: "rgba(255,255,255,0.3)" }}
-                      onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
-                      onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.3)")}>
+                      className="flex items-center gap-1.5 text-[10px] font-bold transition-colors" style={{ color: "#64748b" }}
+                      onMouseEnter={e => (e.currentTarget.style.color = "#0f172a")}
+                      onMouseLeave={e => (e.currentTarget.style.color = "#64748b")}>
                       <RotateCcw className="w-3 h-3" />
                       New Analysis
                     </button>

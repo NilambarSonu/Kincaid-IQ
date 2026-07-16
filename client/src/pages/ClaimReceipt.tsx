@@ -98,8 +98,8 @@ function SectionCard({ n, title, icon: Icon, accent, children }: {
   n: number; title: string; icon: typeof FileCheck; accent: string; children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 backdrop-blur-sm overflow-hidden">
-      <div className="flex items-center gap-3 px-5 py-3.5 border-b border-zinc-800 bg-zinc-900/80">
+    <div className="rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60 backdrop-blur-sm overflow-hidden">
+      <div className="flex items-center gap-3 px-5 py-3.5 border-b border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/80">
         <span className="text-[10px] font-mono font-bold w-5 h-5 rounded flex items-center justify-center border"
           style={{ color: accent, borderColor: `${accent}40`, backgroundColor: `${accent}12` }}>
           {n}
@@ -114,9 +114,9 @@ function SectionCard({ n, title, icon: Icon, accent, children }: {
 
 function KV({ label, value, mono = true }: { label: string; value: React.ReactNode; mono?: boolean }) {
   return (
-    <div className="py-2 border-b border-zinc-800/50 last:border-0 flex items-baseline gap-3">
+    <div className="py-2 border-b border-[var(--kiq-hairline)]/50 last:border-0 flex items-baseline gap-3">
       <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider w-36 shrink-0">{label}</span>
-      <span className={cn("text-[12px] text-zinc-200 break-all", mono && "font-mono")}>{value ?? "—"}</span>
+      <span className={cn("text-[12px] text-[var(--kiq-ink-soft)] break-all", mono && "font-mono")}>{value ?? "—"}</span>
     </div>
   );
 }
@@ -124,7 +124,7 @@ function KV({ label, value, mono = true }: { label: string; value: React.ReactNo
 function UnresolvedBanner({ ids, noun }: { ids: string[]; noun: string }) {
   if (!ids.length) return null;
   return (
-    <div className="mt-4 pt-4 border-t border-zinc-800">
+    <div className="mt-4 pt-4 border-t border-[var(--kiq-hairline)]">
       <p className="text-[10px] font-mono text-[#FFB800] mb-2.5 flex items-center gap-1.5">
         <AlertTriangle className="w-3 h-3 shrink-0" />
         {ids.length} {noun} registered on claim but no DB record found
@@ -149,8 +149,8 @@ function ClaimSection({ r }: { r: Receipt }) {
   return (
     <SectionCard n={1} title="Claim" icon={Package} accent="#00A8FF">
       {/* Hero value */}
-      <div className="flex items-baseline gap-2 mb-5 pb-5 border-b border-zinc-800">
-        <span className="text-4xl font-bold font-mono tabular-nums text-zinc-100" data-testid="text-claim-value">
+      <div className="flex items-baseline gap-2 mb-5 pb-5 border-b border-[var(--kiq-hairline)]">
+        <span className="text-4xl font-bold font-mono tabular-nums text-[var(--kiq-ink)]" data-testid="text-claim-value">
           {c.value}
         </span>
         {c.unit && <span className="text-lg text-zinc-500 font-mono">{c.unit}</span>}
@@ -177,12 +177,12 @@ function ClaimSection({ r }: { r: Receipt }) {
           <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mb-1.5">Freshness</p>
           <div className="flex items-center gap-1.5">
             <div className={cn("w-2.5 h-2.5 rounded-full", FRESHNESS_DOT[c.freshnessStatus] ?? "bg-zinc-600")} />
-            <span className="text-xs font-mono text-zinc-300">{c.freshnessStatus}</span>
+            <span className="text-xs font-mono text-[var(--kiq-muted)]">{c.freshnessStatus}</span>
           </div>
         </div>
         <div>
           <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mb-1.5">KPI Key</p>
-          <span className="text-xs font-mono text-zinc-300">{c.kpiKey}</span>
+          <span className="text-xs font-mono text-[var(--kiq-muted)]">{c.kpiKey}</span>
         </div>
         <div>
           <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mb-1.5">Format</p>
@@ -193,7 +193,7 @@ function ClaimSection({ r }: { r: Receipt }) {
       {/* Confidence */}
       <div className="flex items-center gap-3">
         <span className="text-[10px] font-mono text-zinc-600 w-20 shrink-0">Confidence</span>
-        <div className="flex-1 h-2 rounded-full bg-zinc-800 overflow-hidden">
+        <div className="flex-1 h-2 rounded-full bg-[var(--kiq-surface)] overflow-hidden">
           <div className="h-full rounded-full transition-all"
             style={{
               width: `${(c.confidenceScore ?? 0) * 100}%`,
@@ -208,7 +208,7 @@ function ClaimSection({ r }: { r: Receipt }) {
       </div>
 
       {/* IDs footer */}
-      <div className="mt-4 pt-3 border-t border-zinc-800 flex flex-wrap gap-4 text-[10px] font-mono text-zinc-600">
+      <div className="mt-4 pt-3 border-t border-[var(--kiq-hairline)] flex flex-wrap gap-4 text-[10px] font-mono text-zinc-600">
         <span>claimId <span className="text-zinc-400">{r.claimId}</span></span>
         <span>receiptType <span className="text-zinc-400">{r.receiptType}</span></span>
         <span className="ml-auto">generated {fmt(r.generatedAt)}</span>
@@ -221,7 +221,7 @@ function EvidenceSection({ r }: { r: Receipt }) {
   const total = r.evidence.length + r.unresolvedEvidenceIds.length;
   return (
     <SectionCard n={2} title="Evidence Artifacts" icon={LinkIcon} accent="#00FF94">
-      <div className="flex items-center gap-3 mb-4 pb-3 border-b border-zinc-800">
+      <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[var(--kiq-hairline)]">
         <span className="text-2xl font-bold font-mono text-[#00FF94] tabular-nums">{total}</span>
         <div className="text-xs text-zinc-500">
           <span className="text-[#00FF94] font-semibold">{r.evidence.length}</span> resolved ·{" "}
@@ -246,7 +246,7 @@ function EvidenceSection({ r }: { r: Receipt }) {
                 <LinkIcon className="w-2.5 h-2.5 shrink-0" />{ev.evidenceId}
               </span>
               {ev.sourceType && (
-                <span className="text-[9px] font-mono border border-zinc-700 rounded px-1.5 py-0.5 text-zinc-500 uppercase">
+                <span className="text-[9px] font-mono border border-[var(--kiq-hairline)] rounded px-1.5 py-0.5 text-zinc-500 uppercase">
                   {ev.sourceType}
                 </span>
               )}
@@ -255,7 +255,7 @@ function EvidenceSection({ r }: { r: Receipt }) {
               )}
             </div>
             {ev.description && (
-              <p className="text-xs text-zinc-300 mb-2 leading-relaxed pl-6">{ev.description}</p>
+              <p className="text-xs text-[var(--kiq-muted)] mb-2 leading-relaxed pl-6">{ev.description}</p>
             )}
             {ev.sourceUri && (
               <KV label="Source URI" value={ev.sourceUri} />
@@ -279,7 +279,7 @@ function TransformSection({ r }: { r: Receipt }) {
   const total = r.transforms.length + r.unresolvedTransformIds.length;
   return (
     <SectionCard n={3} title="Transform Lineage" icon={GitBranch} accent="#A855F7">
-      <div className="flex items-center gap-3 mb-4 pb-3 border-b border-zinc-800">
+      <div className="flex items-center gap-3 mb-4 pb-3 border-b border-[var(--kiq-hairline)]">
         <span className="text-2xl font-bold font-mono text-[#A855F7] tabular-nums">{total}</span>
         <div className="text-xs text-zinc-500">
           <span className="text-[#A855F7] font-semibold">{r.transforms.length}</span> resolved ·{" "}
@@ -304,7 +304,7 @@ function TransformSection({ r }: { r: Receipt }) {
                 <GitBranch className="w-2.5 h-2.5 shrink-0" />{tx.transformId}
               </span>
               {tx.outputKpiKey && (
-                <span className="text-[9px] font-mono border border-zinc-700 rounded px-1.5 py-0.5 text-zinc-500">
+                <span className="text-[9px] font-mono border border-[var(--kiq-hairline)] rounded px-1.5 py-0.5 text-zinc-500">
                   → {tx.outputKpiKey}
                 </span>
               )}
@@ -312,17 +312,17 @@ function TransformSection({ r }: { r: Receipt }) {
                 <span className="text-[9px] font-mono text-zinc-700 ml-auto">{fmt(tx.executedAt)}</span>
               )}
             </div>
-            {tx.name && <p className="text-xs font-semibold text-zinc-200 mb-2 pl-6">{tx.name}</p>}
+            {tx.name && <p className="text-xs font-semibold text-[var(--kiq-ink-soft)] mb-2 pl-6">{tx.name}</p>}
             {tx.formula && (
-              <div className="bg-zinc-950/70 rounded-lg border border-zinc-800 px-3 py-2 mb-2 ml-6">
-                <p className="text-[11px] font-mono text-zinc-300 break-all">{tx.formula}</p>
+              <div className="bg-[var(--kiq-surface)]/70 rounded-lg border border-[var(--kiq-hairline)] px-3 py-2 mb-2 ml-6">
+                <p className="text-[11px] font-mono text-[var(--kiq-muted)] break-all">{tx.formula}</p>
               </div>
             )}
             {tx.inputHashes.length > 0 && (
               <div className="flex items-center gap-2 pl-6 flex-wrap mt-1">
                 <span className="text-[9px] font-mono text-zinc-600">inputs:</span>
                 {tx.inputHashes.map(id => (
-                  <span key={id} className="text-[9px] font-mono border border-zinc-700 rounded px-1.5 py-0.5 text-zinc-500">{id}</span>
+                  <span key={id} className="text-[9px] font-mono border border-[var(--kiq-hairline)] rounded px-1.5 py-0.5 text-zinc-500">{id}</span>
                 ))}
               </div>
             )}
@@ -354,7 +354,7 @@ function PolicySection({ r }: { r: Receipt }) {
         ].map(g => (
           <div key={g.label} className={cn(
             "rounded-lg border px-3 py-3",
-            g.ok ? "border-zinc-700 bg-zinc-900/50" : "border-zinc-800 bg-zinc-950/50",
+            g.ok ? "border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/50" : "border-[var(--kiq-hairline)] bg-[var(--kiq-surface)]/50",
           )}>
             <div className="flex items-center gap-1.5 mb-1.5">
               {g.ok
@@ -380,7 +380,7 @@ function PolicySection({ r }: { r: Receipt }) {
       {/* Progress bar */}
       <div className="flex items-center gap-3 mb-4">
         <span className="text-[10px] font-mono text-zinc-600 w-20 shrink-0">Stages</span>
-        <div className="flex-1 h-2 rounded-full bg-zinc-800 overflow-hidden">
+        <div className="flex-1 h-2 rounded-full bg-[var(--kiq-surface)] overflow-hidden">
           <div className="h-full rounded-full bg-[#00FF94]" style={{ width: `${pct}%` }} />
         </div>
         <span className="text-sm font-bold font-mono text-[#00FF94] tabular-nums w-12 text-right">
@@ -414,7 +414,7 @@ function PolicySection({ r }: { r: Receipt }) {
         ))}
       </div>
 
-      <div className="mt-3 pt-3 border-t border-zinc-800 text-[10px] font-mono text-zinc-600">
+      <div className="mt-3 pt-3 border-t border-[var(--kiq-hairline)] text-[10px] font-mono text-zinc-600">
         evaluated {fmt(ps.evaluatedAt)}
       </div>
     </SectionCard>
@@ -440,10 +440,10 @@ function TimestampsSection({ r }: { r: Receipt }) {
     <SectionCard n={5} title="Timestamps" icon={Timer} accent="#00A8FF">
       <div className="space-y-0">
         {rows.map((row, i) => (
-          <div key={i} className="flex items-center gap-3 py-2.5 border-b border-zinc-800/50 last:border-0">
+          <div key={i} className="flex items-center gap-3 py-2.5 border-b border-[var(--kiq-hairline)]/50 last:border-0">
             <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: row.color ?? "#52525b" }} />
             <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider w-40 shrink-0">{row.label}</span>
-            <span className="text-[11px] font-mono text-zinc-300">{fmt(row.value)}</span>
+            <span className="text-[11px] font-mono text-[var(--kiq-muted)]">{fmt(row.value)}</span>
           </div>
         ))}
       </div>
@@ -474,13 +474,13 @@ function HashChainSection({ r }: { r: Receipt }) {
 
       {/* Chain hashes */}
       <div className="space-y-0 mb-4">
-        <div className="py-2.5 border-b border-zinc-800/50 flex items-baseline gap-3">
+        <div className="py-2.5 border-b border-[var(--kiq-hairline)]/50 flex items-baseline gap-3">
           <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider w-36 shrink-0">Evidence Hash</span>
-          <span className="text-[11px] font-mono text-zinc-200 break-all">{h.evidenceHash ?? "—"}</span>
+          <span className="text-[11px] font-mono text-[var(--kiq-ink-soft)] break-all">{h.evidenceHash ?? "—"}</span>
         </div>
-        <div className="py-2.5 border-b border-zinc-800/50 flex items-baseline gap-3">
+        <div className="py-2.5 border-b border-[var(--kiq-hairline)]/50 flex items-baseline gap-3">
           <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider w-36 shrink-0">Chain Hash</span>
-          <span className="text-[11px] font-mono text-zinc-200 break-all">{h.chainHash ?? "—"}</span>
+          <span className="text-[11px] font-mono text-[var(--kiq-ink-soft)] break-all">{h.chainHash ?? "—"}</span>
         </div>
       </div>
 
@@ -489,7 +489,7 @@ function HashChainSection({ r }: { r: Receipt }) {
         <div className="mb-4">
           <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mb-2">Source Hashes</p>
           {Object.entries(h.sourceHashes).map(([id, hash]) => (
-            <div key={id} className="py-1.5 border-b border-zinc-800/30 last:border-0 flex items-baseline gap-3">
+            <div key={id} className="py-1.5 border-b border-[var(--kiq-hairline)]/30 last:border-0 flex items-baseline gap-3">
               <span className="text-[10px] font-mono text-zinc-600 w-36 shrink-0 truncate">{id}</span>
               <span className="text-[11px] font-mono text-zinc-400 break-all">{hash ?? "—"}</span>
             </div>
@@ -502,7 +502,7 @@ function HashChainSection({ r }: { r: Receipt }) {
         <div>
           <p className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest mb-2">Output Hashes</p>
           {Object.entries(h.outputHashes).map(([id, hash]) => (
-            <div key={id} className="py-1.5 border-b border-zinc-800/30 last:border-0 flex items-baseline gap-3">
+            <div key={id} className="py-1.5 border-b border-[var(--kiq-hairline)]/30 last:border-0 flex items-baseline gap-3">
               <span className="text-[10px] font-mono text-zinc-600 w-36 shrink-0 truncate">{id}</span>
               <span className="text-[11px] font-mono text-zinc-400 break-all">{hash ?? "—"}</span>
             </div>
@@ -512,7 +512,7 @@ function HashChainSection({ r }: { r: Receipt }) {
 
       {/* Chain completeness */}
       <div className={cn(
-        "mt-4 pt-4 border-t border-zinc-800 flex items-center gap-2 text-xs font-mono",
+        "mt-4 pt-4 border-t border-[var(--kiq-hairline)] flex items-center gap-2 text-xs font-mono",
         r.chainComplete ? "text-[#00FF94]" : "text-[#FFB800]",
       )}>
         <GitBranch className="w-3.5 h-3.5 shrink-0" />
@@ -546,12 +546,12 @@ export default function ClaimReceipt() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-zinc-950 text-zinc-100 p-6 max-w-4xl mx-auto">
+      <div className="min-h-screen bg-[var(--kiq-surface)] text-[var(--kiq-ink)] p-6 max-w-4xl mx-auto">
 
         {/* ── Breadcrumb ─────────────────────────────────────────────────────── */}
         <div className="flex items-center gap-3 mb-5">
           <button data-testid="button-back" onClick={() => navigate("/executive-tiles")}
-            className="flex items-center gap-1.5 text-xs text-zinc-500 hover:text-zinc-300 transition-colors">
+            className="flex items-center gap-1.5 text-xs text-zinc-500 hover:text-[var(--kiq-muted)] transition-colors">
             <ChevronLeft className="w-3.5 h-3.5" />Executive Tiles
           </button>
           <span className="text-zinc-700">/</span>
@@ -574,7 +574,7 @@ export default function ClaimReceipt() {
             )}
           </div>
           <button data-testid="button-refresh" onClick={() => refetch()} disabled={isFetching}
-            className="flex items-center gap-2 text-xs text-zinc-400 border border-zinc-700 hover:border-zinc-500 hover:text-zinc-200 px-3 py-1.5 rounded-lg transition-all disabled:opacity-40">
+            className="flex items-center gap-2 text-xs text-zinc-400 border border-[var(--kiq-hairline)] hover:border-zinc-500 hover:text-[var(--kiq-ink-soft)] px-3 py-1.5 rounded-lg transition-all disabled:opacity-40">
             <RefreshCw className={cn("w-3.5 h-3.5", isFetching && "animate-spin")} />
             Refresh
           </button>
@@ -584,7 +584,7 @@ export default function ClaimReceipt() {
         {isLoading && (
           <div className="space-y-4">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-28 rounded-xl border border-zinc-800 bg-zinc-900/40 animate-pulse" />
+              <div key={i} className="h-28 rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/40 animate-pulse" />
             ))}
           </div>
         )}

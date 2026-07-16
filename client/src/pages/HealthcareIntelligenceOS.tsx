@@ -3,7 +3,7 @@
  * Palantir Foundry × Bloomberg Terminal × NSA fusion center.
  *
  * 6 tabs · 4-tile doctrine command center · 3-tier multi-agent panel
- * Cross-wired to Claims Recovery, Rx Defense, Fiduciary IQ.
+ * Cross-wired to Claims Recovery, PBM Contract Clarity 360, Fiduciary IQ.
  */
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -60,20 +60,20 @@ const TIER_COLOR: Record<string, string> = {
   CRITICAL: N.red, HIGH: N.orange, MEDIUM: N.gold, LOW: N.blue,
   DEFINITIVE: N.green, STRONG: N.blue, MODERATE: N.gold, WEAK: N.orange,
 };
-const sevColor = (s: string) => TIER_COLOR[s] ?? "rgba(255,255,255,0.4)";
+const sevColor = (s: string) => TIER_COLOR[s] ?? "#475569";
 
 /* ─── DOCTRINE STRIP ────────────────────────────────────────────────────────── */
 function DoctrineStrip({ data }: { data: any }) {
   return (
-    <div className="rounded-xl border border-white/[0.08] bg-gradient-to-r from-white/[0.03] to-transparent p-4 mb-6">
+    <div className="kiq-health-card rounded-xl p-4 mb-6">
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: N.green }} />
-          <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-white/55">
+          <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-[var(--kiq-muted)]">
             HIOS · Healthcare Intelligence Operating System · LIVE
           </p>
         </div>
-        <div className="flex items-center gap-4 text-[10px] text-white/40">
+        <div className="flex items-center gap-4 text-[10px] text-[var(--kiq-muted)]">
           <span>{data?.system_health?.agents_online ?? 0} agents online</span>
           <span>·</span>
           <span>{data?.system_health?.ingestion_streams ?? 0} live streams</span>
@@ -81,7 +81,7 @@ function DoctrineStrip({ data }: { data: any }) {
           <span>T1:{data?.system_health?.tier_1_active ?? 0} T2:{data?.system_health?.tier_2_active ?? 0} T3:{data?.system_health?.tier_3_active ?? 0}</span>
         </div>
       </div>
-      <p className="mt-3 text-xs text-white/50 leading-relaxed italic">
+      <p className="mt-3 text-xs text-[var(--kiq-muted)] leading-relaxed italic">
         "Every healthcare decision may eventually appear before a federal judge."
         &nbsp;— continuously operating as PBM forensic auditor, ERISA litigator, McKinsey strategist, and Chief Medical Officer, simultaneously.
       </p>
@@ -106,48 +106,48 @@ function CommandCenter() {
           <div
             key={t.id}
             data-testid={`tile-${t.id}`}
-            className="rounded-2xl p-5 border relative overflow-hidden group cursor-pointer hover-elevate"
+            className="kiq-health-card rounded-2xl p-5 relative overflow-hidden group cursor-pointer hover-elevate"
             style={{ background: `linear-gradient(180deg, ${t.color}10 0%, transparent 80%)`, borderColor: `${t.color}30` }}
           >
             <div className="flex items-start justify-between mb-3">
-              <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-white/45">{t.label}</p>
+              <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-[var(--kiq-ink)]/45">{t.label}</p>
               <span className="text-[9px] font-bold px-1.5 py-0.5 rounded" style={{ color: TIER_COLOR[t.tier], background: TIER_COLOR[t.tier] + "15" }}>{t.tier}</span>
             </div>
-            <p className="text-3xl font-bold text-white tracking-tight" style={{ color: t.color }}>{t.primary}</p>
-            <p className="text-[11px] text-white/55 mt-1 truncate">{t.secondary}</p>
-            <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-center justify-between">
-              <span className="text-[9px] font-bold tracking-wider text-white/35">GATE · {t.gate}</span>
-              <Eye size={11} className="text-white/30 group-hover:text-white/70 transition-colors" />
+            <p className="text-3xl font-bold text-[var(--kiq-ink)] tracking-tight" style={{ color: t.color }}>{t.primary}</p>
+            <p className="text-[11px] text-[var(--kiq-ink)]/55 mt-1 truncate">{t.secondary}</p>
+            <div className="mt-3 pt-3 border-t border-[var(--kiq-hairline)]/70 flex items-center justify-between">
+              <span className="text-[9px] font-bold tracking-wider text-[var(--kiq-ink)]/35">GATE · {t.gate}</span>
+              <Eye size={11} className="text-[var(--kiq-ink)]/30 group-hover:text-[var(--kiq-ink)]/70 transition-colors" />
             </div>
           </div>
         ))}
       </div>
 
       {/* CROSS-MODULE WIRING ROW */}
-      <div className="rounded-2xl bg-white/[0.025] border border-white/[0.07] p-5">
+      <div className="kiq-health-card rounded-2xl p-5">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <p className="text-xs font-bold tracking-[0.16em] uppercase text-white/55">Cross-Module Intelligence</p>
-            <p className="text-[11px] text-white/35 mt-0.5">HIOS draws live signal from every Kincaid IQ subsystem.</p>
+            <p className="text-xs font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/55">Cross-Module Intelligence</p>
+            <p className="text-[11px] text-[var(--kiq-ink)]/35 mt-0.5">HIOS draws live signal from every Kincaid Health subsystem.</p>
           </div>
-          <Network size={14} className="text-white/30" />
+          <Network size={14} className="text-[var(--kiq-ink)]/30" />
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {[
             { label: "Claims Recovery Pursuits Open", val: data.cross_module?.recovery_actions_open ?? 0,                                     href: "/claims-recovery", icon: Briefcase, c: N.orange },
             { label: "Dollars Recovered",             val: `$${((data.cross_module?.recovery_dollars_returned ?? 0)/1000).toFixed(1)}K`,      href: "/claims-recovery", icon: TrendingUp, c: N.green  },
-            { label: "Rx Defense Contracts Analyzed", val: data.cross_module?.rx_defense_contracts_analyzed ?? 0,                             href: "/rx-defense",      icon: FileText,  c: N.purple },
+            { label: "PBM Contract Clarity 360 Contracts Analyzed", val: data.cross_module?.rx_defense_contracts_analyzed ?? 0,                             href: "/rx-defense",      icon: FileText,  c: N.purple },
             { label: "Fiduciary Plans Under Mgmt",    val: data.cross_module?.fiduciary_plans_under_management ?? 0,                          href: "/fiduciary-iq",    icon: Shield,    c: N.blue   },
           ].map((c) => (
             <Link key={c.label} href={c.href}>
-              <a className="block p-3 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.15] transition-colors group cursor-pointer" data-testid={`xmod-${c.label.toLowerCase().replace(/\s+/g, "-")}`}>
+              <a className="block p-3 rounded-xl bg-[var(--kiq-surface)]/60 border border-[var(--kiq-hairline)]/70 hover:border-cyan-400/30 transition-colors group cursor-pointer" data-testid={`xmod-${c.label.toLowerCase().replace(/\s+/g, "-")}`}>
                 <div className="flex items-center gap-2 mb-2">
                   <c.icon size={11} style={{ color: c.c }} />
-                  <span className="text-[10px] text-white/40 uppercase tracking-wider truncate">{c.label}</span>
+                  <span className="text-[10px] text-[var(--kiq-ink)]/40 uppercase tracking-wider truncate">{c.label}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="text-xl font-bold" style={{ color: c.c }}>{c.val}</p>
-                  <ChevronRight size={12} className="text-white/20 group-hover:text-white/60" />
+                  <ChevronRight size={12} className="text-[var(--kiq-ink)]/20 group-hover:text-[var(--kiq-ink)]/60" />
                 </div>
               </a>
             </Link>
@@ -159,16 +159,16 @@ function CommandCenter() {
       <IntelligenceFeed events={feedData?.events ?? []} />
 
       {/* DOCTRINE CARD */}
-      <div className="rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5">
+      <div className="kiq-health-card rounded-2xl p-5">
         <div className="flex items-center gap-2 mb-3">
           <Shield size={12} style={{ color: N.gold }} />
-          <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-white/55">Constitutional Doctrine — Four Hard Rules</p>
+          <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-[var(--kiq-ink)]/55">Constitutional Doctrine — Four Hard Rules</p>
         </div>
         <div className="grid md:grid-cols-2 gap-2">
           {data.doctrine?.hard_rules?.map((r: string, i: number) => (
-            <div key={i} className="flex items-start gap-2 p-2 rounded-lg bg-white/[0.02]">
+            <div key={i} className="flex items-start gap-2 p-2 rounded-lg bg-[var(--kiq-surface)]/58">
               <span className="text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: N.gold + "20", color: N.gold }}>{i + 1}</span>
-              <p className="text-xs text-white/65">{r}</p>
+              <p className="text-xs text-[var(--kiq-ink)]/65">{r}</p>
             </div>
           ))}
         </div>
@@ -184,19 +184,19 @@ function IntelligenceFeed({ events }: { events: any[] }) {
     MODEL: N.gold, GAP: N.red, TREND: N.green, CERT: N.green, ORCH: N.blue,
   };
   return (
-    <div className="rounded-2xl bg-white/[0.025] border border-white/[0.07] overflow-hidden">
-      <div className="px-5 py-3 flex items-center gap-2 border-b border-white/[0.06] bg-white/[0.02]">
+    <div className="kiq-health-card rounded-2xl overflow-hidden">
+      <div className="px-5 py-3 flex items-center gap-2 border-b border-[var(--kiq-hairline)]/70 bg-[var(--kiq-surface)]/48">
         <Radio size={11} className="animate-pulse" style={{ color: N.green }} />
-        <p className="text-xs font-bold tracking-[0.16em] uppercase text-white/65">Live Intelligence Stream</p>
-        <span className="ml-auto text-[10px] text-white/35">Auto-refresh · 15s</span>
+        <p className="text-xs font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/65">Live Intelligence Stream</p>
+        <span className="ml-auto text-[10px] text-[var(--kiq-ink)]/35">Auto-refresh · 15s</span>
       </div>
-      <div className="divide-y divide-white/[0.04] max-h-96 overflow-y-auto">
+      <div className="divide-y divide-slate-200/70 max-h-96 overflow-y-auto">
         {events.map((e, i) => (
-          <div key={i} className="px-5 py-2.5 hover:bg-white/[0.02] transition-colors flex items-start gap-3" data-testid={`feed-event-${i}`}>
-            <span className="text-[9px] font-mono text-white/30 w-12 flex-shrink-0 mt-0.5">T{e.tier}</span>
+          <div key={i} className="px-5 py-2.5 hover:bg-[var(--kiq-surface)]/70 transition-colors flex items-start gap-3" data-testid={`feed-event-${i}`}>
+            <span className="text-[9px] font-mono text-[var(--kiq-ink)]/30 w-12 flex-shrink-0 mt-0.5">T{e.tier}</span>
             <span className="text-[9px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 mt-0.5" style={{ color: lvlColor[e.level] ?? "#fff", background: (lvlColor[e.level] ?? "#fff") + "18" }}>{e.level}</span>
-            <p className="text-xs text-white/70 flex-1">{e.msg}</p>
-            <span className="text-[9px] text-white/25 flex-shrink-0 mt-0.5">{new Date(e.ts).toLocaleTimeString()}</span>
+            <p className="text-xs text-[var(--kiq-ink)]/70 flex-1">{e.msg}</p>
+            <span className="text-[9px] text-[var(--kiq-ink)]/25 flex-shrink-0 mt-0.5">{new Date(e.ts).toLocaleTimeString()}</span>
           </div>
         ))}
       </div>
@@ -271,8 +271,8 @@ function PriorAuthTab() {
           { l: "Modeled Appeal Wins",  v: s.predicted_appeal_wins,       c: N.green  },
           { l: "Annual $ at Risk",     v: `$${(s.total_annual_cost/1000).toFixed(0)}K`, c: N.purple },
         ].map((k) => (
-          <div key={k.l} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-3">
-            <p className="text-[10px] uppercase tracking-wider text-white/40 mb-1">{k.l}</p>
+          <div key={k.l} className="rounded-xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.07] p-3">
+            <p className="text-[10px] uppercase tracking-wider text-[var(--kiq-ink)]/40 mb-1">{k.l}</p>
             <p className="text-lg font-bold" style={{ color: k.c }}>{k.v}</p>
           </div>
         ))}
@@ -291,7 +291,7 @@ function PriorAuthTab() {
           <Stat label="Win Rate"   v={`${(outcomes.win_rate * 100).toFixed(0)}%`}                  color={N.blue} />
           <Stat label="Recovered"  v={`$${(outcomes.dollars_recovered/1000).toFixed(1)}K`}         color={N.gold} />
           <Stat label="Contingency"v={`$${(outcomes.contingency_earned/1000).toFixed(1)}K`}        color={N.purple} />
-          <span className="text-[10px] text-white/40 ml-auto">Written to <span className="font-mono text-white/60">recovery_actions</span> · feeds Value Ledger</span>
+          <span className="text-[10px] text-[var(--kiq-ink)]/40 ml-auto">Written to <span className="font-mono text-[var(--kiq-ink)]/60">recovery_actions</span> · feeds Value Ledger</span>
         </div>
       )}
 
@@ -305,16 +305,16 @@ function PriorAuthTab() {
         >
           <Upload size={11} /> Parse Denial Letter
         </button>
-        <div className="flex items-center gap-2 px-3 h-9 rounded-lg flex-1 min-w-[260px]" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}>
-          <Search size={12} className="text-white/40" />
+        <div className="flex items-center gap-2 px-3 h-9 rounded-lg flex-1 min-w-[260px]" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
+          <Search size={12} className="text-[var(--kiq-ink)]/40" />
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search case ID, drug, indication, payer, member..."
-            className="flex-1 bg-transparent outline-none text-xs text-white placeholder:text-white/30"
+            className="flex-1 bg-transparent outline-none text-xs text-[var(--kiq-ink)] placeholder:text-[var(--kiq-ink)]/30"
             data-testid="pa-search"
           />
-          {q && <button onClick={() => setQ("")} className="text-white/40 hover:text-white/80"><X size={12} /></button>}
+          {q && <button onClick={() => setQ("")} className="text-[var(--kiq-ink)]/40 hover:text-[var(--kiq-ink)]/80"><X size={12} /></button>}
         </div>
         <div className="flex items-center gap-1">
           {statuses.map((st) => (
@@ -324,8 +324,8 @@ function PriorAuthTab() {
               data-testid={`pa-filter-${st}`}
               className="px-2.5 h-9 rounded-lg text-[10px] font-semibold tracking-wider uppercase transition-colors"
               style={{
-                background: statusFilter === st ? N.blue + "20" : "rgba(255,255,255,0.03)",
-                border: `1px solid ${statusFilter === st ? N.blue + "50" : "rgba(255,255,255,0.08)"}`,
+                background: statusFilter === st ? N.blue + "20" : "#ffffff",
+                border: `1px solid ${statusFilter === st ? N.blue + "50" : "#e2e8f0"}`,
                 color: statusFilter === st ? N.blue : "rgba(255,255,255,0.55)",
               }}
             >
@@ -335,60 +335,60 @@ function PriorAuthTab() {
         </div>
       </div>
 
-      <div className="rounded-2xl bg-white/[0.025] border border-white/[0.07] overflow-hidden">
-        <div className="px-5 py-3 border-b border-white/[0.06] bg-white/[0.02] flex items-center gap-2">
+      <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.025] border border-white/[0.07] overflow-hidden">
+        <div className="px-5 py-3 border-b border-white/[0.06] bg-[var(--kiq-surface)]/[0.02] flex items-center gap-2">
           <Pill size={11} style={{ color: N.purple }} />
-          <p className="text-xs font-bold tracking-[0.16em] uppercase text-white/65">Prior Authorization Queue</p>
-          <span className="ml-auto text-[10px] text-white/35">
+          <p className="text-xs font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/65">Prior Authorization Queue</p>
+          <span className="ml-auto text-[10px] text-[var(--kiq-ink)]/35">
             {filtered.length} of {cases.length} · <span style={{ color: N.blue }}>Guided Appeal</span> = best output (structured intake → GPT-drafted) · <span style={{ color: N.purple }}>Quick Appeal</span> = one-click template
           </span>
         </div>
         <div className="divide-y divide-white/[0.04]">
           {filtered.length === 0 && (
-            <div className="p-8 text-center text-xs text-white/40">No cases match. Try clearing search or filter.</div>
+            <div className="p-8 text-center text-xs text-[var(--kiq-ink)]/40">No cases match. Try clearing search or filter.</div>
           )}
           {filtered.map((c) => {
             const daysLeft = Math.max(0, 180 - (c.days_in_queue || 0));
             const deadlineColor = daysLeft <= 14 ? N.red : daysLeft <= 60 ? N.orange : N.green;
             return (
-              <div key={c.id} className="p-4 hover:bg-white/[0.02] transition-colors" data-testid={`pa-case-${c.id}`}>
+              <div key={c.id} className="p-4 hover:bg-[var(--kiq-surface)]/[0.02] transition-colors" data-testid={`pa-case-${c.id}`}>
                 <div className="flex items-center gap-3 mb-2 flex-wrap">
                   <button
                     onClick={() => copyId(c.id)}
-                    className="font-mono text-[10px] text-white/45 hover:text-white/80 flex items-center gap-1 group"
+                    className="font-mono text-[10px] text-[var(--kiq-ink)]/45 hover:text-[var(--kiq-ink)]/80 flex items-center gap-1 group"
                     title="Copy ID"
                     data-testid={`pa-copy-${c.id}`}
                   >
                     {c.id}
-                    <span className="opacity-0 group-hover:opacity-100 text-[9px]" style={{ color: copiedId === c.id ? N.green : "rgba(255,255,255,0.4)" }}>
+                    <span className="opacity-0 group-hover:opacity-100 text-[9px]" style={{ color: copiedId === c.id ? N.green : "#475569" }}>
                       {copiedId === c.id ? "✓ copied" : "copy"}
                     </span>
                   </button>
-                  <span className="text-sm font-semibold text-white">{c.drug}</span>
+                  <span className="text-sm font-semibold text-[var(--kiq-ink)]">{c.drug}</span>
                   <span className="text-[10px] px-2 py-0.5 rounded" style={{ color: sevColor(c.clinical_strength), background: sevColor(c.clinical_strength) + "18" }}>{c.clinical_strength}</span>
                   <span className="text-[10px] px-2 py-0.5 rounded font-semibold" style={{ color: deadlineColor, background: deadlineColor + "12", border: `1px solid ${deadlineColor}30` }} title="Appeal deadline (180-day default ERISA window)">
                     {daysLeft}d to file
                   </span>
-                  <span className="text-[10px] text-white/35 ml-auto">{c.payer}</span>
+                  <span className="text-[10px] text-[var(--kiq-ink)]/35 ml-auto">{c.payer}</span>
                   <span className="text-sm font-bold" style={{ color: N.gold }}>${c.annual_cost.toLocaleString()}/yr</span>
                 </div>
-                <p className="text-xs text-white/55 mb-3">{c.indication}</p>
+                <p className="text-xs text-[var(--kiq-ink)]/55 mb-3">{c.indication}</p>
                 <div className="grid grid-cols-3 gap-3 mb-3">
                   <DenialBar label="Denial Probability" pct={c.denial_probability * 100} color={c.denial_probability >= 0.7 ? N.red : c.denial_probability >= 0.4 ? N.gold : N.green} />
                   <DenialBar label="Modeled Appeal Win" pct={c.appeal_win_rate * 100} color={N.green} />
-                  <div className="text-xs text-white/45 flex flex-col justify-center">
-                    <span>Status: <span className="text-white/80 font-semibold">{c.status.replace(/_/g, " ")}</span></span>
-                    <span>Days in queue: <span className="text-white/80">{c.days_in_queue}</span></span>
+                  <div className="text-xs text-[var(--kiq-ink)]/45 flex flex-col justify-center">
+                    <span>Status: <span className="text-[var(--kiq-ink)]/80 font-semibold">{c.status.replace(/_/g, " ")}</span></span>
+                    <span>Days in queue: <span className="text-[var(--kiq-ink)]/80">{c.days_in_queue}</span></span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between flex-wrap gap-2">
-                  <span className="text-[10px] text-white/35">Routed to <span className="font-mono text-white/55">{c.agent}</span></span>
+                  <span className="text-[10px] text-[var(--kiq-ink)]/35">Routed to <span className="font-mono text-[var(--kiq-ink)]/55">{c.agent}</span></span>
                   <div className="flex items-center gap-2 flex-wrap">
                     <button
                       onClick={() => setPlaybookCase(c.payer)}
                       data-testid={`pa-playbook-${c.id}`}
                       className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-semibold"
-                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.10)", color: "rgba(255,255,255,0.75)" }}
+                      style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.06)", color: "rgba(255,255,255,0.75)" }}
                       title="Payer-specific playbook"
                     >
                       <BookOpen size={11} /> Playbook
@@ -510,26 +510,26 @@ function AppealIntakeDrawer({ paCase, prefill, onClose }: { paCase: any; prefill
 
   return (
     <div className="fixed inset-0 z-[70] flex items-stretch justify-end" style={{ background: "rgba(0,0,0,0.65)", backdropFilter: "blur(8px)" }} onClick={onClose} data-testid="appeal-intake-drawer">
-      <div className="w-full max-w-[640px] h-full overflow-y-auto" style={{ background: "#070707", borderLeft: "1px solid rgba(255,255,255,0.10)" }} onClick={(e) => e.stopPropagation()}>
-        <div className="sticky top-0 z-10 px-6 py-4 border-b border-white/[0.08] flex items-center gap-3" style={{ background: "#070707" }}>
+      <div className="w-full max-w-[640px] h-full overflow-y-auto" style={{ background: "#F8FAFC", borderLeft: "1px solid rgba(15,23,42,0.06)" }} onClick={(e) => e.stopPropagation()}>
+        <div className="sticky top-0 z-10 px-6 py-4 border-b border-white/[0.08] flex items-center gap-3" style={{ background: "#F8FAFC" }}>
           <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: N.blue + "15", border: `1px solid ${N.blue}40` }}>
             <FileText size={15} style={{ color: N.blue }} />
           </div>
           <div className="flex-1">
-            <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-white/45">Guided Appeal Intake</p>
-            <p className="text-sm font-semibold text-white">{paCase.drug} · <span className="text-white/55 font-normal">{paCase.payer}</span></p>
+            <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/45">Guided Appeal Intake</p>
+            <p className="text-sm font-semibold text-[var(--kiq-ink)]">{paCase.drug} · <span className="text-[var(--kiq-ink)]/55 font-normal">{paCase.payer}</span></p>
           </div>
-          <button onClick={onClose} className="text-white/45 hover:text-white" data-testid="appeal-intake-close"><X size={16} /></button>
+          <button onClick={onClose} className="text-[var(--kiq-ink)]/45 hover:text-[var(--kiq-ink)]" data-testid="appeal-intake-close"><X size={16} /></button>
         </div>
 
         <div className="px-6 py-5 space-y-5">
           {/* CASE SUMMARY */}
-          <div className="rounded-lg p-3 text-[11px]" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+          <div className="rounded-lg p-3 text-[11px]" style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
             <div className="grid grid-cols-2 gap-2">
-              <div><span className="text-white/40">Case</span><span className="text-white/80 font-mono ml-2">{paCase.id}</span></div>
-              <div><span className="text-white/40">Annual cost</span><span className="font-bold ml-2" style={{ color: N.gold }}>${paCase.annual_cost.toLocaleString()}</span></div>
-              <div><span className="text-white/40">Indication</span><span className="text-white/80 ml-2">{paCase.indication}</span></div>
-              <div><span className="text-white/40">Modeled win</span><span className="font-bold ml-2" style={{ color: N.green }}>{(paCase.appeal_win_rate * 100).toFixed(0)}%</span></div>
+              <div><span className="text-[var(--kiq-ink)]/40">Case</span><span className="text-[var(--kiq-ink)]/80 font-mono ml-2">{paCase.id}</span></div>
+              <div><span className="text-[var(--kiq-ink)]/40">Annual cost</span><span className="font-bold ml-2" style={{ color: N.gold }}>${paCase.annual_cost.toLocaleString()}</span></div>
+              <div><span className="text-[var(--kiq-ink)]/40">Indication</span><span className="text-[var(--kiq-ink)]/80 ml-2">{paCase.indication}</span></div>
+              <div><span className="text-[var(--kiq-ink)]/40">Modeled win</span><span className="font-bold ml-2" style={{ color: N.green }}>{(paCase.appeal_win_rate * 100).toFixed(0)}%</span></div>
             </div>
           </div>
 
@@ -551,7 +551,7 @@ function AppealIntakeDrawer({ paCase, prefill, onClose }: { paCase: any; prefill
               <input type="date" value={form.appeal_deadline} onChange={(e) => set("appeal_deadline", e.target.value)} data-testid="intake-deadline" className="form-input" />
             </Field>
           </div>
-          <label className="flex items-center gap-2 text-[11px] text-white/70 cursor-pointer">
+          <label className="flex items-center gap-2 text-[11px] text-[var(--kiq-ink)]/70 cursor-pointer">
             <input type="checkbox" checked={form.urgent} onChange={(e) => set("urgent", e.target.checked)} data-testid="intake-urgent" />
             <Flame size={11} style={{ color: N.red }} />
             File as expedited 72-hour review (urgent care exception, 29 CFR 2560.503-1(f)(2)(i))
@@ -589,9 +589,9 @@ function AppealIntakeDrawer({ paCase, prefill, onClose }: { paCase: any; prefill
             </Field>
           </div>
 
-          <div className="sticky bottom-0 -mx-6 px-6 py-4 border-t border-white/[0.08] flex items-center gap-3" style={{ background: "#070707" }}>
-            <p className="text-[10px] text-white/40 flex-1">GPT-drafted · ERISA §503 + denial-reason citations auto-injected · SHA-256 manifest sidecar</p>
-            <button onClick={onClose} className="px-3 py-2 rounded-lg text-xs font-semibold text-white/60 hover:text-white" data-testid="intake-cancel">Cancel</button>
+          <div className="sticky bottom-0 -mx-6 px-6 py-4 border-t border-white/[0.08] flex items-center gap-3" style={{ background: "#F8FAFC" }}>
+            <p className="text-[10px] text-[var(--kiq-ink)]/40 flex-1">GPT-drafted · ERISA §503 + denial-reason citations auto-injected · SHA-256 manifest sidecar</p>
+            <button onClick={onClose} className="px-3 py-2 rounded-lg text-xs font-semibold text-[var(--kiq-ink)]/60 hover:text-[var(--kiq-ink)]" data-testid="intake-cancel">Cancel</button>
             <button
               onClick={submit}
               disabled={busy}
@@ -608,17 +608,17 @@ function AppealIntakeDrawer({ paCase, prefill, onClose }: { paCase: any; prefill
         <style>{`
           .form-input {
             width: 100%;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.10);
+            background: #ffffff;
+            border: 1px solid rgba(15,23,42,0.06);
             border-radius: 8px;
             padding: 8px 10px;
             font-size: 12px;
-            color: rgba(255,255,255,0.9);
+            color: #0f172a;
             outline: none;
             resize: vertical;
           }
           .form-input:focus { border-color: rgba(0,212,255,0.4); }
-          .form-input::placeholder { color: rgba(255,255,255,0.25); }
+          .form-input::placeholder { color: rgba(15,23,42,0.08); }
           select.form-input { appearance: auto; }
         `}</style>
       </div>
@@ -627,12 +627,12 @@ function AppealIntakeDrawer({ paCase, prefill, onClose }: { paCase: any; prefill
 }
 
 function SectionLabel({ children }: { children: any }) {
-  return <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-white/55 pt-2">{children}</p>;
+  return <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-[var(--kiq-ink)]/55 pt-2">{children}</p>;
 }
 function Field({ label, children }: { label: string; children: any }) {
   return (
     <div>
-      <label className="block text-[10px] font-semibold uppercase tracking-wider text-white/45 mb-1">{label}</label>
+      <label className="block text-[10px] font-semibold uppercase tracking-wider text-[var(--kiq-ink)]/45 mb-1">{label}</label>
       {children}
     </div>
   );
@@ -641,7 +641,7 @@ function Field({ label, children }: { label: string; children: any }) {
 function Stat({ label, v, color }: { label: string; v: any; color: string }) {
   return (
     <div>
-      <p className="text-[9px] uppercase tracking-wider text-white/45">{label}</p>
+      <p className="text-[9px] uppercase tracking-wider text-[var(--kiq-ink)]/45">{label}</p>
       <p className="text-base font-bold" style={{ color }}>{v}</p>
     </div>
   );
@@ -685,24 +685,24 @@ function ParseDenialModal({ onClose, onParsed }: { onClose: () => void; onParsed
 
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-6" style={{ background: "rgba(0,0,0,0.65)", backdropFilter: "blur(8px)" }} onClick={onClose} data-testid="parse-denial-modal">
-      <div className="w-full max-w-[680px] rounded-2xl overflow-hidden" style={{ background: "#070707", border: "1px solid rgba(255,255,255,0.10)" }} onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-[680px] rounded-2xl overflow-hidden" style={{ background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)" }} onClick={(e) => e.stopPropagation()}>
         <div className="px-6 py-4 border-b border-white/[0.08] flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: N.gold + "15", border: `1px solid ${N.gold}40` }}>
             <Upload size={15} style={{ color: N.gold }} />
           </div>
           <div className="flex-1">
-            <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-white/45">Parse Denial Letter</p>
-            <p className="text-sm font-semibold text-white">Paste or upload → GPT extracts reason, codes, deadline, member ID</p>
+            <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/45">Parse Denial Letter</p>
+            <p className="text-sm font-semibold text-[var(--kiq-ink)]">Paste or upload → GPT extracts reason, codes, deadline, member ID</p>
           </div>
-          <button onClick={onClose} className="text-white/45 hover:text-white"><X size={16} /></button>
+          <button onClick={onClose} className="text-[var(--kiq-ink)]/45 hover:text-[var(--kiq-ink)]"><X size={16} /></button>
         </div>
         <div className="p-6 space-y-3">
           <div className="flex items-center gap-2">
-            <label className="text-[11px] font-semibold text-white/60 cursor-pointer px-3 py-1.5 rounded-lg" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.10)" }}>
+            <label className="text-[11px] font-semibold text-[var(--kiq-ink)]/60 cursor-pointer px-3 py-1.5 rounded-lg" style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.06)" }}>
               <input type="file" accept=".txt,.eml,.html" className="hidden" onChange={(e) => e.target.files?.[0] && readFile(e.target.files[0])} data-testid="parse-file" />
               Upload .txt / .eml
             </label>
-            <span className="text-[10px] text-white/35">— or paste the letter text below</span>
+            <span className="text-[10px] text-[var(--kiq-ink)]/35">— or paste the letter text below</span>
           </div>
           <textarea
             value={text}
@@ -710,13 +710,13 @@ function ParseDenialModal({ onClose, onParsed }: { onClose: () => void; onParsed
             rows={14}
             placeholder="Paste the full denial letter text here. GPT will extract: denial reason, exact denial language, denial date, appeal deadline, member ID, group #, ICD-10, drug name, payer, and recommend evidence to cite."
             data-testid="parse-text"
-            className="w-full bg-[rgba(255,255,255,0.03)] border border-white/[0.10] rounded-lg p-3 text-xs text-white/90 outline-none focus:border-[#FFB80060] resize-vertical font-mono"
+            className="w-full bg-[#ffffff] border border-white/[0.10] rounded-lg p-3 text-xs text-[var(--kiq-ink)]/90 outline-none focus:border-[#FFB80060] resize-vertical font-mono"
           />
-          <p className="text-[10px] text-white/40">PDFs: open in your PDF viewer → copy all → paste here. (Native PDF OCR coming next.)</p>
+          <p className="text-[10px] text-[var(--kiq-ink)]/40">PDFs: open in your PDF viewer → copy all → paste here. (Native PDF OCR coming next.)</p>
         </div>
         <div className="px-6 py-4 border-t border-white/[0.08] flex items-center gap-3">
-          <p className="text-[10px] text-white/40 flex-1">{text.length} characters · audit-logged</p>
-          <button onClick={onClose} className="px-3 py-2 rounded-lg text-xs font-semibold text-white/60 hover:text-white">Cancel</button>
+          <p className="text-[10px] text-[var(--kiq-ink)]/40 flex-1">{text.length} characters · audit-logged</p>
+          <button onClick={onClose} className="px-3 py-2 rounded-lg text-xs font-semibold text-[var(--kiq-ink)]/60 hover:text-[var(--kiq-ink)]">Cancel</button>
           <button onClick={submit} disabled={busy} data-testid="parse-submit"
             className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold disabled:opacity-50"
             style={{ background: N.gold + "20", border: `1px solid ${N.gold}50`, color: N.gold }}>
@@ -761,37 +761,37 @@ function P2PModal({ paCase, onClose }: { paCase: any; onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-6" style={{ background: "rgba(0,0,0,0.65)", backdropFilter: "blur(8px)" }} onClick={onClose} data-testid="p2p-modal">
-      <div className="w-full max-w-[720px] max-h-[88vh] rounded-2xl overflow-hidden flex flex-col" style={{ background: "#070707", border: "1px solid rgba(255,255,255,0.10)" }} onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-[720px] max-h-[88vh] rounded-2xl overflow-hidden flex flex-col" style={{ background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)" }} onClick={(e) => e.stopPropagation()}>
         <div className="px-6 py-4 border-b border-white/[0.08] flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: N.orange + "15", border: `1px solid ${N.orange}40` }}>
             <Phone size={15} style={{ color: N.orange }} />
           </div>
           <div className="flex-1">
-            <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-white/45">Peer-to-Peer Call Script</p>
-            <p className="text-sm font-semibold text-white">{paCase.drug} · {paCase.payer}</p>
+            <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/45">Peer-to-Peer Call Script</p>
+            <p className="text-sm font-semibold text-[var(--kiq-ink)]">{paCase.drug} · {paCase.payer}</p>
           </div>
-          <button onClick={onClose} className="text-white/45 hover:text-white"><X size={16} /></button>
+          <button onClick={onClose} className="text-[var(--kiq-ink)]/45 hover:text-[var(--kiq-ink)]"><X size={16} /></button>
         </div>
         <div className="flex-1 overflow-y-auto p-6">
           {!script && !busy && (
             <div className="text-center py-16">
               <Phone size={32} className="mx-auto mb-3" style={{ color: N.orange }} />
-              <p className="text-sm text-white/70 mb-1">Generate a tactical P2P call script</p>
-              <p className="text-[11px] text-white/45 mb-5">Opening · the case in 3 bullets · 5 likely payer rebuttals + counters · escalation tree · closing ask</p>
+              <p className="text-sm text-[var(--kiq-ink)]/70 mb-1">Generate a tactical P2P call script</p>
+              <p className="text-[11px] text-[var(--kiq-ink)]/45 mb-5">Opening · the case in 3 bullets · 5 likely payer rebuttals + counters · escalation tree · closing ask</p>
               <button onClick={generate} data-testid="p2p-generate" className="px-4 py-2 rounded-lg text-xs font-semibold"
                 style={{ background: N.orange + "20", border: `1px solid ${N.orange}50`, color: N.orange }}>
                 <Brain size={12} className="inline mr-1.5" /> Generate Script
               </button>
             </div>
           )}
-          {busy && <div className="text-center py-16 text-white/50"><Loader2 size={20} className="inline mr-2 animate-spin" /> Drafting…</div>}
+          {busy && <div className="text-center py-16 text-[var(--kiq-ink)]/50"><Loader2 size={20} className="inline mr-2 animate-spin" /> Drafting…</div>}
           {script && (
-            <pre className="text-[11px] text-white/85 whitespace-pre-wrap font-mono leading-relaxed">{script}</pre>
+            <pre className="text-[11px] text-[var(--kiq-ink)]/85 whitespace-pre-wrap font-mono leading-relaxed">{script}</pre>
           )}
         </div>
         {script && (
           <div className="px-6 py-4 border-t border-white/[0.08] flex items-center gap-3">
-            <p className="text-[10px] text-white/40 flex-1">SHA-256 {sha.slice(0, 16)}…</p>
+            <p className="text-[10px] text-[var(--kiq-ink)]/40 flex-1">SHA-256 {sha.slice(0, 16)}…</p>
             <button onClick={download} data-testid="p2p-download" className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold"
               style={{ background: N.orange + "20", border: `1px solid ${N.orange}50`, color: N.orange }}>
               <Download size={12} /> Download
@@ -842,16 +842,16 @@ function OutcomeModal({ paCase, onClose }: { paCase: any; onClose: () => void })
 
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-6" style={{ background: "rgba(0,0,0,0.65)", backdropFilter: "blur(8px)" }} onClick={onClose} data-testid="outcome-modal">
-      <div className="w-full max-w-[520px] rounded-2xl overflow-hidden" style={{ background: "#070707", border: "1px solid rgba(255,255,255,0.10)" }} onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-[520px] rounded-2xl overflow-hidden" style={{ background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)" }} onClick={(e) => e.stopPropagation()}>
         <div className="px-6 py-4 border-b border-white/[0.08] flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: N.green + "15", border: `1px solid ${N.green}40` }}>
             <Trophy size={15} style={{ color: N.green }} />
           </div>
           <div className="flex-1">
-            <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-white/45">Log Appeal Outcome</p>
-            <p className="text-sm font-semibold text-white">{paCase.drug} · {paCase.id}</p>
+            <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/45">Log Appeal Outcome</p>
+            <p className="text-sm font-semibold text-[var(--kiq-ink)]">{paCase.drug} · {paCase.id}</p>
           </div>
-          <button onClick={onClose} className="text-white/45 hover:text-white"><X size={16} /></button>
+          <button onClick={onClose} className="text-[var(--kiq-ink)]/45 hover:text-[var(--kiq-ink)]"><X size={16} /></button>
         </div>
         <div className="p-6 space-y-4">
           <div className="grid grid-cols-2 gap-2">
@@ -862,8 +862,8 @@ function OutcomeModal({ paCase, onClose }: { paCase: any; onClose: () => void })
                 <button key={o.v} onClick={() => setOutcome(o.v)} data-testid={`outcome-${o.v}`}
                   className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-semibold transition-colors"
                   style={{
-                    background: active ? o.c + "20" : "rgba(255,255,255,0.03)",
-                    border: `1px solid ${active ? o.c + "60" : "rgba(255,255,255,0.10)"}`,
+                    background: active ? o.c + "20" : "#ffffff",
+                    border: `1px solid ${active ? o.c + "60" : "rgba(15,23,42,0.06)"}`,
                     color: active ? o.c : "rgba(255,255,255,0.65)",
                   }}>
                   <Icon size={12} /> {o.l}
@@ -873,22 +873,22 @@ function OutcomeModal({ paCase, onClose }: { paCase: any; onClose: () => void })
           </div>
           {outcome === "won" && (
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-wider text-white/45 mb-1">Dollars saved (annual)</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-wider text-[var(--kiq-ink)]/45 mb-1">Dollars saved (annual)</label>
               <input type="number" value={dollars} onChange={(e) => setDollars(Number(e.target.value))} data-testid="outcome-dollars"
-                className="w-full bg-[rgba(255,255,255,0.03)] border border-white/[0.10] rounded-lg p-2 text-sm text-white outline-none focus:border-[#00FF9460]" />
-              <p className="text-[10px] text-white/40 mt-1">Default: case annual cost. Contingency = 28% = <span className="font-bold" style={{ color: N.purple }}>${(dollars * 0.28).toLocaleString()}</span></p>
+                className="w-full bg-[#ffffff] border border-white/[0.10] rounded-lg p-2 text-sm text-[var(--kiq-ink)] outline-none focus:border-[#00FF9460]" />
+              <p className="text-[10px] text-[var(--kiq-ink)]/40 mt-1">Default: case annual cost. Contingency = 28% = <span className="font-bold" style={{ color: N.purple }}>${(dollars * 0.28).toLocaleString()}</span></p>
             </div>
           )}
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-wider text-white/45 mb-1">Notes (optional)</label>
+            <label className="block text-[10px] font-semibold uppercase tracking-wider text-[var(--kiq-ink)]/45 mb-1">Notes (optional)</label>
             <textarea rows={3} value={notes} onChange={(e) => setNotes(e.target.value)} data-testid="outcome-notes"
               placeholder="Reviewer name, decision rationale, peer-to-peer outcome..."
-              className="w-full bg-[rgba(255,255,255,0.03)] border border-white/[0.10] rounded-lg p-2 text-xs text-white/90 outline-none focus:border-[#00FF9460] resize-vertical" />
+              className="w-full bg-[#ffffff] border border-white/[0.10] rounded-lg p-2 text-xs text-[var(--kiq-ink)]/90 outline-none focus:border-[#00FF9460] resize-vertical" />
           </div>
         </div>
         <div className="px-6 py-4 border-t border-white/[0.08] flex items-center gap-3">
-          <p className="text-[10px] text-white/40 flex-1">Writes to <span className="font-mono text-white/60">recovery_actions</span> · feeds Wall of Wins + Value Ledger</p>
-          <button onClick={onClose} className="px-3 py-2 rounded-lg text-xs font-semibold text-white/60 hover:text-white">Cancel</button>
+          <p className="text-[10px] text-[var(--kiq-ink)]/40 flex-1">Writes to <span className="font-mono text-[var(--kiq-ink)]/60">recovery_actions</span> · feeds Wall of Wins + Value Ledger</p>
+          <button onClick={onClose} className="px-3 py-2 rounded-lg text-xs font-semibold text-[var(--kiq-ink)]/60 hover:text-[var(--kiq-ink)]">Cancel</button>
           <button onClick={submit} disabled={busy} data-testid="outcome-submit"
             className="flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold disabled:opacity-50"
             style={{ background: N.green + "20", border: `1px solid ${N.green}50`, color: N.green }}>
@@ -907,16 +907,16 @@ function PayerPlaybookModal({ payer, onClose }: { payer: string; onClose: () => 
   const pb = data?.playbook;
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-6" style={{ background: "rgba(0,0,0,0.65)", backdropFilter: "blur(8px)" }} onClick={onClose} data-testid="playbook-modal">
-      <div className="w-full max-w-[560px] rounded-2xl overflow-hidden" style={{ background: "#070707", border: "1px solid rgba(255,255,255,0.10)" }} onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-[560px] rounded-2xl overflow-hidden" style={{ background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)" }} onClick={(e) => e.stopPropagation()}>
         <div className="px-6 py-4 border-b border-white/[0.08] flex items-center gap-3">
-          <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)" }}>
-            <BookOpen size={15} className="text-white/80" />
+          <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: "#f8fafc", border: "1px solid #cbd5e1" }}>
+            <BookOpen size={15} className="text-[var(--kiq-ink)]/80" />
           </div>
           <div className="flex-1">
-            <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-white/45">Payer Playbook</p>
-            <p className="text-sm font-semibold text-white">{data?.payer || payer}</p>
+            <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/45">Payer Playbook</p>
+            <p className="text-sm font-semibold text-[var(--kiq-ink)]">{data?.payer || payer}</p>
           </div>
-          <button onClick={onClose} className="text-white/45 hover:text-white"><X size={16} /></button>
+          <button onClick={onClose} className="text-[var(--kiq-ink)]/45 hover:text-[var(--kiq-ink)]"><X size={16} /></button>
         </div>
         <div className="p-6 space-y-4 text-xs">
           {isLoading || !pb ? <Loading /> : (
@@ -930,18 +930,18 @@ function PayerPlaybookModal({ payer, onClose }: { payer: string; onClose: () => 
               <PBField l="Appeal portal"  v={pb.appeal_portal} mono />
               <PBField l="Appeal address" v={pb.appeal_address} />
               <div>
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-white/45 mb-1.5">Common denial patterns</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--kiq-ink)]/45 mb-1.5">Common denial patterns</p>
                 <ul className="space-y-1.5">
                   {pb.common_denial_patterns.map((p: string, i: number) => (
-                    <li key={i} className="text-[11px] text-white/75 flex gap-2"><span style={{ color: N.orange }}>•</span> {p}</li>
+                    <li key={i} className="text-[11px] text-[var(--kiq-ink)]/75 flex gap-2"><span style={{ color: N.orange }}>•</span> {p}</li>
                   ))}
                 </ul>
               </div>
               <div className="rounded-lg p-3" style={{ background: N.blue + "10", border: `1px solid ${N.blue}30` }}>
                 <p className="text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: N.blue }}>Language that works</p>
-                <p className="text-[11px] text-white/85 leading-relaxed">{pb.language_tips}</p>
+                <p className="text-[11px] text-[var(--kiq-ink)]/85 leading-relaxed">{pb.language_tips}</p>
               </div>
-              <p className="text-[9px] text-white/30">{data?.source}</p>
+              <p className="text-[9px] text-[var(--kiq-ink)]/30">{data?.source}</p>
             </>
           )}
         </div>
@@ -952,7 +952,7 @@ function PayerPlaybookModal({ payer, onClose }: { payer: string; onClose: () => 
 function PBField({ l, v, c, mono }: { l: string; v: string; c?: string; mono?: boolean }) {
   return (
     <div>
-      <p className="text-[10px] font-semibold uppercase tracking-wider text-white/45 mb-0.5">{l}</p>
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-[var(--kiq-ink)]/45 mb-0.5">{l}</p>
       <p className={`text-[12px] ${mono ? "font-mono" : "font-semibold"}`} style={{ color: c || "rgba(255,255,255,0.85)" }}>{v}</p>
     </div>
   );
@@ -961,8 +961,8 @@ function PBField({ l, v, c, mono }: { l: string; v: string; c?: string; mono?: b
 function DenialBar({ label, pct, color }: { label: string; pct: number; color: string }) {
   return (
     <div>
-      <div className="flex justify-between mb-1"><span className="text-[10px] text-white/40">{label}</span><span className="text-[10px] font-bold" style={{ color }}>{pct.toFixed(0)}%</span></div>
-      <div className="h-1.5 bg-white/[0.05] rounded-full overflow-hidden">
+      <div className="flex justify-between mb-1"><span className="text-[10px] text-[var(--kiq-ink)]/40">{label}</span><span className="text-[10px] font-bold" style={{ color }}>{pct.toFixed(0)}%</span></div>
+      <div className="h-1.5 bg-[var(--kiq-surface)]/[0.05] rounded-full overflow-hidden">
         <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: color }} />
       </div>
     </div>
@@ -1002,7 +1002,7 @@ function PBMTab() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <p className="text-[10px] tracking-[0.18em] uppercase font-bold text-white/40">PBM Forensic Flags · {flags.length} active</p>
+        <p className="text-[10px] tracking-[0.18em] uppercase font-bold text-[var(--kiq-ink)]/40">PBM Forensic Flags · {flags.length} active</p>
         <CSVButton kind="pbm" label="Export flags CSV" />
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
@@ -1013,8 +1013,8 @@ function PBMTab() {
           { l: "Peak Anomaly Score",   v: `${s.highest_anomaly}/100`,                           c: N.red    },
           { l: "Pushed to Recovery",   v: `${s.pushed_to_recovery ?? 0}/${s.total_flags}`,      c: N.blue   },
         ].map((k) => (
-          <div key={k.l} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-3">
-            <p className="text-[10px] uppercase tracking-wider text-white/40 mb-1">{k.l}</p>
+          <div key={k.l} className="rounded-xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.07] p-3">
+            <p className="text-[10px] uppercase tracking-wider text-[var(--kiq-ink)]/40 mb-1">{k.l}</p>
             <p className="text-lg font-bold" style={{ color: k.c }}>{k.v}</p>
           </div>
         ))}
@@ -1023,18 +1023,18 @@ function PBMTab() {
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-3">
           {flags.map((f) => (
-            <div key={f.id} className="rounded-xl bg-white/[0.025] border border-white/[0.07] p-4" data-testid={`pbm-flag-${f.id}`}>
+            <div key={f.id} className="rounded-xl bg-[var(--kiq-surface)]/[0.025] border border-white/[0.07] p-4" data-testid={`pbm-flag-${f.id}`}>
               <div className="flex items-center gap-3 mb-2">
-                <span className="text-[10px] font-mono text-white/40">{f.id}</span>
-                <span className="text-sm font-semibold text-white">{f.pbm}</span>
+                <span className="text-[10px] font-mono text-[var(--kiq-ink)]/40">{f.id}</span>
+                <span className="text-sm font-semibold text-[var(--kiq-ink)]">{f.pbm}</span>
                 <span className="text-[10px] px-2 py-0.5 rounded" style={{ color: N.orange, background: N.orange + "18" }}>{f.category}</span>
                 <span className="text-[10px] px-2 py-0.5 rounded ml-auto" style={{ color: TIER_COLOR[f.confidence], background: TIER_COLOR[f.confidence] + "18" }}>{f.confidence}</span>
                 <span className="text-base font-bold" style={{ color: N.gold }}>${f.estimated_exposure.toLocaleString()}</span>
               </div>
-              <p className="text-xs text-white/60 mb-2">{f.evidence}</p>
+              <p className="text-xs text-[var(--kiq-ink)]/60 mb-2">{f.evidence}</p>
               <div className="flex items-center justify-between text-[10px] mb-3">
-                <span className="text-white/40">Drug Class: <span className="text-white/65">{f.drug_class}</span></span>
-                <span className="text-white/40">Statutory: <span className="text-white/65">{f.regulatory_basis}</span></span>
+                <span className="text-[var(--kiq-ink)]/40">Drug Class: <span className="text-[var(--kiq-ink)]/65">{f.drug_class}</span></span>
+                <span className="text-[var(--kiq-ink)]/40">Statutory: <span className="text-[var(--kiq-ink)]/65">{f.regulatory_basis}</span></span>
                 <span className="font-bold" style={{ color: f.anomaly_score >= 85 ? N.red : f.anomaly_score >= 70 ? N.orange : N.gold }}>Anomaly {f.anomaly_score}</span>
               </div>
               <div className="flex items-center justify-between pt-3 border-t border-white/[0.05]">
@@ -1046,7 +1046,7 @@ function PBMTab() {
                       <ChevronRight size={11} />
                     </a>
                   </Link>
-                ) : <span className="text-[10px] text-white/30">Not yet pursued</span>}
+                ) : <span className="text-[10px] text-[var(--kiq-ink)]/30">Not yet pursued</span>}
                 <button
                   onClick={() => pushToRecovery(f.id, f.pbm)}
                   disabled={busy === f.id || !!f.recovery_action_id}
@@ -1063,13 +1063,13 @@ function PBMTab() {
           ))}
         </div>
 
-        <div className="rounded-2xl bg-white/[0.025] border border-white/[0.07] p-4">
-          <p className="text-xs font-bold tracking-[0.16em] uppercase text-white/55 mb-3">Exposure by PBM</p>
+        <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.025] border border-white/[0.07] p-4">
+          <p className="text-xs font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/55 mb-3">Exposure by PBM</p>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={breakdown} layout="vertical" margin={{ left: 10, right: 10 }}>
               <XAxis type="number" hide />
               <YAxis dataKey="pbm" type="category" stroke="#fff5" fontSize={10} width={90} />
-              <Tooltip contentStyle={{ background: "#0a0a0a", border: "1px solid #fff2", fontSize: 11 }} formatter={(v: any) => `$${(v/1000).toFixed(0)}K`} />
+              <Tooltip contentStyle={{ background: "#F8FAFC", border: "1px solid #fff2", fontSize: 11 }} formatter={(v: any) => `$${(v/1000).toFixed(0)}K`} />
               <Bar dataKey="exp" radius={[0, 4, 4, 0]}>
                 {breakdown.map((_, i) => <Cell key={i} fill={[N.red, N.orange, N.gold][i % 3]} />)}
               </Bar>
@@ -1077,7 +1077,7 @@ function PBMTab() {
           </ResponsiveContainer>
           <div className="mt-4 pt-4 border-t border-white/[0.06] flex items-center gap-2">
             <Link href="/rx-defense"><a className="text-[11px] font-semibold flex items-center gap-1" style={{ color: N.blue }} data-testid="link-rx-defense">
-              Open Rx Defense for full PBM contract scoring → <ChevronRight size={11} />
+              Open PBM Contract Clarity 360 for full PBM contract scoring → <ChevronRight size={11} />
             </a></Link>
           </div>
         </div>
@@ -1118,7 +1118,7 @@ function LitigationTab() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <p className="text-[10px] tracking-[0.18em] uppercase font-bold text-white/40">ERISA Litigation Risk Signals · {signals.length} active</p>
+        <p className="text-[10px] tracking-[0.18em] uppercase font-bold text-[var(--kiq-ink)]/40">ERISA Litigation Risk Signals · {signals.length} active</p>
         <CSVButton kind="litigation" label="Export signals CSV" />
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -1128,8 +1128,8 @@ function LitigationTab() {
           { l: "MEDIUM Severity",     v: s.medium,                    c: N.gold   },
           { l: "Avg Discovery Risk",  v: `${s.avg_discovery_risk}/100`, c: N.purple },
         ].map((k) => (
-          <div key={k.l} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-3">
-            <p className="text-[10px] uppercase tracking-wider text-white/40 mb-1">{k.l}</p>
+          <div key={k.l} className="rounded-xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.07] p-3">
+            <p className="text-[10px] uppercase tracking-wider text-[var(--kiq-ink)]/40 mb-1">{k.l}</p>
             <p className="text-lg font-bold" style={{ color: k.c }}>{k.v}</p>
           </div>
         ))}
@@ -1137,17 +1137,17 @@ function LitigationTab() {
 
       <div className="space-y-3">
         {signals.map((sig) => (
-          <div key={sig.id} className="rounded-xl bg-white/[0.025] border border-white/[0.07] p-4" data-testid={`lit-${sig.id}`}>
+          <div key={sig.id} className="rounded-xl bg-[var(--kiq-surface)]/[0.025] border border-white/[0.07] p-4" data-testid={`lit-${sig.id}`}>
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-[10px] font-mono text-white/40">{sig.id}</span>
-              <span className="text-sm font-semibold text-white">{sig.category}</span>
+              <span className="text-[10px] font-mono text-[var(--kiq-ink)]/40">{sig.id}</span>
+              <span className="text-sm font-semibold text-[var(--kiq-ink)]">{sig.category}</span>
               <span className="text-[10px] px-2 py-0.5 rounded" style={{ color: sevColor(sig.severity), background: sevColor(sig.severity) + "18" }}>{sig.severity}</span>
               <span className="ml-auto text-base font-bold" style={{ color: N.gold }}>{sig.exposure_band}</span>
             </div>
-            <p className="text-xs text-white/65 mb-2">{sig.trigger}</p>
+            <p className="text-xs text-[var(--kiq-ink)]/65 mb-2">{sig.trigger}</p>
             <div className="flex items-center justify-between text-[10px] pt-2 border-t border-white/[0.05] mb-3">
-              <span className="text-white/40">Precedent: <span className="italic text-white/65">{sig.precedent}</span></span>
-              <span className="text-white/40">Routed to <span className="font-mono text-white/55">{sig.agent}</span></span>
+              <span className="text-[var(--kiq-ink)]/40">Precedent: <span className="italic text-[var(--kiq-ink)]/65">{sig.precedent}</span></span>
+              <span className="text-[var(--kiq-ink)]/40">Routed to <span className="font-mono text-[var(--kiq-ink)]/55">{sig.agent}</span></span>
               <span className="font-bold" style={{ color: sig.discovery_risk >= 85 ? N.red : N.orange }}>Discovery Risk {sig.discovery_risk}/100</span>
             </div>
             <div className="flex items-center justify-between pt-3 border-t border-white/[0.04]">
@@ -1159,7 +1159,7 @@ function LitigationTab() {
                     <ChevronRight size={11} />
                   </a>
                 </Link>
-              ) : <span className="text-[10px] text-white/30">Not yet pursued</span>}
+              ) : <span className="text-[10px] text-[var(--kiq-ink)]/30">Not yet pursued</span>}
               <button
                 onClick={() => pushToRecovery(sig.id, sig.category)}
                 disabled={busy === sig.id || !!sig.recovery_action_id}
@@ -1178,7 +1178,7 @@ function LitigationTab() {
 
       <div className="rounded-xl p-4 flex items-center gap-3" style={{ background: N.purple + "10", border: `1px solid ${N.purple}30` }}>
         <Gavel size={14} style={{ color: N.purple }} />
-        <p className="text-xs text-white/65 flex-1">Every signal above maps to a real federal precedent. The Litigation Preparedness Agent continuously cross-references these against your documented governance evidence.</p>
+        <p className="text-xs text-[var(--kiq-ink)]/65 flex-1">Every signal above maps to a real federal precedent. The Litigation Preparedness Agent continuously cross-references these against your documented governance evidence.</p>
         <Link href="/fiduciary-iq"><a className="text-[11px] font-semibold flex items-center gap-1" style={{ color: N.purple }} data-testid="link-fiduciary-iq">Open Fiduciary IQ → <ChevronRight size={11} /></a></Link>
       </div>
     </div>
@@ -1195,8 +1195,8 @@ function WorkforceTab() {
   return (
     <div className="space-y-6">
       <div className="grid lg:grid-cols-3 gap-6">
-        <div className="rounded-2xl bg-white/[0.025] border border-white/[0.07] p-5">
-          <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-white/45 mb-3">Workforce Friction Index</p>
+        <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.025] border border-white/[0.07] p-5">
+          <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-[var(--kiq-ink)]/45 mb-3">Workforce Friction Index</p>
           <ResponsiveContainer width="100%" height={220}>
             <RadialBarChart cx="50%" cy="50%" innerRadius="70%" outerRadius="100%" data={friction} startAngle={90} endAngle={-270}>
               <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
@@ -1204,7 +1204,7 @@ function WorkforceTab() {
             </RadialBarChart>
           </ResponsiveContainer>
           <p className="text-center text-3xl font-bold -mt-32 mb-32" style={{ color: friction[0].fill }}>{w.friction_index}</p>
-          <p className="text-center text-[10px] text-white/40 mt-2">Composite of resolution time, attrition, abandonment, and downstream ER utilization.</p>
+          <p className="text-center text-[10px] text-[var(--kiq-ink)]/40 mt-2">Composite of resolution time, attrition, abandonment, and downstream ER utilization.</p>
         </div>
 
         <div className="lg:col-span-2 grid grid-cols-2 gap-3">
@@ -1218,8 +1218,8 @@ function WorkforceTab() {
             { l: "Attrition Replacement Cost",   v: `$${(w.attrition_replacement_cost/1_000_000).toFixed(2)}M`,      c: N.gold   },
             { l: "Medication Abandonment Rate",  v: `${w.medication_abandonment_rate}%`,                            c: N.orange },
           ].map((k) => (
-            <div key={k.l} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-3">
-              <p className="text-[10px] uppercase tracking-wider text-white/40 mb-1">{k.l}</p>
+            <div key={k.l} className="rounded-xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.07] p-3">
+              <p className="text-[10px] uppercase tracking-wider text-[var(--kiq-ink)]/40 mb-1">{k.l}</p>
               <p className="text-lg font-bold" style={{ color: k.c }}>{k.v}</p>
             </div>
           ))}
@@ -1227,9 +1227,9 @@ function WorkforceTab() {
       </div>
 
       <div className="rounded-2xl p-5" style={{ background: N.red + "08", border: `1px solid ${N.red}25` }}>
-        <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-white/55 mb-2">Composite Annualized Workforce Cost</p>
+        <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-[var(--kiq-ink)]/55 mb-2">Composite Annualized Workforce Cost</p>
         <p className="text-4xl font-bold tracking-tight" style={{ color: N.red }}>${(w.composite_annual_cost / 1_000_000).toFixed(2)}M</p>
-        <p className="text-xs text-white/45 mt-2">Sum of productivity loss, attrition replacement, and downstream ER cost attributable to healthcare friction. Tracks against fiduciary prudent-oversight standard.</p>
+        <p className="text-xs text-[var(--kiq-ink)]/45 mt-2">Sum of productivity loss, attrition replacement, and downstream ER cost attributable to healthcare friction. Tracks against fiduciary prudent-oversight standard.</p>
       </div>
     </div>
   );
@@ -1249,24 +1249,24 @@ function AgentTab() {
   return (
     <div className="space-y-6">
       {tiers.map((t) => (
-        <div key={t.id} className="rounded-2xl bg-white/[0.025] border border-white/[0.07] overflow-hidden">
-          <div className="px-5 py-3 border-b border-white/[0.06] bg-white/[0.02]">
+        <div key={t.id} className="rounded-2xl bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] overflow-hidden shadow-sm">
+          <div className="px-5 py-3 border-b border-slate-100 bg-[var(--kiq-canvas-soft)]/50">
             <div className="flex items-center justify-between">
-              <p className="text-xs font-bold tracking-[0.16em] uppercase text-white/65">{t.label}</p>
-              <span className="text-[10px] text-white/35">{t.agents.length} agent{t.agents.length === 1 ? "" : "s"} online</span>
+              <p className="text-xs font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink-soft)]">{t.label}</p>
+              <span className="text-[10px] text-[var(--kiq-muted)]">{t.agents.length} agent{t.agents.length === 1 ? "" : "s"} online</span>
             </div>
-            <p className="text-[11px] text-white/40 mt-0.5">{t.desc}</p>
+            <p className="text-[11px] text-[var(--kiq-muted)] mt-0.5">{t.desc}</p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.04]">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-[var(--kiq-canvas-parchment)]">
             {t.agents.map((a: any) => (
-              <div key={a.id} className="p-4 bg-[#0a0a0a]" data-testid={`agent-${a.id}`}>
+              <div key={a.id} className="p-4 bg-[var(--kiq-surface)]" data-testid={`agent-${a.id}`}>
                 <div className="flex items-center gap-2 mb-2">
                   <Cpu size={11} style={{ color: a.color }} />
-                  <p className="text-sm font-semibold text-white">{a.name}</p>
+                  <p className="text-sm font-semibold text-[var(--kiq-ink)]">{a.name}</p>
                   <div className="w-1.5 h-1.5 rounded-full ml-auto animate-pulse" style={{ background: N.green }} />
                 </div>
-                <p className="text-[11px] text-white/55 leading-relaxed">{a.role}</p>
-                <p className="mt-2 text-[9px] font-mono text-white/30">{a.id}</p>
+                <p className="text-[11px] text-[var(--kiq-muted)] leading-relaxed">{a.role}</p>
+                <p className="mt-2 text-[9px] font-mono text-[var(--kiq-subtle)]">{a.id}</p>
               </div>
             ))}
           </div>
@@ -1276,8 +1276,8 @@ function AgentTab() {
       <div className="rounded-xl p-4 flex items-start gap-3" style={{ background: N.blue + "10", border: `1px solid ${N.blue}25` }}>
         <Brain size={14} style={{ color: N.blue }} className="mt-0.5" />
         <div className="flex-1">
-          <p className="text-xs font-semibold text-white mb-1">Multi-Agent Architecture</p>
-          <p className="text-[11px] text-white/60 leading-relaxed">Agents communicate through an event-driven message bus. Tier-1 agents synthesize cross-system signals from Tier-2 operators, escalating only what survives the 7-Gate enforcement chain (DEFINE → WIRE → VALIDATE → PROMOTE → COMPUTE → GATE → RENDER). Tier-3 agents continuously calibrate the model against national pattern shifts.</p>
+          <p className="text-xs font-semibold text-[var(--kiq-ink)] mb-1">Multi-Agent Architecture</p>
+          <p className="text-[11px] text-[var(--kiq-ink)]/60 leading-relaxed">Agents communicate through an event-driven message bus. Tier-1 agents synthesize cross-system signals from Tier-2 operators, escalating only what survives the 7-Gate enforcement chain (DEFINE → WIRE → VALIDATE → PROMOTE → COMPUTE → GATE → RENDER). Tier-3 agents continuously calibrate the model against national pattern shifts.</p>
         </div>
       </div>
     </div>
@@ -1289,7 +1289,7 @@ function Loading() {
   return (
     <div className="flex items-center justify-center h-64 gap-3">
       <Loader2 size={16} className="animate-spin" style={{ color: N.blue }} />
-      <span className="text-white/40 text-sm">Initializing intelligence subsystems…</span>
+      <span className="text-[var(--kiq-ink)]/40 text-sm">Initializing intelligence subsystems…</span>
     </div>
   );
 }
@@ -1310,31 +1310,31 @@ export default function HealthcareIntelligenceOS() {
     return () => window.removeEventListener("keydown", handler);
   }, []);
 
-  useEffect(() => { document.title = "HIOS — Healthcare Intelligence OS · Kincaid IQ"; }, []);
+  useEffect(() => { document.title = "HIOS — Healthcare Intelligence OS · Kincaid Health"; }, []);
 
   return (
-    <div className="min-h-screen text-white" style={{ background: "linear-gradient(180deg, #050505 0%, #0a0a0a 100%)" }}>
+    <div className="kiq-health-shell text-[var(--kiq-ink)]">
       <div className="max-w-[1600px] mx-auto px-6 lg:px-10 py-8">
         {/* HEADER */}
-        <div className="flex items-center justify-between mb-6 pb-6 border-b border-white/[0.06]">
+        <div className="kiq-command-hero flex items-center justify-between mb-6 px-6 py-5">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${N.blue}25, ${N.purple}15)`, border: `1px solid ${N.blue}40` }}>
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${N.blue}25, ${N.purple}15)`, border: `1px solid ${N.blue}40`, boxShadow: "0 18px 44px rgba(0,212,255,0.16)" }}>
               <Activity size={22} style={{ color: N.blue }} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-2xl font-bold tracking-tight text-white">HIOS</h1>
+                <h1 className="text-2xl font-bold tracking-tight text-[var(--kiq-ink)]">HIOS</h1>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded tracking-wider" style={{ color: N.green, background: N.green + "15", border: `1px solid ${N.green}30` }}>LIVE</span>
               </div>
-              <p className="text-xs text-white/50">Healthcare Intelligence Operating System · Prior Auth · PBM Forensics · ERISA Defense · Workforce Impact</p>
+              <p className="text-xs text-[var(--kiq-ink)]/50">Healthcare Intelligence Operating System · Prior Auth · PBM Forensics · ERISA Defense · Workforce Impact</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <CommandPaletteTrigger onOpen={() => setPaletteOpen(true)} />
             <NotificationsBell />
             <PlanBadge />
-            <div className="hidden xl:block text-right text-[10px] text-white/35">
-              <p className="font-bold tracking-wider uppercase text-white/55">Constitutional Doctrine</p>
+            <div className="hidden xl:block text-right text-[10px] text-[var(--kiq-muted)]">
+              <p className="font-bold tracking-wider uppercase text-[var(--kiq-ink-soft)]">Constitutional Doctrine</p>
               <p>4 Hard Rules · 3 Tiers · 7-Gate</p>
             </div>
           </div>
@@ -1351,11 +1351,11 @@ export default function HealthcareIntelligenceOS() {
                 key={t.id}
                 onClick={() => setTab(t.id)}
                 data-testid={`tab-${t.id}`}
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-colors flex-shrink-0"
+                className="kiq-health-tab flex items-center gap-2 px-4 py-2.5 text-xs font-semibold transition-colors flex-shrink-0"
                 style={{
-                  background: active ? "rgba(0,212,255,0.12)" : "transparent",
-                  border: `1px solid ${active ? "rgba(0,212,255,0.35)" : "rgba(255,255,255,0.06)"}`,
-                  color: active ? N.blue : "rgba(255,255,255,0.55)",
+                  background: active ? "rgba(0,212,255,0.12)" : "rgba(255,255,255,0.62)",
+                  border: `1px solid ${active ? "rgba(0,212,255,0.35)" : "rgba(13,37,61,0.08)"}`,
+                  color: active ? N.blue : "var(--kiq-muted)",
                 }}
               >
                 <t.icon size={13} />
@@ -1411,18 +1411,18 @@ function ValueLedgerTab() {
             <p className="text-[10px] tracking-[0.18em] uppercase font-bold" style={{ color: roiColor }}>
               Renewal Defense Exhibit · Updated {new Date(data.generated_at).toLocaleTimeString()}
             </p>
-            <h2 className="text-2xl font-bold text-white mt-1">
-              <span style={{ color: roiColor }}>{h.roi_multiple}×</span> ROI on Kincaid IQ {h.plan}
+            <h2 className="text-2xl font-bold text-[var(--kiq-ink)] mt-1">
+              <span style={{ color: roiColor }}>{h.roi_multiple}×</span> ROI on Kincaid Health {h.plan}
             </h2>
-            <p className="text-sm text-white/55 mt-1">
+            <p className="text-sm text-[var(--kiq-ink)]/55 mt-1">
               {fmtMoney(h.total_value_captured)} captured against {fmtMoney(h.subscription_cost)} annual subscription
               {h.payback_days && ` · paid back in ${h.payback_days} days`}
             </p>
           </div>
           <div className="text-right">
-            <p className="text-[10px] tracking-wider uppercase text-white/45">Capture Rate</p>
+            <p className="text-[10px] tracking-wider uppercase text-[var(--kiq-ink)]/45">Capture Rate</p>
             <p className="text-3xl font-bold" style={{ color: roiColor }}>{h.capture_rate_pct}%</p>
-            <p className="text-[10px] text-white/40">of {fmtMoney(h.total_value_at_play)} at play</p>
+            <p className="text-[10px] text-[var(--kiq-ink)]/40">of {fmtMoney(h.total_value_at_play)} at play</p>
           </div>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -1432,13 +1432,13 @@ function ValueLedgerTab() {
             { l: "Open Pipeline",        v: fmtMoney(p.open_claims),        c: N.blue,   icon: Activity,  sub: `${p.open_count} claims` },
             { l: "Workforce Preserved",  v: fmtMoney(wf.value_preserved),   c: N.purple, icon: Users,     sub: `${wf.estimated_recovery_pct}% of risk` },
           ].map((k) => (
-            <div key={k.l} className="rounded-xl bg-black/30 border border-white/[0.06] p-3" data-testid={`headline-${k.l}`}>
+            <div key={k.l} className="rounded-xl bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] p-3" data-testid={`headline-${k.l}`}>
               <div className="flex items-center justify-between mb-1">
-                <p className="text-[10px] uppercase tracking-wider text-white/45">{k.l}</p>
+                <p className="text-[10px] uppercase tracking-wider text-[var(--kiq-muted)]">{k.l}</p>
                 <k.icon size={12} style={{ color: k.c }} />
               </div>
               <p className="text-xl font-bold" style={{ color: k.c }}>{k.v}</p>
-              <p className="text-[10px] text-white/35 mt-0.5">{k.sub}</p>
+              <p className="text-[10px] text-[var(--kiq-subtle)] mt-0.5">{k.sub}</p>
             </div>
           ))}
         </div>
@@ -1446,16 +1446,16 @@ function ValueLedgerTab() {
 
       {/* TWO-COLUMN: Quarterly waterfall + Top wins */}
       <div className="grid lg:grid-cols-3 gap-4">
-        <div className="lg:col-span-2 rounded-2xl bg-white/[0.025] border border-white/[0.07] p-5">
-          <p className="text-xs font-bold tracking-[0.16em] uppercase text-white/55 mb-4">Quarterly Capture Waterfall</p>
+        <div className="lg:col-span-2 rounded-2xl bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] p-5 shadow-sm">
+          <p className="text-xs font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink-soft)] mb-4">Quarterly Capture Waterfall</p>
           <div style={{ height: 200 }}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={quarters} margin={{ top: 4, right: 8, left: 8, bottom: 0 }}>
-                <XAxis dataKey="label" stroke="rgba(255,255,255,0.4)" fontSize={10} />
-                <YAxis stroke="rgba(255,255,255,0.4)" fontSize={10}
+                <XAxis dataKey="label" stroke="#475569" fontSize={10} />
+                <YAxis stroke="#475569" fontSize={10}
                        tickFormatter={(v) => v >= 1_000_000 ? `$${(v/1_000_000).toFixed(1)}M` : `$${(v/1000).toFixed(0)}K`} />
                 <Tooltip
-                  contentStyle={{ background: "#0a0a0a", border: "1px solid #222", fontSize: 11 }}
+                  contentStyle={{ background: "#F8FAFC", border: "1px solid #222", fontSize: 11 }}
                   formatter={(v: any, n: any) => [fmtMoney(v), n === "recovered" ? "Recovered" : "Claimed"]}
                 />
                 <Bar dataKey="claimed"   fill={N.blue + "55"} radius={[4, 4, 0, 0]} />
@@ -1463,26 +1463,26 @@ function ValueLedgerTab() {
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <div className="flex items-center gap-4 mt-2 text-[10px] text-white/55">
+          <div className="flex items-center gap-4 mt-2 text-[10px] text-[var(--kiq-ink)]/55">
             <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded" style={{ background: N.blue + "55" }} /> Claimed</span>
             <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded" style={{ background: N.green }} /> Recovered</span>
           </div>
         </div>
 
-        <div className="rounded-2xl bg-white/[0.025] border border-white/[0.07] p-5">
-          <p className="text-xs font-bold tracking-[0.16em] uppercase text-white/55 mb-3">Top 5 Recoveries</p>
+        <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.025] border border-white/[0.07] p-5">
+          <p className="text-xs font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/55 mb-3">Top 5 Recoveries</p>
           {wins.length === 0 ? (
-            <p className="text-xs text-white/35">No closed recoveries yet. Push a PBM flag or litigation signal to start the pipeline.</p>
+            <p className="text-xs text-[var(--kiq-ink)]/35">No closed recoveries yet. Push a PBM flag or litigation signal to start the pipeline.</p>
           ) : (
             <div className="space-y-2">
               {wins.map((w) => (
-                <div key={w.id} className="rounded-lg bg-white/[0.02] border border-white/[0.05] p-2.5" data-testid={`win-${w.id}`}>
+                <div key={w.id} className="rounded-lg bg-[var(--kiq-surface)]/[0.02] border border-white/[0.05] p-2.5" data-testid={`win-${w.id}`}>
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: N.green }}>{w.category}</span>
                     <span className="text-sm font-bold" style={{ color: N.green }}>{fmtMoney(w.amount_recovered)}</span>
                   </div>
-                  <p className="text-[10px] text-white/60 mt-0.5 truncate">{w.target}</p>
-                  <p className="text-[10px] text-white/35">Fee: {fmtMoney(w.contingency_fee)} · {w.status}</p>
+                  <p className="text-[10px] text-[var(--kiq-ink)]/60 mt-0.5 truncate">{w.target}</p>
+                  <p className="text-[10px] text-[var(--kiq-ink)]/35">Fee: {fmtMoney(w.contingency_fee)} · {w.status}</p>
                 </div>
               ))}
             </div>
@@ -1502,16 +1502,16 @@ function ValueLedgerTab() {
           const remaining = card.data[card.remainingKey] || 0;
           const pct = total ? Math.round((captured / total) * 100) : 0;
           return (
-            <div key={card.title} className="rounded-2xl bg-white/[0.025] border border-white/[0.07] p-5">
-              <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-white/55 mb-3">{card.title}</p>
+            <div key={card.title} className="rounded-2xl bg-[var(--kiq-surface)]/[0.025] border border-white/[0.07] p-5">
+              <p className="text-[10px] font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/55 mb-3">{card.title}</p>
               <p className="text-2xl font-bold" style={{ color: card.color }}>{fmtMoney(remaining)}</p>
-              <p className="text-[10px] text-white/40 mb-3">{card.data[card.countKey]} {card.label} unaddressed</p>
-              <div className="h-1.5 rounded-full overflow-hidden bg-white/[0.06]">
+              <p className="text-[10px] text-[var(--kiq-ink)]/40 mb-3">{card.data[card.countKey]} {card.label} unaddressed</p>
+              <div className="h-1.5 rounded-full overflow-hidden bg-[var(--kiq-surface)]/[0.06]">
                 <div className="h-full" style={{ width: `${pct}%`, background: card.color }} />
               </div>
               <div className="flex justify-between text-[10px] mt-1.5">
-                <span className="text-white/45">Captured: <span className="font-semibold" style={{ color: card.color }}>{pct}%</span></span>
-                <span className="text-white/45">Total: {fmtMoney(total)}</span>
+                <span className="text-[var(--kiq-ink)]/45">Captured: <span className="font-semibold" style={{ color: card.color }}>{pct}%</span></span>
+                <span className="text-[var(--kiq-ink)]/45">Total: {fmtMoney(total)}</span>
               </div>
             </div>
           );
@@ -1519,30 +1519,30 @@ function ValueLedgerTab() {
       </div>
 
       {/* NEXT BEST ACTIONS — ranked by dollar impact */}
-      <div className="rounded-2xl bg-white/[0.025] border border-white/[0.07] p-5">
+      <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.025] border border-white/[0.07] p-5">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Flame size={14} style={{ color: N.gold }} />
-            <p className="text-xs font-bold tracking-[0.16em] uppercase text-white/55">Next 5 Best Actions · Ranked by Dollar Impact</p>
+            <p className="text-xs font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/55">Next 5 Best Actions · Ranked by Dollar Impact</p>
           </div>
-          <span className="text-[10px] text-white/35">Total opportunity: {fmtMoney(nba.reduce((a: number, n: any) => a + (n.amount || 0), 0))}</span>
+          <span className="text-[10px] text-[var(--kiq-ink)]/35">Total opportunity: {fmtMoney(nba.reduce((a: number, n: any) => a + (n.amount || 0), 0))}</span>
         </div>
         {nba.length === 0 ? (
-          <p className="text-xs text-white/35">All available flags and signals have been pushed to recovery. Nice work.</p>
+          <p className="text-xs text-[var(--kiq-ink)]/35">All available flags and signals have been pushed to recovery. Nice work.</p>
         ) : (
           <div className="space-y-2">
             {nba.map((a, i) => (
-              <div key={a.id} className="flex items-center gap-3 rounded-lg bg-white/[0.02] border border-white/[0.05] p-3"
+              <div key={a.id} className="flex items-center gap-3 rounded-lg bg-[var(--kiq-surface)]/[0.02] border border-white/[0.05] p-3"
                    data-testid={`nba-${a.id}`}>
-                <span className="text-[10px] font-bold w-5 text-center" style={{ color: i === 0 ? N.gold : "rgba(255,255,255,0.4)" }}>#{i + 1}</span>
+                <span className="text-[10px] font-bold w-5 text-center" style={{ color: i === 0 ? N.gold : "#475569" }}>#{i + 1}</span>
                 <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider"
                       style={{ background: a.color + "20", color: a.color }}>{a.kind}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-semibold text-white truncate">{a.label}</p>
-                  <p className="text-[10px] text-white/40">{a.id} · {a.confidence}</p>
+                  <p className="text-xs font-semibold text-[var(--kiq-ink)] truncate">{a.label}</p>
+                  <p className="text-[10px] text-[var(--kiq-ink)]/40">{a.id} · {a.confidence}</p>
                 </div>
                 <span className="text-sm font-bold" style={{ color: a.color }}>{fmtMoney(a.amount)}</span>
-                <ChevronRight size={14} className="text-white/30" />
+                <ChevronRight size={14} className="text-[var(--kiq-ink)]/30" />
               </div>
             ))}
           </div>
@@ -1553,11 +1553,11 @@ function ValueLedgerTab() {
       <div className="rounded-xl p-4" style={{ background: roiColor + "08", border: `1px solid ${roiColor}25` }}>
         <p className="text-[10px] font-bold tracking-[0.16em] uppercase mb-2" style={{ color: roiColor }}>Subscription Economics</p>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-[11px]">
-          <div><span className="text-white/45">Plan</span><br/><span className="text-white/80 font-semibold capitalize">{h.plan}</span></div>
-          <div><span className="text-white/45">Annual Cost</span><br/><span className="text-white/80 font-semibold">{fmtMoney(h.subscription_cost)}</span></div>
-          <div><span className="text-white/45">Value Captured</span><br/><span className="font-semibold" style={{ color: roiColor }}>{fmtMoney(h.total_value_captured)}</span></div>
-          <div><span className="text-white/45">ROI Multiple</span><br/><span className="font-semibold" style={{ color: roiColor }}>{h.roi_multiple}×</span></div>
-          <div><span className="text-white/45">Payback</span><br/><span className="text-white/80 font-semibold">{h.payback_days ? `${h.payback_days} days` : "—"}</span></div>
+          <div><span className="text-[var(--kiq-ink)]/45">Plan</span><br/><span className="text-[var(--kiq-ink)]/80 font-semibold capitalize">{h.plan}</span></div>
+          <div><span className="text-[var(--kiq-ink)]/45">Annual Cost</span><br/><span className="text-[var(--kiq-ink)]/80 font-semibold">{fmtMoney(h.subscription_cost)}</span></div>
+          <div><span className="text-[var(--kiq-ink)]/45">Value Captured</span><br/><span className="font-semibold" style={{ color: roiColor }}>{fmtMoney(h.total_value_captured)}</span></div>
+          <div><span className="text-[var(--kiq-ink)]/45">ROI Multiple</span><br/><span className="font-semibold" style={{ color: roiColor }}>{h.roi_multiple}×</span></div>
+          <div><span className="text-[var(--kiq-ink)]/45">Payback</span><br/><span className="text-[var(--kiq-ink)]/80 font-semibold">{h.payback_days ? `${h.payback_days} days` : "—"}</span></div>
         </div>
       </div>
     </div>
@@ -1612,13 +1612,13 @@ function EnterpriseTab() {
            style={{ background: "linear-gradient(90deg, rgba(0,212,255,0.06), transparent)", borderColor: "rgba(0,212,255,0.18)" }}>
         <div className="flex items-center gap-3">
           <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: N.green }} />
-          <p className="text-[10px] tracking-[0.18em] uppercase font-bold text-white/55">Enterprise SLA · Multi-Region · Auto-Scaling</p>
+          <p className="text-[10px] tracking-[0.18em] uppercase font-bold text-[var(--kiq-ink)]/55">Enterprise SLA · Multi-Region · Auto-Scaling</p>
         </div>
         <div className="flex items-center gap-6 text-[11px]">
-          <span className="text-white/60">Capacity: <span className="font-bold text-white">{fleet.concurrent_capacity}</span></span>
-          <span className="text-white/60">Target p95: <span className="font-bold" style={{ color: N.green }}>≤{sla.target_p95_ms}ms</span></span>
-          <span className="text-white/60">Uptime SLA: <span className="font-bold" style={{ color: N.green }}>{sla.target_uptime_pct}%</span></span>
-          <span className="text-white/60 flex items-center gap-1"><Globe2 size={11} />
+          <span className="text-[var(--kiq-ink)]/60">Capacity: <span className="font-bold text-[var(--kiq-ink)]">{fleet.concurrent_capacity}</span></span>
+          <span className="text-[var(--kiq-ink)]/60">Target p95: <span className="font-bold" style={{ color: N.green }}>≤{sla.target_p95_ms}ms</span></span>
+          <span className="text-[var(--kiq-ink)]/60">Uptime SLA: <span className="font-bold" style={{ color: N.green }}>{sla.target_uptime_pct}%</span></span>
+          <span className="text-[var(--kiq-ink)]/60 flex items-center gap-1"><Globe2 size={11} />
             {(sla.regions ?? []).join(" · ")}
           </span>
         </div>
@@ -1634,9 +1634,9 @@ function EnterpriseTab() {
           { l: "Handoffs (24h)",       v: tp.handoffs_24h,                                c: N.orange, icon: Zap },
           { l: "Exposure Routed",      v: fmtDollar(tp.exposure_routed ?? 0),             c: N.red,    icon: Target },
         ].map((k) => (
-          <div key={k.l} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-3" data-testid={`ent-kpi-${k.l}`}>
+          <div key={k.l} className="rounded-xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.07] p-3" data-testid={`ent-kpi-${k.l}`}>
             <div className="flex items-center justify-between mb-1">
-              <p className="text-[10px] uppercase tracking-wider text-white/40">{k.l}</p>
+              <p className="text-[10px] uppercase tracking-wider text-[var(--kiq-ink)]/40">{k.l}</p>
               <k.icon size={12} style={{ color: k.c }} />
             </div>
             <p className="text-xl font-bold" style={{ color: k.c }}>{k.v?.toLocaleString?.() ?? k.v}</p>
@@ -1646,21 +1646,21 @@ function EnterpriseTab() {
 
       {/* TWO-COLUMN: subsystem health + performance ring */}
       <div className="grid lg:grid-cols-3 gap-4">
-        <div className="lg:col-span-2 rounded-2xl bg-white/[0.025] border border-white/[0.07] p-5">
-          <p className="text-xs font-bold tracking-[0.16em] uppercase text-white/55 mb-4">Subsystem Health</p>
+        <div className="lg:col-span-2 rounded-2xl bg-[var(--kiq-surface)]/[0.025] border border-white/[0.07] p-5">
+          <p className="text-xs font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/55 mb-4">Subsystem Health</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {subsystems.map((s) => {
               const healthy = subs[s.k]?.healthy ?? false;
               const color = healthy ? N.green : N.red;
               return (
-                <div key={s.name} className="rounded-xl bg-white/[0.02] border border-white/[0.05] p-3 flex items-center gap-3"
+                <div key={s.name} className="rounded-xl bg-[var(--kiq-surface)]/[0.02] border border-white/[0.05] p-3 flex items-center gap-3"
                      data-testid={`subsys-${s.k}`}>
                   <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ background: color + "18" }}>
                     <s.icon size={15} style={{ color }} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-white">{s.name}</p>
-                    <p className="text-[10px] text-white/45">{s.desc}</p>
+                    <p className="text-xs font-semibold text-[var(--kiq-ink)]">{s.name}</p>
+                    <p className="text-[10px] text-[var(--kiq-ink)]/45">{s.desc}</p>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: color }} />
@@ -1674,8 +1674,8 @@ function EnterpriseTab() {
           </div>
         </div>
 
-        <div className="rounded-2xl bg-white/[0.025] border border-white/[0.07] p-5">
-          <p className="text-xs font-bold tracking-[0.16em] uppercase text-white/55 mb-4">Performance Ring</p>
+        <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.025] border border-white/[0.07] p-5">
+          <p className="text-xs font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/55 mb-4">Performance Ring</p>
           <div className="space-y-3">
             {[
               { l: "p50 latency",     v: `${perf.latency?.p50 ?? 0}ms`,                 c: N.green  },
@@ -1687,7 +1687,7 @@ function EnterpriseTab() {
               { l: "Uptime",          v: `${Math.floor((perf.uptime_seconds ?? 0) / 60)}m`,    c: N.purple },
             ].map((m) => (
               <div key={m.l} className="flex items-center justify-between text-[11px]">
-                <span className="text-white/55">{m.l}</span>
+                <span className="text-[var(--kiq-ink)]/55">{m.l}</span>
                 <span className="font-bold" style={{ color: m.c }}>{m.v}</span>
               </div>
             ))}
@@ -1697,22 +1697,22 @@ function EnterpriseTab() {
 
       {/* TOP ORGS + AUDIT TAIL */}
       <div className="grid lg:grid-cols-2 gap-4">
-        <div className="rounded-2xl bg-white/[0.025] border border-white/[0.07] p-5">
+        <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.025] border border-white/[0.07] p-5">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs font-bold tracking-[0.16em] uppercase text-white/55">Top Locations by Exposure Routed</p>
-            <span className="text-[10px] text-white/35">Top 10 of {fleet.locations}</span>
+            <p className="text-xs font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/55">Top Locations by Exposure Routed</p>
+            <span className="text-[10px] text-[var(--kiq-ink)]/35">Top 10 of {fleet.locations}</span>
           </div>
           {topOrgs.length === 0 ? (
-            <p className="text-xs text-white/35">No fleet handoffs recorded yet. Push a flag from PBM Forensics or Litigation to populate the leaderboard.</p>
+            <p className="text-xs text-[var(--kiq-ink)]/35">No fleet handoffs recorded yet. Push a flag from PBM Forensics or Litigation to populate the leaderboard.</p>
           ) : (
             <div className="space-y-2">
               {topOrgs.map((o, i) => (
-                <div key={o.org_id} className="flex items-center gap-3 rounded-lg bg-white/[0.02] border border-white/[0.04] p-2.5"
+                <div key={o.org_id} className="flex items-center gap-3 rounded-lg bg-[var(--kiq-surface)]/[0.02] border border-white/[0.04] p-2.5"
                      data-testid={`top-org-${o.org_id}`}>
-                  <span className="text-[10px] font-bold w-5 text-center" style={{ color: i < 3 ? N.gold : "rgba(255,255,255,0.35)" }}>#{i + 1}</span>
+                  <span className="text-[10px] font-bold w-5 text-center" style={{ color: i < 3 ? N.gold : "#64748b" }}>#{i + 1}</span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-white truncate">{o.org_name}</p>
-                    <p className="text-[10px] text-white/40">{o.handoffs} handoffs</p>
+                    <p className="text-xs font-semibold text-[var(--kiq-ink)] truncate">{o.org_name}</p>
+                    <p className="text-[10px] text-[var(--kiq-ink)]/40">{o.handoffs} handoffs</p>
                   </div>
                   <span className="text-sm font-bold" style={{ color: N.gold }}>{fmtDollar(o.exposure)}</span>
                 </div>
@@ -1721,11 +1721,11 @@ function EnterpriseTab() {
           )}
         </div>
 
-        <div className="rounded-2xl bg-white/[0.025] border border-white/[0.07] p-5">
+        <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.025] border border-white/[0.07] p-5">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-xs font-bold tracking-[0.16em] uppercase text-white/55">Live Audit Trail</p>
+            <p className="text-xs font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/55">Live Audit Trail</p>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] text-white/35 flex items-center gap-1">
+              <span className="text-[10px] text-[var(--kiq-ink)]/35 flex items-center gap-1">
                 <Clock size={9} />
                 {audit?.scope?.org_name ?? "Personal scope"} · {entries.length} events
               </span>
@@ -1733,7 +1733,7 @@ function EnterpriseTab() {
             </div>
           </div>
           {lA ? <Loading /> : entries.length === 0 ? (
-            <p className="text-xs text-white/35">No audit events yet. Every push, export, and alert is logged here with IP + actor.</p>
+            <p className="text-xs text-[var(--kiq-ink)]/35">No audit events yet. Every push, export, and alert is logged here with IP + actor.</p>
           ) : (
             <div className="space-y-1.5 max-h-80 overflow-y-auto pr-1">
               {entries.map((e) => {
@@ -1742,13 +1742,13 @@ function EnterpriseTab() {
                           e.action === "appeal_draft" ? N.purple : N.blue;
                 return (
                   <div key={e.id} className="text-[10.5px] flex items-start gap-2 py-1.5 border-b border-white/[0.03]" data-testid={`audit-${e.id}`}>
-                    <span className="font-mono text-white/35 shrink-0">{e.ts?.slice(11, 19) ?? ""}</span>
+                    <span className="font-mono text-[var(--kiq-ink)]/35 shrink-0">{e.ts?.slice(11, 19) ?? ""}</span>
                     <span className="px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider shrink-0"
                           style={{ background: c + "18", color: c }}>{e.action}</span>
-                    <span className="text-white/65 truncate flex-1">
+                    <span className="text-[var(--kiq-ink)]/65 truncate flex-1">
                       {e.target}{e.amount ? ` · ${fmtDollar(e.amount)}` : ""}
                     </span>
-                    <span className="text-white/30 shrink-0">{e.ip ?? "—"}</span>
+                    <span className="text-[var(--kiq-ink)]/30 shrink-0">{e.ip ?? "—"}</span>
                   </div>
                 );
               })}
@@ -1761,14 +1761,14 @@ function EnterpriseTab() {
       <div className="rounded-xl p-4" style={{ background: N.blue + "08", border: `1px solid ${N.blue}25` }}>
         <p className="text-[10px] font-bold tracking-[0.16em] uppercase mb-2" style={{ color: N.blue }}>Enterprise Architecture</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-[11px]">
-          <div><span className="text-white/45">Multi-tenancy</span><br/><span className="text-white/80 font-semibold">Org-scoped queries · row-level isolation</span></div>
-          <div><span className="text-white/45">Caching</span><br/><span className="text-white/80 font-semibold">Per-org TTL · 30s read · 1s bust on write</span></div>
-          <div><span className="text-white/45">Rate limiting</span><br/><span className="text-white/80 font-semibold">120 burst · 2 req/s sustained per org</span></div>
-          <div><span className="text-white/45">Idempotency</span><br/><span className="text-white/80 font-semibold">Stable finding_id keys · dedupe on write</span></div>
-          <div><span className="text-white/45">Audit</span><br/><span className="text-white/80 font-semibold">Indexed by org_id+ts · IP-stamped</span></div>
-          <div><span className="text-white/45">Observability</span><br/><span className="text-white/80 font-semibold">p50/p95/p99 ring buffer · /health probe</span></div>
-          <div><span className="text-white/45">Concurrency</span><br/><span className="text-white/80 font-semibold">Thread-safe locks · async-ready</span></div>
-          <div><span className="text-white/45">Failover</span><br/><span className="text-white/80 font-semibold">Cache-bust on push · org fallback</span></div>
+          <div><span className="text-[var(--kiq-ink)]/45">Multi-tenancy</span><br/><span className="text-[var(--kiq-ink)]/80 font-semibold">Org-scoped queries · row-level isolation</span></div>
+          <div><span className="text-[var(--kiq-ink)]/45">Caching</span><br/><span className="text-[var(--kiq-ink)]/80 font-semibold">Per-org TTL · 30s read · 1s bust on write</span></div>
+          <div><span className="text-[var(--kiq-ink)]/45">Rate limiting</span><br/><span className="text-[var(--kiq-ink)]/80 font-semibold">120 burst · 2 req/s sustained per org</span></div>
+          <div><span className="text-[var(--kiq-ink)]/45">Idempotency</span><br/><span className="text-[var(--kiq-ink)]/80 font-semibold">Stable finding_id keys · dedupe on write</span></div>
+          <div><span className="text-[var(--kiq-ink)]/45">Audit</span><br/><span className="text-[var(--kiq-ink)]/80 font-semibold">Indexed by org_id+ts · IP-stamped</span></div>
+          <div><span className="text-[var(--kiq-ink)]/45">Observability</span><br/><span className="text-[var(--kiq-ink)]/80 font-semibold">p50/p95/p99 ring buffer · /health probe</span></div>
+          <div><span className="text-[var(--kiq-ink)]/45">Concurrency</span><br/><span className="text-[var(--kiq-ink)]/80 font-semibold">Thread-safe locks · async-ready</span></div>
+          <div><span className="text-[var(--kiq-ink)]/45">Failover</span><br/><span className="text-[var(--kiq-ink)]/80 font-semibold">Cache-bust on push · org fallback</span></div>
         </div>
       </div>
     </div>
@@ -1800,12 +1800,12 @@ function NotificationsBell() {
         onClick={() => { setOpen((v) => !v); if (!open && unread > 0) markRead(); }}
         data-testid="hios-bell"
         className="relative w-9 h-9 rounded-lg flex items-center justify-center transition-colors"
-        style={{ background: open ? N.blue + "20" : "rgba(255,255,255,0.04)", border: `1px solid ${open ? N.blue + "50" : "rgba(255,255,255,0.08)"}` }}
+        style={{ background: open ? N.blue + "20" : "#ffffff", border: `1px solid ${open ? N.blue + "50" : "#e2e8f0"}` }}
         title="Notifications"
       >
         <Bell size={14} style={{ color: unread > 0 ? N.blue : "rgba(255,255,255,0.55)" }} />
         {unread > 0 && (
-          <span className="absolute -top-1 -right-1 text-[9px] font-bold rounded-full min-w-[16px] h-4 px-1 flex items-center justify-center" style={{ background: N.red, color: "white" }}>
+          <span className="absolute -top-1 -right-1 text-[9px] font-bold rounded-full min-w-[16px] h-4 px-1 flex items-center justify-center" style={{ background: N.red, color: "#0F172A" }}>
             {unread > 99 ? "99+" : unread}
           </span>
         )}
@@ -1814,24 +1814,24 @@ function NotificationsBell() {
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 mt-2 w-[420px] max-h-[540px] overflow-y-auto rounded-2xl z-50 shadow-2xl" style={{ background: "#0a0a0a", border: "1px solid rgba(255,255,255,0.10)" }}>
-            <div className="sticky top-0 px-4 py-3 border-b border-white/[0.06] flex items-center justify-between" style={{ background: "#0a0a0a" }}>
-              <p className="text-xs font-bold tracking-[0.16em] uppercase text-white/65">Activity Feed</p>
-              <span className="text-[10px] text-white/40">{data?.total ?? 0} events</span>
+          <div className="absolute right-0 mt-2 w-[420px] max-h-[540px] overflow-y-auto rounded-2xl z-50 shadow-2xl" style={{ background: "#F8FAFC", border: "1px solid rgba(15,23,42,0.06)" }}>
+            <div className="sticky top-0 px-4 py-3 border-b border-white/[0.06] flex items-center justify-between" style={{ background: "#F8FAFC" }}>
+              <p className="text-xs font-bold tracking-[0.16em] uppercase text-[var(--kiq-ink)]/65">Activity Feed</p>
+              <span className="text-[10px] text-[var(--kiq-ink)]/40">{data?.total ?? 0} events</span>
             </div>
             {items.length === 0 ? (
-              <div className="p-6 text-center text-[11px] text-white/40">No activity yet. Pursue a flag or post a comment to start the audit trail.</div>
+              <div className="p-6 text-center text-[11px] text-[var(--kiq-ink)]/40">No activity yet. Pursue a flag or post a comment to start the audit trail.</div>
             ) : items.map((it) => (
-              <div key={it.id} className="px-4 py-2.5 border-b border-white/[0.04] flex items-start gap-3 hover:bg-white/[0.02]">
-                <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: it.unread ? (it.severity === "HIGH" || it.severity === "CRITICAL" ? N.red : N.blue) : "transparent", border: it.unread ? "none" : "1px solid rgba(255,255,255,0.15)" }} />
+              <div key={it.id} className="px-4 py-2.5 border-b border-white/[0.04] flex items-start gap-3 hover:bg-[var(--kiq-surface)]/[0.02]">
+                <div className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ background: it.unread ? (it.severity === "HIGH" || it.severity === "CRITICAL" ? N.red : N.blue) : "transparent", border: it.unread ? "none" : "1px solid #cbd5e1" }} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 text-[10px]">
                     <span className="font-bold uppercase tracking-wider" style={{ color: it.kind === "mention" ? N.purple : N.blue }}>{it.action.replace(/_/g, " ")}</span>
-                    {it.subject && <span className="font-mono text-white/45">{it.subject}</span>}
+                    {it.subject && <span className="font-mono text-[var(--kiq-ink)]/45">{it.subject}</span>}
                     {it.amount > 0 && <span className="ml-auto font-bold" style={{ color: N.gold }}>{fmtMoney(it.amount)}</span>}
                   </div>
-                  {it.target && <p className="text-[11px] text-white/65 mt-0.5 line-clamp-2">{it.target}</p>}
-                  <p className="text-[9px] text-white/30 mt-0.5">{it.ts ? new Date(it.ts).toLocaleString() : ""}</p>
+                  {it.target && <p className="text-[11px] text-[var(--kiq-ink)]/65 mt-0.5 line-clamp-2">{it.target}</p>}
+                  <p className="text-[9px] text-[var(--kiq-ink)]/30 mt-0.5">{it.ts ? new Date(it.ts).toLocaleString() : ""}</p>
                 </div>
               </div>
             ))}
@@ -1851,12 +1851,12 @@ function CommandPaletteTrigger({ onOpen }: { onOpen: () => void }) {
       onClick={onOpen}
       data-testid="hios-cmdk-trigger"
       className="hidden md:flex items-center gap-2 px-3 h-9 rounded-lg text-[11px] transition-colors"
-      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.55)" }}
+      style={{ background: "#ffffff", border: "1px solid #e2e8f0", color: "rgba(255,255,255,0.55)" }}
       title="Command palette (⌘K)"
     >
       <Search size={12} />
       <span>Quick jump</span>
-      <kbd className="ml-2 px-1.5 py-0.5 rounded font-mono text-[9px]" style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.55)" }}>⌘K</kbd>
+      <kbd className="ml-2 px-1.5 py-0.5 rounded font-mono text-[9px]" style={{ background: "#f1f5f9", color: "rgba(255,255,255,0.55)" }}>⌘K</kbd>
     </button>
   );
 }
@@ -1871,7 +1871,7 @@ function CommandPalette({ tabs, setTab, onClose }: { tabs: any[]; setTab: (id: a
     { kind: "Export", label: "Download Audit trail CSV",        hint: "csv_export", run: () => { window.location.href = "/api/hios/exports/audit.csv"; onClose(); } },
     { kind: "Export", label: "Download Prior Auth queue CSV",   hint: "csv_export", run: () => { window.location.href = "/api/hios/exports/prior-auth.csv"; onClose(); } },
     { kind: "Jump",   label: "Open Claims Recovery pipeline",   hint: "/claims-recovery", run: () => { window.location.href = "/claims-recovery"; onClose(); } },
-    { kind: "Jump",   label: "Open Rx Defense",                  hint: "/rx-defense",      run: () => { window.location.href = "/rx-defense"; onClose(); } },
+    { kind: "Jump",   label: "Open PBM Contract Clarity 360",                  hint: "/rx-defense",      run: () => { window.location.href = "/rx-defense"; onClose(); } },
     { kind: "Jump",   label: "Open Fiduciary IQ",                hint: "/fiduciary-iq",    run: () => { window.location.href = "/fiduciary-iq"; onClose(); } },
     { kind: "Admin",  label: "Flush HIOS cache",                 hint: "ops",     run: async () => { await apiRequest("POST", "/api/hios/cache/flush", {}); onClose(); } },
   ];
@@ -1880,7 +1880,7 @@ function CommandPalette({ tabs, setTab, onClose }: { tabs: any[]; setTab: (id: a
 
   return (
     <div className="fixed inset-0 z-[80] flex items-start justify-center pt-[15vh] px-4" style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(8px)" }} onClick={onClose} data-testid="hios-cmdk-modal">
-      <div className="w-full max-w-[620px] rounded-2xl shadow-2xl overflow-hidden" style={{ background: "#0a0a0a", border: "1px solid rgba(255,255,255,0.12)" }} onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-[620px] rounded-2xl shadow-2xl overflow-hidden" style={{ background: "#F8FAFC", border: "1px solid #cbd5e1" }} onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.08]">
           <CmdIcon size={14} style={{ color: N.blue }} />
           <input
@@ -1893,14 +1893,14 @@ function CommandPalette({ tabs, setTab, onClose }: { tabs: any[]; setTab: (id: a
               if (e.key === "Enter")     { e.preventDefault(); filtered[safeCursor]?.run(); }
             }}
             placeholder="Type to jump · tabs, exports, links, admin..."
-            className="flex-1 bg-transparent outline-none text-sm text-white placeholder:text-white/30"
+            className="flex-1 bg-transparent outline-none text-sm text-[var(--kiq-ink)] placeholder:text-[var(--kiq-ink)]/30"
             data-testid="hios-cmdk-input"
           />
-          <kbd className="text-[9px] px-1.5 py-0.5 rounded font-mono" style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.55)" }}>ESC</kbd>
+          <kbd className="text-[9px] px-1.5 py-0.5 rounded font-mono" style={{ background: "#f1f5f9", color: "rgba(255,255,255,0.55)" }}>ESC</kbd>
         </div>
         <div className="max-h-[400px] overflow-y-auto">
           {filtered.length === 0 ? (
-            <div className="p-6 text-center text-xs text-white/40">No matches.</div>
+            <div className="p-6 text-center text-xs text-[var(--kiq-ink)]/40">No matches.</div>
           ) : filtered.map((a, i) => (
             <button
               key={a.label}
@@ -1911,12 +1911,12 @@ function CommandPalette({ tabs, setTab, onClose }: { tabs: any[]; setTab: (id: a
               data-testid={`hios-cmdk-item-${i}`}
             >
               <span className="text-[9px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded" style={{ color: a.kind === "Tab" ? N.blue : a.kind === "Export" ? N.gold : a.kind === "Admin" ? N.red : N.purple, background: (a.kind === "Tab" ? N.blue : a.kind === "Export" ? N.gold : a.kind === "Admin" ? N.red : N.purple) + "15", minWidth: 54, textAlign: "center" }}>{a.kind}</span>
-              <span className="flex-1 text-sm text-white/85">{a.label}</span>
+              <span className="flex-1 text-sm text-[var(--kiq-ink)]/85">{a.label}</span>
               {i === safeCursor && <CornerDownLeft size={12} style={{ color: N.blue }} />}
             </button>
           ))}
         </div>
-        <div className="px-4 py-2 border-t border-white/[0.06] flex items-center gap-3 text-[9px] text-white/35">
+        <div className="px-4 py-2 border-t border-white/[0.06] flex items-center gap-3 text-[9px] text-[var(--kiq-ink)]/35">
           <span>↑↓ navigate</span><span>↵ run</span><span>esc close</span>
           <span className="ml-auto">{filtered.length} of {actions.length}</span>
         </div>
@@ -1983,27 +1983,27 @@ function CommentsBlock({ findingId }: { findingId: string }) {
       <button
         onClick={() => setOpen((v) => !v)}
         data-testid={`hios-comments-toggle-${findingId}`}
-        className="flex items-center gap-2 text-[10px] font-semibold tracking-wider uppercase text-white/50 hover:text-white/80 transition-colors"
+        className="flex items-center gap-2 text-[10px] font-semibold tracking-wider uppercase text-[var(--kiq-ink)]/50 hover:text-[var(--kiq-ink)]/80 transition-colors"
       >
         <MessageSquare size={11} />
-        Comments {comments.length > 0 && <span className="text-white/70">({comments.length})</span>}
+        Comments {comments.length > 0 && <span className="text-[var(--kiq-ink)]/70">({comments.length})</span>}
         <ChevronRight size={10} className="transition-transform" style={{ transform: open ? "rotate(90deg)" : "none" }} />
       </button>
 
       {open && (
         <div className="mt-3 space-y-2">
           {isLoading ? (
-            <div className="text-[10px] text-white/30">Loading…</div>
+            <div className="text-[10px] text-[var(--kiq-ink)]/30">Loading…</div>
           ) : comments.length === 0 ? (
-            <div className="text-[10px] text-white/30 italic">No comments yet. Use @name to mention a teammate.</div>
+            <div className="text-[10px] text-[var(--kiq-ink)]/30 italic">No comments yet. Use @name to mention a teammate.</div>
           ) : comments.map((c) => (
-            <div key={c.id} className="rounded-lg p-2.5" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.05)" }}>
+            <div key={c.id} className="rounded-lg p-2.5" style={{ background: "#ffffff", border: "1px solid #f8fafc" }}>
               <div className="flex items-center gap-2 mb-1 text-[10px]">
                 <AtSign size={9} style={{ color: N.blue }} />
-                <span className="font-semibold text-white/75">{c.author}</span>
-                <span className="text-white/30 ml-auto">{c.created_at ? new Date(c.created_at).toLocaleString() : ""}</span>
+                <span className="font-semibold text-[var(--kiq-ink)]/75">{c.author}</span>
+                <span className="text-[var(--kiq-ink)]/30 ml-auto">{c.created_at ? new Date(c.created_at).toLocaleString() : ""}</span>
               </div>
-              <p className="text-[11px] text-white/75 leading-relaxed">{renderBody(c.body)}</p>
+              <p className="text-[11px] text-[var(--kiq-ink)]/75 leading-relaxed">{renderBody(c.body)}</p>
             </div>
           ))}
 
@@ -2015,7 +2015,7 @@ function CommentsBlock({ findingId }: { findingId: string }) {
               placeholder="Add a note · @mention to notify · ⌘↵ to send"
               rows={2}
               data-testid={`hios-comments-input-${findingId}`}
-              className="flex-1 rounded-lg px-3 py-2 text-[11px] bg-white/[0.03] border border-white/[0.08] text-white/85 placeholder:text-white/30 outline-none focus:border-white/[0.18] resize-none"
+              className="flex-1 rounded-lg px-3 py-2 text-[11px] bg-[var(--kiq-surface)]/[0.03] border border-white/[0.08] text-[var(--kiq-ink)]/85 placeholder:text-[var(--kiq-ink)]/30 outline-none focus:border-white/[0.18] resize-none"
             />
             <button
               onClick={submit}

@@ -155,7 +155,7 @@ export default function Charts() {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Search Ticker (e.g. NVDA)"
-                className="bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm w-56 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all uppercase"
+                className="bg-[var(--kiq-surface)]/5 border border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm w-56 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all uppercase"
                 data-testid="input-ticker-search"
               />
             </div>
@@ -207,7 +207,7 @@ export default function Charts() {
           <div className="metric-card p-4">
             {stats && (
               <div className="flex items-baseline gap-3 mb-4">
-                <span className="text-3xl font-bold font-mono text-white">{stats.price.toFixed(2)}</span>
+                <span className="text-3xl font-bold font-mono text-[var(--kiq-ink)]">{stats.price.toFixed(2)}</span>
                 <span className={`text-base font-bold flex items-center gap-1 ${stats.change >= 0 ? "text-[#00FF94]" : "text-[#FF4D6D]"}`}>
                   {stats.change >= 0 ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
                   {stats.change >= 0 ? "+" : ""}{stats.change.toFixed(2)} ({stats.changePct.toFixed(2)}%)
@@ -226,7 +226,7 @@ export default function Charts() {
                     key={p}
                     onClick={() => setPeriod(p)}
                     className={`text-[10px] font-bold px-3 py-1 rounded-md transition-all ${
-                      period === p ? "bg-primary text-primary-foreground" : "bg-white/5 text-muted-foreground hover:bg-white/10"
+                      period === p ? "bg-primary text-primary-foreground" : "bg-[var(--kiq-surface)]/5 text-muted-foreground hover:bg-[var(--kiq-surface)]/10"
                     }`}
                     data-testid={`button-timeframe-${p}`}
                   >
@@ -248,7 +248,7 @@ export default function Charts() {
                     style={
                       ind.active
                         ? { borderColor: `${ind.color}60`, background: `${ind.color}15`, color: ind.color }
-                        : { borderColor: "rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.04)", color: "rgba(130,150,200,0.6)" }
+                        : { borderColor: "#e2e8f0", background: "#ffffff", color: "rgba(130,150,200,0.6)" }
                     }
                     data-testid={`toggle-${ind.id}`}
                   >
@@ -266,12 +266,12 @@ export default function Charts() {
               ) : (
                 <ResponsiveContainer width="100%" height="100%">
                   <ComposedChart data={chartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f8fafc" vertical={false} />
                     <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} interval={Math.floor(chartData.length / 8)} />
                     <YAxis orientation="right" axisLine={false} tickLine={false} tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} domain={["auto", "auto"]} />
                     <Tooltip
                       contentStyle={{ background: "rgba(8,10,28,0.97)", border: "1px solid rgba(0,168,255,0.2)", borderRadius: "12px", fontSize: "12px" }}
-                      labelStyle={{ fontWeight: "bold", marginBottom: "4px", color: "#fff" }}
+                      labelStyle={{ fontWeight: "bold", marginBottom: "4px", color: "#0F172A" }}
                     />
                     {stats && (
                       <ReferenceLine y={stats.price} stroke="rgba(0,168,255,0.35)" strokeDasharray="4 3"
@@ -309,7 +309,7 @@ export default function Charts() {
                     <XAxis dataKey="date" hide />
                     <YAxis hide />
                     <Tooltip
-                      contentStyle={{ background: "rgba(8,10,28,0.97)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", fontSize: "11px" }}
+                      contentStyle={{ background: "rgba(8,10,28,0.97)", border: "1px solid #e2e8f0", borderRadius: "8px", fontSize: "11px" }}
                       formatter={(v: number) => [`${(v / 1e6).toFixed(1)}M`, "Volume"]}
                     />
                     <Bar dataKey="volume" isAnimationActive={false}>
@@ -331,7 +331,7 @@ export default function Charts() {
                     <ReferenceLine y={70} stroke="rgba(255,77,109,0.25)" strokeDasharray="3 3" />
                     <ReferenceLine y={30} stroke="rgba(0,255,148,0.25)" strokeDasharray="3 3" />
                     <Line type="monotone" dataKey="rsi" stroke="#A855F7" dot={false} strokeWidth={1.5} name="RSI" isAnimationActive={false} />
-                    <Tooltip contentStyle={{ background: "rgba(8,10,28,0.97)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", fontSize: "11px" }} />
+                    <Tooltip contentStyle={{ background: "rgba(8,10,28,0.97)", border: "1px solid #e2e8f0", borderRadius: "8px", fontSize: "11px" }} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -350,7 +350,7 @@ export default function Charts() {
                         <Cell key={`hist-${idx}`} fill={entry.hist >= 0 ? "rgba(0,255,148,0.4)" : "rgba(255,77,109,0.4)"} />
                       ))}
                     </Bar>
-                    <Tooltip contentStyle={{ background: "rgba(8,10,28,0.97)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", fontSize: "11px" }} />
+                    <Tooltip contentStyle={{ background: "rgba(8,10,28,0.97)", border: "1px solid #e2e8f0", borderRadius: "8px", fontSize: "11px" }} />
                   </ComposedChart>
                 </ResponsiveContainer>
               </div>
@@ -367,7 +367,7 @@ export default function Charts() {
             {stats ? (
               <div className="grid grid-cols-2 gap-2">
                 {[
-                  { label: "Price",    value: `$${stats.price.toFixed(2)}`,               color: "#fff" },
+                  { label: "Price",    value: `$${stats.price.toFixed(2)}`,               color: "#0F172A" },
                   { label: "Day Chg",  value: `${stats.changePct >= 0 ? "+" : ""}${stats.changePct.toFixed(2)}%`, color: stats.changePct >= 0 ? "#00FF94" : "#FF4D6D" },
                   { label: "52W High", value: `$${stats.high52.toFixed(2)}`,              color: "#00FF94" },
                   { label: "52W Low",  value: `$${stats.low52.toFixed(2)}`,               color: "#FF4D6D" },
@@ -376,7 +376,7 @@ export default function Charts() {
                   { label: "VWAP",     value: `$${stats.vwap.toFixed(2)}`,                color: "#A855F7" },
                   { label: `${period} Perf`, value: `${stats.periodChangePct >= 0 ? "+" : ""}${stats.periodChangePct.toFixed(2)}%`, color: stats.periodChangePct >= 0 ? "#00FF94" : "#FF4D6D" },
                 ].map(m => (
-                  <div key={m.label} className="p-2 rounded-lg" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                  <div key={m.label} className="p-2 rounded-lg" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
                     <p className="text-[9px] uppercase font-bold text-muted-foreground mb-0.5">{m.label}</p>
                     <p className="text-sm font-bold font-mono" style={{ color: m.color }}>{m.value}</p>
                   </div>
@@ -384,7 +384,7 @@ export default function Charts() {
               </div>
             ) : (
               <div className="h-28 flex items-center justify-center">
-                <Activity className="w-6 h-6 text-white/10 animate-pulse" />
+                <Activity className="w-6 h-6 text-[var(--kiq-ink)]/10 animate-pulse" />
               </div>
             )}
           </div>
@@ -398,12 +398,12 @@ export default function Charts() {
                   <span style={{ color: "#FF4D6D" }}>${stats.low52.toFixed(2)}</span>
                   <span style={{ color: "#00FF94" }}>${stats.high52.toFixed(2)}</span>
                 </div>
-                <div className="h-2 rounded-full w-full" style={{ background: "rgba(255,255,255,0.07)" }}>
+                <div className="h-2 rounded-full w-full" style={{ background: "#e2e8f0" }}>
                   <div
                     className="h-2 rounded-full relative"
                     style={{ background: "linear-gradient(90deg, #FF4D6D, #FFB800, #00FF94)", width: `${stats.rangePos.toFixed(1)}%` }}
                   >
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-white" style={{ background: "#00A8FF" }} />
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-white" style={{ background: "#F8FAFC" }} />
                   </div>
                 </div>
                 <p className="text-[10px] text-center text-muted-foreground">
@@ -444,10 +444,10 @@ export default function Charts() {
                     color: stats.price >= stats.vwap ? "#00FF94" : "#FF4D6D",
                   },
                 ].map((sig) => (
-                  <div key={sig.label} className="flex items-center justify-between px-2.5 py-2 rounded-lg" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div key={sig.label} className="flex items-center justify-between px-2.5 py-2 rounded-lg" style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
                     <div>
                       <p className="text-[9px] uppercase font-bold text-muted-foreground">{sig.label}</p>
-                      <p className="text-xs font-mono text-white">{sig.value}</p>
+                      <p className="text-xs font-mono text-[var(--kiq-ink)]">{sig.value}</p>
                     </div>
                     <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ background: `${sig.color}18`, color: sig.color, border: `1px solid ${sig.color}30` }}>
                       {sig.signal}
@@ -500,7 +500,7 @@ export default function Charts() {
               ].map(r => (
                 <div key={r.label} className="flex items-center gap-2">
                   <span className="text-[10px] w-8 text-muted-foreground">{r.label}</span>
-                  <div className="flex-1 h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.07)" }}>
+                  <div className="flex-1 h-1.5 rounded-full" style={{ background: "#e2e8f0" }}>
                     <div className="h-1.5 rounded-full" style={{ width: `${r.pct}%`, background: r.color }} />
                   </div>
                   <span className="text-[10px] font-mono w-7 text-right" style={{ color: r.color }}>{r.pct}%</span>

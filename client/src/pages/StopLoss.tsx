@@ -131,7 +131,7 @@ function ProvisionBar({ score }: { score: number }) {
   const rating = scoreToRating(score * 10);
   const cfg = RATING_CONFIG[rating];
   return (
-    <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+    <div className="w-full h-1.5 bg-slate-200/70 rounded-full overflow-hidden">
       <div
         className="h-full rounded-full transition-all duration-700"
         style={{ width: `${(score / 10) * 100}%`, background: cfg.color }}
@@ -249,7 +249,7 @@ function UploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
         onDragLeave={() => setDragging(false)}
         onDrop={(e) => { e.preventDefault(); setDragging(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }}
         onClick={() => !isPending && fileRef.current?.click()}
-        className="border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all border-zinc-700 hover:border-zinc-500"
+        className="border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all border-[var(--kiq-hairline)] hover:border-zinc-500"
         style={dragging ? { borderColor: ACCENT, background: ACCENT_BG } : undefined}
       >
         <input ref={fileRef} type="file" accept=".pdf,.txt,.docx" className="hidden"
@@ -257,15 +257,15 @@ function UploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
         {isPending ? (
           <div className="flex flex-col items-center gap-2">
             <Loader2 className="w-8 h-8 animate-spin" style={{ color: ACCENT }} />
-            <p className="text-zinc-300 font-medium">Uploading & analyzing…</p>
+            <p className="text-[var(--kiq-muted)] font-medium">Uploading & analyzing…</p>
           </div>
         ) : (
           <div className="flex flex-col items-center gap-3">
-            <div className="w-14 h-14 bg-zinc-800 rounded-2xl flex items-center justify-center">
+            <div className="w-14 h-14 bg-[var(--kiq-surface)] rounded-2xl flex items-center justify-center">
               <Upload className="w-7 h-7" style={{ color: ACCENT }} />
             </div>
             <div>
-              <p className="text-white font-semibold">Drop your stop-loss contract here</p>
+              <p className="text-[var(--kiq-ink)] font-semibold">Drop your stop-loss contract here</p>
               <p className="text-zinc-500 text-sm mt-1">PDF, TXT or Word — or click to browse</p>
             </div>
           </div>
@@ -275,7 +275,7 @@ function UploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
       <div className="flex gap-3">
         <input
           data-testid="sl-input-carrier-name"
-          className="flex-1 bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:outline-none"
+          className="flex-1 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl px-4 py-2.5 text-sm text-[var(--kiq-ink)] placeholder-zinc-500 focus:outline-none"
           placeholder="Carrier name (optional)"
           value={carrierName}
           onChange={(e) => setCarrierName(e.target.value)}
@@ -284,7 +284,7 @@ function UploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
           data-testid="sl-button-run-demo"
           onClick={() => demoMutation.mutate()}
           disabled={isPending}
-          className="flex items-center gap-2 px-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 rounded-xl text-sm text-zinc-300 transition-colors disabled:opacity-50"
+          className="flex items-center gap-2 px-4 py-2.5 bg-[var(--kiq-surface)] hover:bg-zinc-700 border border-zinc-600 rounded-xl text-sm text-[var(--kiq-muted)] transition-colors disabled:opacity-50"
         >
           <Sparkles className="w-4 h-4 text-[#FFB800]" />
           Demo Analysis
@@ -293,7 +293,7 @@ function UploadZone({ onUploaded }: { onUploaded: (id: string) => void }) {
           data-testid="sl-button-run-demo-comparison"
           onClick={() => demoPairMutation.mutate()}
           disabled={isPending}
-          className="flex items-center gap-2 px-4 py-2.5 bg-zinc-800 hover:bg-zinc-700 rounded-xl text-sm text-zinc-300 transition-colors disabled:opacity-50"
+          className="flex items-center gap-2 px-4 py-2.5 bg-[var(--kiq-surface)] hover:bg-zinc-700 rounded-xl text-sm text-[var(--kiq-muted)] transition-colors disabled:opacity-50"
           style={{ border: `1px solid ${ACCENT_BORDER}` }}
         >
           <GitCompare className="w-4 h-4" style={{ color: ACCENT }} />
@@ -321,7 +321,7 @@ function StatusPill({ status }: { status: string }) {
     </span>
   );
   return (
-    <span className="inline-flex items-center gap-1 text-xs text-zinc-400 bg-zinc-800 border border-zinc-700 rounded-full px-2 py-0.5">
+    <span className="inline-flex items-center gap-1 text-xs text-zinc-400 bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-full px-2 py-0.5">
       <CircleDot size={10} /> Pending
     </span>
   );
@@ -334,14 +334,14 @@ function ProvisionAccordion({ provision, index }: { provision: ProvisionScore; i
   const total = provision.issues.length;
 
   return (
-    <div className="border border-zinc-800 rounded-xl overflow-hidden" data-testid={`sl-provision-${provision.id}`}>
+    <div className="border border-[var(--kiq-hairline)] rounded-xl overflow-hidden" data-testid={`sl-provision-${provision.id}`}>
       <button
-        className="w-full flex items-center gap-3 p-4 text-left hover:bg-zinc-800/50 transition-colors"
+        className="w-full flex items-center gap-3 p-4 text-left hover:bg-[var(--kiq-surface)]/50 transition-colors"
         onClick={() => setOpen(!open)}
         data-testid={`sl-provision-toggle-${provision.id}`}
       >
         <span className="text-xs text-zinc-500 w-5 font-mono">{provision.id}.</span>
-        <span className="flex-1 text-sm font-medium text-white">{provision.name}</span>
+        <span className="flex-1 text-sm font-medium text-[var(--kiq-ink)]">{provision.name}</span>
         <span className="text-xs" style={{ color: cfg.color }}>{found}/{total} met</span>
         <span className="text-xs px-2 py-0.5 rounded-full font-semibold"
           style={{ color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.border}` }}>
@@ -354,7 +354,7 @@ function ProvisionAccordion({ provision, index }: { provision: ProvisionScore; i
       </button>
 
       {open && (
-        <div className="border-t border-zinc-800 bg-zinc-900/50 p-4 space-y-3">
+        <div className="border-t border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/50 p-4 space-y-3">
           {provision.issues.map((issue, i) => (
             <div key={i} className="flex gap-3 items-start" data-testid={`sl-issue-${provision.id}-${i}`}>
               <div className="mt-0.5 flex-shrink-0">
@@ -363,7 +363,7 @@ function ProvisionAccordion({ provision, index }: { provision: ProvisionScore; i
                   : <XCircle size={14} className="text-[#FF4D6D]" />}
               </div>
               <div className="flex-1 min-w-0">
-                <p className={`text-sm ${issue.found ? "text-zinc-300" : "text-zinc-400"}`}>{issue.text}</p>
+                <p className={`text-sm ${issue.found ? "text-[var(--kiq-muted)]" : "text-zinc-400"}`}>{issue.text}</p>
                 {issue.found && issue.quote && (
                   <p className="mt-1 text-xs text-zinc-500 italic border-l-2 border-[#00FF94]/30 pl-2">"{issue.quote}"</p>
                 )}
@@ -385,30 +385,30 @@ function NegotiationCard({ provision }: { provision: ProvisionScore }) {
   const neg = provision.negotiation || {};
 
   return (
-    <div className="border border-zinc-800 rounded-xl overflow-hidden" data-testid={`sl-negotiation-${provision.id}`}>
-      <div className="flex items-center gap-3 p-4 border-b border-zinc-800">
+    <div className="border border-[var(--kiq-hairline)] rounded-xl overflow-hidden" data-testid={`sl-negotiation-${provision.id}`}>
+      <div className="flex items-center gap-3 p-4 border-b border-[var(--kiq-hairline)]">
         <span className="text-xs text-zinc-500 font-mono w-5">{provision.id}.</span>
-        <span className="flex-1 text-sm font-semibold text-white">{provision.name}</span>
+        <span className="flex-1 text-sm font-semibold text-[var(--kiq-ink)]">{provision.name}</span>
         <span className="text-xs px-2 py-0.5 rounded-full font-bold"
           style={{ color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.border}` }}>
           {provision.score?.toFixed(1)}/10
         </span>
       </div>
 
-      <div className="flex border-b border-zinc-800">
+      <div className="flex border-b border-[var(--kiq-hairline)]">
         {(["gap", "language", "talking"] as const).map((t) => (
           <button key={t} onClick={() => setTab(t)}
-            className={`flex-1 py-2 text-xs font-medium transition-colors ${tab === t ? "text-white border-b-2" : "text-zinc-500 hover:text-zinc-300"}`}
+            className={`flex-1 py-2 text-xs font-medium transition-colors ${tab === t ? "text-[var(--kiq-ink)] border-b-2" : "text-zinc-500 hover:text-[var(--kiq-muted)]"}`}
             style={tab === t ? { borderColor: ACCENT } : undefined}>
             {t === "gap" ? "Gap Summary" : t === "language" ? "Model Language" : "Talking Point"}
           </button>
         ))}
       </div>
 
-      <div className="p-4 text-sm text-zinc-300 leading-relaxed">
+      <div className="p-4 text-sm text-[var(--kiq-muted)] leading-relaxed">
         {tab === "gap" && (neg.gap_summary || "—")}
         {tab === "language" && (
-          <pre className="whitespace-pre-wrap font-sans text-xs text-zinc-200 bg-zinc-800 p-3 rounded-lg">
+          <pre className="whitespace-pre-wrap font-sans text-xs text-[var(--kiq-ink-soft)] bg-[var(--kiq-surface)] p-3 rounded-lg">
             {neg.model_language || "—"}
           </pre>
         )}
@@ -431,7 +431,7 @@ function CarrierIndexTab() {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-base font-bold text-white">Carrier Accountability Index</h3>
+          <h3 className="text-base font-bold text-[var(--kiq-ink)]">Carrier Accountability Index</h3>
           <p className="text-xs text-zinc-500 mt-0.5">{data?.methodology} · Updated {data?.updated}</p>
         </div>
         <div className="flex items-center gap-1.5 text-xs text-zinc-500">
@@ -445,13 +445,13 @@ function CarrierIndexTab() {
           const cfg = RATING_CONFIG[c.rating as Rating] || RATING_CONFIG.concern;
           return (
             <div key={c.carrier}
-              className="flex items-center gap-3 p-3 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-zinc-700 transition-colors"
+              className="flex items-center gap-3 p-3 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl hover:border-[var(--kiq-hairline)] transition-colors"
               data-testid={`sl-carrier-row-${i}`}>
               <span className="text-xs text-zinc-600 font-mono w-5">{i + 1}</span>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-white truncate">{c.carrier}</span>
-                  <span className="text-[10px] text-zinc-500 border border-zinc-700 rounded px-1">{c.am_best}</span>
+                  <span className="text-sm font-medium text-[var(--kiq-ink)] truncate">{c.carrier}</span>
+                  <span className="text-[10px] text-zinc-500 border border-[var(--kiq-hairline)] rounded px-1">{c.am_best}</span>
                 </div>
                 <div className="flex items-center gap-3 mt-1">
                   <span className="text-[10px] text-[#00FF94]">✓ {c.strengths}</span>
@@ -503,14 +503,14 @@ function ComparisonTab({ contract, allContracts, onCompare }: {
   return (
     <div className="space-y-6">
       {!cr && (
-        <div className="p-5 bg-zinc-900 border border-zinc-800 rounded-2xl space-y-4">
-          <p className="text-sm text-zinc-300 font-medium">Compare this contract against an earlier version to see what improved, what regressed, and what gaps remain.</p>
+        <div className="p-5 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-2xl space-y-4">
+          <p className="text-sm text-[var(--kiq-muted)] font-medium">Compare this contract against an earlier version to see what improved, what regressed, and what gaps remain.</p>
           <div className="flex gap-3">
             <select
               data-testid="sl-compare-select"
               value={selectedA}
               onChange={(e) => setSelectedA(e.target.value)}
-              className="flex-1 bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none"
+              className="flex-1 bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-xl px-3 py-2.5 text-sm text-[var(--kiq-ink)] focus:outline-none"
             >
               <option value="">Select Contract A (original)…</option>
               {options.map(c => (
@@ -523,7 +523,7 @@ function ComparisonTab({ contract, allContracts, onCompare }: {
               data-testid="sl-button-run-compare"
               onClick={() => { if (selectedA) { compareMutation.mutate(selectedA); onCompare(selectedA); } }}
               disabled={!selectedA || compareMutation.isPending}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white disabled:opacity-50 transition-colors"
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-[var(--kiq-ink)] disabled:opacity-50 transition-colors"
               style={{ background: ACCENT_BG, border: `1px solid ${ACCENT_BORDER}`, color: ACCENT }}
             >
               {compareMutation.isPending ? <Loader2 size={14} className="animate-spin" /> : <ArrowLeftRight size={14} />}
@@ -565,7 +565,7 @@ function ComparisonTab({ contract, allContracts, onCompare }: {
               { label: "Regressions",  items: cr.regressions,  color: "#FF4D6D", icon: TrendingDown },
               { label: "Unchanged",    items: cr.unchanged,    color: "#FFB800", icon: Minus },
             ].map(({ label, items, color, icon: Icon }) => (
-              <div key={label} className="p-3 bg-zinc-900 border border-zinc-800 rounded-xl text-center">
+              <div key={label} className="p-3 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl text-center">
                 <Icon size={16} style={{ color }} className="mx-auto mb-1" />
                 <p className="text-2xl font-bold" style={{ color }}>{items.length}</p>
                 <p className="text-xs text-zinc-500">{label}</p>
@@ -581,10 +581,10 @@ function ComparisonTab({ contract, allContracts, onCompare }: {
               </h4>
               <div className="space-y-2">
                 {cr.improvements.map((item) => (
-                  <div key={item.provision_id} className="flex items-center gap-3 p-3 bg-zinc-900 border border-zinc-800 rounded-xl"
+                  <div key={item.provision_id} className="flex items-center gap-3 p-3 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl"
                     data-testid={`sl-compare-improvement-${item.provision_id}`}>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-white">{item.provision_name}</p>
+                      <p className="text-sm font-medium text-[var(--kiq-ink)]">{item.provision_name}</p>
                       <p className="text-xs text-zinc-500 mt-0.5">{item.description}</p>
                     </div>
                     <div className="text-right text-xs">
@@ -604,10 +604,10 @@ function ComparisonTab({ contract, allContracts, onCompare }: {
               </h4>
               <div className="space-y-2">
                 {cr.regressions.map((item) => (
-                  <div key={item.provision_id} className="flex items-center gap-3 p-3 bg-zinc-900 border border-zinc-800 rounded-xl"
+                  <div key={item.provision_id} className="flex items-center gap-3 p-3 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl"
                     data-testid={`sl-compare-regression-${item.provision_id}`}>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-white">{item.provision_name}</p>
+                      <p className="text-sm font-medium text-[var(--kiq-ink)]">{item.provision_name}</p>
                       <p className="text-xs text-zinc-500 mt-0.5">{item.description}</p>
                     </div>
                     <div className="text-right text-xs">
@@ -641,7 +641,7 @@ function ComparisonTab({ contract, allContracts, onCompare }: {
             onClick={() => {
               qc.invalidateQueries({ queryKey: ["/api/stop-loss/contracts", contract.id] });
             }}
-            className="text-xs text-zinc-500 hover:text-zinc-300 flex items-center gap-1 transition-colors"
+            className="text-xs text-zinc-500 hover:text-[var(--kiq-muted)] flex items-center gap-1 transition-colors"
           >
             <GitCompare size={11} /> Run a new comparison
           </button>
@@ -696,7 +696,7 @@ function ContractDetail({ contractId, allContracts }: {
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-lg font-bold text-white" data-testid="sl-contract-title">
+          <h2 className="text-lg font-bold text-[var(--kiq-ink)]" data-testid="sl-contract-title">
             {contract.carrier_name || contract.contract_filename}
           </h2>
           <div className="flex items-center gap-2 mt-1">
@@ -728,10 +728,10 @@ function ContractDetail({ contractId, allContracts }: {
       </div>
 
       {isProcessing && (
-        <div className="p-5 bg-zinc-900 border border-zinc-800 rounded-2xl flex items-center gap-3">
+        <div className="p-5 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-2xl flex items-center gap-3">
           <Loader2 className="animate-spin flex-shrink-0" style={{ color: ACCENT }} />
           <div>
-            <p className="text-sm font-medium text-white">AI analysis in progress</p>
+            <p className="text-sm font-medium text-[var(--kiq-ink)]">AI analysis in progress</p>
             <p className="text-xs text-zinc-500 mt-0.5">Evaluating 50 fiduciary-aligned stop-loss provisions…</p>
           </div>
         </div>
@@ -746,13 +746,13 @@ function ContractDetail({ contractId, allContracts }: {
       {/* Tabs */}
       {isDone && (
         <>
-          <div className="flex gap-0.5 bg-zinc-900 border border-zinc-800 rounded-xl p-1 overflow-x-auto">
+          <div className="flex gap-0.5 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl p-1 overflow-x-auto">
             {TABS.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
                 data-testid={`sl-tab-${id}`}
                 onClick={() => setActiveTab(id as any)}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${activeTab === id ? "text-white" : "text-zinc-500 hover:text-zinc-300"}`}
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors whitespace-nowrap ${activeTab === id ? "text-[var(--kiq-ink)]" : "text-zinc-500 hover:text-[var(--kiq-muted)]"}`}
                 style={activeTab === id ? { background: ACCENT_BG, color: ACCENT, border: `1px solid ${ACCENT_BORDER}` } : undefined}
               >
                 <Icon size={12} />
@@ -765,11 +765,11 @@ function ContractDetail({ contractId, allContracts }: {
           {activeTab === "overview" && (
             <div className="space-y-5">
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-5 bg-zinc-900 border border-zinc-800 rounded-2xl flex flex-col items-center">
+                <div className="p-5 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-2xl flex flex-col items-center">
                   <ScoreGauge score={contract.overall_score ?? 0} />
                   <p className="text-xs text-zinc-500 mt-2 text-center">Fiduciary Alignment Score<br/>50-point stop-loss framework</p>
                 </div>
-                <div className="p-5 bg-zinc-900 border border-zinc-800 rounded-2xl space-y-3">
+                <div className="p-5 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-2xl space-y-3">
                   <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Key Findings</p>
                   {contract.key_findings?.map((f, i) => {
                     const color = f.severity === "critical" ? "#FF4D6D" : f.severity === "warning" ? "#FFB800" : "#00FF94";
@@ -777,7 +777,7 @@ function ContractDetail({ contractId, allContracts }: {
                     return (
                       <div key={i} className="flex gap-2 items-start" data-testid={`sl-finding-${i}`}>
                         <Icon size={13} style={{ color }} className="mt-0.5 flex-shrink-0" />
-                        <p className="text-xs text-zinc-300 leading-relaxed">{f.text}</p>
+                        <p className="text-xs text-[var(--kiq-muted)] leading-relaxed">{f.text}</p>
                       </div>
                     );
                   })}
@@ -794,11 +794,11 @@ function ContractDetail({ contractId, allContracts }: {
                 const Icon = cfg.icon;
                 return (
                   <div key={ql.id}
-                    className="flex items-center gap-3 p-3 bg-zinc-900 border border-zinc-800 rounded-xl"
+                    className="flex items-center gap-3 p-3 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl"
                     data-testid={`sl-quicklook-${ql.id}`}>
                     <Icon size={16} style={{ color: cfg.color }} />
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium text-white truncate">{ql.name}</p>
+                      <p className="text-xs font-medium text-[var(--kiq-ink)] truncate">{ql.name}</p>
                     </div>
                     <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full"
                       style={{ color: cfg.color, background: `${cfg.color}15`, border: `1px solid ${cfg.color}30` }}>
@@ -822,7 +822,7 @@ function ContractDetail({ contractId, allContracts }: {
           {/* Negotiation Guide */}
           {activeTab === "negotiation" && (
             <div className="space-y-3">
-              <div className="p-4 bg-zinc-900 border border-zinc-800 rounded-xl">
+              <div className="p-4 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl">
                 <p className="text-xs text-zinc-400 leading-relaxed">
                   For each provision below, review the gap summary, then copy the model contract language into your redline.
                   Use the talking point to frame the ask with the carrier's counsel.
@@ -872,11 +872,11 @@ export default function StopLoss() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-black text-white">
+      <div className="kiq-forensic-shell text-[var(--kiq-ink)]">
         <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
 
           {/* Page header */}
-          <div className="flex items-start justify-between">
+          <div className="kiq-command-hero flex items-start justify-between px-6 py-5">
             <div>
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-2xl flex items-center justify-center"
@@ -884,7 +884,7 @@ export default function StopLoss() {
                   <Activity size={20} style={{ color: ACCENT }} />
                 </div>
                 <div>
-                  <h1 className="text-2xl font-bold text-white" data-testid="sl-page-title">Stop-Loss IQ™</h1>
+                  <h1 className="text-2xl font-bold text-[var(--kiq-ink)]" data-testid="sl-page-title">Stop-Loss IQ™</h1>
                   <p className="text-xs text-zinc-500">50-Point Fiduciary Analysis · Self-Funded Health Plans</p>
                 </div>
               </div>
@@ -917,7 +917,7 @@ export default function StopLoss() {
               { label: "Carrier Index", value: "20", color: "#00A8FF" },
               { label: "Contracts Analyzed", value: contracts.filter(c => c.status === "complete").length.toString(), color: "#00FF94" },
             ].map(({ label, value, color }) => (
-              <div key={label} className="p-3 bg-zinc-900 border border-zinc-800 rounded-xl text-center">
+              <div key={label} className="kiq-forensic-card p-3 rounded-xl text-center">
                 <p className="text-xl font-bold" style={{ color }}>{value}</p>
                 <p className="text-[10px] text-zinc-500 mt-0.5">{label}</p>
               </div>
@@ -925,7 +925,7 @@ export default function StopLoss() {
           </div>
 
           {/* Upload zone */}
-          <div className="p-5 bg-zinc-900 border border-zinc-800 rounded-2xl">
+          <div className="kiq-forensic-card p-5 rounded-2xl">
             <p className="text-xs font-bold text-zinc-400 uppercase tracking-wider mb-4">Analyze a Stop-Loss Contract</p>
             <UploadZone onUploaded={(id) => setSelectedId(id)} />
           </div>
@@ -942,12 +942,12 @@ export default function StopLoss() {
                     key={c.id}
                     data-testid={`sl-contract-list-item-${c.id}`}
                     onClick={() => setSelectedId(c.id)}
-                    className={`w-full text-left p-3 rounded-xl border transition-colors ${selectedId === c.id ? "border-[#A855F7]/40 bg-[#A855F7]/05" : "border-zinc-800 bg-zinc-900 hover:border-zinc-700"}`}
+                    className={`w-full text-left p-3 rounded-xl border transition-colors ${selectedId === c.id ? "border-[#A855F7]/40 bg-[#A855F7]/05" : "kiq-forensic-row hover:border-[var(--kiq-hairline)]"}`}
                     style={selectedId === c.id ? { borderColor: ACCENT_BORDER, background: ACCENT_BG } : undefined}
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">
-                        <p className="text-sm font-medium text-white truncate">{c.carrier_name || c.contract_filename}</p>
+                        <p className="text-sm font-medium text-[var(--kiq-ink)] truncate">{c.carrier_name || c.contract_filename}</p>
                         <p className="text-[10px] text-zinc-600 truncate mt-0.5">{c.contract_filename}</p>
                       </div>
                       {c.overall_score !== null && <ScoreBadge score={c.overall_score} />}
@@ -975,7 +975,7 @@ export default function StopLoss() {
 
           {/* Empty state + Index teaser when no contracts */}
           {!isLoading && contracts.length === 0 && (
-            <div className="p-6 bg-zinc-900 border border-zinc-800 rounded-2xl">
+                    <div className="kiq-forensic-card p-6 rounded-2xl">
               <CarrierIndexTab />
             </div>
           )}

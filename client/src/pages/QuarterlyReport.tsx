@@ -69,9 +69,9 @@ export default function QuarterlyReport() {
               <label className="text-xs text-muted-foreground block mb-1">Reporting Period</label>
               <select value={quarter} onChange={e => setQuarter(e.target.value)}
                 className="w-full text-sm px-3 py-2 rounded-lg"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                 data-testid="select-quarter">
-                {["Q1 2026", "Q4 2025", "Q3 2025", "Q2 2025", "Q1 2025"].map(q => <option key={q} value={q} style={{ background: "#0a0a1a" }}>{q}</option>)}
+                {["Q1 2026", "Q4 2025", "Q3 2025", "Q2 2025", "Q1 2025"].map(q => <option key={q} value={q} style={{ background: "#F8FAFC" }}>{q}</option>)}
               </select>
             </div>
             <p className="text-xs text-muted-foreground mb-3">Include Sections</p>
@@ -81,7 +81,7 @@ export default function QuarterlyReport() {
                   data-testid={`toggle-${s.id}`}>
                   <div onClick={() => toggleSection(s.id)}
                     className="w-4 h-4 rounded flex items-center justify-center flex-shrink-0 transition-all"
-                    style={{ background: s.checked ? "rgba(0,168,255,0.15)" : "rgba(255,255,255,0.04)", border: `1px solid ${s.checked ? "rgba(0,168,255,0.4)" : "rgba(255,255,255,0.1)"}` }}>
+                    style={{ background: s.checked ? "rgba(0,168,255,0.15)" : "#ffffff", border: `1px solid ${s.checked ? "rgba(0,168,255,0.4)" : "#e2e8f0"}` }}>
                     {s.checked && <CheckCircle size={10} style={{ color: "#00A8FF" }} />}
                   </div>
                   <span style={{ color: s.checked ? "white" : "rgba(150,170,210,0.5)" }}>{s.label}</span>
@@ -113,14 +113,14 @@ export default function QuarterlyReport() {
         <div className="lg:col-span-2 space-y-4" data-testid="card-report-preview">
           <div className="metric-card" style={{ border: "1px solid rgba(0,168,255,0.1)" }}>
             <div className="flex items-center justify-between mb-4">
-              <p className="font-bold text-white">Report Preview — {quarter}</p>
+              <p className="font-bold text-[var(--kiq-ink)]">Report Preview — {quarter}</p>
               <span className="text-[10px] text-muted-foreground">{sections.filter(s => s.checked).length} sections selected</span>
             </div>
 
             <div className="space-y-4">
               {sections.filter(s => s.checked).map((section) => (
-                <div key={section.id} className="p-3 rounded-xl" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)" }}>
-                  <p className="text-xs font-semibold text-white mb-2">{section.label}</p>
+                <div key={section.id} className="p-3 rounded-xl" style={{ background: "#ffffff", border: "1px solid #f8fafc" }}>
+                  <p className="text-xs font-semibold text-[var(--kiq-ink)] mb-2">{section.label}</p>
                   {section.id === "summary" && (
                     <div className="grid grid-cols-3 gap-3 text-xs">
                       {[["Net Worth", "$2.41B", "#00A8FF"], ["YTD Return", "+14.7%", "#00FF94"], ["vs S&P 500", "+3.5%", "#FFB800"]].map(([l, v, c]) => (
@@ -140,7 +140,7 @@ export default function QuarterlyReport() {
                       ))}
                     </div>
                   )}
-                  {section.id === "notes" && <p className="text-xs text-muted-foreground">Advisor commentary will be populated by Sarah Chen and Michael Torres — Kincaid RMC.</p>}
+                  {section.id === "notes" && <p className="text-xs text-muted-foreground">Advisor commentary will be populated by Sarah Chen and Michael Torres — Kincaid Health.</p>}
                   {!["summary", "allocation", "performance", "notes"].includes(section.id) && <p className="text-xs text-muted-foreground">Section data will be included in generated PDF.</p>}
                 </div>
               ))}
@@ -156,12 +156,12 @@ function buildReportHTML(quarter: string, sections: string[]): string {
   return `<!DOCTYPE html>
 <html>
 <head>
-<title>Kincaid RMC — ${quarter} Report — Jeremiah Shrack</title>
+<title>Kincaid Health — ${quarter} Report — Jeremiah Shrack</title>
 <style>
   body { font-family: 'Georgia', serif; margin: 0; padding: 40px; background: #fff; color: #111; }
   h1 { font-size: 28px; margin: 0 0 4px; } h2 { font-size: 18px; margin: 24px 0 8px; border-bottom: 2px solid #1a1a4e; padding-bottom: 6px; color: #1a1a4e; }
   .header { background: #0a0a2e; color: white; padding: 32px; margin: -40px -40px 32px; }
-  .header h1 { color: #FFB800; } .header p { color: rgba(255,255,255,0.6); font-size: 13px; margin: 4px 0; }
+  .header h1 { color: #FFB800; } .header p { color: #1e293b; font-size: 13px; margin: 4px 0; }
   .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 16px 0; }
   .metric { background: #f8f9ff; border: 1px solid #e8eaf0; border-radius: 8px; padding: 12px; }
   .metric .label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #888; }
@@ -176,7 +176,7 @@ function buildReportHTML(quarter: string, sections: string[]): string {
 </head>
 <body>
 <div class="header">
-  <p style="font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;margin:0 0 8px">Kincaid RMC · Confidential</p>
+  <p style="font-size:11px;color:#475569;letter-spacing:2px;text-transform:uppercase;margin:0 0 8px">Kincaid Health · Confidential</p>
   <h1>Portfolio Review — ${quarter}</h1>
   <p>Jeremiah Shrack · Carmel, Indiana · Prepared ${new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</p>
 </div>
@@ -225,10 +225,10 @@ ${sections.includes("tax") ? `<h2>Tax Highlights — FY 2025</h2>
 
 ${sections.includes("notes") ? `<h2>Advisor Commentary</h2>
 <p style="font-size:13px;line-height:1.6;color:#444">Your portfolio delivered strong outperformance in ${quarter}, with +14.7% vs S&P 500's +11.2%. Private markets continue to drive alpha — Sequoia Capital XVIII reached 3.08x TVPI. Key focus areas for Q2: GRAT annuity payment optimization, Carlyle Europe V capital call timing, and Q1 estimated tax payment coordination with Deloitte. The Whitmore Dynasty Trust remains fully funded and on track for the 2026 GRAT zero-out event.</p>
-<p style="font-size:11px;color:#888;margin-top:8px">— Sarah Chen, Lead Wealth Advisor &nbsp;·&nbsp; Michael Torres, Tax & Structuring &nbsp;·&nbsp; Kincaid RMC</p>` : ""}
+<p style="font-size:11px;color:#888;margin-top:8px">— Sarah Chen, Lead Wealth Advisor &nbsp;·&nbsp; Michael Torres, Tax & Structuring &nbsp;·&nbsp; Kincaid Health</p>` : ""}
 
 <div class="footer">
-  <p>This report is prepared exclusively for Jeremiah Shrack and is strictly confidential. Kincaid RMC | Carmel, Indiana | ${new Date().getFullYear()}</p>
+  <p>This report is prepared exclusively for Jeremiah Shrack and is strictly confidential. Kincaid Health | Carmel, Indiana | ${new Date().getFullYear()}</p>
   <p>Past performance is not indicative of future results. This document does not constitute investment advice.</p>
 </div>
 </body></html>`;

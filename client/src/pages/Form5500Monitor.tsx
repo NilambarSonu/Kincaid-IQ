@@ -73,10 +73,10 @@ export default function Form5500Monitor() {
                 <Activity size={16} style={{ color: "#FBB724" }} />
               </div>
               <div>
-                <h1 className="text-lg font-bold text-white leading-tight">
+                <h1 className="text-lg font-bold text-[var(--kiq-ink)] leading-tight">
                   Form 5500 Monitoring Engine
                 </h1>
-                <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+                <p className="text-xs" style={{ color: "#475569" }}>
                   Account Intelligence · Filing-Cycle Alerts · CRM Sync
                 </p>
               </div>
@@ -115,7 +115,7 @@ export default function Form5500Monitor() {
 
         {/* Tabs */}
         <div className="flex items-center gap-0 mb-4 mt-5"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+          style={{ borderBottom: "1px solid #f1f5f9" }}>
           {(["alerts", "accounts", "crm"] as Tab[]).map(t => (
             <button
               key={t}
@@ -123,7 +123,7 @@ export default function Form5500Monitor() {
               onClick={() => setTab(t)}
               className="px-4 py-2 text-xs font-semibold transition-all"
               style={{
-                color: tab === t ? "#FBB724" : "rgba(255,255,255,0.4)",
+                color: tab === t ? "#FBB724" : "#475569",
                 borderBottom: tab === t ? "2px solid #FBB724" : "2px solid transparent",
                 background: "transparent",
                 marginBottom: -1,
@@ -176,14 +176,14 @@ function StatsRow({ stats }: { stats: any }) {
           <div key={t.label}
             className="rounded-xl p-3"
             style={{
-              background: "linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
-              border: "1px solid rgba(255,255,255,0.07)",
+              background: "linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.01) 100%)",
+              border: "1px solid #e2e8f0",
             }}>
             <div className="flex items-center gap-2 mb-1">
               <Icon size={12} style={{ color: t.color }} />
-              <span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{t.label}</span>
+              <span className="text-xs" style={{ color: "#475569" }}>{t.label}</span>
             </div>
-            <div className="text-xl font-bold" style={{ color: "#fff" }}>{t.value}</div>
+            <div className="text-xl font-bold" style={{ color: "#0F172A" }}>{t.value}</div>
           </div>
         );
       })}
@@ -282,8 +282,8 @@ function AlertsTab({ onSelectAccount }: { onSelectAccount: (id: string) => void 
               onClick={() => setFilter(f)}
               className="px-2.5 py-1 rounded-md text-xs font-semibold"
               style={{
-                background: filter === f ? "rgba(251,183,36,0.15)" : "rgba(255,255,255,0.04)",
-                border: `1px solid ${filter === f ? "rgba(251,183,36,0.35)" : "rgba(255,255,255,0.08)"}`,
+                background: filter === f ? "rgba(251,183,36,0.15)" : "#ffffff",
+                border: `1px solid ${filter === f ? "rgba(251,183,36,0.35)" : "#e2e8f0"}`,
                 color: filter === f ? "#FBB724" : "rgba(255,255,255,0.45)",
               }}
             >
@@ -297,8 +297,8 @@ function AlertsTab({ onSelectAccount }: { onSelectAccount: (id: string) => void 
             onClick={() => dismissAll.mutate()}
             className="text-xs px-2.5 py-1 rounded-md"
             style={{
-              color: "rgba(255,255,255,0.35)",
-              border: "1px solid rgba(255,255,255,0.08)",
+              color: "#64748b",
+              border: "1px solid #e2e8f0",
               background: "transparent",
             }}
           >
@@ -309,7 +309,7 @@ function AlertsTab({ onSelectAccount }: { onSelectAccount: (id: string) => void 
       </div>
 
       {isLoading ? (
-        <div className="py-12 text-center text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
+        <div className="py-12 text-center text-xs" style={{ color: "#64748b" }}>
           Loading alerts…
         </div>
       ) : alerts.length === 0 ? (
@@ -334,7 +334,7 @@ function EmptyAlerts() {
   return (
     <div className="py-16 flex flex-col items-center gap-3"
       style={{
-        border: "1px dashed rgba(255,255,255,0.06)",
+        border: "1px dashed #f1f5f9",
         borderRadius: 12,
         background: "rgba(255,255,255,0.01)",
       }}>
@@ -347,8 +347,8 @@ function EmptyAlerts() {
         <Bell size={20} style={{ color: "rgba(251,183,36,0.5)" }} />
       </div>
       <div className="text-center">
-        <p className="text-sm font-semibold text-white mb-1">No alerts yet</p>
-        <p className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>
+        <p className="text-sm font-semibold text-[var(--kiq-ink)] mb-1">No alerts yet</p>
+        <p className="text-xs" style={{ color: "#64748b" }}>
           Add accounts, enroll EINs for monitoring, then run a scan to detect 5500 changes.
         </p>
       </div>
@@ -378,9 +378,9 @@ function AlertCard({ alert, onDismiss, onViewAccount }: {
       className="rounded-xl overflow-hidden transition-all"
       style={{
         background: alert.read
-          ? "rgba(255,255,255,0.02)"
-          : "linear-gradient(135deg, rgba(251,183,36,0.04) 0%, rgba(255,255,255,0.02) 100%)",
-        border: `1px solid ${alert.read ? "rgba(255,255,255,0.07)" : "rgba(251,183,36,0.22)"}`,
+          ? "#ffffff"
+          : "linear-gradient(135deg, rgba(251,183,36,0.04) 0%, #ffffff 100%)",
+        border: `1px solid ${alert.read ? "#e2e8f0" : "rgba(251,183,36,0.22)"}`,
       }}
     >
       <div className="p-4">
@@ -413,10 +413,10 @@ function AlertCard({ alert, onDismiss, onViewAccount }: {
                     }}>NEW</span>
                 )}
               </div>
-              <div className="font-semibold text-sm text-white mb-1 leading-tight">{alert.employer_name}</div>
+              <div className="font-semibold text-sm text-[var(--kiq-ink)] mb-1 leading-tight">{alert.employer_name}</div>
               <div className="text-xs" style={{ color: "rgba(255,255,255,0.55)" }}>{alert.summary}</div>
               {alert.ein && (
-                <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.25)" }}>
+                <div className="text-xs mt-0.5" style={{ color: "rgba(15,23,42,0.08)" }}>
                   EIN: {alert.ein}
                   {alert.state && <span className="ml-2">{alert.state}</span>}
                   {alert.industry && <span className="ml-2">{alert.industry}</span>}
@@ -445,7 +445,7 @@ function AlertCard({ alert, onDismiss, onViewAccount }: {
                 data-testid={`button-view-account-${alert.id}`}
                 onClick={onViewAccount}
                 className="p-1.5 rounded-lg transition-opacity hover:opacity-70"
-                style={{ color: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.08)" }}
+                style={{ color: "#64748b", border: "1px solid #e2e8f0" }}
                 title="View account"
               >
                 <ExternalLink size={12} />
@@ -455,7 +455,7 @@ function AlertCard({ alert, onDismiss, onViewAccount }: {
               data-testid={`button-expand-${alert.id}`}
               onClick={() => setExpanded(!expanded)}
               className="p-1.5 rounded-lg transition-opacity hover:opacity-70"
-              style={{ color: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.08)" }}
+              style={{ color: "#64748b", border: "1px solid #e2e8f0" }}
               title={expanded ? "Collapse" : "Expand"}
             >
               <ChevronRight size={12} style={{ transform: expanded ? "rotate(90deg)" : "none", transition: "transform 0.15s" }} />
@@ -465,7 +465,7 @@ function AlertCard({ alert, onDismiss, onViewAccount }: {
                 data-testid={`button-dismiss-${alert.id}`}
                 onClick={onDismiss}
                 className="p-1.5 rounded-lg transition-opacity hover:opacity-70"
-                style={{ color: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.08)" }}
+                style={{ color: "#64748b", border: "1px solid #e2e8f0" }}
                 title="Dismiss"
               >
                 <X size={12} />
@@ -476,7 +476,7 @@ function AlertCard({ alert, onDismiss, onViewAccount }: {
 
         {expanded && (
           <div className="mt-3 pt-3 flex flex-col gap-3"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            style={{ borderTop: "1px solid #f1f5f9" }}>
 
             {/* Re-engagement angle */}
             {angle && (
@@ -506,7 +506,7 @@ function AlertCard({ alert, onDismiss, onViewAccount }: {
                     Draft Email
                   </button>
                 </div>
-                <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.7)" }}>{angle}</p>
+                <p className="text-xs leading-relaxed" style={{ color: "#0f172a" }}>{angle}</p>
               </div>
             )}
 
@@ -514,21 +514,21 @@ function AlertCard({ alert, onDismiss, onViewAccount }: {
             {detail.old_value !== undefined && detail.new_value !== undefined && (
               <div className="flex items-center gap-3">
                 <div className="text-center">
-                  <div className="text-xs font-mono font-bold text-white">
+                  <div className="text-xs font-mono font-bold text-[var(--kiq-ink)]">
                     {typeof detail.old_value === "number" && detail.old_value > 1000
                       ? `$${(detail.old_value / 1e6).toFixed(2)}M`
                       : String(detail.old_value)}
                   </div>
-                  <div className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>{detail.old_year}</div>
+                  <div className="text-xs" style={{ color: "#64748b" }}>{detail.old_year}</div>
                 </div>
-                <ArrowRight size={14} style={{ color: "rgba(255,255,255,0.2)" }} />
+                <ArrowRight size={14} style={{ color: "#94a3b8" }} />
                 <div className="text-center">
                   <div className="text-xs font-mono font-bold" style={{ color }}>
                     {typeof detail.new_value === "number" && detail.new_value > 1000
                       ? `$${(detail.new_value / 1e6).toFixed(2)}M`
                       : String(detail.new_value)}
                   </div>
-                  <div className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>{detail.new_year}</div>
+                  <div className="text-xs" style={{ color: "#64748b" }}>{detail.new_year}</div>
                 </div>
                 {detail.pct_change !== undefined && (
                   <div className="ml-2">
@@ -547,13 +547,13 @@ function AlertCard({ alert, onDismiss, onViewAccount }: {
 
             {/* Confidence note */}
             {detail.confidence_note && (
-              <p className="text-xs italic" style={{ color: "rgba(255,255,255,0.3)" }}>
+              <p className="text-xs italic" style={{ color: "#64748b" }}>
                 ⚠ {detail.confidence_note}
               </p>
             )}
 
             {/* Data disclaimer */}
-            <p className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
+            <p className="text-xs" style={{ color: "#94a3b8" }}>
               <Clock size={10} className="inline mr-1" />
               {detail.data_disclaimer || DATA_LAG}
             </p>
@@ -638,7 +638,7 @@ function OutreachModal({ alert, onClose }: { alert: any; onClose: () => void }) 
         style={{
           maxWidth: 640,
           background: "linear-gradient(135deg, rgba(14,18,42,0.99) 0%, rgba(8,10,28,0.99) 100%)",
-          border: "1px solid rgba(255,255,255,0.10)",
+          border: "1px solid rgba(15,23,42,0.06)",
           borderRadius: 20,
           boxShadow: "0 24px 80px rgba(0,0,0,0.65)",
           maxHeight: "92vh",
@@ -647,7 +647,7 @@ function OutreachModal({ alert, onClose }: { alert: any; onClose: () => void }) 
 
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 flex-shrink-0"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+          style={{ borderBottom: "1px solid #e2e8f0" }}>
           <div className="flex items-center gap-3">
             <div style={{
               width: 30, height: 30, borderRadius: 8,
@@ -658,14 +658,14 @@ function OutreachModal({ alert, onClose }: { alert: any; onClose: () => void }) 
               <Mail size={14} style={{ color: "#10b981" }} />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-white leading-tight">Draft Re-engagement Outreach</h3>
-              <p className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>
+              <h3 className="text-sm font-bold text-[var(--kiq-ink)] leading-tight">Draft Re-engagement Outreach</h3>
+              <p className="text-xs" style={{ color: "#64748b" }}>
                 {alert.employer_name} · <span style={{ color }}>{triggerLabel}</span>
               </p>
             </div>
           </div>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:opacity-70"
-            style={{ color: "rgba(255,255,255,0.4)" }}>
+            style={{ color: "#475569" }}>
             <X size={14} />
           </button>
         </div>
@@ -683,8 +683,8 @@ function OutreachModal({ alert, onClose }: { alert: any; onClose: () => void }) 
                 <Zap size={22} style={{ color: "#10b981" }} />
               </div>
               <div className="text-center">
-                <p className="text-sm font-semibold text-white mb-1">Generate AI Draft</p>
-                <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)", maxWidth: 380 }}>
+                <p className="text-sm font-semibold text-[var(--kiq-ink)] mb-1">Generate AI Draft</p>
+                <p className="text-xs" style={{ color: "#475569", maxWidth: 380 }}>
                   AI will draft an email referencing only the detected filing change — no invented events.
                   Edit freely before sending.
                 </p>
@@ -709,14 +709,14 @@ function OutreachModal({ alert, onClose }: { alert: any; onClose: () => void }) 
           {/* Alert context summary */}
           {(subject || draft.data) && (
             <div className="rounded-lg p-3 text-xs"
-              style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}>
+              style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
               <div className="flex items-center gap-2 mb-1">
-                <span style={{ color: "rgba(255,255,255,0.35)" }}>Trigger:</span>
+                <span style={{ color: "#64748b" }}>Trigger:</span>
                 <span style={{ color }} className="font-semibold">{triggerLabel}</span>
-                <span style={{ color: "rgba(255,255,255,0.2)" }}>·</span>
+                <span style={{ color: "#94a3b8" }}>·</span>
                 <span style={{ color: "rgba(255,255,255,0.55)" }}>{alert.summary}</span>
               </div>
-              <p style={{ color: "rgba(255,255,255,0.2)" }}>
+              <p style={{ color: "#94a3b8" }}>
                 <Clock size={9} className="inline mr-1" />
                 Filing-cycle data · 12–18 month lag
               </p>
@@ -728,7 +728,7 @@ function OutreachModal({ alert, onClose }: { alert: any; onClose: () => void }) 
             <>
               <div>
                 <label className="text-xs font-bold mb-1.5 block"
-                  style={{ color: "rgba(255,255,255,0.5)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                  style={{ color: "#334155", letterSpacing: "0.08em", textTransform: "uppercase" }}>
                   Subject
                 </label>
                 <Input
@@ -736,13 +736,13 @@ function OutreachModal({ alert, onClose }: { alert: any; onClose: () => void }) 
                   value={subject}
                   onChange={e => setSubject(e.target.value)}
                   className="text-xs h-8"
-                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff" }}
+                  style={{ background: "#f8fafc", border: "1px solid #cbd5e1", color: "#0F172A" }}
                 />
               </div>
 
               <div>
                 <label className="text-xs font-bold mb-1.5 block"
-                  style={{ color: "rgba(255,255,255,0.5)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                  style={{ color: "#334155", letterSpacing: "0.08em", textTransform: "uppercase" }}>
                   Email Body
                 </label>
                 <Textarea
@@ -752,8 +752,8 @@ function OutreachModal({ alert, onClose }: { alert: any; onClose: () => void }) 
                   rows={10}
                   className="text-xs font-mono resize-none"
                   style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.10)",
+                    background: "#ffffff",
+                    border: "1px solid rgba(15,23,42,0.06)",
                     color: "rgba(255,255,255,0.85)",
                     lineHeight: 1.6,
                   }}
@@ -762,8 +762,8 @@ function OutreachModal({ alert, onClose }: { alert: any; onClose: () => void }) 
 
               <div>
                 <label className="text-xs font-bold mb-1.5 block"
-                  style={{ color: "rgba(255,255,255,0.5)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                  Recipients <span style={{ color: "rgba(255,255,255,0.2)", fontWeight: 400 }}>(comma-separated, optional)</span>
+                  style={{ color: "#334155", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                  Recipients <span style={{ color: "#94a3b8", fontWeight: 400 }}>(comma-separated, optional)</span>
                 </label>
                 <Input
                   data-testid="input-outreach-recipients"
@@ -771,10 +771,10 @@ function OutreachModal({ alert, onClose }: { alert: any; onClose: () => void }) 
                   onChange={e => setRecipients(e.target.value)}
                   placeholder="cfo@employer.com, hr@employer.com"
                   className="text-xs h-8"
-                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff" }}
+                  style={{ background: "#f8fafc", border: "1px solid #cbd5e1", color: "#0F172A" }}
                 />
                 {!recipients.trim() && (
-                  <p className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.25)" }}>
+                  <p className="text-xs mt-1" style={{ color: "rgba(15,23,42,0.08)" }}>
                     Leave blank to log only (copy & send manually via your email client).
                   </p>
                 )}
@@ -818,8 +818,8 @@ function OutreachModal({ alert, onClose }: { alert: any; onClose: () => void }) 
                   variant="ghost"
                   className="flex items-center gap-1.5 text-xs font-semibold"
                   style={{
-                    border: "1px solid rgba(255,255,255,0.10)",
-                    color: copied ? "#10b981" : "rgba(255,255,255,0.5)",
+                    border: "1px solid rgba(15,23,42,0.06)",
+                    color: copied ? "#10b981" : "#334155",
                   }}
                 >
                   {copied ? <><Check size={12} /> Copied</> : <><Copy size={12} /> Copy</>}
@@ -830,7 +830,7 @@ function OutreachModal({ alert, onClose }: { alert: any; onClose: () => void }) 
                   disabled={draft.isPending}
                   variant="ghost"
                   className="text-xs"
-                  style={{ color: "rgba(255,255,255,0.35)" }}
+                  style={{ color: "#64748b" }}
                   title="Regenerate draft"
                 >
                   <RefreshCw size={12} className={draft.isPending ? "animate-spin" : ""} />
@@ -871,14 +871,14 @@ function AccountsTab({ selectedId, onSelect }: {
       {/* Left list */}
       <div className="flex flex-col gap-2" style={{ width: 280, flexShrink: 0 }}>
         <div className="relative">
-          <Search size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: "rgba(255,255,255,0.3)" }} />
+          <Search size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2" style={{ color: "#64748b" }} />
           <Input
             data-testid="input-account-search"
             value={q}
             onChange={e => setQ(e.target.value)}
             placeholder="Search accounts…"
             className="pl-7 text-xs h-8"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }}
+            style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }}
           />
         </div>
 
@@ -889,9 +889,9 @@ function AccountsTab({ selectedId, onSelect }: {
               onClick={() => setStatusFilter(s)}
               className="px-2 py-0.5 rounded text-xs font-semibold"
               style={{
-                background: statusFilter === s ? "rgba(251,183,36,0.15)" : "rgba(255,255,255,0.04)",
-                border: `1px solid ${statusFilter === s ? "rgba(251,183,36,0.3)" : "rgba(255,255,255,0.07)"}`,
-                color: statusFilter === s ? "#FBB724" : "rgba(255,255,255,0.4)",
+                background: statusFilter === s ? "rgba(251,183,36,0.15)" : "#ffffff",
+                border: `1px solid ${statusFilter === s ? "rgba(251,183,36,0.3)" : "#e2e8f0"}`,
+                color: statusFilter === s ? "#FBB724" : "#475569",
               }}
             >
               {s}
@@ -901,9 +901,9 @@ function AccountsTab({ selectedId, onSelect }: {
 
         <div className="flex flex-col gap-1.5 overflow-y-auto custom-scrollbar" style={{ maxHeight: 560 }}>
           {isLoading ? (
-            <div className="text-xs text-center py-8" style={{ color: "rgba(255,255,255,0.3)" }}>Loading…</div>
+            <div className="text-xs text-center py-8" style={{ color: "#64748b" }}>Loading…</div>
           ) : accounts.length === 0 ? (
-            <div className="text-xs text-center py-8" style={{ color: "rgba(255,255,255,0.3)" }}>
+            <div className="text-xs text-center py-8" style={{ color: "#64748b" }}>
               No accounts found. Add one to get started.
             </div>
           ) : accounts.map(a => (
@@ -924,12 +924,12 @@ function AccountsTab({ selectedId, onSelect }: {
         ) : (
           <div className="h-full flex flex-col items-center justify-center gap-3"
             style={{
-              border: "1px dashed rgba(255,255,255,0.06)",
+              border: "1px dashed #f1f5f9",
               borderRadius: 12,
               background: "rgba(255,255,255,0.01)",
             }}>
-            <Database size={24} style={{ color: "rgba(255,255,255,0.15)" }} />
-            <p className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
+            <Database size={24} style={{ color: "#cbd5e1" }} />
+            <p className="text-xs" style={{ color: "#64748b" }}>
               Select an account to view its intelligence profile.
             </p>
           </div>
@@ -943,7 +943,7 @@ function AccountListItem({ account, selected, onSelect }: {
   account: any; selected: boolean; onSelect: () => void;
 }) {
   const statusColors: Record<string, string> = {
-    prospect: "#00D4FF", client: "#10b981", lost: "#ef4444", inactive: "rgba(255,255,255,0.3)",
+    prospect: "#00D4FF", client: "#10b981", lost: "#ef4444", inactive: "#64748b",
   };
   const color = statusColors[account.relationship_status] || "#fff";
 
@@ -955,15 +955,15 @@ function AccountListItem({ account, selected, onSelect }: {
       style={{
         background: selected
           ? "linear-gradient(135deg, rgba(251,183,36,0.10) 0%, rgba(251,183,36,0.04) 100%)"
-          : "rgba(255,255,255,0.02)",
-        border: `1px solid ${selected ? "rgba(251,183,36,0.3)" : "rgba(255,255,255,0.06)"}`,
+          : "#ffffff",
+        border: `1px solid ${selected ? "rgba(251,183,36,0.3)" : "#f1f5f9"}`,
       }}
     >
       <div className="flex items-start justify-between gap-2">
         <div className="flex-1 min-w-0">
-          <div className="text-xs font-semibold text-white truncate">{account.name}</div>
+          <div className="text-xs font-semibold text-[var(--kiq-ink)] truncate">{account.name}</div>
           {account.ein && (
-            <div className="text-xs font-mono" style={{ color: "rgba(255,255,255,0.3)" }}>
+            <div className="text-xs font-mono" style={{ color: "#64748b" }}>
               EIN {account.ein}
             </div>
           )}
@@ -1036,7 +1036,7 @@ function AccountDetail({ accountId, onClose }: { accountId: string; onClose: () 
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-48" style={{ color: "rgba(255,255,255,0.3)" }}>
+      <div className="flex items-center justify-center h-48" style={{ color: "#64748b" }}>
         <RefreshCw size={18} className="animate-spin" />
       </div>
     );
@@ -1046,7 +1046,7 @@ function AccountDetail({ accountId, onClose }: { accountId: string; onClose: () 
   }
 
   const statusColors: Record<string, string> = {
-    prospect: "#00D4FF", client: "#10b981", lost: "#ef4444", inactive: "rgba(255,255,255,0.3)",
+    prospect: "#00D4FF", client: "#10b981", lost: "#ef4444", inactive: "#64748b",
   };
 
   return (
@@ -1054,14 +1054,14 @@ function AccountDetail({ accountId, onClose }: { accountId: string; onClose: () 
       {/* Account header */}
       <div className="rounded-xl p-4"
         style={{
-          background: "linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)",
-          border: "1px solid rgba(255,255,255,0.08)",
+          background: "linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.01) 100%)",
+          border: "1px solid #e2e8f0",
         }}>
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex-1 min-w-0">
-            <h2 className="text-base font-bold text-white leading-tight">{profile.name}</h2>
+            <h2 className="text-base font-bold text-[var(--kiq-ink)] leading-tight">{profile.name}</h2>
             {profile.ein && (
-              <div className="text-xs font-mono" style={{ color: "rgba(255,255,255,0.35)" }}>
+              <div className="text-xs font-mono" style={{ color: "#64748b" }}>
                 EIN {profile.ein}
               </div>
             )}
@@ -1076,10 +1076,10 @@ function AccountDetail({ accountId, onClose }: { accountId: string; onClose: () 
                   {profile.relationship_status}
                 </span>
               )}
-              {profile.industry && <span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{profile.industry}</span>}
-              {profile.state && <span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{profile.state}</span>}
+              {profile.industry && <span className="text-xs" style={{ color: "#475569" }}>{profile.industry}</span>}
+              {profile.state && <span className="text-xs" style={{ color: "#475569" }}>{profile.state}</span>}
               {profile.employees && (
-                <span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+                <span className="text-xs" style={{ color: "#475569" }}>
                   {profile.employees.toLocaleString()} employees
                 </span>
               )}
@@ -1103,7 +1103,7 @@ function AccountDetail({ accountId, onClose }: { accountId: string; onClose: () 
               Lightfield
             </button>
             <button onClick={onClose} className="p-1.5 rounded-lg"
-              style={{ color: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.08)" }}>
+              style={{ color: "#64748b", border: "1px solid #e2e8f0" }}>
               <X size={12} />
             </button>
           </div>
@@ -1125,7 +1125,7 @@ function AccountDetail({ accountId, onClose }: { accountId: string; onClose: () 
                 data-testid="button-unenroll"
                 onClick={() => unenroll.mutate()}
                 className="text-xs px-2 py-1 rounded-md"
-                style={{ color: "rgba(255,255,255,0.3)", border: "1px solid rgba(255,255,255,0.08)" }}
+                style={{ color: "#64748b", border: "1px solid #e2e8f0" }}
               >
                 Stop
               </button>
@@ -1159,7 +1159,7 @@ function AccountDetail({ accountId, onClose }: { accountId: string; onClose: () 
 
       {/* Detail tabs */}
       <div className="flex items-center gap-0"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        style={{ borderBottom: "1px solid #f1f5f9" }}>
         {([
           ["overview", "Overview"],
           ["filings", `5500 History (${profile.filing_history?.length ?? 0})`],
@@ -1171,7 +1171,7 @@ function AccountDetail({ accountId, onClose }: { accountId: string; onClose: () 
             onClick={() => setDetailTab(key as any)}
             className="px-3 py-2 text-xs font-semibold"
             style={{
-              color: detailTab === key ? "#00D4FF" : "rgba(255,255,255,0.35)",
+              color: detailTab === key ? "#00D4FF" : "#64748b",
               borderBottom: detailTab === key ? "2px solid #00D4FF" : "2px solid transparent",
               background: "transparent", marginBottom: -1,
             }}
@@ -1193,7 +1193,7 @@ function AccountDetail({ accountId, onClose }: { accountId: string; onClose: () 
         {detailTab === "alerts" && (
           <div className="flex flex-col gap-2">
             {profile.monitoring?.alerts?.length === 0 ? (
-              <div className="text-xs py-8 text-center" style={{ color: "rgba(255,255,255,0.3)" }}>
+              <div className="text-xs py-8 text-center" style={{ color: "#64748b" }}>
                 No alerts yet. Run a scan to detect 5500 changes.
               </div>
             ) : profile.monitoring?.alerts?.map((a: any) => (
@@ -1242,9 +1242,9 @@ function AccountOverview({ profile }: { profile: any }) {
         <div className="grid grid-cols-2 gap-2">
           {fields.map(([label, val]) => (
             <div key={label} className="rounded-lg p-2.5"
-              style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
-              <div className="text-xs mb-0.5" style={{ color: "rgba(255,255,255,0.35)" }}>{label}</div>
-              <div className="text-xs font-semibold text-white">{val}</div>
+              style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
+              <div className="text-xs mb-0.5" style={{ color: "#64748b" }}>{label}</div>
+              <div className="text-xs font-semibold text-[var(--kiq-ink)]">{val}</div>
             </div>
           ))}
         </div>
@@ -1256,8 +1256,8 @@ function AccountOverview({ profile }: { profile: any }) {
           <div className="text-xs font-bold mb-2" style={{ color: "#FF6B1A" }}>Risk Signals</div>
           {profile.risk_signals.map((s: any, i: number) => (
             <div key={i} className="flex items-center justify-between text-xs">
-              <span style={{ color: "rgba(255,255,255,0.5)" }}>{s.label}</span>
-              <span className="font-mono font-bold text-white">{s.value}</span>
+              <span style={{ color: "#334155" }}>{s.label}</span>
+              <span className="font-mono font-bold text-[var(--kiq-ink)]">{s.value}</span>
             </div>
           ))}
         </div>
@@ -1265,16 +1265,16 @@ function AccountOverview({ profile }: { profile: any }) {
 
       {profile.opportunities?.length > 0 && (
         <div>
-          <div className="text-xs font-bold mb-2" style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em", textTransform: "uppercase" }}>
+          <div className="text-xs font-bold mb-2" style={{ color: "#475569", letterSpacing: "0.08em", textTransform: "uppercase" }}>
             Linked Opportunities
           </div>
           <div className="flex flex-col gap-1.5">
             {profile.opportunities.map((o: any) => (
               <div key={o.id} className="rounded-lg p-2.5 flex items-center justify-between"
-                style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
                 <div>
-                  <div className="text-xs font-semibold text-white">{o.title || "Untitled opportunity"}</div>
-                  <div className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>
+                  <div className="text-xs font-semibold text-[var(--kiq-ink)]">{o.title || "Untitled opportunity"}</div>
+                  <div className="text-xs" style={{ color: "#64748b" }}>
                     {o.stage} {o.renewal_date ? `· due ${o.renewal_date}` : ""}
                   </div>
                 </div>
@@ -1291,8 +1291,8 @@ function AccountOverview({ profile }: { profile: any }) {
 
       {profile.notes && (
         <div className="rounded-lg p-3"
-          style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
-          <div className="text-xs font-bold mb-1" style={{ color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.08em" }}>Notes</div>
+          style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
+          <div className="text-xs font-bold mb-1" style={{ color: "#64748b", textTransform: "uppercase", letterSpacing: "0.08em" }}>Notes</div>
           <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>{profile.notes}</p>
         </div>
       )}
@@ -1303,7 +1303,7 @@ function AccountOverview({ profile }: { profile: any }) {
 function FilingHistory({ history }: { history: any[] }) {
   if (!history?.length) {
     return (
-      <div className="text-xs py-8 text-center" style={{ color: "rgba(255,255,255,0.3)" }}>
+      <div className="text-xs py-8 text-center" style={{ color: "#64748b" }}>
         No Form 5500 filings found. Ensure the EIN is correct and enrolled.
       </div>
     );
@@ -1317,12 +1317,12 @@ function FilingHistory({ history }: { history: any[] }) {
       {history.map((row, i) => (
         <div key={i} className="rounded-xl p-3"
           style={{
-            background: "rgba(255,255,255,0.02)",
-            border: `1px solid ${i === 0 ? "rgba(251,183,36,0.2)" : "rgba(255,255,255,0.06)"}`,
+            background: "#ffffff",
+            border: `1px solid ${i === 0 ? "rgba(251,183,36,0.2)" : "#f1f5f9"}`,
           }}>
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-white">{row.year}</span>
+              <span className="text-sm font-bold text-[var(--kiq-ink)]">{row.year}</span>
               {i === 0 && (
                 <span className="text-xs px-1.5 py-0.5 rounded font-semibold"
                   style={{ color: "#FBB724", background: "rgba(251,183,36,0.1)", border: "1px solid rgba(251,183,36,0.2)" }}>
@@ -1331,7 +1331,7 @@ function FilingHistory({ history }: { history: any[] }) {
               )}
             </div>
             {row.carrier_name && (
-              <span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{row.carrier_name}</span>
+              <span className="text-xs" style={{ color: "#475569" }}>{row.carrier_name}</span>
             )}
           </div>
           <div className="grid grid-cols-3 gap-2">
@@ -1341,8 +1341,8 @@ function FilingHistory({ history }: { history: any[] }) {
               ["Broker Comm.", row.broker_commissions > 0 ? `$${row.broker_commissions.toLocaleString()}` : "—"],
             ].map(([label, val]) => (
               <div key={label}>
-                <div className="text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>{label}</div>
-                <div className="text-xs font-mono font-bold text-white">{val}</div>
+                <div className="text-xs" style={{ color: "#64748b" }}>{label}</div>
+                <div className="text-xs font-mono font-bold text-[var(--kiq-ink)]">{val}</div>
               </div>
             ))}
           </div>
@@ -1362,7 +1362,7 @@ function ContactsPanel({ contacts, onAdd }: { contacts: any[]; onAdd: () => void
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <span className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>
+        <span className="text-xs" style={{ color: "#64748b" }}>
           {contacts?.length ?? 0} contact{contacts?.length !== 1 ? "s" : ""}
         </span>
         <button
@@ -1379,27 +1379,27 @@ function ContactsPanel({ contacts, onAdd }: { contacts: any[]; onAdd: () => void
         </button>
       </div>
       {!contacts?.length ? (
-        <div className="text-xs py-8 text-center" style={{ color: "rgba(255,255,255,0.3)" }}>
+        <div className="text-xs py-8 text-center" style={{ color: "#64748b" }}>
           No contacts yet. Add decision-makers, consultants, or brokers.
         </div>
       ) : contacts.map(c => (
         <div key={c.id} className="rounded-lg p-2.5 flex items-start justify-between gap-2"
-          style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+          style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
           <div>
-            <div className="text-xs font-semibold text-white">
+            <div className="text-xs font-semibold text-[var(--kiq-ink)]">
               {[c.first_name, c.last_name].filter(Boolean).join(" ") || "Unknown"}
             </div>
-            {c.title && <div className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{c.title}</div>}
-            {c.firm && <div className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>{c.firm}</div>}
+            {c.title && <div className="text-xs" style={{ color: "#475569" }}>{c.title}</div>}
+            {c.firm && <div className="text-xs" style={{ color: "#64748b" }}>{c.firm}</div>}
             <div className="flex items-center gap-2 mt-0.5">
               {c.email && <span className="text-xs" style={{ color: "#00D4FF" }}>{c.email}</span>}
-              {c.phone && <span className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>{c.phone}</span>}
+              {c.phone && <span className="text-xs" style={{ color: "#64748b" }}>{c.phone}</span>}
             </div>
           </div>
           <button
             onClick={() => deleteContact.mutate(c.id)}
             className="p-1 rounded"
-            style={{ color: "rgba(255,255,255,0.2)", flexShrink: 0 }}
+            style={{ color: "#94a3b8", flexShrink: 0 }}
           >
             <X size={11} />
           </button>
@@ -1423,7 +1423,7 @@ function CrmTab() {
 
   return (
     <div className="flex flex-col gap-4 max-w-2xl">
-      <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+      <p className="text-xs" style={{ color: "#475569" }}>
         Provider-agnostic CRM sync. Push account profiles and filing alerts directly
         into your CRM from any account detail panel. Lightfield is the primary integration;
         HubSpot is the secondary.
@@ -1456,10 +1456,10 @@ function CrmTab() {
       {/* Sync instructions */}
       <div className="rounded-xl p-4"
         style={{
-          background: "rgba(255,255,255,0.02)",
-          border: "1px solid rgba(255,255,255,0.07)",
+          background: "#ffffff",
+          border: "1px solid #e2e8f0",
         }}>
-        <div className="text-xs font-bold mb-2" style={{ color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+        <div className="text-xs font-bold mb-2" style={{ color: "#475569", textTransform: "uppercase", letterSpacing: "0.08em" }}>
           Sync workflow
         </div>
         {[
@@ -1474,7 +1474,7 @@ function CrmTab() {
               style={{ background: "rgba(251,183,36,0.12)", border: "1px solid rgba(251,183,36,0.25)", color: "#FBB724" }}>
               {i + 1}
             </div>
-            <p className="text-xs" style={{ color: "rgba(255,255,255,0.5)" }}>{step}</p>
+            <p className="text-xs" style={{ color: "#334155" }}>{step}</p>
           </div>
         ))}
       </div>
@@ -1489,13 +1489,13 @@ function CrmProviderCard({ name, description, configured, demoMode, message, env
   return (
     <div className="rounded-xl p-4"
       style={{
-        background: "rgba(255,255,255,0.02)",
-        border: `1px solid ${configured ? `${color}30` : "rgba(255,255,255,0.07)"}`,
+        background: "#ffffff",
+        border: `1px solid ${configured ? `${color}30` : "#e2e8f0"}`,
       }}>
       <div className="flex items-start justify-between gap-3 mb-2">
         <div>
           <div className="flex items-center gap-2 mb-0.5">
-            <span className="text-sm font-bold text-white">{name}</span>
+            <span className="text-sm font-bold text-[var(--kiq-ink)]">{name}</span>
             <span className="text-xs px-2 py-0.5 rounded font-semibold"
               style={{
                 color: configured ? "#10b981" : "#ef4444",
@@ -1505,18 +1505,18 @@ function CrmProviderCard({ name, description, configured, demoMode, message, env
               {configured ? "Connected" : demoMode ? "Demo Mode" : "Not connected"}
             </span>
           </div>
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>{description}</p>
+          <p className="text-xs" style={{ color: "#475569" }}>{description}</p>
         </div>
       </div>
       {message && (
-        <p className="text-xs mt-2" style={{ color: "rgba(255,255,255,0.35)" }}>{message}</p>
+        <p className="text-xs mt-2" style={{ color: "#64748b" }}>{message}</p>
       )}
       {!configured && envVar && (
         <p className="text-xs mt-2 font-mono"
           style={{
-            color: "rgba(255,255,255,0.25)",
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(255,255,255,0.07)",
+            color: "rgba(15,23,42,0.08)",
+            background: "#ffffff",
+            border: "1px solid #e2e8f0",
             borderRadius: 6, padding: "4px 8px",
           }}>
           Required env var: {envVar}
@@ -1561,36 +1561,36 @@ function AddAccountModal({ onClose }: { onClose: () => void }) {
     <Modal title="Add Account" onClose={onClose}>
       <div className="flex flex-col gap-3">
         <div>
-          <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>Employer Name *</label>
+          <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>Employer Name *</label>
           <Input data-testid="input-account-name" {...f("name")} placeholder="Acme Corp" className="text-xs h-8"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }} />
+            style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }} />
         </div>
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>EIN</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>EIN</label>
             <Input data-testid="input-ein" {...f("ein")} placeholder="00-0000000" className="text-xs h-8"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }} />
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }} />
           </div>
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>State</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>State</label>
             <Input data-testid="input-state" {...f("state")} placeholder="IN" className="text-xs h-8"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }} />
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }} />
           </div>
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>Industry</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>Industry</label>
             <Input data-testid="input-industry" {...f("industry")} placeholder="Manufacturing" className="text-xs h-8"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }} />
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }} />
           </div>
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>Employees</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>Employees</label>
             <Input data-testid="input-employees" {...f("employees")} placeholder="500" className="text-xs h-8"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }} />
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }} />
           </div>
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>Status</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>Status</label>
             <select data-testid="select-status" {...f("relationship_status")}
               className="w-full text-xs h-8 rounded-md px-2"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }}>
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }}>
               <option value="prospect">Prospect</option>
               <option value="client">Client</option>
               <option value="lost">Lost</option>
@@ -1598,31 +1598,31 @@ function AddAccountModal({ onClose }: { onClose: () => void }) {
             </select>
           </div>
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>Plan Type</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>Plan Type</label>
             <select data-testid="select-plan-type" {...f("plan_type")}
               className="w-full text-xs h-8 rounded-md px-2"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }}>
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }}>
               <option value="self-funded">Self-funded</option>
               <option value="fully-insured">Fully Insured</option>
               <option value="level-funded">Level Funded</option>
             </select>
           </div>
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>TPA</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>TPA</label>
             <Input data-testid="input-tpa" {...f("tpa")} placeholder="TPA name" className="text-xs h-8"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }} />
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }} />
           </div>
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>Annual Premium</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>Annual Premium</label>
             <Input data-testid="input-premium" {...f("annual_premium")} placeholder="5000000" className="text-xs h-8"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }} />
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }} />
           </div>
         </div>
         <div>
-          <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>Notes</label>
+          <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>Notes</label>
           <Textarea data-testid="textarea-notes" {...f("notes")} placeholder="Context, relationship history…"
             className="text-xs min-h-16"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff", resize: "none" }} />
+            style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A", resize: "none" }} />
         </div>
         <div className="flex items-center gap-2 pt-1">
           <Button
@@ -1634,7 +1634,7 @@ function AddAccountModal({ onClose }: { onClose: () => void }) {
           >
             {create.isPending ? "Creating…" : "Create Account"}
           </Button>
-          <Button onClick={onClose} variant="ghost" className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+          <Button onClick={onClose} variant="ghost" className="text-xs" style={{ color: "#475569" }}>
             Cancel
           </Button>
         </div>
@@ -1669,14 +1669,14 @@ function EnrollModal({ accountId, defaultEin, onClose }: {
           changes, enrollment shifts, and spend changes. Data lags 12–18 months.
         </p>
         <div>
-          <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>EIN *</label>
+          <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>EIN *</label>
           <Input
             data-testid="input-enroll-ein"
             value={ein}
             onChange={e => setEin(e.target.value)}
             placeholder="00-0000000"
             className="text-xs h-8 font-mono"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }}
+            style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }}
           />
         </div>
         <div className="flex items-center gap-2 pt-1">
@@ -1689,7 +1689,7 @@ function EnrollModal({ accountId, defaultEin, onClose }: {
           >
             {enroll.isPending ? "Enrolling…" : "Enroll"}
           </Button>
-          <Button onClick={onClose} variant="ghost" className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+          <Button onClick={onClose} variant="ghost" className="text-xs" style={{ color: "#475569" }}>
             Cancel
           </Button>
         </div>
@@ -1724,10 +1724,10 @@ function AddContactModal({ accountId, onClose }: { accountId: string; onClose: (
     <Modal title="Add Contact" onClose={onClose}>
       <div className="flex flex-col gap-3">
         <div>
-          <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>Role</label>
+          <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>Role</label>
           <select data-testid="select-role" {...f("role")}
             className="w-full text-xs h-8 rounded-md px-2"
-            style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }}>
+            style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }}>
             <option value="decision_maker">Decision Maker</option>
             <option value="consultant">Benefits Consultant</option>
             <option value="broker">Broker</option>
@@ -1738,34 +1738,34 @@ function AddContactModal({ accountId, onClose }: { accountId: string; onClose: (
         </div>
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>First Name</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>First Name</label>
             <Input data-testid="input-first-name" {...f("first_name")} className="text-xs h-8"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }} />
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }} />
           </div>
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>Last Name</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>Last Name</label>
             <Input data-testid="input-last-name" {...f("last_name")} className="text-xs h-8"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }} />
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }} />
           </div>
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>Title</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>Title</label>
             <Input data-testid="input-title" {...f("title")} className="text-xs h-8"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }} />
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }} />
           </div>
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>Firm</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>Firm</label>
             <Input data-testid="input-firm" {...f("firm")} className="text-xs h-8"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }} />
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }} />
           </div>
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>Email</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>Email</label>
             <Input data-testid="input-email" {...f("email")} type="email" className="text-xs h-8"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }} />
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }} />
           </div>
           <div>
-            <label className="text-xs font-semibold mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>Phone</label>
+            <label className="text-xs font-semibold mb-1 block" style={{ color: "#334155" }}>Phone</label>
             <Input data-testid="input-phone" {...f("phone")} className="text-xs h-8"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", color: "#fff" }} />
+              style={{ background: "#ffffff", border: "1px solid rgba(15,23,42,0.03)", color: "#0F172A" }} />
           </div>
         </div>
         <div className="flex items-center gap-2 pt-1">
@@ -1778,7 +1778,7 @@ function AddContactModal({ accountId, onClose }: { accountId: string; onClose: (
           >
             {add.isPending ? "Saving…" : "Save Contact"}
           </Button>
-          <Button onClick={onClose} variant="ghost" className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+          <Button onClick={onClose} variant="ghost" className="text-xs" style={{ color: "#475569" }}>
             Cancel
           </Button>
         </div>
@@ -1794,16 +1794,16 @@ function Modal({ title, onClose, children }: { title: string; onClose: () => voi
       <div className="w-full max-w-md rounded-2xl flex flex-col"
         style={{
           background: "linear-gradient(135deg, rgba(14,18,42,0.98) 0%, rgba(8,10,28,0.99) 100%)",
-          border: "1px solid rgba(255,255,255,0.10)",
+          border: "1px solid rgba(15,23,42,0.06)",
           boxShadow: "0 24px 80px rgba(0,0,0,0.6)",
           maxHeight: "90vh",
           overflow: "hidden",
         }}>
         <div className="flex items-center justify-between px-5 py-3.5 flex-shrink-0"
-          style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
-          <h3 className="text-sm font-bold text-white">{title}</h3>
+          style={{ borderBottom: "1px solid #e2e8f0" }}>
+          <h3 className="text-sm font-bold text-[var(--kiq-ink)]">{title}</h3>
           <button onClick={onClose} className="p-1.5 rounded-lg hover:opacity-70"
-            style={{ color: "rgba(255,255,255,0.4)" }}>
+            style={{ color: "#475569" }}>
             <X size={14} />
           </button>
         </div>

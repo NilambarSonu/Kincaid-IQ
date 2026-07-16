@@ -101,7 +101,7 @@ function PercentileBar({ value, p50, p75, p90, label, isLowerBetter = false }: {
         <span className="text-xs text-zinc-400 font-medium">{label}</span>
         <span className="text-xs font-black" style={{ color }}>{fmt$(value, true)}</span>
       </div>
-      <div className="relative h-2.5 bg-zinc-900 rounded-full border border-zinc-800">
+      <div className="relative h-2.5 bg-[var(--kiq-canvas-soft)] rounded-full border border-[var(--kiq-hairline)]">
         <div className="h-full rounded-full transition-all duration-700"
           style={{ width: `${vPct}%`, background: color, boxShadow: `0 0 8px ${color}55` }} />
         {/* Markers */}
@@ -149,7 +149,7 @@ function ActuarialTile({ tile }: { tile: Tile }) {
           <text x={cx} y={cy - 2} textAnchor="middle" fill={c} fontSize="20" fontWeight="900" fontFamily="monospace">
             {tile.value.toFixed(tile.unit === "%" ? 1 : 0)}
           </text>
-          <text x={cx} y={cy + 10} textAnchor="middle" fill="rgba(255,255,255,0.35)" fontSize="9">{tile.unit}</text>
+          <text x={cx} y={cy + 10} textAnchor="middle" fill="#64748b" fontSize="9">{tile.unit}</text>
         </svg>
         <div className="flex-1 min-w-0">
           <div className="text-xs font-semibold" style={{ color: c }}>{tile.delta}</div>
@@ -246,21 +246,21 @@ export default function ActuarialWorkbench() {
 
   return (
     <Layout fullBleed>
-      <div className="h-full flex bg-zinc-950 text-zinc-100 overflow-hidden">
+      <div className="h-full flex bg-[var(--kiq-surface)] text-[var(--kiq-ink)] overflow-hidden">
 
         {/* ── Left Panel ───────────────────────────────────────────────────── */}
-        <div className="w-72 flex-shrink-0 flex flex-col border-r border-zinc-800" style={{ background: "#040408" }}>
+        <div className="w-72 flex-shrink-0 flex flex-col border-r border-[var(--kiq-hairline)]" style={{ background: "#F8FAFC" }}>
           {/* Header */}
-          <div className="px-4 py-4 border-b border-zinc-800">
+          <div className="px-4 py-4 border-b border-[var(--kiq-hairline)]">
             <div className="flex items-center gap-2 mb-0.5">
               <Calculator className="w-4 h-4 text-emerald-400" />
-              <span className="text-sm font-black text-zinc-100">5500 Actuarial Workbench</span>
+              <span className="text-sm font-black text-[var(--kiq-ink)]">5500 Actuarial Workbench</span>
             </div>
             <p className="text-[10px] text-zinc-600 uppercase tracking-widest">191,887 DOL EFAST2 Employers</p>
           </div>
 
           {/* Search */}
-          <div className="px-4 py-3 border-b border-zinc-800 space-y-2">
+          <div className="px-4 py-3 border-b border-[var(--kiq-hairline)] space-y-2">
             <div className="relative">
               {searching
                 ? <Loader2 className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-500 animate-spin" />
@@ -270,7 +270,7 @@ export default function ActuarialWorkbench() {
                 placeholder="Company name or EIN…"
                 value={searchInput}
                 onChange={e => setSearchInput(e.target.value)}
-                className="pl-8 h-8 text-xs bg-zinc-900 border-zinc-800 text-zinc-200 placeholder:text-zinc-600"
+                className="pl-8 h-8 text-xs bg-[var(--kiq-canvas-soft)] border-[var(--kiq-hairline)] text-[var(--kiq-ink-soft)] placeholder:text-zinc-600"
               />
             </div>
             <div className="relative">
@@ -303,7 +303,7 @@ export default function ActuarialWorkbench() {
               <button
                 data-testid="btn-clear-state"
                 onClick={() => setSelectedState("")}
-                className="text-[10px] text-zinc-500 hover:text-zinc-300 transition-colors flex items-center gap-1"
+                className="text-[10px] text-zinc-500 hover:text-[var(--kiq-muted)] transition-colors flex items-center gap-1"
               >
                 <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
@@ -321,10 +321,10 @@ export default function ActuarialWorkbench() {
                 {results.map((r, i) => (
                   <button key={r.ein} data-testid={`result-employer-${i}`}
                     onClick={() => handleSelectEmployer(r.ein)}
-                    className={`w-full text-left px-4 py-2.5 transition-colors border-b border-zinc-900 hover:bg-zinc-900/60 ${selectedEin === r.ein ? "bg-emerald-500/10 border-l-2 border-l-emerald-500" : ""}`}>
+                    className={`w-full text-left px-4 py-2.5 transition-colors border-b border-zinc-900 hover:bg-[var(--kiq-canvas-soft)]/60 ${selectedEin === r.ein ? "bg-emerald-500/10 border-l-2 border-l-emerald-500" : ""}`}>
                     <div className="flex items-start justify-between gap-1">
                       <div className="flex-1 min-w-0">
-                        <div className="text-xs font-bold text-zinc-200 truncate">{r.name}</div>
+                        <div className="text-xs font-bold text-[var(--kiq-ink-soft)] truncate">{r.name}</div>
                         <div className="text-[10px] text-zinc-600 truncate">{r.plan_name}</div>
                         <div className="flex items-center gap-2 mt-0.5">
                           <span className="text-[9px] text-zinc-600">{r.city}, {r.state}</span>
@@ -348,7 +348,7 @@ export default function ActuarialWorkbench() {
                 {["Walmart", "Amazon", "Boeing", "General Electric", "Apple", "JPMorgan"].map(name => (
                   <button key={name} data-testid={`quick-search-${name.replace(/\s/g, "-").toLowerCase()}`}
                     onClick={() => setSearchInput(name)}
-                    className="flex items-center gap-2 w-full text-xs text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900 px-2 py-1.5 rounded-lg transition-colors">
+                    className="flex items-center gap-2 w-full text-xs text-zinc-500 hover:text-[var(--kiq-ink-soft)] hover:bg-[var(--kiq-canvas-soft)] px-2 py-1.5 rounded-lg transition-colors">
                     <Building2 className="w-3 h-3 shrink-0" />
                     {name}
                   </button>
@@ -358,7 +358,7 @@ export default function ActuarialWorkbench() {
 
             {/* Selected employer quick summary */}
             {employer && (
-              <div className="border-t border-zinc-800 p-4 space-y-2">
+              <div className="border-t border-[var(--kiq-hairline)] p-4 space-y-2">
                 <p className="text-[9px] text-zinc-700 font-bold uppercase tracking-widest">Selected Plan</p>
                 <div className="space-y-1.5 text-[10px] text-zinc-500">
                   <div className="flex gap-1.5"><Users className="w-3 h-3 shrink-0 mt-0.5" /><span>{fmtN(employer.max_participants)} max participants</span></div>
@@ -394,11 +394,11 @@ export default function ActuarialWorkbench() {
         <div className="flex-1 flex flex-col overflow-hidden">
 
           {/* Always-visible tab bar */}
-          <div className="flex items-center gap-1 px-5 py-2 border-b border-zinc-800 bg-zinc-950 shrink-0">
+          <div className="flex items-center gap-1 px-5 py-2 border-b border-[var(--kiq-hairline)] bg-[var(--kiq-surface)] shrink-0">
             {TABS.map(t => (
               <button key={t.id} data-testid={`tab-actuarial-${t.id}`}
                 onClick={() => setActiveTab(t.id)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${activeTab === t.id ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30" : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800"}`}>
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${activeTab === t.id ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30" : "text-zinc-500 hover:text-[var(--kiq-muted)] hover:bg-[var(--kiq-surface)]"}`}>
                 <t.icon className="w-3 h-3" />{t.label}
                 {t.id === "upload" && (
                   <span className="ml-0.5 px-1 py-0 rounded text-[8px] font-bold bg-blue-500/20 text-blue-400">IN</span>
@@ -415,7 +415,7 @@ export default function ActuarialWorkbench() {
                 <Calculator className="w-8 h-8 text-emerald-400" />
               </div>
               <div>
-                <h2 className="text-xl font-black text-zinc-200 mb-2">5500 Actuarial Workbench</h2>
+                <h2 className="text-xl font-black text-[var(--kiq-ink-soft)] mb-2">5500 Actuarial Workbench</h2>
                 <p className="text-sm text-zinc-500 max-w-md leading-relaxed">
                   Search 191,887 employers from the DOL EFAST2 database. Select a plan to run
                   a full actuarial analysis including financial ratios, peer benchmarks, and
@@ -429,9 +429,9 @@ export default function ActuarialWorkbench() {
                   { icon: TrendingUp, label: "Multi-Year Trend", desc: "Year-over-year financials" },
                   { icon: Sparkles, label: "AI Narrative", desc: "Claude actuarial commentary" },
                 ].map(f => (
-                  <div key={f.label} className="bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-left">
+                  <div key={f.label} className="bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl p-3 text-left">
                     <f.icon className="w-4 h-4 text-emerald-400 mb-2" />
-                    <div className="text-xs font-bold text-zinc-300">{f.label}</div>
+                    <div className="text-xs font-bold text-[var(--kiq-muted)]">{f.label}</div>
                     <div className="text-[10px] text-zinc-600 mt-0.5">{f.desc}</div>
                   </div>
                 ))}
@@ -441,10 +441,10 @@ export default function ActuarialWorkbench() {
             <>
               {/* Plan header */}
               {employer && (
-                <div className="border-b border-zinc-800 px-5 py-3" style={{ background: "rgba(16,185,129,0.03)" }}>
+                <div className="border-b border-[var(--kiq-hairline)] px-5 py-3" style={{ background: "rgba(16,185,129,0.03)" }}>
                   <div className="flex items-center justify-between gap-4">
                     <div className="flex-1 min-w-0">
-                      <h2 className="text-base font-black text-zinc-100 truncate">{employer.name}</h2>
+                      <h2 className="text-base font-black text-[var(--kiq-ink)] truncate">{employer.name}</h2>
                       <div className="flex items-center gap-3 mt-0.5 flex-wrap">
                         <span className="text-xs text-zinc-500 truncate">{employer.plan_name}</span>
                         {[
@@ -497,7 +497,7 @@ export default function ActuarialWorkbench() {
                             { label: "Broker Commissions", v: fmt$(latest.broker_commissions, true), sub: `${fmtPct(latest.broker_ratio_pct)} of premiums` },
                             { label: "PMPM",             v: fmt$(latest.pmpm),                  sub: "Per member per month" },
                           ].map(s => (
-                            <div key={s.label} className="bg-zinc-900 border border-zinc-800 rounded-xl p-3">
+                            <div key={s.label} className="bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl p-3">
                               <div className="text-[10px] text-zinc-500 uppercase tracking-wider mb-1">{s.label}</div>
                               <div className="text-lg font-black text-emerald-400">{s.v}</div>
                               <div className="text-[10px] text-zinc-600 mt-0.5">{s.sub}</div>
@@ -529,7 +529,7 @@ export default function ActuarialWorkbench() {
                       </div>
                     )}
 
-                    <div className="flex items-center gap-2 p-3 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-600">
+                    <div className="flex items-center gap-2 p-3 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-lg text-xs text-zinc-600">
                       <Info className="w-3.5 h-3.5 shrink-0" />
                       Source: DOL EFAST2 / Schedule H filings · Data as of plan year {latest?.year ?? "N/A"} · 191,887 employer universe.
                     </div>
@@ -542,9 +542,9 @@ export default function ActuarialWorkbench() {
                     <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Multi-Year Financial History</h3>
                     {profileLoading && <div className="flex items-center gap-2 text-zinc-500 text-sm"><Loader2 className="w-4 h-4 animate-spin" />Loading…</div>}
                     {profile && profile.years.length > 0 && (
-                      <div className="overflow-x-auto rounded-xl border border-zinc-800">
+                      <div className="overflow-x-auto rounded-xl border border-[var(--kiq-hairline)]">
                         <table className="w-full text-sm">
-                          <thead className="bg-zinc-900/80 border-b border-zinc-800">
+                          <thead className="bg-[var(--kiq-canvas-soft)]/80 border-b border-[var(--kiq-hairline)]">
                             <tr>
                               {["Year", "Participants", "Welfare Premiums", "Admin Fees", "Admin Ratio", "Broker Comm.", "Broker Ratio", "Invest. Fees", "PMPM", "Total Income", "Total Assets"].map(h => (
                                 <th key={h} className="text-left py-2.5 px-3 text-[10px] font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap">{h}</th>
@@ -553,13 +553,13 @@ export default function ActuarialWorkbench() {
                           </thead>
                           <tbody>
                             {profile.years.map((y, i) => (
-                              <tr key={y.year} className={`border-b border-zinc-800/60 ${i === 0 ? "bg-emerald-500/5" : "hover:bg-zinc-900/50"} transition-colors`}
+                              <tr key={y.year} className={`border-b border-[var(--kiq-hairline)]/60 ${i === 0 ? "bg-emerald-500/5" : "hover:bg-[var(--kiq-canvas-soft)]/50"} transition-colors`}
                                 data-testid={`row-year-${y.year}`}>
                                 <td className="py-2.5 px-3 font-bold text-xs text-emerald-400">{y.year}</td>
-                                <td className="py-2.5 px-3 text-xs text-zinc-300 font-mono">{fmtN(y.participants)}</td>
-                                <td className="py-2.5 px-3 text-xs text-zinc-300 font-mono">{fmt$(y.welfare_premiums, true)}</td>
+                                <td className="py-2.5 px-3 text-xs text-[var(--kiq-muted)] font-mono">{fmtN(y.participants)}</td>
+                                <td className="py-2.5 px-3 text-xs text-[var(--kiq-muted)] font-mono">{fmt$(y.welfare_premiums, true)}</td>
                                 <td className="py-2.5 px-3 text-xs font-mono">
-                                  <span className={y.admin_ratio_pct && y.admin_ratio_pct > 20 ? "text-red-400" : "text-zinc-300"}>{fmt$(y.admin_fees, true)}</span>
+                                  <span className={y.admin_ratio_pct && y.admin_ratio_pct > 20 ? "text-red-400" : "text-[var(--kiq-muted)]"}>{fmt$(y.admin_fees, true)}</span>
                                 </td>
                                 <td className="py-2.5 px-3 text-xs font-bold font-mono">
                                   <span className={y.admin_ratio_pct && y.admin_ratio_pct > 20 ? "text-red-400" : y.admin_ratio_pct && y.admin_ratio_pct > 10 ? "text-amber-400" : "text-emerald-400"}>
@@ -567,7 +567,7 @@ export default function ActuarialWorkbench() {
                                   </span>
                                 </td>
                                 <td className="py-2.5 px-3 text-xs font-mono">
-                                  <span className={y.broker_ratio_pct && y.broker_ratio_pct > 12 ? "text-red-400" : "text-zinc-300"}>{fmt$(y.broker_commissions, true)}</span>
+                                  <span className={y.broker_ratio_pct && y.broker_ratio_pct > 12 ? "text-red-400" : "text-[var(--kiq-muted)]"}>{fmt$(y.broker_commissions, true)}</span>
                                 </td>
                                 <td className="py-2.5 px-3 text-xs font-bold font-mono">
                                   <span className={y.broker_ratio_pct && y.broker_ratio_pct > 12 ? "text-red-400" : y.broker_ratio_pct && y.broker_ratio_pct > 6.3 ? "text-amber-400" : "text-emerald-400"}>
@@ -575,7 +575,7 @@ export default function ActuarialWorkbench() {
                                   </span>
                                 </td>
                                 <td className="py-2.5 px-3 text-xs text-zinc-400 font-mono">{fmt$(y.invest_fees, true)}</td>
-                                <td className="py-2.5 px-3 text-xs font-mono text-zinc-300">{fmt$(y.pmpm)}</td>
+                                <td className="py-2.5 px-3 text-xs font-mono text-[var(--kiq-muted)]">{fmt$(y.pmpm)}</td>
                                 <td className="py-2.5 px-3 text-xs text-zinc-400 font-mono">{fmt$(y.total_income, true)}</td>
                                 <td className="py-2.5 px-3 text-xs text-zinc-500 font-mono">{fmt$(y.total_assets, true)}</td>
                               </tr>
@@ -584,7 +584,7 @@ export default function ActuarialWorkbench() {
                         </table>
                       </div>
                     )}
-                    <div className="flex items-center gap-2 p-3 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-600">
+                    <div className="flex items-center gap-2 p-3 bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-lg text-xs text-zinc-600">
                       <Info className="w-3.5 h-3.5 shrink-0" />
                       Red = exceeds P75 threshold. Amber = above national median. Ratios: Admin = Admin Fees / Welfare Premiums; Broker = Commissions / Welfare Premiums.
                     </div>
@@ -602,7 +602,7 @@ export default function ActuarialWorkbench() {
                             <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">
                               Industry Benchmarks — NAICS {profile.employer.business_code} · {profile.industry_bench.plan_count.toLocaleString()} peer plans
                             </h3>
-                            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-5">
+                            <div className="bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl p-5 space-y-5">
                               {latest && profile.industry_bench.p50_admin_fees > 0 && (
                                 <PercentileBar
                                   label="Admin Fees"
@@ -636,7 +636,7 @@ export default function ActuarialWorkbench() {
                             </div>
                           </div>
                         ) : (
-                          <div className="text-zinc-500 text-sm p-4 bg-zinc-900 rounded-xl border border-zinc-800">
+                          <div className="text-zinc-500 text-sm p-4 bg-[var(--kiq-canvas-soft)] rounded-xl border border-[var(--kiq-hairline)]">
                             No industry benchmark data available for this NAICS code.
                           </div>
                         )}
@@ -646,7 +646,7 @@ export default function ActuarialWorkbench() {
                             <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">
                               State Benchmarks — {profile.employer.state} · {profile.state_bench.plan_count.toLocaleString()} peer plans
                             </h3>
-                            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-5">
+                            <div className="bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl p-5 space-y-5">
                               {latest && profile.state_bench.p50_welfare > 0 && (
                                 <PercentileBar
                                   label="Welfare Premiums (State)"
@@ -674,9 +674,9 @@ export default function ActuarialWorkbench() {
                         {/* National reference table */}
                         <div>
                           <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">National Reference — All Industries</h3>
-                          <div className="overflow-x-auto rounded-xl border border-zinc-800">
+                          <div className="overflow-x-auto rounded-xl border border-[var(--kiq-hairline)]">
                             <table className="w-full text-sm">
-                              <thead className="bg-zinc-900/80 border-b border-zinc-800">
+                              <thead className="bg-[var(--kiq-canvas-soft)]/80 border-b border-[var(--kiq-hairline)]">
                                 <tr>
                                   {["Metric", "This Plan", "National Median", "P75", "Signal"].map(h =>
                                     <th key={h} className="text-left py-2.5 px-3 text-[10px] font-bold text-zinc-500 uppercase tracking-wider">{h}</th>)}
@@ -689,8 +689,8 @@ export default function ActuarialWorkbench() {
                                   { label: "Welfare Premiums", plan: fmt$(latest.welfare_premiums, true), median: "$947K", p75: "$1,701K", flag: "green" },
                                   { label: "PMPM", plan: fmt$(latest.pmpm), median: "~$790", p75: "~$1,400", flag: (latest.pmpm ?? 0) > 1400 ? "red" : (latest.pmpm ?? 0) > 790 ? "yellow" : "green" },
                                 ].map(row => (
-                                  <tr key={row.label} className="border-b border-zinc-800/60 hover:bg-zinc-900/50">
-                                    <td className="py-2.5 px-3 text-xs text-zinc-300 font-semibold">{row.label}</td>
+                                  <tr key={row.label} className="border-b border-[var(--kiq-hairline)]/60 hover:bg-[var(--kiq-canvas-soft)]/50">
+                                    <td className="py-2.5 px-3 text-xs text-[var(--kiq-muted)] font-semibold">{row.label}</td>
                                     <td className="py-2.5 px-3 text-xs font-bold font-mono" style={{ color: defColor(row.flag) }}>{row.plan}</td>
                                     <td className="py-2.5 px-3 text-xs text-zinc-500 font-mono">{row.median}</td>
                                     <td className="py-2.5 px-3 text-xs text-zinc-500 font-mono">{row.p75}</td>
@@ -719,7 +719,7 @@ export default function ActuarialWorkbench() {
                         <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-4">
                           <Sparkles className="w-6 h-6 text-emerald-400" />
                         </div>
-                        <h3 className="text-base font-black text-zinc-200 mb-2">AI Actuarial Analysis</h3>
+                        <h3 className="text-base font-black text-[var(--kiq-ink-soft)] mb-2">AI Actuarial Analysis</h3>
                         <p className="text-sm text-zinc-500 mb-6 max-w-md mx-auto leading-relaxed">
                           Generate a credentialed actuarial narrative for this plan — including financial ratio analysis,
                           benchmarking position, red flags, and ERISA fiduciary recommendations.
@@ -748,20 +748,20 @@ export default function ActuarialWorkbench() {
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-2">
                             <Sparkles className="w-4 h-4 text-emerald-400" />
-                            <h3 className="text-sm font-black text-zinc-200">Actuarial Narrative — {employer?.name}</h3>
+                            <h3 className="text-sm font-black text-[var(--kiq-ink-soft)]">Actuarial Narrative — {employer?.name}</h3>
                           </div>
                           <Button size="sm" variant="outline" data-testid="btn-regenerate-narrative"
                             onClick={handleGenerateNarrative}
                             disabled={aiMutation.isPending}
-                            className="border-zinc-700 text-zinc-400 hover:bg-zinc-800 text-xs">
+                            className="border-[var(--kiq-hairline)] text-zinc-400 hover:bg-[var(--kiq-surface)] text-xs">
                             <RefreshCw className="w-3 h-3 mr-1.5" /> Regenerate
                           </Button>
                         </div>
-                        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+                        <div className="bg-[var(--kiq-canvas-soft)] border border-[var(--kiq-hairline)] rounded-xl p-6">
                           <div className="prose prose-invert prose-sm max-w-none">
                             {aiNarrative.split("\n").map((line, i) => {
                               if (line.startsWith("## ")) return <h3 key={i} className="text-sm font-black text-emerald-400 mt-5 mb-2 first:mt-0">{line.replace("## ", "")}</h3>;
-                              if (line.startsWith("### ")) return <h4 key={i} className="text-xs font-bold text-zinc-300 mt-3 mb-1">{line.replace("### ", "")}</h4>;
+                              if (line.startsWith("### ")) return <h4 key={i} className="text-xs font-bold text-[var(--kiq-muted)] mt-3 mb-1">{line.replace("### ", "")}</h4>;
                               if (line.startsWith("- ")) return <div key={i} className="flex items-start gap-2 text-xs text-zinc-400 mb-1.5"><span className="text-emerald-500 shrink-0 mt-0.5">•</span><span className="leading-relaxed">{line.replace("- ", "")}</span></div>;
                               if (line.trim() === "") return <div key={i} className="h-2" />;
                               return <p key={i} className="text-xs text-zinc-400 leading-relaxed mb-2">{line}</p>;

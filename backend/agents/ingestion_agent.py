@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Agent 1: Ingestion Layer
+Kincaid Health — Agent 1: Ingestion Layer
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Normalizes raw enterprise documents (bytes OR string) into structured intelligence objects.
 
@@ -23,7 +23,7 @@ Returns:
 """
 from .base import BaseAgent, run_agent
 
-SYSTEM = """You are the Kincaid IQ Ingestion Agent — Layer 1 of a 5-agent fiduciary intelligence pipeline.
+SYSTEM = """You are the Kincaid Health Ingestion Agent — Layer 1 of a 5-agent fiduciary intelligence pipeline.
 
 ROLE: Normalize raw enterprise documents into structured intelligence objects.
 

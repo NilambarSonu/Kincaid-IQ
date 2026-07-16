@@ -109,7 +109,7 @@ function prioritizeIssues(provisions: ProvisionScore[], savingsMap: Record<numbe
 
 /* ─── SHARED STYLES ──────────────────────────────────────────────────────── */
 const S = {
-  page: { background: "#dde3ec", color: "#000", padding: "24px 0 40px", margin: "0", fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif" } as React.CSSProperties,
+  page: { background: "linear-gradient(180deg, #eef3fb 0%, #dde3ec 100%)", color: "#000", padding: "28px 0 44px", margin: "0", fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif" } as React.CSSProperties,
   section: { background: "#ffffff", borderRadius: 16, margin: "0 24px 16px", padding: "48px 56px", boxShadow: "0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05)" } as React.CSSProperties,
   h2: { fontSize: 24, fontWeight: 900, color: "#000", letterSpacing: "-0.01em", margin: "0 0 22px 0" } as React.CSSProperties,
   h3: { fontSize: 17, fontWeight: 800, color: "#000", margin: "0 0 14px 0" } as React.CSSProperties,
@@ -147,25 +147,25 @@ function CoverPage({ contract }: { contract: Contract }) {
     <div style={{ ...S.section, padding: 0, overflow: "hidden", borderBottom: `3px solid ${rating.border}` }}>
       {/* KIQ Banner */}
       <div style={{ width: "100%", height: 80, background: "linear-gradient(135deg, #002B5C 0%, #9B1C2E 100%)", display: "flex", alignItems: "center", padding: "0 56px" }}>
-        <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 900, fontSize: 11, letterSpacing: "0.24em", textTransform: "uppercase" as const }}>KINCAID IQ — FIDUCIARY INTELLIGENCE PLATFORM</span>
+        <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 900, fontSize: 11, letterSpacing: "0.24em", textTransform: "uppercase" as const }}>KINCAID HEALTH — FIDUCIARY INTELLIGENCE PLATFORM</span>
       </div>
 
       {/* Sub-header strip */}
-      <div style={{ background: "#002B5C", padding: "10px 56px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ background: "#F8FAFC", padding: "10px 56px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.25)" }} />
+          <div style={{ width: 1, height: 28, background: "rgba(15,23,42,0.08)" }} />
           <div>
             <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.28em", color: "rgba(255,255,255,0.90)", textTransform: "uppercase" }}>
               Stop-Loss IQ™ · Fiduciary-Grade Stop-Loss Contract Intelligence
             </div>
             <div style={{ fontSize: 9, color: "rgba(255,255,255,0.45)", letterSpacing: "0.10em", marginTop: 2 }}>
-              Powered by Kincaid IQ Intelligence Platform
+              Powered by Kincaid Health Intelligence Platform
             </div>
           </div>
         </div>
         <div style={{ textAlign: "right" }}>
           <div style={{ fontSize: 9, color: "rgba(255,255,255,0.55)", letterSpacing: "0.10em" }}>{date}</div>
-          <div style={{ fontSize: 9, color: "rgba(255,255,255,0.35)", marginTop: 2, letterSpacing: "0.08em" }}>CONFIDENTIAL · BROKER USE ONLY</div>
+          <div style={{ fontSize: 9, color: "#64748b", marginTop: 2, letterSpacing: "0.08em" }}>CONFIDENTIAL · BROKER USE ONLY</div>
         </div>
       </div>
 
@@ -216,10 +216,10 @@ function CoverPage({ contract }: { contract: Contract }) {
         <div style={{ marginTop: 40, paddingTop: 20, borderTop: "1px solid rgba(0,0,0,0.10)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 28, height: 28, borderRadius: 6, background: "#9B1C2E", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <span style={{ fontSize: 9, fontWeight: 900, color: "#fff", letterSpacing: "0.04em" }}>KIQ</span>
+              <span style={{ fontSize: 9, fontWeight: 900, color: "#0F172A", letterSpacing: "0.04em" }}>KIQ</span>
             </div>
             <div>
-              <div style={{ fontSize: 10, fontWeight: 800, color: "#002B5C", letterSpacing: "0.10em" }}>KINCAID IQ</div>
+              <div style={{ fontSize: 10, fontWeight: 800, color: "#002B5C", letterSpacing: "0.10em" }}>KINCAID HEALTH</div>
               <div style={{ fontSize: 9, color: "#666", letterSpacing: "0.06em" }}>Intelligence Platform · Stop-Loss IQ™</div>
             </div>
           </div>
@@ -821,17 +821,17 @@ function Methodology({ provisions }: { provisions: ProvisionScore[] }) {
           Legal Disclaimer
         </div>
         <div style={{ fontSize: 12, color: "#000", lineHeight: 1.9 }}>
-          CONFIDENTIAL — FOR AUTHORIZED USE ONLY. This report is prepared by Kincaid IQ Stop-Loss IQ™ exclusively for the named plan sponsor and its authorized broker, consultant, and ERISA counsel of record. Unauthorized disclosure, reproduction, or distribution is prohibited. This report does not constitute legal advice, actuarial opinion, or financial advice, and does not create an attorney-client relationship. The analysis is based solely on the stop-loss contract language submitted for review and does not account for carrier representations, verbal commitments, endorsements, riders, or amendments not included in the submitted document. Contract interpretation may differ from a court of competent jurisdiction or arbitral panel applying the law of the governing state. Named plan fiduciaries should engage qualified ERISA counsel and a licensed actuary before taking or refraining from taking any action in reliance on this report. To the maximum extent permitted by applicable law, Kincaid IQ disclaims all representations and warranties, express or implied, and all liability for damages of any kind arising out of or related to any action taken or not taken in reliance on this report. Stop-loss coverage and policy interpretation are subject to applicable state insurance law and the terms of the underlying stop-loss policy; this report does not constitute a coverage determination. © Kincaid IQ | kincaidiq.com
+          CONFIDENTIAL — FOR AUTHORIZED USE ONLY. This report is prepared by Kincaid Health Stop-Loss IQ™ exclusively for the named plan sponsor and its authorized broker, consultant, and ERISA counsel of record. Unauthorized disclosure, reproduction, or distribution is prohibited. This report does not constitute legal advice, actuarial opinion, or financial advice, and does not create an attorney-client relationship. The analysis is based solely on the stop-loss contract language submitted for review and does not account for carrier representations, verbal commitments, endorsements, riders, or amendments not included in the submitted document. Contract interpretation may differ from a court of competent jurisdiction or arbitral panel applying the law of the governing state. Named plan fiduciaries should engage qualified ERISA counsel and a licensed actuary before taking or refraining from taking any action in reliance on this report. To the maximum extent permitted by applicable law, Kincaid Health disclaims all representations and warranties, express or implied, and all liability for damages of any kind arising out of or related to any action taken or not taken in reliance on this report. Stop-loss coverage and policy interpretation are subject to applicable state insurance law and the terms of the underlying stop-loss policy; this report does not constitute a coverage determination. © Kincaid Health | kincaidiq.com
         </div>
       </div>
 
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 28, paddingTop: 20, borderTop: "1px solid rgba(0,0,0,0.08)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <div style={{ width: 28, height: 28, borderRadius: 6, background: "#9B1C2E", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ fontSize: 8, fontWeight: 900, color: "#fff", letterSpacing: "0.04em" }}>KIQ</span>
+            <span style={{ fontSize: 8, fontWeight: 900, color: "#0F172A", letterSpacing: "0.04em" }}>KIQ</span>
           </div>
           <div>
-            <div style={{ fontSize: 10, fontWeight: 900, color: "#002B5C", letterSpacing: "0.15em" }}>KINCAID IQ · STOP-LOSS IQ™</div>
+            <div style={{ fontSize: 10, fontWeight: 900, color: "#002B5C", letterSpacing: "0.15em" }}>KINCAID HEALTH · STOP-LOSS IQ™</div>
             <div style={{ fontSize: 9, color: "#666", marginTop: 2 }}>Fiduciary-Grade Stop-Loss Contract Intelligence · ERISA Aligned</div>
           </div>
         </div>
@@ -878,12 +878,12 @@ export default function StopLossFullReport({ contract, onClose }: { contract: Co
   const provisions = contract.provision_scores;
 
   return (
-    <div id="kiq-sl-print-overlay" style={{ position: "fixed", inset: 0, zIndex: 60, background: "rgba(0,0,0,0.96)",
+    <div id="kiq-sl-print-overlay" className="kiq-report-overlay" style={{ position: "fixed", inset: 0, zIndex: 60, background: "var(--kiq-report-overlay-bg)",
       display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
       {/* Toolbar */}
       <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 12, padding: "12px 24px",
-        background: "#ffffff", borderBottom: "1px solid rgba(0,0,0,0.10)" }} className="print-hide">
+        background: "rgba(255,255,255,0.78)", borderBottom: "1px solid rgba(13,37,61,0.08)" }} className="print-hide kiq-report-toolbar">
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: 12, fontWeight: 900, color: "#000", letterSpacing: "0.15em", textTransform: "uppercase" }}>
             Stop-Loss IQ™ · Full Fiduciary Report
@@ -893,28 +893,28 @@ export default function StopLossFullReport({ contract, onClose }: { contract: Co
           </div>
         </div>
 
-        <button data-testid="sl-fullreport-email" onClick={() => setEmailOpen(true)}
+        <button className="kiq-report-action" data-testid="sl-fullreport-email" onClick={() => setEmailOpen(true)}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", borderRadius: 10,
             background: "rgba(217,119,6,0.08)", border: "1px solid rgba(217,119,6,0.25)", color: NEON.gold,
             fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
           <Mail style={{ width: 14, height: 14 }} /> Email Full Report
         </button>
 
-        <button data-testid="sl-fullreport-print" onClick={handlePrint} disabled={printing}
+        <button className="kiq-report-action" data-testid="sl-fullreport-print" onClick={handlePrint} disabled={printing}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", borderRadius: 10,
             background: "rgba(37,99,235,0.08)", border: "1px solid rgba(37,99,235,0.2)", color: NEON.blue,
             fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
           <Printer style={{ width: 14, height: 14 }} /> Print / Save PDF
         </button>
 
-        <button data-testid="sl-fullreport-download" onClick={handleDownload}
+        <button className="kiq-report-action" data-testid="sl-fullreport-download" onClick={handleDownload}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 18px", borderRadius: 10,
             background: "rgba(5,150,105,0.08)", border: "1px solid rgba(5,150,105,0.2)", color: NEON.green,
             fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
           <Download style={{ width: 14, height: 14 }} /> Download PNG
         </button>
 
-        <button data-testid="sl-fullreport-close" onClick={onClose}
+        <button className="kiq-report-action" data-testid="sl-fullreport-close" onClick={onClose}
           style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 16px", borderRadius: 10,
             background: "rgba(0,0,0,0.04)", border: "1px solid rgba(0,0,0,0.08)", color: "#000",
             fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
@@ -924,7 +924,7 @@ export default function StopLossFullReport({ contract, onClose }: { contract: Co
 
       {/* Report scroll area */}
       <div id="kiq-sl-print-scroll" style={{ flex: 1, overflowY: "auto", overflowX: "hidden" }}>
-        <div ref={reportRef} style={{ ...S.page, maxWidth: 1140, margin: "0 auto" }}>
+        <div ref={reportRef} className="kiq-report-document" style={{ ...S.page, maxWidth: 1140, margin: "0 auto" }}>
           <div id="rpt-sl-section-0"><CoverPage contract={contract} /></div>
           <div id="rpt-sl-section-1"><TableOfContents provisions={provisions} /></div>
           <div id="rpt-sl-section-2"><ExecutiveSummary contract={contract} /></div>
@@ -943,6 +943,7 @@ export default function StopLossFullReport({ contract, onClose }: { contract: Co
 
         <div className="print-hide" style={{ display: "flex", justifyContent: "center", padding: "32px 0 48px" }}>
           <button
+            className="kiq-report-action"
             onClick={() => document.getElementById("rpt-sl-section-0")?.scrollIntoView({ behavior: "smooth" })}
             style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 24px", borderRadius: 10,
               background: "rgba(0,0,0,0.05)", border: "1px solid rgba(0,0,0,0.10)",
@@ -985,7 +986,7 @@ export default function StopLossFullReport({ contract, onClose }: { contract: Co
           * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
           @page { margin: 0.4in; size: letter portrait; }
           body::after {
-            content: "KINCAID IQ — STRICTLY CONFIDENTIAL · STOP-LOSS IQ™";
+            content: "KINCAID HEALTH — STRICTLY CONFIDENTIAL · STOP-LOSS IQ™";
             position: fixed; bottom: 0.15in; left: 0; right: 0;
             text-align: center; font-size: 6pt; font-weight: 700;
             letter-spacing: 0.14em; text-transform: uppercase;

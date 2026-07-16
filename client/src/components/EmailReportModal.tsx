@@ -17,10 +17,10 @@ export interface EmailReportConfig {
 }
 
 const REPORT_CONFIGS: Record<string, Omit<EmailReportConfig, "summaryData">> = {
-  "rx-defense":           { reportType: "rx-defense",           reportLabel: "Rx Defense IQ™ — PBM Contract Analysis",       defaultSubject: "Rx Defense IQ™ Report — PBM Contract Analysis",    accentColor: "#10B981" },
+  "rx-defense":           { reportType: "rx-defense",           reportLabel: "PBM Contract Clarity 360™ — PBM Contract Analysis",       defaultSubject: "PBM Contract Clarity 360™ Report — PBM Contract Analysis",    accentColor: "#10B981" },
   "stop-loss":            { reportType: "stop-loss",            reportLabel: "Stop-Loss IQ™ — Program Analysis",              defaultSubject: "Stop-Loss IQ™ Report — Program Analysis",          accentColor: "#A855F7" },
   "fiduciary-iq":         { reportType: "fiduciary-iq",         reportLabel: "ERISA Fiduciary IQ™ Report",                    defaultSubject: "ERISA Fiduciary IQ™ — Fiduciary Risk Assessment",  accentColor: "#6366F1" },
-  "stewardship":          { reportType: "stewardship",          reportLabel: "Annual Stewardship Report",                     defaultSubject: "2024 Annual Stewardship Report — Kincaid RMC",     accentColor: "#FFB800" },
+  "stewardship":          { reportType: "stewardship",          reportLabel: "Annual Stewardship Report",                     defaultSubject: "2024 Annual Stewardship Report — Kincaid Health",     accentColor: "#FFB800" },
   "employer-health-score":{ reportType: "employer-health-score",reportLabel: "Employer Health Score™",                        defaultSubject: "Employer Health Score™ — Benefits Diagnostic",     accentColor: "#10B981" },
   "claims-recovery":      { reportType: "claims-recovery",      reportLabel: "Claims Recovery IQ™ Report",                   defaultSubject: "Claims Recovery IQ™ — Overpayment Audit Findings", accentColor: "#FF6B1A" },
   "network-iq":           { reportType: "network-iq",           reportLabel: "Network IQ™ — Adequacy Analysis",               defaultSubject: "Network IQ™ Report — Network Adequacy Analysis",   accentColor: "#22D3EE" },
@@ -43,7 +43,7 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
   const [cc,            setCc]            = useState<string[]>([]);
   const [subject,       setSubject]       = useState(config.defaultSubject);
   const [message,       setMessage]       = useState(
-    `Please find attached the ${config.reportLabel} prepared by Kincaid RMC.\n\nThis report highlights key findings, risk exposures, and recommended actions for your plan.\n\nPlease don't hesitate to reach out if you have any questions.\n\nBest regards,\nJeremiah Shrack`
+    `Please find attached the ${config.reportLabel} prepared by Kincaid Health.\n\nThis report highlights key findings, risk exposures, and recommended actions for your plan.\n\nPlease don't hesitate to reach out if you have any questions.\n\nBest regards,\nJeremiah Shrack`
   );
   const [sent,          setSent]          = useState(false);
   const [generatingPDF, setGeneratingPDF] = useState(false);
@@ -54,7 +54,7 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
       setRecipients([""]);
       setCc([]);
       setSubject(config.defaultSubject);
-      setMessage(`Please find attached the ${config.reportLabel} prepared by Kincaid RMC.\n\nThis report highlights key findings, risk exposures, and recommended actions for your plan.\n\nPlease don't hesitate to reach out if you have any questions.\n\nBest regards,\nJeremiah Shrack`);
+      setMessage(`Please find attached the ${config.reportLabel} prepared by Kincaid Health.\n\nThis report highlights key findings, risk exposures, and recommended actions for your plan.\n\nPlease don't hesitate to reach out if you have any questions.\n\nBest regards,\nJeremiah Shrack`);
     }
   }, [open, reportType]);
 
@@ -97,7 +97,7 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
       subject: subject.trim() || config.defaultSubject,
       message: message.trim(),
       sender_name: "Jeremiah Shrack",
-      sender_title: "CEO, Kincaid RMC",
+      sender_title: "CEO, Kincaid Health",
       report_summary: summaryData ?? {},
       pdf_base64: pdfBase64,
       pdf_filename: pdfFilename,
@@ -106,7 +106,7 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
 
   if (!open) return null;
 
-  const inputCls = "w-full bg-white/[0.06] border border-white/15 rounded-lg px-3 py-2 text-white text-sm focus:outline-none placeholder:text-white/25";
+  const inputCls = "w-full bg-white/[0.06] border border-white/15 rounded-lg px-3 py-2 text-slate-900 text-sm focus:outline-none placeholder:text-slate-900/25";
 
   return (
     <div
@@ -114,23 +114,23 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
       onClick={e => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
-        style={{ width: "100%", maxWidth: 560, borderRadius: 20, border: `1px solid ${accent}25`, background: "linear-gradient(160deg,#080d1e,#06091a)", boxShadow: `0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px ${accent}15, inset 0 1px 0 rgba(255,255,255,0.04)`, overflow: "hidden" }}
+        style={{ width: "100%", maxWidth: 560, borderRadius: 20, border: `1px solid ${accent}25`, background: "linear-gradient(160deg,#FFFFFF,#06091a)", boxShadow: `0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px ${accent}15, inset 0 1px 0 #ffffff`, overflow: "hidden" }}
         data-testid="email-modal"
       >
         {/* Header */}
-        <div style={{ padding: "20px 24px 16px", borderBottom: `1px solid rgba(255,255,255,0.06)`, background: `linear-gradient(135deg,${accent}0a,transparent)` }}>
+        <div style={{ padding: "20px 24px 16px", borderBottom: `1px solid #f1f5f9`, background: `linear-gradient(135deg,${accent}0a,transparent)` }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 36, height: 36, borderRadius: 10, display: "flex", alignItems: "center", justifyContent: "center", background: `${accent}18`, border: `1px solid ${accent}30` }}>
                 <Mail size={16} style={{ color: accent }} />
               </div>
               <div>
-                <p style={{ fontSize: 15, fontWeight: 700, color: "white", margin: 0 }}>Email Report</p>
-                <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", margin: 0 }}>{config.reportLabel}</p>
+                <p style={{ fontSize: 15, fontWeight: 700, color: "#0F172A", margin: 0 }}>Email Report</p>
+                <p style={{ fontSize: 11, color: "#64748b", margin: 0 }}>{config.reportLabel}</p>
               </div>
             </div>
             <button onClick={onClose} data-testid="email-modal-close"
-              style={{ width: 30, height: 30, borderRadius: 8, border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
+              style={{ width: 30, height: 30, borderRadius: 8, border: "1px solid #e2e8f0", background: "#f8fafc", color: "#475569", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
               <X size={14} />
             </button>
           </div>
@@ -142,12 +142,12 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
             <div style={{ width: 64, height: 64, borderRadius: "50%", background: "rgba(0,255,148,0.12)", border: "1px solid rgba(0,255,148,0.3)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}>
               <CheckCircle size={28} style={{ color: NEON.green }} />
             </div>
-            <p style={{ fontSize: 18, fontWeight: 700, color: "white", margin: "0 0 8px" }}>Report Sent</p>
+            <p style={{ fontSize: 18, fontWeight: 700, color: "#0F172A", margin: "0 0 8px" }}>Report Sent</p>
             <p style={{ fontSize: 13, color: "rgba(255,255,255,0.45)", margin: "0 0 4px" }}>
               Delivered to {recipients.filter(r => r.includes("@")).join(", ")}
             </p>
             {cc.filter(c => c.includes("@")).length > 0 && (
-              <p style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", margin: "0 0 28px" }}>
+              <p style={{ fontSize: 11, color: "rgba(15,23,42,0.08)", margin: "0 0 28px" }}>
                 CC: {cc.filter(c => c.includes("@")).join(", ")}
               </p>
             )}
@@ -157,7 +157,7 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
                 Send to Another
               </button>
               <button onClick={onClose} data-testid="email-modal-done"
-                style={{ padding: "9px 20px", borderRadius: 10, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.6)", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
+                style={{ padding: "9px 20px", borderRadius: 10, border: "1px solid #cbd5e1", background: "#f1f5f9", color: "#1e293b", fontSize: 12, fontWeight: 700, cursor: "pointer" }}>
                 Done
               </button>
             </div>
@@ -184,7 +184,7 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
                       type="email" placeholder="client@company.com" value={r}
                       onChange={e => setRecipient(i, e.target.value)}
                       className={inputCls} data-testid={`email-recipient-${i}`}
-                      style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13, outline: "none", width: "100%" }}
+                      style={{ background: "#f1f5f9", border: "1px solid #cbd5e1", borderRadius: 8, padding: "8px 12px", color: "#0F172A", fontSize: 13, outline: "none", width: "100%" }}
                     />
                     {recipients.length > 1 && (
                       <button onClick={() => removeRecipient(i)}
@@ -200,9 +200,9 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
             {/* CC */}
             <div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-                <label style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.35)", letterSpacing: "0.12em", textTransform: "uppercase" }}>CC</label>
+                <label style={{ fontSize: 11, fontWeight: 700, color: "#64748b", letterSpacing: "0.12em", textTransform: "uppercase" }}>CC</label>
                 <button onClick={addCc} data-testid="email-add-cc"
-                  style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "rgba(255,255,255,0.35)", border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)", borderRadius: 6, padding: "2px 8px", cursor: "pointer" }}>
+                  style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: "#64748b", border: "1px solid #cbd5e1", background: "#ffffff", borderRadius: 6, padding: "2px 8px", cursor: "pointer" }}>
                   <Plus size={10} /> Add CC
                 </button>
               </div>
@@ -214,7 +214,7 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
                         type="email" placeholder="cc@company.com" value={c}
                         onChange={e => setCcItem(i, e.target.value)}
                         data-testid={`email-cc-${i}`}
-                        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "8px 12px", color: "rgba(255,255,255,0.8)", fontSize: 13, outline: "none", width: "100%" }}
+                        style={{ background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: 8, padding: "8px 12px", color: "#0f172a", fontSize: 13, outline: "none", width: "100%" }}
                       />
                       <button onClick={() => removeCc(i)}
                         style={{ width: 34, borderRadius: 8, border: "1px solid rgba(255,77,109,0.15)", background: "rgba(255,77,109,0.04)", color: "#FF4D6D", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}>
@@ -231,7 +231,7 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
               <label style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.45)", letterSpacing: "0.12em", textTransform: "uppercase", display: "block", marginBottom: 8 }}>Subject</label>
               <input
                 type="text" value={subject} onChange={e => setSubject(e.target.value)} data-testid="email-subject"
-                style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 8, padding: "8px 12px", color: "white", fontSize: 13, outline: "none", width: "100%", boxSizing: "border-box" }}
+                style={{ background: "#f1f5f9", border: "1px solid #cbd5e1", borderRadius: 8, padding: "8px 12px", color: "#0F172A", fontSize: 13, outline: "none", width: "100%", boxSizing: "border-box" }}
               />
             </div>
 
@@ -242,7 +242,7 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
               </label>
               <textarea
                 rows={7} value={message} onChange={e => setMessage(e.target.value)} data-testid="email-message"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 8, padding: "10px 12px", color: "rgba(255,255,255,0.8)", fontSize: 12, outline: "none", width: "100%", resize: "vertical", lineHeight: 1.65, boxSizing: "border-box", fontFamily: "inherit" }}
+                style={{ background: "#f8fafc", border: "1px solid #cbd5e1", borderRadius: 8, padding: "10px 12px", color: "#0f172a", fontSize: 12, outline: "none", width: "100%", resize: "vertical", lineHeight: 1.65, boxSizing: "border-box", fontFamily: "inherit" }}
               />
             </div>
 
@@ -253,8 +253,8 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 12px" }}>
                   {Object.entries(summaryData).map(([k, v]) => (
                     <div key={k} style={{ display: "flex", justifyContent: "space-between", fontSize: 11 }}>
-                      <span style={{ color: "rgba(255,255,255,0.4)" }}>{k}</span>
-                      <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: 700 }}>{v}</span>
+                      <span style={{ color: "#475569" }}>{k}</span>
+                      <span style={{ color: "#0f172a", fontWeight: 700 }}>{v}</span>
                     </div>
                   ))}
                 </div>
@@ -266,7 +266,7 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
               <FileText size={15} color="#00FF94" />
               <div>
                 <p style={{ fontSize: 11, fontWeight: 700, color: "#00FF94", margin: 0 }}>20-Page PDF Report Will Be Attached</p>
-                <p style={{ fontSize: 10, color: "rgba(255,255,255,0.4)", margin: "2px 0 0" }}>Includes methodology, formulas, benchmarks, data tables, regulatory citations &amp; action plan</p>
+                <p style={{ fontSize: 10, color: "#475569", margin: "2px 0 0" }}>Includes methodology, formulas, benchmarks, data tables, regulatory citations &amp; action plan</p>
               </div>
             </div>
 
@@ -280,12 +280,12 @@ export default function EmailReportModal({ open, onClose, reportType, summaryDat
                 padding: "12px 20px", borderRadius: 12, fontSize: 14, fontWeight: 800,
                 cursor: (generatingPDF || sendMutation.isPending) ? "not-allowed" : "pointer",
                 background: (generatingPDF || sendMutation.isPending) ? `${accent}40` : `linear-gradient(135deg,${accent},${accent}cc)`,
-                border: `1px solid ${accent}50`, color: "white", width: "100%", transition: "opacity 0.15s",
+                border: `1px solid ${accent}50`, color: "#0F172A", width: "100%", transition: "opacity 0.15s",
               }}>
               {generatingPDF
                 ? <><Loader2 size={14} style={{ animation: "spin 0.8s linear infinite" }} /> Generating 20-Page PDF…</>
                 : sendMutation.isPending
-                  ? <><div style={{ width: 14, height: 14, borderRadius: "50%", border: "2px solid rgba(255,255,255,0.3)", borderTopColor: "white", animation: "spin 0.8s linear infinite" }} /> Sending…</>
+                  ? <><div style={{ width: 14, height: 14, borderRadius: "50%", border: "2px solid #64748b", borderTopColor: "#0F172A", animation: "spin 0.8s linear infinite" }} /> Sending…</>
                   : <><Send size={14} /> Send Report + PDF Attachment</>}
             </button>
 

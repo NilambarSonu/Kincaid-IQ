@@ -100,10 +100,9 @@ function IntelligenceTicker() {
     return () => clearInterval(t);
   }, []);
   return (
-    <div className="flex items-center gap-3 px-3 py-1.5 rounded-lg overflow-hidden"
-      style={{ background: "rgba(0,212,255,0.05)", border: "1px solid rgba(0,212,255,0.18)" }}>
+    <div className="kiq-forensic-card flex items-center gap-3 px-3 py-1.5 rounded-lg overflow-hidden">
       <Zap size={11} style={{ color: NEON.blue, flexShrink: 0 }} />
-      <p className="text-[11px] font-mono truncate" style={{ color: "rgba(255,255,255,0.55)" }}>
+      <p className="text-[11px] font-mono truncate text-[var(--kiq-muted)]">
         <span style={{ color: NEON.blue }}>LIVE · </span>{TICKER_ITEMS[idx]}
       </p>
     </div>
@@ -137,16 +136,16 @@ function CommandCenterTab({ d }: { d: any }) {
     <div className="space-y-6">
       {/* Plan Selector + Ticker */}
       <div className="flex items-center gap-3 flex-wrap">
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.03]">
+        <div className="kiq-forensic-card flex items-center gap-2 px-3 py-1.5 rounded-lg">
           <Building2 size={12} style={{ color: NEON.orange }} />
           <select
             value={plan}
             onChange={e => setPlan(e.target.value)}
-            className="bg-transparent text-xs text-white border-none outline-none cursor-pointer"
+            className="bg-transparent text-xs text-[var(--kiq-ink)] border-none outline-none cursor-pointer"
             data-testid="plan-selector"
           >
             {(s.plan_names || ["All Plans Rollup"]).map((p: string) => (
-              <option key={p} value={p} className="bg-gray-900">{p}</option>
+              <option key={p} value={p} className="bg-[var(--kiq-canvas-soft)]">{p}</option>
             ))}
           </select>
         </div>
@@ -158,18 +157,18 @@ function CommandCenterTab({ d }: { d: any }) {
       {/* Enterprise KPI Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
         {kpis.map(k => (
-          <div key={k.label} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4"
+          <div key={k.label} className="kiq-forensic-card rounded-xl p-4"
             data-testid={`cmd-kpi-${k.label.toLowerCase().replace(/\s+/g,"-")}`}>
-            <p className="text-white/35 text-[10px] mb-1 uppercase tracking-wider leading-tight">{k.label}</p>
+            <p className="text-[var(--kiq-ink)]/35 text-[10px] mb-1 uppercase tracking-wider leading-tight">{k.label}</p>
             <p className="text-xl font-bold leading-none" style={{ color: k.c }}>{k.val}</p>
-            <p className="text-[10px] text-white/30 mt-1.5 leading-tight">{k.sub}</p>
+            <p className="text-[10px] text-[var(--kiq-ink)]/30 mt-1.5 leading-tight">{k.sub}</p>
           </div>
         ))}
       </div>
 
       {/* Recovery Waterfall */}
-      <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
-        <h3 className="text-white font-semibold mb-5 text-sm flex items-center gap-2">
+      <div className="kiq-forensic-card rounded-2xl p-5">
+        <h3 className="text-[var(--kiq-ink)] font-semibold mb-5 text-sm flex items-center gap-2">
           <TrendingUp size={14} style={{ color: NEON.orange }} />
           Recovery Waterfall — Claims Universe → Net Recovery
         </h3>
@@ -177,9 +176,9 @@ function CommandCenterTab({ d }: { d: any }) {
           {waterfall.map((w: any, i: number) => (
             <div key={i} className="flex items-center gap-3" data-testid={`waterfall-${i}`}>
               <div className="w-36 text-right flex-shrink-0">
-                <p className="text-[11px] text-white/50">{w.label}</p>
+                <p className="text-[11px] text-[var(--kiq-ink)]/50">{w.label}</p>
               </div>
-              <div className="flex-1 relative h-7 rounded overflow-hidden bg-white/[0.03]">
+              <div className="flex-1 relative h-7 rounded overflow-hidden bg-slate-200/70">
                 <div
                   className="absolute left-0 top-0 h-full rounded transition-all"
                   style={{
@@ -199,14 +198,14 @@ function CommandCenterTab({ d }: { d: any }) {
 
       {/* Charts Row */}
       <div className="grid lg:grid-cols-2 gap-5">
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
-          <h3 className="text-white font-semibold mb-4 text-sm">Recovery by Category (Top 8)</h3>
+        <div className="kiq-forensic-card rounded-2xl p-5">
+          <h3 className="text-[var(--kiq-ink)] font-semibold mb-4 text-sm">Recovery by Category (Top 8)</h3>
           <ResponsiveContainer width="100%" height={220}>
             <BarChart data={catData} layout="vertical" barSize={12}>
               <XAxis type="number" tick={{ fill: "#ffffff30", fontSize: 8 }} axisLine={false} tickLine={false}
                 tickFormatter={v => fmtM(v)} />
               <YAxis type="category" dataKey="name" tick={{ fill: "#ffffff45", fontSize: 8 }} axisLine={false} tickLine={false} width={110} />
-              <Tooltip contentStyle={{ background: "#080d1a", border: "1px solid #ffffff15", borderRadius: 8, fontSize: 11 }}
+              <Tooltip contentStyle={{ background: "#F8FAFC", border: "1px solid #ffffff15", borderRadius: 8, fontSize: 11 }}
                 formatter={(v: any) => [fmtM(v)]} />
               <Bar dataKey="value" radius={3}>
                 {catData.map((e: any, i: number) => <Cell key={i} fill={e.color} fillOpacity={0.85} />)}
@@ -215,30 +214,30 @@ function CommandCenterTab({ d }: { d: any }) {
           </ResponsiveContainer>
         </div>
 
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
-          <h3 className="text-white font-semibold mb-4 text-sm">Vendor Exposure Breakdown</h3>
+        <div className="kiq-forensic-card rounded-2xl p-5">
+          <h3 className="text-[var(--kiq-ink)] font-semibold mb-4 text-sm">Vendor Exposure Breakdown</h3>
           <div className="space-y-3">
             {vendorExp.map((v: any) => (
               <div key={v.vendor} className="space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-white/60">{v.vendor}</span>
+                  <span className="text-[var(--kiq-ink)]/60">{v.vendor}</span>
                   <span className="font-bold" style={{ color: NEON.orange }}>{fmtM(v.exposure)}</span>
                 </div>
-                <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                <div className="h-1.5 rounded-full bg-[var(--kiq-surface)]/[0.06] overflow-hidden">
                   <div className="h-full rounded-full" style={{ width: `${v.pct}%`, background: NEON.orange }} />
                 </div>
-                <p className="text-[10px] text-white/30">{v.pct}% of total recovery opportunity</p>
+                <p className="text-[10px] text-[var(--kiq-ink)]/30">{v.pct}% of total recovery opportunity</p>
               </div>
             ))}
           </div>
 
           <div className="mt-5 pt-4 border-t border-white/[0.06]">
-            <h4 className="text-white/50 text-[10px] font-bold uppercase tracking-wider mb-3">Monthly Recovery Trend</h4>
+            <h4 className="text-[var(--kiq-ink)]/50 text-[10px] font-bold uppercase tracking-wider mb-3">Monthly Recovery Trend</h4>
             <ResponsiveContainer width="100%" height={100}>
               <LineChart data={d.monthly_trend}>
                 <XAxis dataKey="month" tick={{ fill: "#ffffff25", fontSize: 8 }} axisLine={false} tickLine={false} />
                 <YAxis hide tickFormatter={v => fmtM(v)} />
-                <Tooltip contentStyle={{ background: "#080d1a", border: "1px solid #ffffff15", borderRadius: 8, fontSize: 10 }}
+                <Tooltip contentStyle={{ background: "#F8FAFC", border: "1px solid #ffffff15", borderRadius: 8, fontSize: 10 }}
                   formatter={(v: any) => [fmtM(v)]} />
                 <Line type="monotone" dataKey="recovery" stroke={NEON.green} strokeWidth={2} dot={false} />
               </LineChart>
@@ -252,10 +251,10 @@ function CommandCenterTab({ d }: { d: any }) {
         style={{ background: "rgba(0,255,148,0.04)", border: "1px solid rgba(0,255,148,0.18)" }}>
         <CheckCircle size={15} className="text-green-400 flex-shrink-0 mt-0.5" />
         <div className="flex-1">
-          <p className="text-white/85 text-sm font-semibold">
+          <p className="text-[var(--kiq-ink)]/85 text-sm font-semibold">
             ${((s.total_recovery_opportunity || 0) / 1_000_000).toFixed(1)}M Recovery Opportunity Identified — {s.findings_count} Categories
           </p>
-          <p className="text-white/40 text-xs mt-0.5 leading-relaxed">
+          <p className="text-[var(--kiq-ink)]/40 text-xs mt-0.5 leading-relaxed">
             Forensic audit of {(s.total_claims_reviewed || 0).toLocaleString()} claims across a ${((s.total_claims_spend || 0) / 1_000_000).toFixed(0)}M universe
             ({s.covered_lives?.toLocaleString()} covered lives) identified {s.findings_count} overpayment categories.
             Fortune 500 benchmark: $399.80 PMPM — plan running $142.30 above peer set.
@@ -282,54 +281,54 @@ function FindingsTab({ d }: { d: any }) {
           <button key={f} onClick={() => setFilter(f)} data-testid={`findings-filter-${f}`}
             className="px-3 py-1 rounded-lg text-xs font-semibold transition-all"
             style={{
-              background: filter === f ? (f === "Critical" ? NEON.red : f === "High" ? NEON.orange : f === "Medium" ? NEON.gold : NEON.blue) + "20" : "rgba(255,255,255,0.03)",
-              border: `1px solid ${filter === f ? (f === "Critical" ? NEON.red : f === "High" ? NEON.orange : f === "Medium" ? NEON.gold : NEON.blue) + "50" : "rgba(255,255,255,0.08)"}`,
-              color: filter === f ? (f === "Critical" ? NEON.red : f === "High" ? NEON.orange : f === "Medium" ? NEON.gold : NEON.blue) : "rgba(255,255,255,0.4)",
+              background: filter === f ? (f === "Critical" ? NEON.red : f === "High" ? NEON.orange : f === "Medium" ? NEON.gold : NEON.blue) + "20" : "#ffffff",
+              border: `1px solid ${filter === f ? (f === "Critical" ? NEON.red : f === "High" ? NEON.orange : f === "Medium" ? NEON.gold : NEON.blue) + "50" : "#e2e8f0"}`,
+              color: filter === f ? (f === "Critical" ? NEON.red : f === "High" ? NEON.orange : f === "Medium" ? NEON.gold : NEON.blue) : "#475569",
             }}>
             {f} {f !== "All" ? `(${findings.filter((x: any) => x.severity === f).length})` : `(${findings.length})`}
           </button>
         ))}
-        <div className="ml-auto text-xs text-white/30">
-          Total: <span className="font-bold text-white/60">{fmtM(filtered.reduce((s: number, f: any) => s + (f.recovery_estimate || 0), 0))}</span>
+        <div className="ml-auto text-xs text-[var(--kiq-ink)]/30">
+          Total: <span className="font-bold text-[var(--kiq-ink)]/60">{fmtM(filtered.reduce((s: number, f: any) => s + (f.recovery_estimate || 0), 0))}</span>
         </div>
       </div>
 
       {filtered.map((f: any) => {
         const isOpen = expanded === f.id;
         return (
-          <div key={f.id} className="rounded-xl bg-white/[0.03] border border-white/[0.07] overflow-hidden" data-testid={`finding-${f.id}`}>
-            <button className="w-full p-4 flex items-center gap-3 text-left hover:bg-white/[0.02] transition-colors"
+          <div key={f.id} className="kiq-forensic-card rounded-xl overflow-hidden" data-testid={`finding-${f.id}`}>
+            <button className="w-full p-4 flex items-center gap-3 text-left hover:bg-[var(--kiq-surface)]/70 transition-colors"
               onClick={() => setExpanded(isOpen ? null : f.id)}>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
                   <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ color: severityColor(f.severity), background: severityColor(f.severity) + "18" }}>{f.severity}</span>
-                  <span className="text-white font-medium text-sm">{f.category}</span>
+                  <span className="text-[var(--kiq-ink)] font-medium text-sm">{f.category}</span>
                   <span className="text-xs px-1.5 py-0.5 rounded border" style={{ color: confColor(f.confidence), borderColor: confColor(f.confidence) + "40", background: confColor(f.confidence) + "12" }}>{f.confidence}</span>
                 </div>
-                <p className="text-xs text-white/45 line-clamp-1">{f.description}</p>
+                <p className="text-xs text-[var(--kiq-ink)]/45 line-clamp-1">{f.description}</p>
               </div>
               <div className="text-right flex-shrink-0 ml-4">
                 <p className="font-bold" style={{ color: NEON.green }}>{fmtM(f.recovery_estimate ?? 0)}</p>
-                {f.affected_claims > 0 && <p className="text-xs text-white/30">{f.affected_claims.toLocaleString()} claims</p>}
+                {f.affected_claims > 0 && <p className="text-xs text-[var(--kiq-ink)]/30">{f.affected_claims.toLocaleString()} claims</p>}
               </div>
-              <ChevronRight size={14} className={`text-white/30 transition-transform flex-shrink-0 ${isOpen ? "rotate-90" : ""}`} />
+              <ChevronRight size={14} className={`text-[var(--kiq-ink)]/30 transition-transform flex-shrink-0 ${isOpen ? "rotate-90" : ""}`} />
             </button>
             {isOpen && (
               <div className="px-4 pb-4 border-t border-white/[0.05] pt-4 space-y-3">
-                <p className="text-sm text-white/65 leading-relaxed">{f.description}</p>
+                <p className="text-sm text-[var(--kiq-ink)]/65 leading-relaxed">{f.description}</p>
                 <div className="grid md:grid-cols-3 gap-3">
                   {[
                     { label: "Statute / Basis", val: f.statute },
                     { label: "Evidence",        val: f.evidence },
                     { label: "Recovery Method", val: f.recovery_method },
                   ].map(i => (
-                    <div key={i.label} className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.05]">
-                      <p className="text-xs text-white/30 mb-1">{i.label}</p>
-                      <p className="text-xs text-white/65">{i.val}</p>
+                    <div key={i.label} className="p-3 rounded-lg bg-[var(--kiq-surface)]/60 border border-[var(--kiq-hairline)]/70">
+                      <p className="text-xs text-[var(--kiq-ink)]/30 mb-1">{i.label}</p>
+                      <p className="text-xs text-[var(--kiq-ink)]/65">{i.val}</p>
                     </div>
                   ))}
                 </div>
-                <div className="flex items-center justify-between text-xs text-white/35">
+                <div className="flex items-center justify-between text-xs text-[var(--kiq-ink)]/35">
                   <span>Look-back: {f.months_back} months</span>
                   {f.affected_claims > 0 && <span>{f.affected_claims.toLocaleString()} affected claims</span>}
                 </div>
@@ -387,12 +386,12 @@ function AiForensicTab({ lastUpload }: { lastUpload: any }) {
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="text-white font-semibold text-sm">AI Forensic Engine — GPT-4o</h3>
+              <h3 className="text-[var(--kiq-ink)] font-semibold text-sm">AI Forensic Engine — GPT-4o</h3>
               <span className="text-[10px] px-2 py-0.5 rounded font-bold" style={{ color: NEON.purple, background: "rgba(168,85,247,0.15)", border: "1px solid rgba(168,85,247,0.25)" }}>
                 CONSTITUTIONAL VOICE
               </span>
             </div>
-            <p className="text-white/50 text-xs leading-relaxed">
+            <p className="text-[var(--kiq-ink)]/50 text-xs leading-relaxed">
               Analyzes uploaded claim file columns and sample rows through GPT-4o with a forensic audit system prompt.
               Identifies 15+ enterprise recovery categories. Returns structured findings with confidence tiers
               (CERTIFIED / MODELED / INSUFFICIENT_EVIDENCE). McKinsey partner tone, MECE structure, no hedging.
@@ -419,23 +418,23 @@ function AiForensicTab({ lastUpload }: { lastUpload: any }) {
 
       {/* Instructions if no results */}
       {!results && !analyzing && (
-        <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-8 text-center">
-          <Brain size={32} className="mx-auto mb-3 text-white/15" />
-          <p className="text-white/40 text-sm font-medium">Upload a claims file and click "Run AI Analysis"</p>
-          <p className="text-white/25 text-xs mt-2">Or click "Run on Demo Data" to see the engine in action without uploading.</p>
+        <div className="rounded-xl bg-[var(--kiq-surface)]/[0.02] border border-white/[0.06] p-8 text-center">
+          <Brain size={32} className="mx-auto mb-3 text-[var(--kiq-ink)]/15" />
+          <p className="text-[var(--kiq-ink)]/40 text-sm font-medium">Upload a claims file and click "Run AI Analysis"</p>
+          <p className="text-[var(--kiq-ink)]/25 text-xs mt-2">Or click "Run on Demo Data" to see the engine in action without uploading.</p>
           <div className="mt-4 grid grid-cols-3 gap-3 max-w-md mx-auto text-xs">
             {["Duplicate detection", "DRG upcoding", "Spread pricing", "Unbundling", "COB errors", "Ineligible members"].map(t => (
-              <div key={t} className="rounded-lg px-2 py-1.5 text-white/35" style={{ background: "rgba(168,85,247,0.06)", border: "1px solid rgba(168,85,247,0.15)" }}>{t}</div>
+              <div key={t} className="rounded-lg px-2 py-1.5 text-[var(--kiq-ink)]/35" style={{ background: "rgba(168,85,247,0.06)", border: "1px solid rgba(168,85,247,0.15)" }}>{t}</div>
             ))}
           </div>
         </div>
       )}
 
       {analyzing && (
-        <div className="rounded-xl bg-white/[0.02] border border-white/[0.06] p-12 text-center">
+        <div className="rounded-xl bg-[var(--kiq-surface)]/[0.02] border border-white/[0.06] p-12 text-center">
           <Loader2 size={28} className="mx-auto mb-3 animate-spin" style={{ color: NEON.purple }} />
-          <p className="text-white/50 text-sm">GPT-4o forensic audit in progress…</p>
-          <p className="text-white/30 text-xs mt-1">Scanning {lastUpload?.detected_columns?.length || "all"} claim columns · McKinsey-grade analysis</p>
+          <p className="text-[var(--kiq-ink)]/50 text-sm">GPT-4o forensic audit in progress…</p>
+          <p className="text-[var(--kiq-ink)]/30 text-xs mt-1">Scanning {lastUpload?.detected_columns?.length || "all"} claim columns · McKinsey-grade analysis</p>
         </div>
       )}
 
@@ -443,10 +442,10 @@ function AiForensicTab({ lastUpload }: { lastUpload: any }) {
         <div className="space-y-3">
           <div className="flex items-center gap-2">
             <CheckCircle size={14} style={{ color: NEON.green }} />
-            <p className="text-white/70 text-sm font-semibold">
+            <p className="text-[var(--kiq-ink)]/70 text-sm font-semibold">
               {results.length} findings identified by GPT-4o Forensic Engine
             </p>
-            <span className="ml-auto text-xs text-white/30">
+            <span className="ml-auto text-xs text-[var(--kiq-ink)]/30">
               Total: {fmtM(results.reduce((s, f) => s + (f.recovery_estimate || 0), 0))}
             </span>
           </div>
@@ -456,28 +455,28 @@ function AiForensicTab({ lastUpload }: { lastUpload: any }) {
             return (
               <div key={fid} className="rounded-xl overflow-hidden" style={{ background: "rgba(168,85,247,0.04)", border: "1px solid rgba(168,85,247,0.18)" }}
                 data-testid={`ai-finding-${fid}`}>
-                <button className="w-full p-4 flex items-center gap-3 text-left hover:bg-white/[0.02] transition-colors"
+                <button className="w-full p-4 flex items-center gap-3 text-left hover:bg-[var(--kiq-surface)]/[0.02] transition-colors"
                   onClick={() => setExpanded(isOpen ? null : fid)}>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
                       <span className="text-[10px] px-1.5 py-0.5 rounded font-bold" style={{ color: NEON.purple, background: "rgba(168,85,247,0.2)" }}>AI</span>
                       <span className="text-xs font-bold px-2 py-0.5 rounded" style={{ color: severityColor(f.severity), background: severityColor(f.severity) + "18" }}>{f.severity}</span>
-                      <span className="text-white font-medium text-sm">{f.category}</span>
+                      <span className="text-[var(--kiq-ink)] font-medium text-sm">{f.category}</span>
                       <span className="text-xs px-1.5 py-0.5 rounded border" style={{ color: confColor(f.confidence), borderColor: confColor(f.confidence) + "40", background: confColor(f.confidence) + "12" }}>{f.confidence}</span>
                     </div>
-                    <p className="text-xs text-white/45 line-clamp-1">{f.description}</p>
+                    <p className="text-xs text-[var(--kiq-ink)]/45 line-clamp-1">{f.description}</p>
                   </div>
                   <div className="text-right flex-shrink-0 ml-4">
                     <p className="font-bold" style={{ color: NEON.green }}>{fmtM(f.recovery_estimate ?? f.recovery_estimate_usd ?? 0)}</p>
                     {(f.affected_claims_estimate || f.affected_claims) > 0 && (
-                      <p className="text-xs text-white/30">{(f.affected_claims_estimate || f.affected_claims || 0).toLocaleString()} est.</p>
+                      <p className="text-xs text-[var(--kiq-ink)]/30">{(f.affected_claims_estimate || f.affected_claims || 0).toLocaleString()} est.</p>
                     )}
                   </div>
-                  <ChevronRight size={14} className={`text-white/30 flex-shrink-0 transition-transform ${isOpen ? "rotate-90" : ""}`} />
+                  <ChevronRight size={14} className={`text-[var(--kiq-ink)]/30 flex-shrink-0 transition-transform ${isOpen ? "rotate-90" : ""}`} />
                 </button>
                 {isOpen && (
                   <div className="px-4 pb-4 border-t pt-4 space-y-3" style={{ borderColor: "rgba(168,85,247,0.15)" }}>
-                    <p className="text-sm text-white/65 leading-relaxed">{f.description}</p>
+                    <p className="text-sm text-[var(--kiq-ink)]/65 leading-relaxed">{f.description}</p>
                     <div className="grid md:grid-cols-3 gap-3">
                       {[
                         { label: "Statute / Basis", val: f.statute },
@@ -485,8 +484,8 @@ function AiForensicTab({ lastUpload }: { lastUpload: any }) {
                         { label: "Recovery Method", val: f.recovery_method },
                       ].map(i => (
                         <div key={i.label} className="p-3 rounded-lg" style={{ background: "rgba(168,85,247,0.06)", border: "1px solid rgba(168,85,247,0.15)" }}>
-                          <p className="text-xs text-white/30 mb-1">{i.label}</p>
-                          <p className="text-xs text-white/65">{i.val}</p>
+                          <p className="text-xs text-[var(--kiq-ink)]/30 mb-1">{i.label}</p>
+                          <p className="text-xs text-[var(--kiq-ink)]/65">{i.val}</p>
                         </div>
                       ))}
                     </div>
@@ -556,7 +555,7 @@ function ClaimsUniverseTab({ lastUpload }: { lastUpload: any }) {
   if (isLoading) return (
     <div className="flex items-center justify-center h-48 gap-3">
       <Loader2 size={16} className="animate-spin text-blue-400" />
-      <span className="text-white/40 text-sm">Loading claims universe…</span>
+      <span className="text-[var(--kiq-ink)]/40 text-sm">Loading claims universe…</span>
     </div>
   );
 
@@ -573,8 +572,8 @@ function ClaimsUniverseTab({ lastUpload }: { lastUpload: any }) {
           { label: "Flagged",         val: (universe?.total_flagged || 0).toLocaleString(), c: NEON.orange },
           { label: "Flag Rate",       val: `${universe?.flag_rate_pct || 0}%`, c: NEON.red },
         ].map(k => (
-          <div key={k.label} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-3" data-testid={`universe-kpi-${k.label}`}>
-            <p className="text-white/35 text-[10px] uppercase tracking-wider">{k.label}</p>
+          <div key={k.label} className="kiq-forensic-card rounded-xl p-3" data-testid={`universe-kpi-${k.label}`}>
+            <p className="text-[var(--kiq-ink)]/35 text-[10px] uppercase tracking-wider">{k.label}</p>
             <p className="text-lg font-bold mt-0.5" style={{ color: k.c }}>{k.val}</p>
           </div>
         ))}
@@ -582,12 +581,12 @@ function ClaimsUniverseTab({ lastUpload }: { lastUpload: any }) {
 
       {/* Controls */}
       <div className="flex items-center gap-3 flex-wrap">
-        <div className="flex items-center gap-2 rounded-lg px-3 py-1.5 flex-1 min-w-48" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)" }}>
-          <Search size={12} className="text-white/30 flex-shrink-0" />
+        <div className="flex items-center gap-2 rounded-lg px-3 py-1.5 flex-1 min-w-48" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
+          <Search size={12} className="text-[var(--kiq-ink)]/30 flex-shrink-0" />
           <input
             type="text" placeholder="Search any column…" value={search}
             onChange={e => setSearch(e.target.value)} data-testid="universe-search"
-            className="bg-transparent text-xs text-white placeholder:text-white/25 border-none outline-none flex-1"
+            className="bg-transparent text-xs text-[var(--kiq-ink)] placeholder:text-[var(--kiq-ink)]/25 border-none outline-none flex-1"
           />
         </div>
         <div className="flex gap-1.5 flex-wrap">
@@ -595,15 +594,15 @@ function ClaimsUniverseTab({ lastUpload }: { lastUpload: any }) {
             <button key={f} onClick={() => setFlagFilter(f)} data-testid={`flag-filter-${f}`}
               className="px-2 py-1 rounded text-[10px] font-semibold transition-all"
               style={{
-                background: flagFilter === f ? NEON.orange + "20" : "rgba(255,255,255,0.03)",
-                border: `1px solid ${flagFilter === f ? NEON.orange + "50" : "rgba(255,255,255,0.07)"}`,
-                color: flagFilter === f ? NEON.orange : "rgba(255,255,255,0.35)",
+                background: flagFilter === f ? NEON.orange + "20" : "#ffffff",
+                border: `1px solid ${flagFilter === f ? NEON.orange + "50" : "#e2e8f0"}`,
+                color: flagFilter === f ? NEON.orange : "#64748b",
               }}>
               {f}
             </button>
           ))}
         </div>
-        <span className="text-xs text-white/30 flex-shrink-0">{filtered.length.toLocaleString()} rows</span>
+        <span className="text-xs text-[var(--kiq-ink)]/30 flex-shrink-0">{filtered.length.toLocaleString()} rows</span>
       </div>
 
       {/* Table */}
@@ -611,19 +610,19 @@ function ClaimsUniverseTab({ lastUpload }: { lastUpload: any }) {
         <div className="overflow-x-auto max-h-[500px] overflow-y-auto">
           <table className="w-full text-xs">
             <thead className="sticky top-0 z-10">
-              <tr style={{ background: "#0d1020", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-                <th className="px-3 py-2.5 text-left text-white/40 font-semibold uppercase tracking-wider text-[10px] w-16">#</th>
+              <tr style={{ background: "#F1F5F9", borderBottom: "1px solid #e2e8f0" }}>
+                <th className="px-3 py-2.5 text-left text-[var(--kiq-ink)]/40 font-semibold uppercase tracking-wider text-[10px] w-16">#</th>
                 {dataColumns.slice(0, 8).map((col: string) => (
                   <th key={col}
-                    className="px-3 py-2.5 text-left font-semibold uppercase tracking-wider text-[10px] whitespace-nowrap cursor-pointer select-none hover:text-white/70 transition-colors"
-                    style={{ color: sortCol === col ? NEON.blue : "rgba(255,255,255,0.4)" }}
+                    className="px-3 py-2.5 text-left font-semibold uppercase tracking-wider text-[10px] whitespace-nowrap cursor-pointer select-none hover:text-[var(--kiq-ink)]/70 transition-colors"
+                    style={{ color: sortCol === col ? NEON.blue : "#475569" }}
                     onClick={() => handleSort(col)}
                     data-testid={`universe-sort-${col}`}>
                     {col.replace(/_/g, " ")}
                     {sortCol === col ? (sortDir === "asc" ? " ↑" : " ↓") : " ↕"}
                   </th>
                 ))}
-                <th className="px-3 py-2.5 text-left text-white/40 font-semibold uppercase tracking-wider text-[10px]">Flags</th>
+                <th className="px-3 py-2.5 text-left text-[var(--kiq-ink)]/40 font-semibold uppercase tracking-wider text-[10px]">Flags</th>
               </tr>
             </thead>
             <tbody>
@@ -631,11 +630,11 @@ function ClaimsUniverseTab({ lastUpload }: { lastUpload: any }) {
                 const flags: string[] = row._flags || [];
                 return (
                   <tr key={i} data-testid={`universe-row-${i}`}
-                    className="border-b border-white/[0.03] hover:bg-white/[0.02] transition-colors"
+                    className="border-b border-[var(--kiq-hairline)]/70 hover:bg-[var(--kiq-surface)]/70 transition-colors"
                     style={{ background: flags.length > 0 ? "rgba(255,107,26,0.02)" : "transparent" }}>
-                    <td className="px-3 py-2 text-white/25">{row._row_num || i + 1}</td>
+                    <td className="px-3 py-2 text-[var(--kiq-ink)]/25">{row._row_num || i + 1}</td>
                     {dataColumns.slice(0, 8).map((col: string) => (
-                      <td key={col} className="px-3 py-2 text-white/60 whitespace-nowrap max-w-32 truncate">
+                      <td key={col} className="px-3 py-2 text-[var(--kiq-ink)]/60 whitespace-nowrap max-w-32 truncate">
                         {String(row[col] ?? "")}
                       </td>
                     ))}
@@ -655,28 +654,28 @@ function ClaimsUniverseTab({ lastUpload }: { lastUpload: any }) {
           </table>
         </div>
         {/* Pagination footer */}
-        <div className="px-4 py-2.5 flex items-center justify-between" style={{ borderTop: "1px solid rgba(255,255,255,0.05)", background: "#0a0f1e" }}>
-          <p className="text-xs text-white/30">
+        <div className="px-4 py-2.5 flex items-center justify-between" style={{ borderTop: "1px solid #f8fafc", background: "#F8FAFC" }}>
+          <p className="text-xs text-[var(--kiq-ink)]/30">
             Page {universe?.page ?? page} of {universe?.total_pages ?? 1} ·{" "}
-            Showing <span className="text-white/50 font-semibold">{rows.length}</span> of{" "}
-            <span className="text-white/50 font-semibold">{(universe?.total_rows ?? 0).toLocaleString()}</span> total rows
+            Showing <span className="text-[var(--kiq-ink)]/50 font-semibold">{rows.length}</span> of{" "}
+            <span className="text-[var(--kiq-ink)]/50 font-semibold">{(universe?.total_rows ?? 0).toLocaleString()}</span> total rows
           </p>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page <= 1 || isLoading}
               className="px-3 py-1 rounded text-xs font-semibold disabled:opacity-30"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)" }}
+              style={{ background: "#ffffff", border: "1px solid #e2e8f0", color: "#334155" }}
               data-testid="universe-prev-page"
             >
               ← Prev
             </button>
-            <span className="text-xs text-white/30">{page}</span>
+            <span className="text-xs text-[var(--kiq-ink)]/30">{page}</span>
             <button
               onClick={() => setPage(p => p + 1)}
               disabled={page >= (universe?.total_pages ?? 1) || isLoading}
               className="px-3 py-1 rounded text-xs font-semibold disabled:opacity-30"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)" }}
+              style={{ background: "#ffffff", border: "1px solid #e2e8f0", color: "#334155" }}
               data-testid="universe-next-page"
             >
               Next →
@@ -698,9 +697,9 @@ function VendorScorecardTab() {
 
   return (
     <div className="space-y-4">
-      <p className="text-white/35 text-xs">
+      <p className="text-[var(--kiq-ink)]/35 text-xs">
         Vendor performance rated on error rate, demand response speed, cooperation grade, and recovery yield.
-        Plan: <span className="text-white/55 font-semibold">{data?.plan_name}</span> · {(data?.covered_lives || 0).toLocaleString()} covered lives
+        Plan: <span className="text-[var(--kiq-ink)]/55 font-semibold">{data?.plan_name}</span> · {(data?.covered_lives || 0).toLocaleString()} covered lives
       </p>
 
       <div className="grid md:grid-cols-2 gap-4">
@@ -708,10 +707,10 @@ function VendorScorecardTab() {
           const isOpen = expanded === v.name;
           const gc = gradeColor(v.fiduciary_grade);
           return (
-            <div key={v.name} className="rounded-2xl overflow-hidden"
+            <div key={v.name} className="kiq-forensic-card rounded-2xl overflow-hidden"
               style={{ background: "rgba(255,255,255,0.025)", border: `1px solid ${gc}22` }}
               data-testid={`vendor-${v.name.replace(/\s+/g, "-")}`}>
-              <button className="w-full p-5 text-left hover:bg-white/[0.02] transition-colors"
+              <button className="w-full p-5 text-left hover:bg-[var(--kiq-surface)]/70 transition-colors"
                 onClick={() => setExpanded(isOpen ? null : v.name)}>
                 <div className="flex items-start gap-4">
                   {/* Grade Badge */}
@@ -721,8 +720,8 @@ function VendorScorecardTab() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-white font-semibold text-sm">{v.name}</span>
-                      <span className="text-[10px] px-1.5 py-0.5 rounded font-bold text-white/50 bg-white/[0.06] border border-white/[0.1]">{v.type}</span>
+                      <span className="text-[var(--kiq-ink)] font-semibold text-sm">{v.name}</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded font-bold text-[var(--kiq-ink)]/50 bg-[var(--kiq-surface)]/[0.06] border border-white/[0.1]">{v.type}</span>
                     </div>
                     <div className="grid grid-cols-2 gap-x-4 gap-y-1">
                       {[
@@ -732,13 +731,13 @@ function VendorScorecardTab() {
                         { label: "Open Demands", val: String(v.open_demands), warn: v.open_demands > 3 },
                       ].map(m => (
                         <div key={m.label} className="flex items-center gap-1.5">
-                          <span className="text-[10px] text-white/35">{m.label}:</span>
+                          <span className="text-[10px] text-[var(--kiq-ink)]/35">{m.label}:</span>
                           <span className="text-[10px] font-bold" style={{ color: m.warn ? NEON.orange : "rgba(255,255,255,0.65)" }}>{m.val}</span>
                         </div>
                       ))}
                     </div>
                   </div>
-                  <ChevronRight size={14} className={`text-white/30 flex-shrink-0 transition-transform ${isOpen ? "rotate-90" : ""}`} />
+                  <ChevronRight size={14} className={`text-[var(--kiq-ink)]/30 flex-shrink-0 transition-transform ${isOpen ? "rotate-90" : ""}`} />
                 </div>
               </button>
 
@@ -746,14 +745,14 @@ function VendorScorecardTab() {
                 <div className="px-5 pb-5 border-t space-y-3" style={{ borderColor: gc + "20" }}>
                   {/* Trend sparkline */}
                   <div className="mt-3">
-                    <p className="text-[10px] text-white/30 mb-2 uppercase tracking-wider">Error Rate Trend (4Q)</p>
+                    <p className="text-[10px] text-[var(--kiq-ink)]/30 mb-2 uppercase tracking-wider">Error Rate Trend (4Q)</p>
                     <div className="flex items-end gap-1 h-8">
                       {(v.trend || []).map((val: number, i: number) => (
                         <div key={i} className="flex-1 rounded-sm"
                           style={{ height: `${Math.max(8, (val / Math.max(...v.trend)) * 32)}px`, background: i === v.trend.length - 1 ? gc : gc + "50" }} />
                       ))}
                     </div>
-                    <div className="flex justify-between text-[9px] text-white/20 mt-0.5">
+                    <div className="flex justify-between text-[9px] text-[var(--kiq-ink)]/20 mt-0.5">
                       <span>Q1</span><span>Q2</span><span>Q3</span><span>Q4</span>
                     </div>
                   </div>
@@ -766,21 +765,21 @@ function VendorScorecardTab() {
                       { label: "Cooperation Grade", val: v.cooperation_grade },
                       { label: "Contact", val: v.contact },
                     ].map(m => (
-                      <div key={m.label} className="p-2 rounded-lg" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                        <p className="text-[10px] text-white/30">{m.label}</p>
-                        <p className="text-xs text-white/65 mt-0.5 font-semibold truncate">{m.val}</p>
+                      <div key={m.label} className="p-2 rounded-lg" style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
+                        <p className="text-[10px] text-[var(--kiq-ink)]/30">{m.label}</p>
+                        <p className="text-xs text-[var(--kiq-ink)]/65 mt-0.5 font-semibold truncate">{m.val}</p>
                       </div>
                     ))}
                   </div>
 
                   {/* Flags */}
                   <div>
-                    <p className="text-[10px] text-white/30 mb-1.5 uppercase tracking-wider">Open Issues</p>
+                    <p className="text-[10px] text-[var(--kiq-ink)]/30 mb-1.5 uppercase tracking-wider">Open Issues</p>
                     <div className="space-y-1">
                       {(v.flags || []).map((flag: string, i: number) => (
                         <div key={i} className="flex items-center gap-2 text-xs">
                           <AlertTriangle size={10} style={{ color: NEON.orange, flexShrink: 0 }} />
-                          <span className="text-white/55">{flag}</span>
+                          <span className="text-[var(--kiq-ink)]/55">{flag}</span>
                         </div>
                       ))}
                     </div>
@@ -820,7 +819,7 @@ function RegulatoryMatrixTab() {
             <span className="text-xs font-semibold" style={{ color: statusColor(status) }}>{count} {status}</span>
           </div>
         ))}
-        <p className="text-white/30 text-xs ml-auto">Plan: <span className="text-white/50">{data?.plan_name}</span></p>
+        <p className="text-[var(--kiq-ink)]/30 text-xs ml-auto">Plan: <span className="text-[var(--kiq-ink)]/50">{data?.plan_name}</span></p>
       </div>
 
       {/* Matrix table */}
@@ -829,9 +828,9 @@ function RegulatoryMatrixTab() {
           const isOpen = expanded === rule.regulation;
           const sc = statusColor(rule.status);
           return (
-            <div key={i} className="rounded-xl overflow-hidden" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)" }}
+            <div key={i} className="rounded-xl overflow-hidden" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid #e2e8f0" }}
               data-testid={`reg-rule-${i}`}>
-              <button className="w-full p-4 flex items-center gap-3 text-left hover:bg-white/[0.02] transition-colors"
+              <button className="w-full p-4 flex items-center gap-3 text-left hover:bg-[var(--kiq-surface)]/[0.02] transition-colors"
                 onClick={() => setExpanded(isOpen ? null : rule.regulation)}>
                 <div className="flex-shrink-0">
                   <div className="text-xs px-2 py-1 rounded font-bold" style={{ color: sc, background: sc + "15", border: `1px solid ${sc}30` }}>
@@ -840,10 +839,10 @@ function RegulatoryMatrixTab() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-white font-medium text-sm">{rule.regulation}</span>
-                    <span className="text-white/40 text-xs truncate hidden sm:block">— {rule.title}</span>
+                    <span className="text-[var(--kiq-ink)] font-medium text-sm">{rule.regulation}</span>
+                    <span className="text-[var(--kiq-ink)]/40 text-xs truncate hidden sm:block">— {rule.title}</span>
                   </div>
-                  <p className="text-xs text-white/35 line-clamp-1">{rule.requirement}</p>
+                  <p className="text-xs text-[var(--kiq-ink)]/35 line-clamp-1">{rule.requirement}</p>
                 </div>
                 <div className="flex-shrink-0">
                   <span className="text-xs px-2 py-0.5 rounded font-bold" style={{
@@ -853,7 +852,7 @@ function RegulatoryMatrixTab() {
                     {rule.risk_level}
                   </span>
                 </div>
-                <ChevronRight size={14} className={`text-white/30 flex-shrink-0 transition-transform ${isOpen ? "rotate-90" : ""}`} />
+                <ChevronRight size={14} className={`text-[var(--kiq-ink)]/30 flex-shrink-0 transition-transform ${isOpen ? "rotate-90" : ""}`} />
               </button>
               {isOpen && (
                 <div className="px-4 pb-4 border-t border-white/[0.05] pt-4 grid md:grid-cols-3 gap-3">
@@ -862,9 +861,9 @@ function RegulatoryMatrixTab() {
                     { label: "Evidence",    val: rule.evidence },
                     { label: "Remediation", val: rule.remediation },
                   ].map(it => (
-                    <div key={it.label} className="p-3 rounded-lg bg-white/[0.02] border border-white/[0.05]">
-                      <p className="text-[10px] text-white/30 mb-1 uppercase tracking-wider">{it.label}</p>
-                      <p className="text-xs text-white/65 leading-relaxed">{it.val}</p>
+                    <div key={it.label} className="p-3 rounded-lg bg-[var(--kiq-surface)]/[0.02] border border-white/[0.05]">
+                      <p className="text-[10px] text-[var(--kiq-ink)]/30 mb-1 uppercase tracking-wider">{it.label}</p>
+                      <p className="text-xs text-[var(--kiq-ink)]/65 leading-relaxed">{it.val}</p>
                     </div>
                   ))}
                 </div>
@@ -900,8 +899,8 @@ function ArLedgerTab() {
           { label: "Interest Accrued",  val: fmtM(summary.total_interest_accrued || 0), c: NEON.gold },
           { label: "Projected 90-Day",  val: fmtM(summary.projected_90_day_collection || 0), c: NEON.blue },
         ].map(k => (
-          <div key={k.label} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4" data-testid={`ar-kpi-${k.label}`}>
-            <p className="text-white/35 text-[10px] uppercase tracking-wider">{k.label}</p>
+          <div key={k.label} className="kiq-forensic-card rounded-xl p-4" data-testid={`ar-kpi-${k.label}`}>
+            <p className="text-[var(--kiq-ink)]/35 text-[10px] uppercase tracking-wider">{k.label}</p>
             <p className="text-xl font-bold mt-0.5" style={{ color: k.c }}>{k.val}</p>
           </div>
         ))}
@@ -913,23 +912,23 @@ function ArLedgerTab() {
           <div key={bucket} className="rounded-lg p-3 text-center"
             style={{ background: agingColor(bucket) + "08", border: `1px solid ${agingColor(bucket)}25` }}>
             <p className="text-[10px] font-bold uppercase tracking-wider" style={{ color: agingColor(bucket) }}>{bucket} days</p>
-            <p className="text-base font-bold text-white mt-1">{fmtM(aging[bucket] || 0)}</p>
+            <p className="text-base font-bold text-[var(--kiq-ink)] mt-1">{fmtM(aging[bucket] || 0)}</p>
           </div>
         ))}
       </div>
 
       {/* Table */}
       <div className="rounded-xl overflow-hidden border border-white/[0.08]">
-        <div className="px-4 py-2.5 flex items-center gap-3" style={{ background: "#0d1020", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+        <div className="px-4 py-2.5 flex items-center gap-3" style={{ background: "#F1F5F9", borderBottom: "1px solid #e2e8f0" }}>
           <Scale size={12} style={{ color: NEON.purple }} />
-          <p className="text-xs font-semibold text-white/70">Accounts Receivable Ledger</p>
+          <p className="text-xs font-semibold text-[var(--kiq-ink)]/70">Accounts Receivable Ledger</p>
           <div className="ml-auto flex gap-2">
             <button onClick={() => setSort("days")} className="text-[10px] px-2 py-0.5 rounded"
-              style={{ background: sort === "days" ? NEON.purple + "20" : "transparent", color: sort === "days" ? NEON.purple : "rgba(255,255,255,0.3)", border: `1px solid ${sort === "days" ? NEON.purple + "40" : "transparent"}` }}>
+              style={{ background: sort === "days" ? NEON.purple + "20" : "transparent", color: sort === "days" ? NEON.purple : "#64748b", border: `1px solid ${sort === "days" ? NEON.purple + "40" : "transparent"}` }}>
               By Age
             </button>
             <button onClick={() => setSort("outstanding")} className="text-[10px] px-2 py-0.5 rounded"
-              style={{ background: sort === "outstanding" ? NEON.purple + "20" : "transparent", color: sort === "outstanding" ? NEON.purple : "rgba(255,255,255,0.3)", border: `1px solid ${sort === "outstanding" ? NEON.purple + "40" : "transparent"}` }}>
+              style={{ background: sort === "outstanding" ? NEON.purple + "20" : "transparent", color: sort === "outstanding" ? NEON.purple : "#64748b", border: `1px solid ${sort === "outstanding" ? NEON.purple + "40" : "transparent"}` }}>
               By Amount
             </button>
           </div>
@@ -937,9 +936,9 @@ function ArLedgerTab() {
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
-              <tr style={{ background: "#0a0f1e", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <tr style={{ background: "#F8FAFC", borderBottom: "1px solid #f1f5f9" }}>
                 {["Finding", "Respondent", "Demanded", "Recovered", "Outstanding", "Days", "Aging", "Interest", "Status"].map(h => (
-                  <th key={h} className="px-3 py-2.5 text-left text-white/35 font-semibold text-[10px] uppercase tracking-wider whitespace-nowrap">{h}</th>
+                  <th key={h} className="px-3 py-2.5 text-left text-[var(--kiq-ink)]/35 font-semibold text-[10px] uppercase tracking-wider whitespace-nowrap">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -948,22 +947,22 @@ function ArLedgerTab() {
                 const ac = agingColor(row.aging_bucket);
                 return (
                   <tr key={i} data-testid={`ar-row-${i}`}
-                    className="border-b border-white/[0.03] hover:bg-white/[0.02] transition-colors">
-                    <td className="px-3 py-2.5 text-white/70 font-medium max-w-36 truncate">{row.finding}</td>
-                    <td className="px-3 py-2.5 text-white/50 whitespace-nowrap">
+                    className="border-b border-[var(--kiq-hairline)]/70 hover:bg-[var(--kiq-surface)]/70 transition-colors">
+                    <td className="px-3 py-2.5 text-[var(--kiq-ink)]/70 font-medium max-w-36 truncate">{row.finding}</td>
+                    <td className="px-3 py-2.5 text-[var(--kiq-ink)]/50 whitespace-nowrap">
                       <div>{row.respondent}</div>
-                      <div className="text-[10px] text-white/25">{row.respondent_type}</div>
+                      <div className="text-[10px] text-[var(--kiq-ink)]/25">{row.respondent_type}</div>
                     </td>
-                    <td className="px-3 py-2.5 font-semibold text-white/60 whitespace-nowrap">{fmtM(row.demanded)}</td>
-                    <td className="px-3 py-2.5 font-semibold whitespace-nowrap" style={{ color: row.recovered > 0 ? NEON.green : "rgba(255,255,255,0.25)" }}>{fmtM(row.recovered)}</td>
-                    <td className="px-3 py-2.5 font-bold whitespace-nowrap" style={{ color: row.outstanding > 0 ? NEON.orange : "rgba(255,255,255,0.3)" }}>{fmtM(row.outstanding)}</td>
-                    <td className="px-3 py-2.5 text-white/50 whitespace-nowrap">{row.days_outstanding}d</td>
+                    <td className="px-3 py-2.5 font-semibold text-[var(--kiq-ink)]/60 whitespace-nowrap">{fmtM(row.demanded)}</td>
+                    <td className="px-3 py-2.5 font-semibold whitespace-nowrap" style={{ color: row.recovered > 0 ? NEON.green : "rgba(15,23,42,0.08)" }}>{fmtM(row.recovered)}</td>
+                    <td className="px-3 py-2.5 font-bold whitespace-nowrap" style={{ color: row.outstanding > 0 ? NEON.orange : "#64748b" }}>{fmtM(row.outstanding)}</td>
+                    <td className="px-3 py-2.5 text-[var(--kiq-ink)]/50 whitespace-nowrap">{row.days_outstanding}d</td>
                     <td className="px-3 py-2.5 whitespace-nowrap">
                       <span className="text-[10px] px-1.5 py-0.5 rounded font-bold" style={{ color: ac, background: ac + "15" }}>{row.aging_bucket}</span>
                     </td>
-                    <td className="px-3 py-2.5 text-white/40 whitespace-nowrap">{fmtM(row.interest_accrued)}</td>
+                    <td className="px-3 py-2.5 text-[var(--kiq-ink)]/40 whitespace-nowrap">{fmtM(row.interest_accrued)}</td>
                     <td className="px-3 py-2.5 whitespace-nowrap">
-                      <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ color: "rgba(255,255,255,0.45)", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}>{row.status}</span>
+                      <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ color: "rgba(255,255,255,0.45)", background: "#f8fafc", border: "1px solid #e2e8f0" }}>{row.status}</span>
                     </td>
                   </tr>
                 );
@@ -971,12 +970,12 @@ function ArLedgerTab() {
             </tbody>
           </table>
         </div>
-        <div className="px-4 py-2 flex items-center justify-between" style={{ borderTop: "1px solid rgba(255,255,255,0.05)", background: "#0a0f1e" }}>
-          <p className="text-[11px] text-white/30">
-            Weighted avg days outstanding: <span className="font-bold text-white/50">{summary.weighted_avg_days || 0}d</span>
+        <div className="px-4 py-2 flex items-center justify-between" style={{ borderTop: "1px solid #f8fafc", background: "#F8FAFC" }}>
+          <p className="text-[11px] text-[var(--kiq-ink)]/30">
+            Weighted avg days outstanding: <span className="font-bold text-[var(--kiq-ink)]/50">{summary.weighted_avg_days || 0}d</span>
           </p>
           <p className="text-[11px]">
-            <span className="text-white/30">Total outstanding: </span>
+            <span className="text-[var(--kiq-ink)]/30">Total outstanding: </span>
             <span className="font-bold" style={{ color: NEON.orange }}>{fmtM(summary.total_outstanding || 0)}</span>
           </p>
         </div>
@@ -1047,8 +1046,8 @@ function PipelineTab({ d }: { d: any }) {
           { label: "Recovery Rate",   val: `${(summary.recovery_rate_pct ?? 0).toFixed(1)}%`,                    c: NEON.purple },
           { label: "Kincaid Earned",  val: fmtM(summary.contingency_earned ?? 0),                               c: NEON.orange },
         ].map(k => (
-          <div key={k.label} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-3">
-            <p className="text-white/40 text-[10px] mb-1 uppercase tracking-wider">{k.label}</p>
+          <div key={k.label} className="rounded-xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.07] p-3">
+            <p className="text-[var(--kiq-ink)]/40 text-[10px] mb-1 uppercase tracking-wider">{k.label}</p>
             <p className="text-lg font-bold" style={{ color: k.c }}>{k.val}</p>
           </div>
         ))}
@@ -1058,16 +1057,16 @@ function PipelineTab({ d }: { d: any }) {
         <div className="rounded-2xl p-5" style={{ background: "rgba(0,212,255,0.05)", border: "1px solid rgba(0,212,255,0.22)" }}>
           <div className="flex items-center gap-2 mb-3">
             <Gavel size={14} style={{ color: NEON.blue }} />
-            <p className="text-sm font-semibold text-white">Findings Ready to Pursue</p>
-            <span className="text-[10px] text-white/40 ml-auto">Click "Pursue" to create a recovery action and generate a GPT-4o demand letter.</span>
+            <p className="text-sm font-semibold text-[var(--kiq-ink)]">Findings Ready to Pursue</p>
+            <span className="text-[10px] text-[var(--kiq-ink)]/40 ml-auto">Click "Pursue" to create a recovery action and generate a GPT-4o demand letter.</span>
           </div>
           <div className="space-y-2">
             {unpursued.map((f: any) => (
-              <div key={f.id} className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.05]" data-testid={`unpursued-${f.id}`}>
+              <div key={f.id} className="flex items-center gap-3 p-3 rounded-lg bg-[var(--kiq-surface)]/[0.02] border border-white/[0.05]" data-testid={`unpursued-${f.id}`}>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded" style={{ color: severityColor(f.severity), background: severityColor(f.severity) + "18" }}>{f.severity}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-white truncate">{f.category}</p>
-                  <p className="text-[11px] text-white/40 truncate">{f.confidence}</p>
+                  <p className="text-sm text-[var(--kiq-ink)] truncate">{f.category}</p>
+                  <p className="text-[11px] text-[var(--kiq-ink)]/40 truncate">{f.confidence}</p>
                 </div>
                 <span className="font-bold text-sm" style={{ color: NEON.green }}>{fmtM(f.recovery_estimate ?? 0)}</span>
                 <button onClick={() => pursue(f)} disabled={pursuingId === f.id} data-testid={`pursue-${f.id}`}
@@ -1085,13 +1084,13 @@ function PipelineTab({ d }: { d: any }) {
       {isLoading ? (
         <div className="flex items-center justify-center h-32 gap-3">
           <Loader2 size={16} className="animate-spin text-blue-400" />
-          <span className="text-white/40 text-sm">Loading pipeline…</span>
+          <span className="text-[var(--kiq-ink)]/40 text-sm">Loading pipeline…</span>
         </div>
       ) : actions.length === 0 ? (
-        <div className="rounded-2xl bg-white/[0.02] border border-white/[0.05] p-12 text-center">
-          <Briefcase size={28} className="mx-auto mb-3 text-white/20" />
-          <p className="text-white/50 text-sm">No active pursuits yet.</p>
-          <p className="text-white/30 text-xs mt-1">Click "Pursue" on a finding above to start your first recovery action.</p>
+        <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.02] border border-white/[0.05] p-12 text-center">
+          <Briefcase size={28} className="mx-auto mb-3 text-[var(--kiq-ink)]/20" />
+          <p className="text-[var(--kiq-ink)]/50 text-sm">No active pursuits yet.</p>
+          <p className="text-[var(--kiq-ink)]/30 text-xs mt-1">Click "Pursue" on a finding above to start your first recovery action.</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -1099,11 +1098,11 @@ function PipelineTab({ d }: { d: any }) {
             const items = actions.filter(a => a.status === stage.id);
             if (!items.length) return null;
             return (
-              <div key={stage.id} className="rounded-2xl bg-white/[0.025] border border-white/[0.06] overflow-hidden">
+              <div key={stage.id} className="rounded-2xl bg-[var(--kiq-surface)]/[0.025] border border-white/[0.06] overflow-hidden">
                 <div className="px-4 py-2.5 flex items-center gap-2" style={{ background: stage.color + "12", borderBottom: `1px solid ${stage.color}22` }}>
                   <div className="w-2 h-2 rounded-full" style={{ background: stage.color }} />
                   <p className="text-xs font-bold uppercase tracking-wider" style={{ color: stage.color }}>{stage.label}</p>
-                  <span className="text-[11px] text-white/40 ml-auto">{items.length} action{items.length > 1 ? "s" : ""} · {fmtM(items.reduce((s, a) => s + (a.amount_claimed ?? 0), 0))}</span>
+                  <span className="text-[11px] text-[var(--kiq-ink)]/40 ml-auto">{items.length} action{items.length > 1 ? "s" : ""} · {fmtM(items.reduce((s, a) => s + (a.amount_claimed ?? 0), 0))}</span>
                 </div>
                 <div className="divide-y divide-white/[0.04]">
                   {items.map(a => {
@@ -1117,13 +1116,13 @@ function PipelineTab({ d }: { d: any }) {
                         <div className="flex items-start gap-3">
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1 flex-wrap">
-                              <span className="text-sm font-semibold text-white">{a.finding_category || finding.category}</span>
-                              <span className="text-[10px] px-1.5 py-0.5 rounded text-white/55 bg-white/[0.04] border border-white/[0.08]">vs. {a.target_party}</span>
-                              <span className="text-[10px] text-white/30 ml-auto">#{a.id}</span>
+                              <span className="text-sm font-semibold text-[var(--kiq-ink)]">{a.finding_category || finding.category}</span>
+                              <span className="text-[10px] px-1.5 py-0.5 rounded text-[var(--kiq-ink)]/55 bg-[var(--kiq-surface)]/[0.04] border border-white/[0.08]">vs. {a.target_party}</span>
+                              <span className="text-[10px] text-[var(--kiq-ink)]/30 ml-auto">#{a.id}</span>
                             </div>
                             <div className="flex items-center gap-4 text-xs">
-                              <span className="text-white/45">Claimed: <span className="font-semibold text-white/75">{fmtM(a.amount_claimed)}</span></span>
-                              <span className="text-white/45">Recovered: <span className="font-semibold" style={{ color: a.amount_recovered > 0 ? NEON.green : "rgba(255,255,255,0.4)" }}>{fmtM(a.amount_recovered)}</span></span>
+                              <span className="text-[var(--kiq-ink)]/45">Claimed: <span className="font-semibold text-[var(--kiq-ink)]/75">{fmtM(a.amount_claimed)}</span></span>
+                              <span className="text-[var(--kiq-ink)]/45">Recovered: <span className="font-semibold" style={{ color: a.amount_recovered > 0 ? NEON.green : "#475569" }}>{fmtM(a.amount_recovered)}</span></span>
                             </div>
                           </div>
                           <div className="flex flex-wrap gap-1.5 justify-end flex-shrink-0">
@@ -1149,7 +1148,7 @@ function PipelineTab({ d }: { d: any }) {
                               type="number" placeholder="Recovered amount ($)" value={recoveredInput[a.id] || ""}
                               onChange={e => setRecoveredInput(r => ({ ...r, [a.id]: e.target.value }))}
                               data-testid={`recovered-input-${a.id}`}
-                              className="flex-1 bg-white/[0.04] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-white placeholder:text-white/25 outline-none"
+                              className="flex-1 bg-[var(--kiq-surface)]/[0.04] border border-white/10 rounded-lg px-3 py-1.5 text-xs text-[var(--kiq-ink)] placeholder:text-[var(--kiq-ink)]/25 outline-none"
                             />
                             <button
                               onClick={() => {
@@ -1190,20 +1189,20 @@ function CalculatorTab({ d }: { d: any }) {
 
   return (
     <div className="grid lg:grid-cols-2 gap-6">
-      <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
-        <h3 className="text-white font-semibold mb-4 text-sm">Select Recovery Findings</h3>
+      <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.08] p-5">
+        <h3 className="text-[var(--kiq-ink)] font-semibold mb-4 text-sm">Select Recovery Findings</h3>
         <div className="space-y-1.5">
           {findings.map((f: any) => {
             const on = selectedFindings.includes(f.id);
             return (
-              <label key={f.id} className="flex items-center gap-3 p-2.5 rounded-lg cursor-pointer hover:bg-white/[0.03] transition-colors border border-transparent hover:border-white/[0.06]"
+              <label key={f.id} className="flex items-center gap-3 p-2.5 rounded-lg cursor-pointer hover:bg-[var(--kiq-surface)]/[0.03] transition-colors border border-transparent hover:border-white/[0.06]"
                 data-testid={`calc-finding-${f.id}`}>
                 <input type="checkbox" checked={on} onChange={() => toggle(f.id)} className="w-4 h-4 rounded accent-indigo-500" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-white/80 truncate">{f.category}</p>
-                  <p className="text-xs text-white/35">{f.confidence} · {f.severity}</p>
+                  <p className="text-sm text-[var(--kiq-ink)]/80 truncate">{f.category}</p>
+                  <p className="text-xs text-[var(--kiq-ink)]/35">{f.confidence} · {f.severity}</p>
                 </div>
-                <span className="font-bold text-sm flex-shrink-0" style={{ color: on ? NEON.green : "rgba(255,255,255,0.3)" }}>{fmtM(f.recovery_estimate ?? 0)}</span>
+                <span className="font-bold text-sm flex-shrink-0" style={{ color: on ? NEON.green : "#64748b" }}>{fmtM(f.recovery_estimate ?? 0)}</span>
               </label>
             );
           })}
@@ -1211,37 +1210,37 @@ function CalculatorTab({ d }: { d: any }) {
       </div>
 
       <div className="space-y-4">
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
-          <h3 className="text-white font-semibold mb-4 text-sm">Success Fee Rate</h3>
+        <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.08] p-5">
+          <h3 className="text-[var(--kiq-ink)] font-semibold mb-4 text-sm">Success Fee Rate</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-white/60 text-sm">Kincaid RMC Success Fee</span>
-              <span className="font-bold text-white">{feePct}%</span>
+              <span className="text-[var(--kiq-ink)]/60 text-sm">Kincaid Health Success Fee</span>
+              <span className="font-bold text-[var(--kiq-ink)]">{feePct}%</span>
             </div>
             <input type="range" min={20} max={35} value={feePct} onChange={e => setFeePct(Number(e.target.value))}
               className="w-full accent-indigo-500" data-testid="fee-slider" />
-            <div className="flex justify-between text-xs text-white/30"><span>20%</span><span>35%</span></div>
-            <p className="text-xs text-white/30">Industry standard: 25–33%. Fortune 20 engagements typically 22–28%.</p>
+            <div className="flex justify-between text-xs text-[var(--kiq-ink)]/30"><span>20%</span><span>35%</span></div>
+            <p className="text-xs text-[var(--kiq-ink)]/30">Industry standard: 25–33%. Fortune 20 engagements typically 22–28%.</p>
           </div>
         </div>
 
         <div className="rounded-2xl border p-5 space-y-4" style={{ background: "rgba(0,255,148,0.04)", borderColor: "rgba(0,255,148,0.15)" }}>
-          <h3 className="text-white font-semibold text-sm">Recovery Summary</h3>
+          <h3 className="text-[var(--kiq-ink)] font-semibold text-sm">Recovery Summary</h3>
           {[
-            { label: "Total Recovery Opportunity", val: fmtM(totalRecovery), color: "white", bold: false },
+            { label: "Total Recovery Opportunity", val: fmtM(totalRecovery), color: "#0F172A", bold: false },
             { label: `Kincaid Success Fee (${feePct}%)`, val: `-${fmtM(kincaidFee)}`, color: NEON.gold, bold: false },
             { label: "Net Benefit to Plan", val: fmtM(netBenefit), color: NEON.green, bold: true },
           ].map(r => (
             <div key={r.label} className={`flex justify-between items-center ${r.bold ? "border-t border-white/[0.08] pt-4" : ""}`}>
-              <span className="text-sm text-white/60">{r.label}</span>
+              <span className="text-sm text-[var(--kiq-ink)]/60">{r.label}</span>
               <span className={`font-bold ${r.bold ? "text-2xl" : "text-lg"}`} style={{ color: r.color }}>{r.val}</span>
             </div>
           ))}
-          <p className="text-xs text-white/30 border-t border-white/[0.05] pt-3">No upfront cost. 28% contingency on gross recovered amounts. No recovery, no fee.</p>
+          <p className="text-xs text-[var(--kiq-ink)]/30 border-t border-white/[0.05] pt-3">No upfront cost. 28% contingency on gross recovered amounts. No recovery, no fee.</p>
         </div>
 
         <div className="rounded-xl p-4" style={{ background: "rgba(0,212,255,0.04)", border: "1px solid rgba(0,212,255,0.18)" }}>
-          <p className="text-xs text-white/50 leading-relaxed">
+          <p className="text-xs text-[var(--kiq-ink)]/50 leading-relaxed">
             <span className="font-bold" style={{ color: NEON.blue }}>Fortune 500 Benchmark: </span>
             Plans ≥50,000 covered lives average $399.80 PMPM. This plan: $542.10 PMPM — $142.30 above peer set.
             Annual excess spend: ~${((d.summary?.covered_lives || 187400) * 142.30 * 12 / 1_000_000).toFixed(1)}M vs. peer median.
@@ -1256,8 +1255,8 @@ function CalculatorTab({ d }: { d: any }) {
 function TimelineTab({ d }: { d: any }) {
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
-        <h3 className="text-white font-semibold mb-4 text-sm flex items-center gap-2">
+      <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.08] p-5">
+        <h3 className="text-[var(--kiq-ink)] font-semibold mb-4 text-sm flex items-center gap-2">
           <Target size={14} style={{ color: NEON.orange }} />
           90-Day Forensic Audit Cycle — Fortune 500 Self-Funded Plans ≥50,000 Lives
         </h3>
@@ -1265,29 +1264,29 @@ function TimelineTab({ d }: { d: any }) {
           {(d.recovery_timeline || []).map((phase: any, i: number) => (
             <div key={i} className="flex gap-0" data-testid={`phase-${i}`}>
               <div className="flex flex-col items-center w-14 flex-shrink-0">
-                <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0 z-10"
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-[var(--kiq-ink)] flex-shrink-0 z-10"
                   style={{ background: `linear-gradient(135deg,${NEON.orange},${NEON.gold})` }}>{i + 1}</div>
                 {i < (d.recovery_timeline.length - 1) && <div className="w-0.5 flex-1 min-h-[24px]" style={{ background: "rgba(255,107,26,0.25)" }} />}
               </div>
               <div className="pb-6 pl-2 flex-1">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-white font-medium text-sm">{phase.phase}</span>
-                  <span className="text-xs text-white/35 border border-white/10 rounded px-1.5 py-0.5">{phase.duration}</span>
+                  <span className="text-[var(--kiq-ink)] font-medium text-sm">{phase.phase}</span>
+                  <span className="text-xs text-[var(--kiq-ink)]/35 border border-white/10 rounded px-1.5 py-0.5">{phase.duration}</span>
                 </div>
-                <p className="text-xs text-white/50 leading-relaxed">{phase.description}</p>
+                <p className="text-xs text-[var(--kiq-ink)]/50 leading-relaxed">{phase.description}</p>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
-        <h3 className="text-white font-semibold mb-4 text-sm">Monthly Recovery Trend ($M)</h3>
+      <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.08] p-5">
+        <h3 className="text-[var(--kiq-ink)] font-semibold mb-4 text-sm">Monthly Recovery Trend ($M)</h3>
         <ResponsiveContainer width="100%" height={180}>
           <LineChart data={d.monthly_trend}>
             <XAxis dataKey="month" tick={{ fill: "#ffffff35", fontSize: 9 }} axisLine={false} tickLine={false} />
             <YAxis tick={{ fill: "#ffffff35", fontSize: 9 }} axisLine={false} tickLine={false} tickFormatter={v => fmtM(v)} />
-            <Tooltip contentStyle={{ background: "#080d1a", border: "1px solid #ffffff15", borderRadius: 8, fontSize: 11 }}
+            <Tooltip contentStyle={{ background: "#F8FAFC", border: "1px solid #ffffff15", borderRadius: 8, fontSize: 11 }}
               formatter={(v: any) => [fmtM(v)]} />
             <Line type="monotone" dataKey="recovery" stroke={NEON.green} strokeWidth={2} dot={false} name="Recovery Identified" />
           </LineChart>
@@ -1295,26 +1294,26 @@ function TimelineTab({ d }: { d: any }) {
       </div>
 
       {/* Engagement Terms */}
-      <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
-        <h3 className="text-white font-semibold mb-4 text-sm flex items-center gap-2">
+      <div className="rounded-2xl bg-[var(--kiq-surface)]/[0.03] border border-white/[0.08] p-5">
+        <h3 className="text-[var(--kiq-ink)] font-semibold mb-4 text-sm flex items-center gap-2">
           <BookOpen size={14} style={{ color: NEON.blue }} />
           Engagement Terms
         </h3>
         <div className="space-y-3">
           <div className="p-3 rounded-lg" style={{ background: "rgba(0,255,148,0.04)", border: "1px solid rgba(0,255,148,0.15)" }}>
-            <p className="text-xs text-white/40 mb-1">Fee Structure</p>
-            <p className="text-sm font-semibold text-white">{d.engagement_terms?.fee_structure}</p>
+            <p className="text-xs text-[var(--kiq-ink)]/40 mb-1">Fee Structure</p>
+            <p className="text-sm font-semibold text-[var(--kiq-ink)]">{d.engagement_terms?.fee_structure}</p>
           </div>
           <div className="p-3 rounded-lg" style={{ background: "rgba(0,212,255,0.04)", border: "1px solid rgba(0,212,255,0.15)" }}>
-            <p className="text-xs text-white/40 mb-1">Audit Cycle</p>
-            <p className="text-sm font-semibold text-white">{d.engagement_terms?.audit_cycle || "90-day forensic audit cycle"}</p>
+            <p className="text-xs text-[var(--kiq-ink)]/40 mb-1">Audit Cycle</p>
+            <p className="text-sm font-semibold text-[var(--kiq-ink)]">{d.engagement_terms?.audit_cycle || "90-day forensic audit cycle"}</p>
           </div>
           {d.engagement_terms?.client_obligations && (
             <div>
-              <p className="text-xs text-white/40 mb-2 uppercase tracking-wider">Client Obligations</p>
+              <p className="text-xs text-[var(--kiq-ink)]/40 mb-2 uppercase tracking-wider">Client Obligations</p>
               <div className="space-y-1.5">
                 {d.engagement_terms.client_obligations.map((o: string, i: number) => (
-                  <div key={i} className="flex items-start gap-2 text-xs text-white/55">
+                  <div key={i} className="flex items-start gap-2 text-xs text-[var(--kiq-ink)]/55">
                     <ChevronRight size={10} className="mt-0.5 flex-shrink-0" style={{ color: NEON.orange }} />
                     <span>{o}</span>
                   </div>
@@ -1357,7 +1356,7 @@ async function downloadBoardPack(toast: any) {
       doc.setFillColor(14, 20, 45); doc.rect(0, 0, W, 12, "F");
       doc.setFillColor(...ORANGE); doc.rect(0, 12, W, 0.8, "F");
       doc.setFont("helvetica", "bold"); doc.setFontSize(7.5);
-      doc.setTextColor(...([255, 184, 0] as [number,number,number])); doc.text("KINCAID IQ™", M, 7.5);
+      doc.setTextColor(...([255, 184, 0] as [number,number,number])); doc.text("KINCAID HEALTH™", M, 7.5);
       doc.setTextColor(...GRAY); doc.text("CLAIMS RECOVERY IQ™ — BOARD PACK", M + 22, 7.5);
       doc.setTextColor(...([65, 80, 120] as [number,number,number])); doc.text(date, W - M, 7.5, { align: "right" });
       // Footer
@@ -1403,9 +1402,9 @@ async function downloadBoardPack(toast: any) {
     doc.setFillColor(...ORANGE); doc.rect(0, 0, 3, H, "F");
     doc.setFillColor(...ORANGE); doc.rect(W - 3, 0, 3, H, "F");
     doc.setFont("helvetica", "bold"); doc.setFontSize(11);
-    doc.setTextColor(...([255, 184, 0] as [number,number,number])); doc.text("KINCAID IQ™", M + 3, 22);
+    doc.setTextColor(...([255, 184, 0] as [number,number,number])); doc.text("KINCAID HEALTH™", M + 3, 22);
     doc.setFont("helvetica", "normal"); doc.setFontSize(8);
-    doc.setTextColor(...([65, 80, 120] as [number,number,number])); doc.text("Kincaid RMC  •  Claims Recovery IQ™  •  Board Audit Committee Deliverable", M + 3, 29);
+    doc.setTextColor(...([65, 80, 120] as [number,number,number])); doc.text("Kincaid Health  •  Claims Recovery IQ™  •  Board Audit Committee Deliverable", M + 3, 29);
     doc.setFont("helvetica", "bold"); doc.setFontSize(26);
     doc.setTextColor(...WHITE);
     doc.text("CLAIMS RECOVERY IQ™", M + 3, 56);
@@ -1433,7 +1432,7 @@ async function downloadBoardPack(toast: any) {
     kv("Active A/R Balance", fmtM(exec.active_ar_balance || 0));
     kv("Board-Reportable Findings", String(exec.board_reportable_findings || 0) + " Critical-Severity");
     y += 5;
-    bodyText("Kincaid RMC conducted a 90-day forensic audit of the plan's claims universe. The audit identified 15 categories of overpayment, billing error, and statutory non-compliance across TPA, PBM, carrier, and provider respondents. Recovery opportunity is presented at CERTIFIED, MODELED, and INSUFFICIENT_EVIDENCE confidence tiers per the platform's constitutional doctrine.");
+    bodyText("Kincaid Health conducted a 90-day forensic audit of the plan's claims universe. The audit identified 15 categories of overpayment, billing error, and statutory non-compliance across TPA, PBM, carrier, and provider respondents. Recovery opportunity is presented at CERTIFIED, MODELED, and INSUFFICIENT_EVIDENCE confidence tiers per the platform's constitutional doctrine.");
 
     // ── Page 3: Top 5 Findings ─────────────────────────────────────────────
     newPage();
@@ -1501,7 +1500,7 @@ async function downloadBoardPack(toast: any) {
     kv("Projected 90-Day Collection", fmtM(ars.projected_90_day_collection || 0));
     kv("Open Demands", String(ars.open_demands || 0));
     y += 8;
-    bodyText("Kincaid RMC. 28% contingency on gross recovered amounts. No recovery, no fee. Report ID: " + (meta.report_id || "CRIQ-2024") + " · SHA-256 manifest: " + sha);
+    bodyText("Kincaid Health. 28% contingency on gross recovered amounts. No recovery, no fee. Report ID: " + (meta.report_id || "CRIQ-2024") + " · SHA-256 manifest: " + sha);
 
     doc.save(`Kincaid-IQ-Claims-Recovery-Board-Pack-${new Date().toISOString().slice(0, 10)}.pdf`);
     toast({ title: "Board Pack downloaded", description: `6-page board-quality PDF · SHA-256 manifest embedded · ${page} pages` });
@@ -1558,14 +1557,14 @@ export default function ClaimsRecovery() {
 
   return (
     <Layout>
-      <div style={{ minHeight: "100vh", background: "linear-gradient(135deg,#060b18 0%,#080d1e 50%,#060a16 100%)" }}>
+      <div className="kiq-forensic-shell">
         {/* Sticky Header */}
-        <div style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(6,10,22,0.90)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(255,107,26,0.14)", boxShadow: "0 1px 24px rgba(255,107,26,0.06)" }}>
+        <div className="kiq-forensic-header" style={{ position: "sticky", top: 0, zIndex: 50 }}>
           <div className="px-6 py-3 flex items-center gap-3 flex-wrap">
             <DollarSign size={18} style={{ color: NEON.orange }} />
             <div>
-              <h1 className="text-base font-bold text-white">Claims Recovery IQ™</h1>
-              <p className="text-white/35 text-xs">Fortune 20 enterprise forensic audit · 90-day cycle · success-fee model</p>
+              <h1 className="text-base font-bold text-[var(--kiq-ink)]">Claims Recovery IQ™</h1>
+              <p className="text-[var(--kiq-ink)]/35 text-xs">Fortune 20 enterprise forensic audit · 90-day cycle · success-fee model</p>
             </div>
             <div className="ml-auto flex items-center gap-2 flex-wrap">
               <input ref={fileInputRef} type="file" accept=".csv,.xlsx,.xls,.pdf,.txt,.json,.x12,.837"
@@ -1588,7 +1587,7 @@ export default function ClaimsRecovery() {
               </button>
               {data && (
                 <div className="flex items-center gap-2 px-3 py-1 rounded-lg" style={{ background: "rgba(0,255,148,0.08)", border: "1px solid rgba(0,255,148,0.2)" }}>
-                  <span className="text-xs text-white/40">Recovery Opp.</span>
+                  <span className="text-xs text-[var(--kiq-ink)]/40">Recovery Opp.</span>
                   <span className="font-bold" style={{ color: NEON.green }}>{fmtM(data.summary.total_recovery_opportunity)}</span>
                 </div>
               )}
@@ -1602,7 +1601,7 @@ export default function ClaimsRecovery() {
               return (
                 <button key={id} onClick={() => setTab(id)} data-testid={`cr-tab-${id}`}
                   className="flex items-center gap-1.5 px-3 py-2 text-xs font-medium whitespace-nowrap transition-all border-b-2 flex-shrink-0 relative"
-                  style={{ color: active ? NEON.orange : "rgba(255,255,255,0.4)", borderBottomColor: active ? NEON.orange : "transparent", background: active ? `${NEON.orange}10` : "transparent" }}>
+                  style={{ color: active ? NEON.orange : "#475569", borderBottomColor: active ? NEON.orange : "transparent", background: active ? `${NEON.orange}10` : "transparent" }}>
                   <Icon size={11} />{label}
                   {badge && (
                     <span className="ml-0.5 text-[9px] px-1 py-0.5 rounded font-bold" style={{ color: NEON.orange, background: "rgba(255,107,26,0.2)" }}>{badge}</span>
@@ -1616,32 +1615,32 @@ export default function ClaimsRecovery() {
         <div className="px-6 py-6 max-w-7xl">
           {/* Upload Panel */}
           {(lastUpload || (uploads && uploads.length > 0)) && (
-            <div className="mb-5 rounded-xl p-4" style={{ background: "rgba(0,212,255,0.05)", border: "1px solid rgba(0,212,255,0.22)" }} data-testid="cr-upload-panel">
+            <div className="kiq-forensic-card mb-5 rounded-xl p-4" data-testid="cr-upload-panel">
               <div className="flex items-center gap-2 mb-2">
                 <CheckCircle size={14} style={{ color: NEON.blue }} />
-                <p className="text-sm font-semibold text-white">Uploaded Claims Files</p>
-                <span className="text-[10px] text-white/40 ml-auto">Stored in Document Vault · 90-day forensic audit cycle</span>
+                <p className="text-sm font-semibold text-[var(--kiq-ink)]">Uploaded Claims Files</p>
+                <span className="text-[10px] text-[var(--kiq-ink)]/40 ml-auto">Stored in Document Vault · 90-day forensic audit cycle</span>
               </div>
               {lastUpload && (
-                <div className="text-xs text-white/65 mb-2">
-                  <span className="font-semibold text-white">{lastUpload.filename}</span>{" — "}
+                <div className="text-xs text-[var(--kiq-ink)]/65 mb-2">
+                  <span className="font-semibold text-[var(--kiq-ink)]">{lastUpload.filename}</span>{" — "}
                   {lastUpload.row_count != null ? `${lastUpload.row_count.toLocaleString()} claim rows · ` : ""}
                   {(lastUpload.size_bytes / 1024).toFixed(1)} KB. {lastUpload.next_step}
                   {lastUpload.detected_columns?.length > 0 && (
-                    <div className="mt-1.5 text-[10px] text-white/40">
-                      Detected columns: <span className="font-mono text-white/55">{lastUpload.detected_columns.slice(0, 8).join(", ")}{lastUpload.detected_columns.length > 8 ? " …" : ""}</span>
+                    <div className="mt-1.5 text-[10px] text-[var(--kiq-ink)]/40">
+                      Detected columns: <span className="font-mono text-[var(--kiq-ink)]/55">{lastUpload.detected_columns.slice(0, 8).join(", ")}{lastUpload.detected_columns.length > 8 ? " …" : ""}</span>
                     </div>
                   )}
                 </div>
               )}
               {uploads && uploads.length > 0 && (
-                <div className="space-y-1 mt-2 pt-2 border-t border-white/[0.06]">
+                <div className="space-y-1 mt-2 pt-2 border-t border-[var(--kiq-hairline)]/70">
                   {uploads.slice(0, 5).map((u: any) => (
-                    <div key={u.id} className="flex items-center gap-2 text-[11px] text-white/55" data-testid={`cr-upload-row-${u.id}`}>
-                      <FileText size={10} className="text-white/35" />
+                    <div key={u.id} className="flex items-center gap-2 text-[11px] text-[var(--kiq-ink)]/55" data-testid={`cr-upload-row-${u.id}`}>
+                      <FileText size={10} className="text-[var(--kiq-ink)]/35" />
                       <span className="truncate flex-1">{u.original_filename}</span>
-                      <span className="text-white/35">{(u.file_size / 1024).toFixed(1)} KB</span>
-                      <span className="text-white/30">{u.uploaded_at ? new Date(u.uploaded_at).toLocaleDateString() : ""}</span>
+                      <span className="text-[var(--kiq-ink)]/35">{(u.file_size / 1024).toFixed(1)} KB</span>
+                      <span className="text-[var(--kiq-ink)]/30">{u.uploaded_at ? new Date(u.uploaded_at).toLocaleDateString() : ""}</span>
                     </div>
                   ))}
                 </div>
@@ -1652,7 +1651,7 @@ export default function ClaimsRecovery() {
           {isLoading ? (
             <div className="flex items-center justify-center h-64 gap-3">
               <div className="w-5 h-5 rounded-full border-2 border-orange-400/30 border-t-orange-400 animate-spin" />
-              <span className="text-white/40 text-sm">Loading enterprise claims data…</span>
+              <span className="text-[var(--kiq-ink)]/40 text-sm">Loading enterprise claims data…</span>
             </div>
           ) : data ? (
             <>
@@ -1667,7 +1666,7 @@ export default function ClaimsRecovery() {
               {tab === "calculator" && <CalculatorTab     d={data} />}
               {tab === "timeline"   && <TimelineTab       d={data} />}
             </>
-          ) : <div className="text-white/30 text-center py-20">No data.</div>}
+          ) : <div className="text-[var(--kiq-ink)]/30 text-center py-20">No data.</div>}
         </div>
       </div>
 

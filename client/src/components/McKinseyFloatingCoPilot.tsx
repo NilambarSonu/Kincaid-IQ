@@ -11,9 +11,9 @@ import {
   Link, Crosshair, Navigation, Database, Eye, Radio, AlertTriangle, Zap,
 } from "lucide-react";
 
-const BG = "#07091c";
-const SURFACE = "rgba(255,255,255,0.04)";
-const BORDER = "rgba(255,255,255,0.09)";
+const BG = "#F8FAFC";
+const SURFACE = "#ffffff";
+const BORDER = "rgba(15,23,42,0.03)";
 const ACCENT = "#4f7dff";
 
 const ICON_MAP: Record<string, React.ComponentType<{ size?: number }>> = {
@@ -130,7 +130,7 @@ const ROUTE_MAP: Record<string, { name: string; desc: string }> = {
   "/saas/contract-xray":       { name: "Contract X-Ray",           desc: "AI contract clause analysis and risk flagging" },
   "/rx-pbm":                   { name: "RxPBM Intelligence",        desc: "Drug pricing benchmarks, PBM directory, and RFP question bank" },
   "/actuarial-workbench":      { name: "5500 Actuarial Workbench",  desc: "DOL Form 5500 Schedule H actuarial analysis — 191K employers, multi-year financials, percentile benchmarks, AI narrative" },
-  "/rx-defense":               { name: "Rx Defense",               desc: "PBM contract and pharmacy benefit forensic review" },
+  "/rx-defense":               { name: "PBM Contract Clarity 360",               desc: "PBM contract and pharmacy benefit forensic review" },
   "/stop-loss":                { name: "Stop-Loss",                desc: "Stop-loss policy management and aggregate tracking" },
   "/cfo-war-room":             { name: "CFO War Room",             desc: "CFO-focused financial command center" },
   "/integrations":             { name: "Integrations Hub",         desc: "Third-party integration management: M365, QuickBooks, etc." },
@@ -214,7 +214,7 @@ function MarkdownText({
         }
         if (line.startsWith("# ")) {
           return (
-            <p key={i} className="font-bold mt-2 text-white">
+            <p key={i} className="font-bold mt-2 text-slate-900">
               {parseNavLinks(line.replace("# ", ""), navigate, onClose)}
             </p>
           );
@@ -223,7 +223,7 @@ function MarkdownText({
           return (
             <div key={i} className="flex gap-1.5 items-start">
               <span style={{ color: ACCENT }} className="mt-0.5 flex-shrink-0">●</span>
-              <span style={{ color: "rgba(255,255,255,0.8)" }}>
+              <span style={{ color: "#0f172a" }}>
                 {parseNavLinks(line.replace(/^[-•]\s/, ""), navigate, onClose)}
               </span>
             </div>
@@ -236,7 +236,7 @@ function MarkdownText({
               <span style={{ color: ACCENT, minWidth: 16 }} className="font-bold flex-shrink-0">
                 {num}.
               </span>
-              <span style={{ color: "rgba(255,255,255,0.8)" }}>
+              <span style={{ color: "#0f172a" }}>
                 {parseNavLinks(line.replace(/^\d+\.\s/, ""), navigate, onClose)}
               </span>
             </div>
@@ -250,7 +250,7 @@ function MarkdownText({
           return segments.map((seg, j) => {
             if (seg.startsWith("**") && seg.endsWith("**")) {
               return (
-                <strong key={j} className="text-white font-semibold">
+                <strong key={j} className="text-slate-900 font-semibold">
                   {seg.replace(/\*\*/g, "")}
                 </strong>
               );
@@ -460,37 +460,19 @@ export default function McKinseyFloatingCoPilot() {
       {/* Floating trigger */}
       {!open && (
         <div style={{ position: "fixed", bottom: 28, right: 28, zIndex: 9999 }}>
-          {totalFlags > 0 && (
-            <div className="absolute -top-2 -left-2 flex items-center gap-1 px-1.5 py-0.5 rounded-full animate-pulse"
-              style={{ background: "rgba(217,119,6,0.9)", border: "1px solid rgba(217,119,6,0.6)", zIndex: 1 }}>
-              <AlertTriangle size={8} color="white" />
-              <span className="text-[9px] font-black text-white">{totalFlags.toLocaleString()}</span>
-            </div>
-          )}
           <button
             data-testid="mckinsey-copilot-open"
             onClick={() => setOpen(true)}
-            className="flex flex-col items-start shadow-2xl transition-all duration-200 hover:scale-105 active:scale-95 rounded-2xl overflow-hidden"
+            className="kiq-floating-icon-button relative shadow-2xl transition-all duration-200 active:scale-95"
             style={{
-              background: "linear-gradient(135deg, #2a3fa8 0%, #4f7dff 100%)",
-              border: "1px solid rgba(79,125,255,0.5)",
-              boxShadow: "0 0 24px rgba(79,125,255,0.35), 0 4px 20px rgba(0,0,0,0.5)",
-              color: "white",
+              color: "#533afd",
             }}
           >
-            <div className="flex items-center gap-2 px-4 py-2.5">
-              <BrainCircuit size={16} />
-              <span className="text-xs font-bold tracking-wide">McKinsey Co-Pilot</span>
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "#4fffb0" }} />
-            </div>
-            {currentPageInfo && (
-              <div className="flex items-center gap-1.5 px-4 pb-2 -mt-1">
-                <Eye size={9} style={{ color: "rgba(255,255,255,0.45)" }} />
-                <span className="text-[9px]" style={{ color: "rgba(255,255,255,0.45)" }}>
-                  Monitoring: <span style={{ color: "rgba(255,255,255,0.7)" }}>{currentPageInfo.name}</span>
-                </span>
-              </div>
-            )}
+            <BrainCircuit size={23} />
+            <span className="absolute right-2 top-2 w-2 h-2 rounded-full animate-pulse" style={{ background: "#10b981" }} />
+            <span className="kiq-floating-label">
+              McKinsey Co-Pilot{currentPageInfo ? ` · ${currentPageInfo.name}` : ""}
+            </span>
           </button>
         </div>
       )}
@@ -516,10 +498,10 @@ export default function McKinseyFloatingCoPilot() {
           {/* Header */}
           <div
             className="flex items-center gap-2 px-4 py-3 flex-shrink-0"
-            style={{ borderBottom: `1px solid ${BORDER}`, background: "rgba(255,255,255,0.02)" }}
+            style={{ borderBottom: `1px solid ${BORDER}`, background: "#ffffff" }}
           >
             <BrainCircuit size={15} style={{ color: ACCENT }} />
-            <span className="font-bold text-xs text-white tracking-wide">McKinsey Co-Pilot</span>
+            <span className="font-bold text-xs text-slate-900 tracking-wide">McKinsey Co-Pilot</span>
             <span
               className="text-[10px] px-2 py-0.5 rounded-full ml-1 font-semibold"
               style={{ background: "rgba(79,125,255,0.15)", color: ACCENT }}
@@ -537,7 +519,7 @@ export default function McKinseyFloatingCoPilot() {
                 <button
                   data-testid="mckinsey-copilot-reset"
                   onClick={() => { setMessages([]); setSelectedFramework(null); setLastBriefedPage(null); }}
-                  className="p-1 rounded-lg opacity-50 hover:opacity-100 transition-opacity text-white"
+                  className="p-1 rounded-lg opacity-50 hover:opacity-100 transition-opacity text-slate-900"
                   title="New conversation"
                 >
                   <RotateCcw size={12} />
@@ -546,7 +528,7 @@ export default function McKinseyFloatingCoPilot() {
               <button
                 data-testid="mckinsey-copilot-resize"
                 onClick={() => setExpanded((e) => !e)}
-                className="p-1 rounded-lg opacity-50 hover:opacity-100 transition-opacity text-white"
+                className="p-1 rounded-lg opacity-50 hover:opacity-100 transition-opacity text-slate-900"
                 title={expanded ? "Compact" : "Expand"}
               >
                 {expanded ? <Minimize2 size={12} /> : <Maximize2 size={12} />}
@@ -554,7 +536,7 @@ export default function McKinseyFloatingCoPilot() {
               <button
                 data-testid="mckinsey-copilot-close"
                 onClick={handleClose}
-                className="p-1 rounded-lg opacity-50 hover:opacity-100 transition-opacity text-white"
+                className="p-1 rounded-lg opacity-50 hover:opacity-100 transition-opacity text-slate-900"
                 title="Close"
               >
                 <X size={13} />
@@ -604,7 +586,7 @@ export default function McKinseyFloatingCoPilot() {
               style={{
                 background: selectedFramework ? "rgba(79,125,255,0.15)" : SURFACE,
                 border: `1px solid ${selectedFramework ? "rgba(79,125,255,0.4)" : BORDER}`,
-                color: selectedFramework ? ACCENT : "rgba(255,255,255,0.4)",
+                color: selectedFramework ? ACCENT : "#475569",
               }}
             >
               <Sparkles size={10} />
@@ -623,7 +605,7 @@ export default function McKinseyFloatingCoPilot() {
           {showFrameworks && (
             <div
               className="mx-3 mb-2 rounded-xl overflow-hidden flex-shrink-0"
-              style={{ border: `1px solid ${BORDER}`, background: "rgba(255,255,255,0.03)" }}
+              style={{ border: `1px solid ${BORDER}`, background: "#ffffff" }}
             >
               <div className="p-2 grid grid-cols-2 gap-1">
                 <button
@@ -632,7 +614,7 @@ export default function McKinseyFloatingCoPilot() {
                   className="px-2 py-1.5 rounded-lg text-left text-[10px] transition-all"
                   style={{
                     background: !selectedFramework ? "rgba(79,125,255,0.15)" : "transparent",
-                    color: !selectedFramework ? ACCENT : "rgba(255,255,255,0.5)",
+                    color: !selectedFramework ? ACCENT : "#334155",
                     border: `1px solid ${!selectedFramework ? "rgba(79,125,255,0.3)" : "transparent"}`,
                   }}
                 >
@@ -698,13 +680,13 @@ export default function McKinseyFloatingCoPilot() {
                           data-testid={`alert-${a.ein}`}
                         >
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-[10px] font-semibold text-white truncate">{a.name}</span>
+                            <span className="text-[10px] font-semibold text-slate-900 truncate">{a.name}</span>
                             <span className="text-[9px] font-black shrink-0" style={{ color: "#d97706" }}>
                               {a.commission_pct}% comm.
                             </span>
                           </div>
                           <div className="flex items-center gap-2 mt-0.5">
-                            <span className="text-[9px]" style={{ color: "rgba(255,255,255,0.35)" }}>
+                            <span className="text-[9px]" style={{ color: "#64748b" }}>
                               {a.state} · {a.year} · EIN {a.ein}
                             </span>
                           </div>
@@ -790,14 +772,14 @@ export default function McKinseyFloatingCoPilot() {
                       </span>
                       {msg.briefPage && (
                         <>
-                          <span className="text-[9px]" style={{ color: "rgba(255,255,255,0.25)" }}>·</span>
+                          <span className="text-[9px]" style={{ color: "rgba(15,23,42,0.08)" }}>·</span>
                           <span className="text-[9px]" style={{ color: "rgba(255,255,255,0.45)" }}>{msg.briefPage}</span>
                         </>
                       )}
                     </div>
                   )}
                   {msg.role === "user" ? (
-                    <p className="text-xs text-white">{msg.content}</p>
+                    <p className="text-xs text-slate-900">{msg.content}</p>
                   ) : (
                     <>
                       {msg.benchmarkUsed && msg.benchmarkCompany && !msg.isBrief && (
@@ -808,8 +790,8 @@ export default function McKinseyFloatingCoPilot() {
                           <span className="text-[9px] font-semibold uppercase tracking-wider" style={{ color: "#10b981" }}>
                             DOL EFAST2 Live Data
                           </span>
-                          <span className="text-[9px]" style={{ color: "rgba(255,255,255,0.3)" }}>·</span>
-                          <span className="text-[9px]" style={{ color: "rgba(255,255,255,0.5)" }}>{msg.benchmarkCompany}</span>
+                          <span className="text-[9px]" style={{ color: "#64748b" }}>·</span>
+                          <span className="text-[9px]" style={{ color: "#334155" }}>{msg.benchmarkCompany}</span>
                         </div>
                       )}
                       <MarkdownText content={msg.content} navigate={navigate} onClose={handleClose} />
@@ -819,7 +801,7 @@ export default function McKinseyFloatingCoPilot() {
                     <button
                       onClick={() => copyMessage(msg.content, i)}
                       className="absolute top-1.5 right-1.5 opacity-0 group-hover:opacity-100 transition-opacity p-0.5 rounded"
-                      style={{ color: "rgba(255,255,255,0.4)" }}
+                      style={{ color: "#475569" }}
                     >
                       {copiedIdx === i ? <Check size={10} style={{ color: "#4fffb0" }} /> : <Copy size={10} />}
                     </button>
@@ -848,7 +830,7 @@ export default function McKinseyFloatingCoPilot() {
                   <div className="rounded-xl px-3 py-2" style={{ background: SURFACE, border: `1px solid ${BORDER}` }}>
                     <div className="flex gap-1 items-center">
                       <Loader2 size={11} className="animate-spin" style={{ color: isBenchmark ? "#10b981" : ACCENT }} />
-                      <span className="text-[10px]" style={{ color: "rgba(255,255,255,0.4)" }}>
+                      <span className="text-[10px]" style={{ color: "#475569" }}>
                         {isBenchmark ? "Searching DOL records…" : "Analyzing…"}
                       </span>
                     </div>
@@ -884,7 +866,7 @@ export default function McKinseyFloatingCoPilot() {
                     : "Ask where to find anything or get strategic analysis…"
                 }
                 rows={2}
-                className="flex-1 bg-transparent text-xs text-white placeholder:text-white/25 resize-none outline-none leading-relaxed"
+                className="flex-1 bg-transparent text-xs text-slate-900 placeholder:text-slate-900/25 resize-none outline-none leading-relaxed"
                 style={{ maxHeight: 80 }}
               />
               <button
@@ -900,7 +882,7 @@ export default function McKinseyFloatingCoPilot() {
                 <Send size={14} />
               </button>
             </div>
-            <p className="text-center text-[9px] mt-1.5" style={{ color: "rgba(255,255,255,0.2)" }}>
+            <p className="text-center text-[9px] mt-1.5" style={{ color: "#94a3b8" }}>
               Enter to send · Shift+Enter for new line
             </p>
           </div>

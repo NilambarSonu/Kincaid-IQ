@@ -128,14 +128,14 @@ function GroupHistoryModal({ planEin, onClose }: { planEin: string; onClose: () 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm" data-testid="modal-group-history" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="w-full max-w-4xl bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden shadow-2xl">
-        <div className="flex items-center justify-between p-5 border-b border-zinc-800">
+      <div className="w-full max-w-4xl bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-2xl overflow-hidden shadow-2xl">
+        <div className="flex items-center justify-between p-5 border-b border-[var(--kiq-hairline)]">
           <div>
             <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">Multi-Year Comparison</p>
-            <p className="text-sm font-bold text-zinc-100 mt-0.5">{planName}</p>
+            <p className="text-sm font-bold text-[var(--kiq-ink)] mt-0.5">{planName}</p>
             <p className="text-xs text-zinc-400">{sponsor} · EIN {planEin}</p>
           </div>
-          <button onClick={onClose} data-testid="btn-modal-close" className="p-2 rounded-lg hover:bg-zinc-800 text-zinc-400 transition-colors" aria-label="Close">
+          <button onClick={onClose} data-testid="btn-modal-close" className="p-2 rounded-lg hover:bg-[var(--kiq-surface)] text-zinc-400 transition-colors" aria-label="Close">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -146,7 +146,7 @@ function GroupHistoryModal({ planEin, onClose }: { planEin: string; onClose: () 
           <div className="p-5 space-y-5 max-h-[70vh] overflow-y-auto">
             {/* Trend chart */}
             {trendData.length > 1 && (
-              <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+              <div className="rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/40 p-4">
                 <p className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest mb-3">Medical Commission Trend</p>
                 <div className="h-36">
                   <ResponsiveContainer width="100%" height="100%">
@@ -155,7 +155,7 @@ function GroupHistoryModal({ planEin, onClose }: { planEin: string; onClose: () 
                       <YAxis tick={{ fill: "#71717a", fontSize: 10 }} axisLine={false} tickLine={false}
                         tickFormatter={v => fmt$(v)} width={60} />
                       <Tooltip
-                        contentStyle={{ background: "#0d1117", border: "1px solid #3f3f46", borderRadius: 8, fontSize: 11 }}
+                        contentStyle={{ background: "#F8FAFC", border: "1px solid #3f3f46", borderRadius: 8, fontSize: 11 }}
                         formatter={(v: number, name: string) => [
                           name === "total" ? fmt$(v) : fmtPct(v), name === "total" ? "Total Comp" : "Comm%"
                         ]}
@@ -170,11 +170,11 @@ function GroupHistoryModal({ planEin, onClose }: { planEin: string; onClose: () 
             {/* Records by year */}
             {Object.entries(byYear).sort(([a], [b]) => Number(b) - Number(a)).map(([year, recs]) => (
               <div key={year}>
-                <p className="text-xs font-bold text-zinc-300 mb-2 font-mono">{year}</p>
-                <div className="rounded-xl border border-zinc-800 overflow-hidden">
+                <p className="text-xs font-bold text-[var(--kiq-muted)] mb-2 font-mono">{year}</p>
+                <div className="rounded-xl border border-[var(--kiq-hairline)] overflow-hidden">
                   <table className="w-full text-xs">
                     <thead>
-                      <tr className="border-b border-zinc-800 bg-zinc-900/60">
+                      <tr className="border-b border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/60">
                         {["Benefit Type", "Carrier", "Premiums", "Direct Comm", "Total Comp", "Comm%", "Benchmark", "Δ", "Flag"].map(h => (
                           <th key={h} className="text-left px-3 py-2 text-[10px] font-mono text-zinc-500 uppercase">{h}</th>
                         ))}
@@ -182,7 +182,7 @@ function GroupHistoryModal({ planEin, onClose }: { planEin: string; onClose: () 
                     </thead>
                     <tbody>
                       {recs.map(r => (
-                        <tr key={r.id} className="border-b border-zinc-800/40 hover:bg-zinc-800/30 transition-colors">
+                        <tr key={r.id} className="border-b border-[var(--kiq-hairline)]/40 hover:bg-[var(--kiq-surface)]/30 transition-colors">
                           <td className="px-3 py-2">
                             <span className="text-[10px] px-1.5 py-0.5 rounded border"
                               style={{ color: BENEFIT_COLORS[r.benefitType] ?? "#71717a", borderColor: `${BENEFIT_COLORS[r.benefitType] ?? "#71717a"}30` }}>
@@ -190,9 +190,9 @@ function GroupHistoryModal({ planEin, onClose }: { planEin: string; onClose: () 
                             </span>
                           </td>
                           <td className="px-3 py-2 text-zinc-400 truncate max-w-[120px]">{r.carrierName}</td>
-                          <td className="px-3 py-2 font-mono text-zinc-300">{fmt$(r.totalPremiums)}</td>
-                          <td className="px-3 py-2 font-mono text-zinc-300">{fmt$(r.directCommissions)}</td>
-                          <td className="px-3 py-2 font-mono font-bold text-zinc-100">{fmt$(r.totalCompensation)}</td>
+                          <td className="px-3 py-2 font-mono text-[var(--kiq-muted)]">{fmt$(r.totalPremiums)}</td>
+                          <td className="px-3 py-2 font-mono text-[var(--kiq-muted)]">{fmt$(r.directCommissions)}</td>
+                          <td className="px-3 py-2 font-mono font-bold text-[var(--kiq-ink)]">{fmt$(r.totalCompensation)}</td>
                           <td className="px-3 py-2 font-mono" style={{ color: r.aboveBenchmark ? "#FF4D6D" : "#00FF94" }}>
                             {fmtPct(r.commissionPct)}
                           </td>
@@ -237,7 +237,7 @@ function SummaryBar({ summary }: { summary: SummaryData }) {
         { label: "Total Premiums",     value: fmt$(summary.totalPremiums),           color: "#00FF94", sub: "underlying plan premiums" },
         { label: "Avg Commission %",   value: fmtPct(summary.avgCommissionPct),      color: "#A855F7", sub: topType ? `${topType.benefitType} highest vol` : "across all types" },
       ].map(s => (
-        <div key={s.label} className="rounded-xl border border-zinc-800/60 bg-zinc-900/40 p-4">
+        <div key={s.label} className="rounded-xl border border-[var(--kiq-hairline)]/60 bg-[var(--kiq-canvas-soft)]/40 p-4">
           <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mb-1">{s.label}</p>
           <p className="text-xl font-bold font-mono tabular-nums" style={{ color: s.color }}>{s.value}</p>
           <p className="text-[10px] text-zinc-600 mt-1">{s.sub}</p>
@@ -329,7 +329,7 @@ export default function ActuarialBroker() {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <FileSearch className="w-5 h-5 text-[#00A8FF]" />
-              <h1 className="text-2xl font-bold text-zinc-100 tracking-tight">Actuarial Broker Commissions</h1>
+              <h1 className="text-2xl font-bold text-[var(--kiq-ink)] tracking-tight">Actuarial Broker Commissions</h1>
             </div>
             <p className="text-sm text-zinc-400">
               DOL Form 5500 Schedule A / Schedule C · Multi-year broker commission analysis · Benchmark comparison
@@ -347,7 +347,7 @@ export default function ActuarialBroker() {
           </div>
           <div className="text-right text-[11px] text-zinc-500 shrink-0">
             <p className="font-mono">SHRACK-7742</p>
-            <p>Kincaid RMC · Actuarial Intelligence</p>
+            <p>Kincaid Health · Actuarial Intelligence</p>
           </div>
         </div>
 
@@ -356,7 +356,7 @@ export default function ActuarialBroker() {
 
         {/* ── Benefit type breakdown ── */}
         {summary && summary.byBenefitType.length > 0 && (
-          <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+          <div className="rounded-xl border border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/40 p-4">
             <p className="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-widest mb-4">
               Compensation by Benefit Type
             </p>
@@ -367,7 +367,7 @@ export default function ActuarialBroker() {
                   <YAxis tick={{ fill: "#71717a", fontSize: 10 }} axisLine={false} tickLine={false}
                     tickFormatter={v => fmt$(v)} />
                   <Tooltip
-                    contentStyle={{ background: "#0d1117", border: "1px solid #3f3f46", borderRadius: 8, fontSize: 11 }}
+                    contentStyle={{ background: "#F8FAFC", border: "1px solid #3f3f46", borderRadius: 8, fontSize: 11 }}
                     formatter={(v: number) => [fmt$(v), "Total Compensation"]}
                   />
                   <Bar dataKey="totalCompensation" radius={[4, 4, 0, 0]}>
@@ -382,7 +382,7 @@ export default function ActuarialBroker() {
         )}
 
         {/* ── Search / Filters ── */}
-        <div className="rounded-xl border border-zinc-800/60 bg-zinc-900/40 p-4 space-y-4">
+        <div className="rounded-xl border border-[var(--kiq-hairline)]/60 bg-[var(--kiq-canvas-soft)]/40 p-4 space-y-4">
           <div className="flex items-center gap-2">
             <Filter className="w-3.5 h-3.5 text-zinc-500" />
             <p className="text-[10px] font-mono font-bold text-zinc-400 uppercase tracking-widest">Search & Filter</p>
@@ -397,7 +397,7 @@ export default function ActuarialBroker() {
                 value={filters.q}
                 onChange={e => setFilters(f => ({ ...f, q: e.target.value }))}
                 onKeyDown={e => e.key === "Enter" && applyFilters()}
-                className="w-full pl-9 pr-3 py-2 bg-zinc-950 border border-zinc-700 rounded-lg text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-[#00A8FF]/60 transition-colors"
+                className="w-full pl-9 pr-3 py-2 bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg text-sm text-[var(--kiq-ink-soft)] placeholder:text-zinc-600 focus:outline-none focus:border-[#00A8FF]/60 transition-colors"
                 data-testid="input-search"
               />
             </div>
@@ -405,7 +405,7 @@ export default function ActuarialBroker() {
             <select
               value={filters.benefitType}
               onChange={e => setFilters(f => ({ ...f, benefitType: e.target.value }))}
-              className="px-3 py-2 bg-zinc-950 border border-zinc-700 rounded-lg text-sm text-zinc-300 focus:outline-none focus:border-[#00A8FF]/60"
+              className="px-3 py-2 bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg text-sm text-[var(--kiq-muted)] focus:outline-none focus:border-[#00A8FF]/60"
               data-testid="select-benefit-type"
             >
               <option value="">All Benefit Types</option>
@@ -417,7 +417,7 @@ export default function ActuarialBroker() {
             <select
               value={filters.state}
               onChange={e => setFilters(f => ({ ...f, state: e.target.value }))}
-              className="px-3 py-2 bg-zinc-950 border border-zinc-700 rounded-lg text-sm text-zinc-300 focus:outline-none focus:border-[#00A8FF]/60"
+              className="px-3 py-2 bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg text-sm text-[var(--kiq-muted)] focus:outline-none focus:border-[#00A8FF]/60"
               data-testid="select-state"
             >
               <option value="">All States</option>
@@ -432,26 +432,26 @@ export default function ActuarialBroker() {
               <span className="text-[11px] text-zinc-500">Year:</span>
               <input type="number" placeholder="2021" value={filters.yearFrom}
                 onChange={e => setFilters(f => ({ ...f, yearFrom: e.target.value }))}
-                className="w-20 px-2 py-1.5 bg-zinc-950 border border-zinc-700 rounded-lg text-xs text-zinc-300 focus:outline-none focus:border-[#00A8FF]/60"
+                className="w-20 px-2 py-1.5 bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg text-xs text-[var(--kiq-muted)] focus:outline-none focus:border-[#00A8FF]/60"
                 data-testid="input-year-from" />
               <span className="text-zinc-600">–</span>
               <input type="number" placeholder="2023" value={filters.yearTo}
                 onChange={e => setFilters(f => ({ ...f, yearTo: e.target.value }))}
-                className="w-20 px-2 py-1.5 bg-zinc-950 border border-zinc-700 rounded-lg text-xs text-zinc-300 focus:outline-none focus:border-[#00A8FF]/60"
+                className="w-20 px-2 py-1.5 bg-[var(--kiq-surface)] border border-[var(--kiq-hairline)] rounded-lg text-xs text-[var(--kiq-muted)] focus:outline-none focus:border-[#00A8FF]/60"
                 data-testid="input-year-to" />
             </div>
             {/* Flag toggles */}
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" checked={filters.flaggedOnly}
                 onChange={e => setFilters(f => ({ ...f, flaggedOnly: e.target.checked }))}
-                className="rounded border-zinc-700 bg-zinc-950"
+                className="rounded border-[var(--kiq-hairline)] bg-[var(--kiq-surface)]"
                 data-testid="checkbox-flagged" />
               <span className="text-[11px] text-zinc-400">Flagged only</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" checked={filters.aboveBenchmark}
                 onChange={e => setFilters(f => ({ ...f, aboveBenchmark: e.target.checked }))}
-                className="rounded border-zinc-700 bg-zinc-950"
+                className="rounded border-[var(--kiq-hairline)] bg-[var(--kiq-surface)]"
                 data-testid="checkbox-above-benchmark" />
               <span className="text-[11px] text-zinc-400">Above benchmark only</span>
             </label>
@@ -459,7 +459,7 @@ export default function ActuarialBroker() {
             <div className="flex items-center gap-2 ml-auto">
               <button
                 onClick={() => { setFilters(defaultFilters); setApplied(defaultFilters); setPage(0); }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-zinc-200 hover:border-zinc-600 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--kiq-hairline)] text-xs text-zinc-400 hover:text-[var(--kiq-ink-soft)] hover:border-zinc-600 transition-colors"
                 data-testid="btn-clear-filters"
               >
                 <RefreshCw className="w-3 h-3" /> Clear
@@ -478,7 +478,7 @@ export default function ActuarialBroker() {
         {/* ── Results header ── */}
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <p className="text-sm text-zinc-400">
-            <span className="font-bold text-zinc-200 font-mono">{fmtNum(total)}</span> records
+            <span className="font-bold text-[var(--kiq-ink-soft)] font-mono">{fmtNum(total)}</span> records
             {applied.q && <> matching "<span className="text-[#00A8FF]">{applied.q}</span>"</>}
           </p>
           <p className="text-[10px] text-zinc-500 font-mono">
@@ -487,17 +487,17 @@ export default function ActuarialBroker() {
         </div>
 
         {/* ── Table ── */}
-        <div className="rounded-xl border border-zinc-800 overflow-x-auto">
+        <div className="rounded-xl border border-[var(--kiq-hairline)] overflow-x-auto">
           <table className="w-full text-xs min-w-[900px]">
             <thead>
-              <tr className="border-b border-zinc-800 bg-zinc-900/70">
+              <tr className="border-b border-[var(--kiq-hairline)] bg-[var(--kiq-canvas-soft)]/70">
                 {COLS.map(c => (
                   <th
                     key={c.key}
                     onClick={c.sortable ? () => toggleSort(c.key) : undefined}
                     className={cn(
                       "text-left px-3 py-3 text-[10px] font-mono font-bold text-zinc-500 uppercase tracking-wider whitespace-nowrap",
-                      c.sortable && "cursor-pointer hover:text-zinc-300 select-none",
+                      c.sortable && "cursor-pointer hover:text-[var(--kiq-muted)] select-none",
                     )}
                   >
                     <span className="flex items-center gap-1">
@@ -511,10 +511,10 @@ export default function ActuarialBroker() {
             <tbody>
               {isLoading ? (
                 Array.from({ length: 8 }).map((_, i) => (
-                  <tr key={i} className="border-b border-zinc-800/40">
+                  <tr key={i} className="border-b border-[var(--kiq-hairline)]/40">
                     {COLS.map(c => (
                       <td key={c.key} className="px-3 py-3">
-                        <div className="h-3 rounded bg-zinc-800 animate-pulse w-16" />
+                        <div className="h-3 rounded bg-[var(--kiq-surface)] animate-pulse w-16" />
                       </td>
                     ))}
                   </tr>
@@ -529,13 +529,13 @@ export default function ActuarialBroker() {
                 records.map(r => (
                   <tr key={r.id}
                     className={cn(
-                      "border-b border-zinc-800/40 hover:bg-zinc-800/30 transition-colors",
+                      "border-b border-[var(--kiq-hairline)]/40 hover:bg-[var(--kiq-surface)]/30 transition-colors",
                       r.flagged && "bg-[#FF4D6D]/5",
                     )}
                     data-testid={`row-broker-${r.id}`}
                   >
                     <td className="px-3 py-3 max-w-[180px]">
-                      <p className="font-semibold text-zinc-200 truncate" title={r.planName}>{r.planName}</p>
+                      <p className="font-semibold text-[var(--kiq-ink-soft)] truncate" title={r.planName}>{r.planName}</p>
                       <p className="text-[10px] text-zinc-500 truncate">{r.sponsorName} · {r.sponsorState}</p>
                     </td>
                     <td className="px-3 py-3">
@@ -548,9 +548,9 @@ export default function ActuarialBroker() {
                         {r.planEin}
                       </button>
                     </td>
-                    <td className="px-3 py-3 font-mono text-zinc-300">{r.planYear}</td>
+                    <td className="px-3 py-3 font-mono text-[var(--kiq-muted)]">{r.planYear}</td>
                     <td className="px-3 py-3 max-w-[160px]">
-                      <p className="text-zinc-200 truncate" title={r.brokerName}>{r.brokerName}</p>
+                      <p className="text-[var(--kiq-ink-soft)] truncate" title={r.brokerName}>{r.brokerName}</p>
                       <p className="text-[10px] text-zinc-500 truncate">{r.brokerFirm}</p>
                     </td>
                     <td className="px-3 py-3 text-zinc-400 truncate max-w-[120px]" title={r.carrierName ?? ""}>
@@ -565,8 +565,8 @@ export default function ActuarialBroker() {
                     <td className="px-3 py-3 font-mono text-zinc-400 tabular-nums">
                       {r.coveredLives ? fmtNum(r.coveredLives) : "—"}
                     </td>
-                    <td className="px-3 py-3 font-mono text-zinc-300 tabular-nums">{fmt$(r.totalPremiums)}</td>
-                    <td className="px-3 py-3 font-mono font-bold text-zinc-100 tabular-nums">{fmt$(r.totalCompensation)}</td>
+                    <td className="px-3 py-3 font-mono text-[var(--kiq-muted)] tabular-nums">{fmt$(r.totalPremiums)}</td>
+                    <td className="px-3 py-3 font-mono font-bold text-[var(--kiq-ink)] tabular-nums">{fmt$(r.totalCompensation)}</td>
                     <td className="px-3 py-3 font-mono tabular-nums"
                       style={{ color: r.aboveBenchmark ? "#FF4D6D" : "#00FF94" }}>
                       {fmtPct(r.commissionPct)}
@@ -598,7 +598,7 @@ export default function ActuarialBroker() {
             <button
               onClick={() => setPage(p => Math.max(0, p - 1))}
               disabled={page === 0}
-              className="px-4 py-2 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-zinc-200 disabled:opacity-40 transition-colors"
+              className="px-4 py-2 rounded-lg border border-[var(--kiq-hairline)] text-xs text-zinc-400 hover:text-[var(--kiq-ink-soft)] disabled:opacity-40 transition-colors"
               data-testid="btn-prev-page"
             >
               Previous
@@ -609,7 +609,7 @@ export default function ActuarialBroker() {
             <button
               onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
               disabled={page >= totalPages - 1}
-              className="px-4 py-2 rounded-lg border border-zinc-700 text-xs text-zinc-400 hover:text-zinc-200 disabled:opacity-40 transition-colors"
+              className="px-4 py-2 rounded-lg border border-[var(--kiq-hairline)] text-xs text-zinc-400 hover:text-[var(--kiq-ink-soft)] disabled:opacity-40 transition-colors"
               data-testid="btn-next-page"
             >
               Next
@@ -618,7 +618,7 @@ export default function ActuarialBroker() {
         )}
 
         {/* ── Source note ── */}
-        <div className="flex items-start gap-2 rounded-xl border border-zinc-800/60 bg-zinc-900/30 px-4 py-3 text-[10px] text-zinc-600">
+        <div className="flex items-start gap-2 rounded-xl border border-[var(--kiq-hairline)]/60 bg-[var(--kiq-canvas-soft)]/30 px-4 py-3 text-[10px] text-zinc-600">
           <FileSearch className="w-3.5 h-3.5 text-zinc-500 shrink-0 mt-0.5" />
           Data sourced from DOL EBSA Form 5500 Series public filings (Schedule A — Insurance Information, Schedule C — Service Provider Compensation).
           Benchmarks derived from EBSA actuarial guidance and industry surveys. Variance flags indicate commissions exceeding benchmark by ≥1 percentage point.

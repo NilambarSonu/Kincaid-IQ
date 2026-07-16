@@ -6,7 +6,7 @@ import {
 
 const CARD   = "#0d1033";
 const CARD2  = "#111540";
-const BORDER = "rgba(255,255,255,0.08)";
+const BORDER = "#e2e8f0";
 const TEXT1  = "#f0f4ff";
 const TEXT2  = "#8b9dd4";
 const GREEN  = "#22c55e";

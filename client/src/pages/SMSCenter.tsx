@@ -10,9 +10,9 @@ import {
   Phone, Zap, FileText, Plus, X, Loader2, Wifi, WifiOff,
 } from "lucide-react";
 
-const BG = "#07091c";
-const SURFACE = "rgba(255,255,255,0.04)";
-const BORDER = "rgba(255,255,255,0.08)";
+const BG = "#F8FAFC";
+const SURFACE = "#ffffff";
+const BORDER = "#e2e8f0";
 const ACCENT = "#4f7dff";
 
 type Tab = "single" | "bulk" | "template";
@@ -99,7 +99,7 @@ function ResultCard({ result }: { result: any }) {
               ) : (
                 <AlertCircle size={12} className="text-yellow-400" />
               )}
-              <span style={{ color: "rgba(255,255,255,0.6)" }}>{r.to}</span>
+              <span style={{ color: "#1e293b" }}>{r.to}</span>
               {r.demo_mode && (
                 <span className="text-yellow-400">(demo mode)</span>
               )}
@@ -224,7 +224,7 @@ export default function SMSCenter() {
     <Layout>
       <div
         className="min-h-screen p-6"
-        style={{ background: BG, color: "white" }}
+        style={{ background: BG, color: "#0F172A" }}
       >
         <div className="max-w-3xl mx-auto">
           {/* Header */}
@@ -239,7 +239,7 @@ export default function SMSCenter() {
                 </div>
                 <div>
                   <h1 className="text-xl font-bold">SMS Intelligence Center</h1>
-                  <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  <p className="text-xs" style={{ color: "#475569" }}>
                     Send secure alerts, compliance notifications, and digests via SMS
                   </p>
                 </div>
@@ -273,7 +273,7 @@ export default function SMSCenter() {
               >
                 <div className="flex items-center gap-2 mb-1">
                   <s.icon size={13} style={{ color: s.color }} />
-                  <span className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+                  <span className="text-xs" style={{ color: "#475569" }}>
                     {s.label}
                   </span>
                 </div>
@@ -295,7 +295,7 @@ export default function SMSCenter() {
                 className="flex-1 py-2 rounded-lg text-xs font-semibold capitalize transition-all"
                 style={{
                   background: tab === t ? "rgba(79,125,255,0.2)" : "transparent",
-                  color: tab === t ? ACCENT : "rgba(255,255,255,0.4)",
+                  color: tab === t ? ACCENT : "#475569",
                   border: tab === t ? "1px solid rgba(79,125,255,0.3)" : "1px solid transparent",
                 }}
               >
@@ -315,7 +315,7 @@ export default function SMSCenter() {
                 Send Single SMS
               </h3>
               <div>
-                <label className="text-xs mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>
+                <label className="text-xs mb-1 block" style={{ color: "#334155" }}>
                   Recipient Phone Number (E.164 format: +1234567890)
                 </label>
                 <input
@@ -325,15 +325,15 @@ export default function SMSCenter() {
                   placeholder="+1 (555) 000-0000"
                   className="w-full px-4 py-2.5 rounded-xl text-sm"
                   style={{
-                    background: "rgba(255,255,255,0.04)",
+                    background: "#ffffff",
                     border: `1px solid ${BORDER}`,
-                    color: "white",
+                    color: "#0F172A",
                     outline: "none",
                   }}
                 />
               </div>
               <div>
-                <label className="text-xs mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>
+                <label className="text-xs mb-1 block" style={{ color: "#334155" }}>
                   Message
                 </label>
                 <Textarea
@@ -343,14 +343,14 @@ export default function SMSCenter() {
                   placeholder="Type your message here…"
                   className="resize-none text-sm"
                   style={{
-                    background: "rgba(255,255,255,0.04)",
+                    background: "#ffffff",
                     border: `1px solid ${BORDER}`,
-                    color: "white",
+                    color: "#0F172A",
                     borderRadius: 12,
                   }}
                   rows={4}
                 />
-                <div className="flex justify-between mt-1 text-xs" style={{ color: "rgba(255,255,255,0.3)" }}>
+                <div className="flex justify-between mt-1 text-xs" style={{ color: "#64748b" }}>
                   <span>{charCount} characters</span>
                   <span>{smsCount} SMS segment{smsCount > 1 ? "s" : ""}</span>
                 </div>
@@ -385,7 +385,7 @@ export default function SMSCenter() {
               </h3>
 
               <div>
-                <label className="text-xs mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>
+                <label className="text-xs mb-1 block" style={{ color: "#334155" }}>
                   Add Recipients (up to 50)
                 </label>
                 <div className="flex gap-2">
@@ -397,9 +397,9 @@ export default function SMSCenter() {
                     placeholder="+1 (555) 000-0000"
                     className="flex-1 px-4 py-2.5 rounded-xl text-sm"
                     style={{
-                      background: "rgba(255,255,255,0.04)",
+                      background: "#ffffff",
                       border: `1px solid ${BORDER}`,
-                      color: "white",
+                      color: "#0F172A",
                       outline: "none",
                     }}
                   />
@@ -435,7 +435,7 @@ export default function SMSCenter() {
               </div>
 
               <div>
-                <label className="text-xs mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>
+                <label className="text-xs mb-1 block" style={{ color: "#334155" }}>
                   Message (same for all recipients)
                 </label>
                 <Textarea
@@ -445,9 +445,9 @@ export default function SMSCenter() {
                   placeholder="Type your broadcast message…"
                   className="resize-none text-sm"
                   style={{
-                    background: "rgba(255,255,255,0.04)",
+                    background: "#ffffff",
                     border: `1px solid ${BORDER}`,
-                    color: "white",
+                    color: "#0F172A",
                     borderRadius: 12,
                   }}
                   rows={4}
@@ -503,7 +503,7 @@ export default function SMSCenter() {
                         </Badge>
                       )}
                     </div>
-                    <p className="text-xs" style={{ color: "rgba(255,255,255,0.4)" }}>
+                    <p className="text-xs" style={{ color: "#475569" }}>
                       {t.preview}
                     </p>
                   </button>
@@ -519,7 +519,7 @@ export default function SMSCenter() {
                     Fill Template: {TEMPLATE_LABELS[selectedTemplate]}
                   </h3>
                   <div>
-                    <label className="text-xs mb-1 block" style={{ color: "rgba(255,255,255,0.5)" }}>
+                    <label className="text-xs mb-1 block" style={{ color: "#334155" }}>
                       Recipient Phone Number
                     </label>
                     <input
@@ -529,9 +529,9 @@ export default function SMSCenter() {
                       placeholder="+1 (555) 000-0000"
                       className="w-full px-4 py-2.5 rounded-xl text-sm"
                       style={{
-                        background: "rgba(255,255,255,0.04)",
+                        background: "#ffffff",
                         border: `1px solid ${BORDER}`,
-                        color: "white",
+                        color: "#0F172A",
                         outline: "none",
                       }}
                     />
@@ -539,7 +539,7 @@ export default function SMSCenter() {
 
                   {(TEMPLATE_VARS[selectedTemplate] || []).map((varName) => (
                     <div key={varName}>
-                      <label className="text-xs mb-1 block capitalize" style={{ color: "rgba(255,255,255,0.5)" }}>
+                      <label className="text-xs mb-1 block capitalize" style={{ color: "#334155" }}>
                         {varName.replace(/_/g, " ")}
                       </label>
                       <input
@@ -551,9 +551,9 @@ export default function SMSCenter() {
                         placeholder={varName.replace(/_/g, " ")}
                         className="w-full px-4 py-2.5 rounded-xl text-sm"
                         style={{
-                          background: "rgba(255,255,255,0.04)",
+                          background: "#ffffff",
                           border: `1px solid ${BORDER}`,
-                          color: "white",
+                          color: "#0F172A",
                           outline: "none",
                         }}
                       />

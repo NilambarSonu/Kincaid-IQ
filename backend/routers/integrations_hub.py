@@ -110,7 +110,7 @@ DEMO_DATA = {
             {"id":"t002","name":"BOR Authorization — With Stop-Loss","status":"active","uses":12},
             {"id":"t003","name":"Initial Engagement Letter","status":"active","uses":89},
             {"id":"t004","name":"Plan Audit Authorization","status":"active","uses":8},
-            {"id":"t005","name":"Rx Defense Engagement","status":"active","uses":6},
+            {"id":"t005","name":"PBM Contract Clarity 360 Engagement","status":"active","uses":6},
         ],
         "recent": [
             {"id":"e001","signer":"Diane Garwood — Horizon Bancorp","template":"BOR Authorization — Standard","sent":"2025-05-20","status":"PENDING","due":"2025-06-03"},
@@ -125,7 +125,7 @@ DEMO_DATA = {
             {"name":"#kincaid-alerts","purpose":"DOL anomalies and critical flags","members":3,"active":True},
             {"name":"#renewal-windows","purpose":"Upcoming renewal and OE notifications","members":5,"active":True},
             {"name":"#commit-pipeline","purpose":"KincaidCommit gate completions","members":3,"active":True},
-            {"name":"#broker-intel","purpose":"Shady broker spotlights and DOL news","members":7,"active":True},
+            {"name":"#broker-intel","purpose":"Broker compensation spotlights and DOL news","members":7,"active":True},
         ],
         "recent_alerts": [
             {"channel":"#kincaid-alerts","message":"CRITICAL: Horizon Bancorp LTD broker spike +76% detected in 2022 DOL filing","time":"2 hours ago","emoji":"🚨"},
@@ -230,7 +230,7 @@ DEMO_DATA = {
         "status": "NOT CONNECTED",
         "preview": {
             "channels": ["#KincaidAlerts","#RenewalWindows","#CommitPipeline"],
-            "alert_types": ["DOL 5500 anomaly detected","Renewal window opening","KincaidCommit gate completed","Shady broker spotlight"],
+            "alert_types": ["DOL 5500 anomaly detected","Renewal window opening","KincaidCommit gate completed","Broker compensation spotlight"],
             "kincaid_use_case": "Real-time Teams notifications for brokers already in the Microsoft 365 ecosystem (covered by M365 integration)",
         },
     },

@@ -173,7 +173,7 @@ def _build_model(beneficiaries: int, capture_rate: float) -> dict:
             "MODELED — savings = beneficiaries × per-beneficiary leakage rate, "
             f"calibrated to a {BASELINE_BENES:,}-beneficiary national baseline and "
             "scaled linearly with in-scope population and the capture-rate haircut. "
-            "Confidence tiers per Kincaid IQ Verify doctrine: CERTIFIED (audit-reconciled), "
+            "Confidence tiers per Kincaid Health Verify doctrine: CERTIFIED (audit-reconciled), "
             "MODELED (inference with disclosed bounds)."
         ),
     }

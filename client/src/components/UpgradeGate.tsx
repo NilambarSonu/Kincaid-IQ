@@ -5,7 +5,7 @@ import { useSubscription, PLAN_REQUIRED } from "@/lib/useSubscription";
 
 const PLAN_BENEFITS: Record<string, string[]> = {
   fiduciary: [
-    "Rx Defense™ — PBM Contract AI",
+    "PBM Contract Clarity 360™ — PBM Contract AI",
     "DOL 5500 Intelligence Engine",
     "CAA 2026 Compliance Dashboard",
     "Board Pack Export",
@@ -89,17 +89,17 @@ export function UpgradeGate({ module, children, mode = "replace" }: UpgradeGateP
           {planLabel}
         </div>
 
-        <h2 className="text-2xl font-bold text-white mb-2">
+        <h2 className="text-2xl font-bold text-slate-900 mb-2">
           Unlock this module
         </h2>
-        <p className="text-white/50 text-sm mb-6 leading-relaxed">
+        <p className="text-slate-900/50 text-sm mb-6 leading-relaxed">
           This feature is available on the <span className="font-semibold" style={{ color }}>{planLabel}</span> plan
-          at <span className="font-semibold text-white">${planPrice}/mo</span>. Includes a 14-day free trial.
+          at <span className="font-semibold text-slate-900">${planPrice}/mo</span>. Includes a 14-day free trial.
         </p>
 
         <div className="grid grid-cols-1 gap-1.5 mb-8 text-left">
           {benefits.map((b, i) => (
-            <div key={i} className="flex items-center gap-2 text-sm text-white/60">
+            <div key={i} className="flex items-center gap-2 text-sm text-slate-900/60">
               <CheckCircle className="w-3.5 h-3.5 flex-shrink-0" style={{ color }} />
               {b}
             </div>
@@ -109,7 +109,7 @@ export function UpgradeGate({ module, children, mode = "replace" }: UpgradeGateP
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Button
             className="gap-2 font-semibold text-sm px-6"
-            style={{ background: color, color: "#07091c" }}
+            style={{ background: color, color: "#F8FAFC" }}
             onClick={() => navigate("/billing")}
             data-testid={`btn-upgrade-${module}`}
           >
@@ -118,7 +118,7 @@ export function UpgradeGate({ module, children, mode = "replace" }: UpgradeGateP
           </Button>
           <Button
             variant="outline"
-            className="border-white/15 text-white/50 hover:text-white hover:border-white/30 text-sm"
+            className="border-white/15 text-slate-900/50 hover:text-slate-900 hover:border-white/30 text-sm"
             onClick={() => navigate("/billing")}
             data-testid={`btn-view-pricing-${module}`}
           >

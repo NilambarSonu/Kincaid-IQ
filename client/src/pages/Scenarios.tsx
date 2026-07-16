@@ -84,7 +84,7 @@ function SliderField({ label, value, onChange, min, max, unit, color }: {
         onChange={(e) => onChange(parseInt(e.target.value))}
         className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
         style={{
-          background: `linear-gradient(to right, ${color} ${pct}%, rgba(255,255,255,0.08) ${pct}%)`,
+          background: `linear-gradient(to right, ${color} ${pct}%, #e2e8f0 ${pct}%)`,
           accentColor: color,
         }}
         data-testid={`slider-${label.toLowerCase().replace(/\s+/g, "-")}`}
@@ -134,7 +134,7 @@ export default function Scenarios() {
 
   return (
     <Layout>
-      <div className="mb-8">
+      <div className="kiq-command-hero mb-8 px-6 py-5">
         <p className="section-label mb-1">Risk Analysis</p>
         <div className="flex items-center justify-between">
           <div>
@@ -184,7 +184,7 @@ export default function Scenarios() {
                 onChange={(e) => setCustomName(e.target.value)}
                 placeholder="e.g. Fed Shock + China Tensions"
                 className="w-full text-sm px-3 py-2 rounded-lg"
-                style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+                style={{ background: "#f8fafc", border: "1px solid #e2e8f0", color: "#0F172A" }}
                 data-testid="input-scenario-name"
               />
             </div>
@@ -197,8 +197,8 @@ export default function Scenarios() {
                     onClick={() => setTimeHorizon(m)}
                     className="flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all"
                     style={{
-                      background: timeHorizon === m ? "rgba(0,229,255,0.12)" : "rgba(255,255,255,0.04)",
-                      border: `1px solid ${timeHorizon === m ? "rgba(0,229,255,0.3)" : "rgba(255,255,255,0.07)"}`,
+                      background: timeHorizon === m ? "rgba(0,229,255,0.12)" : "#ffffff",
+                      border: `1px solid ${timeHorizon === m ? "rgba(0,229,255,0.3)" : "#e2e8f0"}`,
                       color: timeHorizon === m ? "#00E5FF" : "rgba(150,170,210,0.5)",
                     }}
                     data-testid={`horizon-${m}`}
@@ -258,15 +258,15 @@ export default function Scenarios() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         {baseCase && (
-          <div className="rounded-2xl p-6" style={{ background: "hsl(var(--primary))" }} data-testid="card-base-case">
+          <div className="kiq-command-card p-6" style={{ borderTop: "3px solid #00FF94" }} data-testid="card-base-case">
             <div className="flex items-center gap-2 mb-3">
               <TrendingUp size={16} style={{ color: "hsl(38 65% 60%)" }} />
-              <p className="text-sm font-medium" style={{ color: "hsl(38 20% 70%)" }}>Base Case (Soft Landing)</p>
+              <p className="text-sm font-medium text-[var(--kiq-muted)]">Base Case (Soft Landing)</p>
             </div>
             <p className="text-3xl font-bold text-emerald-400" style={{ fontFamily: "var(--font-display)" }}>
               +{baseCase.portfolioImpact}%
             </p>
-            <p className="text-sm mt-1" style={{ color: "hsl(38 40% 60%)" }}>+{formatCurrency(baseCase.impactValue)} projected gain</p>
+            <p className="text-sm mt-1 text-[var(--kiq-muted)]">+{formatCurrency(baseCase.impactValue)} projected gain</p>
           </div>
         )}
         {worstCase && (
@@ -337,7 +337,7 @@ export default function Scenarios() {
               onClick={() => open("scenario-crash")}
             >
               <div className="flex items-start justify-between mb-3">
-                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "rgba(255,255,255,0.05)" }}>
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "#f8fafc" }}>
                   <FlaskConical size={16} style={{ color: categoryColors[scenario.category]?.color || "rgba(130,160,200,0.6)" }} />
                 </div>
                 {(() => {

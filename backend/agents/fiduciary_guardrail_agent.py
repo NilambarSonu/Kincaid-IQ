@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Agent 5: Fiduciary Guardrail Agent (GUARDRAIL)
+Kincaid Health — Agent 5: Fiduciary Guardrail Agent (GUARDRAIL)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Validates all pipeline outputs for fiduciary defensibility.
 Guardrail checks: contract-consistent, audit-defensible, policy-aligned, non-speculative.
@@ -27,7 +27,7 @@ Returns (final API response schema):
 import json
 from .base import BaseAgent, run_agent
 
-SYSTEM = """You are the Kincaid IQ Fiduciary Validation Agent — Layer 5 (GUARDRAIL) of a 5-agent fiduciary intelligence pipeline.
+SYSTEM = """You are the Kincaid Health Fiduciary Validation Agent — Layer 5 (GUARDRAIL) of a 5-agent fiduciary intelligence pipeline.
 
 ROLE: Validate all pipeline outputs for fiduciary defensibility, remove speculative findings, then produce the final unified intelligence report.
 

@@ -92,7 +92,7 @@ export default function CreditMonitor() {
                   <stop offset="95%" stopColor="#A855F7" stopOpacity={0}/>
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
               <XAxis dataKey="date" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} />
               <YAxis yAxisId="left" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} unit="bps" />
               <YAxis yAxisId="right" orientation="right" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} unit="bps" />
@@ -110,7 +110,7 @@ export default function CreditMonitor() {
           <p className="section-label mb-4">CDX IG and HY Index (12M)</p>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={cdxHistory}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" />
               <XAxis dataKey="date" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} />
               <YAxis yAxisId="left" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} unit="bps" />
               <YAxis yAxisId="right" orientation="right" tick={{ fill: "rgba(130,150,200,0.5)", fontSize: 10 }} unit="bps" />
@@ -139,8 +139,8 @@ export default function CreditMonitor() {
               </thead>
               <tbody>
                 {sectorMatrix.map((s) => (
-                  <tr key={s.sector} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                    <td className="py-3 font-medium text-white">{s.sector}</td>
+                  <tr key={s.sector} className="border-b border-white/5 hover:bg-[var(--kiq-surface)]/5 transition-colors">
+                    <td className="py-3 font-medium text-[var(--kiq-ink)]">{s.sector}</td>
                     <td className="py-3 text-right">
                       <span className="px-2 py-1 rounded-sm font-bold" style={{ background: getHeatmapColor(s.igOas, 'ig'), color: getHeatmapTextColor(s.igOas, 'ig') }}>
                         {s.igOas}
@@ -176,9 +176,9 @@ export default function CreditMonitor() {
                 {kylesBook.map((b) => {
                   const equityTicker = b.name.split(" ")[0].replace(/[^A-Z]/g, "");
                   return (
-                    <tr key={b.name} className="border-b border-white/5 hover:bg-white/5 transition-colors cursor-pointer group"
+                    <tr key={b.name} className="border-b border-white/5 hover:bg-[var(--kiq-surface)]/5 transition-colors cursor-pointer group"
                       data-testid={`row-credit-${b.name.replace(/\s+/g, "-").toLowerCase()}`}>
-                      <td className="py-3 font-semibold text-white">
+                      <td className="py-3 font-semibold text-[var(--kiq-ink)]">
                         <div className="flex items-center gap-2">
                           {b.name}
                           <div className="hidden group-hover:flex items-center gap-1.5">
@@ -208,7 +208,7 @@ export default function CreditMonitor() {
                         </span>
                       </td>
                       <td className="py-3 text-right text-muted-foreground">{b.maturity}</td>
-                      <td className="py-3 text-right font-bold text-white">{formatCurrency(b.notional)}</td>
+                      <td className="py-3 text-right font-bold text-[var(--kiq-ink)]">{formatCurrency(b.notional)}</td>
                     </tr>
                   );
                 })}
@@ -222,9 +222,9 @@ export default function CreditMonitor() {
         <p className="section-label mb-4">Credit Watchlist: Rising Stars & Fallen Angels</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {watchlist.map((w, i) => (
-            <div key={i} className="p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors">
+            <div key={i} className="p-4 rounded-xl border border-white/10 bg-[var(--kiq-surface)]/5 hover:bg-[var(--kiq-surface)]/10 transition-colors">
               <div className="flex items-center justify-between mb-2">
-                <p className="font-bold text-white">{w.name}</p>
+                <p className="font-bold text-[var(--kiq-ink)]">{w.name}</p>
                 <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
                   w.potentialAction.includes('Rising') || w.potentialAction.includes('Upgrade') ? "bg-emerald-500/10 text-emerald-500" : "bg-destructive/10 text-destructive"
                 }`}>
@@ -233,7 +233,7 @@ export default function CreditMonitor() {
               </div>
               <div className="flex justify-between text-xs mb-3">
                 <span className="text-muted-foreground">Current Rating</span>
-                <span className="font-mono text-white">{w.currentRating}</span>
+                <span className="font-mono text-[var(--kiq-ink)]">{w.currentRating}</span>
               </div>
               <div className="flex gap-2">
                  <Activity size={14} className="text-primary mt-0.5 shrink-0" />

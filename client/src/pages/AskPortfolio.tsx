@@ -19,11 +19,11 @@ function MarkdownText({ text }: { text: string }) {
   return (
     <div className="text-sm leading-relaxed space-y-1.5">
       {text.split("\n").map((line, i) => {
-        if (line.match(/^#{1,3}\s/)) return <p key={i} className="font-bold text-white mt-3">{line.replace(/^#{1,3}\s/, "")}</p>;
-        if (line.match(/^\*\*.*\*\*$/)) return <p key={i} className="font-semibold text-white mt-2">{line.replace(/\*\*/g, "")}</p>;
+        if (line.match(/^#{1,3}\s/)) return <p key={i} className="font-bold text-[var(--kiq-ink)] mt-3">{line.replace(/^#{1,3}\s/, "")}</p>;
+        if (line.match(/^\*\*.*\*\*$/)) return <p key={i} className="font-semibold text-[var(--kiq-ink)] mt-2">{line.replace(/\*\*/g, "")}</p>;
         if (line.startsWith("- ") || line.startsWith("• ")) return <p key={i} className="pl-3 flex gap-2 text-muted-foreground"><span style={{ color: "rgba(0,168,255,0.5)" }}>·</span>{line.slice(2)}</p>;
         if (line.trim() === "") return <div key={i} className="h-1" />;
-        return <p key={i} className="text-muted-foreground" dangerouslySetInnerHTML={{ __html: line.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-white">$1</strong>') }} />;
+        return <p key={i} className="text-muted-foreground" dangerouslySetInnerHTML={{ __html: line.replace(/\*\*([^*]+)\*\*/g, '<strong class="text-[var(--kiq-ink)]">$1</strong>') }} />;
       })}
     </div>
   );
@@ -80,15 +80,15 @@ export default function AskPortfolio() {
                   style={{ background: "rgba(0,168,255,0.08)", border: "1px solid rgba(0,168,255,0.15)" }}>
                   <BrainCircuit size={24} style={{ color: "#00A8FF" }} />
                 </div>
-                <p className="font-bold text-white mb-1">Ask anything about your portfolio</p>
+                <p className="font-bold text-[var(--kiq-ink)] mb-1">Ask anything about your portfolio</p>
                 <p className="text-xs text-muted-foreground mb-6 text-center max-w-sm">
                   Full context: $2.41B net worth, 12 PE/VC funds, 4 properties, 6 legal entities, tax position, liquidity
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-xl">
                   {SUGGESTED.slice(0, 4).map((q) => (
                     <button key={q} onClick={() => send(q)}
-                      className="text-left px-3 py-2.5 rounded-xl text-xs text-muted-foreground hover:text-white transition-all"
-                      style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}
+                      className="text-left px-3 py-2.5 rounded-xl text-xs text-muted-foreground hover:text-[var(--kiq-ink)] transition-all"
+                      style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}
                       data-testid="suggestion-button">
                       {q}
                     </button>
@@ -108,11 +108,11 @@ export default function AskPortfolio() {
                     )}
                     <div className={`max-w-[85%] px-4 py-3 rounded-2xl ${m.role === "user" ? "rounded-tr-sm" : "rounded-tl-sm"}`}
                       style={{
-                        background: m.role === "user" ? "rgba(0,168,255,0.1)" : "rgba(255,255,255,0.03)",
-                        border: `1px solid ${m.role === "user" ? "rgba(0,168,255,0.2)" : "rgba(255,255,255,0.06)"}`,
+                        background: m.role === "user" ? "rgba(0,168,255,0.1)" : "#ffffff",
+                        border: `1px solid ${m.role === "user" ? "rgba(0,168,255,0.2)" : "#f1f5f9"}`,
                       }}>
                       {m.role === "user"
-                        ? <p className="text-sm text-white">{m.content}</p>
+                        ? <p className="text-sm text-[var(--kiq-ink)]">{m.content}</p>
                         : <MarkdownText text={m.content} />}
                     </div>
                     {m.role === "user" && (
@@ -130,7 +130,7 @@ export default function AskPortfolio() {
                       <BrainCircuit size={13} style={{ color: "#00A8FF" }} />
                     </div>
                     <div className="px-4 py-3 rounded-2xl rounded-tl-sm flex items-center gap-2"
-                      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                      style={{ background: "#ffffff", border: "1px solid #f1f5f9" }}>
                       <Loader2 size={12} className="animate-spin" style={{ color: "#00A8FF" }} />
                       <span className="text-xs text-muted-foreground">Analyzing your portfolio…</span>
                     </div>
@@ -148,7 +148,7 @@ export default function AskPortfolio() {
               onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
               placeholder="Ask anything about your portfolio…"
               className="flex-1 text-sm px-4 py-3 rounded-xl"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", color: "white" }}
+              style={{ background: "#ffffff", border: "1px solid #e2e8f0", color: "#0F172A" }}
               data-testid="input-question"
               disabled={loading}
             />
@@ -168,7 +168,7 @@ export default function AskPortfolio() {
             {messages.length > 0 && (
               <button onClick={() => setMessages([])}
                 className="px-3 py-3 rounded-xl"
-                style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(150,170,210,0.4)" }}
+                style={{ background: "#ffffff", border: "1px solid #e2e8f0", color: "rgba(150,170,210,0.4)" }}
                 title="Clear chat" data-testid="button-clear-chat">
                 <RotateCcw size={14} />
               </button>
@@ -185,8 +185,8 @@ export default function AskPortfolio() {
             <div className="space-y-1.5">
               {SUGGESTED.map((q) => (
                 <button key={q} onClick={() => send(q)}
-                  className="w-full text-left text-xs px-2.5 py-2 rounded-lg text-muted-foreground hover:text-white transition-all hover:bg-white/5"
-                  style={{ border: "1px solid rgba(255,255,255,0.04)" }}
+                  className="w-full text-left text-xs px-2.5 py-2 rounded-lg text-muted-foreground hover:text-[var(--kiq-ink)] transition-all hover:bg-[var(--kiq-surface)]/5"
+                  style={{ border: "1px solid #ffffff" }}
                   data-testid="sidebar-suggestion">
                   {q}
                 </button>
@@ -203,9 +203,9 @@ export default function AskPortfolio() {
               { label: "Legal Entities", value: "6" },
               { label: "Properties", value: "4" },
             ].map((r) => (
-              <div key={r.label} className="flex justify-between text-xs py-1" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+              <div key={r.label} className="flex justify-between text-xs py-1" style={{ borderBottom: "1px solid #ffffff" }}>
                 <span className="text-muted-foreground">{r.label}</span>
-                <span className="font-semibold text-white">{r.value}</span>
+                <span className="font-semibold text-[var(--kiq-ink)]">{r.value}</span>
               </div>
             ))}
           </div>

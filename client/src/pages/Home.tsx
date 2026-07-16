@@ -32,7 +32,7 @@ export default function Home() {
   const [pullingKincaid, setPullingKincaid] = useState(false);
 
   const handlePullKincaid = async () => {
-    const query = prompt.trim() || "all of Kincaid IQ";
+    const query = prompt.trim() || "all of Kincaid Health";
     setPullingKincaid(true);
     try {
       const response = await fetch("/api/pull-kincaid", {
@@ -44,7 +44,7 @@ export default function Home() {
       if (data.code) {
         const kincaidLog: Log = {
           id: Date.now(),
-          prompt: `Pull Kincaid IQ: ${query}`,
+          prompt: `Pull Kincaid Health: ${query}`,
           provider: 'anthropic-kincaid',
           response: data.code,
           createdAt: new Date()
@@ -52,7 +52,7 @@ export default function Home() {
         setResults([kincaidLog]);
       }
     } catch (err) {
-      console.error("Error pulling Kincaid IQ:", err);
+      console.error("Error pulling Kincaid Health:", err);
     } finally {
       setPullingKincaid(false);
     }
@@ -63,30 +63,30 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="w-full max-w-4xl mx-auto flex flex-col gap-8 flex-1">
+      <div className="w-full max-w-4xl mx-auto flex flex-col gap-8 flex-1 py-8 px-4 font-sans text-[var(--kiq-ink-soft)]">
         
         {/* Header Section */}
-        <div className="text-center space-y-4 pt-4 md:pt-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 border border-primary/10 text-primary text-sm font-medium mb-2">
-            <Sparkles size={14} /> Fiduciary Grade Engine
+        <div className="text-center space-y-4 pt-4 md:pt-8 animate-kincaid-slide-up">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-500/5 border border-red-500/10 text-red-700 text-xs font-semibold uppercase tracking-wider mb-2">
+            <Sparkles size={13} className="text-red-600 animate-pulse" /> Fiduciary Grade Engine
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-[var(--kiq-ink)] tracking-tight font-display">
             Dual-Engine Analysis
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Submit a query to evaluate responses across multiple frontier models simultaneously, or use Claude to pull Kincaid IQ code.
+          <p className="text-base text-[var(--kiq-muted)] max-w-2xl mx-auto leading-relaxed">
+            Submit a query to evaluate responses across multiple frontier models simultaneously, or use Claude to pull Kincaid Health code.
           </p>
         </div>
 
         {/* Input Form */}
-        <form onSubmit={handleSubmit} className="relative z-20">
-          <div className="relative glass-card rounded-2xl overflow-hidden focus-within:ring-2 focus-within:ring-primary/20 transition-all duration-300">
+        <form onSubmit={handleSubmit} className="relative z-20 animate-kincaid-slide-up" style={{ animationDelay: "100ms" }}>
+          <div className="relative glass-3d bg-[var(--kiq-surface)] rounded-2xl overflow-hidden shadow-glass border border-[var(--kiq-hairline)]/50 focus-within:ring-2 focus-within:ring-red-500/20 focus-within:border-red-500/40 transition-all duration-300">
             <textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Enter your prompt here... (e.g. 'Pull all of Kincaid iQ')"
-              className="w-full min-h-[140px] p-5 bg-transparent border-none resize-y text-foreground placeholder:text-muted-foreground/70 focus:outline-none custom-scrollbar text-base"
+              placeholder="Enter your prompt here... (e.g. 'Pull all of Kincaid Health')"
+              className="w-full min-h-[140px] p-5 bg-transparent border-none resize-y text-[var(--kiq-ink)] placeholder:text-[var(--kiq-subtle)] focus:outline-none custom-scrollbar text-base font-medium"
               disabled={isPending || pullingKincaid}
             />
             <div className="absolute bottom-4 right-4 flex items-center gap-3">
@@ -95,30 +95,30 @@ export default function Home() {
                 onClick={handlePullKincaid}
                 disabled={!prompt.trim() || pullingKincaid || isPending}
                 className={`
-                  px-5 py-2.5 rounded-xl font-semibold flex items-center gap-2
-                  transition-all duration-200 ease-out
+                  px-5 py-2.5 rounded-xl font-semibold flex items-center gap-2 text-xs uppercase tracking-wider
+                  transition-all duration-200 ease-out border cursor-pointer
                   ${prompt.trim() && !pullingKincaid
-                    ? 'bg-secondary text-secondary-foreground shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0' 
-                    : 'bg-muted text-muted-foreground cursor-not-allowed'
+                    ? 'bg-[var(--kiq-canvas-soft)] hover:bg-[var(--kiq-canvas-parchment)] text-[var(--kiq-ink-soft)] border-[var(--kiq-hairline)] shadow-sm' 
+                    : 'bg-[var(--kiq-canvas-parchment)] text-[var(--kiq-subtle)] border-transparent cursor-not-allowed'
                   }
                 `}
               >
-                {pullingKincaid ? "Pulling..." : "Pull Kincaid IQ"}
+                {pullingKincaid ? "Pulling..." : "Pull Kincaid Health"}
               </button>
               <button
                 type="submit"
                 disabled={!prompt.trim() || isPending || pullingKincaid}
                 className={`
-                  px-5 py-2.5 rounded-xl font-semibold flex items-center gap-2
-                  transition-all duration-200 ease-out
+                  px-5 py-2.5 rounded-xl font-semibold flex items-center gap-2 text-xs uppercase tracking-wider
+                  transition-all duration-200 ease-out border-none cursor-pointer
                   ${prompt.trim() && !isPending
-                    ? 'bg-primary text-primary-foreground shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0' 
-                    : 'bg-muted text-muted-foreground cursor-not-allowed'
+                    ? 'bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-500/10' 
+                    : 'bg-[var(--kiq-canvas-parchment)] text-[var(--kiq-subtle)] cursor-not-allowed'
                   }
                 `}
               >
                 {isPending ? "Analyzing..." : "Submit Query"}
-                <Send size={16} className={isPending ? "animate-pulse" : ""} />
+                <Send size={13} className={isPending ? "animate-pulse" : ""} />
               </button>
             </div>
           </div>
@@ -129,9 +129,9 @@ export default function Home() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="mt-3 text-sm text-destructive flex items-center gap-2 bg-destructive/10 px-4 py-3 rounded-xl border border-destructive/20"
+                className="mt-3 text-sm text-red-700 flex items-center gap-2 bg-red-50 px-4 py-3 rounded-xl border border-red-150"
               >
-                <AlertCircle size={16} />
+                <AlertCircle size={15} className="text-red-600" />
                 <span>{error.message || "An error occurred while processing the request."}</span>
               </motion.div>
             )}
@@ -139,7 +139,7 @@ export default function Home() {
         </form>
 
         {/* Results Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-12 flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-12 flex-1 animate-kincaid-slide-up" style={{ animationDelay: "200ms" }}>
           <ResultPanel 
             provider="openai" 
             content={openAiResult?.response || ""} 

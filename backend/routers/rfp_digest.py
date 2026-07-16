@@ -435,7 +435,7 @@ def _build_digest_html(digest: dict, frequency: str) -> str:
         <tr><td style="background:linear-gradient(135deg,#0c1a3a 0%,#091528 100%);border-radius:12px 12px 0 0;padding:32px 36px;border-bottom:2px solid {GOLD}22;">
           <div style="display:flex;align-items:center;justify-content:space-between;">
             <div>
-              <span style="font-size:9px;font-weight:800;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.35);">KINCAID IQ · RFP INTELLIGENCE OS</span>
+              <span style="font-size:9px;font-weight:800;letter-spacing:0.25em;text-transform:uppercase;color:rgba(255,255,255,0.35);">KINCAID HEALTH · RFP INTELLIGENCE OS</span>
               <h1 style="font-size:22px;font-weight:800;color:white;margin:8px 0 4px;">{freq_label} Intelligence Digest</h1>
               <p style="font-size:12px;color:rgba(255,255,255,0.4);margin:0;">{today_str} · Coverage from {since_str}</p>
             </div>
@@ -460,14 +460,14 @@ def _build_digest_html(digest: dict, frequency: str) -> str:
           <table width="100%" cellpadding="0" cellspacing="0">
             <tr>
               <td>
-                <p style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);margin:0;">Kincaid IQ · RFP Intelligence OS™</p>
+                <p style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.5);margin:0;">Kincaid Health · RFP Intelligence OS™</p>
                 <p style="font-size:10px;color:rgba(255,255,255,0.25);margin:3px 0 0;">
                   You're receiving this because you opted into {freq_label.lower()} digests.
                   <a href="{APP_BASE_URL}/digest-preferences" style="color:{GOLD};text-decoration:none;">Manage preferences →</a>
                 </p>
               </td>
               <td align="right">
-                <span style="font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:0.1em;">KINCAID IQ™</span>
+                <span style="font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:0.1em;">KINCAID HEALTH™</span>
               </td>
             </tr>
           </table>
@@ -492,7 +492,7 @@ def _try_send(to_email: str, extra_recipients: List[str], subject: str, html: st
     try:
         msg = MIMEMultipart("alternative")
         msg["Subject"] = subject
-        msg["From"]    = f"Kincaid IQ <{user}>"
+        msg["From"]    = f"Kincaid Health <{user}>"
         msg["To"]      = to_email
         all_recipients = list({to_email} | set(extra_recipients))
         if len(all_recipients) > 1:

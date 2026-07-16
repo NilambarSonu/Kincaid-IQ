@@ -51,7 +51,7 @@ function ConfidenceBar({ score }: { score: number }) {
   const color = pct >= 90 ? "#00FF94" : pct >= 80 ? "#FFB800" : "#FF4D6D";
   return (
     <div className="flex items-center gap-2">
-      <div className="h-1.5 w-24 bg-zinc-800 rounded-full overflow-hidden">
+      <div className="h-1.5 w-24 bg-[var(--kiq-surface)] rounded-full overflow-hidden">
         <div className="h-full rounded-full" style={{ width: `${pct}%`, background: color }} />
       </div>
       <span className="text-[9px] font-mono" style={{ color }}>{pct}%</span>
@@ -74,7 +74,7 @@ export default function GovernanceClaims() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-zinc-950 p-6 space-y-6">
+      <div className="min-h-screen bg-[var(--kiq-surface)] p-6 space-y-6">
         <div className="flex items-start justify-between">
           <div>
             <div className="flex items-center gap-2 mb-1">
@@ -83,7 +83,7 @@ export default function GovernanceClaims() {
                 Fiduciary Intelligence
               </span>
             </div>
-            <h1 className="text-2xl font-black text-zinc-100">Claims Registry</h1>
+            <h1 className="text-2xl font-black text-[var(--kiq-ink)]">Claims Registry</h1>
             <p className="text-xs text-zinc-500 mt-1">
               All governed intelligence claims with evidence lineage and policy state
             </p>
@@ -110,7 +110,7 @@ export default function GovernanceClaims() {
             { label: "High Conf (≥90%)", value: (data?.items ?? []).filter(c => c.confidence_score >= 0.9).length, color: "#A855F7" },
             { label: "Policy Allowed", value: (data?.items ?? []).filter(c => c.policy.allowed).length, color: "#FFB800" },
           ].map(({ label, value, color }) => (
-            <div key={label} className="bg-zinc-950/80 border border-zinc-800/50 rounded-xl p-4">
+            <div key={label} className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-xl p-4">
               <p className="text-[9px] font-mono uppercase tracking-widest text-zinc-600 mb-1">{label}</p>
               <p className="text-2xl font-black font-mono" style={{ color }}>{value}</p>
             </div>
@@ -118,10 +118,10 @@ export default function GovernanceClaims() {
         </div>
 
         {/* Claims table */}
-        <div className="bg-zinc-950/80 border border-zinc-800/50 rounded-2xl overflow-hidden">
+        <div className="bg-[var(--kiq-surface)]/80 border border-[var(--kiq-hairline)]/50 rounded-2xl overflow-hidden">
           <table className="w-full text-xs">
             <thead>
-              <tr className="border-b border-zinc-800/40">
+              <tr className="border-b border-[var(--kiq-hairline)]/40">
                 {["KPI Key", "Claim", "Value", "Period", "Confidence", "Status", "Policy"].map(h => (
                   <th key={h} className="px-4 py-3 text-left text-[9px] font-mono uppercase tracking-widest text-zinc-600">{h}</th>
                 ))}
@@ -132,7 +132,7 @@ export default function GovernanceClaims() {
                 [...Array(3)].map((_, i) => (
                   <tr key={i} className="border-b border-zinc-900/40">
                     <td colSpan={7} className="px-4 py-3">
-                      <div className="h-4 bg-zinc-900/50 rounded animate-pulse" />
+                      <div className="h-4 bg-[var(--kiq-canvas-soft)]/50 rounded animate-pulse" />
                     </td>
                   </tr>
                 ))
@@ -142,15 +142,15 @@ export default function GovernanceClaims() {
                 </tr>
               ) : (
                 items.map(c => (
-                  <tr key={c.claim_id} className="border-b border-zinc-900/40 hover:bg-zinc-900/20"
+                  <tr key={c.claim_id} className="border-b border-zinc-900/40 hover:bg-[var(--kiq-canvas-soft)]/20"
                     data-testid={`claim-row-${c.claim_id}`}>
                     <td className="px-4 py-3">
-                      <span className="text-[9px] font-mono text-[#A855F7] bg-zinc-900/50 border border-zinc-800/40 rounded px-1.5 py-0.5">
+                      <span className="text-[9px] font-mono text-[#A855F7] bg-[var(--kiq-canvas-soft)]/50 border border-[var(--kiq-hairline)]/40 rounded px-1.5 py-0.5">
                         {c.kpi_key}
                       </span>
                     </td>
                     <td className="px-4 py-3 max-w-[200px]">
-                      <p className="text-zinc-200 font-medium truncate">{c.title}</p>
+                      <p className="text-[var(--kiq-ink-soft)] font-medium truncate">{c.title}</p>
                       <p className="text-[9px] font-mono text-zinc-600">{c.claim_id}</p>
                     </td>
                     <td className="px-4 py-3">

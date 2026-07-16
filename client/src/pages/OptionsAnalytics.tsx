@@ -146,7 +146,7 @@ export default function OptionsAnalytics() {
             <CardTitle className="text-[10px] uppercase text-muted-foreground font-bold tracking-widest">Spot Price</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold font-mono text-white" data-testid="text-options-spot">${currentTickerData.spot.toFixed(2)}</p>
+            <p className="text-2xl font-bold font-mono text-[var(--kiq-ink)]" data-testid="text-options-spot">${currentTickerData.spot.toFixed(2)}</p>
             <p className="text-[10px] text-muted-foreground mt-1">{ticker} · NASDAQ</p>
           </CardContent>
         </Card>
@@ -169,7 +169,7 @@ export default function OptionsAnalytics() {
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold font-mono text-amber-400">0.74</p>
-            <p className="text-[10px] text-muted-foreground mt-1">Expiration: <span className="text-white font-bold">{expiration}</span></p>
+            <p className="text-[10px] text-muted-foreground mt-1">Expiration: <span className="text-[var(--kiq-ink)] font-bold">{expiration}</span></p>
           </CardContent>
         </Card>
       </div>
@@ -192,7 +192,7 @@ export default function OptionsAnalytics() {
               <TableHeader className="bg-black/40">
                 <TableRow className="hover:bg-transparent border-white/10">
                   <TableHead colSpan={6} className="text-center border-r border-white/10 text-primary uppercase font-black text-[9px] tracking-widest py-2">CALLS</TableHead>
-                  <TableHead className="text-center bg-white/5 font-black text-[9px] uppercase tracking-widest">STRIKE</TableHead>
+                  <TableHead className="text-center bg-[var(--kiq-surface)]/5 font-black text-[9px] uppercase tracking-widest">STRIKE</TableHead>
                   <TableHead colSpan={6} className="text-center border-l border-white/10 text-orange-400 uppercase font-black text-[9px] tracking-widest">PUTS</TableHead>
                 </TableRow>
                 <TableRow className="hover:bg-transparent border-white/10 text-[9px] uppercase font-bold text-muted-foreground">
@@ -202,7 +202,7 @@ export default function OptionsAnalytics() {
                   <TableHead className="text-right">Δ</TableHead>
                   <TableHead className="text-right">Last</TableHead>
                   <TableHead className="text-right border-r border-white/10">Bid/Ask</TableHead>
-                  <TableHead className="text-center bg-white/5 text-[9px]"></TableHead>
+                  <TableHead className="text-center bg-[var(--kiq-surface)]/5 text-[9px]"></TableHead>
                   <TableHead className="text-left border-l border-white/10">Bid/Ask</TableHead>
                   <TableHead className="text-left">Last</TableHead>
                   <TableHead className="text-left">Δ</TableHead>
@@ -218,7 +218,7 @@ export default function OptionsAnalytics() {
                   const isATM = opt.isATM;
                   return (
                     <TableRow key={opt.strike}
-                      className={`border-white/5 hover:bg-white/5 cursor-pointer transition-colors h-9 ${isATM ? "bg-amber-500/8" : ""} ${selectedStrike === opt.strike ? "ring-1 ring-primary/30" : ""}`}
+                      className={`border-white/5 hover:bg-[var(--kiq-surface)]/5 cursor-pointer transition-colors h-9 ${isATM ? "bg-amber-500/8" : ""} ${selectedStrike === opt.strike ? "ring-1 ring-primary/30" : ""}`}
                       onClick={() => setSelectedStrike(selectedStrike === opt.strike ? null : opt.strike)}
                       data-testid={`row-option-${opt.strike}`}
                     >
@@ -228,13 +228,13 @@ export default function OptionsAnalytics() {
                       <TableCell className={`text-right text-[10px] font-mono text-green-400 ${isITMCall ? "bg-primary/5" : ""}`}>{opt.callDelta.toFixed(2)}</TableCell>
                       <TableCell className={`text-right text-[10px] font-mono font-bold text-white ${isITMCall ? "bg-primary/5" : ""}`}>${opt.callLast.toFixed(2)}</TableCell>
                       <TableCell className={`text-right text-[10px] font-mono border-r border-white/10 text-muted-foreground ${isITMCall ? "bg-primary/5" : ""}`}>{opt.callBid}/{opt.callAsk}</TableCell>
-                      <TableCell className={`text-center font-bold text-sm bg-white/5 ${isATM ? "text-amber-400" : "text-white"}`}>{opt.strike}</TableCell>
+                      <TableCell className={`text-center font-bold text-sm bg-[var(--kiq-surface)]/5 ${isATM ? "text-amber-400" : "text-[var(--kiq-ink)]"}`}>{opt.strike}</TableCell>
                       <TableCell className={`text-left text-[10px] font-mono border-l border-white/10 text-muted-foreground ${isITMPut ? "bg-orange-500/5" : ""}`}>{opt.putBid}/{opt.putAsk}</TableCell>
-                      <TableCell className={`text-left text-[10px] font-mono font-bold text-white ${isITMPut ? "bg-orange-500/5" : ""}`}>${opt.putLast.toFixed(2)}</TableCell>
+                      <TableCell className={`text-left text-[10px] font-mono font-bold text-[var(--kiq-ink)] ${isITMPut ? "bg-orange-500/5" : ""}`}>${opt.putLast.toFixed(2)}</TableCell>
                       <TableCell className={`text-left text-[10px] font-mono text-red-400 ${isITMPut ? "bg-orange-500/5" : ""}`}>{opt.putDelta.toFixed(2)}</TableCell>
                       <TableCell className={`text-left text-[10px] font-mono ${isITMPut ? "bg-orange-500/5" : ""}`}>{opt.putIV.toFixed(1)}%</TableCell>
-                      <TableCell className={`text-left text-[10px] font-mono ${isITMPut ? "bg-orange-500/5 text-white" : "text-muted-foreground"}`}>{opt.putVolume.toLocaleString()}</TableCell>
-                      <TableCell className={`text-left text-[10px] font-mono ${isITMPut ? "bg-orange-500/5 text-white" : "text-muted-foreground"}`}>{opt.putOI.toLocaleString()}</TableCell>
+                      <TableCell className={`text-left text-[10px] font-mono ${isITMPut ? "bg-orange-500/5 text-[var(--kiq-ink)]" : "text-muted-foreground"}`}>{opt.putVolume.toLocaleString()}</TableCell>
+                      <TableCell className={`text-left text-[10px] font-mono ${isITMPut ? "bg-orange-500/5 text-[var(--kiq-ink)]" : "text-muted-foreground"}`}>{opt.putOI.toLocaleString()}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -255,8 +255,8 @@ export default function OptionsAnalytics() {
               <select
                 value={strategy}
                 onChange={(e) => setStrategy(e.target.value)}
-                className="text-[11px] font-bold px-2 py-1 rounded-lg border bg-black/30 text-white"
-                style={{ borderColor: "rgba(255,255,255,0.12)" }}
+                className="text-[11px] font-bold px-2 py-1 rounded-lg border bg-black/30 text-[var(--kiq-ink)]"
+                style={{ borderColor: "#cbd5e1" }}
                 data-testid="select-strategy"
               >
                 {STRATEGIES.map(s => <option key={s} value={s}>{s}</option>)}
@@ -281,14 +281,14 @@ export default function OptionsAnalytics() {
                     <stop offset="95%" stopColor="#FF4D6D" stopOpacity={0.3} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
-                <XAxis dataKey="price" tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }} axisLine={false}
+                <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" vertical={false} />
+                <XAxis dataKey="price" tick={{ fill: "#475569", fontSize: 10 }} axisLine={false}
                   tickFormatter={(v) => `$${v}`} />
-                <YAxis tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }} axisLine={false}
+                <YAxis tick={{ fill: "#475569", fontSize: 10 }} axisLine={false}
                   tickFormatter={(v) => `$${v}`} />
-                <Tooltip contentStyle={{ background: "#0c0e1a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }}
+                <Tooltip contentStyle={{ background: "#F8FAFC", border: "1px solid #e2e8f0", borderRadius: "8px" }}
                   formatter={(v: number) => [`$${v.toFixed(2)}`, "P&L"]} />
-                <ReferenceLine y={0} stroke="rgba(255,255,255,0.2)" strokeDasharray="4 3" />
+                <ReferenceLine y={0} stroke="#94a3b8" strokeDasharray="4 3" />
                 <ReferenceLine x={atmStrike} stroke="rgba(255,184,0,0.4)" strokeDasharray="4 3"
                   label={{ value: "Spot", position: "top", fill: "#FFB800", fontSize: 10 }} />
                 <Area type="monotone" dataKey="pnl" stroke="#00A8FF" strokeWidth={2} fillOpacity={1}
@@ -314,7 +314,7 @@ export default function OptionsAnalytics() {
                   { label: "Rho", value: "+124", color: "#FFB800" },
                   { label: "Charm", value: "-0.04", color: "#FF6B6B" },
                 ].map(g => (
-                  <div key={g.label} className="p-2 rounded-lg" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                  <div key={g.label} className="p-2 rounded-lg" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
                     <p className="text-[9px] text-muted-foreground uppercase font-bold mb-0.5">{g.label}</p>
                     <p className="text-sm font-mono font-bold" style={{ color: g.color }}>{g.value}</p>
                   </div>
@@ -332,11 +332,11 @@ export default function OptionsAnalytics() {
             <CardContent>
               <ResponsiveContainer width="100%" height={140}>
                 <LineChart data={ivTermStructure}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
-                  <XAxis dataKey="tenor" tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }} axisLine={false} />
-                  <YAxis tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }} axisLine={false}
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" vertical={false} />
+                  <XAxis dataKey="tenor" tick={{ fill: "#475569", fontSize: 10 }} axisLine={false} />
+                  <YAxis tick={{ fill: "#475569", fontSize: 10 }} axisLine={false}
                     tickFormatter={(v) => `${v}%`} domain={["auto", "auto"]} />
-                  <Tooltip contentStyle={{ background: "#0c0e1a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }} />
+                  <Tooltip contentStyle={{ background: "#F8FAFC", border: "1px solid #e2e8f0", borderRadius: "8px" }} />
                   <Line type="monotone" dataKey="iv" stroke="#FFB800" strokeWidth={2}
                     dot={{ fill: "#FFB800", r: 4 }} name="IV" />
                 </LineChart>
@@ -356,10 +356,10 @@ export default function OptionsAnalytics() {
         <CardContent>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={skewData} data-testid="chart-vol-skew">
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
-              <XAxis dataKey="strike" tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }} axisLine={false} />
-              <YAxis tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }} axisLine={false} tickFormatter={(v) => `${v}%`} />
-              <Tooltip contentStyle={{ background: "#0c0e1a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px" }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff" vertical={false} />
+              <XAxis dataKey="strike" tick={{ fill: "#475569", fontSize: 10 }} axisLine={false} />
+              <YAxis tick={{ fill: "#475569", fontSize: 10 }} axisLine={false} tickFormatter={(v) => `${v}%`} />
+              <Tooltip contentStyle={{ background: "#F8FAFC", border: "1px solid #e2e8f0", borderRadius: "8px" }} />
               <ReferenceLine x={atmStrike} stroke="rgba(255,184,0,0.4)" strokeDasharray="4 3"
                 label={{ value: "ATM", position: "top", fill: "#FFB800", fontSize: 10 }} />
               <Line type="monotone" dataKey="callIV" stroke="#00A8FF" strokeWidth={2} dot={{ fill: "#00A8FF", r: 3 }} name="Call IV" />

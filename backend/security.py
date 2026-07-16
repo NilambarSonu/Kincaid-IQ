@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Security Hardening Layer v1.0
+Kincaid Health — Security Hardening Layer v1.0
 Rate limiting, login lockout, and brute-force protection.
 """
 import time

@@ -1,5 +1,5 @@
 """
-Kincaid IQ — Audit Trail Engine v2.0
+Kincaid Health — Audit Trail Engine v2.0
 Fiduciary-grade immutable event log with SHA-256 chain linking.
 
 Every sensitive action generates a signed receipt persisted to the

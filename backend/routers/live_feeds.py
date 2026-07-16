@@ -33,7 +33,7 @@ router = APIRouter(prefix="/api/live-feeds", tags=["live-feeds"])
 
 _SAM_KEY = os.environ.get("SAM_GOV_API_KEY") or os.environ.get("SAM_API_KEY", "")
 _INGEST_SOURCE_PREFIX = "live"
-_UA = {"User-Agent": "Kincaid RMC research@kincaidrmc.com", "Accept": "application/json"}
+_UA = {"User-Agent": "Kincaid Health research@kincaidrmc.com", "Accept": "application/json"}
 
 
 # ─── Provenance writer ────────────────────────────────────────────────────────
