@@ -16,6 +16,9 @@ import {
   Sparkles,
 } from "lucide-react";
 
+import iconImg from "../../public/icon.png";
+import avatarImg from "../../public/jeremiah-franklin-shrack.png";
+
 const vertexShader = `
   varying vec2 vUv;
   void main() {
@@ -326,7 +329,7 @@ export default function Login() {
                 rel="noreferrer"
                 aria-label="Jeremiah Franklin Shrack LinkedIn profile"
               >
-                <img src="/jeremiah-franklin-shrack.png" alt="Jeremiah Franklin Shrack" />
+                <img src={avatarImg} alt="Jeremiah Franklin Shrack" />
               </a>
               <a className="kiq-webgl-profile-link" href="https://www.linkedin.com/in/shrack/" target="_blank" rel="noreferrer">
                 Jeremiah Franklin Shrack
@@ -342,7 +345,7 @@ export default function Login() {
           transition={{ delay: 0.36, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="kiq-webgl-auth-shine" />
-          <img src="/icon.png" alt="Kincaid Health" style={{ width: '64px', height: '64px', objectFit: 'contain', margin: '0 auto 1rem', display: 'block' }} />
+          <img src={iconImg} alt="Kincaid Health" style={{ width: '64px', height: '64px', objectFit: 'contain', margin: '0 auto 1rem', display: 'block' }} />
           <h2>{mode === "login" ? "Welcome back" : "Create your workspace"}</h2>
           <p className="kiq-webgl-auth-subtitle">
             {mode === "login" ? "Access your enterprise health intelligence console" : "Register your secure enterprise health intelligence console"}
